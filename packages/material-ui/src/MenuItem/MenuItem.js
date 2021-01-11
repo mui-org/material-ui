@@ -7,7 +7,31 @@ import experimentalStyled, { shouldForwardProp } from '../styles/experimentalSty
 import useThemeProps from '../styles/useThemeProps';
 import { getMenuItemUtilityClass } from './menuItemClasses';
 import ListItem from '../ListItem';
+import KeyboardArrowRight from '../internal/svg-icons/KeyboardArrowRight';
+import createChainedFunction from '../utils/createChainedFunction';
+import useForkRef from '../utils/useForkRef';
+import useTheme from '../styles/useTheme';
 import { overridesResolver as listItemOverridesResolver, ListItemRoot } from '../ListItem/ListItem';
+
+const RTL_ANCHOR_ORIGIN = {
+  vertical: 'top',
+  horizontal: 'left',
+};
+
+const LTR_ANCHOR_ORIGIN = {
+  vertical: 'top',
+  horizontal: 'right',
+};
+
+const RTL_TRANSFORM_ORIGIN = {
+  vertical: 'top',
+  horizontal: 'right',
+};
+
+const LTR_TRANSFORM_ORIGIN = {
+  vertical: 'top',
+  horizontal: 'left',
+};
 
 const overridesResolver = (props, styles) => {
   const { styleProps } = props;
@@ -50,17 +74,40 @@ const MenuItemRoot = experimentalStyled(
   }),
 }));
 
+  /* Styles applied to a Menu Item's children when a subMenu is present */
+  subMenuItemWrapper: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  /* Styles applied to the subMenuIcon when it is present */
+  subMenuIcon: {
+    marginLeft: theme.spacing(2),
+  },
+  /* Styles applied to subMenuIcon when dirction is 'rtl' */
+  rtlSubMenuIcon: {
+    transform: 'rotate(-180deg)',
+  },
+
 const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiMenuItem' });
   const {
+    children,
     className,
     component = 'li',
     dense = false,
     disableGutters = false,
+    onArrowRightKeydown,
     ListItemClasses,
+    openSubMenu = false,
+    onKeyDown,
     role = 'menuitem',
     selected,
+    subMenu,
+    subMenuIcon: SubMenuIcon = KeyboardArrowRight,
+    setParentOpenSubMenuIndex,
     tabIndex: tabIndexProp,
+    onParentClose,
     ...other
   } = props;
 
@@ -73,10 +120,22 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
     tabIndex = tabIndexProp !== undefined ? tabIndexProp : -1;
   }
 
-  return (
+  const {
+    anchorEl, // disallowed
+    onParentClose: onParentCloseProp, // disallowed
+    MenuListProps, // Needs to be spread into subMenu prop
+    isSubMenu, // disallowed
+    open, // disallowed
+    setParentOpenSubMenuIndex: setParentOpenSubMenuIndexProp, // disallowed
+    onClose: subOnClose, // Needs to be combined with parentOnClose on the subMenu
+    ...allowedSubMenuProps
+  } = subMenu ? subMenu.props : {};
+
+  const listItem = (
     <ListItem
       components={{ Root: MenuItemRoot }}
       componentsProps={{ root: { styleProps } }}
+      key={subMenu && 'subMenuItem'}
       button
       role={role}
       tabIndex={tabIndex}
@@ -85,10 +144,47 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
       disableGutters={disableGutters}
       className={clsx(classes.root, className)}
       ref={ref}
+      aria-haspopup={subMenu ? true : undefined}
+      aria-expanded={subMenu ? openSubMenu : undefined}
+      onKeyDown={createChainedFunction(onArrowRightKeydown, onKeyDown)}
       {...other}
       classes={ListItemClasses}
-    />
+    >
+      {subMenu ? (
+        <div className={classes.subMenuItemWrapper}>
+          {children}
+          <SubMenuIcon
+            className={clsx(classes.subMenuIcon, {
+              [classes.rtlSubMenuIcon]: theme.direction === 'rtl',
+            })}
+          />
+        </div>
+      ) : (
+        children
+      )}
+    </ListItem>
   );
+
+  if (!subMenu) return listItem;
+
+  const listItemAnchorEl = listItemRef.current;
+
+  return [
+    listItem,
+    openSubMenu && listItemAnchorEl
+      ? React.cloneElement(subMenu, {
+          key: 'subMenu',
+          anchorEl: listItemAnchorEl,
+          anchorOrigin: theme.direction === 'rtl' ? RTL_ANCHOR_ORIGIN : LTR_ANCHOR_ORIGIN,
+          MenuListProps: { ...MenuListProps, isSubMenu: true },
+          open: openSubMenu,
+          onClose: createChainedFunction(onParentClose, subOnClose),
+          setParentOpenSubMenuIndex,
+          transformOrigin: theme.direction === 'rtl' ? RTL_TRANSFORM_ORIGIN : LTR_TRANSFORM_ORIGIN,
+          ...allowedSubMenuProps,
+        })
+      : undefined,
+  ];
 });
 
 MenuItem.propTypes = {
@@ -139,6 +235,27 @@ MenuItem.propTypes = {
   /**
    * @ignore
    */
+  onArrowRightKeydown: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onKeyDown: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onMouseEnter: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onParentClose: PropTypes.func,
+  /**
+   * When `true`, opens the subMenu, if provided.
+   * @default false
+   */
+  openSubMenu: PropTypes.bool,
+  /**
+   * @ignore
+   */
   role: PropTypes.string,
   /**
    * @ignore
@@ -148,6 +265,21 @@ MenuItem.propTypes = {
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx: PropTypes.object,
+  /**
+   * @ignore
+   */
+  setParentOpenSubMenuIndex: PropTypes.func,
+  /**
+   * Menu to display as a sub-menu.
+   */
+  subMenu: PropTypes.node,
+  /**
+   * Normally `Icon`, `SvgIcon`, or a `@material-ui/icons`
+   * SVG icon element rendered on a MenuItem that
+   * contains a subMenu
+   * @default KeyboardArrowRight
+   */
+  subMenuIcon: PropTypes.node,
   /**
    * @ignore
    */

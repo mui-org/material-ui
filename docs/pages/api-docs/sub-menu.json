@@ -1,0 +1,10 @@
+{
+  "props": { "children": { "type": { "name": "node" } } },
+  "name": "SubMenu",
+  "styles": { "classes": [], "globalClasses": {}, "name": null },
+  "spread": true,
+  "filename": "/packages/material-ui/src/SubMenu/SubMenu.js",
+  "inheritance": null,
+  "demos": "",
+  "styledComponent": true
+}

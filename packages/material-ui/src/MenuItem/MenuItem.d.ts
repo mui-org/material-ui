@@ -26,11 +26,38 @@ export interface MenuItemTypeMap<P = {}, D extends React.ElementType = 'li'> {
         selected?: string;
         /** Styles applied to the root element if dense. */
         dense?: string;
+        /** Styles applied to a Menu Item's children when a subMenu is present */
+        subMenuItemWrapper?: string;
+        /** Styles applied to the subMenuIcon when it is present */
+        subMenuIcon?: string;
+        /** Styles applied to subMenuIcon when dirction is 'rtl' */
+        rtlSubMenuIcon?: string;
       };
       /**
        * `classes` prop applied to the [`ListItem`](/api/list-item/) element.
        */
       ListItemClasses?: ListItemProps['classes'];
+      onArrowRightKeydown?: React.KeyboardEventHandler<any>;
+      onKeyDown?: React.KeyboardEventHandler<any>;
+      onMouseEnter?: React.MouseEventHandler<any>;
+      onParentClose?: React.ReactEventHandler<{}>;
+      /**
+       * When `true`, opens the subMenu, if provided.
+       * @default false
+       */
+      openSubMenu?: boolean;
+      setParentOpenSubMenuIndex?: (index: number) => void;
+      /**
+       * Menu to display as a sub-menu.
+       */
+      subMenu?: React.ReactNode;
+      /**
+       * Normally `Icon`, `SvgIcon`, or a `@material-ui/icons`
+       * SVG icon element rendered on a MenuItem that
+       * contains a subMenu
+       * @default KeyboardArrowRight
+       */
+      subMenuIcon?: React.ReactNode;
       /**
        * The system prop that allows defining system overrides as well as additional CSS styles.
        */

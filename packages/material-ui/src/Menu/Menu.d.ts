@@ -30,6 +30,8 @@ export interface MenuProps extends StandardProps<PopoverProps & Partial<Transiti
     paper?: string;
     /** Styles applied to the List component via `MenuList`. */
     list?: string;
+    disablePointerEvents?: string;
+    enablePointerEvents?: string;
   };
   /**
    * When opening the menu will not focus the active item but the `[role="menu"]`
@@ -59,6 +61,7 @@ export interface MenuProps extends StandardProps<PopoverProps & Partial<Transiti
    * `classes` prop applied to the [`Popover`](/api/popover/) element.
    */
   PopoverClasses?: PopoverProps['classes'];
+  setParentOpenSubMenuIndex?: (index: number) => void;
   /**
    * The length of the transition in `ms`, or 'auto'
    * @default 'auto'

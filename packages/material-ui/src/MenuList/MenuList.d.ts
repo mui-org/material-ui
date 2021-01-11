@@ -27,6 +27,7 @@ export interface MenuListProps extends ListProps {
    * @default false
    */
   disableListWrap?: boolean;
+  isSubMenu?: boolean;
   /**
    * The variant to use. Use `menu` to prevent selected items from impacting the initial focus
    * and the vertical alignment relative to the anchor element.

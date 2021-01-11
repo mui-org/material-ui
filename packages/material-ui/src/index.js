@@ -314,6 +314,9 @@ export * from './StepLabel';
 export { default as Stepper } from './Stepper';
 export * from './Stepper';
 
+export { default as SubMenu } from './SubMenu';
+export * from './SubMenu';
+
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
 

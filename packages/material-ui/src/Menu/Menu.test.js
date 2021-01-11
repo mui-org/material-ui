@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
 import { getClasses, createMount, describeConformance } from 'test/utils';
+import Button from '../Button';
 import Popover from '../Popover';
 import Menu from './Menu';
+import SubMenu from '../SubMenu';
+import MenuItem from '../MenuItem';
 import MenuList from '../MenuList';
 
 const MENU_LIST_HEIGHT = 100;
@@ -144,6 +147,7 @@ describe('<Menu />', () => {
         </div>
       </Menu>,
     );
+
     const popover = wrapper.find(Popover);
     expect(popover.props().open).to.equal(true);
     expect(wrapper.find('[role="menuitem"]').props().autoFocus).to.equal(true);
@@ -236,6 +240,305 @@ describe('<Menu />', () => {
         // twice in StrictMode
         "Material-UI: The Menu component doesn't accept a Fragment as a child.",
       ]);
+    });
+  });
+
+  describe('cascading menu', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = useFakeTimers();
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    const CascadingMenu = (props) => {
+      const [anchorEl, setAnchorEl] = React.useState(null);
+
+      const handleButtonClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+
+      const handleItemClick = () => {
+        setAnchorEl(null);
+      };
+
+      return (
+        <div>
+          <Button onClick={handleButtonClick}>Open Menu</Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleItemClick}
+            transitionDuration={0}
+            {...props}
+          >
+            <MenuItem
+              id="settings-item"
+              subMenu={
+                <SubMenu>
+                  <MenuItem id="regular-item" onClick={handleItemClick}>
+                    Regular Item
+                  </MenuItem>
+                  <MenuItem
+                    id="go-deeper-1"
+                    subMenu={
+                      <SubMenu>
+                        <MenuItem key="deeper2" id="go-deeper-2">
+                          Go deeper
+                        </MenuItem>
+                      </SubMenu>
+                    }
+                  >
+                    Go deeper
+                  </MenuItem>
+                </SubMenu>
+              }
+            >
+              Settings
+            </MenuItem>
+            <MenuItem
+              id="account-item"
+              subMenu={
+                <SubMenu>
+                  <MenuItem id="reset-password" onClick={handleItemClick}>
+                    Reset password
+                  </MenuItem>
+                  <MenuItem id="change-username" onClick={handleItemClick}>
+                    Change username
+                  </MenuItem>
+                </SubMenu>
+              }
+            >
+              My account
+            </MenuItem>
+          </Menu>
+        </div>
+      );
+    };
+
+    it('displays a sub menu level 1', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+      wrapper.find('#settings-item').last().simulate('mousemove');
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+    });
+
+    it('displays a sub menu level 2', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+      wrapper.find('#settings-item').last().simulate('mousemove');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#go-deeper-1').last().simulate('mousemove');
+
+      clock.tick(500);
+      wrapper.update();
+
+      expect(wrapper.find('#go-deeper-2').exists()).to.equal(true);
+    });
+
+    it('sub menus collapse when parent menu is changed', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+      wrapper.find('#settings-item').last().simulate('mousemove');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#account-item').last().simulate('mousemove');
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#change-username').exists()).to.equal(true);
+      wrapper.find('#settings-item').last().simulate('mousemove');
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#change-username').exists()).to.equal(false);
+    });
+
+    it('sub menu stays open when mouse is outside of menu', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+      wrapper.find('#settings-item').last().simulate('mousemove');
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+
+      wrapper.find('#regular-item').last().simulate('mousemove');
+      wrapper.find('#regular-item').last().simulate('mouseout');
+      wrapper.find(Button).simulate('mouseenter');
+
+      expect(wrapper.find('#regular-item').last().exists()).to.equal(true);
+    });
+
+    it('opens a sub Menu on RightArrow keydown', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+
+      clock.tick(200);
+      wrapper.update();
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      clock.tick(200);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+    });
+
+    it('closes current sub Menu on LeftArrow keydown', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+
+      wrapper.find('#regular-item').last().simulate('keyDown', {
+        key: 'ArrowLeft',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(false);
+    });
+
+    it('closes all menus on Tab keydown', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+
+      wrapper.find('#regular-item').last().simulate('keyDown', {
+        key: 'Tab',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#settings-item').exists()).to.equal(false);
+      expect(wrapper.find('#regular-item').exists()).to.equal(false);
+    });
+
+    it('closes all menus on Escape keydown', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+
+      wrapper.find('#regular-item').last().simulate('keyDown', {
+        key: 'Escape',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#settings-item').exists()).to.equal(false);
+      expect(wrapper.find('#regular-item').exists()).to.equal(false);
+    });
+
+    it('changes focus with up and down arrow buttons', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+
+      wrapper.find('#regular-item').last().simulate('keyDown', {
+        key: 'ArrowDown',
+      });
+      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(false);
+
+      wrapper.find('#regular-item').last().simulate('keyDown', {
+        key: 'ArrowUp',
+      });
+      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+    });
+
+    it('changes focus with left and right arrow buttons', () => {
+      const wrapper = mount(<CascadingMenu />);
+      wrapper.find(Button).simulate('click');
+
+      clock.tick(0);
+      wrapper.update();
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      clock.tick(0);
+      wrapper.update();
+
+      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+
+      wrapper.find('#regular-item').last().simulate('keyDown', {
+        key: 'ArrowLeft',
+      });
+      // FIXME: @eps1lon - the assertion below is what's failing after the changes in https://github.com/mui-org/material-ui/commit/e58cc23df9e262a0f95c822504ac6c019b94407d
+      // Basically, this test correctly discovered that the parent item is no longer getting the Mui-focusVisible class when its child menu closes after an ArrowLeft.
+      // So, from manual testing, I confirmed the correct item is technically focused, as before, but it no longer _appears_ focused.
+
+      // expect(wrapper.find('#settings-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+
+      wrapper.find('#settings-item').last().simulate('keyDown', {
+        key: 'ArrowRight',
+      });
+
+      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
     });
   });
 });

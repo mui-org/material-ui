@@ -23,7 +23,11 @@
     }
   },
   "name": "Menu",
-  "styles": { "classes": ["paper", "list"], "globalClasses": {}, "name": "MuiMenu" },
+  "styles": {
+    "classes": ["paper", "list", "disablePointerEvents", "enablePointerEvents"],
+    "globalClasses": {},
+    "name": "MuiMenu"
+  },
   "spread": true,
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/material-ui/src/Menu/Menu.js",

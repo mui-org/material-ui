@@ -7,6 +7,9 @@
     "dense": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used. The prop defaults to the value inherited from the parent List component.",
     "disableGutters": "If <code>true</code>, the left and right padding is removed.",
     "ListItemClasses": "<code>classes</code> prop applied to the <a href=\"/api/list-item/\"><code>ListItem</code></a> element.",
+    "openSubMenu": "When <code>true</code>, opens the subMenu, if provided.",
+    "subMenu": "Menu to display as a sub-menu.",
+    "subMenuIcon": "Normally <code>Icon</code>, <code>SvgIcon</code>, or a <code>@material-ui/icons</code> SVG icon element rendered on a MenuItem that contains a subMenu"
     "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
