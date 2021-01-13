@@ -30,7 +30,7 @@ export interface MenuItemTypeMap<P = {}, D extends React.ElementType = 'li'> {
         subMenuItemWrapper?: string;
         /** Styles applied to the subMenuIcon when it is present */
         subMenuIcon?: string;
-        /** Styles applied to subMenuIcon when dirction is 'rtl' */
+        /** Styles applied to subMenuIcon when direction is 'rtl' */
         rtlSubMenuIcon?: string;
       };
       /**

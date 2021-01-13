@@ -28,6 +28,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "dense"
-    }
+    },
+    "subMenuItemWrapper": {
+      "description": "Styles applied to a Menu Item's children when a subMenu is present"
+    },
+    "subMenuIcon": { "description": "Styles applied to the subMenuIcon when it is present" },
+    "rtlSubMenuIcon": { "description": "Styles applied to subMenuIcon when direction is 'rtl'" }
   }
 }

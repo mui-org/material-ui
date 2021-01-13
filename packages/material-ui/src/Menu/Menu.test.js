@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
-import { getClasses, createMount, describeConformance } from 'test/utils';
+import {
+  act,
+  createClientRender,
+  createMount,
+  describeConformance,
+  fireEvent,
+  getClasses,
+} from 'test/utils';
 import Button from '../Button';
 import Popover from '../Popover';
 import Menu from './Menu';
@@ -15,6 +22,7 @@ describe('<Menu />', () => {
   let classes;
   // StrictModeViolation: Not using act(), prefer using createClientRender from test/utils
   const mount = createMount({ strict: false });
+  const render = createClientRender();
   const defaultProps = {
     open: false,
     anchorEl: () => document.createElement('div'),
@@ -280,14 +288,14 @@ describe('<Menu />', () => {
               subMenu={
                 <SubMenu>
                   <MenuItem id="regular-item" onClick={handleItemClick}>
-                    Regular Item
+                    Regular item
                   </MenuItem>
                   <MenuItem
                     id="go-deeper-1"
                     subMenu={
                       <SubMenu>
                         <MenuItem key="deeper2" id="go-deeper-2">
-                          Go deeper
+                          Bottom depth
                         </MenuItem>
                       </SubMenu>
                     }
@@ -309,6 +317,7 @@ describe('<Menu />', () => {
                   <MenuItem id="change-username" onClick={handleItemClick}>
                     Change username
                   </MenuItem>
+                  <MenuItem onClick={handleItemClick}>Delete account</MenuItem>
                 </SubMenu>
               }
             >
@@ -320,225 +329,241 @@ describe('<Menu />', () => {
     };
 
     it('displays a sub menu level 1', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-      wrapper.find('#settings-item').last().simulate('mousemove');
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Settings' }));
+      });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
     });
 
     it('displays a sub menu level 2', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-      wrapper.find('#settings-item').last().simulate('mousemove');
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Settings' }));
+      });
 
       clock.tick(0);
-      wrapper.update();
 
-      wrapper.find('#go-deeper-1').last().simulate('mousemove');
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Go deeper' }));
+      });
 
       clock.tick(500);
-      wrapper.update();
 
-      expect(wrapper.find('#go-deeper-2').exists()).to.equal(true);
+      expect(queryByRole('menuitem', { name: 'Bottom depth' })).to.not.equal(null);
     });
 
-    it('sub menus collapse when parent menu is changed', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-      wrapper.find('#settings-item').last().simulate('mousemove');
+    it('sub menus collapse when active parent item is changed', () => {
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'My account' }));
+      });
 
       clock.tick(0);
-      wrapper.update();
 
-      wrapper.find('#account-item').last().simulate('mousemove');
-
-      clock.tick(0);
-      wrapper.update();
-
-      expect(wrapper.find('#change-username').exists()).to.equal(true);
-      wrapper.find('#settings-item').last().simulate('mousemove');
+      expect(queryByRole('menuitem', { name: 'Change username' })).to.not.equal(null);
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Settings' }));
+      });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#change-username').exists()).to.equal(false);
+      expect(queryByRole('menuitem', { name: 'Change username' })).to.equal(null);
     });
 
     it('sub menu stays open when mouse is outside of menu', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-      wrapper.find('#settings-item').last().simulate('mousemove');
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Settings' }));
+      });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
 
-      wrapper.find('#regular-item').last().simulate('mousemove');
-      wrapper.find('#regular-item').last().simulate('mouseout');
-      wrapper.find(Button).simulate('mouseenter');
+      act(() => {
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Regular item' }));
+      });
+      act(() => {
+        fireEvent.mouseOut(getByRole('menuitem', { name: 'Regular item' }));
+      });
+      act(() => {
+        fireEvent.mouseEnter(getByRole('button'));
+      });
 
-      expect(wrapper.find('#regular-item').last().exists()).to.equal(true);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
     });
 
     it('opens a sub Menu on RightArrow keydown', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-
-      clock.tick(200);
-      wrapper.update();
-
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
-      clock.tick(200);
-      wrapper.update();
+      clock.tick(0);
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(true);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
     });
 
     it('closes current sub Menu on LeftArrow keydown', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-
-      clock.tick(0);
-      wrapper.update();
-
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(true);
-
-      wrapper.find('#regular-item').last().simulate('keyDown', {
-        key: 'ArrowLeft',
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Regular item' }), { key: 'ArrowLeft' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(false);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.equal(null);
     });
 
     it('closes all menus on Tab keydown', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-
-      clock.tick(0);
-      wrapper.update();
-
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(true);
-
-      wrapper.find('#regular-item').last().simulate('keyDown', {
-        key: 'Tab',
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Regular item' }), { key: 'Tab' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#settings-item').exists()).to.equal(false);
-      expect(wrapper.find('#regular-item').exists()).to.equal(false);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.equal(null);
+      expect(queryByRole('menuitem', { name: 'Settings' })).to.equal(null);
     });
 
     it('closes all menus on Escape keydown', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-
-      clock.tick(0);
-      wrapper.update();
-
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').exists()).to.equal(true);
-
-      wrapper.find('#regular-item').last().simulate('keyDown', {
-        key: 'Escape',
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.not.equal(null);
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Regular item' }), { key: 'Escape' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#settings-item').exists()).to.equal(false);
-      expect(wrapper.find('#regular-item').exists()).to.equal(false);
+      expect(queryByRole('menuitem', { name: 'Regular item' })).to.equal(null);
+      expect(queryByRole('menuitem', { name: 'Settings' })).to.equal(null);
     });
 
     it('changes focus with up and down arrow buttons', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-
-      clock.tick(0);
-      wrapper.update();
-
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      const { getByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
-
-      wrapper.find('#regular-item').last().simulate('keyDown', {
-        key: 'ArrowDown',
+      expect(getByRole('menuitem', { name: 'Regular item' })).to.equal(document.activeElement); // is focused
+      expect(Array.from(getByRole('menuitem', { name: 'Regular item' }).classList)).to.include(
+        'Mui-focusVisible',
+      ); // looks focused
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Regular item' }), { key: 'ArrowDown' });
       });
-      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(false);
 
-      wrapper.find('#regular-item').last().simulate('keyDown', {
-        key: 'ArrowUp',
+      clock.tick(0);
+
+      expect(getByRole('menuitem', { name: 'Go deeper' })).to.equal(document.activeElement); // is focused
+      expect(Array.from(getByRole('menuitem', { name: 'Go deeper' }).classList)).to.include(
+        'Mui-focusVisible',
+      ); // looks focused
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Go deeper' }), { key: 'ArrowUp' });
       });
-      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+
+      clock.tick(0);
+
+      expect(getByRole('menuitem', { name: 'Regular item' })).to.equal(document.activeElement); // is focused
+      expect(Array.from(getByRole('menuitem', { name: 'Regular item' }).classList)).to.include(
+        'Mui-focusVisible',
+      ); // looks focused
     });
 
     it('changes focus with left and right arrow buttons', () => {
-      const wrapper = mount(<CascadingMenu />);
-      wrapper.find(Button).simulate('click');
-
-      clock.tick(0);
-      wrapper.update();
-
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      const { getByRole } = render(<CascadingMenu />);
+      act(() => {
+        fireEvent.click(getByRole('button'));
+      });
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
       clock.tick(0);
-      wrapper.update();
 
-      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
-
-      wrapper.find('#regular-item').last().simulate('keyDown', {
-        key: 'ArrowLeft',
+      expect(getByRole('menuitem', { name: 'Regular item' })).to.equal(document.activeElement); // is focused
+      expect(Array.from(getByRole('menuitem', { name: 'Regular item' }).classList)).to.include(
+        'Mui-focusVisible',
+      ); // looks focused
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Regular item' }), { key: 'ArrowLeft' });
       });
+
+      clock.tick(0);
+
+      expect(getByRole('menuitem', { name: 'Settings' })).to.equal(document.activeElement); // is focused
+
       // FIXME: @eps1lon - the assertion below is what's failing after the changes in https://github.com/mui-org/material-ui/commit/e58cc23df9e262a0f95c822504ac6c019b94407d
       // Basically, this test correctly discovered that the parent item is no longer getting the Mui-focusVisible class when its child menu closes after an ArrowLeft.
       // So, from manual testing, I confirmed the correct item is technically focused, as before, but it no longer _appears_ focused.
 
-      // expect(wrapper.find('#settings-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+      // expect(Array.from(settings.classList)).to.include('Mui-focusVisible'); // looks focused
 
-      wrapper.find('#settings-item').last().simulate('keyDown', {
-        key: 'ArrowRight',
+      act(() => {
+        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
       });
 
-      expect(wrapper.find('#regular-item').last().hasClass('Mui-focusVisible')).to.equal(true);
+      clock.tick(0);
+
+      expect(getByRole('menuitem', { name: 'Regular item' })).to.equal(document.activeElement); // is focused
+      expect(Array.from(getByRole('menuitem', { name: 'Regular item' }).classList)).to.include(
+        'Mui-focusVisible',
+      ); // looks focused
     });
   });
 });
