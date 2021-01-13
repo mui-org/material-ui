@@ -536,34 +536,28 @@ describe('<Menu />', () => {
 
       clock.tick(0);
 
-      expect(getByRole('menuitem', { name: 'Regular item' })).to.equal(document.activeElement); // is focused
-      expect(Array.from(getByRole('menuitem', { name: 'Regular item' }).classList)).to.include(
-        'Mui-focusVisible',
-      ); // looks focused
+      let regularItem = getByRole('menuitem', { name: 'Regular item' });
+      expect(regularItem).to.equal(document.activeElement); // is focused
+      expect(Array.from(regularItem.classList)).to.include('Mui-focusVisible'); // looks focused
       act(() => {
-        fireEvent.keyDown(getByRole('menuitem', { name: 'Regular item' }), { key: 'ArrowLeft' });
+        fireEvent.keyDown(regularItem, { key: 'ArrowLeft' });
       });
 
       clock.tick(0);
 
-      expect(getByRole('menuitem', { name: 'Settings' })).to.equal(document.activeElement); // is focused
-
-      // FIXME: @eps1lon - the assertion below is what's failing after the changes in https://github.com/mui-org/material-ui/commit/e58cc23df9e262a0f95c822504ac6c019b94407d
-      // Basically, this test correctly discovered that the parent item is no longer getting the Mui-focusVisible class when its child menu closes after an ArrowLeft.
-      // So, from manual testing, I confirmed the correct item is technically focused, as before, but it no longer _appears_ focused.
-
-      // expect(Array.from(settings.classList)).to.include('Mui-focusVisible'); // looks focused
+      const settings = getByRole('menuitem', { name: 'Settings' });
+      expect(settings).to.equal(document.activeElement); // is focused
+      expect(Array.from(settings.classList)).to.include('Mui-focusVisible'); // looks focused
 
       act(() => {
-        fireEvent.keyDown(getByRole('menuitem', { name: 'Settings' }), { key: 'ArrowRight' });
+        fireEvent.keyDown(settings, { key: 'ArrowRight' });
       });
 
       clock.tick(0);
 
-      expect(getByRole('menuitem', { name: 'Regular item' })).to.equal(document.activeElement); // is focused
-      expect(Array.from(getByRole('menuitem', { name: 'Regular item' }).classList)).to.include(
-        'Mui-focusVisible',
-      ); // looks focused
+      regularItem = getByRole('menuitem', { name: 'Regular item' });
+      expect(regularItem).to.equal(document.activeElement); // is focused
+      expect(Array.from(regularItem.classList)).to.include('Mui-focusVisible'); // looks focused
     });
   });
 });
