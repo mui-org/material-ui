@@ -20,6 +20,7 @@
       "dense",
       "subMenuItemWrapper",
       "subMenuIcon",
+      "openSubMenuParent",
       "rtlSubMenuIcon"
     ],
     "globalClasses": { "selected": "Mui-selected" },

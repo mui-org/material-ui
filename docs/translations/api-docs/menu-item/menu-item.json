@@ -32,7 +32,19 @@
     "subMenuItemWrapper": {
       "description": "Styles applied to a Menu Item's children when a subMenu is present"
     },
-    "subMenuIcon": { "description": "Styles applied to the subMenuIcon when it is present" },
-    "rtlSubMenuIcon": { "description": "Styles applied to subMenuIcon when direction is 'rtl'" }
+    "subMenuIcon": {
+      "description": "Styles applied to {{nodeName}} when {{conditions}}.",
+      "nodeName": "the subMenuIcon",
+      "conditions": "it is present"
+    },
+    "openSubMenuParent": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "parent item of open sub menu"
+    },
+    "rtlSubMenuIcon": {
+      "description": "Styles applied to {{nodeName}} when {{conditions}}.",
+      "nodeName": "subMenuIcon",
+      "conditions": "direction is 'rtl'"
+    }
   }
 }

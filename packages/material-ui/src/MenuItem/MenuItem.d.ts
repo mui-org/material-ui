@@ -28,9 +28,11 @@ export interface MenuItemTypeMap<P = {}, D extends React.ElementType = 'li'> {
         dense?: string;
         /** Styles applied to a Menu Item's children when a subMenu is present */
         subMenuItemWrapper?: string;
-        /** Styles applied to the subMenuIcon when it is present */
+        /** Styles applied to the subMenuIcon when it is present. */
         subMenuIcon?: string;
-        /** Styles applied to subMenuIcon when direction is 'rtl' */
+        /** Styles applied to parent item of open sub menu. */
+        openSubMenuParent?: string;
+        /** Styles applied to subMenuIcon when direction is 'rtl'. */
         rtlSubMenuIcon?: string;
       };
       /**

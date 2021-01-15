@@ -80,11 +80,15 @@ const MenuItemRoot = experimentalStyled(
     display: 'flex',
     justifyContent: 'space-between',
   },
-  /* Styles applied to the subMenuIcon when it is present */
+  /* Styles applied to the subMenuIcon when it is present. */
   subMenuIcon: {
     marginLeft: theme.spacing(2),
   },
-  /* Styles applied to subMenuIcon when direction is 'rtl' */
+  /* Styles applied to parent item of open sub menu. */
+  openSubMenuParent: {
+    backgroundColor: theme.palette.action.hover,
+  },
+  /* Styles applied to subMenuIcon when direction is 'rtl'. */
   rtlSubMenuIcon: {
     transform: 'rotate(-180deg)',
   },
