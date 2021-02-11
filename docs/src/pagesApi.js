@@ -126,6 +126,7 @@ module.exports = [
   { pathname: '/api-docs/step-icon' },
   { pathname: '/api-docs/step-label' },
   { pathname: '/api-docs/stepper' },
+  { pathname: '/api-docs/sub-menu' },
   { pathname: '/api-docs/svg-icon' },
   { pathname: '/api-docs/swipeable-drawer' },
   { pathname: '/api-docs/switch' },

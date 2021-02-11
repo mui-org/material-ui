@@ -6,5 +6,6 @@
   "filename": "/packages/material-ui/src/SubMenu/SubMenu.js",
   "inheritance": null,
   "demos": "",
-  "styledComponent": true
+  "styledComponent": true,
+  "cssComponent": false
 }
