@@ -265,7 +265,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -280,7 +280,7 @@ describe('<Menu />', () => {
         );
       };
 
-      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      const { getByRole } = render(<CascadingMenu />);
 
       act(() => {
         fireEvent.click(getByRole('button'));
@@ -293,9 +293,8 @@ describe('<Menu />', () => {
       act(() => {
         fireEvent.mouseMove(getByRole('menuitem', { name: 'Test' }));
       });
-
       clock.restore();
-      expect(queryByRole('menuitem', { name: expected })).to.not.equal(null);
+      expect(getByRole('menuitem', { name: expected })).to.not.equal(null);
     });
 
     it('renders a nested subMenu', () => {
@@ -311,10 +310,10 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
-                  <SubMenu>
+                  <SubMenu transitionDuration={0}>
                     <MenuItem
                       subMenu={
                         <SubMenu>
@@ -334,7 +333,7 @@ describe('<Menu />', () => {
         );
       };
 
-      const { getByRole, queryByRole } = render(<CascadingMenu />);
+      const { getByRole } = render(<CascadingMenu />);
 
       act(() => {
         fireEvent.click(getByRole('button'));
@@ -357,7 +356,7 @@ describe('<Menu />', () => {
       });
 
       clock.restore();
-      expect(queryByRole('menuitem', { name: expected })).to.not.equal(null);
+      expect(getByRole('menuitem', { name: expected })).to.not.equal(null);
     });
 
     it('collapses the subMenu when active parent item is changed', () => {
@@ -373,7 +372,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -408,7 +407,7 @@ describe('<Menu />', () => {
       });
 
       act(() => {
-        fireEvent.mouseMove(getByRole('menuitem', { name: 'Other' }));
+        fireEvent.mouseMove(getByRole('menuitem', { name: 'Other', hidden: true }));
       });
 
       clock.restore();
@@ -428,7 +427,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -462,7 +461,7 @@ describe('<Menu />', () => {
       });
 
       act(() => {
-        fireEvent.mouseOut(getByRole('menuitem', { name: 'Test' }));
+        fireEvent.mouseOut(getByRole('menuitem', { name: 'Test', hidden: true }));
       });
 
       act(() => {
@@ -470,7 +469,7 @@ describe('<Menu />', () => {
       });
 
       act(() => {
-        fireEvent.mouseEnter(getByRole('button'));
+        fireEvent.mouseEnter(getByRole('button', { hidden: true }));
       });
 
       clock.restore();
@@ -490,7 +489,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -536,7 +535,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -587,10 +586,19 @@ describe('<Menu />', () => {
           setAnchorEl(event.currentTarget);
         };
 
+        const handleClose = () => {
+          setAnchorEl(null);
+        };
+
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
+            <Menu
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              open={Boolean(anchorEl)}
+              transitionDuration={0}
+            >
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -627,19 +635,16 @@ describe('<Menu />', () => {
         fireEvent.keyDown(getByRole('menuitem', { name: expected }), { key: 'Tab' });
       });
 
-      // Restore regular clock before doing setTimeout because sinon fake clocks replace the normal
-      // functionality and cause this to fail.
+      act(() => {
+        clock.tick(0);
+      });
       clock.restore();
 
-      // This is gross and potentially flakey but it's the only way we could get the second assertion to pass.
-      // Having the first assertion in here too eliminates the need for an additional clock.tick().
-      setTimeout(() => {
-        expect(queryByRole('menuitem', { name: expected })).to.equal(null);
-        expect(queryByRole('menuitem', { name: 'Test' })).to.equal(null);
-      }, 1000);
+      expect(queryByRole('menuitem', { name: expected })).to.equal(null);
+      expect(queryByRole('menuitem', { name: 'Test' })).to.equal(null);
     });
 
-    it('closes all menus on escape keydown', async () => {
+    it('closes all menus on escape keydown', () => {
       const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
@@ -649,10 +654,19 @@ describe('<Menu />', () => {
           setAnchorEl(event.currentTarget);
         };
 
+        const handleClose = () => {
+          setAnchorEl(null);
+        };
+
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
+            <Menu
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              open={Boolean(anchorEl)}
+              transitionDuration={0}
+            >
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -689,16 +703,14 @@ describe('<Menu />', () => {
         fireEvent.keyDown(getByRole('menuitem', { name: expected }), { key: 'Escape' });
       });
 
-      // Restore regular clock before doing setTimeout because sinon fake clocks replace the normal
-      // functionality and cause this to fail.
+      act(() => {
+        clock.tick(0);
+      });
+
       clock.restore();
 
-      // This is gross and potentially flakey but it's the only way we could get the second assertion to pass.
-      // Having the first assertion in here too eliminates the need for an additional clock.tick().
-      setTimeout(() => {
-        expect(queryByRole('menuitem', { name: expected })).to.equal(null);
-        expect(queryByRole('menuitem', { name: 'Test' })).to.equal(null);
-      }, 1000);
+      expect(queryByRole('menuitem', { name: expected })).to.equal(null);
+      expect(queryByRole('menuitem', { name: 'Test' })).to.equal(null);
     });
 
     it('changes subMenu item focus with down arrow', () => {
@@ -714,7 +726,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -772,7 +784,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -830,7 +842,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -881,7 +893,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -956,7 +968,7 @@ describe('<Menu />', () => {
         return (
           <React.Fragment>
             <Button onClick={handleButtonClick} />
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0}>
               <MenuItem
                 subMenu={
                   <SubMenu>
@@ -986,9 +998,9 @@ describe('<Menu />', () => {
       });
 
       clock.restore();
-      expect(Array.from(queryByRole('menuitem', { name: 'MenuItem' }).classList)).to.include(
-        'MuiMenuItem-openSubMenuParent',
-      );
+      expect(
+        Array.from(queryByRole('menuitem', { name: 'MenuItem', hidden: true }).classList),
+      ).to.include('MuiMenuItem-openSubMenuParent');
     });
   });
 });
