@@ -92,9 +92,8 @@ const useStyles = makeStyles({
   /* Styles applied to subMenuIcon when direction is 'rtl'. */
   rtlSubMenuIcon: {
     transform: 'rotate(-180deg)',
-  }
+  },
 });
-
 
 const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiMenuItem' });
@@ -119,7 +118,7 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
   } = props;
 
   const { theme } = props;
-  const hookClasses = useStyles({ theme })
+  const hookClasses = useStyles({ theme });
 
   const listItemRef = React.useRef(null);
   const handleRef = useForkRef(listItemRef, ref);

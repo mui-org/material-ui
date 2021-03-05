@@ -66,7 +66,7 @@ export interface MenuItemTypeMap<P = {}, D extends React.ElementType = 'li'> {
       sx?: SxProps<Theme>;
       theme: {
         direction: string;
-      }
+      };
     };
   defaultComponent: D;
 }
