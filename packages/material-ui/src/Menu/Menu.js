@@ -168,9 +168,7 @@ const Menu = React.forwardRef(function Menu(props, ref) {
     }
 
     if (!child.props.disabled) {
-      if (variant === 'selectedMenu' && child.props.selected) {
-        activeItemIndex = index;
-      } else if (activeItemIndex === -1) {
+      if ((variant === 'selectedMenu' && child.props.selected) || activeItemIndex === -1) {
         activeItemIndex = index;
       }
     }
@@ -224,6 +222,7 @@ const Menu = React.forwardRef(function Menu(props, ref) {
     // and reset the state that controls which subMenu is open.
     if (atLeastOneSubMenu) {
       additionalProps.onMouseMove = (e) => {
+        console.log(`mousemove on index ${index}`);
         setOpenSubMenuIndex(index);
         if (onMouseMoveChildProp) {
           onMouseMoveChildProp(e);
