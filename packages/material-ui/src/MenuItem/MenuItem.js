@@ -299,7 +299,7 @@ MenuItem.propTypes = {
   /**
    * @ignore
    */
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object,
 };
 
 export default MenuItem;
