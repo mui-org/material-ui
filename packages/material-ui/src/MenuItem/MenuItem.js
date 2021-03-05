@@ -297,6 +297,10 @@ MenuItem.propTypes = {
    * @ignore
    */
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * @ignore
+   */
+  theme: PropTypes.object.isRequired,
 };
 
 export default MenuItem;

@@ -64,6 +64,9 @@ export interface MenuItemTypeMap<P = {}, D extends React.ElementType = 'li'> {
        * The system prop that allows defining system overrides as well as additional CSS styles.
        */
       sx?: SxProps<Theme>;
+      theme: {
+        direction: string;
+      }
     };
   defaultComponent: D;
 }
