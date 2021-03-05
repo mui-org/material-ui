@@ -8,7 +8,7 @@
     "ListItemClasses": { "type": { "name": "object" } },
     "openSubMenu": { "type": { "name": "bool" } },
     "subMenu": { "type": { "name": "node" } },
-    "subMenuIcon": { "type": { "name": "node" }, "default": "KeyboardArrowRight" }
+    "subMenuIcon": { "type": { "name": "node" }, "default": "KeyboardArrowRight" },
     "sx": { "type": { "name": "object" } }
   },
   "name": "MenuItem",

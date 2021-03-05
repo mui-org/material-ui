@@ -5,12 +5,12 @@ import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import experimentalStyled, { shouldForwardProp } from '../styles/experimentalStyled';
 import useThemeProps from '../styles/useThemeProps';
+import { makeStyles } from '../styles';
 import { getMenuItemUtilityClass } from './menuItemClasses';
 import ListItem from '../ListItem';
 import KeyboardArrowRight from '../internal/svg-icons/KeyboardArrowRight';
-import createChainedFunction from '../utils/createChainedFunction';
 import useForkRef from '../utils/useForkRef';
-import useTheme from '../styles/useTheme';
+import createChainedFunction from '../utils/createChainedFunction';
 import { overridesResolver as listItemOverridesResolver, ListItemRoot } from '../ListItem/ListItem';
 
 const RTL_ANCHOR_ORIGIN = {
@@ -74,6 +74,7 @@ const MenuItemRoot = experimentalStyled(
   }),
 }));
 
+const useStyles = makeStyles({
   /* Styles applied to a Menu Item's children when a subMenu is present */
   subMenuItemWrapper: {
     width: '100%',
@@ -81,17 +82,19 @@ const MenuItemRoot = experimentalStyled(
     justifyContent: 'space-between',
   },
   /* Styles applied to the subMenuIcon when it is present. */
-  subMenuIcon: {
+  subMenuIcon: ({ theme }) => ({
     marginLeft: theme.spacing(2),
-  },
+  }),
   /* Styles applied to parent item of open sub menu. */
-  openSubMenuParent: {
+  openSubMenuParent: ({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
-  },
+  }),
   /* Styles applied to subMenuIcon when direction is 'rtl'. */
   rtlSubMenuIcon: {
     transform: 'rotate(-180deg)',
-  },
+  }
+});
+
 
 const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiMenuItem' });
@@ -114,6 +117,12 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
     onParentClose,
     ...other
   } = props;
+
+  const { theme } = props;
+  const hookClasses = useStyles({ theme })
+
+  const listItemRef = React.useRef(null);
+  const handleRef = useForkRef(listItemRef, ref);
 
   const styleProps = { dense };
 
@@ -146,8 +155,8 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
       component={component}
       selected={selected}
       disableGutters={disableGutters}
-      className={clsx(classes.root, className)}
-      ref={ref}
+      className={clsx(classes.root, { [hookClasses.openSubMenuParent]: openSubMenu }, className)}
+      ref={handleRef}
       aria-haspopup={subMenu ? true : undefined}
       aria-expanded={subMenu ? openSubMenu : undefined}
       onKeyDown={createChainedFunction(onArrowRightKeydown, onKeyDown)}
@@ -155,11 +164,11 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
       classes={ListItemClasses}
     >
       {subMenu ? (
-        <div className={classes.subMenuItemWrapper}>
+        <div className={hookClasses.subMenuItemWrapper}>
           {children}
           <SubMenuIcon
-            className={clsx(classes.subMenuIcon, {
-              [classes.rtlSubMenuIcon]: theme.direction === 'rtl',
+            className={clsx(hookClasses.subMenuIcon, {
+              [hookClasses.rtlSubMenuIcon]: theme.direction === 'rtl',
             })}
           />
         </div>
@@ -266,10 +275,6 @@ MenuItem.propTypes = {
    */
   selected: PropTypes.bool,
   /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.object,
-  /**
    * @ignore
    */
   setParentOpenSubMenuIndex: PropTypes.func,
@@ -284,6 +289,10 @@ MenuItem.propTypes = {
    * @default KeyboardArrowRight
    */
   subMenuIcon: PropTypes.node,
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.object,
   /**
    * @ignore
    */
