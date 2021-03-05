@@ -998,9 +998,16 @@ describe('<Menu />', () => {
       });
 
       clock.restore();
-      expect(
-        Array.from(queryByRole('menuitem', { name: 'MenuItem', hidden: true }).classList),
-      ).to.include('MuiMenuItem-openSubMenuParent');
+
+      const classList = Array.from(
+        queryByRole('menuitem', { name: 'MenuItem', hidden: true }).classList,
+      );
+      const findClassLike = (matchString, list) => {
+        const matches = list.filter((c) => c.indexOf(matchString) > -1);
+        return matches.length > 0;
+      };
+
+      expect(findClassLike('openSubMenuParent', classList)).to.equal(true);
     });
   });
 });
