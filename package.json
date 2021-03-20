@@ -75,7 +75,7 @@
     "@emotion/styled": "^11.0.0",
     "@octokit/rest": "^18.0.14",
     "@rollup/plugin-replace": "^2.3.1",
-    "@testing-library/dom": "7.28.1",
+    "@testing-library/dom": "^7.22.1",
     "@testing-library/react": "^11.0.2",
     "@testing-library/react-hooks": "4.0.0",
     "@types/chai": "^4.2.3",
