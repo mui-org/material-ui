@@ -252,8 +252,19 @@ describe('<Menu />', () => {
   });
 
   describe('cascading menu', () => {
+    /**
+     * @type {ReturnType<typeof useFakeTimers>}
+     */
+    let clock;
+    beforeEach(() => {
+      clock = useFakeTimers();
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
     it('renders a subMenu', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -298,7 +309,6 @@ describe('<Menu />', () => {
     });
 
     it('renders a nested subMenu', () => {
-      const clock = useFakeTimers();
       const expected = 'NestedSubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -360,7 +370,6 @@ describe('<Menu />', () => {
     });
 
     it('collapses the subMenu when active parent item is changed', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -415,7 +424,6 @@ describe('<Menu />', () => {
     });
 
     it('keeps subMenus open when mousing outside of menus', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -477,7 +485,6 @@ describe('<Menu />', () => {
     });
 
     it('opens a subMenu on right arrow keydown', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -523,7 +530,6 @@ describe('<Menu />', () => {
     });
 
     it('closes a subMenu on left arrow keydown', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -577,7 +583,6 @@ describe('<Menu />', () => {
     });
 
     it('closes all menus on tab keydown', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -645,7 +650,6 @@ describe('<Menu />', () => {
     });
 
     it('closes all menus on escape keydown', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -714,7 +718,6 @@ describe('<Menu />', () => {
     });
 
     it('changes subMenu item focus with down arrow', () => {
-      const clock = useFakeTimers();
       const expected = 'Second';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -772,7 +775,6 @@ describe('<Menu />', () => {
     });
 
     it('changes subMenu item focus with up arrow', () => {
-      const clock = useFakeTimers();
       const expected = 'Second';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -830,7 +832,6 @@ describe('<Menu />', () => {
     });
 
     it('focuses first item when it opens a subMenu', () => {
-      const clock = useFakeTimers();
       const expected = 'SubMenuItem';
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -879,8 +880,7 @@ describe('<Menu />', () => {
       ); // looks focused
     });
 
-    it('changes focus with right and left arrow keys', async () => {
-      const clock = useFakeTimers();
+    it('changes focus with right and left arrow keys', () => {
       const firstFocus = 'MenuItem';
       const secondFocus = 'SubMenuItem';
       const CascadingMenu = () => {
@@ -908,7 +908,7 @@ describe('<Menu />', () => {
         );
       };
 
-      const { findByRole, getByRole } = render(<CascadingMenu />);
+      const { getByRole } = render(<CascadingMenu />);
 
       act(() => {
         fireEvent.click(getByRole('button'));
@@ -948,16 +948,15 @@ describe('<Menu />', () => {
         clock.tick(0);
       });
 
-      clock.restore();
       // ensure focus moved back to first item in root menu
       expect(getByRole('menuitem', { name: firstFocus })).to.equal(document.activeElement); // is focused
-      const fFocus = await findByRole('menuitem', { name: firstFocus });
+      // TODO: @EsoterikStare advance timer explicitly until the query passes
+      const fFocus = getByRole('menuitem', { name: firstFocus });
       const hasFocusVisible = Array.from(fFocus.classList).includes('Mui-focusVisible');
       expect(hasFocusVisible).to.equal(true); // looks focused
     });
 
     it('keeps parent items of open sub menus highlighted', () => {
-      const clock = useFakeTimers();
       const CascadingMenu = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
 
