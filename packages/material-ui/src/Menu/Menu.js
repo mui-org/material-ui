@@ -131,10 +131,17 @@ const Menu = React.forwardRef(function Menu(props, ref) {
     if (event.key === 'ArrowLeft' && isSubMenu) {
       // This assigns the focusVisible class to the parent item when closing
       // a sub menu using the left arrow keyboard navigation.
-      anchorEl.onfocus = async () => {
-        await anchorEl.classList.remove('MuiMenuItem-openSubMenuParent');
-        anchorEl.classList.add('Mui-focusVisible');
-      };
+      
+      // TODO: @eps1lon we were just doing this before the change to `useIsFocusVisible` last August.
+      // TODO: It would be nice to figure out why this stopped working after that change.
+      anchorEl.focus();
+      
+      // TODO: @eps1lon this is obviously not the right way to approach this. 
+      // anchorEl.onfocus = async () => {
+      //   await anchorEl.classList.remove('MuiMenuItem-openSubMenuParent');
+      //   anchorEl.classList.add('Mui-focusVisible');
+      // };
+
       // Tell the parent Menu to close the sub Menu that you're in, but
       // don't trigger the sub Menu onClose cascade.
       if (!event.defaultPrevented) setParentOpenSubMenuIndex(null);
