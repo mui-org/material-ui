@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { OpaqueIdentifier } from '@material-ui/utils';
 import { InternalStandardProps as StandardProps } from '..';
 import { ButtonBaseProps } from '../ButtonBase';
 import { SwitchBaseClasses } from './switchBaseClasses';
@@ -53,7 +54,7 @@ export interface SwitchBaseProps
   /**
    * Name attribute of the `input` element.
    */
-  name?: string;
+  name?: OpaqueIdentifier;
   /**
    * Callback fired when the state is changed.
    *

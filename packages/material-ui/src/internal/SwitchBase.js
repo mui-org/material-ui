@@ -241,7 +241,8 @@ SwitchBase.propTypes = {
   /*
    * @ignore
    */
-  name: PropTypes.string,
+  // possibly opaque identifier
+  name: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   /**
    * @ignore
    */
