@@ -11,7 +11,7 @@ import Select from '../Select';
 import TableCell from '../TableCell';
 import Toolbar from '../Toolbar';
 import TablePaginationActions from './TablePaginationActions';
-import usePossiblyOpaqueIdentifier from '../utils/usePossiblyOpaqueIdentifier';
+import useId from '../utils/useId';
 import tablePaginationClasses, { getTablePaginationUtilityClass } from './tablePaginationClasses';
 
 const TablePaginationRoot = styled(TableCell, {
@@ -171,8 +171,9 @@ const TablePagination = React.forwardRef(function TablePagination(inProps, ref) 
     colSpan = colSpanProp || 1000; // col-span over everything
   }
 
-  const selectId = usePossiblyOpaqueIdentifier(SelectProps.id);
-  const labelId = usePossiblyOpaqueIdentifier(SelectProps.labelId);
+  // TODO: Select does not accept opaque identifiers due to https://github.com/facebook/react/issues/18594
+  const selectId = useId(SelectProps.id);
+  const labelId = useId(SelectProps.labelId);
 
   const getLabelDisplayedRowsTo = () => {
     if (count === -1) return (page + 1) * rowsPerPage;
