@@ -89,8 +89,8 @@ describe('<RadioGroup />', () => {
 
     const radios = getAllByRole('radio');
 
-    expect(radios[0].name).to.match(/^mui-[0-9]+/);
-    expect(radios[1].name).to.match(/^mui-[0-9]+/);
+    expect(radios[0]).to.have.attribute('name');
+    expect(radios[1]).to.have.attribute('name');
   });
 
   describe('imperative focus()', () => {
@@ -274,16 +274,31 @@ describe('<RadioGroup />', () => {
   });
 
   describe('useRadioGroup', () => {
-    const RadioGroupController = React.forwardRef((_, ref) => {
+    const RadioGroupItem = React.forwardRef(function RadioGroupItem(_, ref) {
       const radioGroup = useRadioGroup();
-      React.useImperativeHandle(ref, () => radioGroup, [radioGroup]);
-      return null;
+
+      const hostRef = React.useRef(null);
+      React.useImperativeHandle(
+        ref,
+        () => {
+          return {
+            ...radioGroup,
+            // `name` might be an opaque identifier so we want the "materialized" value
+            get name() {
+              return hostRef.current.getAttribute('data-name');
+            },
+          };
+        },
+        [radioGroup],
+      );
+
+      return <div data-name={radioGroup.name} ref={hostRef} />;
     });
 
     const RadioGroupControlled = React.forwardRef(function RadioGroupControlled(props, ref) {
       return (
         <RadioGroup {...props}>
-          <RadioGroupController ref={ref} />
+          <RadioGroupItem ref={ref} />
         </RadioGroup>
       );
     });
@@ -313,7 +328,7 @@ describe('<RadioGroup />', () => {
         const radioGroupRef = React.createRef();
         const { setProps } = render(<RadioGroupControlled ref={radioGroupRef} />);
 
-        expect(radioGroupRef.current.name).to.match(/^mui-[0-9]+/);
+        expect(radioGroupRef.current).to.have.property('name');
 
         setProps({ name: 'anotherGroup' });
         expect(radioGroupRef.current).to.have.property('name', 'anotherGroup');

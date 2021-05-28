@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { OpaqueIdentifier } from '@material-ui/utils';
 import { FormGroupProps } from '../FormGroup';
 
 export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
@@ -6,11 +7,12 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
    * The default value. Use when the component is not controlled.
    */
   defaultValue?: FormGroupProps['defaultValue'];
+  // TODO: link to opaque identifier docs
   /**
    * The name used to reference the value of the control.
-   * If you don't provide this prop, it falls back to a randomly generated name.
+   * If you don't provide this prop, it falls back to an opaque identifier which means the value is only supposed to be passed to React not manually read from.
    */
-  name?: string;
+  name?: OpaqueIdentifier;
   /**
    * Callback fired when a radio button is selected.
    *
