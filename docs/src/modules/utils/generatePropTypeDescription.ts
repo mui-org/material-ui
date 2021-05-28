@@ -89,6 +89,9 @@ export default function generatePropTypeDescription(type: PropTypeDescriptor): s
       if (type.raw === '() => null') {
         return 'any';
       }
+      if (type.raw === 'opaqueIdentifierPropType') {
+        return 'string';
+      }
 
       const deprecatedInfo = getDeprecatedInfo(type);
       if (deprecatedInfo !== false) {

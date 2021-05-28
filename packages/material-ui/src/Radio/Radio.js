@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { refType } from '@material-ui/utils';
+import { opaqueIdentifierPropType, refType } from '@material-ui/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import SwitchBase from '../internal/SwitchBase';
 import useThemeProps from '../styles/useThemeProps';
@@ -168,7 +168,7 @@ Radio.propTypes /* remove-proptypes */ = {
   /**
    * Name attribute of the `input` element.
    */
-  name: PropTypes.string,
+  name: opaqueIdentifierPropType,
   /**
    * Callback fired when the state is changed.
    *

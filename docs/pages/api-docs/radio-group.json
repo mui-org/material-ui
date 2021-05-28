@@ -7,7 +7,7 @@
         "description": "Array&lt;string&gt;<br>&#124;&nbsp;number<br>&#124;&nbsp;string"
       }
     },
-    "name": { "type": { "name": "string" } },
+    "name": { "type": { "name": "custom", "description": "string" } },
     "onChange": { "type": { "name": "func" } },
     "value": { "type": { "name": "any" } }
   },

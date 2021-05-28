@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { opaqueIdentifierPropType } from '@material-ui/utils';
 import PropTypes from 'prop-types';
 import FormGroup from '../FormGroup';
 import useForkRef from '../utils/useForkRef';
@@ -83,9 +84,9 @@ RadioGroup.propTypes /* remove-proptypes */ = {
   ]),
   /**
    * The name used to reference the value of the control.
-   * If you don't provide this prop, it falls back to a randomly generated name.
+   * If you don't provide this prop, it falls back to an opaque identifier which means the value is only supposed to be passed to React not manually read from.
    */
-  name: PropTypes.string,
+  name: opaqueIdentifierPropType,
   /**
    * Callback fired when a radio button is selected.
    *

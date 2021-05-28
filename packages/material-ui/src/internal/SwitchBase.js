@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { refType } from '@material-ui/utils';
+import { opaqueIdentifierPropType, refType } from '@material-ui/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import capitalize from '../utils/capitalize';
 import styled from '../styles/styled';
@@ -241,8 +241,7 @@ SwitchBase.propTypes = {
   /*
    * @ignore
    */
-  // possibly opaque identifier
-  name: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  name: opaqueIdentifierPropType,
   /**
    * @ignore
    */

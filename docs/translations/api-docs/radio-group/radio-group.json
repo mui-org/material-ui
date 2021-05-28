@@ -3,7 +3,7 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "defaultValue": "The default value. Use when the component is not controlled.",
-    "name": "The name used to reference the value of the control. If you don&#39;t provide this prop, it falls back to a randomly generated name.",
+    "name": "The name used to reference the value of the control. If you don&#39;t provide this prop, it falls back to an opaque identifier which means the value is only supposed to be passed to React not manually read from.",
     "onChange": "Callback fired when a radio button is selected.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (string).",
     "value": "Value of the selected radio button. The DOM API casts this to a string."
   },

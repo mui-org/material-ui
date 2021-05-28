@@ -16,7 +16,7 @@
     "id": { "type": { "name": "string" } },
     "inputProps": { "type": { "name": "object" } },
     "inputRef": { "type": { "name": "custom", "description": "ref" } },
-    "name": { "type": { "name": "string" } },
+    "name": { "type": { "name": "custom", "description": "string" } },
     "onChange": { "type": { "name": "func" } },
     "required": { "type": { "name": "bool" } },
     "size": {

@@ -26,6 +26,7 @@ export { default as unstable_useForkRef } from './useForkRef';
 export { default as unstable_useIsFocusVisible } from './useIsFocusVisible';
 export {
   default as unstable_usePossiblyOpaqueIdentifier,
+  opaqueIdentifierPropType,
   OpaqueIdentifier,
 } from './usePossiblyOpaqueIdentifier';
 export { default as unstable_getScrollbarSize } from './getScrollbarSize';

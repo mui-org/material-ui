@@ -1,5 +1,8 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import useId from './useId';
+
+export const opaqueIdentifierPropType = PropTypes.oneOfType([PropTypes.object, PropTypes.string]);
 
 declare const opaqueIdentifierBranding: unique symbol;
 /**
