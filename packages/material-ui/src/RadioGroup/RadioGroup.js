@@ -4,7 +4,7 @@ import FormGroup from '../FormGroup';
 import useForkRef from '../utils/useForkRef';
 import useControlled from '../utils/useControlled';
 import RadioGroupContext from './RadioGroupContext';
-import useId from '../utils/useId';
+import usePossiblyOpaqueIdentifier from '../utils/usePossiblyOpaqueIdentifier';
 
 const RadioGroup = React.forwardRef(function RadioGroup(props, ref) {
   const {
@@ -53,7 +53,7 @@ const RadioGroup = React.forwardRef(function RadioGroup(props, ref) {
     }
   };
 
-  const name = useId(nameProp);
+  const name = usePossiblyOpaqueIdentifier(nameProp);
 
   return (
     <RadioGroupContext.Provider value={{ name, onChange: handleChange, value }}>

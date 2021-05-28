@@ -11,7 +11,7 @@ import Grow from '../Grow';
 import Popper from '../Popper';
 import useEventCallback from '../utils/useEventCallback';
 import useForkRef from '../utils/useForkRef';
-import useId from '../utils/useId';
+import usePossiblyOpaqueIdentifier from '../utils/usePossiblyOpaqueIdentifier';
 import useIsFocusVisible from '../utils/useIsFocusVisible';
 import useControlled from '../utils/useControlled';
 import tooltipClasses, { getTooltipUtilityClass } from './tooltipClasses';
@@ -287,7 +287,7 @@ const Tooltip = React.forwardRef(function Tooltip(inProps, ref) {
     }, [title, childNode, isControlled]);
   }
 
-  const id = useId(idProp);
+  const id = usePossiblyOpaqueIdentifier(idProp);
 
   const prevUserSelect = React.useRef();
   const stopTouchInteraction = React.useCallback(() => {

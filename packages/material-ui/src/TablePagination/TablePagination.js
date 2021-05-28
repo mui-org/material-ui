@@ -11,7 +11,7 @@ import Select from '../Select';
 import TableCell from '../TableCell';
 import Toolbar from '../Toolbar';
 import TablePaginationActions from './TablePaginationActions';
-import useId from '../utils/useId';
+import usePossiblyOpaqueIdentifier from '../utils/usePossiblyOpaqueIdentifier';
 import tablePaginationClasses, { getTablePaginationUtilityClass } from './tablePaginationClasses';
 
 const TablePaginationRoot = styled(TableCell, {
@@ -171,8 +171,8 @@ const TablePagination = React.forwardRef(function TablePagination(inProps, ref) 
     colSpan = colSpanProp || 1000; // col-span over everything
   }
 
-  const selectId = useId(SelectProps.id);
-  const labelId = useId(SelectProps.labelId);
+  const selectId = usePossiblyOpaqueIdentifier(SelectProps.id);
+  const labelId = usePossiblyOpaqueIdentifier(SelectProps.labelId);
 
   const getLabelDisplayedRowsTo = () => {
     if (count === -1) return (page + 1) * rowsPerPage;

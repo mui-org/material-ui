@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { unstable_useId as useId } from '@material-ui/utils';
+import { unstable_usePossiblyOpaqueIdentifier as usePossiblyOpaqueIdentifier } from '@material-ui/utils';
 import { styled, Theme, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
 import {
   unstable_composeClasses as composeClasses,
@@ -277,7 +277,7 @@ function ClockPicker<TDate>(inProps: ClockPickerProps<TDate>) {
     ],
   );
 
-  const selectedId = useId();
+  const selectedId = usePossiblyOpaqueIdentifier();
 
   const viewProps = React.useMemo(() => {
     switch (view) {
