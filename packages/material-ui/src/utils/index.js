@@ -15,3 +15,4 @@ export { default as useControlled } from './useControlled';
 export { default as useEventCallback } from './useEventCallback';
 export { default as useForkRef } from './useForkRef';
 export { default as useIsFocusVisible } from './useIsFocusVisible';
+export { default as unstable_usePossiblyOpaqueIdentifier } from './usePossiblyOpaqueIdentifier';

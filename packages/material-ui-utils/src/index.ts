@@ -24,6 +24,7 @@ export { default as unstable_useControlled } from './useControlled';
 export { default as unstable_useEventCallback } from './useEventCallback';
 export { default as unstable_useForkRef } from './useForkRef';
 export { default as unstable_useIsFocusVisible } from './useIsFocusVisible';
+export { default as unstable_usePossiblyOpaqueIdentifier } from './usePossiblyOpaqueIdentifier';
 export { default as unstable_getScrollbarSize } from './getScrollbarSize';
 export {
   detectScrollType as unstable_detectScrollType,
