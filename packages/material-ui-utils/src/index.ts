@@ -27,8 +27,8 @@ export { default as unstable_useIsFocusVisible } from './useIsFocusVisible';
 export {
   default as unstable_usePossiblyOpaqueIdentifier,
   opaqueIdentifierPropType,
-  OpaqueIdentifier,
 } from './usePossiblyOpaqueIdentifier';
+export type OpaqueIdentifier = import('./usePossiblyOpaqueIdentifier').OpaqueIdentifier;
 export { default as unstable_getScrollbarSize } from './getScrollbarSize';
 export {
   detectScrollType as unstable_detectScrollType,
