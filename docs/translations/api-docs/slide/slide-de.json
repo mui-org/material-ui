@@ -5,6 +5,7 @@
     "children": "A single child content element.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
     "direction": "Direction the child node will enter from.",
     "in": "If <code>true</code>, the component will transition in.",
+    "targetRef": "If defined, then element slides in from the edge of the targetRef element, else it slides from the edge of the screen.",
     "timeout": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object."
   },
   "classDescriptions": {}

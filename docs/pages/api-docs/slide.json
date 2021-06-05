@@ -17,6 +17,12 @@
       "default": "{\n  enter: easing.easeOut,\n  exit: easing.sharp,\n}"
     },
     "in": { "type": { "name": "bool" } },
+    "targetRef": {
+      "type": {
+        "name": "object"
+      },
+      "default": "{}"
+    },
     "timeout": {
       "type": {
         "name": "union",
