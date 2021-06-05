@@ -23,7 +23,7 @@ const icon = (
 
 export default function SimpleSlide() {
   const [checked, setChecked] = React.useState(false);
-  const [checkedParent, setCheckedParent] = React.useState(false);
+  const [checkedTarget, setCheckedTarget] = React.useState(false);
   const slideTargetRef = React.useRef(null);
 
   const handleChange = () => {
@@ -31,7 +31,7 @@ export default function SimpleSlide() {
   };
 
   const handleChangeParent = () => {
-    setCheckedParent((prev) => !prev);
+    setCheckedTarget((prev) => !prev);
   };
 
   return (
@@ -49,13 +49,13 @@ export default function SimpleSlide() {
         <Box sx={{ width: 200 }}>
           <FormControlLabel
             control={
-              <Switch checked={checkedParent} onChange={handleChangeParent} />
+              <Switch checked={checkedTarget} onChange={handleChangeParent} />
             }
-            label="Show(from parent)"
+            label="Show(from target)"
           />
           <Slide
             direction="up"
-            in={checkedParent}
+            in={checkedTarget}
             targetRef={slideTargetRef}
             mountOnEnter
             unmountOnExit

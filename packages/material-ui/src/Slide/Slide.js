@@ -332,10 +332,7 @@ Slide.propTypes /* remove-proptypes */ = {
   /**
    * If defined, then element slides in from the edge of the targetRef element, else it slides from the edge of the screen.
    */
-  targetRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]),
+  targetRef: PropTypes.object,
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.
