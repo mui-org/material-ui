@@ -11,8 +11,9 @@ import { ownerWindow } from '../utils';
 
 // Translate the node so it can't be seen on the screen.
 // Later, we're going to translate the node back to its original location with `none`.
-function getTranslateValue(direction, node) {
+function getTranslateValue(direction, node, targetNode) {
   const rect = node.getBoundingClientRect();
+  const targetNodeRect = targetNode && targetNode.getBoundingClientRect();
   const containerWindow = ownerWindow(node);
   let transform;
 
@@ -35,23 +36,41 @@ function getTranslateValue(direction, node) {
   }
 
   if (direction === 'left') {
+    if (targetNode) {
+      return `translateX(${rect.left + targetNode.offsetWidth}px) translateX(${
+        offsetX - rect.left
+      }px)`;
+    }
+
     return `translateX(${containerWindow.innerWidth}px) translateX(${offsetX - rect.left}px)`;
   }
 
   if (direction === 'right') {
+    if (targetNode) {
+      return `translateX(-${rect.left - targetNodeRect.left + rect.width - offsetX}px)`;
+    }
+
     return `translateX(-${rect.left + rect.width - offsetX}px)`;
   }
 
   if (direction === 'up') {
+    if (targetNode) {
+      return `translateY(${targetNodeRect.top + targetNode.offsetHeight}px) translateY(${
+        offsetY - rect.top
+      }px)`;
+    }
     return `translateY(${containerWindow.innerHeight}px) translateY(${offsetY - rect.top}px)`;
   }
 
   // direction === 'down'
+  if (targetNode) {
+    return `translateY(-${rect.top - targetNodeRect.top + rect.height - offsetY}px)`;
+  }
   return `translateY(-${rect.top + rect.height - offsetY}px)`;
 }
 
-export function setTranslateValue(direction, node) {
-  const transform = getTranslateValue(direction, node);
+export function setTranslateValue(direction, node, targetNode) {
+  const transform = getTranslateValue(direction, node, targetNode);
 
   if (transform) {
     node.style.webkitTransform = transform;
@@ -69,6 +88,8 @@ const defaultTimeout = {
   exit: duration.leavingScreen,
 };
 
+const defaultTargetRef = {};
+
 /**
  * The Slide transition is used by the [Drawer](/components/drawers/) component.
  * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
@@ -77,6 +98,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
   const {
     appear = true,
     children,
+    targetRef = defaultTargetRef,
     direction = 'down',
     easing: easingProp = defaultEasing,
     in: inProp,
@@ -110,7 +132,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
   };
 
   const handleEnter = normalizedTransitionCallback((node, isAppearing) => {
-    setTranslateValue(direction, node);
+    setTranslateValue(direction, node, targetRef.current);
     reflow(node);
 
     if (onEnter) {
@@ -160,7 +182,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
       ...transitionProps,
     });
 
-    setTranslateValue(direction, node);
+    setTranslateValue(direction, node, targetRef.current);
 
     if (onExit) {
       onExit(node);
@@ -179,9 +201,9 @@ const Slide = React.forwardRef(function Slide(props, ref) {
 
   const updatePosition = React.useCallback(() => {
     if (childrenRef.current) {
-      setTranslateValue(direction, childrenRef.current);
+      setTranslateValue(direction, childrenRef.current, targetRef.current);
     }
-  }, [direction]);
+  }, [direction, targetRef]);
 
   React.useEffect(() => {
     // Skip configuration where the position is screen size invariant.
@@ -191,7 +213,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
 
     const handleResize = debounce(() => {
       if (childrenRef.current) {
-        setTranslateValue(direction, childrenRef.current);
+        setTranslateValue(direction, childrenRef.current, targetRef.current);
       }
     });
 
@@ -201,7 +223,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
       handleResize.clear();
       containerWindow.removeEventListener('resize', handleResize);
     };
-  }, [direction, inProp]);
+  }, [direction, inProp, targetRef]);
 
   React.useEffect(() => {
     if (!inProp) {
@@ -307,6 +329,13 @@ Slide.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   style: PropTypes.object,
+  /**
+   * If defined, then element slides in from the edge of the targetRef element, else it slides from the edge of the screen.
+   */
+  targetRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.
