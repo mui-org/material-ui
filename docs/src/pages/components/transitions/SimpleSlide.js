@@ -22,16 +22,17 @@ const icon = (
 );
 
 export default function SimpleSlide() {
-  const [checked, setChecked] = React.useState(false);
-  const [checkedTarget, setCheckedTarget] = React.useState(false);
+  const [slideInFromScreenEdge, setSlideInFromScreenEdge] = React.useState(false);
+
+  const [slideInFromTargetEdge, setSlideInFromTargetEdge] = React.useState(false);
   const slideTargetRef = React.useRef(null);
 
-  const handleChange = () => {
-    setChecked((prev) => !prev);
+  const handleSlideInFromScreenEdge = () => {
+    setSlideInFromScreenEdge((prev) => !prev);
   };
 
-  const handleChangeParent = () => {
-    setCheckedTarget((prev) => !prev);
+  const handleSlideInFromTargetEdge = () => {
+    setSlideInFromTargetEdge((prev) => !prev);
   };
 
   return (
@@ -39,23 +40,36 @@ export default function SimpleSlide() {
       <Box display="flex">
         <Box sx={{ width: 160 }}>
           <FormControlLabel
-            control={<Switch checked={checked} onChange={handleChange} />}
+            control={
+              <Switch
+                checked={slideInFromScreenEdge}
+                onChange={handleSlideInFromScreenEdge}
+              />
+            }
             label="Show"
           />
-          <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
+          <Slide
+            direction="up"
+            in={slideInFromScreenEdge}
+            mountOnEnter
+            unmountOnExit
+          >
             {icon}
           </Slide>
         </Box>
         <Box sx={{ width: 200 }}>
           <FormControlLabel
             control={
-              <Switch checked={checkedTarget} onChange={handleChangeParent} />
+              <Switch
+                checked={slideInFromTargetEdge}
+                onChange={handleSlideInFromTargetEdge}
+              />
             }
             label="Show(from target)"
           />
           <Slide
             direction="up"
-            in={checkedTarget}
+            in={slideInFromTargetEdge}
             targetRef={slideTargetRef}
             mountOnEnter
             unmountOnExit

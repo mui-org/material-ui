@@ -31,6 +31,7 @@ export interface SlideProps extends TransitionProps {
    */
   in?: TransitionProps['in'];
   ref?: React.Ref<unknown>;
+  targetRef?: React.Ref<HTMLDivElement | null>;
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.
