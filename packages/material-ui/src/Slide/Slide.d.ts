@@ -31,6 +31,12 @@ export interface SlideProps extends TransitionProps {
    */
   in?: TransitionProps['in'];
   ref?: React.Ref<unknown>;
+  /**
+   * If defined, then element slides in from the edge of the targetRef element, else it slides from the edge of the screen.
+   * @default {
+   *   current: undefined,
+   * }
+   */
   targetRef?: React.Ref<HTMLDivElement | null>;
   /**
    * The duration for the transition, in milliseconds.

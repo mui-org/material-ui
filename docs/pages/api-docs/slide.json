@@ -18,10 +18,8 @@
     },
     "in": { "type": { "name": "bool" } },
     "targetRef": {
-      "type": {
-        "name": "object"
-      },
-      "default": "{}"
+      "type": { "name": "union", "description": "func<br>&#124;&nbsp;{ current?: object }" },
+      "default": "{\n  current: undefined,\n}"
     },
     "timeout": {
       "type": {

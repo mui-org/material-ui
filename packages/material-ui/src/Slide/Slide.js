@@ -88,7 +88,9 @@ const defaultTimeout = {
   exit: duration.leavingScreen,
 };
 
-const defaultTargetRef = {};
+const defaultTargetRef = {
+  current: undefined,
+};
 
 /**
  * The Slide transition is used by the [Drawer](/components/drawers/) component.
@@ -331,8 +333,16 @@ Slide.propTypes /* remove-proptypes */ = {
   style: PropTypes.object,
   /**
    * If defined, then element slides in from the edge of the targetRef element, else it slides from the edge of the screen.
+   * @default {
+   *   current: undefined,
+   * }
    */
-  targetRef: PropTypes.object,
+  targetRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({
+      current: PropTypes.object,
+    }),
+  ]),
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.
