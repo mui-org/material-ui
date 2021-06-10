@@ -28,7 +28,7 @@ export {
   default as unstable_usePossiblyOpaqueIdentifier,
   opaqueIdentifierPropType,
 } from './usePossiblyOpaqueIdentifier';
-export type OpaqueIdentifier = import('./usePossiblyOpaqueIdentifier').OpaqueIdentifier;
+export type ReactStringAttribute = import('./usePossiblyOpaqueIdentifier').ReactStringAttribute;
 export { default as unstable_getScrollbarSize } from './getScrollbarSize';
 export {
   detectScrollType as unstable_detectScrollType,

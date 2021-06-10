@@ -13,13 +13,19 @@ declare const opaqueIdentifierBranding: unique symbol;
  */
 // We can't create a type that would be rejected for string concatenation or `.toString()` calls.
 // So in order to not have to add `string | OpaqueIdentifier` to every react-dom host prop we intersect it with `string`.
-export type OpaqueIdentifier = string & {
+type OpaqueIdentifier = string & {
   readonly [opaqueIdentifierBranding]: unknown;
   // While this would cause `const stringified: string = opaqueIdentifier.toString()` to not type-check it also adds completions while typing.
   // It would also still allow string concatenation.
   // Unsure which is better. Not type-checking or not suggesting.
   // toString(): void;
 };
+
+/**
+ * A type that React can stringify.
+ * @remark We only allow string-like types to prevent unexpected stringification behavior. It's not always clear how e.g. booleans or arrays are stringified.
+ */
+export type ReactStringAttribute = OpaqueIdentifier | string;
 
 export default function usePossiblyOpaqueIdentifier(
   idOverride?: string,
