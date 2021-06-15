@@ -16,6 +16,7 @@ import { isFilled } from '../InputBase/utils';
 import styled, { slotShouldForwardProp } from '../styles/styled';
 import useForkRef from '../utils/useForkRef';
 import useControlled from '../utils/useControlled';
+import areEqualValues from '../utils/areEqualValues';
 import selectClasses, { getSelectUtilityClasses } from './selectClasses';
 
 const SelectSelect = styled('div', {
@@ -69,14 +70,6 @@ const SelectNativeInput = styled('input', {
   width: '100%',
   boxSizing: 'border-box',
 });
-
-function areEqualValues(a, b) {
-  if (typeof b === 'object' && b !== null) {
-    return a === b;
-  }
-
-  return String(a) === String(b);
-}
 
 function isEmpty(display) {
   return display == null || (typeof display === 'string' && !display.trim());

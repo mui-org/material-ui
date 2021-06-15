@@ -76,11 +76,7 @@ RadioGroup.propTypes /* remove-proptypes */ = {
   /**
    * The default value. Use when the component is not controlled.
    */
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  defaultValue: PropTypes.any,
   /**
    * The name used to reference the value of the control.
    * If you don't provide this prop, it falls back to a randomly generated name.
@@ -94,7 +90,7 @@ RadioGroup.propTypes /* remove-proptypes */ = {
    */
   onChange: PropTypes.func,
   /**
-   * Value of the selected radio button. The DOM API casts this to a string.
+   * Value of the selected radio button.
    */
   value: PropTypes.any,
 };

@@ -8,6 +8,7 @@ import useThemeProps from '../styles/useThemeProps';
 import RadioButtonIcon from './RadioButtonIcon';
 import capitalize from '../utils/capitalize';
 import createChainedFunction from '../utils/createChainedFunction';
+import areEqualValues from '../utils/areEqualValues';
 import useRadioGroup from '../RadioGroup/useRadioGroup';
 import radioClasses, { getRadioUtilityClass } from './radioClasses';
 import styled, { rootShouldForwardProp } from '../styles/styled';
@@ -91,7 +92,7 @@ const Radio = React.forwardRef(function Radio(inProps, ref) {
 
   if (radioGroup) {
     if (typeof checked === 'undefined') {
-      checked = radioGroup.value === props.value;
+      checked = areEqualValues(radioGroup.value, props.value);
     }
     if (typeof name === 'undefined') {
       name = radioGroup.name;
@@ -195,7 +196,7 @@ Radio.propTypes /* remove-proptypes */ = {
    */
   sx: PropTypes.object,
   /**
-   * The value of the component. The DOM API casts this to a string.
+   * The value of the component.
    */
   value: PropTypes.any,
 };

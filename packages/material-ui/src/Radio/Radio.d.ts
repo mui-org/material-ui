@@ -42,6 +42,10 @@ export interface RadioProps
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
+  /**
+   * The value of the component.
+   */
+  value?: any;
 }
 
 /**

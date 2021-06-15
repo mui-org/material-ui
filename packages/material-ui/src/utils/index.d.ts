@@ -1,3 +1,4 @@
+export { default as areEqualValues } from './areEqualValues';
 export { default as capitalize } from './capitalize';
 export { default as createChainedFunction } from './createChainedFunction';
 export { default as createSvgIcon } from './createSvgIcon';

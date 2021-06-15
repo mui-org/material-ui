@@ -5,7 +5,7 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
   /**
    * The default value. Use when the component is not controlled.
    */
-  defaultValue?: FormGroupProps['defaultValue'];
+  defaultValue?: any;
   /**
    * The name used to reference the value of the control.
    * If you don't provide this prop, it falls back to a randomly generated name.
@@ -19,7 +19,7 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
    */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
   /**
-   * Value of the selected radio button. The DOM API casts this to a string.
+   * Value of the selected radio button.
    */
   value?: any;
 }
