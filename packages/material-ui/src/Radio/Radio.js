@@ -8,10 +8,17 @@ import useThemeProps from '../styles/useThemeProps';
 import RadioButtonIcon from './RadioButtonIcon';
 import capitalize from '../utils/capitalize';
 import createChainedFunction from '../utils/createChainedFunction';
-import areEqualValues from '../utils/areEqualValues';
 import useRadioGroup from '../RadioGroup/useRadioGroup';
 import radioClasses, { getRadioUtilityClass } from './radioClasses';
 import styled, { rootShouldForwardProp } from '../styles/styled';
+
+function areEqualValues(a, b) {
+  if (typeof b === 'object' && b !== null) {
+    return a === b;
+  }
+
+  return String(a) === String(b);
+}
 
 const useUtilityClasses = (styleProps) => {
   const { classes, color } = styleProps;
@@ -196,7 +203,7 @@ Radio.propTypes /* remove-proptypes */ = {
    */
   sx: PropTypes.object,
   /**
-   * The value of the component.
+   * The value of the component. The DOM API casts this to a string.
    */
   value: PropTypes.any,
 };

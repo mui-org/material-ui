@@ -1,4 +1,3 @@
-export { default as areEqualValues } from './areEqualValues';
 export { default as chainPropTypes } from './chainPropTypes';
 export { default as deepmerge } from './deepmerge';
 export { default as elementAcceptingRef } from './elementAcceptingRef';
