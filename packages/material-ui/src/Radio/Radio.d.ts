@@ -42,10 +42,6 @@ export interface RadioProps
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
-  /**
-   * The value of the component. The DOM API casts this to a string.
-   */
-  value?: string | number;
 }
 
 /**

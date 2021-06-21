@@ -202,7 +202,7 @@ Radio.propTypes /* remove-proptypes */ = {
   /**
    * The value of the component. The DOM API casts this to a string.
    */
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  value: PropTypes.any,
 };
 
 export default Radio;

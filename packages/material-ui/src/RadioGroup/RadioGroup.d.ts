@@ -5,7 +5,7 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
   /**
    * The default value. Use when the component is not controlled.
    */
-  defaultValue?: string | number;
+  defaultValue?: FormGroupProps['defaultValue'];
   /**
    * The name used to reference the value of the control.
    * If you don't provide this prop, it falls back to a randomly generated name.
@@ -21,7 +21,7 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
   /**
    * Value of the selected radio button. The DOM API casts this to a string.
    */
-  value?: string | number;
+  value?: any;
 }
 
 export type RadioGroupClassKey = keyof NonNullable<RadioGroupProps['classes']>;
