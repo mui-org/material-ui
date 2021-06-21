@@ -1,10 +1,10 @@
 {
   "props": {
     "children": { "type": { "name": "node" } },
-    "defaultValue": { "type": { "name": "any" } },
+    "defaultValue": { "type": { "name": "union", "description": "number<br>&#124;&nbsp;string" } },
     "name": { "type": { "name": "string" } },
     "onChange": { "type": { "name": "func" } },
-    "value": { "type": { "name": "any" } }
+    "value": { "type": { "name": "union", "description": "number<br>&#124;&nbsp;string" } }
   },
   "name": "RadioGroup",
   "styles": { "classes": [], "globalClasses": {}, "name": null },

@@ -45,7 +45,7 @@ export interface RadioProps
   /**
    * The value of the component. The DOM API casts this to a string.
    */
-  value?: any;
+  value?: string | number;
 }
 
 /**

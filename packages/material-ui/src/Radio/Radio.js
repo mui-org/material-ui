@@ -12,14 +12,6 @@ import useRadioGroup from '../RadioGroup/useRadioGroup';
 import radioClasses, { getRadioUtilityClass } from './radioClasses';
 import styled, { rootShouldForwardProp } from '../styles/styled';
 
-function areEqualValues(a, b) {
-  if (typeof b === 'object' && b !== null) {
-    return a === b;
-  }
-
-  return String(a) === String(b);
-}
-
 const useUtilityClasses = (styleProps) => {
   const { classes, color } = styleProps;
 
@@ -99,7 +91,12 @@ const Radio = React.forwardRef(function Radio(inProps, ref) {
 
   if (radioGroup) {
     if (typeof checked === 'undefined') {
-      checked = areEqualValues(radioGroup.value, props.value);
+      if (typeof radioGroup.value === 'object' && typeof props.value === 'object') {
+        checked = radioGroup.value === props.value;
+      } else {
+        // always compare as string because value could also be number
+        checked = String(radioGroup.value) === String(props.value);
+      }
     }
     if (typeof name === 'undefined') {
       name = radioGroup.name;
@@ -205,7 +202,7 @@ Radio.propTypes /* remove-proptypes */ = {
   /**
    * The value of the component. The DOM API casts this to a string.
    */
-  value: PropTypes.any,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Radio;

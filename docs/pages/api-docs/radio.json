@@ -27,7 +27,7 @@
       "default": "'medium'"
     },
     "sx": { "type": { "name": "object" } },
-    "value": { "type": { "name": "any" } }
+    "value": { "type": { "name": "union", "description": "number<br>&#124;&nbsp;string" } }
   },
   "name": "Radio",
   "styles": {
