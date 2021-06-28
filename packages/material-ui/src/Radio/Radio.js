@@ -88,7 +88,12 @@ const Radio = React.forwardRef(function Radio(inProps, ref) {
 
   if (radioGroup) {
     if (typeof checked === 'undefined') {
-      checked = radioGroup.value === props.value;
+      if (typeof radioGroup.value === 'object' && typeof props.value === 'object') {
+        checked = radioGroup.value === props.value;
+      } else {
+        // always compare as string because value could also be number
+        checked = String(radioGroup.value) === String(props.value);
+      }
     }
     if (typeof name === 'undefined') {
       name = radioGroup.name;

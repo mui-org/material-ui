@@ -2,7 +2,14 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
-import { createMount, describeConformance, act, createClientRender, fireEvent } from 'test/utils';
+import {
+  createMount,
+  describeConformance,
+  act,
+  createClientRender,
+  screen,
+  fireEvent,
+} from 'test/utils';
 import FormGroup from '@material-ui/core/FormGroup';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup, { useRadioGroup } from '@material-ui/core/RadioGroup';
@@ -60,6 +67,23 @@ describe('<RadioGroup />', () => {
     fireEvent.click(radio);
 
     expect(radio.checked).to.equal(true);
+  });
+
+  it('should support number value', () => {
+    render(
+      <RadioGroup name="group" defaultValue={1}>
+        <Radio value={1} />
+        <Radio value={2} />
+      </RadioGroup>,
+    );
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0]).to.have.attribute('value', '1');
+    expect(radios[0].checked).to.equal(true);
+    expect(radios[1].checked).to.equal(false);
+
+    fireEvent.click(radios[1]);
+    expect(radios[0].checked).to.equal(false);
+    expect(radios[1].checked).to.equal(true);
   });
 
   it('should support default value in uncontrolled mode', () => {
