@@ -6,7 +6,7 @@
     "direction": "Direction the child node will enter from.",
     "easing": "The transition timing function. You may specify a single easing or a object containing enter and exit values.",
     "in": "If <code>true</code>, the component will transition in.",
-    "targetRef": "If defined, then element slides in from the edge of the targetRef element, else it slides from the edge of the screen.",
+    "targetRef": "If defined, then element slides in from the edge of the specified element.",
     "timeout": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object."
   },
   "classDescriptions": {}
