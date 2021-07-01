@@ -37,9 +37,7 @@ function getTranslateValue(direction, node, targetNode) {
 
   if (direction === 'left') {
     if (targetNode) {
-      return `translateX(${rect.left + targetNode.offsetWidth}px) translateX(${
-        offsetX - rect.left
-      }px)`;
+      return `translateX(${targetNodeRect.right}px) translateX(${offsetX - rect.left}px)`;
     }
 
     return `translateX(${containerWindow.innerWidth}px) translateX(${offsetX - rect.left}px)`;
@@ -47,7 +45,7 @@ function getTranslateValue(direction, node, targetNode) {
 
   if (direction === 'right') {
     if (targetNode) {
-      return `translateX(-${rect.left - targetNodeRect.left + rect.width - offsetX}px)`;
+      return `translateX(-${rect.right - targetNodeRect.left - offsetX}px)`;
     }
 
     return `translateX(-${rect.left + rect.width - offsetX}px)`;
@@ -55,9 +53,7 @@ function getTranslateValue(direction, node, targetNode) {
 
   if (direction === 'up') {
     if (targetNode) {
-      return `translateY(${targetNodeRect.top + targetNode.offsetHeight}px) translateY(${
-        offsetY - rect.top
-      }px)`;
+      return `translateY(${targetNodeRect.bottom}px) translateY(${offsetY - rect.top}px)`;
     }
     return `translateY(${containerWindow.innerHeight}px) translateY(${offsetY - rect.top}px)`;
   }
