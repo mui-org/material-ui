@@ -2,7 +2,7 @@
 
 <p class="description">Quickly manage the layout, alignment, and sizing of grid columns, navigation, components, and more with a full suite of responsive flexbox utilities.</p>
 
-Si vous êtes **nouveau ou peu familiers avec FlexBox**, nous vous encourageons à lire ce guide [CSS-Tricks flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
+Si vous êtes **nouveau ou peu familiers avec FlexBox**, nous vous encourageons à lire ce guide [CSS-Tricks FlexBox ](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
 
 ## Properties for the Parent
 
@@ -109,7 +109,7 @@ Si vous êtes **nouveau ou peu familiers avec FlexBox**, nous vous encourageons 
 import { flexbox } from '@material-ui/system';
 ```
 
-| Import name      | Prop             | Propriété CSS     | Clé du thème |
+| Nom importé      | Propriété        | Propriété CSS     | Clé du thème |
 |:---------------- |:---------------- |:----------------- |:------------ |
 | `flexDirection`  | `flexDirection`  | `flex-direction`  | none         |
 | `flexWrap`       | `flexWrap`       | `flex-wrap`       | none         |

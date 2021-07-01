@@ -28,15 +28,16 @@ const ToggleButtonGroupRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${toggleButtonGroupClasses.grouped}`]: {
-        ...styles.grouped,
-        ...styles[`grouped${capitalize(styleProps.orientation)}`],
+    return [
+      { [`& .${toggleButtonGroupClasses.grouped}`]: styles.grouped },
+      {
+        [`& .${toggleButtonGroupClasses.grouped}`]:
+          styles[`grouped${capitalize(styleProps.orientation)}`],
       },
-      ...styles.root,
-      ...(styleProps.orientation === 'vertical' && styles.vertical),
-      ...(styleProps.fullWidth && styles.fullWidth),
-    };
+      styles.root,
+      styleProps.orientation === 'vertical' && styles.vertical,
+      styleProps.fullWidth && styles.fullWidth,
+    ];
   },
 })(({ styleProps, theme }) => ({
   /* Styles applied to the root element. */

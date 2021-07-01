@@ -1,23 +1,29 @@
 {
   "props": {
+    "autoFocus": { "type": { "name": "bool" } },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" } },
     "component": { "type": { "name": "elementType" } },
     "dense": { "type": { "name": "bool" } },
     "disableGutters": { "type": { "name": "bool" } },
-    "ListItemClasses": { "type": { "name": "object" } },
+    "divider": { "type": { "name": "bool" } },
+    "focusVisibleClassName": { "type": { "name": "string" } },
     "sx": { "type": { "name": "object" } }
   },
   "name": "MenuItem",
   "styles": {
-    "classes": ["root", "gutters", "selected", "dense"],
-    "globalClasses": { "selected": "Mui-selected" },
+    "classes": ["root", "focusVisible", "dense", "disabled", "divider", "gutters", "selected"],
+    "globalClasses": {
+      "focusVisible": "Mui-focusVisible",
+      "disabled": "Mui-disabled",
+      "selected": "Mui-selected"
+    },
     "name": "MuiMenuItem"
   },
   "spread": true,
   "forwardsRefTo": "HTMLLIElement",
   "filename": "/packages/material-ui/src/MenuItem/MenuItem.js",
-  "inheritance": { "component": "ListItem", "pathname": "/api/list-item/" },
+  "inheritance": { "component": "ButtonBase", "pathname": "/api/button-base/" },
   "demos": "<ul><li><a href=\"/components/menus/\">Menus</a></li></ul>",
   "styledComponent": true,
   "cssComponent": false

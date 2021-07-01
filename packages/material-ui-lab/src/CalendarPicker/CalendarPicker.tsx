@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, Theme, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { styled, Theme, useThemeProps } from '@material-ui/core/styles';
 import {
   unstable_composeClasses as composeClasses,
   generateUtilityClass,
@@ -243,8 +243,7 @@ const CalendarPicker = React.forwardRef(function CalendarPicker<TDate extends an
     }
   }, [date]); // eslint-disable-line
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   return (

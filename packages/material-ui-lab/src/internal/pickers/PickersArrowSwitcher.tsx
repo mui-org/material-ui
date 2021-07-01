@@ -93,8 +93,7 @@ const PickersArrowSwitcher = React.forwardRef(function PickersArrowSwitcher(
   const rightArrowButtonProps = componentsProps.rightArrowButton || {};
   const RightArrowIcon = components.RightArrowIcon || ArrowRightIcon;
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
 
   return (
     <PickersArrowSwitcherRoot ref={ref} className={className} styleProps={styleProps} {...other}>

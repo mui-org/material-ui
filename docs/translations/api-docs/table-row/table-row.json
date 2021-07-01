@@ -6,7 +6,7 @@
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "hover": "If <code>true</code>, the table row will shade on hover.",
     "selected": "If <code>true</code>, the table row will have the selected shading.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": { "description": "Styles applied to the root element." },

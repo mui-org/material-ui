@@ -24,11 +24,11 @@ const AppBarRoot = styled(Paper, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`position${capitalize(styleProps.position)}`],
-      ...styles[`color${capitalize(styleProps.color)}`],
-    };
+    return [
+      styles.root,
+      styles[`position${capitalize(styleProps.position)}`],
+      styles[`color${capitalize(styleProps.color)}`],
+    ];
   },
 })(({ theme, styleProps }) => {
   const backgroundColorDefault =

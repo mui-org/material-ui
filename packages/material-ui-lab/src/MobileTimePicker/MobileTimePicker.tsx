@@ -50,21 +50,22 @@ const MobileTimePicker = React.forwardRef(function MobileTimePicker<TDate>(
   // Note that we are passing down all the value without spread.
   // It saves us >1kb gzip and make any prop available automatically on any level down.
   const { ToolbarComponent = TimePickerToolbar, value, onChange, ...other } = props;
-  const AllDateInputProps = { ...inputProps, ...other, ref, validationError };
+  const DateInputProps = { ...inputProps, ...other, ref, validationError };
 
   return (
     <MobileWrapper
       {...other}
       {...wrapperProps}
-      DateInputProps={AllDateInputProps}
+      DateInputProps={DateInputProps}
       PureDateInputComponent={PureDateInput}
     >
+      {/* @ts-ignore time picker has no component slot for the calendar header */}
       <Picker
         {...pickerProps}
         autoFocus
         toolbarTitle={props.label || props.toolbarTitle}
         ToolbarComponent={ToolbarComponent}
-        DateInputProps={AllDateInputProps}
+        DateInputProps={DateInputProps}
         {...other}
       />
     </MobileWrapper>
@@ -114,6 +115,13 @@ MobileTimePicker.propTypes /* remove-proptypes */ = {
    * @default "CLEAR"
    */
   clearText: PropTypes.node,
+  /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   */
+  components: PropTypes.shape({
+    OpenPickerIcon: PropTypes.elementType,
+  }),
   /**
    * Props applied to the [`Dialog`](/api/dialog/) element.
    */
@@ -259,10 +267,6 @@ MobileTimePicker.propTypes /* remove-proptypes */ = {
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps: PropTypes.object,
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon: PropTypes.node,
   /**
    * First view to show.
    */

@@ -10,7 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 <p class="description">只需轻点按钮，用户就可以触发动作或做出选择。</p>
 
-按钮可以传送了用户可以采取的行动。 他们通常直接放置在您的用户界面中，例如：
+按钮可以展示用户能进行的操作。 他们通常直接放置在您的用户界面中，例如：
 
 - Dialogs 对话框
 - Modal windows 模态窗口
@@ -20,7 +20,19 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## 实心按钮
+## Basic Button
+
+The `Button` comes with three variants: text (default), contained, and outlined.
+
+{{"demo": "pages/components/buttons/BasicButtons.js"}}
+
+### 文本按钮
+
+[Text buttons](https://material.io/components/buttons#text-button) are typically used for less-pronounced actions, including those located: in dialogs, in cards. 在卡片中，文本按钮有助于强调卡片的内容。
+
+{{"demo": "pages/components/buttons/TextButtons.js"}}
+
+### 实心按钮
 
 [实心按钮](https://material.io/design/components/buttons.html#contained-button) 表示高度的强调，你根据它们的立体效果和填充颜色来区分彼此。 它们用于触发应用程序所具有的主要功能。
 
@@ -30,20 +42,9 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 {{"demo": "pages/components/buttons/DisableElevation.js"}}
 
-## 文本按钮
+### 描边按钮
 
-[文本按钮](https://material.io/components/buttons#text-button) 通常用于不太明显的操作，包括那些位于：
-
-- 在 dialogs 对话框中的
-- 在 cards 卡片中的
-
-在卡片中，文本按钮有助于强调卡片的内容。
-
-{{"demo": "pages/components/buttons/TextButtons.js"}}
-
-## 描边按钮
-
-[描边按钮](https://material.io/components/buttons#outlined-button) 表示中等程度的强调。 该按钮包含重要的操作，但不应该成为应用程序中的主要操作。
+[Outlined buttons](https://material.io/components/buttons#outlined-button) are medium-emphasis buttons. They contain actions that are important but aren't the primary action in an app.
 
 你也可以将描边按钮作为比实心按钮次要一点的替代方案，或者用来作为比文本按钮重要一点的展示。
 
@@ -65,17 +66,23 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 请注意，文档里组件的 API 部分 [避免](/guides/api/#native-properties) 提到原生的属性（还是有很多）。
 
+## Color 颜色
+
+{{"demo": "pages/components/buttons/ColorButtons.js"}}
+
+In addition to using the default button colors, you can add custom ones, or disable any you don't need. See the [Adding new colors](/customization/palette/#adding-new-colors) example for more info.
+
+## 尺寸
+
+For larger or smaller buttons, use the `size` prop.
+
+{{"demo": "pages/components/buttons/ButtonSizes.js"}}
+
 ## Upload button 上传按钮
 
 {{"demo": "pages/components/buttons/UploadButtons.js"}}
 
-## 尺寸
-
-您想要一个大一点或者小一点的按钮吗？ 我们提供了 `size` 这个属性供您调整。
-
-{{"demo": "pages/components/buttons/ButtonSizes.js"}}
-
-## 带有 icons（图标）和 label（标签）的按钮
+## 带有icons（图标）和 label（标签）的按钮
 
 因为相比纯文本来说用户对图标更敏感，所以有些时候你可能希望为某些按钮设置图标，以增强应用程序的用户体验。 例如，如果您有删除按钮，则可以使用垃圾箱图标对其进行标记。
 
@@ -89,6 +96,12 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 {{"demo": "pages/components/buttons/IconButtons.js"}}
 
+### 尺寸
+
+For larger or smaller icon buttons, use the `size` prop.
+
+{{"demo": "pages/components/buttons/IconButtonSizes.js"}}
+
 ## Customized Buttons（自定义按钮）
 
 你可以参考以下一些例子来自定义组件。 您可以在 [重写文档页面](/customization/how-to-customize/) 中了解更多有关此内容的信息。
@@ -99,7 +112,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 ## 载入按钮（Loading buttons）
 
-加载按钮可以显示加载状态并且禁用与此交互。
+The loading buttons can show loading state and disable interactions.
 
 {{"demo": "pages/components/buttons/LoadingButtons.js"}}
 
@@ -115,9 +128,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 ## Third-party routing library（第三方路由库）
 
-一个常见的用例是使用按钮触发导航到新页面的操作。 `ButtonBase` 组件提供了 `component` 属性来处理此用例。 然而，一些特定 `ButtonBase` 的代码需要所给组件的 DOM 节点。 在组件上附加一个 ref，并且预期此组件能够将这个 ref 传递到下层 DOM 节点，通过这样的方法可以实现。 鉴于我们的许多交互式组件都依赖于 `ButtonBase`，您可以在任何情况都能受益于它。
-
-这有一个[与 react-router 交互的例子](/guides/composition/#button)。
+One frequent use case is to perform navigation on the client only, without an HTTP round-trip to the server. `ButtonBase` 组件提供了 `component` 属性来处理此用例。 Here is a [more detailed guide](/guides/routing/#button).
 
 ## 设计局限
 
@@ -127,7 +138,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 若您希望使用 `not-allowed`， 您有以下两种选择：
 
-1. **仅使用 CSS**。 您可以移除作用在 `<button>` 元素上的指针事件的样式：
+1. **仅使用 CSS**。 You can remove the pointer-events style on the disabled state of the `<button>` element:
 
 ```css
 .MuiButtonBase-root:disabled {

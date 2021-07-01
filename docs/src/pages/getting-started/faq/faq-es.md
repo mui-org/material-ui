@@ -44,16 +44,15 @@ Scrolling is blocked as soon as a modal is opened. This prevents interacting wit
 The ripple effect is exclusively coming from the `BaseButton` component. You can disable the ripple effect globally by providing the following in your theme:
 
 ```js
-module.exports = {
-    entry: {
-+     vendor: ["@material-ui/styles"],
-      app1: "./src/app.1.js",
-      app2: "./src/app.2.js",
-    },
-    plugins: [
-+     new webpack.optimize.CommonsChunkPlugin({
-+       name: "vendor",
-+       minChunks:
+import { createTheme } from '@material-ui/core';
+
+const theme = createTheme({
+  components: {
+    // Name of the component ⚛️
+    MuiButtonBase: {
+      defaultProps: {
+        // The props to apply
+        disableRipple: true, // No more ripple, on the whole application 💣!
       Infinity,
 +     }),
     ]
@@ -69,7 +68,7 @@ import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
   transitions: {
-    // Então temos `transition: none;` everywhere
+    // So we have `transition: none;` everywhere
     create: () => 'none',
   },
 });
@@ -112,7 +111,7 @@ No, it's not required. But this dependency comes built in, so carries no additio
 
 You can use `npm ls @material-ui/styles`, `yarn list @material-ui/styles` or `find -L ./node_modules | grep /@material-ui/styles/package.json` commands in your application folder. If you think that the issue may be in the duplication of the @material-ui/styles module somewhere in your dependencies, there are several ways to check this.
 
-## When should I use inline-style vs CSS?
+## When should I use inline-style vs. CSS?
 
 As a rule of thumb, only use inline-style for dynamic style properties. The CSS alternative provides more advantages, such as:
 
@@ -123,7 +122,7 @@ As a rule of thumb, only use inline-style for dynamic style properties. The CSS 
 
 ## ¿Cómo uso react-router?
 
-We detail the [integration with third-party routing libraries](/guides/composition/#routing-libraries) like react-router, Gatsby or Next.js in our guide.
+We detail the [integration with third-party routing libraries](/guides/routing/) like react-router, Gatsby or Next.js in our guide.
 
 ## ¿Cómo puedo acceder al elemento DOM?
 
@@ -245,29 +244,17 @@ The styling solution relies on a cache, the *sheets manager*, to only inject the
 example of fix:
 
 ```diff
+-// Create a sheets instance.
 -const sheets = new ServerStyleSheets();
 
 function handleRender(req, res) {
-
 + // Create a sheets instance.
 + const sheets = new ServerStyleSheets();
 
-  //… const html = ReactDOMServer.renderToString(
-  -// Create a sheets instance.
--const sheets = new ServerStyleSheets();
-
-function handleRender(req, res) {
-
-+ // Create a sheets instance.
-
-  + const sheets = new ServerStyleSheets();
-
   //…
+
+  // Render the component to a string.
   const html = ReactDOMServer.renderToString(
-  const html = ReactDOMServer.renderToString(
-  const html = ReactDOMServer.renderToString(
-  const html = ReactDOMServer.renderToString(
-  -// Create a sheets instance.
 ```
 
 ### React class name hydration mismatch
@@ -297,14 +284,8 @@ function handleRender(req, res) {
 
 + // Create a new class name generator.
 
-    + const sheets = new ServerStyleSheets();
-
-  //…
+    // Render the component to a string.
     const html = ReactDOMServer.renderToString(
-  const html = ReactDOMServer.renderToString(
-  const html = ReactDOMServer.renderToString(
-  const html = ReactDOMServer.renderToString(
-  -// Create a sheets instance.
   ```
 
 - You need to verify that your client and server are running the **exactly the same version** of Material-UI. It is possible that a mismatch of even minor versions can cause styling problems. To check version numbers, run `npm list @material-ui/core` in the environment where you build your application and also in your deployment environment.
@@ -317,8 +298,8 @@ function handleRender(req, res) {
     "dependencies": {
     ...
   -   "@material-ui/core": "^4.0.0",
-+   "@material-ui/core": "4.0.0",
-    ...
+  +   "@material-ui/core": "4.0.0",
+      ...
     },
   ```
 
@@ -371,7 +352,10 @@ This is why we require a prop with the actual DOM node so that React can take ca
 ```jsx
 function App() {
   const [container, setContainer] = React.useState(null);
-  const handleRef = React.useCallback(instance => setContainer(instance), [setContainer])
+  const handleRef = React.useCallback(
+    (instance) => setContainer(instance),
+    [setContainer],
+  );
 
   return (
     <div className="App">

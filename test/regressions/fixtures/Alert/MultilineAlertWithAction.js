@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import Typogrpahy from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/core/Alert';
 
 export default function MultilineAlertWithAction() {
@@ -12,8 +12,8 @@ export default function MultilineAlertWithAction() {
         </Button>
       }
     >
-      <Typogrpahy as="div">This is the first line.</Typogrpahy>
-      <Typogrpahy as="div">This is the second line.</Typogrpahy>
+      <Typography as="div">This is the first line.</Typography>
+      <Typography as="div">This is the second line.</Typography>
     </Alert>
   );
 }

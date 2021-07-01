@@ -2,7 +2,6 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
 import {
-  createMount,
   describeConformanceV5,
   act,
   createClientRender,
@@ -43,7 +42,6 @@ describe('<Tabs />', () => {
   // tests mocking getBoundingClientRect prevent mocha to exit
   const isJSDOM = navigator.userAgent === 'node.js';
 
-  const mount = createMount();
   const render = createClientRender();
 
   before(function beforeHook() {
@@ -61,7 +59,6 @@ describe('<Tabs />', () => {
   describeConformanceV5(<Tabs value={0} />, () => ({
     classes,
     inheritComponent: 'div',
-    mount,
     render,
     muiName: 'MuiTabs',
     refInstanceof: window.HTMLDivElement,
@@ -327,6 +324,41 @@ describe('<Tabs />', () => {
           'You can provide one of the following values: 1, 3',
           'You can provide one of the following values: 1, 3',
         ]);
+      });
+
+      describe('hidden tab', () => {
+        let nodeEnv;
+
+        before(function test() {
+          if (!/jsdom/.test(window.navigator.userAgent)) {
+            this.skip();
+            return;
+          }
+
+          nodeEnv = process.env.NODE_ENV;
+          // We can't use a regular assignment, because it causes a syntax error in Karma
+          Object.defineProperty(process.env, 'NODE_ENV', { value: 'development' });
+        });
+
+        after(() => {
+          Object.defineProperty(process.env, 'NODE_ENV', { value: nodeEnv });
+        });
+
+        it('should warn if a Tab has display: none', () => {
+          expect(() => {
+            render(
+              <Tabs value="hidden-tab">
+                <Tab value="hidden-tab" style={{ display: 'none' }} />
+              </Tabs>,
+            );
+          }).toErrorDev([
+            [
+              'Material-UI: The value provided to the Tabs component is invalid.',
+              'The Tab with this value (`hidden-tab`) is not part of the document layout.',
+              "Make sure the tab item is present in the document or that it's not display none.",
+            ].join('\n'),
+          ]);
+        });
       });
     });
   });
@@ -800,13 +832,13 @@ describe('<Tabs />', () => {
     const serverRender = createServerRender({ expectUseLayoutEffectWarning: true });
 
     it('should let the selected <Tab /> render the indicator server-side', () => {
-      const markup = serverRender(
+      const container = serverRender(
         <Tabs value={1}>
           <Tab />
           <Tab />
         </Tabs>,
       );
-      const indicator = markup.find(`button > .${classes.indicator}`);
+      const indicator = container.firstChild.querySelectorAll(`button > .${classes.indicator}`);
       expect(indicator).to.have.lengthOf(1);
     });
   });

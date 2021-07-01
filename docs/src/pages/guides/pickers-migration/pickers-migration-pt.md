@@ -8,7 +8,7 @@ Este guia é uma visão geral dos conceitos principais que foram alterados de se
 
 ## Instalação
 
-Você simplesmente precisa instalar o pacote `@material-ui/lab` se ainda não estiver instalado. Nada mais é necessário.
+You need to install the `@material-ui/lab` package if it's not already installed. ⚠️ Make sure you have installed the latest version, `"@material-ui/lab": ^5.0.0-alpha.30"` or above.
 
 ## Importações
 

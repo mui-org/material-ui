@@ -6,8 +6,8 @@
     "color": "The active color.",
     "count": "The total number of pages.",
     "defaultPage": "The page selected by default when the component is uncontrolled.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "getItemAriaLabel": "Accepts a function which returns a string value that provides a user-friendly name for the current page.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.<br><br><strong>Signature:</strong><br><code>function(type: string, page: number, selected: bool) =&gt; string</code><br><em>type:</em> The link or button type to format (&#39;page&#39; | &#39;first&#39; | &#39;last&#39; | &#39;next&#39; | &#39;previous&#39;). Defaults to &#39;page&#39;.<br><em>page:</em> The page number to format.<br><em>selected:</em> If true, the current page is selected.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "getItemAriaLabel": "Accepts a function which returns a string value that provides a user-friendly name for the current page. This is important for screen reader users.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.<br><br><strong>Signature:</strong><br><code>function(type: string, page: number, selected: bool) =&gt; string</code><br><em>type:</em> The link or button type to format (&#39;page&#39; | &#39;first&#39; | &#39;last&#39; | &#39;next&#39; | &#39;previous&#39;). Defaults to &#39;page&#39;.<br><em>page:</em> The page number to format.<br><em>selected:</em> If true, the current page is selected.",
     "hideNextButton": "If <code>true</code>, hide the next-page button.",
     "hidePrevButton": "If <code>true</code>, hide the previous-page button.",
     "onChange": "Callback fired when the page is changed.<br><br><strong>Signature:</strong><br><code>function(event: object, page: number) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>page:</em> The page selected.",
@@ -18,6 +18,7 @@
     "showLastButton": "If <code>true</code>, show the last-page button.",
     "siblingCount": "Number of always visible pages before and after the current page.",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

@@ -42,7 +42,9 @@ export interface CardTypeMap<P = {}, D extends React.ElementType = 'div'> {
 
 declare const Card: OverridableComponent<CardTypeMap>;
 
-export type CardProps<D extends React.ElementType = CardTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<CardTypeMap<P, D>, D>;
+export type CardProps<
+  D extends React.ElementType = CardTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<CardTypeMap<P, D>, D>;
 
 export default Card;

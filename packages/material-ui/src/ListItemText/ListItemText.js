@@ -26,14 +26,14 @@ const ListItemTextRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${listItemTextClasses.primary}`]: styles.primary,
-      [`& .${listItemTextClasses.secondary}`]: styles.secondary,
-      ...styles.root,
-      ...(styleProps.inset && styles.inset),
-      ...(styleProps.primary && styleProps.secondary && styles.multiline),
-      ...(styleProps.dense && styles.dense),
-    };
+    return [
+      { [`& .${listItemTextClasses.primary}`]: styles.primary },
+      { [`& .${listItemTextClasses.secondary}`]: styles.secondary },
+      styles.root,
+      styleProps.inset && styles.inset,
+      styleProps.primary && styleProps.secondary && styles.multiline,
+      styleProps.dense && styles.dense,
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

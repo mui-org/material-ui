@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { expect } from 'chai';
+import { SinonFakeTimers, useFakeTimers } from 'sinon';
 import TextField from '@material-ui/core/TextField';
 import { fireEvent, screen } from 'test/utils';
 import StaticDatePicker from '@material-ui/lab/StaticDatePicker';
@@ -11,6 +12,14 @@ import {
 } from '../internal/pickers/test-utils';
 
 describe('<StaticDatePicker />', () => {
+  let clock: SinonFakeTimers;
+  beforeEach(() => {
+    clock = useFakeTimers();
+  });
+  afterEach(() => {
+    clock.restore();
+  });
+  // StrictModeViolation: Uses CalendarPicker
   const render = createPickerRender({ strict: false });
 
   it('render proper month', () => {

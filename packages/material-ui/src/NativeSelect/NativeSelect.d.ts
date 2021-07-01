@@ -30,7 +30,7 @@ export interface NativeSelectProps
   /**
    * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes">Attributes</a> applied to the `select` element.
    */
-  inputProps?: NativeSelectInputProps;
+  inputProps?: Partial<NativeSelectInputProps>;
   /**
    * Callback fired when a menu item is selected.
    *

@@ -1,5 +1,5 @@
 ---
-title: React Select component
+title: Composant React Select
 components: Select, NativeSelect
 githubLabel: 'component: Select'
 ---
@@ -24,25 +24,25 @@ If you are looking for more advanced features, like combobox, multiselect, autoc
 
 ## Props
 
-The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [Input](/api/input/), [FilledInput](/api/filled-input/), or [OutlinedInput](/api/outlined-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
+Le composant Select est implémenté en tant qu'élément `<input>` personnalisé de la [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [Input](/api/input/), [FilledInput](/api/filled-input/), or [OutlinedInput](/api/outlined-input/), depending on the variant selected. Il partage les mêmes styles et bon nombre des mêmes accessoires. Reportez-vous à la page API du composant respectif pour plus de détails.
 
 ### Filled and outlined variants
 
 {{"demo": "pages/components/selects/NativeSelects.js"}}
 
-### Labels and helper text
+### Étiquettes et texte d'aide
 
 {{"demo": "pages/components/selects/SelectLabels.js"}}
 
-### Auto width
+### Largeur automatique
 
 {{"demo": "pages/components/selects/SelectAutoWidth.js"}}
 
-### Other props
+### D'autres accessoires
 
 {{"demo": "pages/components/selects/SelectOtherProps.js"}}
 
-## Text Fields (Champs de texte)
+## Sélection native
 
 As the user experience can be improved on mobile using the native select of the platform, we allow such pattern.
 
@@ -56,15 +56,15 @@ Le composant d'encapsulation `TextField` est un contrôle de formulaire complet 
 
 Here are some examples of customizing the component. Vous pouvez en savoir plus dans la [page de documentation des overrides](/customization/how-to-customize/).
 
-The first step is to style the `InputBase` component. Le composant d'encapsulation `TextField` est un contrôle de formulaire complet comprenant une étiquette, une entrée et un texte d'aide.
+The first step is to style the `InputBase` component. Une fois qu'il est stylisé, vous pouvez soit l'utiliser directement comme champ de texte, soit le fournir à la propriété select `input` pour avoir un champ `select`. Notice that the `"standard"` variant is easier to customize, since it does not wrap the contents in a `fieldset`/`legend` markup.
 
 {{"demo": "pages/components/selects/CustomizedSelects.js"}}
 
 🎨 Si vous cherchez de l'inspiration, vous pouvez consulter les [exemples de personnalisation de MUI Treasury](https://mui-treasury.com/styles/select).
 
-## Controlled Open Select
+## Sélection multiple
 
-The `Select` component can handle multiple selections. The `Select` component can handle multiple selections.
+The `Select` component can handle multiple selections. Il est activé avec la prop `multiple`.
 
 Like with the single selection, you can pull out the new value by accessing `event.target.value` in the `onChange` callback. It's always an array.
 
@@ -72,7 +72,7 @@ Like with the single selection, you can pull out the new value by accessing `eve
 
 {{"demo": "pages/components/selects/MultipleSelect.js"}}
 
-### Checkmarks
+### Coches
 
 {{"demo": "pages/components/selects/MultipleSelectCheckmarks.js"}}
 
@@ -80,19 +80,19 @@ Like with the single selection, you can pull out the new value by accessing `eve
 
 Alternatively a `TextField` with an `id` and `label` creates the proper markup and ids for you:
 
-### Placeholder
+### Espace réservé
 
 {{"demo": "pages/components/selects/MultipleSelectPlaceholder.js"}}
 
-### Native
+### Originaire de
 
 {{"demo": "pages/components/selects/MultipleSelectNative.js"}}
 
-## Avec un dialogue
+## Sélection ouverte contrôlée
 
 {{"demo": "pages/components/selects/ControlledOpenSelect.js"}}
 
-## With a dialog
+## Avec un dialogue
 
 Bien que cela soit découragé par la spécification Material Design, vous pouvez utiliser une sélection dans une boîte de dialogue.
 

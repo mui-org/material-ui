@@ -18,19 +18,45 @@
 
 Изменение переменных конфигурации темы (theme configuration variables) — наиболее эффективный способ настройки Material-UI под ваши потребности. В следующих разделах рассматриваются наиболее важные переменные темы:
 
-- [Палитра](/customization/palette/)
-- [Typography](/customization/typography/)
-- [Интервал](/customization/spacing/)
-- [Контрольные точки](/customization/breakpoints/)
-- [z-index](/customization/z-index/)
-- [Компоненты](/customization/theme-components/)
-- [Переходы](/customization/transitions/)
+- [`.палитра`](/customization/palette/)
+- [`.typography`](/customization/typography/)
+- [`.интервал`](/customization/spacing/)
+- [`.контрольные точки`](/customization/breakpoints/)
+- [`.zIndex`](/customization/z-index/)
+- [`.transições`](/customization/transitions/)
+- [`.компоненты`](/customization/theme-components/)
 
 Вы можете проверить [ раздел "тема по умолчанию" (default theme) ](/customization/default-theme/) для просмотра полной информации о default theme.
 
 ### Пользовательские переменные
 
 When using Material-UI's theme with the [styling solution](/styles/basics/) or [any others](/guides/interoperability/#themeprovider), it can be convenient to add additional variables to the theme so you can use them everywhere. Например:
+
+```jsx
+const theme = createTheme({
+  status: {
+    danger: orange[500],
+  },
+});
+```
+
+If you are using TypeScript, you would also need to use [module augmentation](/guides/typescript/#customization-of-theme) for the theme to accept the above values.
+
+```tsx
+declare module '@material-ui/core/styles' {
+  interface Theme {
+    status: {
+      danger: string;
+    };
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    status?: {
+      danger?: string;
+    };
+  }
+}
+```
 
 {{"demo": "pages/customization/theming/CustomStyles.js"}}
 
@@ -42,7 +68,7 @@ When using Material-UI's theme with the [styling solution](/styles/basics/) or [
 
 Вы [можете получить доступ](/styles/advanced/#accessing-the-theme-in-a-component) к переменным темы внутри ваших React-компонент.
 
-- [material-ui-theme-editor](https://in-your-saas.github.io/material-ui-theme-editor/): A tool to generate themes for your Material-UI applications by just selecting the colors and having a live preview. Includes basic site templates to show various components and how they are affected by the theme
+- [mui-theme-creator](https://bareynol.github.io/mui-theme-creator/): Инструмент, помогающий проектировать и настраивать темы для библиотеки компонентов Material-UI. Includes basic site templates to show various components and how they are affected by the theme
 - [create-mui-theme](https://react-theming.github.io/create-mui-theme/): Is an online tool for creating Material-UI themes via Material Design Color Tool.
 - [Material palette generator](https://material.io/inline-tools/color/): Этот инструмент можно использовать для создания палитры на основе любого выбранного цвета.
 
@@ -75,12 +101,12 @@ Generate a theme base on the options received.
 
 #### Аргументы
 
-1. `options` (*Object*): Takes an incomplete theme object and adds the missing parts.
-2. `...args` (*Array*): Deep merge the arguments with the about to be returned theme.
+1. `options` (_object_): Takes an incomplete theme object and adds the missing parts.
+2. `...args` (_object[]_): Deep merge the arguments with the about to be returned theme.
 
 #### Возвращает
 
-`theme` (*Object*): The new theme with a responsive typography.
+`theme` (_object_): A complete, ready-to-use theme object.
 
 #### Примеры
 
@@ -107,17 +133,17 @@ Generate responsive typography settings based on the options received.
 
 #### Аргументы
 
-1. `theme` (*Object*): The theme object to enhance.
-2. `варианты` (*объекта* [optional]):
+1. `theme` (_object_): The theme object to enhance.
+2. `options` (_object_ [optional]):
 
-- `breakpoints` (*Array\<String\>* [optional]): Default to `['sm', 'md', 'lg']`. `breakpoints` (*Array\<String\>* [optional]): Default to `['sm', 'md', 'lg']`.
-- `disableAlign` (*Boolean* [optional]): Default to `false`. Whether font sizes change slightly so line heights are preserved and align to Material Design's 4px line height grid. This requires a unitless line height in the theme's styles.
-- `factor` (*Number* [optional]): Default to `2`. This value determines the strength of font size resizing. The higher the value, the less difference there is between font sizes on small screens. The lower the value, the bigger font sizes for small screens. The value must be greater than 1.
-- `variants` (*Array\<String\>* [optional]): Default to all. The typography variants to handle.
+- `breakpoints` (_array\<string\>_ [optional]): Default to `['sm', 'md', 'lg']`. `breakpoints` (*Array\<String\>* [optional]): Default to `['sm', 'md', 'lg']`.
+- `disableAlign` (_bool_ [optional]): Default to `false`. Whether font sizes change slightly so line heights are preserved and align to Material Design's 4px line height grid. This requires a unitless line height in the theme's styles.
+- `factor` (_number_ [optional]): Default to `2`. This value determines the strength of font size resizing. The higher the value, the less difference there is between font sizes on small screens. The lower the value, the bigger font sizes for small screens. The value must be greater than 1.
+- `variants` (_array\<string\>_ [optional]): Default to all. The typography variants to handle.
 
 #### Возвращает
 
-`theme` (*Object*): A complete, ready to use theme object.
+`theme` (_object_): The new theme with a responsive typography.
 
 #### Примеры
 
@@ -140,12 +166,12 @@ Using `unstable_createMuiStrictModeTheme` restricts the usage of some of our com
 
 #### Аргументы
 
-1. `options` (*Object*): Takes an incomplete theme object and adds the missing parts.
-2. `...args` (*Array*): Deep merge the arguments with the about to be returned theme.
+1. `options` (_object_): Takes an incomplete theme object and adds the missing parts.
+2. `...args` (_object[]_): Deep merge the arguments with the about to be returned theme.
 
 #### Возвращает
 
-`theme` (*Object*): The new theme with a responsive typography.
+`theme` (_object_): A complete, ready to use theme object.
 
 #### Примеры
 

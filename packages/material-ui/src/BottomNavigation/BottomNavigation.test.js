@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, describeConformanceV5, createClientRender, fireEvent } from 'test/utils';
+import { describeConformanceV5, createClientRender, fireEvent } from 'test/utils';
 import BottomNavigation, {
   bottomNavigationClasses as classes,
 } from '@material-ui/core/BottomNavigation';
@@ -12,7 +12,7 @@ import Icon from '@material-ui/core/Icon';
 
 describe('<BottomNavigation />', () => {
   const render = createClientRender();
-  const mount = createMount();
+
   const icon = <Icon>restore</Icon>;
   const getBottomNavigation = (container) => container.firstChild;
 
@@ -24,7 +24,6 @@ describe('<BottomNavigation />', () => {
       classes,
       inheritComponent: 'div',
       render,
-      mount,
       muiName: 'MuiBottomNavigation',
       refInstanceof: window.HTMLDivElement,
       testComponentPropWith: 'span',

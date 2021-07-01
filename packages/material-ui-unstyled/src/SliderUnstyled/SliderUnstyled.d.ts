@@ -1,6 +1,8 @@
 import { OverridableComponent, OverridableTypeMap, OverrideProps } from '@material-ui/types';
 import { SliderUnstyledClasses } from './sliderUnstyledClasses';
 
+export interface SliderStylePropsOverrides {}
+
 export interface Mark {
   value: number;
   label?: React.ReactNode;
@@ -51,38 +53,43 @@ export interface SliderUnstyledTypeMap<P = {}, D extends React.ElementType = 'sp
      */
     componentsProps?: {
       root?: {
-        as: React.ElementType;
-        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'>;
+        as?: React.ElementType;
+        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'> &
+          SliderStylePropsOverrides;
       };
       track?: {
         as?: React.ElementType;
-        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'>;
+        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'> &
+          SliderStylePropsOverrides;
       };
       rail?: {
         as?: React.ElementType;
-        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'>;
+        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'> &
+          SliderStylePropsOverrides;
       };
       thumb?: {
         as?: React.ElementType;
-        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'>;
+        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'> &
+          SliderStylePropsOverrides;
       };
       mark?: {
         as?: React.ElementType;
         styleProps?: Omit<
           SliderUnstyledTypeMap<P, D>['props'],
           'components' | 'componentsProps'
-        > & { markActive?: boolean };
+        > & { markActive?: boolean } & SliderStylePropsOverrides;
       };
       markLabel?: {
         as?: React.ElementType;
         styleProps?: Omit<
           SliderUnstyledTypeMap<P, D>['props'],
           'components' | 'componentsProps'
-        > & { markLabelActive?: boolean };
+        > & { markLabelActive?: boolean } & SliderStylePropsOverrides;
       };
       valueLabel?: {
         as?: React.ElementType;
-        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'>;
+        styleProps?: Omit<SliderUnstyledTypeMap<P, D>['props'], 'components' | 'componentsProps'> &
+          SliderStylePropsOverrides;
       };
     };
     /**

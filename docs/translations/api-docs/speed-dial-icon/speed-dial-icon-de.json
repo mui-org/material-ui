@@ -3,7 +3,8 @@
   "propDescriptions": {
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "icon": "The icon element.",
-    "openIcon": "The icon to display in the SpeedDial Floating Action Button when the SpeedDial is open."
+    "openIcon": "The icon to display in the SpeedDial Floating Action Button when the SpeedDial is open.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

@@ -600,7 +600,6 @@ const MenuTest = () => {
         Link Item
       </MenuItem>
       <MenuItem
-        button={false}
         ref={(elem) => {
           expectType<HTMLLIElement | null, typeof elem>(elem);
         }}
@@ -609,8 +608,6 @@ const MenuTest = () => {
         action={(action) => {
           buttonActionRef.current = action;
         }}
-        // @ts-expect-error 'false' is not assignable to true | undefined
-        button={false}
         ref={(elem) => {
           // inferred from `button={false}` instead of `action`
           expectType<HTMLLIElement | null, typeof elem>(elem);

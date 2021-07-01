@@ -31,7 +31,9 @@ declare const TabList: OverridableComponent<TabListTypeMap>;
 
 export type TabListClassKey = keyof NonNullable<TabListTypeMap['props']['classes']>;
 
-export type TabListProps<D extends React.ElementType = TabListTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<TabListTypeMap<P, D>, D>;
+export type TabListProps<
+  D extends React.ElementType = TabListTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<TabListTypeMap<P, D>, D>;
 
 export default TabList;

@@ -16,6 +16,7 @@ export default function IconBreadcrumbs() {
     <div role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link
+          underline="hover"
           sx={{ display: 'flex', alignItems: 'center' }}
           color="inherit"
           href="/"
@@ -24,6 +25,7 @@ export default function IconBreadcrumbs() {
           Material-UI
         </Link>
         <Link
+          underline="hover"
           sx={{ display: 'flex', alignItems: 'center' }}
           color="inherit"
           href="/getting-started/installation/"

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, describeConformanceV5, act, createClientRender } from 'test/utils';
+import { describeConformanceV5, act, createClientRender } from 'test/utils';
 import SwitchBase from './SwitchBase';
 import FormControl, { useFormControl } from '../FormControl';
 import ButtonBase from '../ButtonBase';
@@ -9,7 +9,6 @@ import classes from './switchBaseClasses';
 
 describe('<SwitchBase />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(
     <SwitchBase checkedIcon="checked" icon="unchecked" type="checkbox" />,
@@ -17,7 +16,6 @@ describe('<SwitchBase />', () => {
       classes,
       inheritComponent: ButtonBase,
       render,
-      mount,
       refInstanceof: window.HTMLSpanElement,
       testComponentPropWith: 'div',
       testVariantProps: { disabled: true },

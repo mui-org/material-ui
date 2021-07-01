@@ -94,7 +94,7 @@ describe('builder', () => {
       expect(fs.existsSync(actualFilePath)).to.equal(true);
 
       const actualFileData = fs.readFileSync(actualFilePath, { encoding: 'utf8' });
-      expect(actualFileData).to.include("import createSvgIcon from './utils/createSvgIcon.js'");
+      expect(actualFileData).to.include("import createSvgIcon from './utils/createSvgIcon'");
     });
   });
 

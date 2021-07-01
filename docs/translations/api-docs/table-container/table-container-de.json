@@ -3,7 +3,8 @@
   "propDescriptions": {
     "children": "The table itself, normally <code>&lt;Table /&gt;</code>.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "component": "The component used for the root node. Either a string to use a HTML element or a component."
+    "component": "The component used for the root node. Either a string to use a HTML element or a component.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

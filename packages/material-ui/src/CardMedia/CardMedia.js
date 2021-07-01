@@ -24,11 +24,7 @@ const CardMediaRoot = styled('div', {
     const { styleProps } = props;
     const { isMediaComponent, isImageComponent } = styleProps;
 
-    return {
-      ...styles.root,
-      ...(isMediaComponent && styles.media),
-      ...(isImageComponent && styles.img),
-    };
+    return [styles.root, isMediaComponent && styles.media, isImageComponent && styles.img];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

@@ -8,4 +8,3 @@
 - [ Container](/components/container/): El Container(contenedor) centra su contenido horizontalmente. Es el elemento más básico del layout.
 - [ Breakpoints ](/customization/breakpoints/): API que permite el uso de puntos de interrupción en una amplia variedad de contextos.
 - [ useMediaQuery ](/components/use-media-query/): Este es un enlace de consulta de medios CSS para React. It listens for matches to a CSS media query.
-- [ Hidden](/components/hidden/): Cambia rápida y receptivamente el valor de visibilidad de los componentes y más con nuestras utilidades hidden(oculto).

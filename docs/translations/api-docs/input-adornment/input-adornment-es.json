@@ -7,6 +7,7 @@
     "disablePointerEvents": "Disable pointer events on the root. This allows for the content of the adornment to focus the <code>input</code> on click.",
     "disableTypography": "If children is a string then disable wrapping in a Typography component.",
     "position": "The position this adornment should appear relative to the <code>Input</code>.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use. Note: If you are using the <code>TextField</code> component or the <code>FormControl</code> component you do not have to set this manually."
   },
   "classDescriptions": {
@@ -17,6 +18,16 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"filled\"</code>"
+    },
+    "outlined": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"outlined\"</code>"
+    },
+    "standard": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"standard\"</code>"
     },
     "positionStart": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

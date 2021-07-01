@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { styled, useThemeProps } from '@material-ui/core/styles';
 import { capitalize } from '@material-ui/core/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import { getTimelineDotUtilityClass } from './timelineDotClasses';
@@ -22,13 +22,13 @@ const TimelineDotRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[
+    return [
+      styles.root,
+      styles[
         styleProps.color !== 'inherit' && `${styleProps.variant}${capitalize(styleProps.color)}`
       ],
-      ...styles[styleProps.variant],
-    };
+      styles[styleProps.variant],
+    ];
   },
 })(({ styleProps, theme }) => ({
   /* Styles applied to the root element. */
@@ -40,49 +40,29 @@ const TimelineDotRoot = styled('span', {
   borderRadius: '50%',
   boxShadow: theme.shadows[1],
   margin: '11.5px 0',
-  /* Styles applied to the root element if `color="grey"` and `variant="filled"`. */
-  ...(styleProps.color === 'grey' &&
-    styleProps.variant === 'filled' && {
-      borderColor: 'transparent',
-      color: theme.palette.grey[50],
-      backgroundColor: theme.palette.grey[400],
-    }),
-  /* Styles applied to the root element if `color="grey"` and `variant="outlined"`. */
-  ...(styleProps.color === 'grey' &&
-    styleProps.variant === 'outlined' && {
-      boxShadow: 'none',
-      color: theme.palette.grey.contrastText,
-      borderColor: theme.palette.grey[400],
-      backgroundColor: 'transparent',
-    }),
-  /* Styles applied to the root element if `color="primary"` and `variant="filled"`. */
-  ...(styleProps.color === 'primary' &&
-    styleProps.variant === 'filled' && {
-      borderColor: 'transparent',
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.primary.main,
-    }),
-  /* Styles applied to the root element if `color="primary"` and `variant="outlined"`. */
-  ...(styleProps.color === 'primary' &&
-    styleProps.variant === 'outlined' && {
-      boxShadow: 'none',
-      backgroundColor: 'transparent',
-      borderColor: theme.palette.primary.main,
-    }),
-  /* Styles applied to the root element if `color="secondary"` and `variant="filled"`. */
-  ...(styleProps.color === 'secondary' &&
-    styleProps.variant === 'filled' && {
-      borderColor: 'transparent',
-      color: theme.palette.secondary.contrastText,
-      backgroundColor: theme.palette.secondary.main,
-    }),
-  /* Styles applied to the root element if `color="secondary"` and `variant="outlined"`. */
-  ...(styleProps.color === 'secondary' &&
-    styleProps.variant === 'outlined' && {
-      boxShadow: 'none',
-      backgroundColor: 'transparent',
-      borderColor: theme.palette.secondary.main,
-    }),
+  ...(styleProps.variant === 'filled' && {
+    borderColor: 'transparent',
+    ...(styleProps.color === 'grey'
+      ? {
+          color: theme.palette.grey[50],
+          backgroundColor: theme.palette.grey[400],
+        }
+      : {
+          color: theme.palette[styleProps.color].contrastText,
+          backgroundColor: theme.palette[styleProps.color].main,
+        }),
+  }),
+  ...(styleProps.variant === 'outlined' && {
+    boxShadow: 'none',
+    backgroundColor: 'transparent',
+    ...(styleProps.color === 'grey'
+      ? {
+          borderColor: theme.palette.grey[400],
+        }
+      : {
+          borderColor: theme.palette[styleProps.color].main,
+        }),
+  }),
 }));
 
 const TimelineDot = React.forwardRef(function TimelineDot(inProps, ref) {
@@ -128,7 +108,16 @@ TimelineDot.propTypes /* remove-proptypes */ = {
    * The dot can have a different colors.
    * @default 'grey'
    */
-  color: PropTypes.oneOf(['grey', 'inherit', 'primary', 'secondary']),
+  color: PropTypes.oneOf([
+    'error',
+    'grey',
+    'info',
+    'inherit',
+    'primary',
+    'secondary',
+    'success',
+    'warning',
+  ]),
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

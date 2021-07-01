@@ -4,9 +4,9 @@
 
 ## ラッピングコンポーネント
 
-最大限の柔軟性とパフォーマンスを提供するために、 コンポーネントが受け取る子要素の性質を知る方法が必要です。 To solve this problem we tag some of the components with a `muiName` static property when needed. 最大限の柔軟性とパフォーマンスを提供するために、 コンポーネントが受け取る子要素の性質を知る方法が必要です。 To solve this problem we tag some of the components with a `muiName` static property when needed.
+最大限の柔軟性とパフォーマンスを提供するために、 コンポーネントが受け取る子要素の性質を知る方法が必要です。 To solve this problem, we tag some of the components with a `muiName` static property when needed.
 
-Invalid prop `component` supplied to `ComponentName`. Expected an element type that can hold a ref.
+ただし、拡張するためにコンポーネントをラップする必要がある場合があり、これは`muiName`ソリューションと競合する可能性があります。 コンポーネントをラップする場合は、そのコンポーネントにこの静的プロパティーが設定されているかどうかを確認します。
 
 To find out if the Material-UI component you're using has this requirement, check out the the props API documentation for that component. さらに、親コンポーネントがラップされたコンポーネントプロパティをコントロールする必要がある場合があるため、プロパティを転送する必要があります。
 
@@ -19,19 +19,19 @@ WrappedIcon.muiName = Icon.muiName;
 
 {{"demo": "pages/guides/composition/Composition.js"}}
 
-## Component prop
+## Component プロパティ
 
-Material-UI allows you to change the root element that will be rendered via a prop called `component`.
+Material-UIは、`component`プロパティによって、レンダリングされるルート要素を変更することが可能です。
 
 ### どのように機能しますか？
 
-The custom component will be rendered by Material-UI like this:
+カスタマイズされたコンポーネントは Material-UI によって次にようにレンダリングされます。
 
 ```js
 return React.createElement(props.component, props)
 ```
 
-For example, by default a `List` component will render a `<ul>` element. This can be changed by passing a [React component](https://reactjs.org/docs/components-and-props.html#function-and-class-components) to the `component` prop. The following example will render the `List` component with a `<nav>` element as root element instead:
+例えば、 デフォルトの`List`コンポーネントは、 `<ul>` 要素をレンダリングしますが、 これは[Reactのコンポーネント](https://reactjs.org/docs/components-and-props.html#function-and-class-components)に `component`プロパティを渡すことで変更できます。 次の例は、 `List` コンポーネントのルート要素を`<nav>` 要素としてレンダリングします。
 
 ```jsx
 <List component="nav">
@@ -44,9 +44,9 @@ For example, by default a `List` component will render a `<ul>` element. This ca
 </List>
 ```
 
-This pattern is very powerful and allows for great flexibility, as well as a way to interoperate with other libraries, such as your favorite routing or forms library. But it also **comes with a small caveat!**
+この手法は非常に強力であり、あなたが使用したいと思っているルーティングやフォームなどの他のライブラリとの相互利用を可能とする優れた柔軟性を持っています。 しかし、 これには、**小さな警告を伴います！**
 
-### インラインのある警告
+### インラインについての注意
 
 Using an inline function as an argument for the `component` prop may result in **unexpected unmounting**, since a new component is passed every time React renders. Not only will React update the DOM unnecessarily, the ripple effect of the `ListItem` will also not work correctly.
 
@@ -69,21 +69,24 @@ function ListItemLink(props) {
 }
 ```
 
-⚠️ However, since we are using an inline function to change the rendered component, React will unmount the link every time `ListItemLink` is rendered. Not only will React update the DOM unnecessarily, the ripple effect of the `ListItem` will also not work correctly.
+⚠️ しかし、レンダリングされたコンポーネントを変更するためにインライン関数を使用している事から、React は `ListItemLink` がレンダリングされるたびにリンクのマウントを解除します。 ReactがDOMを不必要に更新するだけでなく、 `ListItem`の変更の波及も正しく動作しません。
 
-The solution is simple: **avoid inline functions and pass a static component to the `component` prop** instead. Let's change the `ListItemLink` component so `CustomLink` always reference the same component:
+解決方法はシンプルです。インライン関数を避け、代わりに、**静的なコンポーネントを`component` プロパティに渡します。** `CustomLink` が常に、同じコンポーネントを参照できるように、`ListItemLink` コンポーネントを変更しましょう。
 
 ```tsx
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
 function ListItemLink(props) {
   const { icon, primary, to } = props;
 
   const CustomLink = React.useMemo(
     () =>
-      React.forwardRef((linkProps, ref) => (
-        <Link ref={ref} to={to} {...linkProps} />
-      )),
+      React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(function Link(
+        linkProps,
+        ref,
+      ) {
+        return <Link ref={ref} to={to} {...linkProps} />;
+      }),
     [to],
   );
 
@@ -98,9 +101,9 @@ function ListItemLink(props) {
 }
 ```
 
-### Caveat with prop forwarding
+### プロパティ転送についての注意
 
-You can take advantage of the prop forwarding to simplify the code. In this example, we don't create any intermediary component:
+プロパティの転送を利用して、コードをシンプルにする事ができます。 この例では、中間コンポーネントを作成しません。
 
 ```jsx
 import { Link } from 'react-router-dom';
@@ -108,33 +111,17 @@ import { Link } from 'react-router-dom';
 <ListItem button component={Link} to="/">
 ```
 
-⚠️ However, this strategy suffers from a limitation: prop collisions. The component providing the `component` prop (e.g. ListItem) might not forward all the props (for example dense) to the root element.
+しかし、この方法はプロパティの衝突から制限されます。 `component`プロパティを持つコンポーネントは、すべてのプロパティ(例：dense）をルート要素へ転送するわけではありません。
 
-### With TypeScript
+### TypeScriptの使用
 
-You can find the details in the [TypeScript guide](/guides/typescript/#usage-of-component-prop).
+詳細については、[TypeScript guide](/guides/typescript/#usage-of-component-prop)を参照してください。
 
-## Routing libraries
+## refsについての注意
 
-The integration with third-party routing libraries is achieved with the `component` prop. The behavior is identical to the description of the prop above. Here are a few demos with [react-router-dom](https://github.com/ReactTraining/react-router). They cover the Button, Link, and List components. You can apply the same strategy with all the components (BottomNavigation, Card, etc.).
+このセクションでは、カスタムコンポーネントを `子要素` または `component` プロパティとして使用する場合の注意点について説明します。
 
-### Button (ボタン)
-
-{{"demo": "pages/guides/composition/ButtonRouter.js"}}
-
-### Link
-
-{{"demo": "pages/guides/composition/LinkRouter.js"}}
-
-### List (リスト)
-
-{{"demo": "pages/guides/composition/ListRouter.js"}}
-
-## Caveat with refs
-
-This section covers caveats when using a custom component as `children` or for the `component` prop.
-
-Some of the components need access to the DOM node. This was previously possible by using `ReactDOM.findDOMNode`. This function is deprecated in favor of `ref` and ref forwarding. However, only the following component types can be given a `ref`:
+一部のコンポーネントは DOM ノードにアクセスする必要があります。 以前は `ReactDOM.findDOMNode` を使用することで可能でしたが、 この関数は `ref` とrefの転送の登場から、非推奨となっています。 ただし、 `ref` が与えられるコンポーネント型は次のものだけです。
 
 - Any Material-UI component
 - class components i.e. `React.Component` or `React.PureComponent`

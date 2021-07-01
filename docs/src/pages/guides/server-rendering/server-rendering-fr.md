@@ -124,8 +124,7 @@ function handleRender(req, res) {
     ),
   );
 
-  // Grab the CSS from the sheets.
-  const css = sheets.toString();
+  // Grab the CSS from the sheets. const css = sheets.toString();
 
   // Grab the CSS from emotion
   const styles = extractCritical(html);
@@ -200,6 +199,14 @@ function Main() {
   );
 }
 
+ReactDOM.hydrate(<Main />, document.querySelector('#root')); */}
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </CacheProvider>
+  );
+}
+
 ReactDOM.hydrate(<Main />, document.querySelector('#root'));
 ```
 
@@ -207,8 +214,8 @@ ReactDOM.hydrate(<Main />, document.querySelector('#root'));
 
 We host different reference implementations which you can find in the [GitHub repository](https://github.com/mui-org/material-ui) under the [`/examples`](https://github.com/mui-org/material-ui/tree/master/examples) folder:
 
-- [The reference implementation of this tutorial](https://github.com/mui-org/material-ui/tree/next/examples/ssr)
-- [Gatsby](https://github.com/mui-org/material-ui/tree/next/examples/gatsby)
+- [The reference implementation of this tutorial](https://github.com/mui-org/material-ui/tree/HEAD/examples/ssr)
+- [Gatsby](https://github.com/mui-org/material-ui/tree/HEAD/examples/gatsby)
 - https://github.com/mui-org/material-ui/tree/master/examples/nextjs
 
 ## Résolution de problèmes

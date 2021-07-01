@@ -8,4 +8,3 @@ Material Design 中的 [响应式布局](https://material.io/design/layout/respo
 - [Container](/components/container/)：容器可以将您页面的内容水平居中。 这是最基本的布局元素。
 - [Breakpoints](/customization/breakpoints/)：它的 API 让您可以在不同的语义环境中使用断点。
 - [useMediaQuery](/components/use-media-query/) ：这是 React 的 CSS 媒体查询 hook。 它监听与 CSS 媒体查询的匹配的内容。
-- [Hidden](/components/hidden/)：使用我们隐藏的实用程序来快速并响应式地切换元素的显隐。

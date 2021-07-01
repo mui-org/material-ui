@@ -8,6 +8,7 @@
     "nextButton": "A next button element. For instance, it can be a <code>Button</code> or an <code>IconButton</code>.",
     "position": "Set the positioning type.",
     "steps": "The total steps.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

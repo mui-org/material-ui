@@ -1,0 +1,56 @@
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "alignItems": "Defines the <code>align-items</code> style property.",
+    "autoFocus": "If <code>true</code>, the list item is focused during the first mount. Focus will also be triggered if the value changes from false to true.",
+    "children": "The content of the component if a <code>ListItemSecondaryAction</code> is used it must be the last child.",
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "component": "The component used for the root node. Either a string to use a HTML element or a component.",
+    "dense": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used. The prop defaults to the value inherited from the parent List component.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "disableGutters": "If <code>true</code>, the left and right padding is removed.",
+    "divider": "If <code>true</code>, a 1px light border is added to the bottom of the list item.",
+    "focusVisibleClassName": "This prop can help identify which element has keyboard focus. The class name will be applied when the element gains the focus through keyboard interaction. It&#39;s a polyfill for the <a href=\"https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo\">CSS :focus-visible selector</a>. The rationale for using this feature <a href=\"https://github.com/WICG/focus-visible/blob/master/explainer.md\">is explained here</a>. A <a href=\"https://github.com/WICG/focus-visible\">polyfill can be used</a> to apply a <code>focus-visible</code> class to other components if needed.",
+    "selected": "Use to apply selected styling.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+  },
+  "classDescriptions": {
+    "root": {
+      "description": "Styles applied to the root element."
+    },
+    "focusVisible": {
+      "description": "Pseudo-class applied to {{nodeName}}.",
+      "nodeName": "the `component`'s `focusVisibleClassName` prop"
+    },
+    "dense": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the component element",
+      "conditions": "dense"
+    },
+    "alignItemsFlexStart": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the component element",
+      "conditions": "<code>alignItems=\"flex-start\"</code>"
+    },
+    "disabled": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the inner `component` element",
+      "conditions": "<code>disabled={true}</code>"
+    },
+    "divider": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the inner `component` element",
+      "conditions": "<code>divider={true}</code>"
+    },
+    "gutters": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the inner `component` element",
+      "conditions": "<code>disableGutters={true}</code>"
+    },
+    "selected": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>selected={true}</code>"
+    }
+  }
+}

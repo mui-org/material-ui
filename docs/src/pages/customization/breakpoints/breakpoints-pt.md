@@ -4,7 +4,7 @@
 
 Para uma experiência de usuário ideal, as interfaces do material design precisam adaptar seu leiaute em vários pontos de quebra. Material-UI usa uma implementação **simplificada** da [especificação](https://material.io/design/layout/responsive-layout-grid.html#breakpoints) original.
 
-Os pontos de quebra são usados internamente em vários componentes para torná-los responsivos, mas você também pode tirar proveito deles para controlar o leiaute da sua aplicação através do componente [Grade](/components/grid/) e [Hidden](/components/hidden/).
+The breakpoints are used internally in various components to make them responsive, but you can also take advantage of them for controlling the layout of your application through the [Grid](/components/grid/) component.
 
 ## Pontos de quebra padrão
 
@@ -12,9 +12,9 @@ Cada ponto de quebra (uma chave) corresponde a uma largura de tela *fixa* (um va
 
 - **xs,** extra-pequeno: 0px
 - **sm,** pequeno: 600px
-- **md,** médio: 960px
-- **lg,** grande: 1280px
-- **xl,** extra-grande: 1920px
+- **md,** medium: 900px
+- **lg,** large: 1200px
+- **xl,** extra-large: 1536px
 
 Esses valores podem ser [customizados](#custom-breakpoints).
 
@@ -46,24 +46,6 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 
 Você pode aprender mais na página [useMediaQuery](/components/use-media-query/).
 
-### withWidth()
-
-> ⚠️ Esse componente de ordem superior será descontinuado para o hook [useMediaQuery](/components/use-media-query/).
-
-```jsx
-import withWidth from '@material-ui/core/withWidth';
-
-function MyComponent(props) {
-  return <div>{`Largura atual: ${props.width}`}</div>;
-}
-
-export default withWidth()(MyComponent);
-```
-
-Você pode aprender mais na página [useMediaQuery](/components/use-media-query/).
-
-{{"demo": "pages/customization/breakpoints/WithWidth.js"}}
-
 ## Pontos de quebra customizados
 
 Você define os pontos de quebra do seu projeto na seção `theme.breakpoints` do seu tema.
@@ -75,13 +57,17 @@ Você define os pontos de quebra do seu projeto na seção `theme.breakpoints` d
 Se você alterar os valores dos pontos de quebra padrão, você precisará fornecer novos conforme descreveremos:
 
 ```jsx
-import withWidth from '@material-ui/core/withWidth';
-
-function MyComponent(props) {
-  return <div>{`Largura atual: ${props.width}`}</div>;
-}
-
-export default withWidth()(MyComponent);
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 ```
 
 Sinta-se à vontade para ter quantos pontos de quebra você quiser, nomeando-os da maneira que preferir para o seu projeto.
@@ -90,9 +76,10 @@ Sinta-se à vontade para ter quantos pontos de quebra você quiser, nomeando-os 
 const theme = createTheme({
   breakpoints: {
     values: {
+      mobile: 0,
       tablet: 640,
       laptop: 1024,
-      desktop: 1280,
+      desktop: 1200,
     },
   },
 });
@@ -103,14 +90,15 @@ Se você estiver usando TypeScript, você também deverá usar a [extensão de m
 <!-- Tested with packages/material-ui/test/typescript/breakpointsOverrides.augmentation.tsconfig.json -->
 
 ```ts
-declare module "@material-ui/core/styles/createBreakpoints" {
+declare module '@material-ui/core/styles' {
   interface BreakpointOverrides {
     xs: false; // removes the `xs` breakpoint
     sm: false;
     md: false;
     lg: false;
     xl: false;
-    tablet: true; // adds the `tablet` breakpoint
+    mobile: true; // adds the `mobile` breakpoint
+    tablet: true;
     laptop: true;
     desktop: true;
   }
@@ -123,34 +111,7 @@ declare module "@material-ui/core/styles/createBreakpoints" {
 
 #### Argumentos
 
-1. `key` (*String* | *Number*): Uma chave de ponto de quebra (`xs`, `sm`, etc.) ou um número de largura de tela em pixels.
-
-#### Retornos
-
-Se você estiver usando TypeScript, você também deverá usar a [extensão de módulos](/guides/typescript/#customization-of-theme) para que o tema aceite os valores acima.
-
-#### Exemplos
-
-```js
-declare module "@material-ui/core/styles/createBreakpoints" {
-  interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
-    sm: false;
-    md: false;
-    lg: false;
-    xl: false;
-    tablet: true; // adds the `tablet` breakpoint
-    laptop: true;
-    desktop: true;
-  }
-}
-```
-
-### `theme.breakpoints.down(key) => media query`
-
-#### Argumentos
-
-1. `key` (*String* | *Number*): Uma chave de ponto de quebra (`xs`, `sm`, etc.) ou um número de largura de tela em pixels.
+1. `key` (_string_ | _number_): A breakpoint key (`xs`, `sm`, etc.) or a screen width number in px.
 
 #### Retornos
 
@@ -159,12 +120,37 @@ declare module "@material-ui/core/styles/createBreakpoints" {
 #### Exemplos
 
 ```js
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     backgroundColor: 'blue',
     // Match [md, ∞)
-    //       [960px, ∞)
+    //       [900px, ∞)
     [theme.breakpoints.up('md')]: {
+      backgroundColor: 'red',
+    },
+  },
+});
+```
+
+### `theme.breakpoints.down(key) => media query`
+
+#### Argumentos
+
+1. `key` (_string_ | _number_): A breakpoint key (`xs`, `sm`, etc.) or a screen width number in px.
+
+#### Retornos
+
+`media query`: Uma string de consulta de mídia pronta para ser usada com a maioria das soluções de estilo, na qual corresponde à largura da tela menor que, e incluindo o tamanho de tela fornecido pela chave do ponto de quebra.
+
+#### Exemplos
+
+```js
+const styles = (theme) => ({
+  root: {
+    backgroundColor: 'blue',
+    // Match [0, md)
+    //       [0, 900px)
+    [theme.breakpoints.down('md')]: {
       backgroundColor: 'red',
     },
   },
@@ -175,22 +161,22 @@ const styles = theme => ({
 
 #### Argumentos
 
-1. `key` (*String*): Uma chave de ponto de quebra (`xs`, `sm`, etc.).
+1. `key` (_string_): A breakpoint key (`xs`, `sm`, etc.).
 
 #### Retornos
 
-`media query`: Uma string de consulta de mídia pronta para ser usada com a maioria das soluções de estilo, na qual corresponde à largura da tela menor que, e incluindo o tamanho de tela fornecido pela chave do ponto de quebra.
+`media query`: Uma string de consulta de mídia pronta para ser usada com a maioria das soluções de estilo, na qual corresponde à largura da tela incluindo o tamanho de tela fornecido pela chave do ponto de quebra.
 
 #### Exemplos
 
 ```js
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     backgroundColor: 'blue',
-    // Match [0, md + 1)
-    //       [0, lg)
-    //       [0, 1280px)
-    [theme.breakpoints.down('md')]: {
+    // Match [md, md + 1)
+    //       [md, lg)
+    //       [900px, 1200px)
+    [theme.breakpoints.only('md')]: {
       backgroundColor: 'red',
     },
   },
@@ -201,81 +187,26 @@ const styles = theme => ({
 
 #### Argumentos
 
-1. `start` (*String*): Uma chave de ponto de quebra (`xs`, `sm`, etc.) ou um número de largura de tela em pixels.
-2. `end` (*String*): Uma chave de ponto de quebra (`xs`, `sm`, etc.) ou um número de largura de tela em pixels.
+1. `start` (_string_): A breakpoint key (`xs`, `sm`, etc.) or a screen width number in px.
+2. `end` (_string_): A breakpoint key (`xs`, `sm`, etc.) or a screen width number in px.
 
 #### Retornos
 
-`media query`: Uma string de consulta de mídia pronta para ser usada com a maioria das soluções de estilo, na qual corresponde à largura da tela incluindo o tamanho de tela fornecido pela chave do ponto de quebra.
+`media query`: Uma string de consulta de mídia pronta para ser usada com a maioria das soluções de estilo, na qual corresponde a larguras de telas maiores que o tamanho da tela fornecido na chave de ponto de quebra no primeiro argumento e menor que o tamanho de tela fornecido pela chave de ponto de quebra no segundo argumento.
 
 #### Exemplos
 
 ```js
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     backgroundColor: 'blue',
-    // Match [md, md + 1)
-    //       [md, lg)
-    //       [960px, 1280px)
-    [theme.breakpoints.only('md')]: {
+    // Match [sm, md)
+    //       [600px, 900px)
+    [theme.breakpoints.between('sm', 'md')]: {
       backgroundColor: 'red',
     },
   },
 });
-```
-
-### `withWidth([options]) => higher-order component`
-
-Injeta uma propriedade `width`. Não modifica o componente passado para ele; em vez disso, ele retorna um novo componente. Esta propriedade de ponto de quebra, `width`, corresponde à largura de tela atual. Pode ser um dos seguintes pontos de quebra:
-
-```ts
-type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-```
-
-Alguns detalhes de implementação que podem ser interessantes para estar ciente:
-
-- Ele encaminha as propriedades *non React static* para que este HOC seja mais "transparente". Por exemplo, pode ser usado para definir um método estático (next.js) `getInitialProps()`.
-
-#### Argumentos
-
-1. `options` (_Object_ [opcional]):
-
-- `options.withTheme` (*Boolean* [opcional]): Padrão `false`. Fornecer o objeto `theme` para o componente como uma propriedade.
-- `options.noSSR` (*Boolean* [opcional]): Padrão `false`. Para realizar a reconciliação de renderização do lado do servidor, ele precisa renderizar duas vezes. Uma primeira vez sem nada e uma segunda vez com os filhos. Este ciclo de renderização de dupla passagem tem uma desvantagem. A interface do usuário pode piscar. Você pode definir esse sinalizador para `true` se você não estiver fazendo a renderização do lado do servidor.
-- `options.initialWidth` (*Breakpoint* [opcional]): Como `window.innerWidth` não esta disponível no servidor, retornamos uma correspondência padrão durante a primeira montagem. Você pode querer usar uma heurística para aproximar a largura da tela no navegador do cliente. Por exemplo, você poderia estar usando o user-agent ou o client-hint. Para definir o initialWidth, precisamos passar uma propriedade customizada com esta forma: https://caniuse.com/#search=client%20hint, também podemos definir a largura inicial globalmente usando [`propriedades customizadas`](/customization/theme-components/#default-props) no tema.
-
-```js
-const theme = createTheme({
-  props: {
-    // Componente withWidth ⚛️
-    MuiWithWidth: {
-      // Propriedade de largura inicial
-      initialWidth: 'lg', // Ponto de quebra globalmente definido 🌎!
-      },
-  },
-});
-```
-
-- `options.resizeInterval` (*Number* [opcional]): Padrão é 166, que corresponde a 10 quadros a 60 Hz. Número de milissegundos a aguardar antes de responder a um evento de redimensionamento de tela.
-
-#### Retornos
-
-`higher-order component`: Deve ser usado para encapsular o componente.
-
-#### Exemplos
-
-```jsx
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-
-function MyComponent(props) {
-  if (isWidthUp('sm', props.width)) {
-    return <span />
-  }
-
-  return <div />;
-}
-
-export default withWidth()(MyComponent);
 ```
 
 ## Valores padrão

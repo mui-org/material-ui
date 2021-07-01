@@ -3,8 +3,8 @@ import { isFragment } from 'react-is';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { alpha } from '@material-ui/system';
 import capitalize from '../utils/capitalize';
-import { alpha } from '../styles/colorManipulator';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import buttonGroupClasses, { getButtonGroupUtilityClass } from './buttonGroupClasses';
@@ -12,20 +12,26 @@ import buttonGroupClasses, { getButtonGroupUtilityClass } from './buttonGroupCla
 const overridesResolver = (props, styles) => {
   const { styleProps } = props;
 
-  return {
-    [`& .${buttonGroupClasses.grouped}`]: {
-      ...styles.grouped,
-      ...styles[`grouped${capitalize(styleProps.orientation)}`],
-      ...styles[`grouped${capitalize(styleProps.variant)}`],
-      ...styles[`grouped${capitalize(styleProps.variant)}${capitalize(styleProps.orientation)}`],
-      ...styles[`grouped${capitalize(styleProps.variant)}${capitalize(styleProps.color)}`],
+  return [
+    { [`& .${buttonGroupClasses.grouped}`]: styles.grouped },
+    {
+      [`& .${buttonGroupClasses.grouped}`]: styles[`grouped${capitalize(styleProps.orientation)}`],
     },
-    ...styles.root,
-    ...styles[styleProps.variant],
-    ...(styleProps.disableElevation === true && styles.disableElevation),
-    ...(styleProps.fullWidth && styles.fullWidth),
-    ...(styleProps.orientation === 'vertical' && styles.vertical),
-  };
+    { [`& .${buttonGroupClasses.grouped}`]: styles[`grouped${capitalize(styleProps.variant)}`] },
+    {
+      [`& .${buttonGroupClasses.grouped}`]:
+        styles[`grouped${capitalize(styleProps.variant)}${capitalize(styleProps.orientation)}`],
+    },
+    {
+      [`& .${buttonGroupClasses.grouped}`]:
+        styles[`grouped${capitalize(styleProps.variant)}${capitalize(styleProps.color)}`],
+    },
+    styles.root,
+    styles[styleProps.variant],
+    styleProps.disableElevation === true && styles.disableElevation,
+    styleProps.fullWidth && styles.fullWidth,
+    styleProps.orientation === 'vertical' && styles.vertical,
+  ];
 };
 
 const useUtilityClasses = (styleProps) => {

@@ -1,5 +1,5 @@
 {
-  "componentDescription": "Uses an additional container component if <code>ListItemSecondaryAction</code> is the last child.",
+  "componentDescription": "Uses an additional container component if `ListItemSecondaryAction` is the last child.",
   "propDescriptions": {
     "alignItems": "Defines the <code>align-items</code> style property.",
     "autoFocus": "If <code>true</code>, the list item is focused during the first mount. Focus will also be triggered if the value changes from false to true.",
@@ -7,13 +7,18 @@
     "children": "The content of the component if a <code>ListItemSecondaryAction</code> is used it must be the last child.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
+    "components": "The components used for each slot inside the InputBase. Either a string to use a HTML element or a component.",
+    "componentsProps": "The props used for each slot inside the Input.",
     "ContainerComponent": "The container component used when a <code>ListItemSecondaryAction</code> is the last child.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
     "ContainerProps": "Props applied to the container component if used.",
     "dense": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used. The prop defaults to the value inherited from the parent List component.",
     "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
     "disableGutters": "If <code>true</code>, the left and right padding is removed.",
+    "disablePadding": "If <code>true</code>, all padding is removed.",
     "divider": "If <code>true</code>, a 1px light border is added to the bottom of the list item.",
-    "selected": "Use to apply selected styling."
+    "secondaryAction": "The element to display at the end of ListItem.",
+    "selected": "Use to apply selected styling.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {
@@ -54,6 +59,11 @@
       "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
       "nodeName": "the inner `component` element",
       "conditions": "<code>disableGutters={true}</code>"
+    },
+    "padding": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disablePadding={true}</code>"
     },
     "button": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

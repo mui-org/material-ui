@@ -1,5 +1,5 @@
 ---
-title: React Skeleton component
+title: Composant React Skeleton
 components: Skeleton (Squelette)
 githubLabel: 'component: Skeleton'
 ---
@@ -8,13 +8,13 @@ githubLabel: 'component: Skeleton'
 
 <p class="description">Display a placeholder preview of your content before the data gets loaded to reduce load-time frustration.</p>
 
-The data for your components might not be immediately available. The data for your components might not be immediately available. It feels like things are happening immediately, then the information is incrementally displayed on the screen (Cf. [Avoid The Spinner](https://www.lukew.com/ff/entry.asp?1797)).
+The data for your components might not be immediately available. Vous pouvez améliorer la réactivité perçue de la page en utilisant des Skeletons. It feels like things are happening immediately, then the information is incrementally displayed on the screen (Cf. [Avoid The Spinner](https://www.lukew.com/ff/entry.asp?1797)).
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Utilisation
 
-The component is designed to be used **directly in your components**. Par exemple:
+Le composant est conçu pour être utilisé **directement dans vos composants**. Par exemple:
 
 ```jsx
 {item ? (
@@ -32,7 +32,7 @@ The component supports 3 shape variants.
 
 ## Animations
 
-By default, the skeleton pulsate, but you can change the animation for a wave or disable it entirely.
+Par défaut, c'est le Skeleton Pulsates, mais vous pouvez changer l'animation en une vague ou la désactiver entièrement.
 
 {{"demo": "pages/components/skeleton/Animations.js"}}
 
@@ -68,16 +68,22 @@ loading
 
 {{"demo": "pages/components/skeleton/SkeletonChildren.js", "defaultCodeOpen": false}}
 
+## Couleur
+
+The color of the component can be customized by changing its `background-color` CSS property. This is especially useful when on a black background (as the skeleton will otherwise be invisible).
+
+{{"demo": "pages/components/skeleton/SkeletonColor.js", "bg": "inline"}}
+
 ## Accessibilité
 
-Skeleton screens provide an alternative to the traditional spinner method. Rather than showing an abstract widget, skeleton screens create anticipation of what is to come and reduce cognitive load.
+Les écrans de Skeleton offrent une alternative à la méthode traditionnelle. Rather than showing an abstract widget, skeleton screens create anticipation of what is to come and reduce cognitive load.
 
 The background color of the skeleton uses the least amount of luminance to be visible in good conditions (good ambient light, good screen, no visual impairments).
 
 ### ARIA
 
-None.
+Aucune.
 
 ### Clavier
 
-The skeleton is not focusable.
+Le Skeleton n'est pas concentrable.

@@ -1,25 +1,33 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, fireEvent, screen, describeConformanceV5 } from 'test/utils';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import { SinonFakeTimers, useFakeTimers } from 'sinon';
+import { fireEvent, screen, describeConformanceV5 } from 'test/utils';
 import CalendarPicker, { calendarPickerClasses as classes } from '@material-ui/lab/CalendarPicker';
-import { adapterToUse, createPickerRender, getAllByMuiTest } from '../internal/pickers/test-utils';
+import {
+  adapterToUse,
+  wrapPickerMount,
+  createPickerRender,
+  getAllByMuiTest,
+} from '../internal/pickers/test-utils';
 
 describe('<CalendarPicker />', () => {
-  const mount = createMount();
-  const render = createPickerRender({ strict: false });
+  let clock: SinonFakeTimers;
+  beforeEach(() => {
+    clock = useFakeTimers();
+  });
+  afterEach(() => {
+    clock.restore();
+  });
 
-  const localizedMount = (node: React.ReactNode) => {
-    return mount(<LocalizationProvider dateAdapter={AdapterDateFns}>{node}</LocalizationProvider>);
-  };
+  // StrictModeViolation: Uses StrictMode incompatible API of `react-transition-group`
+  const render = createPickerRender({ strict: false });
 
   describeConformanceV5(<CalendarPicker date={adapterToUse.date()} onChange={() => {}} />, () => ({
     classes,
     inheritComponent: 'div',
     render,
     muiName: 'MuiCalendarPicker',
-    mount: localizedMount,
+    wrapMount: wrapPickerMount,
     refInstanceof: window.HTMLDivElement,
     // cannot test reactTestRenderer because of required context
     skip: [

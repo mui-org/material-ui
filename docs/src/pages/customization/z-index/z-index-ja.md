@@ -14,4 +14,4 @@ The `z-index` values start at an arbitrary number, high and specific enough to i
 - snackbar: 1400
 - tooltip: 1500
 
-これらの値はいつでもカスタマイズできます。 これらの値はいつでもカスタマイズできます。 これらの値はいつでもカスタマイズできます。 これらの値はいつでもカスタマイズできます。 You will find them in the theme under the [`zIndex`](/customization/default-theme/?expand-path=$.zIndex) key of the theme. 個々の値をカスタマイズすることはお勧めできません。; 1つを変更した場合は、すべてを変更する必要があります。
+これらの値はいつでもカスタマイズできます。 これらは、テーマの[`zIndex`](/customization/default-theme/?expand-path=$.zIndex)キーの下のテーマにあります。 個々の値をカスタマイズすることはお勧めできません。; 1つを変更した場合は、すべてを変更する必要があります。

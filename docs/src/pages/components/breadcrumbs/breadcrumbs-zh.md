@@ -13,7 +13,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#breadcrumb'
 
 ## 简单的面包屑导航
 
-{{"demo": "pages/components/breadcrumbs/SimpleBreadcrumbs.js"}}
+{{"demo": "pages/components/breadcrumbs/BasicBreadcrumbs.js"}}
 
 ## 激活最后一个面包屑导航
 
@@ -23,7 +23,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#breadcrumb'
 
 ## 自定义分隔符
 
-在以下的示例中，我们使用了两个字符串分隔符和一个 SVG 图标。
+In the following examples, we are using two string separators and an SVG icon.
 
 {{"demo": "pages/components/breadcrumbs/CustomSeparator.js"}}
 

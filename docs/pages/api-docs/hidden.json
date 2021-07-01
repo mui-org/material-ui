@@ -1,0 +1,39 @@
+{
+  "props": {
+    "children": { "type": { "name": "node" } },
+    "implementation": {
+      "type": { "name": "enum", "description": "'css'<br>&#124;&nbsp;'js'" },
+      "default": "'js'"
+    },
+    "initialWidth": {
+      "type": {
+        "name": "enum",
+        "description": "'xs'<br>&#124;&nbsp;'sm'<br>&#124;&nbsp;'md'<br>&#124;&nbsp;'lg'<br>&#124;&nbsp;'xl'"
+      }
+    },
+    "lgDown": { "type": { "name": "bool" } },
+    "lgUp": { "type": { "name": "bool" } },
+    "mdDown": { "type": { "name": "bool" } },
+    "mdUp": { "type": { "name": "bool" } },
+    "only": {
+      "type": {
+        "name": "union",
+        "description": "'xs'<br>&#124;&nbsp;'sm'<br>&#124;&nbsp;'md'<br>&#124;&nbsp;'lg'<br>&#124;&nbsp;'xl'<br>&#124;&nbsp;Array&lt;'xs'<br>&#124;&nbsp;'sm'<br>&#124;&nbsp;'md'<br>&#124;&nbsp;'lg'<br>&#124;&nbsp;'xl'&gt;"
+      }
+    },
+    "smDown": { "type": { "name": "bool" } },
+    "smUp": { "type": { "name": "bool" } },
+    "xlDown": { "type": { "name": "bool" } },
+    "xlUp": { "type": { "name": "bool" } },
+    "xsDown": { "type": { "name": "bool" } },
+    "xsUp": { "type": { "name": "bool" } }
+  },
+  "name": "Hidden",
+  "styles": { "classes": [], "globalClasses": {}, "name": null },
+  "spread": true,
+  "filename": "/packages/material-ui/src/Hidden/Hidden.js",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/components/hidden/\">Hidden</a></li></ul>",
+  "styledComponent": true,
+  "cssComponent": false
+}

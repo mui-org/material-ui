@@ -105,6 +105,7 @@ import { Button, TextField } from '@material-ui/core';
       'babel-plugin-import',
       {
         libraryName: '@material-ui/core',
+        libraryDirectory: '',
         camel2DashComponentName: false,
       },
       'core',
@@ -113,6 +114,7 @@ import { Button, TextField } from '@material-ui/core';
       'babel-plugin-import',
       {
         libraryName: '@material-ui/icons',
+        libraryDirectory: '',
         camel2DashComponentName: false,
       },
       'icons',
@@ -156,6 +158,7 @@ import { Button, TextField } from '@material-ui/core';
 
 ```js
 /* config-overrides.js */
+/* eslint-disable react-hooks/rules-of-hooks */
 const { useBabelRc, override } = require('customize-cra');
 
 module.exports = override(useBabelRc());
@@ -175,24 +178,6 @@ module.exports = override(useBabelRc());
 +   "test": "react-app-rewired test",
     "eject": "react-scripts eject"
 }
-```
-
-注意：您可能会遇到如下错误：
-
-> Module not found: Can't resolve '@material-ui/core/makeStyles' in '/your/project'
-
-这是因为 `@material-ui/styles` 通过 `核心（core）` 重新导出，但是不允许完整的导入模块。
-
-您的代码中可能存在这样的模块导入方式：
-
-```js
-import { makeStyles, createStyles } from '@material-ui/core';
-```
-
-要解决它也很简单，您只需要这样单独定义导入模块：
-
-```js
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 ```
 
 这样一来，你可以享受更快的启动时间了。

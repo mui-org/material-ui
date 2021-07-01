@@ -137,6 +137,21 @@ describe('e2e', () => {
       await expect(screen.getByText('ok')).toHaveFocus();
     });
 
+    it('should loop the tab key after activation', async () => {
+      await renderFixture('Unstable_TrapFocus/DefaultOpenLazyTrapFocus');
+
+      await expect(screen.getByTestId('initial-focus')).toHaveFocus();
+
+      await page.keyboard.press('Tab');
+      await expect(screen.getByText('close')).toHaveFocus();
+      await page.keyboard.press('Tab');
+      await expect(screen.getByText('noop')).toHaveFocus();
+      await page.keyboard.press('Tab');
+      await expect(screen.getByText('close')).toHaveFocus();
+      await page.keyboard.press('Enter');
+      await expect(screen.getByTestId('initial-focus')).toHaveFocus();
+    });
+
     it('should focus on first focus element after last has received a tab click', async () => {
       await renderFixture('Unstable_TrapFocus/OpenTrapFocus');
 

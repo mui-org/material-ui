@@ -4,11 +4,10 @@ import { InternalStandardProps as StandardProps, Theme } from '..';
 import { ModalProps } from '../Modal';
 import { SlideProps } from '../Slide';
 import { PaperProps } from '../Paper';
-import { TransitionHandlerProps, TransitionProps } from '../transitions/transition';
+import { TransitionProps } from '../transitions/transition';
 import { DrawerClasses } from './drawerClasses';
 
-export interface DrawerProps
-  extends StandardProps<ModalProps & Partial<TransitionHandlerProps>, 'open' | 'children'> {
+export interface DrawerProps extends StandardProps<ModalProps, 'open' | 'children'> {
   /**
    * Side from which the drawer will appear.
    * @default 'left'

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { unstable_useId as useId } from '@material-ui/utils';
-import { styled, Theme, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { styled, Theme, useThemeProps } from '@material-ui/core/styles';
 import {
   unstable_composeClasses as composeClasses,
   generateUtilityClass,
@@ -360,8 +360,7 @@ function ClockPicker<TDate>(inProps: ClockPickerProps<TDate>) {
     selectedId,
   ]);
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   return (

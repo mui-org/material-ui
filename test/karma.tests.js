@@ -49,3 +49,10 @@ const unstyledContext = require.context(
   /\.test\.(js|ts|tsx)$/,
 );
 unstyledContext.keys().forEach(unstyledContext);
+
+const utilsContext = require.context(
+  '../packages/material-ui-utils/src/',
+  true,
+  /\.test\.(js|ts|tsx)$/,
+);
+utilsContext.keys().forEach(utilsContext);

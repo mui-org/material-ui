@@ -15,9 +15,9 @@ Coisas para saber ao usar o componente `Popover`:
 
 [A paleta](/system/palette/) com funções de estilo.
 
-## Popover Simples
+## Basic Popover
 
-{{"demo": "pages/components/popover/SimplePopover.js" }}
+{{"demo": "pages/components/popover/BasicPopover.js" }}
 
 ## Âncora - Exemplo interativo
 
@@ -27,13 +27,13 @@ Use os botões de opção para ajustar as posições `anchorOrigin` e `transform
 
 ## Interação mouse em cima
 
-Este exemplo demonstra como usar o componente `Popover` para implementar um comportamento popover baseado no evento mouse over.
+This demo demonstrates how to use the `Popover` component and the mouseover event to achieve popover behavior.
 
 {{"demo": "pages/components/popover/MouseOverPopover.js"}}
 
 ## Projetos Complementares
 
-Para situações de uso mais avançadas, você pode tirar proveito com:
+For more advanced use cases, you might be able to take advantage of:
 
 ### PopupState helper
 

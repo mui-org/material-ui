@@ -7,14 +7,6 @@ export interface TrapFocusProps {
    */
   open: boolean;
   /**
-   * Return the document the trap focus is mounted into.
-   * Provide the prop if you need the restore focus to work between different documents.
-   * @default function defaultGetDoc() {
-   *   return document;
-   * }
-   */
-  getDoc?: () => Document;
-  /**
    * Returns an array of ordered tabbable nodes (i.e. in tab order) within the root.
    * For instance, you can provide the "tabbable" npm dependency.
    * @param {HTMLElement} root

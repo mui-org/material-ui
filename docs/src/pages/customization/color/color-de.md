@@ -1,6 +1,6 @@
 # Farbe (Color)
 
-<p class="description">Vermitteln Sie Bedeutung durch Farbe. Im Auslieferungszustand haben Sie Zugriff auf alle Farben in der Material Design-Spezifikation.</p>
+<p class="description">Vermitteln Sie Bedeutung durch Farbe. Out of the box you get access to all colors in the Material Design guidelines.</p>
 
 Das Material Design [Farbsystem](https://material.io/design/color/) kann verwendet werden, um ein Farbschema zu erstellen, das Ihre Marke oder Ihren Stil widerspiegelt.
 
@@ -17,7 +17,7 @@ The Material Design team has also built an awesome palette configuration tool: [
 <br />
 <br />
 
-Die Ausgabe kann in die `createTheme()` Funktion eingegeben werden:
+The output can be fed into `createTheme()` function:
 
 ```js
 import { createTheme } from '@material-ui/core/styles';
@@ -64,9 +64,9 @@ const theme = createTheme({
 });
 ```
 
-Nur die `Haupttöne` müssen bereitgestellt werden (es sei denn, Sie möchten `light`, `dark` oder `contrastText` weiter anpassen), da die anderen Farben von `createTheme()` berechnet werden, wie in der Sektion [ Designanpassung ](/customization/palette/) beschrieben.
+Only the `main` shades need be provided (unless you wish to further customize `light`, `dark` or `contrastText`), as the other colors will be calculated by `createTheme()`, as described in the [Theme customization](/customization/palette/) section.
 
-Wenn Sie die standardmäßigen primären und / oder sekundären Farbtöne verwenden, wird durch das Bereitstellen von dem Farbobjekt die entsprechenden Farbtöne der Materialfarbe für main, light und dark von `createTheme()` berechnet.
+If you are using the default primary and / or secondary shades then by providing the color object, `createTheme()` will use the appropriate shades from the material color for main, light and dark.
 
 ### Werkzeuge von der Community
 

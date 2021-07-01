@@ -32,7 +32,7 @@ export interface StepperProps extends StandardProps<PaperProps> {
    * An element to be placed between each step.
    * @default <StepConnector />
    */
-  connector?: React.ReactElement<any, any>;
+  connector?: React.ReactElement<any, any> | null;
   /**
    * If set the `Stepper` will not assist in controlling steps for linear flow.
    * @default false

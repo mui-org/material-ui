@@ -5,7 +5,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
@@ -124,7 +123,13 @@ export default function InteractiveList() {
           <Demo>
             <List dense={dense}>
               {generate(
-                <ListItem>
+                <ListItem
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  }
+                >
                   <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
@@ -134,11 +139,6 @@ export default function InteractiveList() {
                     primary="Single-line item"
                     secondary={secondary ? 'Secondary text' : null}
                   />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
                 </ListItem>,
               )}
             </List>

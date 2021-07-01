@@ -25,12 +25,12 @@ const StepRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.orientation],
-      ...(styleProps.alternativeLabel && styles.alternativeLabel),
-      ...(styleProps.completed && styles.completed),
-    };
+    return [
+      styles.root,
+      styles[styleProps.orientation],
+      styleProps.alternativeLabel && styles.alternativeLabel,
+      styleProps.completed && styles.completed,
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element if `orientation="horizontal"`. */

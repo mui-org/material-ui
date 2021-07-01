@@ -1,13 +1,13 @@
 import * as React from 'react';
 import sortedUniqBy from 'lodash/sortedUniqBy';
 import MarkdownDocs from 'docs/src/modules/components/MarkdownDocs';
-import { prepareMarkdown } from 'docs/src/modules/utils/parseMarkdown';
+import {
+  demos,
+  docs,
+  requireDemo,
+} from '!@material-ui/markdown/loader!docs/src/pages/versions/versions.md';
 
-const pageFilename = 'versions';
-const requireDemo = require.context('docs/src/pages/versions/', false, /\.(js|tsx)$/);
-const requireRaw = require.context('!raw-loader!../src/pages/versions', false, /\.(js|md|tsx)$/);
-
-export default function Page({ demos, docs }) {
+export default function Page() {
   return <MarkdownDocs demos={demos} docs={docs} requireDemo={requireDemo} />;
 }
 
@@ -73,7 +73,5 @@ Page.getInitialProps = async () => {
 
   versions = sortedUniqBy(versions, 'version');
 
-  const { demos, docs } = prepareMarkdown({ pageFilename, requireRaw });
-
-  return { demos, docs, versions };
+  return { versions };
 };

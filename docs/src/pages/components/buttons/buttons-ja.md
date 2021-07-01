@@ -1,5 +1,5 @@
 ---
-title: React Button component
+title: React Button コンポーネント
 components: Button, IconButton, ButtonBase
 materialDesign: https://material.io/components/buttons
 githubLabel: 'component: Button'
@@ -10,7 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 <p class="description">Buttonを使用すると、ユーザーは1回のタップでアクションを実行したり選択したりできます。</p>
 
-[ボタン](https://material.io/design/components/buttons.html) 、ユーザーが実行できるアクションを伝えます。 これらは通常、UI全体の次のような場所に配置されます。
+ボタンは、ユーザーが実行できるアクションを伝達します。 これらは通常、UI全体の次のような場所に配置されます。
 
 - Dialogs
 - Modal window
@@ -20,9 +20,21 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Contained buttons
+## Basic Button
 
-[Outlined buttons](https://material.io/design/components/buttons.html#outlined-button) are medium-emphasis buttons. アプリ内で強調すべきアクションを含みます。
+The `Button` comes with three variants: text (default), contained, and outlined.
+
+{{"demo": "pages/components/buttons/BasicButtons.js"}}
+
+### Text button
+
+[Text buttons](https://material.io/components/buttons#text-button) are typically used for less-pronounced actions, including those located: in dialogs, in cards. Cardでは、テキストボタンを使用することでCardの内容に重点を置くことができます。
+
+{{"demo": "pages/components/buttons/TextButtons.js"}}
+
+### Contained button
+
+[Contained button](https://material.io/components/buttons#contained-button) は高さと塗りつぶしによって区別される、より強調されたボタンです。 アプリ内で強調すべきアクションを含みます。
 
 {{"demo": "pages/components/buttons/ContainedButtons.js"}}
 
@@ -30,20 +42,9 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#button'
 
 {{"demo": "pages/components/buttons/DisableElevation.js"}}
 
-## Text buttons
+### Outlined button
 
-Cardの中でText Buttonを用いることで、Cardの内容に重点を置くことができます。
-
-- Dialog
-- Card
-
-Cardでは、テキストボタンを使用することでCardの内容に重点を置くことができます。
-
-{{"demo": "pages/components/buttons/TextButtons.js"}}
-
-## Outlined buttons
-
-[Contained button](https://material.io/design/components/buttons.html#contained-button)は、力強く、強調と塗りつぶしによって区別されるようなボタンです。 アプリ内で強調すべきアクションを含みます。
+[Outlined buttons](https://material.io/components/buttons#outlined-button) are medium-emphasis buttons. They contain actions that are important but aren't the primary action in an app.
 
 Outlined buttonは、Contained buttonより弱く、 Text buttonよりは強い強調をします。
 
@@ -59,19 +60,25 @@ Outlined buttonは、Contained buttonより弱く、 Text buttonよりは強い�
 
 ドキュメントでは(多すぎるので)ネイティブpropsに関しては [言及していない](/guides/api/#native-properties)ことに注意してください。
 
+## カラー
+
+{{"demo": "pages/components/buttons/ColorButtons.js"}}
+
+In addition to using the default button colors, you can add custom ones, or disable any you don't need. See the [Adding new colors](/customization/palette/#adding-new-colors) example for more info.
+
+## サイズ
+
+For larger or smaller buttons, use the `size` prop.
+
+{{"demo": "pages/components/buttons/ButtonSizes.js"}}
+
 ## Upload button
 
 {{"demo": "pages/components/buttons/UploadButtons.js"}}
 
-## サイズ
-
-大きなボタンと小さなボタンがありますか? `size`プロパティを使用します。
-
-{{"demo": "pages/components/buttons/ButtonSizes.js"}}
-
 ## Buttons with icons and label
 
-Sometimes you might want to have icons for certain buttons to enhance the UX of the application as we recognize logos more easily than plain text. たとえば、削除ボタンにごみ箱アイコンを付けるような場合です。
+ロゴはプレーンテキストよりも認識しやすいため、ボタンにアイコンを追加してアプリケーションのUXを強化したい場合があります。 たとえば、削除ボタンにごみ箱アイコンを付けるような場合です。
 
 {{"demo": "pages/components/buttons/IconLabelButtons.js"}}
 
@@ -83,35 +90,39 @@ Sometimes you might want to have icons for certain buttons to enhance the UX of 
 
 {{"demo": "pages/components/buttons/IconButtons.js"}}
 
+### サイズ
+
+他のサイズのボタンを表示したい場合は、 `size` プロパティを使用します。
+
+{{"demo": "pages/components/buttons/IconButtonSizes.js"}}
+
 ## カスタムButton
 
-コンポーネントのカスタマイズの例を次に示します。 詳細については、 [overrides documentation page](/customization/how-to-customize/)を参照してください。
+コンポーネントのカスタマイズの例を次に示します。 詳細については、 [こちら](/customization/how-to-customize/)を参照してください。
 
 {{"demo": "pages/components/buttons/CustomizedButtons.js", "defaultCodeOpen": false}}
 
 🎨 インスピレーションを求めている場合は、 [MUI Treasury's customization examples](https://mui-treasury.com/styles/button) を確認すると良いでしょう。
 
-## 複雑なButton
+## ローディングボタン
 
-The loading buttons can show loading state and disable interactions.
+ローディングボタンは、読み込み中の状態を表示し、操作を無効にすることができます。
 
 {{"demo": "pages/components/buttons/LoadingButtons.js"}}
 
-こちらは [react-routerとの統合例](/guides/composition/#button).
+状態間の遷移を確認するにはトグルスイッチを切り替えてください。
 
 {{"demo": "pages/components/buttons/LoadingButtonsTransition.js"}}
 
-## Complex buttons
+## 複雑なボタン
 
-テキストボタン、コンテインボタン、フローティングアクションボタン、アイコンボタンは、同じコンポーネント(`ButtonBase`) を元に作成されています。 この元のコンポーネントを利用して独自のインタラクションを構築できます。 You can take advantage of this lower-level component to build custom interactions.
+テキストボタン、コンテインボタン、フローティングアクションボタン、アイコンボタンは、同じコンポーネント(`ButtonBase`) を元に作成されています。 この低レベルのコンポーネントを利用して独自のインタラクションを構築できます。
 
 {{"demo": "pages/components/buttons/ButtonBase.js"}}
 
 ## サードパーティ製ルーティングライブラリ
 
-一般的な使用例の1つは、ボタンを使用して新しいページへのナビゲーションを発火することです。 一般的な使用例の1つは、ボタンを使用して新しいページへのナビゲーションを発火することです。 ただし、特定のフォーカスについては` ButtonBase `には提供されているコンポーネントのDOMノードが必要です。 コンポーネントにrefを添付し、コンポーネントが基のDOMノードにrefを継承することを期待して成り立っています。 多くのインタラクティブなコンポーネントが `ButtonBase` に依存していることから、どこでもこの機能を使うことができるはずです。
-
-こちらは [react-routerとの統合例](/guides/composition/#button).
+One frequent use case is to perform navigation on the client only, without an HTTP round-trip to the server. `ButtonBase` コンポーネントはこういった使用法を扱うために`component` プロパティを提供します。 詳細は [こちら](/guides/routing/#button) です。
 
 ## 制限事項
 
@@ -121,7 +132,7 @@ ButtonBaseコンポーネントは無効化時に、 `pointer-events: none;` と
 
 `not-allowed`を意図的に使用したい場合、２つの選択肢があります。
 
-1. **CSS だけ**. `<button>` エレメントの無効化時のポインターイベントを削除できます:
+1. **CSS のみ**。 You can remove the pointer-events style on the disabled state of the `<button>` element:
 
 ```css
 .MuiButtonBase-root:disabled {
@@ -135,7 +146,7 @@ ButtonBaseコンポーネントは無効化時に、 `pointer-events: none;` と
 - [tooltips を無効化したエレメント](/components/tooltips/#disabled-elements)で表示する必要がある時、 `pointer-events: none;` に戻す必要があります。
 - ボタン要素以外をレンダリングする時、カーソルが変更されない時がある。例えば、link `<a>`要素。
 
-2. **DOM 変更**. Buttonコンポーネントを囲う。
+2. **DOM を変更する**。 Buttonコンポーネントを囲う。
 
 ```jsx
 <span style={{ cursor: 'not-allowed' }}>

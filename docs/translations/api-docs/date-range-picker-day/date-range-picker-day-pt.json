@@ -1,10 +1,75 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "day": "The date to show.",
+    "isEndOfHighlighting": "Set to <code>true</code> if the <code>day</code> is the end of a highlighted date range.",
+    "isEndOfPreviewing": "Set to <code>true</code> if the <code>day</code> is the start of a highlighted date range.",
+    "isHighlighting": "Set to <code>true</code> if the <code>day</code> is in a highlighted date range.",
+    "isPreviewing": "Set to <code>true</code> if the <code>day</code> is in a preview date range.",
+    "isStartOfHighlighting": "Set to <code>true</code> if the <code>day</code> is the start of a highlighted date range.",
+    "isStartOfPreviewing": "Set to <code>true</code> if the <code>day</code> is the end of a highlighted date range.",
     "outsideCurrentMonth": "If <code>true</code>, day is outside of month and will be hidden.",
-    "selected": "If <code>true</code>, renders as selected."
+    "selected": "If <code>true</code>, renders as selected.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "root": {
+      "description": "Estilos aplicados ao elemento raiz."
+    },
+    "rangeIntervalDayHighlight": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>isHighlighting=true</code> and <code>outsideCurrentMonth=false</code>"
+    },
+    "rangeIntervalDayHighlightStart": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>isStartOfHighlighting=true</code> or <code>day</code> is the start of the month"
+    },
+    "rangeIntervalDayHighlightEnd": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>isEndOfHighlighting=true</code> or <code>day</code> is the end of the month"
+    },
+    "rangeIntervalPreview": {
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the preview element"
+    },
+    "rangeIntervalDayPreview": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>isPreviewing=true</code> and <code>outsideCurrentMonth=false</code>"
+    },
+    "rangeIntervalDayPreviewStart": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>isStartOfPreviewing=true</code> or <code>day</code> is the start of the month"
+    },
+    "rangeIntervalDayPreviewEnd": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>isEndOfPreviewing=true</code> or <code>day</code> is the end of the month"
+    },
+    "day": {
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the day element"
+    },
+    "dayOutsideRangeInterval": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "the day element",
+      "conditions": "<code>isHighlighting=false</code>"
+    },
+    "dayInsideRangeInterval": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "the day element",
+      "conditions": "<code>selected=false</code> and <code>isHighlighting=true</code>"
+    },
+    "notSelectedDate": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "the day element",
+      "conditions": "<code>selected=false</code>"
+    }
+  }
 }

@@ -1,6 +1,6 @@
 ---
 title: Componente React Seletor de hora
-components: TimePicker
+components: DesktopTimePicker, MobileTimePicker, StaticTimePicker, TimePicker, ClockPicker
 githubLabel: 'component: TimePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/time-pickers
@@ -34,40 +34,52 @@ function App() {
 
 ## Utilização Básica
 
-O seletor de hora ajustará automaticamente à configuração de horário da localidade, ou seja, ao formato 12 horas ou 24 horas. Isso pode ser controlado com a propriedade `ampm`.
+The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop.
 
 {{"demo": "pages/components/time-picker/BasicTimePicker.js"}}
 
-## Localização
+## Modo estático
 
-Use `LocalizationProvider` para alterar a date-engine de localização que é usada para renderizar o seletor de hora. Observe que a configuração `am/pm` é trocada automaticamente:
+It's possible to render any time picker inline. Isto permitirá construir contêineres customizados de popover/modal.
 
-{{"demo": "pages/components/time-picker/LocalizedTimePicker.js"}}
+{{"demo": "pages/components/time-picker/StaticTimePickerDemo.js", "bg": true}}
 
 ## Responsividade
 
 O componente seletor de hora é projetado e otimizado para o dispositivo em que ele é executado.
 
-- A versão "móvel" funciona melhor para dispositivos de toque e telas pequenas.
-- A versão "desktop" funciona melhor para dispositivos com mouse e telas grandes.
+- The `MobileTimePicker` component works best for touch devices and small screens.
+- The `DesktopTimePicker` component works best for mouse devices and large screens.
 
-Por padrão, o componente `TimePicker` usa uma consulta de mídia `@media (pointer: fine)` para determinar qual versão usar. Isto pode ser customizado com a propriedade `desktopModeMediaQuery`.
+By default, the `TimePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. Isto pode ser customizado com a propriedade `desktopModeMediaQuery`.
 
 {{"demo": "pages/components/time-picker/ResponsiveTimePickers.js"}}
+
+## Propriedades de formulário
+
+The time picker component can be disabled or read-only.
+
+{{"demo": "pages/components/time-picker/FormPropsTimePickers.js"}}
+
+## Localização
+
+Use `LocalizationProvider` para alterar a date-engine de localização que é usada para renderizar o seletor de hora. O seletor de hora ajustará automaticamente à configuração de horário da localidade, ou seja, ao formato 12 horas ou 24 horas. Isso pode ser controlado com a propriedade `ampm`.
+
+{{"demo": "pages/components/time-picker/LocalizedTimePicker.js"}}
 
 ## Validação de hora
 
 {{"demo": "pages/components/time-picker/TimeValidationTimePicker.js"}}
 
-## Modo estático
-
-É possível renderizar qualquer seletor em linha. Isto permitirá construir contêineres customizados de popover/modal.
-
-{{"demo": "pages/components/time-picker/StaticTimePickerDemo.js", "bg": true}}
-
 ## Paisagem
 
 {{"demo": "pages/components/time-picker/StaticTimePickerLandscape.js", "bg": true}}
+
+## Subcomponentes
+
+Some lower-level sub-components (`ClockPicker`) are also exported. Estes são renderizados sem estar encapsulado ou  lógica exterior (campo com mascara, valores de data e validação, etc.).
+
+{{"demo": "pages/components/time-picker/SubComponentsTimePickers.js"}}
 
 ## Segundos
 

@@ -1,6 +1,6 @@
 ---
 title: React Date Picker component
-components: DatePicker, PickersDay
+components: CalendarPicker, CalendarPickerSkeleton, DatePicker, DesktopDatePicker, MobileDatePicker, MonthPicker, PickersDay, StaticDatePicker, YearPicker
 githubLabel: 'component: DatePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
@@ -37,20 +37,32 @@ function App() {
 
 ## Basic usage
 
-The date picker will be rendered as a modal dialog on mobile, and a textfield with a popover on desktop.
+The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop.
 
 {{"demo": "pages/components/date-picker/BasicDatePicker.js"}}
+
+## Static mode
+
+It's possible to render any date picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers.
+
+{{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
 
 ## Responsiveness
 
 The date picker component is designed and optimized for the device it runs on.
 
-- The "Mobile" version works best for touch devices and small screens.
-- The "Desktop" version works best for mouse devices and large screens.
+- The `MobileDatePicker` component works best for touch devices and small screens.
+- The `DesktopDatePicker` component works best for mouse devices and large screens.
 
-By default, the `DatePicker` component uses a `@media (pointer: fine)` media query to determine which version to use. This can be customized with the `desktopModeMediaQuery` prop.
+By default, the `DatePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. This can be customized with the `desktopModeMediaQuery` prop.
 
 {{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
+
+## Form props
+
+The date picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-picker/FormPropsDatePickers.js"}}
 
 ## Lokalisierung
 
@@ -58,39 +70,39 @@ Use `LocalizationProvider` to change the date-engine locale that is used to rend
 
 {{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
 
+## Jalali calendar system
+
+Install `date-fns-jalali` and use `@date-io/date-fns-jalali` adapter to support [Jalali calendar](https://en.wikipedia.org/wiki/Jalali_calendar).
+
+{{"demo": "pages/components/date-picker/JalaliDatePicker.js"}}
+
 ## Views playground
 
 It's possible to combine `year`, `month`, and `date` selection views. Views will appear in the order they're included in the `views` array.
 
 {{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
 
-## Static mode
-
-It's possible to render any picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers.
-
-{{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
-
 ## Landscape orientation
 
-For ease of use the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. You can force a specific layout using the `orientation` prop.
+For ease of use, the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. You can force a specific layout using the `orientation` prop.
 
 {{"demo": "pages/components/date-picker/StaticDatePickerLandscape.js", "bg": true}}
 
 ## Sub-components
 
-Some lower level sub-components (`DayPicker`, `MonthPicker` and `YearPicker`) are also exported. These are rendered without a wrapper or outer logic (masked input, date values parsing and validation, etc.).
+Some lower-level sub-components (`CalendarPicker`, `MonthPicker`, and `YearPicker`) are also exported. These are rendered without a wrapper or outer logic (masked input, date values parsing and validation, etc.).
 
-{{"demo": "pages/components/date-picker/InternalPickers.js"}}
+{{"demo": "pages/components/date-picker/SubComponentsPickers.js"}}
 
 ## Custom input component
 
-You can customize rendering of the input with the `renderInput` prop. Make sure to spread `ref` and `inputProps` correctly to the custom input component.
+You can customize the rendering of the input with the `renderInput` prop. Make sure to spread `ref` and `inputProps` correctly to the custom input component.
 
 {{"demo": "pages/components/date-picker/CustomInput.js"}}
 
 ## Customized day rendering
 
-The displayed days are customizable with the `renderDay` function prop. You can take advantage of the internal [PickersDay](/api/pickers-day) component.
+The displayed days are customizable with the `renderDay` function prop. You can take advantage of the [PickersDay](/api/pickers-day/) component.
 
 {{"demo": "pages/components/date-picker/CustomDay.js"}}
 

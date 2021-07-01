@@ -1,16 +1,16 @@
 ---
 title: React Date Range Picker（日期范围选择器）组件
-components: DateRangePicker
+components: DateRangePicker, DateRangePickerDay, DesktopDateRangePicker, MobileDateRangePicker, StaticDateRangePicker
 githubLabel: 'component: DateRangePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
 ---
 
-# Date Range Picker [<span role="img" title="Enterprise">⚡️</span>](https://material-ui.com/store/items/material-ui-x/) 日期范围选择器
+# Date Range Picker [<span role="img" title="Enterprise">⚡️</span>](https://material-ui.com/store/items/material-ui-pro/) 日期范围选择器
 
 <p class="description">日期选择器让用户选择一系列的日期。</p>
 
-> ⚠️ 高级组件 <br /><br /> 时间范围选择器组件适用于 Material-UI X, 它是基于在社区版本（MIT 协议）的 Material-UI 上建立的。 <br /><br /> 该付费扩展将包括更高级的组件（大数据栅格，时间范围选择器，可拖动的树形视图 & 拖放组件等等）。 你现在可以以实惠的价格 [提前使用](https://material-ui.com/store/items/material-ui-x/)。
+> ⚠️ Pro component <br /><br /> The date range picker is intended for Material-UI X Pro, a commercial set of advanced components built on top of the community edition (MIT license). <br /><br /> 该付费扩展将包括更高级的组件（大数据栅格，时间范围选择器，可拖动的树形视图 & 拖放组件等等）。 你现在可以以实惠的价格 [提前使用](https://material-ui.com/store/items/material-ui-pro/)。
 
 日期范围选择器让用户选择一个日期范围。
 
@@ -36,20 +36,32 @@ function App() {
 
 ## 基本用法
 
-请注意，你可以从 [DatePicker]('/api/date-picker/') 中传递几乎任何的属性。
+请注意，你可以从 [DatePicker](/api/date-picker/) 中传递几乎任何的属性。
 
 {{"demo": "pages/components/date-range-picker/BasicDateRangePicker.js"}}
+
+## 静态模式
+
+可以将任何选择器内嵌渲染。 这将启用自定义弹出提示/模态框的容器。
+
+{{"demo": "pages/components/date-range-picker/StaticDateRangePickerDemo.js", "bg": true}}
 
 ## 响应式
 
 日期范围选择器组件是针对运行它的设备进行设计并优化的。
 
-- “手机（Mobile）”版本最适合触控设备和小型屏幕。
-- “桌面（Mobile）”版本最适合鼠标设备和大型屏幕。
+- The `MobileDateRangePicker` component works best for touch devices and small screens.
+- The `DesktopDateRangePicker` component works best for mouse devices and large screens.
 
-默认情况下， `DateRangePicker` 组件使用 `@media (pointer: fine)` 媒体查询来确定使用哪个版本。 你也可以使用 `desktopModeMediaQuery` 属性来自定义它。
+By default, the `DateRangePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. 你也可以使用 `desktopModeMediaQuery` 属性来自定义它。 你也可以使用 `desktopModeMediaQuery` 属性来自定义它。
 
 {{"demo": "pages/components/date-range-picker/ResponsiveDateRangePicker.js"}}
+
+## Form props 表单的属性
+
+The date range picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-range-picker/FormPropsDateRangePickers.js"}}
 
 ## 不同的月数
 
@@ -69,8 +81,8 @@ function App() {
 
 {{"demo": "pages/components/date-range-picker/CustomDateRangeInputs.js"}}
 
-## 静态模式
+## 自定义日期渲染
 
-你可以在没有模态框或弹出提示的情况下渲染任何选择器。 为此你需要使用 `StaticDateRangePicker`。
+你可以通过 `renderDay` 函数属性来自定义所显示的日期。 You can take advantage of the internal [DateRangePickerDay](/api/date-range-picker-day/) component.
 
-{{"demo": "pages/components/date-range-picker/StaticDateRangePicker.js"}}
+{{"demo": "pages/components/date-range-picker/CustomDateRangePickerDay.js"}}

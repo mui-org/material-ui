@@ -22,6 +22,7 @@
     "placement": "Tooltip placement.",
     "PopperComponent": "The component used for the popper.",
     "PopperProps": "Props applied to the <a href=\"/api/popper/\"><code>Popper</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "title": "Tooltip title. Zero-length titles string are never displayed.",
     "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
     "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
@@ -40,6 +41,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the Popper component",
       "conditions": "<code>arrow={true}</code>"
+    },
+    "popperClose": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the Popper component",
+      "conditions": "the tooltip is open"
     },
     "tooltip": {
       "description": "Styles applied to {{nodeName}}.",

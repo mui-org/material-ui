@@ -18,7 +18,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 ## Painel de Expansão Simples
 
-{{"demo": "pages/components/accordion/SimpleAccordion.js", "bg": true}}
+{{"demo": "pages/components/accordion/BasicAccordion.js", "bg": true}}
 
 ## Acordeão controlado
 

@@ -1,5 +1,5 @@
 ---
-title: React Container component
+title: Composant React Container
 components: Container (Conteneur)
 githubLabel: 'component: Container'
 ---
@@ -14,7 +14,7 @@ Bien que les conteneurs puissent être imbriqués, la plupart des mises en page 
 
 ## Fluid
 
-A fluid container width is bounded by the `maxWidth` prop value.
+La largeur d'un conteneur fluid (pleine largeure) est limitée par la valeur de la propriété `maxWidth`.
 
 {{"demo": "pages/components/container/SimpleContainer.js", "iframe": true, "defaultCodeOpen": false}}
 
@@ -24,7 +24,7 @@ A fluid container width is bounded by the `maxWidth` prop value.
 
 ## Fixe
 
-If you prefer to design for a fixed set of sizes instead of trying to accommodate a fully fluid viewport, you can set the `fixed` property. La largeur maximale correspond à la largeur minimale du point d'arrêt actuel.
+Si vous préférez concevoir pour un ensemble fixe de tailles au lieu d'essayer de vous adapter à un viewport fluid (pleine largeure), vous pouvez définir la propriété `fixed`. La largeur maximale correspond à la largeur minimale du point d'arrêt actuel.
 
 {{"demo": "pages/components/container/FixedContainer.js", "iframe": true, "defaultCodeOpen": false}}
 

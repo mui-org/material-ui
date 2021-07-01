@@ -1,5 +1,5 @@
 {
-  "componentDescription": "Poppers rely on the 3rd party library <a href=\"https://popper.js.org/docs/v2/\">Popper.js</a> for positioning.",
+  "componentDescription": "Poppers rely on the 3rd party library [Popper.js](https://popper.js.org/docs/v2/) for positioning.",
   "propDescriptions": {
     "anchorEl": "A HTML element, <a href=\"https://popper.js.org/docs/v2/virtual-elements/\">virtualElement</a>, or a function that returns either. It&#39;s used to set the position of the popper. The return value will passed as the reference object of the Popper instance.",
     "children": "Popper render function or node.",

@@ -24,9 +24,9 @@ githubLabel: 'component: Select'
 
 ## Props
 
-The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [Input](/api/input/), [FilledInput](/api/filled-input/), or [OutlinedInput](/api/outlined-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
+The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [OutlinedInput](/api/outlined-input/), [Input](/api/input/), or [FilledInput](/api/filled-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
 
-### Filled and outlined variants
+### Filled and standard variants
 
 {{"demo": "pages/components/selects/SelectVariants.js"}}
 
@@ -54,9 +54,9 @@ The Select component is implemented as a custom `<input>` element of the [InputB
 
 ## Кастомизированные списки
 
-Ниже находятся примеры кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находятся примеры кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
-Чтобы правильно подписать ваш элемент `Select`, вам потребуется дополнительный элемент со свойством `id`. После стилизации, вы можете использовать компонент напрямую как текстовое поле, либо передать его в компонент `Select`, свойством `input`.
+Чтобы правильно подписать ваш элемент `Select`, вам потребуется дополнительный элемент со свойством `id`. После стилизации, вы можете использовать компонент напрямую как текстовое поле, либо передать его в компонент `Select`, свойством `input`. Notice that the `"standard"` variant is easier to customize, since it does not wrap the contents in a `fieldset`/`legend` markup.
 
 {{"demo": "pages/components/selects/CustomizedSelects.js"}}
 
@@ -94,7 +94,7 @@ The Select component is implemented as a custom `<input>` element of the [InputB
 
 ## Группировка
 
-Хоть это и не приветствуется спецификацией Material Design, вы можете использовать список внутри диалогового окна.
+While it's discouraged by the Material Design guidelines, you can use a select inside a dialog.
 
 {{"demo": "pages/components/selects/DialogSelect.js"}}
 

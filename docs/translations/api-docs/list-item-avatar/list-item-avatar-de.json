@@ -1,8 +1,9 @@
 {
-  "componentDescription": "A simple wrapper to apply <code>List</code> styles to an <code>Avatar</code>.",
+  "componentDescription": "A simple wrapper to apply `List` styles to an `Avatar`.",
   "propDescriptions": {
     "children": "The content of the component – normally <code>Avatar</code>.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details."
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

@@ -3,7 +3,7 @@
   "propDescriptions": {
     "autoWidth": "If <code>true</code>, the width of the popover will automatically be set according to the items inside the menu, otherwise it will be at least the width of the select input.",
     "children": "The option elements to populate the select with. Can be some <code>MenuItem</code> when <code>native</code> is false and <code>option</code> when <code>native</code> is true.<br>⚠️The <code>MenuItem</code> elements <strong>must</strong> be direct descendants when <code>native</code> is false.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
     "displayEmpty": "If <code>true</code>, a value is displayed even if no items are selected.<br>In order to display a meaningful value, a function can be passed to the <code>renderValue</code> prop which returns the value to be displayed when no items are selected.<br>⚠️ When using this prop, make sure the label doesn&#39;t overlap with the empty displayed value. The label should either be hidden or forced to a shrunk state.",
     "IconComponent": "The icon that displays the arrow.",
@@ -12,67 +12,72 @@
     "inputProps": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes\">Attributes</a> applied to the <code>input</code> element. When <code>native</code> is <code>true</code>, the attributes are applied on the <code>select</code> element.",
     "label": "See <a href=\"/api/outlined-input/#props\">OutlinedInput#label</a>",
     "labelId": "The ID of an element that acts as an additional label. The Select will be labelled by the additional label and the selected value.",
-    "labelWidth": "See <a href=\"/api/outlined-input/#props\">OutlinedInput#label</a>",
     "MenuProps": "Props applied to the <a href=\"/api/menu/\"><code>Menu</code></a> element.",
     "multiple": "If <code>true</code>, <code>value</code> must be an array and the menu will support multiple selections.",
     "native": "If <code>true</code>, the component uses a native <code>select</code> element.",
-    "onChange": "Callback fired when a menu item is selected.<br><br><strong>Signature:</strong><br><code>function(event: object, child?: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (any).<br><em>child:</em> The react element that was selected when <code>native</code> is <code>false</code> (default).",
+    "onChange": "Callback fired when a menu item is selected.<br><br><strong>Signature:</strong><br><code>function(event: object, child?: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (any). <strong>Warning</strong>: This is a generic event not a change event.<br><em>child:</em> The react element that was selected when <code>native</code> is <code>false</code> (default).",
     "onClose": "Callback fired when the component requests to be closed. Use in controlled mode (see open).<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",
     "onOpen": "Callback fired when the component requests to be opened. Use in controlled mode (see open).<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",
     "open": "Control <code>select</code> open state. You can only use it when the <code>native</code> prop is <code>false</code> (default).",
     "renderValue": "Render the selected value. You can only use it when the <code>native</code> prop is <code>false</code> (default).<br><br><strong>Signature:</strong><br><code>function(value: any) =&gt; ReactNode</code><br><em>value:</em> The <code>value</code> provided to the component.",
     "SelectDisplayProps": "Props applied to the clickable div element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The <code>input</code> value. Providing an empty string will select no options. This prop is required when the <code>native</code> prop is <code>false</code> (default). Set to an empty string <code>&#39;&#39;</code> if you don&#39;t want any of the available options to be selected.<br>If the value is an object it must have reference equality with the option in order to be selected. If the value is not an object, the string representation must match with the string representation of the option in order to be selected.",
-    "variant": "The variant to use."
+    "variant": "A variante a usar."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the select component `root` class"
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "select": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the select component `select` class"
     },
     "filled": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the select component",
       "conditions": "<code>variant=\"filled\"</code>"
     },
     "outlined": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the select component",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
-    "selectMenu": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the select component `selectMenu` class"
+    "standard": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "the select component",
+      "conditions": "<code>variant=\"standard\"</code>"
     },
     "disabled": {
       "description": "Pseudo-class applied to {{nodeName}}.",
       "nodeName": "the select component `disabled` class"
     },
     "icon": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the icon component"
     },
     "iconOpen": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the icon component",
       "conditions": "the popup is open"
     },
     "iconFilled": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the icon component",
       "conditions": "<code>variant=\"filled\"</code>"
     },
     "iconOutlined": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the icon component",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
+    "iconStandard": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "the icon component",
+      "conditions": "<code>variant=\"standard\"</code>"
+    },
     "nativeInput": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the underlying native input component"
     }
   }

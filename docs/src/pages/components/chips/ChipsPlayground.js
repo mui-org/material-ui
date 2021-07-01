@@ -157,6 +157,18 @@ function ChipsPlayground() {
                   control={<Radio />}
                   label="secondary"
                 />
+                <FormControlLabel value="error" control={<Radio />} label="error" />
+                <FormControlLabel value="info" control={<Radio />} label="info" />
+                <FormControlLabel
+                  value="success"
+                  control={<Radio />}
+                  label="success"
+                />
+                <FormControlLabel
+                  value="warning"
+                  control={<Radio />}
+                  label="warning"
+                />
               </RadioGroup>
             </FormControl>
           </Grid>

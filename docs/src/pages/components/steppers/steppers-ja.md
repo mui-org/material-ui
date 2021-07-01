@@ -5,9 +5,9 @@ githubLabel: 'component: Stepper'
 materialDesign: https://material.io/archive/guidelines/components/steppers.html
 ---
 
-# Stepper（ステッパー）
+# Stepper ステッパー
 
-<p class="description">ステッパーは、番号の付いたステップを通して進捗を伝えます。 ウィザードのようなワークフローを提供します。 ウィザードのようなワークフローを提供します。</p>
+<p class="description">ステッパーは、番号の付いたステップを通して進捗を伝えます。 ウィザードのようなワークフローを提供します。</p>
 
 [Steppers](https://material.io/archive/guidelines/components/steppers.html)は、一連の論理ステップと番号付きステップの進行状況を表示します。 ナビゲーションにも使用できます。 ステッパーは、ステップが保存された後に一時的なフィードバックメッセージを表示する場合があります。
 
@@ -30,7 +30,7 @@ Horizontal steppers are ideal when the contents of one step depend on an earlier
 
 `Stepper` は、現在のステップインデックス（ゼロベース）を `activeStep` プロパティとして渡すことで制御できます。 `<code>Stepper`方向は、 `orientation`プロパティを使用して設定されます。
 
-この例では、 `optional`プロパティを第2の`Step`コンポーネントに配置して、オプションの手順を使用する方法も示します。 オプションの手順がスキップされる場合の管理はユーザー次第です。 この例では、 `optional`プロパティを第2の`Step`コンポーネントに配置して、オプションの手順を使用する方法も示します。 オプションの手順がスキップされる場合の管理はユーザー次第です。 特定のステップでこれを決定したら、`completed={false}` を設定して、アクティブなステップインデックスがオプションのステップを超えていても、実際には完了していないことを示す必要があります。
+この例では、 `optional`プロパティを第2の`Step`コンポーネントに配置して、オプションの手順を使用する方法も示します。 オプションの手順がスキップされる場合の管理はユーザー次第です。 特定のステップでこれを決定したら、`completed={false}` を設定して、アクティブなステップインデックスがオプションのステップを超えていても、実際には完了していないことを示す必要があります。
 
 {{"demo": "pages/components/steppers/HorizontalLinearStepper.js"}}
 
@@ -56,7 +56,7 @@ The use of the `StepButton` here demonstrates clickable step labels, as well as 
 
 ### Non-linear - Alternative Label
 
-コンポーネントのカスタマイズ例を次に示します。 詳細については、 [overrides documentation page](/customization/how-to-customize/)を参照してください。
+コンポーネントのカスタマイズ例を次に示します。 詳細については、 [こちら](/customization/how-to-customize/)を参照してください。
 
 {{"demo": "pages/components/steppers/CustomizedSteppers.js"}}
 
@@ -76,7 +76,7 @@ The content of a step is unmounted when closed. If you need to make the content 
 
 ## モバイルステッパー
 
-このコンポーネントは、モバイルデバイスに適したコンパクトなステッパーを実装します。 このコンポーネントは、モバイルデバイスに適したコンパクトなステッパーを実装します。 このコンポーネントは、モバイルデバイスに適したコンパクトなステッパーを実装します。 その着想については、[mobile steps](https://material.io/archive/guidelines/components/steppers.html#steppers-types-of-steps)を参照してください。 It has more limited functionality than the vertical stepper. このコンポーネントは、モバイルデバイスに適したコンパクトなステッパーを実装します。 このコンポーネントは、モバイルデバイスに適したコンパクトなステッパーを実装します。 その着想については、[mobile steps](https://material.io/archive/guidelines/components/steppers.html#steppers-types-of-steps)を参照してください。
+このコンポーネントは、モバイルデバイスに適したコンパクトなステッパーを実装します。 It has more limited functionality than the vertical stepper. その着想については、[mobile steps](https://material.io/archive/guidelines/components/steppers.html#steppers-types-of-steps)を参照してください。
 
 The mobile stepper supports three variants to display progress through the available steps: text, dots, and progress.
 

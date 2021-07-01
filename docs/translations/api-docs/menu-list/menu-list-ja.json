@@ -1,5 +1,5 @@
 {
-  "componentDescription": "A permanently displayed menu following <a href=\"https://www.w3.org/TR/wai-aria-practices/#menubutton\">https://www.w3.org/TR/wai-aria-practices/#menubutton</a>.\nIt&#39;s exposed to help customization of the <a href=\"/api/menu/\"><code>Menu</code></a> component if you\nuse it separately you need to move focus into the component manually. Once\nthe focus is placed inside the component it is fully keyboard accessible.",
+  "componentDescription": "A permanently displayed menu following https://www.w3.org/TR/wai-aria-practices/#menubutton.\nIt's exposed to help customization of the [`Menu`](/api/menu/) component if you\nuse it separately you need to move focus into the component manually. Once\nthe focus is placed inside the component it is fully keyboard accessible.",
   "propDescriptions": {
     "autoFocus": "If <code>true</code>, will focus the <code>[role=&quot;menu&quot;]</code> container and move into tab order.",
     "autoFocusItem": "If <code>true</code>, will focus the first menuitem if <code>variant=&quot;menu&quot;</code> or selected item if <code>variant=&quot;selectedMenu&quot;</code>.",

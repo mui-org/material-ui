@@ -1,6 +1,6 @@
 {
   "name": "@material-ui/lab",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-alpha.39",
   "private": false,
   "author": "Material-UI Team",
   "description": "Laboratory for new Material-UI modules.",
@@ -36,7 +36,7 @@
     "typescript": "tslint -p tsconfig.json \"{src,test}/**/*.{spec,d}.{ts,tsx}\" && tsc -p tsconfig.json"
   },
   "peerDependencies": {
-    "@material-ui/core": "^5.0.0-alpha.18",
+    "@material-ui/core": "^5.0.0-alpha.36",
     "@types/react": "^16.8.6 || ^17.0.0",
     "date-fns": "^2.0.0",
     "dayjs": "^1.8.17",
@@ -68,8 +68,9 @@
     "@date-io/dayjs": "^2.10.6",
     "@date-io/luxon": "^2.10.6",
     "@date-io/moment": "^2.10.6",
-    "@material-ui/system": "5.0.0-alpha.35",
-    "@material-ui/utils": "5.0.0-alpha.35",
+    "@material-ui/system": "5.0.0-beta.0",
+    "@material-ui/unstyled": "5.0.0-alpha.39",
+    "@material-ui/utils": "5.0.0-beta.0",
     "clsx": "^1.0.4",
     "prop-types": "^15.7.2",
     "react-is": "^17.0.0",

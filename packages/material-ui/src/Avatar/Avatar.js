@@ -25,11 +25,11 @@ const AvatarRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.variant],
-      ...(styleProps.colorDefault && styles.colorDefault),
-    };
+    return [
+      styles.root,
+      styles[styleProps.variant],
+      styleProps.colorDefault && styles.colorDefault,
+    ];
   },
 })(({ theme, styleProps }) => ({
   position: 'relative',

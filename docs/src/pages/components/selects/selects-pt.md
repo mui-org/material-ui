@@ -24,9 +24,9 @@ Se você estiver procurando por recursos mais avançados, como combobox, seleç�
 
 ## Propriedades
 
-The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [Input](/api/input/), [FilledInput](/api/filled-input/), or [OutlinedInput](/api/outlined-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
+O componente seleção é implementado como um elemento `<input>` personalizado do [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [OutlinedInput](/api/outlined-input/), [Input](/api/input/), or [FilledInput](/api/filled-input/), depending on the variant selected. Ele compartilha os mesmos estilos e muitas das mesmas propriedades. Consulte a página da API do respectivo componente para obter detalhes.
 
-### Variantes filled e outlined
+### Filled and standard variants
 
 {{"demo": "pages/components/selects/SelectVariants.js"}}
 
@@ -56,7 +56,7 @@ O componente wrapper `TextField` é um controle de formulário completo, incluin
 
 Aqui estão alguns exemplos de customização do componente. Você pode aprender mais sobre isso na [página de documentação de sobrescritas](/customization/how-to-customize/).
 
-O primeiro passo é estilizar o componente `InputBase`. Uma vez estilizado, você pode usá-lo diretamente como um campo de texto ou fornecê-lo à propriedade `input` da seleção para ter um campo `select`.
+O primeiro passo é estilizar o componente `InputBase`. Uma vez estilizado, você pode usá-lo diretamente como um campo de texto ou fornecê-lo à propriedade `input` da seleção para ter um campo `select`. Notice that the `"standard"` variant is easier to customize, since it does not wrap the contents in a `fieldset`/`legend` markup.
 
 {{"demo": "pages/components/selects/CustomizedSelects.js"}}
 
@@ -94,7 +94,7 @@ Como na seleção única, você pode extrair o novo valor acessando `event.targe
 
 ## Com um diálogo
 
-Embora não seja recomendado pela especificação do Material Design, você pode usar uma seleção dentro de um diálogo.
+While it's discouraged by the Material Design guidelines, you can use a select inside a dialog.
 
 {{"demo": "pages/components/selects/DialogSelect.js"}}
 

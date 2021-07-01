@@ -72,18 +72,15 @@ function App() {
 3. 也可以用 `theme.mixins.toolbar` 的 CSS：
 
 ```jsx
-const useStyles = makeStyles((theme) => ({
-  offset: theme.mixins.toolbar,
-}));
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 function App() {
-  const classes = useStyles();
   return (
     <React.Fragment>
       <AppBar position="fixed">
-        <Toolbar>{/* 内容 */}</Toolbar>
+        <Toolbar>{/* content */}</Toolbar>
       </AppBar>
-      <div className={classes.offset} />
+      <Offset />
     </React.Fragment>
   );
 }
@@ -115,11 +112,11 @@ function App() {
 
 #### 参数
 
-1. `options` (_Object_ [optional]):
+1. `options` (_object_ [optional]):
 
-   - `options.disableHysteresis` (_Boolean_ [optional])：默认值为 `false`。 禁用迟滞的效果。 在决定 `trigger` 的值时会忽略在滚动的方向。
+   - `options.disableHysteresis` (_bool_ [optional]): Defaults to `false`. 禁用迟滞的效果。 在决定 `trigger` 的值时会忽略在滚动的方向。
    - `options.target` (_Node_ [optional])：默认值是 `window`。
-   - `options.threshold` (_Number_ [optional])：默认值是 `100`。 严格来说，当垂直滚动超过（但不包括）此阈值时，请更改 `trigger` 的值。
+   - `options.threshold` (_number_ [optional])：默认值是 `100`。 严格来说，当垂直滚动超过（但不包括）此阈值时，请更改 `trigger` 的值。
 
 #### 返回结果
 
@@ -138,4 +135,28 @@ function HideOnScroll(props) {
     </Slide>
   );
 }
+```
+
+## Enable Color on Dark
+
+Following the [Material Design guidelines](https://material.io/design/color/dark-theme.html), the `color` prop has no effect on the appearance of the AppBar in dark mode. You can override this behavior by setting the `enableColorOnDark` prop to `true`.
+
+```jsx
+// Specific element via prop
+<AppBar enableColorOnDark />
+
+// Affect all AppBars via theme
+<ThemeProvider
+  theme={createTheme({
+    components: {
+      MuiAppBar: {
+        defaultProps: {
+          enableColorOnDark: true,
+        },
+      },
+    },
+  })}
+>
+  <AppBar />
+</ThemeProvider>
 ```

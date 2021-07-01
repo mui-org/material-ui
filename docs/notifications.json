@@ -1,12 +1,12 @@
 [
   {
-    "id": 27,
-    "text": "You can <a style=\"color: inherit;\" target=\"_blank\" rel=\"noopener\" href=\"https://twitter.com/MaterialUI\">follow us on Twitter</a> to receive exclusive tips and updates about Material-UI and the React ecosystem."
-  },
-  {
     "id": 35,
     "title": "Let's translate!",
     "text": "<a style=\"color: inherit;\" target=\"_blank\" rel=\"noopener\" data-ga-event-category=\"l10n\" data-ga-event-action=\"notification\" data-ga-event-label=\"zh\" href=\"https://translate.material-ui.com/\">帮助 Material-UI 将文档翻译成中文</a>. 🇨🇳",
     "userLanguage": "zh"
+  },
+  {
+    "id": 53,
+    "text": "You can <a style=\"color: inherit;\" target=\"_blank\" rel=\"noopener\" href=\"https://twitter.com/MaterialUI\">follow us on Twitter</a> to receive exclusive tips and updates about Material-UI and the React ecosystem."
   }
 ]

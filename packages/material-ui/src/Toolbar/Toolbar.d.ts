@@ -47,7 +47,9 @@ export interface ToolbarTypeMap<P = {}, D extends React.ElementType = 'div'> {
  */
 declare const Toolbar: OverridableComponent<ToolbarTypeMap>;
 
-export type ToolbarProps<D extends React.ElementType = ToolbarTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<ToolbarTypeMap<P, D>, D>;
+export type ToolbarProps<
+  D extends React.ElementType = ToolbarTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<ToolbarTypeMap<P, D>, D>;
 
 export default Toolbar;

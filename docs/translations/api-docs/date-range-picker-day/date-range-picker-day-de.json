@@ -2,9 +2,74 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "The content of the component.",
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "day": "The date to show.",
+    "isEndOfHighlighting": "Set to <code>true</code> if the <code>day</code> is the end of a highlighted date range.",
+    "isEndOfPreviewing": "Set to <code>true</code> if the <code>day</code> is the start of a highlighted date range.",
+    "isHighlighting": "Set to <code>true</code> if the <code>day</code> is in a highlighted date range.",
+    "isPreviewing": "Set to <code>true</code> if the <code>day</code> is in a preview date range.",
+    "isStartOfHighlighting": "Set to <code>true</code> if the <code>day</code> is the start of a highlighted date range.",
+    "isStartOfPreviewing": "Set to <code>true</code> if the <code>day</code> is the end of a highlighted date range.",
     "outsideCurrentMonth": "If <code>true</code>, day is outside of month and will be hidden.",
-    "selected": "If <code>true</code>, renders as selected."
+    "selected": "If <code>true</code>, renders as selected.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "root": {
+      "description": "Styles applied to the root element."
+    },
+    "rangeIntervalDayHighlight": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>isHighlighting=true</code> and <code>outsideCurrentMonth=false</code>"
+    },
+    "rangeIntervalDayHighlightStart": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>isStartOfHighlighting=true</code> or <code>day</code> is the start of the month"
+    },
+    "rangeIntervalDayHighlightEnd": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>isEndOfHighlighting=true</code> or <code>day</code> is the end of the month"
+    },
+    "rangeIntervalPreview": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the preview element"
+    },
+    "rangeIntervalDayPreview": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>isPreviewing=true</code> and <code>outsideCurrentMonth=false</code>"
+    },
+    "rangeIntervalDayPreviewStart": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>isStartOfPreviewing=true</code> or <code>day</code> is the start of the month"
+    },
+    "rangeIntervalDayPreviewEnd": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>isEndOfPreviewing=true</code> or <code>day</code> is the end of the month"
+    },
+    "day": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the day element"
+    },
+    "dayOutsideRangeInterval": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the day element",
+      "conditions": "<code>isHighlighting=false</code>"
+    },
+    "dayInsideRangeInterval": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the day element",
+      "conditions": "<code>selected=false</code> and <code>isHighlighting=true</code>"
+    },
+    "notSelectedDate": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the day element",
+      "conditions": "<code>selected=false</code>"
+    }
+  }
 }

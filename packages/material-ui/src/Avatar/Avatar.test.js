@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createClientRender, fireEvent, createMount, describeConformanceV5 } from 'test/utils';
+import { createClientRender, fireEvent, describeConformanceV5 } from 'test/utils';
 import { spy } from 'sinon';
 import Avatar, { avatarClasses as classes } from '@material-ui/core/Avatar';
 import CancelIcon from '../internal/svg-icons/Cancel';
 
 describe('<Avatar />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Avatar />, () => ({
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     testComponentPropWith: 'span',
     muiName: 'MuiAvatar',

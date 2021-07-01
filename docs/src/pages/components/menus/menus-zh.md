@@ -20,13 +20,13 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 
 理想状态下，选择一个选项是会立刻执行此选项并且关闭整个菜单。
 
-**解疑**：与简单菜单不同，一个简单的对话框可以提供与列表项可用选项相关的额外细节，或提供与主要任务相关的导航或正交操作。 Although they can display the same content, simple menus are preferred over simple dialogs because simple menus are less disruptive to the user's current context.
+**解疑**：与简单菜单不同，一个简单的对话框可以提供与列表项可用选项相关的额外细节，或提供与主要任务相关的导航或正交操作。 虽然它们都可以显示相同的内容，但是菜单组件比对话框组件更受欢迎，因为相比之下菜单组件对用户的干扰更小。
 
-{{"demo": "pages/components/menus/SimpleMenu.js"}}
+{{"demo": "pages/components/menus/BasicMenu.js"}}
 
 ## 选择菜单
 
-若用于选项的选择，当打开简单菜单的时候，它会通过一个锚元素来尝试与当前被选择的菜单的选择项垂直对齐，而初始的焦点集中于被选中的那个选项。 通过 `selected` 属性（在[ListItem](/api/list-item/)中），您能够设置当前被选中的选项。 若想要使用一个已被选的项目，且不影响初始的焦点或者菜单的垂直位置，您可以设置一下”菜单“的 `variant` 属性。
+If used for item selection, when opened, simple menus places the initial focus on the selected menu item. 通过 `selected` 属性（在[ListItem](/api/list-item/)中），您能够设置当前被选中的选项。 To use a selected menu item without impacting the initial focus, set the `variant` prop to "menu".
 
 {{"demo": "pages/components/menus/SimpleListMenu.js"}}
 

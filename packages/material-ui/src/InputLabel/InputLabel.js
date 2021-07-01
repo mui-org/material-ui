@@ -35,15 +35,15 @@ const InputLabelRoot = styled(FormLabel, {
   slot: 'Root',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
-      [`& .${formLabelClasses.asterisk}`]: styles.asterisk,
-      ...styles.root,
-      ...(!styleProps.formControl && styles.formControl),
-      ...(styleProps.size === 'small' && styles.sizeSmall),
-      ...(styleProps.shrink && styles.shrink),
-      ...(!styleProps.disableAnimation && styles.animated),
-      ...styles[styleProps.variant],
-    };
+    return [
+      { [`& .${formLabelClasses.asterisk}`]: styles.asterisk },
+      styles.root,
+      !styleProps.formControl && styles.formControl,
+      styleProps.size === 'small' && styles.sizeSmall,
+      styleProps.shrink && styles.shrink,
+      !styleProps.disableAnimation && styles.animated,
+      styles[styleProps.variant],
+    ];
   },
 })(({ theme, styleProps }) => ({
   display: 'block',
@@ -164,7 +164,7 @@ InputLabel.propTypes /* remove-proptypes */ = {
   /**
    * The color of the component. It supports those theme colors that make sense for this component.
    */
-  color: PropTypes.oneOf(['primary', 'secondary']),
+  color: PropTypes.oneOf(['error', 'info', 'primary', 'secondary', 'success', 'warning']),
   /**
    * If `true`, the transition animation is disabled.
    * @default false

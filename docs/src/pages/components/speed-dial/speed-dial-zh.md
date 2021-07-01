@@ -2,7 +2,7 @@
 title: React Speed Dial（快速拨号）组件
 components: SpeedDial, SpeedDialAction, SpeedDialIcon
 githubLabel: 'component: SpeedDial'
-0: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
+materialDesign: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 ---
 
@@ -19,6 +19,10 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 浮动操作按钮可以显示相关操作。
 
 {{"demo": "pages/components/speed-dial/BasicSpeedDial.js"}}
+
+## 练习
+
+{{"demo": "pages/components/speed-dial/PlaygroundSpeedDial.js"}}
 
 ## 自定义关闭图标
 

@@ -26,10 +26,7 @@ const PaginationRoot = styled('nav', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.variant],
-    };
+    return [styles.root, styles[styleProps.variant]];
   },
 })({});
 

@@ -1,34 +1,37 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "color": "The color of a button when it is selected.",
     "exclusive": "If <code>true</code>, only allow one of the child ToggleButton values to be selected.",
+    "fullWidth": "If <code>true</code>, the button group will take up the full width of its container.",
     "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: any) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> of the selected buttons. When <code>exclusive</code> is true this is a single value; when false an array of selected values. If no value is selected and <code>exclusive</code> is true the value is null; when false an empty array.",
     "orientation": "The group orientation (layout flow direction).",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The currently selected value within the group or an array of selected values when <code>exclusive</code> is false.<br>The value must have reference equality with the option in order to be selected."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "vertical": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>orientation=\"vertical\"</code>"
     },
     "grouped": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the children"
     },
     "groupedHorizontal": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the children",
       "conditions": "<code>orientation=\"horizontal\"</code>"
     },
     "groupedVertical": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the children",
       "conditions": "<code>orientation=\"vertical\"</code>"
     }

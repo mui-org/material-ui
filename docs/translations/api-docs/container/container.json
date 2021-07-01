@@ -6,7 +6,7 @@
     "disableGutters": "If <code>true</code>, the left and right padding is removed.",
     "fixed": "Set the max-width to match the min-width of the current breakpoint. This is useful if you&#39;d prefer to design for a fixed set of sizes instead of trying to accommodate a fully fluid viewport. It&#39;s fluid by default.",
     "maxWidth": "Determine the max-width of the container. The container width grows with the size of the screen. Set to <code>false</code> to disable <code>maxWidth</code>.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": { "description": "Styles applied to the root element." },

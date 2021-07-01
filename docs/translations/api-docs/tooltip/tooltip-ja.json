@@ -5,7 +5,7 @@
     "children": "Tooltip reference element.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "describeChild": "Set to <code>true</code> if the <code>title</code> acts as an accessible description. By default the <code>title</code> acts as an accessible label for the child.",
-    "disableFocusListener": "Do not respond to focus events.",
+    "disableFocusListener": "Do not respond to focus-visible events.",
     "disableHoverListener": "Do not respond to hover events.",
     "disableInteractive": "Makes a tooltip not interactive, i.e. it will close when the user hovers over the tooltip before the <code>leaveDelay</code> is expired.",
     "disableTouchListener": "Do not respond to long press touch events.",
@@ -22,8 +22,9 @@
     "placement": "Tooltip placement.",
     "PopperComponent": "The component used for the popper.",
     "PopperProps": "Props applied to the <a href=\"/api/popper/\"><code>Popper</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "title": "Tooltip title. Zero-length titles string are never displayed.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "TransitionComponent": "トランジションに使用されるコンポーネント。 <a href=\"/components/transitions/#transitioncomponent-prop\">このガイド</a> に従って、このコンポーネントの要件の詳細を確認してください。",
     "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
   },
   "classDescriptions": {
@@ -40,6 +41,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the Popper component",
       "conditions": "<code>arrow={true}</code>"
+    },
+    "popperClose": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the Popper component",
+      "conditions": "the tooltip is open"
     },
     "tooltip": {
       "description": "Styles applied to {{nodeName}}.",

@@ -11,7 +11,7 @@
     "open": "If <code>true</code>, the component is shown.",
     "PaperProps": "Props applied to the <a href=\"/api/paper/\"><code>Paper</code></a> element.",
     "SlideProps": "Props applied to the <a href=\"/api/slide/\"><code>Slide</code></a> element.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "transitionDuration": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.",
     "variant": "The variant to use."
   },

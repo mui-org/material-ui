@@ -64,15 +64,14 @@ describe('custom matchers', () => {
       expect(caughtError).to.have.property('stack');
       expect(caughtError.stack).to.include(
         'Recorded unexpected console.error calls: \n\n' +
-          '  - Expected "expected Message"\n' +
-          'to include\n' +
-          '"expected message"\n' +
+          '  - Expected #1 "expected message" to be included in \n' +
+          '"expected Message"\n' +
           '    at callback',
       );
       // check that the top stackframe points to this test
       // if this test is moved to another file the next assertion fails
       expect(caughtError.stack).to.match(
-        /"expected message"\s+at callback \(.+\/initMatchers\.test\.js:\d+:\d+\)/,
+        /"expected Message"\s+at callback \(.+\/initMatchers\.test\.js:\d+:\d+\)/,
       );
     });
 

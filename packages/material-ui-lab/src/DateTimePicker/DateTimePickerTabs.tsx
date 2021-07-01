@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import Paper from '@material-ui/core/Paper';
-import { useTheme, styled } from '@material-ui/core/styles';
+import Tabs, { tabsClasses } from '@material-ui/core/Tabs';
+import { styled } from '@material-ui/core/styles';
 import TimeIcon from '../internal/svg-icons/Time';
 import DateRangeIcon from '../internal/svg-icons/DateRange';
 import {
@@ -39,22 +38,19 @@ export interface DateTimePickerTabsProps {
 
 type StyleProps = DateTimePickerTabsProps & { wrapperVariant: WrapperVariant };
 
-const DateTimePickerTabsRoot = styled(Paper, { skipSx: true })<{ styleProps: StyleProps }>(
-  ({ styleProps = {} }) => ({
+const DateTimePickerTabsRoot = styled(Tabs, { skipSx: true })<{ styleProps: StyleProps }>(
+  ({ styleProps, theme }) => ({
+    boxShadow: `0 -1px 0 0 inset ${theme.palette.divider}`,
     ...(styleProps.wrapperVariant === 'desktop' && {
       order: 1,
+      boxShadow: `0 1px 0 0 inset ${theme.palette.divider}`,
+      [`& .${tabsClasses.indicator}`]: {
+        bottom: 'auto',
+        top: 0,
+      },
     }),
   }),
 );
-
-const DateTimePickerTabsTabs = styled(Tabs, { skipSx: true })(({ theme }) => {
-  const tabsBackground =
-    theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.background.default;
-  return {
-    color: theme.palette.getContrastText(tabsBackground),
-    backgroundColor: tabsBackground,
-  };
-});
 
 /**
  * @ignore - internal component.
@@ -62,10 +58,7 @@ const DateTimePickerTabsTabs = styled(Tabs, { skipSx: true })(({ theme }) => {
 const DateTimePickerTabs = (props: DateTimePickerTabsProps) => {
   const { dateRangeIcon = <DateRangeIcon />, onChange, timeIcon = <TimeIcon />, view } = props;
 
-  const theme = useTheme();
   const wrapperVariant = React.useContext(WrapperVariantContext);
-  const indicatorColor = theme.palette.mode === 'light' ? 'secondary' : 'primary';
-
   const styleProps = { ...props, wrapperVariant };
 
   const handleChange = (event: React.SyntheticEvent, value: TabValue) => {
@@ -73,24 +66,18 @@ const DateTimePickerTabs = (props: DateTimePickerTabsProps) => {
   };
 
   return (
-    <DateTimePickerTabsRoot styleProps={styleProps}>
-      <DateTimePickerTabsTabs
-        variant="fullWidth"
-        value={viewToTab(view)}
-        onChange={handleChange}
-        indicatorColor={indicatorColor}
-      >
-        <Tab
-          value="date"
-          aria-label="pick date"
-          icon={<React.Fragment>{dateRangeIcon}</React.Fragment>}
-        />
-        <Tab
-          value="time"
-          aria-label="pick time"
-          icon={<React.Fragment>{timeIcon}</React.Fragment>}
-        />
-      </DateTimePickerTabsTabs>
+    <DateTimePickerTabsRoot
+      styleProps={styleProps}
+      variant="fullWidth"
+      value={viewToTab(view)}
+      onChange={handleChange}
+    >
+      <Tab
+        value="date"
+        aria-label="pick date"
+        icon={<React.Fragment>{dateRangeIcon}</React.Fragment>}
+      />
+      <Tab value="time" aria-label="pick time" icon={<React.Fragment>{timeIcon}</React.Fragment>} />
     </DateTimePickerTabsRoot>
   );
 };

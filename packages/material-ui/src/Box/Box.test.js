@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import { createClientRender, createMount, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import Box from '@material-ui/core/Box';
 
 describe('<Box />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<Box />, () => ({
     render,
-    mount,
     inheritComponent: 'div',
     skip: [
       'componentProp',

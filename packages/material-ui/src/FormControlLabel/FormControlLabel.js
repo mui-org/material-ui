@@ -28,11 +28,11 @@ export const FormControlLabelRoot = styled('label', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${formControlLabelClasses.label}`]: styles.label,
-      ...styles.root,
-      ...styles[`labelPlacement${capitalize(styleProps.labelPlacement)}`],
-    };
+    return [
+      { [`& .${formControlLabelClasses.label}`]: styles.label },
+      styles.root,
+      styles[`labelPlacement${capitalize(styleProps.labelPlacement)}`],
+    ];
   },
 })(({ theme, styleProps }) => ({
   display: 'inline-flex',

@@ -20,13 +20,13 @@ githubLabel: 'component: Select'
 
 選択コンポーネントはネイティブの `<select>` 要素に入れ替えられます。
 
-コンボボックス、複数選択、自動補完、非同期、作成可能のサポートといったさらに高度な機能をお探しなら、[`Autocomplete`コンポーネント](/components/autocomplete/)を参照してください。 It's meant to be an improved version of the "react-select" and "downshift" packages. "react-select"と"downshift"というパッケージの改良版であることを意識しています。
+コンボボックス、複数選択、自動補完、非同期、作成可能のサポートといったさらに高度な機能をお探しなら、[`Autocomplete`コンポーネント](/components/autocomplete/)を参照してください。 "react-select"と"downshift"というパッケージの改良版であることを意識しています。
 
 ## Props
 
-The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [Input](/api/input/), [FilledInput](/api/filled-input/), or [OutlinedInput](/api/outlined-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
+Select コンポーネントは [InputBase](/api/input-base/) のカスタム `<input>`要素として実装されています。 It extends the [text field components](/components/text-fields) sub-components, either the [OutlinedInput](/api/outlined-input/), [Input](/api/input/), or [FilledInput](/api/filled-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
 
-### Filled and outlined variants
+### Filled and standard variants
 
 {{"demo": "pages/components/selects/NativeSelects.js"}}
 
@@ -56,9 +56,9 @@ The Select component is implemented as a custom `<input>` element of the [InputB
 
 ## カスタマイズされた選択
 
-コンポーネントのカスタマイズの例を次に示します。 詳細については、 [overrides documentation page](/customization/how-to-customize/)を参照してください。
+コンポーネントのカスタマイズの例を次に示します。 詳細については、 [こちら](/customization/how-to-customize/)を参照してください。
 
-To properly label your `Select` input you need an extra element with an `id` that contains a label. スタイルを設定したら、テキストフィールドとして直接使用するか、select `input` プロパティに提供して、 `select` フィールドを作成できます。
+最初のステップは、 `InputBase` コンポーネントのスタイル設定です。 スタイルを設定したら、テキストフィールドとして直接使用するか、select `input` プロパティに提供して、 `select` フィールドを作成できます。 Notice that the `"standard"` variant is easier to customize, since it does not wrap the contents in a `fieldset`/`legend` markup.
 
 {{"demo": "pages/components/selects/CustomizedSelects.js"}}
 
@@ -68,7 +68,7 @@ To properly label your `Select` input you need an extra element with an `id` tha
 
 ## 制御開選択
 
-To properly label your `Select` input you need an extra element with an `id` that contains a label. To properly label your `Select` input you need an extra element with an `id` that contains a label.
+`Select` コンポーネントは、複数の選択を処理できます。 To properly label your `Select` input you need an extra element with an `id` that contains a label.
 
 単一選択の場合と同様に、 `onChange` コールバックで `event.target.value` にアクセスすることにより、新しい値を引き出すことができます。 常に配列です。 常に配列です。 常に配列です。 常に配列です。 常に配列です。 常に配列です。
 
@@ -112,7 +112,7 @@ Alternatively a `TextField` with an `id` and `label` creates the proper markup a
 
 ## With a dialog
 
-Material Designの仕様では推奨されていませんが、ダイアログ内でselectを使用できます。
+While it's discouraged by the Material Design guidelines, you can use a select inside a dialog.
 
 {{"demo": "pages/components/selects/DialogSelect.js"}}
 

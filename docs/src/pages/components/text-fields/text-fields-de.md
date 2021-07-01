@@ -13,11 +13,9 @@ materialDesign: https://material.io/components/text-fields
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## TextField
+## Basic TextField
 
-Die `TextField` Wrapper-Komponente ist ein vollständiges Formularsteuerelement, das eine Beschriftung, Eingabe und Hilfetext enthält.
-
-It supports standard, outlined and filled styling.
+The `TextField` wrapper component is a complete form control including a label, input, and help text. It comes with three variants: outlined (default), filled, and standard.
 
 {{"demo": "pages/components/text-fields/BasicTextFields.js"}}
 
@@ -31,13 +29,13 @@ Standard form attributes are supported e.g. `required`, `disabled`, `type`, etc.
 
 ## Validierung
 
-The `error` prop toggles the error state, the `helperText` prop can then be used to provide feedback to the user about the error.
+The `error` prop toggles the error state. The `helperText` prop can then be used to provide feedback to the user about the error.
 
 {{"demo": "pages/components/text-fields/ValidationTextFields.js"}}
 
 ## Mehrzeilig
 
-The `multiline` prop transforms the text field into a [textarea](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea) or a [TextareaAutosize](/components/textarea-autosize/). Unless the `rows` prop is set, the height of the text field dynamically matches its content (using [TextareaAutosize](/components/textarea-autosize/)). You can use the `rowsMin` and `rowsMax` props to bound it.
+The `multiline` prop transforms the text field into a [textarea](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea) or a [TextareaAutosize](/components/textarea-autosize/). Unless the `rows` prop is set, the height of the text field dynamically matches its content (using [TextareaAutosize](/components/textarea-autosize/)). You can use the `minRows` and `maxRows` props to bound it.
 
 {{"demo": "pages/components/text-fields/MultilineTextFields.js"}}
 
@@ -55,7 +53,7 @@ There are multiple ways to display an icon with a text field.
 
 ### Eingabeverzierungen
 
-The main way is with an `InputAdornment`. Sie können beispielsweise eine Symbolschaltfläche verwenden, um das Kennwort ein- oder auszublenden. This can be used to add a prefix, a suffix or an action to an input.
+The main way is with an `InputAdornment`. This can be used to add a prefix, a suffix, or an action to an input. This can be used to add a prefix, a suffix or an action to an input.
 
 {{"demo": "pages/components/text-fields/InputAdornments.js"}}
 
@@ -69,15 +67,19 @@ The `filled` variant input height can be further reduced by rendering the label 
 
 {{"demo": "pages/components/text-fields/TextFieldHiddenLabel.js"}}
 
-## Layout
+## Margin
 
-`dense` and `normal` alter other styles to meet the specification. `margin` prop can be used to alter the vertical spacing of inputs. Using `none` (default) will not apply margins to the `FormControl`, whereas `dense` and `normal` will.
-
-`fullWidth` can be used to make the input take up the full width of its container.
+The `margin` prop can be used to alter the vertical spacing of the text field. Using `none` (default) doesn't apply margins to the `FormControl` whereas `dense` and `normal` do.
 
 {{"demo": "pages/components/text-fields/LayoutTextFields.js"}}
 
-## Uncontrolled vs Controlled
+## Gesamte Breite
+
+`fullWidth` can be used to make the input take up the full width of its container.
+
+{{"demo": "pages/components/text-fields/FullWidthTextField.js"}}
+
+## Uncontrolled vs. Controlled
 
 The component can be controlled or uncontrolled.
 
@@ -87,7 +89,7 @@ The component can be controlled or uncontrolled.
 
 Das `Textfeld` besteht aus kleineren Komponenten ( [`FormControl`](/api/form-control/), [`Input`](/api/input/), [`FilledInput`](/api/filled-input/), [`InputLabel`](/api/input-label/), [`OutlinedInput`](/api/outlined-input/), und [`FormHelperText`](/api/form-helper-text/) ) welche Sie direkt nutzen können, um Ihre Formulareingaben erheblich anzupassen.
 
-Möglicherweise haben Sie auch festgestellt, dass einige native HTML-Eingabeeigenschaften in der Komponente `TextField` fehlen. Das war Absicht. Die Komponente kümmert sich um die am häufigsten verwendeten Eigenschaften. Anschließend muss der Benutzer die darunter liegende Komponente verwenden, die in der folgenden Demo gezeigt wird. Sie können jedoch `inputProps` (und `InputProps`, `InputLabelProps` Eigenschaften) verwenden, wenn Sie einiges an Boilerplate vermeiden möchten.
+Möglicherweise haben Sie auch festgestellt, dass einige native HTML-Eingabeeigenschaften in der Komponente `TextField` fehlen. Das war Absicht. The component takes care of the most used properties. Then, it's up to the user to use the underlying component shown in the following demo. Sie können jedoch `inputProps` (und `InputProps`, `InputLabelProps` Eigenschaften) verwenden, wenn Sie einiges an Boilerplate vermeiden möchten.
 
 {{"demo": "pages/components/text-fields/ComposedTextField.js"}}
 
@@ -107,11 +109,46 @@ Hier einige Beispiele zum Anpassen der Komponente. Mehr dazu erfahren Sie auf de
 
 {{"demo": "pages/components/text-fields/CustomizedInputs.js"}}
 
-Die Anpassung endet nicht bei CSS. Sie können Komposition verwenden, um benutzerdefinierte Komponenten zu erstellen und Ihrer App ein einzigartiges Gefühl zu verleihen. Nachfolgend ein Beispiel mit der [`InputBase`](/api/input-base/) Komponente, die von Google Maps inspiriert wurde.
+Customization does not stop at CSS. You can use composition to build custom components and give your app a unique feel. Nachfolgend ein Beispiel mit der [`InputBase`](/api/input-base/) Komponente, die von Google Maps inspiriert wurde.
 
 {{"demo": "pages/components/text-fields/CustomizedInputBase.js", "bg": true}}
 
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/styles/text-field).
+
+## `useFormControl`
+
+For advanced customization use cases, a `useFormControl()` hook is exposed. This hook returns the context value of the parent `FormControl` component.
+
+**API**
+
+```jsx
+import { useFormControl } from '@material-ui/core/FormControl';
+```
+
+**Rückgabewerte**
+
+`value` (_object_):
+
+- `value.adornedStart` (_bool_): Indicate whether the child `Input` or `Select` component has a start adornment.
+- `value.setAdornedStart` (_func_): Setter function for `adornedStart` state value.
+- `value.color` (_string_): The theme color is being used, inherited from `FormControl` `color` prop .
+- `value.disabled` (_bool_): Indicate whether the component is being displayed in a disabled state, inherited from `FormControl` `disabled` prop.
+- `value.error` (_bool_): Indicate whether the component is being displayed in an error state, inherited from `FormControl` `error` prop
+- `value.filled` (_bool_): Indicate whether input is filled
+- `value.focused` (_bool_): Indicate whether the component and its children are being displayed in a focused state
+- `value.fullWidth` (_bool_): Indicate whether the component is taking up the full width of its container, inherited from `FormControl` `fullWidth` prop
+- `value.hiddenLabel` (_bool_): Indicate whether the label is being hidden, inherited from `FormControl` `hiddenLabel` prop
+- `value.required` (_bool_): Indicate whether the label is indicating that the input is required input, inherited from the `FormControl` `required` prop
+- `value.size` (_string_): The size of the component, inherited from the `FormControl` `size` prop
+- `value.variant` (_string_): The variant is being used by the `FormControl` component and its children, inherited from `FormControl` `variant` prop
+- `value.onBlur` (_func_): Should be called when the input is blurred
+- `value.onFocus` (_func_): Should be called when the input is focused
+- `value.onEmpty` (_func_): Should be called when the input is emptied
+- `value.onFilled` (_func_): Should be called when the input is filled
+
+**Beispiel**
+
+{{"demo": "pages/components/text-fields/UseFormControl.js"}}
 
 ## Einschränkungen
 
@@ -135,13 +172,13 @@ oder
 
 ### Floating label
 
-The floating label is absolutely positioned, it won't impact the layout of the page. You need to make sure that the input is larger than the label to display correctly.
+The floating label is absolutely positioned. It won't impact the layout of the page. Make sure that the input is larger than the label to display correctly.
 
 ### type="number"
 
 Inputs of type="number" have potential usability issues:
 
-- Allowing certain non-numeric characters ('e', '+', '-', '.') and silently discarding others and silently discarding others and silently discarding others
+- Allowing certain non-numeric characters ('e', '+', '-', '.') and silently discarding others and silently discarding others and silently discarding others and silently discarding others
 - Wenn Sie die Komponente zusammenstellen:
 
 and more - see [this article](https://technology.blog.gov.uk/2020/02/24/why-the-gov-uk-design-system-team-changed-the-input-type-for-numbers/) by the GOV.UK Design System team for a more detailed explanation.
@@ -233,7 +270,7 @@ In order for the text field to be accessible, **the input should be linked to th
 
 ## Ergänzende Projekte
 
-Für fortgeschrittenere Anwendungsfälle können Ihnen folgende Projekte helfen:
+For more advanced use cases, you might be able to take advantage of:
 
 - [mui-rff](https://github.com/lookfirst/mui-rff) Bindings for using Material-UI with [React Final Form](https://final-form.org/react).
 - [formik-material-ui](https://github.com/stackworx/formik-material-ui): Bindings for using Material-UI with [formik](https://jaredpalmer.com/formik).

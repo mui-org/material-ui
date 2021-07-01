@@ -42,6 +42,7 @@ export const FormLabelRoot = styled('label', {
   ...theme.typography.body1,
   lineHeight: '1.4375em',
   padding: 0,
+  position: 'relative',
   [`&.${formLabelClasses.focused}`]: {
     color: theme.palette[styleProps.color].main,
   },
@@ -136,7 +137,7 @@ FormLabel.propTypes /* remove-proptypes */ = {
   /**
    * The color of the component. It supports those theme colors that make sense for this component.
    */
-  color: PropTypes.oneOf(['primary', 'secondary']),
+  color: PropTypes.oneOf(['error', 'info', 'primary', 'secondary', 'success', 'warning']),
   /**
    * The component used for the root node.
    * Either a string to use a HTML element or a component.

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
-import { createMount, describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
 import Snackbar, { snackbarClasses as classes } from '@material-ui/core/Snackbar';
 
 describe('<Snackbar />', () => {
@@ -16,8 +16,6 @@ describe('<Snackbar />', () => {
   afterEach(() => {
     clock.restore();
   });
-
-  const mount = createMount();
 
   const clientRender = createClientRender();
   /**
@@ -40,7 +38,6 @@ describe('<Snackbar />', () => {
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiSnackbar',
     skip: [

@@ -14,7 +14,7 @@ theme.spacing(2); // `${8 * 2}px` = '16px'
 
 間隔の変換は、次の方法で変更できます。
 
-- a number
+- 数値
 
 ```js
 const theme = createTheme({
@@ -24,17 +24,17 @@ const theme = createTheme({
 theme.spacing(2); // `${4 * 2}px` = '8px'
 ```
 
-- a function
+- 関数
 
 ```js
 const theme = createTheme({
-  spacing: factor => `${0.25 * factor}rem`, // (Bootstrap strategy)
+  spacing: (factor) => `${0.25 * factor}rem`, // (Bootstrap strategy)
 });
 
 theme.spacing(2); // = 0.25 * 2rem = 0.5rem = 8px
 ```
 
-- an array
+- 配列
 
 ```js
 const theme = createTheme({
@@ -46,14 +46,14 @@ theme.spacing(2); // = '8px'
 
 ## Multiple arity
 
-`theme.spacing()` ヘルパーは最大4つの引数を受け入れます。 You can use the arguments to reduce the boilerplate. You can use the arguments to reduce the boilerplate.
+`theme.spacing()` ヘルパーは最大4つの引数を受け入れます。 引数を使用すると、ボイラープレートを減らすことができます。
 
 ```diff
 -padding: `${theme.spacing(1)} ${theme.spacing(2)}`, // '8px 16px'
 +padding: theme.spacing(1, 2), // '8px 16px'
 ```
 
-Mixing string values is also supported:
+文字列値のミキシングもサポートされています:
 
 ```js
 margin: theme.spacing(1, 'auto'), // '8px auto'

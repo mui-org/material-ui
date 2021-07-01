@@ -135,7 +135,7 @@ function DemoSandboxed(props) {
   const t = useTranslate();
 
   return (
-    <DemoErrorBoundary onResetDemoClick={onResetDemoClick} t={t}>
+    <DemoErrorBoundary name={name} onResetDemoClick={onResetDemoClick} t={t}>
       <Sandbox {...sandboxProps}>
         <Component />
       </Sandbox>

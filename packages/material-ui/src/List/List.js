@@ -23,12 +23,12 @@ const ListRoot = styled('ul', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(!styleProps.disablePadding && styles.padding),
-      ...(styleProps.dense && styles.dense),
-      ...(styleProps.subheader && styles.subheader),
-    };
+    return [
+      styles.root,
+      !styleProps.disablePadding && styles.padding,
+      styleProps.dense && styles.dense,
+      styleProps.subheader && styles.subheader,
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

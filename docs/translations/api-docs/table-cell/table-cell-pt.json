@@ -1,73 +1,79 @@
 {
-  "componentDescription": "The component renders a <code>&lt;th&gt;</code> element when the parent context is a header\nor otherwise a <code>&lt;td&gt;</code> element.",
+  "componentDescription": "The component renders a `<th>` element when the parent context is a header\nor otherwise a `<td>` element.",
   "propDescriptions": {
     "align": "Set the text-align on the table cell content.<br>Monetary or generally number fields <strong>should be right aligned</strong> as that allows you to add them up quickly in your head without having to worry about decimals.",
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "padding": "Sets the padding applied to the cell. The prop defaults to the value (<code>&#39;default&#39;</code>) inherited from the parent Table component.",
     "scope": "Set scope attribute.",
     "size": "Specify the size of the cell. The prop defaults to the value (<code>&#39;medium&#39;</code>) inherited from the parent Table component.",
     "sortDirection": "Set aria-sort direction.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "Specify the cell type. The prop defaults to the value inherited from the parent TableHead, TableBody, or TableFooter components."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "head": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"head\"</code> or <code>context.table.head</code>"
     },
     "body": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"body\"</code> or <code>context.table.body</code>"
     },
     "footer": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"footer\"</code> or <code>context.table.footer</code>"
     },
     "sizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>size=\"small\"</code>"
     },
+    "sizeMedium": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>size=\"medium\"</code>"
+    },
     "paddingCheckbox": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>padding=\"checkbox\"</code>"
     },
     "paddingNone": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>padding=\"none\"</code>"
     },
     "alignLeft": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"left\"</code>"
     },
     "alignCenter": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"center\"</code>"
     },
     "alignRight": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"right\"</code>"
     },
     "alignJustify": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"justify\"</code>"
     },
     "stickyHeader": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>context.table.stickyHeader={true}</code>"
     }
   }

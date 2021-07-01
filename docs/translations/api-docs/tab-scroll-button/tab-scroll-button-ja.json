@@ -4,8 +4,9 @@
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "direction": "The direction the button should indicate.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "orientation": "The group orientation (layout flow direction)."
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "orientation": "コンポーネントの向き (レイアウトの並ぶ方向)。",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

@@ -1,48 +1,52 @@
-# How to customize
+- - -
+components: GlobalStyles
+- - -
+
+# 如何定制
 
 <p class="description">您可以轻松地自定义一个 Material-UI 组件的外观。</p>
 
-As components can be used in different contexts, there are several approaches to customizing them. 从最狭窄到最广泛的用例，这些是： 从最狭窄到最广泛的用例，这些是：
+由于组件可以在不同的环境中使用，因此有几种方法可以对其进行定制。 从最狭窄到最广泛的用例，这些是：
 
-1. [One-off customization](#1-one-off-customization)
-1. [Reusable style overrides](#2-reusable-style-overrides)
-1. [Dynamic variation](#3-dynamic-variation)
+1. [一次性定制](#1-one-off-customization)
+1. [可重复使用的样式覆盖](#2-reusable-style-overrides)
+1. [动态变体](#3-dynamic-variation)
 1. [全局化主题变体](#4-global-theme-variation)
 1. [全局 CSS 覆盖](#5-global-css-override)
 
-## 1. One-off customization
+## 1. 一次性定制
 
 您可能需要为实现特定的组件而更改样式，以下有几种解决方案：
 
-### Use the `sx` prop
+### 使用 `sx` 属性
 
-The easiest way to add style overrides for a one-off situation is to use the `sx` prop available on all Material-UI components. 下面是一个示例： 下面是一个示例：
+The easiest way to add style overrides for a one-off situation is to use the [`sx` prop](/system/basics/#the-sx-prop) available on all Material-UI components. 下面是一个示例：
 
 {{"demo": "pages/customization/how-to-customize/SxProp.js"}}
 
-Next you'll see how you can you can use global class selectors for accessing slots inside the component. You'll also learn how to easily identify the classes which are available to you for each of the states and slots in the component. You'll also learn how to easily identify the classes which are available to you for each of the states and slots in the component.
+接下来你会看到如何可以你可以使用全局类选择器来访问组件内部的插槽。 你还将学习如何轻松识别组件中每个状态和槽位的可用类。
 
-### Overriding nested component styles
+### 覆盖嵌套组件样式
 
-You can use the browser dev tools to identify the slot for the component you want to override. It can save you a lot of time. You can use the browser dev tools to identify the slot for the component you want to override. It can save you a lot of time. The styles injected into the DOM by Material-UI rely on class names that [follow a simple pattern](/styles/advanced/#class-names): `[hash]-Mui[Component name]-[name of the slot]`.
+你可以使用浏览器开发工具来确定您要覆盖的组件的插槽。 这样做可以节省你的很多时间。 Material-UI 注入到 DOM中 的样式依赖于[遵循简单模式的类名](/styles/advanced/#class-names)：`[hash]-Mui[Component name]-[name of the slot]`.
 
-⚠️ These class names can't be used as CSS selectors because they are unstable, however, Material-UI applies global class names using a consistent convention: `Mui[Component name]-[name of the slot]`.
+⚠️ 这些类名不能用作 CSS 选择器，因为它们是不稳定的，然而，Material-UI 在应用全局类名时，使用了一致的约定：`Mui[Component name]-[name of the slot]`.
 
-让我们回到上面的演示。 How can you override the slider's thumb?
+让我们回到上面的演示。 如何覆写滑块的拇指图标？
 
 <img src="/static/images/customization/dev-tools.png" alt="dev-tools" width="406" />
 
-In this example, the styles are applied with `.css-ae2u5c-MuiSlider-thumb` so the name of the component is `Slider` and the name of the slot is `thumb`.
+在本例中，样式应用的是 `.css-ae2u5c-MuiSlider-thumb`，所以组件的名称是 `Slider`，插槽的名称是 `thumb`。
 
-You now know that you need to target the `.MuiSlider-thumb` class name for overriding the look of the thumb:
+你现在知道你需要针对 `.MuiSlider-thumb` 类名来覆盖拇指的外观：
 
 {{"demo": "pages/customization/how-to-customize/DevTools.js"}}
 
 ### 用类名（class names）覆盖样式
 
-If you would like to override the styles of the components using classes, you can use the `className` prop available on each component. For overriding the styles of the different parts inside the component, you can use the global classes available for each slot, as described in the previous section. For overriding the styles of the different parts inside the component, you can use the global classes available for each slot, as described in the previous section.
+如果你想使用类覆盖组件的样式，你可以使用每个组件上可用的 `className` 属性。 对于覆盖组件内部不同部件的样式，可以使用每个槽位可用的全局类，如前一节所述。
 
-You can find examples of this using different styles libraries in the [Styles library interoperability](/guides/interoperability/) guide.
+您可以在 [样式库互操作性](/guides/interoperability/) 指南中找到不同样式库的示例。
 
 ### CSS 伪类（Pseudo-classes）
 
@@ -55,7 +59,7 @@ You can find examples of this using different styles libraries in the [Styles li
   color: black;
 }
 
-/* Increase the specificity */
+/* 覆盖属性 */
 .Button:disabled {
   color: white;
 }
@@ -65,14 +69,14 @@ You can find examples of this using different styles libraries in the [Styles li
 <Button disabled className="Button">
 ```
 
-Sometimes, you can't use a **pseudo-class**, as the state doesn't exist in the web specification. 我们以菜单项（menu item）组件和 *selected* 状态为例。 我们以菜单项（menu item）组件和 *selected* 状态为例。 You can use the `.Mui-selected` global class name to customize the special state of the `MenuItem` component:
+有时候，您不能使用**伪类**，因为web标准中不存在该状态。 我们以菜单项（menu item）组件和 *selected* 状态为例。 你可以使用全局类名`.Mui-selected`自定义`MenuItem`组件的特殊状态。
 
 ```css
 .MenuItem {
   color: black;
 }
 
-/* Increase the specificity */
+/* 覆盖属性 */
 .MenuItem.Mui-selected {
   color: blue;
 }
@@ -84,13 +88,13 @@ Sometimes, you can't use a **pseudo-class**, as the state doesn't exist in the w
 
 #### 为什么我需要增加优先级来覆盖一个组件的状态呢？
 
-通过一些设计，CSS 的一些特殊要求让伪类提高了优先级。 For consistency with native elements, Material-UI increases the specificity of its custom pseudo-classes. 这有一个重要的优点，您可以自由挑选那些想要自定义状态。 这有一个重要的优点，您可以自由挑选那些想要自定义状态。
+通过一些设计，CSS 的一些特殊要求让伪类提高了优先级。 通过一些设计，CSS 的一些特殊要求让伪类提高了优先级。 这有一个重要的优点，您可以自由挑选那些想要自定义状态。
 
-#### What custom pseudo-classes are available in Material-UI?
+#### Material-UI 内部有哪些可被自定义的伪类？
 
 You can rely on the following [global class names](/styles/advanced/#with-material-ui-core) generated by Material-UI:
 
-| State         | 全局类名                |
+| 状态            | 全局类名                |
 |:------------- |:------------------- |
 | active        | `.Mui-active`       |
 | checked       | `.Mui-checked`      |
@@ -116,25 +120,44 @@ You can rely on the following [global class names](/styles/advanced/#with-materi
 }
 ```
 
-## 2. Reusable style overrides
+## 2. 可重复使用的样式覆盖
 
-If you find that you need the same overrides in multiple places across your application, you can use the `styled()` utility for creating a reusable component:
+If you find that you need the same overrides in multiple places across your application, you can use the [`styled()`](/customization/styled/) utility to create a reusable component:
 
 {{"demo": "pages/customization/how-to-customize/StyledCustomization.js", "defaultCodeOpen": true}}
 
 With it, you have access to all of a component's props to dynamically style the component.
 
-## 3。 Dynamic variation
+## 3。 动态变体
 
-In the previous section, we learned how to override the style of a Material-UI component. 现在，让我们看看我们如何使动态地应用这个覆盖。 现在，让我们看看我们如何使动态地应用这个覆盖。 Here are four alternatives; each has its pros and cons.
+In the previous section, we learned how to override the style of a Material-UI component. 现在，让我们看看我们如何使动态地应用这个覆盖。 Here are four alternatives; each has its pros and cons.
 
 ### 动态 CSS
 
+Using the `styled()` utility offers a simple way for adding dynamic styles based on props.
+
 {{"demo": "pages/customization/how-to-customize/DynamicCSS.js", "defaultCodeOpen": false}}
 
-### 类名称分支
+> ⚠️ Note that if you are using TypeScript you will need to update the prop's types of the new component.
 
-{{"demo": "pages/customization/how-to-customize/DynamicClassName.js"}}
+```tsx
+import * as React from 'react';
+import { styled } from '@material-ui/core/styles';
+import Slider, { SliderProps } from '@material-ui/core/Slider';
+
+interface StyledSliderProps extends SliderProps {
+  success?: boolean;
+}
+
+const StyledSlider = styled(Slider, {
+  shouldForwardProp: (prop) => prop !== 'success',
+})<StyledSliderProps>(({ success, theme }) => ({
+  ...(success &&
+    {
+      // the overrides added when the new prop is used
+    }),
+}));
+```
 
 ### CSS 变量
 
@@ -156,7 +179,7 @@ Components expose [global class names](/styles/advanced/#with-material-ui-core) 
 
 ```css
 .MuiButton-root {
-  fontsize: '1rem';
+  font-size: 1rem;
 }
 ```
 

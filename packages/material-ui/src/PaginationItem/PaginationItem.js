@@ -2,10 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { alpha } from '@material-ui/system';
 import useThemeProps from '../styles/useThemeProps';
 import paginationItemClasses, { getPaginationItemUtilityClass } from './paginationItemClasses';
 import { useTheme } from '../styles';
-import { alpha } from '../styles/colorManipulator';
 import ButtonBase from '../ButtonBase';
 import capitalize from '../utils/capitalize';
 import FirstPageIcon from '../internal/svg-icons/FirstPage';
@@ -14,22 +14,21 @@ import NavigateBeforeIcon from '../internal/svg-icons/NavigateBefore';
 import NavigateNextIcon from '../internal/svg-icons/NavigateNext';
 import styled from '../styles/styled';
 
-const rootOverridesResolver = (props, styles) => {
+const overridesResolver = (props, styles) => {
   const { styleProps } = props;
 
-  return {
-    ...styles.root,
-    ...styles[styleProps.variant],
-    ...styles[`size${capitalize(styleProps.size)}`],
-    ...(styleProps.variant === 'text' && styles[`text${capitalize(styleProps.color)}`]),
-    ...(styleProps.variant === 'outlined' && styles[`outlined${capitalize(styleProps.color)}`]),
-    ...(styleProps.shape === 'rounded' && styles.rounded),
-    ...(styleProps.type === 'page' && styles.page),
-    ...((styleProps.type === 'start-ellipsis' || styleProps.type === 'end-ellipsis') &&
-      styles.ellipsis),
-    ...((styleProps.type === 'previous' || styleProps.type === 'next') && styles.previousNext),
-    ...((styleProps.type === 'first' || styleProps.type === 'last') && styles.firstLast),
-  };
+  return [
+    styles.root,
+    styles[styleProps.variant],
+    styles[`size${capitalize(styleProps.size)}`],
+    styleProps.variant === 'text' && styles[`text${capitalize(styleProps.color)}`],
+    styleProps.variant === 'outlined' && styles[`outlined${capitalize(styleProps.color)}`],
+    styleProps.shape === 'rounded' && styles.rounded,
+    styleProps.type === 'page' && styles.page,
+    (styleProps.type === 'start-ellipsis' || styleProps.type === 'end-ellipsis') && styles.ellipsis,
+    (styleProps.type === 'previous' || styleProps.type === 'next') && styles.previousNext,
+    (styleProps.type === 'first' || styleProps.type === 'last') && styles.firstLast,
+  ];
 };
 
 const useUtilityClasses = (styleProps) => {
@@ -63,7 +62,7 @@ const useUtilityClasses = (styleProps) => {
 const PaginationItemEllipsis = styled('div', {
   name: 'MuiPaginationItem',
   slot: 'Root',
-  overridesResolver: rootOverridesResolver,
+  overridesResolver,
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */
   ...theme.typography.body2,
@@ -98,7 +97,7 @@ const PaginationItemEllipsis = styled('div', {
 const PaginationItemPage = styled(ButtonBase, {
   name: 'MuiPaginationItem',
   slot: 'Root',
-  overridesResolver: rootOverridesResolver,
+  overridesResolver,
 })(
   ({ theme, styleProps }) => ({
     /* Styles applied to the root element. */

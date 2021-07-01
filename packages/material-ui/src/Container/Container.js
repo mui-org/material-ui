@@ -28,12 +28,12 @@ const ContainerRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`maxWidth${capitalize(String(styleProps.maxWidth))}`],
-      ...(styleProps.fixed && styles.fixed),
-      ...(styleProps.disableGutters && styles.disableGutters),
-    };
+    return [
+      styles.root,
+      styles[`maxWidth${capitalize(String(styleProps.maxWidth))}`],
+      styleProps.fixed && styles.fixed,
+      styleProps.disableGutters && styles.disableGutters,
+    ];
   },
 })(
   ({ theme, styleProps }) => ({

@@ -6,6 +6,6 @@ const defaultTheme = createTheme();
 /**
  * @ignore - do not document.
  */
-const Box = createBox(defaultTheme);
+const Box = createBox({ defaultTheme });
 
 export default Box;

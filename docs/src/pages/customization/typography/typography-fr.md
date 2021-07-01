@@ -76,6 +76,8 @@ return (
 );
 ```
 
+Note that if you want to add additional `@font-face` declarations, you need to use the string CSS template syntax for adding style overrides, so that the previosly defined `@font-face` declarations won't be replaced.
+
 ## Font size
 
 Material-UI uses `rem` units for the font size. The browser `<html>` element default font size is `16px`, but browsers have an option to change this value, so `rem` units allow us to accommodate the user's settings, resulting in a better accessibility support. Users change font size settings for all kinds of reasons, from poor eyesight to choosing optimum settings for devices that can be vastly different in size and viewing distance.
@@ -224,7 +226,7 @@ const theme = createTheme({
 
 > If you aren't using TypeScript you should skip this step.
 
-You need to make sure that the typings for the theme's `typography` variants and the `Typogrpahy`'s `variant` prop reflects the new set of variants.
+You need to make sure that the typings for the theme's `typography` variants and the `Typography`'s `variant` prop reflects the new set of variants.
 
 <!-- Tested with packages/material-ui/test/typescript/augmentation/typographyVariants.spec.ts -->
 

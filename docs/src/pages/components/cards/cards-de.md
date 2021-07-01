@@ -15,11 +15,11 @@ They should be easy to scan for relevant and actionable information. Elements, l
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Einfache Karte
+## Basic card
 
 Karten können zwar mehrere Aktionen, UI-Steuerelemente und ein Überlaufmenü unterstützen, seien Sie zurückhaltend und denken Sie daran, dass Karten Eintrittspunkte zu komplexeren und detaillierteren Informationen sind.
 
-{{"demo": "pages/components/cards/SimpleCard.js", "bg": true}}
+{{"demo": "pages/components/cards/BasicCard.js", "bg": true}}
 
 ### Outlined Card
 

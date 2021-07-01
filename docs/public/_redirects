@@ -25,6 +25,8 @@ https://material-ui.dev/* https://material-ui.com/:splat 301!
 /r/x-license https://material-ui.com/store/items/material-ui-pro/
 /r/migration-v4 /guides/migration-v4/
 
+/x/license/ https://docs.google.com/document/d/1nkd5JP5wCefo6UwpVi6PnbTaw8DxhstkCZlfHV5ZgfI/edit?usp=sharing 301
+
 # Legacy redirection
 # Added in chronological order
 # To be removed at some point
@@ -139,6 +141,7 @@ https://v3-9-0.material-ui.com/* https://v3.material-ui.com/:splat 301!
 /customization/components/ /customization/how-to-customize/ 301
 /customization/globals/ /customization/theme-components/ 301
 /components/slider-styled/ /components/slider/ 301
+/customization/styled/ /system/styled/ 301
 
 # Proxies
 

@@ -1,7 +1,12 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "component": "The component used for the root node. Either a string to use a HTML element or a component."
+    "children": "The content of the component.",
+    "component": "The component used for the root node. Either a string to use a HTML element or a component.",
+    "direction": "Defines the <code>flex-direction</code> style property. It is applied for all screen sizes.",
+    "divider": "Add an element between each child.",
+    "spacing": "Defines the space between immediate children.",
+    "sx": "The system prop, which allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {}
 }

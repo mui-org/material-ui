@@ -38,7 +38,7 @@ We avoid documenting native properties supported by the DOM like [`className`](/
 
 ### CSS Classes
 
-All components accept a [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) prop to customize the styles. The classes design answers two constraints: to make the classes structure as simple as possible, while sufficient to implement the Material Design specification.
+All components accept a [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) prop to customize the styles. The classes design answers two constraints: to make the classes structure as simple as possible, while sufficient to implement the Material Design guidelines.
 
 - The class applied to the root element is always called `root`.
 - All the default styles are grouped in a single class.
@@ -82,7 +82,7 @@ The name of a boolean property should be chosen based on the **default value**. 
 
 Большинство управляемых компонентов контролируются параметрами `value` и `onChange`, хотя комбинация `open` / `onClose` / `onOpen` используется с отвечающим за отображение состоянием. Если же событий несколько, то мы ставим в начало существительное, а затем глагол, например: `onPageChange`, `onRowsChange`.
 
-### boolean vs enum
+### boolean vs. enum
 
 There are two options to design the API for the variations of a component: with a *boolean*; or with an *enum*. For example, let's take a button that has different types. Each option has its pros and cons:
 
@@ -107,7 +107,7 @@ There are two options to design the API for the variations of a component: with 
 
   This API is more verbose: `<Button>`, `<Button variant="contained">`, `<Button variant="fab">`.
 
-  However it prevents an invalid combination from being used, bounds the number of properties exposed, and can easily support new values in the future.
+  However, it prevents an invalid combination from being used, bounds the number of props exposed, and can easily support new values in the future.
 
 The Material-UI components use a combination of the two approaches according to the following rules:
 

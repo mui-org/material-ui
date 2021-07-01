@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { capitalize, isMuiElement } from '@material-ui/core/utils';
-import { styled, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { styled, useThemeProps } from '@material-ui/core/styles';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import { timelineContentClasses } from '../TimelineContent';
 import { timelineOppositeContentClasses } from '../TimelineOppositeContent';
@@ -29,10 +29,7 @@ const TimelineItemRoot = styled('li', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`position${capitalize(styleProps.position)}`],
-    };
+    return [styles.root, styles[`position${capitalize(styleProps.position)}`]];
   },
 })(({ styleProps }) => ({
   listStyle: 'none',

@@ -15,9 +15,10 @@
     "id": "This prop is used to help implement the accessibility logic. If you don&#39;t provide this prop. It falls back to a randomly generated id.",
     "multiSelect": "If true <code>ctrl</code> and <code>shift</code> will trigger multiselect.",
     "onNodeFocus": "Callback fired when tree items are focused.<br><br><strong>Signature:</strong><br><code>function(event: object, value: string) =&gt; void</code><br><em>event:</em> The event source of the callback <strong>Warning</strong>: This is a generic event not a focus event.<br><em>value:</em> of the focused node.",
-    "onNodeSelect": "Callback fired when tree items are selected/unselected.<br><br><strong>Signature:</strong><br><code>function(event: object, value: array \\| string) =&gt; void</code><br><em>event:</em> The event source of the callback<br><em>value:</em> of the selected nodes. When <code>multiSelect</code> is true this is an array of strings; when false (default) a string.",
+    "onNodeSelect": "Callback fired when tree items are selected/unselected.<br><br><strong>Signature:</strong><br><code>function(event: object, value: array | string) =&gt; void</code><br><em>event:</em> The event source of the callback<br><em>value:</em> of the selected nodes. When <code>multiSelect</code> is true this is an array of strings; when false (default) a string.",
     "onNodeToggle": "Callback fired when tree items are expanded/collapsed.<br><br><strong>Signature:</strong><br><code>function(event: object, nodeIds: array) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>nodeIds:</em> The ids of the expanded nodes.",
-    "selected": "Selected node ids. (Controlled) When <code>multiSelect</code> is true this takes an array of strings; when false (default) a string."
+    "selected": "Selected node ids. (Controlled) When <code>multiSelect</code> is true this takes an array of strings; when false (default) a string.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

@@ -11,7 +11,7 @@
     "outsideCurrentMonth": "If <code>true</code>, day is outside of month and will be hidden.",
     "selected": "If <code>true</code>, renders as selected.",
     "showDaysOutsideCurrentMonth": "If <code>true</code>, days that have <code>outsideCurrentMonth={true}</code> are displayed.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "today": "If <code>true</code>, renders as today date."
   },
   "classDescriptions": {

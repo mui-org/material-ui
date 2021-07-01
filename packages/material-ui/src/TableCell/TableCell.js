@@ -2,8 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { darken, alpha, lighten } from '@material-ui/system';
 import capitalize from '../utils/capitalize';
-import { darken, alpha, lighten } from '../styles/colorManipulator';
 import TableContext from '../Table/TableContext';
 import Tablelvl2Context from '../Table/Tablelvl2Context';
 import useThemeProps from '../styles/useThemeProps';
@@ -33,14 +33,14 @@ const TableCellRoot = styled('td', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.variant],
-      ...styles[`size${capitalize(styleProps.size)}`],
-      ...(styleProps.padding !== 'normal' && styles[`padding${capitalize(styleProps.padding)}`]),
-      ...(styleProps.align !== 'inherit' && styles[`align${capitalize(styleProps.align)}`]),
-      ...(styleProps.stickyHeader && styles.stickyHeader),
-    };
+    return [
+      styles.root,
+      styles[styleProps.variant],
+      styles[`size${capitalize(styleProps.size)}`],
+      styleProps.padding !== 'normal' && styles[`padding${capitalize(styleProps.padding)}`],
+      styleProps.align !== 'inherit' && styles[`align${capitalize(styleProps.align)}`],
+      styleProps.stickyHeader && styles.stickyHeader,
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */

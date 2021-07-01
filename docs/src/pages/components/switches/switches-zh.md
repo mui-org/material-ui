@@ -15,13 +15,29 @@ materialDesign: 'https://material.io/components/selection-controls#switches'
 
 ## 基本的开关
 
-{{"demo": "pages/components/switches/Switches.js"}}
+{{"demo": "pages/components/switches/BasicSwitches.js"}}
 
-## 带有 FormControlLabel 的开关
+## 标签
 
-借助 `FormControlLabel` 组件，`Switch`能够提供一些描述。
+You can provide a label to the `Switch` thanks to the `FormControlLabel` component.
 
 {{"demo": "pages/components/switches/SwitchLabels.js"}}
+
+## Size 大小
+
+Use the `size` prop to change the size of the switch.
+
+{{"demo": "pages/components/switches/SwitchesSize.js"}}
+
+## Color 颜色
+
+{{"demo": "pages/components/switches/ColorSwitches.js"}}
+
+## Controlled
+
+You can control the switch with the `checked` and `onChange` props:
+
+{{"demo": "pages/components/switches/ControlledSwitches.js"}}
 
 ## 带有 FormGroup 的开关
 
@@ -36,12 +52,6 @@ materialDesign: 'https://material.io/components/selection-controls#switches'
 {{"demo": "pages/components/switches/CustomizedSwitches.js"}}
 
 🎨 如果您还在寻找灵感，您可以查看一下 [MUI Treasury 自定义的例子](https://mui-treasury.com/components/button)。
-
-## 尺寸
-
-想用一些优雅的小开关？ 试着使用 `size` 属性吧。
-
-{{"demo": "pages/components/switches/SwitchesSize.js"}}
 
 ## 标签放置
 

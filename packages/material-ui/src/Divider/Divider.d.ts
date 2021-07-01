@@ -72,7 +72,9 @@ export interface DividerTypeMap<P = {}, D extends React.ElementType = 'hr'> {
  */
 declare const Divider: OverridableComponent<DividerTypeMap>;
 
-export type DividerProps<D extends React.ElementType = DividerTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<DividerTypeMap<P, D>, D>;
+export type DividerProps<
+  D extends React.ElementType = DividerTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<DividerTypeMap<P, D>, D>;
 
 export default Divider;

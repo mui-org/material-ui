@@ -9,19 +9,21 @@
     "components": "The components used for each slot inside the Slider. Either a string to use a HTML element or a component.",
     "componentsProps": "The props used for each slot inside the Slider.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "getAriaLabel": "Accepts a function which returns a string value that provides a user-friendly name for the thumb labels of the slider.<br><br><strong>Signature:</strong><br><code>function(index: number) =&gt; string</code><br><em>index:</em> The thumb label&#39;s index to format.",
-    "getAriaValueText": "Accepts a function which returns a string value that provides a user-friendly name for the current value of the slider.<br><br><strong>Signature:</strong><br><code>function(value: number, index: number) =&gt; string</code><br><em>value:</em> The thumb label&#39;s value to format.<br><em>index:</em> The thumb label&#39;s index to format.",
+    "disabled": "Если <code>true</code>, компонент отключен.",
+    "disableSwap": "If <code>true</code>, the active thumb doesn&#39;t swap when moving pointer over a thumb while dragging another thumb.",
+    "getAriaLabel": "Accepts a function which returns a string value that provides a user-friendly name for the thumb labels of the slider. This is important for screen reader users.<br><br><strong>Signature:</strong><br><code>function(index: number) =&gt; string</code><br><em>index:</em> The thumb label&#39;s index to format.",
+    "getAriaValueText": "Accepts a function which returns a string value that provides a user-friendly name for the current value of the slider. This is important for screen reader users.<br><br><strong>Signature:</strong><br><code>function(value: number, index: number) =&gt; string</code><br><em>value:</em> The thumb label&#39;s value to format.<br><em>index:</em> The thumb label&#39;s index to format.",
     "isRtl": "Indicates whether the theme context has rtl direction. It is set automatically.",
     "marks": "Marks indicate predetermined values to which the user can move the slider. If <code>true</code> the marks are spaced according the value of the <code>step</code> prop. If an array, it should contain objects with <code>value</code> and an optional <code>label</code> keys.",
     "max": "The maximum allowed value of the slider. Should not be equal to min.",
     "min": "The minimum allowed value of the slider. Should not be equal to max.",
     "name": "Name attribute of the hidden <code>input</code> element.",
-    "onChange": "Callback function that is fired when the slider&#39;s value changed.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number \\| number[]) =&gt; void</code><br><em>event:</em> The event source of the callback. <strong>Warning</strong>: This is a generic event not a change event.<br><em>value:</em> The new value.",
-    "onChangeCommitted": "Callback function that is fired when the <code>mouseup</code> is triggered.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number \\| number[]) =&gt; void</code><br><em>event:</em> The event source of the callback. <strong>Warning</strong>: This is a generic event not a change event.<br><em>value:</em> The new value.",
+    "onChange": "Callback function that is fired when the slider&#39;s value changed.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number | number[], activeThumb: number) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (any). <strong>Warning</strong>: This is a generic event not a change event.<br><em>value:</em> The new value.<br><em>activeThumb:</em> Index of the currently moved thumb.",
+    "onChangeCommitted": "Callback function that is fired when the <code>mouseup</code> is triggered.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number | number[]) =&gt; void</code><br><em>event:</em> The event source of the callback. <strong>Warning</strong>: This is a generic event not a change event.<br><em>value:</em> The new value.",
     "orientation": "The divider orientation.",
     "scale": "A transformation function, to change the scale of the slider.",
     "step": "The granularity with which the slider can step through values. (A &quot;discrete&quot; slider.) The <code>min</code> prop serves as the origin for the valid values. We recommend (max - min) to be evenly divisible by the step.<br>When step is <code>null</code>, the thumb can only be slid onto marks provided with the <code>marks</code> prop.",
+    "tabIndex": "Tab index attribute of the hidden <code>input</code> element.",
     "track": "The track presentation:<br>- <code>normal</code> the track will render a bar representing the slider value. - <code>inverted</code> the track will render a bar representing the remaining slider value. - <code>false</code> the track will render without a bar.",
     "value": "The value of the slider. For ranged sliders, provide an array with two values.",
     "valueLabelDisplay": "Controls when the value label is displayed:<br>- <code>auto</code> the value label will display when the thumb is hovered or focused. - <code>on</code> will display persistently. - <code>off</code> will never display.",
@@ -46,6 +48,11 @@
       "nodeName": "the root and thumb element",
       "conditions": "<code>disabled={true}</code>"
     },
+    "dragging": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root",
+      "conditions": "a thumb is being dragged"
+    },
     "rail": {
       "description": "Class name applied to {{nodeName}}.",
       "nodeName": "the rail element"
@@ -56,12 +63,12 @@
     },
     "trackFalse": {
       "description": "Class name applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the track element",
+      "nodeName": "the root element",
       "conditions": "<code>track={false}</code>"
     },
     "trackInverted": {
       "description": "Class name applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the track element",
+      "nodeName": "the root element",
       "conditions": "<code>track=\"inverted\"</code>"
     },
     "thumb": {
@@ -81,6 +88,19 @@
     "valueLabel": {
       "description": "Class name applied to {{nodeName}}.",
       "nodeName": "the thumb label element"
+    },
+    "valueLabelOpen": {
+      "description": "Class name applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the thumb label element",
+      "conditions": "it's open"
+    },
+    "valueLabelCircle": {
+      "description": "Class name applied to {{nodeName}}.",
+      "nodeName": "the thumb label's circle element"
+    },
+    "valueLabelLabel": {
+      "description": "Class name applied to {{nodeName}}.",
+      "nodeName": "the thumb label's label element"
     },
     "mark": {
       "description": "Class name applied to {{nodeName}}.",

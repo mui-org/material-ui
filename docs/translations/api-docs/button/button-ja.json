@@ -5,14 +5,14 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "disableElevation": "If <code>true</code>, no elevation is used.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "disableElevation": "<code>true</code>の場合、Elevationを使用しません。",
     "disableFocusRipple": "If <code>true</code>, the  keyboard focus ripple is disabled.",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
     "endIcon": "Element placed after the children.",
     "fullWidth": "If <code>true</code>, the button will take up the full width of its container.",
     "href": "The URL to link to when the button is clicked. If defined, an <code>a</code> element will be used as the root node.",
-    "size": "The size of the button. <code>small</code> is equivalent to the dense button styling.",
+    "size": "コンポーネントのサイズ。 <code>small</code> は、 高密度なボタンスタイルと同等です。",
     "startIcon": "Element placed before the children.",
     "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
@@ -20,10 +20,6 @@
   "classDescriptions": {
     "root": {
       "description": "Styles applied to the root element."
-    },
-    "label": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the span element that wraps the children"
     },
     "text": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -38,12 +34,12 @@
     "textPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"primary\"</code>"
+      "conditions": "<code>variant=\"text\"</code> と <code>color=\"primary\"</code>"
     },
     "textSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"secondary\"</code>"
+      "conditions": "<code>variant=\"text\"</code> と <code>color=\"secondary\"</code>"
     },
     "outlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -58,12 +54,12 @@
     "outlinedPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"primary\"</code>"
+      "conditions": "<code>variant=\"outlined\"</code> と <code>color=\"primary\"</code>"
     },
     "outlinedSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"secondary\"</code>"
+      "conditions": "<code>variant=\"outlined\"</code> と <code>color=\"secondary\"</code>"
     },
     "contained": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -78,12 +74,12 @@
     "containedPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"primary\"</code>"
+      "conditions": "<code>variant=\"contained\"</code> と <code>color=\"primary\"</code>"
     },
     "containedSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"secondary\"</code>"
+      "conditions": "<code>variant=\"contained\"</code> と <code>color=\"secondary\"</code>"
     },
     "disableElevation": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

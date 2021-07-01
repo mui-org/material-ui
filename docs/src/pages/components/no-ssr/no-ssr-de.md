@@ -17,7 +17,7 @@ Diese Komponente kann in verschiedenen Situationen nützlich sein:
 
 Die Style-Funktion der [Palette](/system/palette/).
 
-## Aufschiebung der Client-Seite
+## Client-side deferring
 
 {{"demo": "pages/components/no-ssr/SimpleNoSsr.js"}}
 

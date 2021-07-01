@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import FilledInput, { filledInputClasses as classes } from '@material-ui/core/FilledInput';
 import InputBase from '@material-ui/core/InputBase';
 
 describe('<FilledInput />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<FilledInput open />, () => ({
     classes,
     inheritComponent: InputBase,
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiFilledInput',
     testDeepOverrides: { slotName: 'input', slotClassName: classes.input },

@@ -2,7 +2,7 @@
 title: Componente React Acesso Rápido
 components: SpeedDial, SpeedDialAction, SpeedDialIcon
 githubLabel: 'component: SpeedDial'
-0: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
+materialDesign: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 ---
 
@@ -19,6 +19,10 @@ Se mais de seis ações forem necessárias, algo diferente de um BAF deve ser us
 O botão de ação flutuante pode exibir ações relacionadas.
 
 {{"demo": "pages/components/speed-dial/BasicSpeedDial.js"}}
+
+## Área de exemplos
+
+{{"demo": "pages/components/speed-dial/PlaygroundSpeedDial.js"}}
 
 ## Ícone de fechamento customizado
 

@@ -13,7 +13,7 @@
     "margin": "If <code>dense</code> or <code>normal</code>, will adjust vertical spacing of this and contained components.",
     "required": "If <code>true</code>, the label will indicate that the <code>input</code> is required.",
     "size": "The size of the component.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

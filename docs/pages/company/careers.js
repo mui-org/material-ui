@@ -1,20 +1,11 @@
 import * as React from 'react';
 import TopLayoutCompany from 'docs/src/modules/components/TopLayoutCompany';
-import { prepareMarkdown } from 'docs/src/modules/utils/parseMarkdown';
+import {
+  demos,
+  docs,
+  requireDemo,
+} from '!@material-ui/markdown/loader!docs/src/pages/company/careers/careers.md';
 
-const pageFilename = 'company/careers';
-const requireDemo = require.context('docs/src/pages/company/careers', false, /\.(js|tsx)$/);
-const requireRaw = require.context(
-  '!raw-loader!../../src/pages/company/careers',
-  false,
-  /\.(js|md|tsx)$/,
-);
-
-export default function Page({ demos, docs }) {
+export default function Page() {
   return <TopLayoutCompany demos={demos} docs={docs} requireDemo={requireDemo} />;
 }
-
-Page.getInitialProps = () => {
-  const { demos, docs } = prepareMarkdown({ pageFilename, requireRaw });
-  return { demos, docs };
-};

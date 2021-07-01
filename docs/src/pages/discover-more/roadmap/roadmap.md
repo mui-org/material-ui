@@ -17,9 +17,9 @@ Here are the top priorities:
   - Identify frequently needed components. There are many resources we leverage for this: the developer survey answers, GitHub issue upvotes, Algolia search volume, Google search volume, documentation usage, npm downloads, etc.
   - Prioritize the creation of frequently needed components.
   - Encourage the usage of third-party components if they already exist and are well maintained.
-- **Design.** 🎀 We are relatively up-to-date but the Material Design specification [is evolving](https://material.io/whats-new/), so should we. We also plan to implement [a second design](https://github.com/mui-org/material-ui/issues/22485).
-- **Better customization.** 💅 We want to make our component customization intuitive, no matter if you are using global CSS or styled-components:
-- **Better documentation.** 📚 No problem is solved until documented.
+- **Design.** 🎀 We are relatively up-to-date, but the Material Design guidelines [are evolving](https://material.io/whats-new/). So should we. We also plan to implement [a second design](https://github.com/mui-org/material-ui/issues/22485).
+- **Better customization.** 💅 We want to make component customization intuitive, no matter if you are using global CSS or styled-components:
+- **Better documentation.** 📚 No solution is complete without great documentation.
 - **Performance.** 🚀 React abstraction has a cost. The more components you render, the slower your page will be. You will notice stark differences when rendering a large table or list.
 - **Bundle size.** 📦 You can follow our progress [with bundlephobia.com report](https://bundlephobia.com/result?p=@material-ui/core). Please pay special attention to the cost of the individual modules under "Exports Analysis".
 - **TypeScript.** 📏 We are continuously improving the definitions. The codebase is mostly written in JavaScript with manually authored `.d.ts` definitions. While we do not plan a migration effort as a standalone effort, new modules are written in TypeScript.

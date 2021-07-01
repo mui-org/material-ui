@@ -7,19 +7,20 @@ The created file might need some manual adjustment since not every edge case is 
 
 ## Run a fixture
 
-1. Navigate into the fixture you want to test (where the `packge.json` is located)
+1. Navigate into the fixture you want to test (where the `package.json` is located)
 1. Use the node version you want to use (e.g. `nvm use 14.0.0`)
 1. Prepare the package.json
    - to test a Pull Request
-     - checkout branch
-     - `yarn`
-     - `yarn lerna run build --scope "@material-ui/*"`
-     - `cd` to fixture
-     - `node ../../scripts/useBuildFromSource.js .`
+     1. checkout branch
+     1. `yarn`
+     1. `yarn lerna run build --scope "@material-ui/*"`
+     1. `cd` to fixture
+     1. `yarn install`
+     1. `node ../../scripts/useBuildFromSource.js .`
    - to test a published npm dist tag (e.g. `latest` or `next`) on npm
-     - adjust the dependencies in the package.json accordingly
-1. `cd` to fixture
-1. `yarn install`
+     1. `cd` to fixture
+     1. adjust the dependencies in the package.json accordingly
+     1. `yarn install`
 1. `yarn start` should exit with 0
 
 ### In CI

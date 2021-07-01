@@ -103,7 +103,7 @@ Like with the single selection, you can pull out the new value by accessing `eve
 
 ## With a dialog
 
-While it's discouraged by the Material Design specification, you can use a select inside a dialog.
+While it's discouraged by the Material Design guidelines, you can use a select inside a dialog.
 
 {{"demo": "pages/components/selects/DialogSelect.js"}}
 

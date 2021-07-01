@@ -1,6 +1,6 @@
 ---
 title: React List component
-components: Collapse, Divider, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
+components: Collapse, Divider, List, ListItem, ListItemButton, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
 githubLabel: 'component: List'
 materialDesign: https://material.io/components/lists
 ---
@@ -13,27 +13,19 @@ materialDesign: https://material.io/components/lists
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Einfache Liste
+## Basic List
 
-{{"demo": "pages/components/lists/SimpleList.js", "bg": true}}
+{{"demo": "pages/components/lists/BasicList.js", "bg": true}}
 
 Das letzte Element der vorherigen Demo zeigt, wie Sie einen Link rendern können:
 
 ```jsx
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
-//...
-
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
-//...
+<ListItemButton component="a" href="#simple-list">
+  <ListItemText primary="Spam" />
+</ListItemButton>
 ```
 
-Nach diesem Abschnitt der Dokumentation finden Sie eine [Demo mit React Router](/guides/composition/#react-router).
+You can find a [demo with React Router following this section](/guides/routing/#list) of the documentation.
 
 ## Verschachtelte Liste
 
@@ -79,11 +71,9 @@ Der Schalter ist die sekundäre Aktion und ein separates Ziel.
 
 {{"demo": "pages/components/lists/SwitchListSecondary.js", "bg": true}}
 
-## Liste mit angehefteter Kopfzeile
+## Sticky subheader
 
-Nach dem Scrollen bleiben angeheftete Kopfzeilen am oberen Bildschirmrand fixiert, bis sie von der nächsten Kopfzeile aus dem Bildschirm gedrückt werden.
-
-This feature relies on CSS sticky positioning. Unfortunately it's [not implemented](https://caniuse.com/#search=sticky) by all the supported browsers. It defaults to `disableSticky` when not supported.
+Nach dem Scrollen bleiben angeheftete Kopfzeilen am oberen Bildschirmrand fixiert, bis sie von der nächsten Kopfzeile aus dem Bildschirm gedrückt werden. This feature relies on CSS sticky positioning. (⚠️ no IE 11 support)
 
 {{"demo": "pages/components/lists/PinnedSubheaderList.js", "bg": true}}
 
@@ -106,6 +96,12 @@ Im folgenden Beispiel zeigen wir wie Sie [react-window](https://github.com/bvaug
 {{"demo": "pages/components/lists/VirtualizedList.js", "bg": true}}
 
 Wenn diese Bibliothek Ihren Anwendungsfall nicht abdeckt, sollten Sie [react-virtualized](https://github.com/bvaughn/react-virtualized) und Alternativen wie [react-virtuoso](https://github.com/petyosi/react-virtuoso) in Betracht ziehen. The use of [react-window](https://github.com/bvaughn/react-window) when possible is encouraged.
+
+## Customized List
+
+Hier einige Beispiele zum Anpassen der Komponente. Mehr dazu erfahren Sie auf der [Überschreibungsdokumentationsseite](/customization/how-to-customize/).
+
+{{"demo": "pages/components/lists/CustomizedList.js"}}
 
 ## Individuelle Anpassung
 

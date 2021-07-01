@@ -1,5 +1,5 @@
 {
-  "componentDescription": "The component renders a <code>&lt;th&gt;</code> element when the parent context is a header\nor otherwise a <code>&lt;td&gt;</code> element.",
+  "componentDescription": "The component renders a `<th>` element when the parent context is a header\nor otherwise a `<td>` element.",
   "propDescriptions": {
     "align": "Set the text-align on the table cell content.<br>Monetary or generally number fields <strong>should be right aligned</strong> as that allows you to add them up quickly in your head without having to worry about decimals.",
     "children": "The content of the component.",
@@ -9,6 +9,7 @@
     "scope": "Set scope attribute.",
     "size": "Specify the size of the cell. The prop defaults to the value (<code>&#39;medium&#39;</code>) inherited from the parent Table component.",
     "sortDirection": "Set aria-sort direction.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "Specify the cell type. The prop defaults to the value inherited from the parent TableHead, TableBody, or TableFooter components."
   },
   "classDescriptions": {
@@ -34,6 +35,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>size=\"small\"</code>"
+    },
+    "sizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code>"
     },
     "paddingCheckbox": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

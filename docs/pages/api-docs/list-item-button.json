@@ -1,0 +1,45 @@
+{
+  "props": {
+    "alignItems": {
+      "type": { "name": "enum", "description": "'center'<br>&#124;&nbsp;'flex-start'" },
+      "default": "'center'"
+    },
+    "autoFocus": { "type": { "name": "bool" } },
+    "children": { "type": { "name": "node" } },
+    "classes": { "type": { "name": "object" } },
+    "component": { "type": { "name": "elementType" } },
+    "dense": { "type": { "name": "bool" } },
+    "disabled": { "type": { "name": "bool" } },
+    "disableGutters": { "type": { "name": "bool" } },
+    "divider": { "type": { "name": "bool" } },
+    "focusVisibleClassName": { "type": { "name": "string" } },
+    "selected": { "type": { "name": "bool" } },
+    "sx": { "type": { "name": "object" } }
+  },
+  "name": "ListItemButton",
+  "styles": {
+    "classes": [
+      "root",
+      "focusVisible",
+      "dense",
+      "alignItemsFlexStart",
+      "disabled",
+      "divider",
+      "gutters",
+      "selected"
+    ],
+    "globalClasses": {
+      "focusVisible": "Mui-focusVisible",
+      "disabled": "Mui-disabled",
+      "selected": "Mui-selected"
+    },
+    "name": "MuiListItemButton"
+  },
+  "spread": true,
+  "forwardsRefTo": "HTMLDivElement",
+  "filename": "/packages/material-ui/src/ListItemButton/ListItemButton.js",
+  "inheritance": { "component": "ButtonBase", "pathname": "/api/button-base/" },
+  "demos": "<ul><li><a href=\"/components/lists/\">Lists</a></li></ul>",
+  "styledComponent": true,
+  "cssComponent": false
+}

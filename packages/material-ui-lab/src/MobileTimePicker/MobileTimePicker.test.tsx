@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { describeConformance, fireEvent, fireTouchChangedEvent } from 'test/utils';
 import MobileTimePicker from '@material-ui/lab/MobileTimePicker';
 import {
-  createPickerMount,
+  wrapPickerMount,
   createPickerRender,
   adapterToUse,
   getByMuiTest,
@@ -29,7 +29,6 @@ function createMouseEventWithOffsets(
 
 describe('<MobileTimePicker />', () => {
   const render = createPickerRender();
-  const mount = createPickerMount();
 
   describeConformance(
     <MobileTimePicker
@@ -39,7 +38,7 @@ describe('<MobileTimePicker />', () => {
     />,
     () => ({
       classes: {},
-      mount,
+      wrapMount: wrapPickerMount,
       refInstanceof: window.HTMLDivElement,
       skip: ['componentProp', 'mergeClassName', 'propsSpread', 'rootClass', 'reactTestRenderer'],
     }),

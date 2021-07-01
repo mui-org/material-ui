@@ -35,12 +35,12 @@ const AccordionRoot = styled(Paper, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${accordionClasses.region}`]: styles.region,
-      ...styles.root,
-      ...(!styleProps.square && styles.rounded),
-      ...(!styleProps.disableGutters && styles.gutters),
-    };
+    return [
+      { [`& .${accordionClasses.region}`]: styles.region },
+      styles.root,
+      !styleProps.square && styles.rounded,
+      !styleProps.disableGutters && styles.gutters,
+    ];
   },
 })(
   ({ theme }) => {

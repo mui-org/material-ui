@@ -11,20 +11,24 @@ materialDesign: '<a href="https://material.io/design/components/progress-indicat
 
 Les [Indicateurs de progression](https://material.io/design/components/progress-indicators.html) informent les utilisateurs de l'état des processus en cours, tels que le chargement d'une application, la soumission d'un formulaire ou la progression des mises à jour.
 
-- **Determinate** circular indicators fill the invisible, circular track with color, as the indicator moves from 0 to 360 degrees.
+- Les indicateurs **déterminés** indiquent la durée d'une opération.
 - **Indeterminate** circular indicators grow and shrink in size while moving along the invisible track.
 
-Les indicateurs **déterminés** indiquent la durée d'une opération.
+Les animations des composants s'appuient sur CSS autant que possible pour fonctionner avant même que le JavaScript soit chargé.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Circular
 
-### Circular indeterminate
+### Circulaire indéterminée
 
 {{"demo": "pages/components/progress/CircularIndeterminate.js"}}
 
-### Circular determinate
+### Circular color
+
+{{"demo": "pages/components/progress/CircularColor.js"}}
+
+### Circulaire déterminée
 
 {{"demo": "pages/components/progress/CircularDeterminate.js"}}
 
@@ -36,13 +40,17 @@ Les indicateurs **déterminés** indiquent la durée d'une opération.
 
 {{"demo": "pages/components/progress/CircularWithValueLabel.js"}}
 
-## Linear
+## Barre de progression linéaire
 
-### Linear indeterminate
+### Linéaire indéterminée
 
 {{"demo": "pages/components/progress/LinearIndeterminate.js"}}
 
-### Linear determinate
+### Linear color
+
+{{"demo": "pages/components/progress/LinearColor.js"}}
+
+### Linéaire déterminée
 
 {{"demo": "pages/components/progress/LinearDeterminate.js"}}
 
@@ -75,7 +83,7 @@ function Progress(props) {
 }
 ```
 
-## Customized progress
+## Barres de progression personnalisée
 
 Here are some examples of customizing the component. Vous pouvez en savoir plus dans la [page de documentation des overrides](/customization/how-to-customize/).
 
@@ -89,7 +97,7 @@ Il y a [3 limites importantes](https://www.nngroup.com/articles/response-times-3
 
 ## Limites
 
-### High CPU load
+### Charge CPU élevée
 
 Under heavy load, you might lose the stroke dash animation or see random CircularProgress ring widths. You should run processor intensive operations in a web worker or by batch in order not to block the main rendering thread.
 
@@ -99,11 +107,11 @@ When it's not possible, you can leverage the `disableShrink` property to mitigat
 
 {{"demo": "pages/components/progress/CircularUnderLoad.js"}}
 
-### High frequency updates
+### Mises à jour haute fréquence
 
-The `LinearProgress` uses a transition on the CSS transform property to provide a smooth update between different values. The default transition duration is 200ms. In the event a parent component updates the `value` prop too quickly, you will at least experience a 200ms delay between the re-render and the progress bar fully updated.
+Le `LinearProgress` utilise une transition sur la propriété de transformation CSS pour fournir une mise à jour lisse entre différentes valeurs. La durée de transition par défaut est de 200ms. Dans le cas où le composant parent met à jour la propriété `value` trop rapidement, vous aurez au moins un délai de 200ms entre le rendu (affichage) et la barre de progression complètement mise à jour.
 
-If you need to perform 30 re-renders per second or more, we recommend disabling the transition:
+Si vous devez effectuer 30 affichages par seconde ou plus, nous vous recommandons de désactiver la transition :
 
 ```css
 .MuiLinearProgress-bar {
@@ -113,7 +121,7 @@ If you need to perform 30 re-renders per second or more, we recommend disabling 
 
 ### IE11
 
-The circular progress component animation on IE11 is degraded. The stroke dash animation is not working (equivalent to `disableShrink`) and the circular animation wobbles. You can solve the latter with:
+The circular progress component animation on IE11 is degraded. L'animation du tableau de bord des traits ne fonctionne pas (équivalent à `disableShrink`) et à l'animation circulaire. Vous pouvez résoudre ce dernier avec :
 
 ```css
 .MuiCircularProgress-indeterminate {

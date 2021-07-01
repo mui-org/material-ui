@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { elementTypeAcceptingRef } from '@material-ui/utils';
-import getThemeProps from '../styles/getThemeProps';
+import { useThemeProps } from '@material-ui/system';
 import Drawer, { getAnchor, isHorizontal } from '../Drawer/Drawer';
 import ownerDocument from '../utils/ownerDocument';
 import ownerWindow from '../utils/ownerWindow';
@@ -134,8 +134,8 @@ const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigato
 const transitionDurationDefault = { enter: duration.enteringScreen, exit: duration.leavingScreen };
 
 const SwipeableDrawer = React.forwardRef(function SwipeableDrawer(inProps, ref) {
+  const props = useThemeProps({ name: 'MuiSwipeableDrawer', props: inProps });
   const theme = useTheme();
-  const props = getThemeProps({ name: 'MuiSwipeableDrawer', props: inProps, theme });
   const {
     anchor = 'left',
     disableBackdropTransition = false,

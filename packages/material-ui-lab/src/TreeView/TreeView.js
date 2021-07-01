@@ -1,11 +1,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {
-  styled,
-  useTheme,
-  unstable_useThemeProps as useThemeProps,
-} from '@material-ui/core/styles';
+import { styled, useTheme, useThemeProps } from '@material-ui/core/styles';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import {
   useControlled,
@@ -83,7 +79,7 @@ const TreeView = React.forwardRef(function TreeView(inProps, ref) {
     selected: selectedProp,
     ...other
   } = props;
-  // use the `isRtl` from the props after the buildAPI script support it
+
   const theme = useTheme();
   const isRtl = theme.direction === 'rtl';
 

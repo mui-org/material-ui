@@ -12,6 +12,9 @@
     "className": { "type": { "name": "string" } },
     "clearable": { "type": { "name": "bool" } },
     "clearText": { "type": { "name": "node" }, "default": "\"CLEAR\"" },
+    "components": {
+      "type": { "name": "shape", "description": "{ OpenPickerIcon?: elementType }" }
+    },
     "DialogProps": { "type": { "name": "object" } },
     "disableCloseOnSelect": {
       "type": { "name": "bool" },
@@ -43,7 +46,6 @@
     "onOpen": { "type": { "name": "func" } },
     "open": { "type": { "name": "bool" } },
     "OpenPickerButtonProps": { "type": { "name": "object" } },
-    "openPickerIcon": { "type": { "name": "node" } },
     "openTo": {
       "type": {
         "name": "enum",

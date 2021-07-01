@@ -18,7 +18,9 @@ interface Props {
   dense: boolean;
   disabled: boolean;
   disableGutters: boolean;
+  disablePadding: boolean;
   divider: boolean;
+  secondaryAction?: 'none' | 'iconButton' | 'checkbox' | 'switch';
   selected: boolean;
   width: number | string;
   height: number;
@@ -29,7 +31,6 @@ interface Props {
   primaryIcon: string;
   imageFile: string;
   imageUrl: string;
-  secondaryAction?: 'none' | 'iconButton' | 'checkbox' | 'switch';
   secondaryIcon: string;
 }
 
@@ -118,6 +119,7 @@ ListItem.defaultProps = {
   dense: false,
   disabled: false,
   disableGutters: false,
+  disablePadding: false,
   divider: false,
   selected: false,
   width: 568,
@@ -158,9 +160,18 @@ addPropertyControls(ListItem, {
     type: ControlType.Boolean,
     title: 'Disable gutters',
   },
+  disablePadding: {
+    type: ControlType.Boolean,
+    title: 'Disable padding',
+  },
   divider: {
     type: ControlType.Boolean,
     title: 'Divider',
+  },
+  secondaryAction: {
+    type: ControlType.Enum,
+    title: 'Secondary action',
+    options: ['none', 'iconButton', 'checkbox', 'switch'],
   },
   selected: {
     type: ControlType.Boolean,
@@ -210,11 +221,6 @@ addPropertyControls(ListItem, {
         (props.primaryAction !== undefined && props.primaryAction !== 'avatar')
       );
     },
-  },
-  secondaryAction: {
-    type: ControlType.Enum,
-    title: 'Secondary action',
-    options: ['none', 'iconButton', 'checkbox', 'switch'],
   },
   secondaryIcon: {
     type: ControlType.String,

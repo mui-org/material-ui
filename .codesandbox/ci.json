@@ -4,6 +4,7 @@
   "node": "12",
   "packages": [
     "packages/material-ui",
+    "packages/material-ui-codemod",
     "packages/material-ui-icons",
     "packages/material-ui-lab",
     "packages/material-ui-styles",
@@ -16,6 +17,7 @@
     "packages/material-ui-styled-engine-sc"
   ],
   "publishDirectory": {
+    "@material-ui/codemod": "packages/material-ui-codemod/build",
     "@material-ui/core": "packages/material-ui/build",
     "@material-ui/icons": "packages/material-ui-icons/build",
     "@material-ui/lab": "packages/material-ui-lab/build",

@@ -27,12 +27,12 @@ La paleta predeterminada utiliza los tonos con prefijo `A` (`A200`, etc.) para l
 
 Puede anular los valores de la paleta por defecto incluyendo un objeto de paleta como parte de su tema. If any of the:
 
-- [`palette.primary`](/customization/default-theme/?expand-path=$.palette.primary)
-- [`palette.secondary`](/customization/default-theme/?expand-path=$.palette.secondary)
-- [`palette.error`](/customization/default-theme/?expand-path=$.palette.error)
-- [`palette.warning`](/customization/default-theme/?expand-path=$.palette.warning)
-- [`palette.info`](/customization/default-theme/?expand-path=$.palette.info)
-- [`palette.success`](/customization/default-theme/?expand-path=$.palette.success)
+- [`.palette.primary`](/customization/default-theme/?expand-path=$.palette.primary)
+- [`.palette.secondary`](/customization/default-theme/?expand-path=$.palette.secondary)
+- [`.palette.error`](/customization/default-theme/?expand-path=$.palette.error)
+- [`.palette.warning`](/customization/default-theme/?expand-path=$.palette.warning)
+- [`.palette.info`](/customization/default-theme/?expand-path=$.palette.info)
+- [`.palette.success`](/customization/default-theme/?expand-path=$.palette.success)
 
 palette color objects are provided, they will replace the defaults.
 
@@ -134,8 +134,13 @@ const theme = createTheme({
     danger: '#e53e3e',
   },
   palette: {
+    primary: {
+      main: '#0971f1',
+      darker: '#053e85',
+    },
     neutral: {
-      main: '#5c6ac4',
+      main: '#64748B',
+      contrastText: '#fff',
     },
   },
 });
@@ -148,7 +153,7 @@ If you are using TypeScript, you would also need to use [module augmentation](/g
 ```ts
 import * as React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 function App() {
@@ -156,7 +161,7 @@ function App() {
 
   const theme = React.useMemo(
     () =>
-      createTheme({
+      createMuiTheme({
         palette: {
           type: prefersDarkMode ? 'dark' : 'light',
         },
@@ -173,13 +178,15 @@ function App() {
 }
 ```
 
+{{"demo": "pages/customization/palette/CustomColor.js"}}
+
 ## Picking colors
 
 Need inspiration? The Material Design team has built an [palette configuration tool](/customization/color/#picking-colors) to help you.
 
 ## Dark mode
 
-Material-UI comes with two palette types, light (the default) and dark. Puedes convertir el tema a obscuro cambiando la configuración `mode: 'dark'`. While it's only a single property value change, internally it modifies several palette values.
+Material-UI comes with two palette modes: light (the default) and dark. Puedes convertir el tema a obscuro cambiando la configuración `mode: 'dark'`.
 
 ```js
 const darkTheme = createTheme({
@@ -189,11 +196,17 @@ const darkTheme = createTheme({
 });
 ```
 
-The colors modified by the palette type are the following:
+While it's only a single value change, the `createTheme` helper modifies several palette values. The colors modified by the palette mode are the following:
 
 {{"demo": "pages/customization/palette/DarkTheme.js", "bg": "inline", "hideToolbar": true}}
 
-### User preference
+### Toggling color mode
+
+You can use the React context to toggle the mode with a button inside your page.
+
+{{"demo": "pages/customization/palette/ToggleColorMode.js", "defaultCodeOpen": false}}
+
+### System preference
 
 Users might have specified a preference for a light or dark theme. The method by which the user expresses their preference can vary. It might be a system-wide setting exposed by the Operating System, or a setting controlled by the User Agent.
 

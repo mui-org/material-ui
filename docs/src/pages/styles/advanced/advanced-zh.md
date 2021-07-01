@@ -6,7 +6,7 @@
 
 若您想将主题传递到 React 组件树，请将添加 `ThemeProvider` 包装到应用程序的顶层。 然后，您可以在样式函数中访问主题对象。
 
-> 此示例为自定义组件创建了一个主题对象（theme object）。 如果你想要使用 Material-UI 的部分组件，那么则需要通过使用 `createTheme()` 方法来提供一个更丰富的主题结构。 请前往 [theming 部分](/customization/theming/) 学习如何构建自己的 Material-UI 主题。
+> 此示例为自定义组件创建了一个主题对象（theme object）。 If you intend to use some of the Material-UI's components you need to provide a richer theme structure using the `createTheme()` method. 请前往 [theming 部分](/customization/theming/) 学习如何构建自己的 Material-UI 主题。
 
 ```jsx
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -177,7 +177,7 @@ JSS 使用插件来扩展其核心，您可以挑选所需的功能，并且只�
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 import rtl from 'jss-rtl';
 
 const jss = create({
@@ -223,10 +223,12 @@ const useStyles = makeStyles({
 `StylesProvider`组件的属性 `injectFirst` 会把style标签注入到head的**前部**(意味着更低的权重)。
 
 ```jsx
-import { StylesProvider } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/styles';
 
-<StylesProvider injectFirst>{/* 你的组件树。
-      样式化组件可以覆盖 Material-UI 的样式。 */}</StylesProvider>;
+<StylesProvider injectFirst>
+  {/* 你的组件树。
+      样式化组件可以覆盖 Material-UI 的样式。 */}
+</StylesProvider>;
 ```
 
 ### `makeStyles` / `withStyles` / `styled`
@@ -235,7 +237,7 @@ import { StylesProvider } from '@material-ui/core/styles';
 
 ```jsx
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
 const useStylesBase = makeStyles({
   root: {
@@ -250,14 +252,14 @@ const useStyles = makeStyles({
 });
 
 export default function MyComponent() {
-  // 下列函数先后顺序不重要
+  // Order doesn't matter
   const classes = useStyles();
   const classesBase = useStylesBase();
 
-  // 下列函数先后顺序不重要
+  // Order doesn't matter
   const className = clsx(classes.root, classesBase.root);
 
-  // color: red 🔴 优先渲染。
+  // color: red 🔴 wins.
   return <div className={className} />;
 }
 ```
@@ -281,11 +283,11 @@ JSS [提供了一种机制](https://github.com/cssinjs/jss/blob/master/docs/setu
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 const jss = create({
   ...jssPreset(),
-  // 当将样式注入到 DOM 中时，定义了一个自定义插入点以供 JSS 查询。 
+  // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
   insertionPoint: 'jss-insertion-point',
 });
 
@@ -307,11 +309,11 @@ export default function App() {
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 const jss = create({
   ...jssPreset(),
-  // 当将样式注入到 DOM 中时，定义了一个自定义插入点以供 JSS 查询。 
+  // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
   insertionPoint: document.getElementById('jss-insertion-point'),
 });
 
@@ -326,14 +328,14 @@ codesandbox.io 阻止访问 `<head>` 元素。 要解决这个问题，您可以
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 const styleNode = document.createComment('jss-insertion-point');
 document.head.insertBefore(styleNode, document.head.firstChild);
 
 const jss = create({
   ...jssPreset(),
-  // 我们定义了一个自定义插入点，JSS在DOM中注入样式时会查找该插入点。
+  // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
   insertionPoint: 'jss-insertion-point',
 });
 
@@ -348,7 +350,7 @@ This example returns a string of HTML and inlines the critical CSS required, rig
 
 ```jsx
 import ReactDOMServer from 'react-dom/server';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ServerStyleSheets } from '@material-ui/styles';
 
 function render() {
   const sheets = new ServerStyleSheets();

@@ -2,39 +2,40 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "Alias for the <code>primary</code> prop.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "disableTypography": "If <code>true</code>, the children won&#39;t be wrapped by a Typography component. This can be useful to render an alternative Typography variant by wrapping the <code>children</code> (or <code>primary</code>) text, and optional <code>secondary</code> text with the Typography component.",
     "inset": "If <code>true</code>, the children are indented. This should be used if there is no left avatar or left icon.",
     "primary": "The main content element.",
     "primaryTypographyProps": "These props will be forwarded to the primary typography component (as long as disableTypography is not <code>true</code>).",
     "secondary": "The secondary content element.",
-    "secondaryTypographyProps": "These props will be forwarded to the secondary typography component (as long as disableTypography is not <code>true</code>)."
+    "secondaryTypographyProps": "These props will be forwarded to the secondary typography component (as long as disableTypography is not <code>true</code>).",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "multiline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Typography component",
       "conditions": "primary and secondary are set"
     },
     "dense": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Typography component",
       "conditions": "dense"
     },
     "inset": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>inset={true}</code>"
     },
     "primary": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the primary `Typography` component"
     },
     "secondary": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the secondary `Typography` component"
     }
   }

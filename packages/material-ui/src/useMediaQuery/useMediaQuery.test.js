@@ -2,10 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { act, createClientRender, createServerRender } from 'test/utils';
+import { act, createClientRender, createServerRender, screen, RenderCounter } from 'test/utils';
 import mediaQuery from 'css-mediaquery';
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { stub } from 'sinon';
 
 function createMatchMedia(width, ref) {
   const listeners = [];
@@ -42,24 +42,17 @@ describe('useMediaQuery', () => {
   });
 
   const render = createClientRender();
-  let values;
-
-  beforeEach(() => {
-    values = spy();
-  });
 
   describe('without feature', () => {
     it('should work without window.matchMedia available', () => {
       expect(typeof window.matchMedia).to.equal('undefined');
-      const ref = React.createRef();
-      const text = () => ref.current.textContent;
       const Test = () => {
         const matches = useMediaQuery('(min-width:100px)');
-        return <span ref={ref}>{`${matches}`}</span>;
+        return <span data-testid="matches">{`${matches}`}</span>;
       };
 
       render(<Test />);
-      expect(text()).to.equal('false');
+      expect(screen.getByTestId('matches').textContent).to.equal('false');
     });
   });
 
@@ -87,190 +80,207 @@ describe('useMediaQuery', () => {
 
     describe('option: defaultMatches', () => {
       it('should be false by default', () => {
-        const ref = React.createRef();
-        const text = () => ref.current.textContent;
+        const getRenderCountRef = React.createRef();
         const Test = () => {
           const matches = useMediaQuery('(min-width:2000px)');
-          React.useEffect(() => values(matches));
-          return <span ref={ref}>{`${matches}`}</span>;
+          return (
+            <RenderCounter ref={getRenderCountRef}>
+              <span data-testid="matches">{`${matches}`}</span>
+            </RenderCounter>
+          );
         };
 
         render(<Test />);
-        expect(text()).to.equal('false');
-        expect(values.callCount).to.equal(1);
+        expect(screen.getByTestId('matches').textContent).to.equal('false');
+        expect(getRenderCountRef.current()).to.equal(1);
       });
 
       it('should take the option into account', () => {
-        const ref = React.createRef();
-        const text = () => ref.current.textContent;
+        const getRenderCountRef = React.createRef();
         const Test = () => {
           const matches = useMediaQuery('(min-width:2000px)', {
             defaultMatches: true,
           });
-          React.useEffect(() => values(matches));
-          return <span ref={ref}>{`${matches}`}</span>;
+          return (
+            <RenderCounter ref={getRenderCountRef}>
+              <span data-testid="matches">{`${matches}`}</span>
+            </RenderCounter>
+          );
         };
 
         render(<Test />);
-        expect(text()).to.equal('false');
-        expect(values.callCount).to.equal(2);
+        expect(screen.getByTestId('matches').textContent).to.equal('false');
+        expect(getRenderCountRef.current()).to.equal(2);
       });
     });
 
     describe('option: noSsr', () => {
       it('should render once if the default value match the expectation', () => {
-        const ref = React.createRef();
-        const text = () => ref.current.textContent;
+        const getRenderCountRef = React.createRef();
         const Test = () => {
           const matches = useMediaQuery('(min-width:2000px)', {
             defaultMatches: false,
           });
-          React.useEffect(() => values(matches));
-          return <span ref={ref}>{`${matches}`}</span>;
+
+          return (
+            <RenderCounter ref={getRenderCountRef}>
+              <span data-testid="matches">{`${matches}`}</span>
+            </RenderCounter>
+          );
         };
 
         render(<Test />);
-        expect(text()).to.equal('false');
-        expect(values.callCount).to.equal(1);
+        expect(screen.getByTestId('matches').textContent).to.equal('false');
+        expect(getRenderCountRef.current()).to.equal(1);
       });
 
       it('should render twice if the default value does not match the expectation', () => {
-        const ref = React.createRef();
-        const text = () => ref.current.textContent;
+        const getRenderCountRef = React.createRef();
         const Test = () => {
           const matches = useMediaQuery('(min-width:2000px)', {
             defaultMatches: true,
           });
-          React.useEffect(() => values(matches));
-          return <span ref={ref}>{`${matches}`}</span>;
+
+          return (
+            <RenderCounter ref={getRenderCountRef}>
+              <span data-testid="matches">{`${matches}`}</span>
+            </RenderCounter>
+          );
         };
 
         render(<Test />);
-        expect(text()).to.equal('false');
-        expect(values.callCount).to.equal(2);
+        expect(screen.getByTestId('matches').textContent).to.equal('false');
+        expect(getRenderCountRef.current()).to.equal(2);
       });
 
       it('should render once if the default value does not match the expectation', () => {
-        const ref = React.createRef();
-        const text = () => ref.current.textContent;
+        const getRenderCountRef = React.createRef();
         const Test = () => {
           const matches = useMediaQuery('(min-width:2000px)', {
             defaultMatches: true,
             noSsr: true,
           });
-          React.useEffect(() => values(matches));
-          return <span ref={ref}>{`${matches}`}</span>;
+
+          return (
+            <RenderCounter ref={getRenderCountRef}>
+              <span data-testid="matches">{`${matches}`}</span>
+            </RenderCounter>
+          );
         };
 
         render(<Test />);
-        expect(text()).to.equal('false');
-        expect(values.callCount).to.equal(1);
+        expect(screen.getByTestId('matches').textContent).to.equal('false');
+        expect(getRenderCountRef.current()).to.equal(1);
       });
     });
 
     it('should try to reconcile each time', () => {
-      const ref = React.createRef();
-      const text = () => ref.current.textContent;
+      const getRenderCountRef = React.createRef();
       const Test = () => {
         const matches = useMediaQuery('(min-width:2000px)', {
           defaultMatches: true,
         });
-        React.useEffect(() => values(matches));
-        return <span ref={ref}>{`${matches}`}</span>;
+
+        return (
+          <RenderCounter ref={getRenderCountRef}>
+            <span data-testid="matches">{`${matches}`}</span>
+          </RenderCounter>
+        );
       };
 
       const { unmount } = render(<Test />);
-      expect(text()).to.equal('false');
-      expect(values.callCount).to.equal(2);
+      expect(screen.getByTestId('matches').textContent).to.equal('false');
+      expect(getRenderCountRef.current()).to.equal(2);
 
       unmount();
 
       render(<Test />);
-      expect(text()).to.equal('false');
-      expect(values.callCount).to.equal(4);
+      expect(screen.getByTestId('matches').textContent).to.equal('false');
+      expect(getRenderCountRef.current()).to.equal(2);
     });
 
     it('should be able to change the query dynamically', () => {
-      const ref = React.createRef();
-      const text = () => ref.current.textContent;
+      const getRenderCountRef = React.createRef();
       const Test = (props) => {
         const matches = useMediaQuery(props.query, {
           defaultMatches: true,
         });
-        React.useEffect(() => values(matches));
-        return <span ref={ref}>{`${matches}`}</span>;
+
+        return (
+          <RenderCounter ref={getRenderCountRef}>
+            <span data-testid="matches">{`${matches}`}</span>
+          </RenderCounter>
+        );
       };
       Test.propTypes = {
         query: PropTypes.string.isRequired,
       };
 
       const { setProps } = render(<Test query="(min-width:2000px)" />);
-      expect(text()).to.equal('false');
-      expect(values.callCount).to.equal(2);
+      expect(screen.getByTestId('matches').textContent).to.equal('false');
+      expect(getRenderCountRef.current()).to.equal(2);
       setProps({ query: '(min-width:100px)' });
-      expect(text()).to.equal('true');
-      expect(values.callCount).to.equal(4);
+      expect(screen.getByTestId('matches').textContent).to.equal('true');
+      expect(getRenderCountRef.current()).to.equal(4);
     });
 
     it('should observe the media query', () => {
-      const ref = React.createRef();
-      const text = () => ref.current.textContent;
+      const getRenderCountRef = React.createRef();
       const Test = (props) => {
         const matches = useMediaQuery(props.query);
-        React.useEffect(() => values(matches));
-        return <span ref={ref}>{`${matches}`}</span>;
+
+        return (
+          <RenderCounter ref={getRenderCountRef}>
+            <span data-testid="matches">{`${matches}`}</span>
+          </RenderCounter>
+        );
       };
       Test.propTypes = {
         query: PropTypes.string.isRequired,
       };
 
       render(<Test query="(min-width:2000px)" />);
-      expect(values.callCount).to.equal(1);
-      expect(text()).to.equal('false');
+      expect(getRenderCountRef.current()).to.equal(1);
+      expect(screen.getByTestId('matches').textContent).to.equal('false');
 
       act(() => {
         matchMediaInstances[0].instance.matches = true;
         matchMediaInstances[0].listeners[0]();
       });
-      expect(text()).to.equal('true');
-      expect(values.callCount).to.equal(2);
+      expect(screen.getByTestId('matches').textContent).to.equal('true');
+      expect(getRenderCountRef.current()).to.equal(2);
     });
   });
 
   describe('server-side', () => {
-    const serverRender = createServerRender();
+    const serverRender = createServerRender({ expectUseLayoutEffectWarning: true });
 
     it('should use the ssr match media ponyfill', () => {
-      let markup;
-      expect(() => {
-        const ref = React.createRef();
-        function MyComponent() {
-          const matches = useMediaQuery('(min-width:2000px)');
-          values(matches);
-          return <span ref={ref}>{`${matches}`}</span>;
-        }
+      function MyComponent() {
+        const matches = useMediaQuery('(min-width:2000px)');
 
-        const Test = () => {
-          const ssrMatchMedia = (query) => ({
-            matches: mediaQuery.match(query, {
-              width: 3000,
-            }),
-          });
+        return <span>{`${matches}`}</span>;
+      }
 
-          return (
-            <ThemeProvider
-              theme={{ components: { MuiUseMediaQuery: { defaultProps: { ssrMatchMedia } } } }}
-            >
-              <MyComponent />
-            </ThemeProvider>
-          );
-        };
+      const Test = () => {
+        const ssrMatchMedia = (query) => ({
+          matches: mediaQuery.match(query, {
+            width: 3000,
+          }),
+        });
 
-        markup = serverRender(<Test />);
-      }).toErrorDev(['Warning: useLayoutEffect does nothing on the server']);
+        return (
+          <ThemeProvider
+            theme={{ components: { MuiUseMediaQuery: { defaultProps: { ssrMatchMedia } } } }}
+          >
+            <MyComponent />
+          </ThemeProvider>
+        );
+      };
 
-      expect(markup.text()).to.equal('true');
-      expect(values.callCount).to.equal(1);
+      const container = serverRender(<Test />);
+
+      expect(container.firstChild).to.have.text('true');
     });
   });
 

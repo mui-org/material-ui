@@ -28,7 +28,7 @@ theme.spacing(2); // `${4 * 2}px` = '8px'
 
 ```js
 const theme = createTheme({
-  spacing: factor => `${0.25 * factor}rem`, // (Bootstrap Strategie)
+  spacing: (factor) => `${0.25 * factor}rem`, // (Bootstrap strategy)
 });
 
 theme.spacing(2); // = 0.25 * 2rem = 0.5rem = 8px

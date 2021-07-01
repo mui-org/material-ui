@@ -2,61 +2,62 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "This prop isn&#39;t supported. Use the <code>component</code> prop if you need to change the children structure.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "disabled": "Se <code>true</code>, o componente está desabilitado.",
     "disableFocusRipple": "If <code>true</code>, the  keyboard focus ripple is disabled.",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
     "icon": "The icon element.",
     "label": "The label element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "You can provide your own value. Otherwise, we fallback to the child position index.",
     "wrapped": "Tab labels appear in a single row. They can use a second line if needed."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "labelIcon": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "both <code>icon</code> and <code>label</code> are provided"
     },
     "textColorInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "the parent [<code>Tabs</code>](/api/tabs/) has <code>textColor=\"inherit\"</code>"
     },
     "textColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "the parent [<code>Tabs</code>](/api/tabs/) has <code>textColor=\"primary\"</code>"
     },
     "textColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "the parent [<code>Tabs</code>](/api/tabs/) has <code>textColor=\"secondary\"</code>"
     },
     "selected": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>selected={true}</code> (controlled by the Tabs component)"
     },
     "disabled": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>disabled={true}</code> (controlled by the Tabs component)"
     },
     "fullWidth": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>fullWidth={true}</code> (controlled by the Tabs component)"
     },
     "wrapped": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>wrapped={true}</code>"
     },
     "wrapper": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the `icon` and `label`'s wrapper element"
     }
   }

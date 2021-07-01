@@ -96,7 +96,7 @@ function MyComponent() {
 
 确认型对话框明确要求用户在提交选项之前确认他们的选择。 举个例子，用户可以听到多种铃声，但是只有在点击 “OK” 按钮后才意味着完成了选择。
 
-Touching "Cancel" in a confirmation dialog, or pressing Back, cancels the action, discards any changes, and closes the dialog.
+在确认对话框中点按“取消”或“返回（Back）”键，可取消操作，放弃任何更改，并关闭对话框。
 
 {{"demo": "pages/components/dialogs/ConfirmationDialog.js"}}
 
@@ -108,7 +108,7 @@ Touching "Cancel" in a confirmation dialog, or pressing Back, cancels the action
 
 ## 长内容滚动
 
-When dialogs become too long for the user's viewport or device, they scroll.
+当对话框相对于用户的视口或设备来说太长时，它们就可以滚动。
 
 - 使用 `scroll=paper`，对话框的内容能在 paper 元素中滚动。
 - 使用 `scroll=body`，对话框的内容能在 body 元素中滚动。
@@ -119,7 +119,7 @@ When dialogs become too long for the user's viewport or device, they scroll.
 
 ## 性能
 
-参考 [模态框性能部分](/components/modal/#performance)。
+参考[对话框性能部分](/components/modal/#performance)。
 
 ## 设计局限
 

@@ -4,8 +4,16 @@
       "type": { "name": "enum", "description": "'center'<br>&#124;&nbsp;'flex-start'" },
       "default": "'center'"
     },
-    "autoFocus": { "type": { "name": "bool" } },
-    "button": { "type": { "name": "bool" } },
+    "autoFocus": {
+      "type": { "name": "bool" },
+      "deprecated": true,
+      "deprecationInfo": "checkout <a href=\"/api/list-item-button/\">ListItemButton</a> instead"
+    },
+    "button": {
+      "type": { "name": "bool" },
+      "deprecated": true,
+      "deprecationInfo": "checkout <a href=\"/api/list-item-button/\">ListItemButton</a> instead"
+    },
     "children": { "type": { "name": "custom", "description": "node" } },
     "classes": { "type": { "name": "object" } },
     "component": { "type": { "name": "elementType" } },
@@ -16,14 +24,25 @@
     "componentsProps": { "type": { "name": "object" }, "default": "{}" },
     "ContainerComponent": {
       "type": { "name": "custom", "description": "element type" },
-      "default": "'li'"
+      "default": "'li'",
+      "deprecated": true
     },
-    "ContainerProps": { "type": { "name": "object" }, "default": "{}" },
+    "ContainerProps": { "type": { "name": "object" }, "default": "{}", "deprecated": true },
     "dense": { "type": { "name": "bool" } },
-    "disabled": { "type": { "name": "bool" } },
+    "disabled": {
+      "type": { "name": "bool" },
+      "deprecated": true,
+      "deprecationInfo": "checkout <a href=\"/api/list-item-button/\">ListItemButton</a> instead"
+    },
     "disableGutters": { "type": { "name": "bool" } },
+    "disablePadding": { "type": { "name": "bool" } },
     "divider": { "type": { "name": "bool" } },
-    "selected": { "type": { "name": "bool" } },
+    "secondaryAction": { "type": { "name": "node" } },
+    "selected": {
+      "type": { "name": "bool" },
+      "deprecated": true,
+      "deprecationInfo": "checkout <a href=\"/api/list-item-button/\">ListItemButton</a> instead"
+    },
     "sx": { "type": { "name": "object" } }
   },
   "name": "ListItem",
@@ -37,6 +56,7 @@
       "disabled",
       "divider",
       "gutters",
+      "padding",
       "button",
       "secondaryAction",
       "selected"

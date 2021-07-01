@@ -32,15 +32,15 @@ const CollapseRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.orientation],
-      ...(styleProps.state === 'entered' && styles.entered),
-      ...(styleProps.state === 'exited' &&
+    return [
+      styles.root,
+      styles[styleProps.orientation],
+      styleProps.state === 'entered' && styles.entered,
+      styleProps.state === 'exited' &&
         !styleProps.in &&
         styleProps.collapsedSize === '0px' &&
-        styles.hidden),
-    };
+        styles.hidden,
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */

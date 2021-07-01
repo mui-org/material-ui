@@ -3,6 +3,7 @@
   "propDescriptions": {
     "appear": "Perform the enter transition when it first mounts if <code>in</code> is also <code>true</code>. Set this to <code>false</code> to disable this behavior.",
     "children": "A single child content element.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
+    "easing": "The transition timing function. You may specify a single easing or a object containing enter and exit values.",
     "in": "If <code>true</code>, the component will transition in.",
     "timeout": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.<br>Set to &#39;auto&#39; to automatically calculate transition time based on height."
   },

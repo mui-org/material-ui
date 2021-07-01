@@ -15,9 +15,9 @@ githubLabel: 'component: Popover'
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
-## 简单的弹出框
+## Basic Popover
 
-{{"demo": "pages/components/popover/SimplePopover.js" }}
+{{"demo": "pages/components/popover/BasicPopover.js" }}
 
 ## 锚点（Anchor）测试
 
@@ -27,13 +27,13 @@ githubLabel: 'component: Popover'
 
 ## 鼠标悬停的交互事件
 
-这表明如何使用 `Popover` 组件，并展示了使用鼠标事件来实现弹出窗口的效果。
+This demo demonstrates how to use the `Popover` component and the mouseover event to achieve popover behavior.
 
 {{"demo": "pages/components/popover/MouseOverPopover.js"}}
 
 ## 补充项目
 
-对于更高级的用例，您可以利用：
+For more advanced use cases, you might be able to take advantage of:
 
 ### PopupState helper
 

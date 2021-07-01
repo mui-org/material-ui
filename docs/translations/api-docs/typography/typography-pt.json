@@ -2,166 +2,124 @@
   "componentDescription": "",
   "propDescriptions": {
     "align": "Set the text-align on the component.",
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "display": "Controls the display type",
     "gutterBottom": "If <code>true</code>, the text will have a bottom margin.",
     "noWrap": "If <code>true</code>, the text will not wrap, but instead will truncate with a text overflow ellipsis.<br>Note that text overflow can only happen with block or inline-block level elements (the element needs to have a width in order to overflow).",
-    "paragraph": "If <code>true</code>, the text will have a bottom margin.",
+    "paragraph": "If <code>true</code>, the element will be a paragraph element.",
     "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "Applies the theme typography styles.",
     "variantMapping": "The component maps the variant prop to a range of different HTML element types. For instance, subtitle1 to <code>&lt;h6&gt;</code>. If you wish to change that mapping, you can provide your own. Alternatively, you can use the <code>component</code> prop."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "body2": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"body2\"</code>"
     },
     "body1": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"body1\"</code>"
     },
     "caption": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"caption\"</code>"
     },
     "button": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"button\"</code>"
     },
     "h1": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"h1\"</code>"
     },
     "h2": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"h2\"</code>"
     },
     "h3": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"h3\"</code>"
     },
     "h4": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"h4\"</code>"
     },
     "h5": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"h5\"</code>"
     },
     "h6": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"h6\"</code>"
     },
     "subtitle1": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"subtitle1\"</code>"
     },
     "subtitle2": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"subtitle2\"</code>"
     },
     "overline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"overline\"</code>"
     },
     "inherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"inherit\"</code>"
     },
     "alignLeft": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"left\"</code>"
     },
     "alignCenter": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"center\"</code>"
     },
     "alignRight": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"right\"</code>"
     },
     "alignJustify": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>align=\"justify\"</code>"
     },
     "noWrap": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>nowrap={true}</code>"
     },
     "gutterBottom": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>gutterBottom={true}</code>"
     },
     "paragraph": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>paragraph={true}</code>"
-    },
-    "colorInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"inherit\"</code>"
-    },
-    "colorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"primary\"</code>"
-    },
-    "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"secondary\"</code>"
-    },
-    "colorTextPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"textPrimary\"</code>"
-    },
-    "colorTextSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"textSecondary\"</code>"
-    },
-    "colorError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"error\"</code>"
-    },
-    "displayInline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>display=\"inline\"</code>"
-    },
-    "displayBlock": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>display=\"block\"</code>"
     }
   }
 }

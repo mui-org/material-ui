@@ -5,7 +5,7 @@
     "disableBackdropTransition": "Disable the backdrop transition. This can improve the FPS on low-end devices.",
     "disableDiscovery": "If <code>true</code>, touching the screen near the edge of the drawer will not slide in the drawer a bit to promote accidental discovery of the swipe gesture.",
     "disableSwipeToOpen": "If <code>true</code>, swipe to open is disabled. This is useful in browsers where swiping triggers navigation actions. Swipe to open is disabled on iOS browsers by default.",
-    "hysteresis": "Affects how far the drawer must be opened/closed to change his state. Specified as percent (0-1) of the width of the drawer",
+    "hysteresis": "Affects how far the drawer must be opened/closed to change its state. Specified as percent (0-1) of the width of the drawer",
     "minFlingVelocity": "Defines, from which (average) velocity on, the swipe is defined as complete although hysteresis isn&#39;t reached. Good threshold is between 250 - 1000 px/s",
     "onClose": "Callback fired when the component requests to be closed.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",
     "onOpen": "Callback fired when the component requests to be opened.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",

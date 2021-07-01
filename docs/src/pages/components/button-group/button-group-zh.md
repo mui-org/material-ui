@@ -12,25 +12,31 @@ githubLabel: '组件：按钮组'
 
 ## Basic button group 基本的按钮组
 
-支持基本的按钮变量。
+The buttons can be grouped by wrapping them with the `ButtonGroup` component. They need to be immediate children.
 
 {{"demo": "pages/components/button-group/BasicButtonGroup.js"}}
 
+## Button variants
+
+All the standard button variants are supported.
+
+{{"demo": "pages/components/button-group/VariantButtonGroup.js"}}
+
 ## 大小和颜色
 
-`size` 和 `color` 属性可以用于控制按钮组的外观。
+The `size` and `color` props can be used to control the appearance of the button group.
 
 {{"demo": "pages/components/button-group/GroupSizesColors.js"}}
 
 ## Vertical group 垂直组
 
-按钮组可以使用 `orientation` 属性来垂直显示。
+The button group can be displayed vertically using the `orientation` prop.
 
 {{"demo": "pages/components/button-group/GroupOrientation.js"}}
 
 ## Split button 分体式按钮
 
-`按钮组组件`也可用于创建分体式按钮。 下拉列表可以用于更改按钮相关的操作（如本例所示），或者用于立即触发一个相关的操作。
+`按钮组组件`也可用于创建分体式按钮。 The dropdown can change the button action (as in this example) or be used to immediately trigger a related action.
 
 {{"demo": "pages/components/button-group/SplitButton.js"}}
 

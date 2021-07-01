@@ -8,7 +8,7 @@ export default function useId(idOverride?: string): string | undefined {
       // Fallback to this default id when possible.
       // Use the random value for client-side rendering only.
       // We can't use it server-side.
-      setDefaultId(`mui-${Math.round(Math.random() * 1e5)}`);
+      setDefaultId(`mui-${Math.round(Math.random() * 1e9)}`);
     }
   }, [defaultId]);
   return id;

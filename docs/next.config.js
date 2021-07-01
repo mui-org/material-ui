@@ -6,19 +6,11 @@ const { LANGUAGES, LANGUAGES_SSR } = require('./src/modules/constants');
 
 const workspaceRoot = path.join(__dirname, '../');
 
-/**
- * @typedef {'legacy' | 'root'} ReactRenderMode
- *
- * Values explained:
- * - legacy - `ReactDOM.render(<App />, container)`
- * - legacy-strict - `ReactDOM.render(<React.StrictMode><App /></React.StrictMode>, container)`
- * - concurrent - `ReactDOM.createRoot(container).render(<App />)`
- *
- * @type {ReactRenderMode | 'legacy-strict'}
- */
-const reactMode = 'legacy';
-// eslint-disable-next-line no-console
-console.log(`Using React '${reactMode}' mode.`);
+const reactStrictMode = false;
+if (reactStrictMode) {
+  // eslint-disable-next-line no-console
+  console.log(`Using React.StrictMode.`);
+}
 const l10nPRInNetlify = /^l10n_/.test(process.env.HEAD) && process.env.NETLIFY === 'true';
 const vercelDeploy = Boolean(process.env.VERCEL);
 
@@ -31,11 +23,16 @@ if (staging) {
 }
 
 module.exports = {
+  eslint: {
+    // TODO: https://github.com/mui-org/material-ui/issues/25966
+    ignoreDuringBuilds: true,
+  },
   typescript: {
     // Motivated by https://github.com/zeit/next.js/issues/7687
     ignoreDevErrors: true,
     ignoreBuildErrors: true,
   },
+  webpack5: false,
   webpack: (config, options) => {
     const plugins = config.plugins.slice();
 
@@ -158,7 +155,7 @@ module.exports = {
     NETLIFY_DEPLOY_URL: process.env.DEPLOY_URL || 'http://localhost:3000',
     NETLIFY_SITE_NAME: process.env.SITE_NAME || 'material-ui',
     PULL_REQUEST: process.env.PULL_REQUEST === 'true',
-    REACT_MODE: reactMode,
+    REACT_STRICT_MODE: reactStrictMode,
     FEEDBACK_URL: process.env.FEEDBACK_URL,
     // #default-branch-switch
     SOURCE_CODE_ROOT_URL: 'https://github.com/mui-org/material-ui/blob/next',
@@ -205,10 +202,7 @@ module.exports = {
 
     return map;
   },
-  experimental: {
-    reactRoot: !reactMode.startsWith('legacy'),
-  },
-  reactStrictMode: reactMode === 'legacy-strict',
+  reactStrictMode,
   async rewrites() {
     return [{ source: `/:lang(${LANGUAGES.join('|')})?/:rest*`, destination: '/:rest*' }];
   },

@@ -1,14 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
-import {
-  createMount,
-  describeConformanceV5,
-  act,
-  createClientRender,
-  fireEvent,
-  queries,
-} from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent, queries } from 'test/utils';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -21,13 +14,11 @@ const NoContent = React.forwardRef(() => {
 
 describe('<ListItem />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<ListItem />, () => ({
     classes,
     inheritComponent: 'li',
     render,
-    mount,
     refInstanceof: window.HTMLLIElement,
     muiName: 'MuiListItem',
     testVariantProps: { dense: true },
@@ -74,6 +65,14 @@ describe('<ListItem />', () => {
     });
   });
 
+  describe('action', () => {
+    it('should show action if provided', () => {
+      const { getByText } = render(<ListItem secondaryAction="foo" />);
+      expect(getByText('foo')).toBeVisible();
+    });
+  });
+
+  // TODO remove in v6 in favor of ListItemButton
   describe('secondary action', () => {
     it('should wrap with a container', () => {
       const { getByRole } = render(
@@ -188,6 +187,7 @@ describe('<ListItem />', () => {
     });
   });
 
+  // TODO remove in v6 in favor of ListItemButton
   describe('prop: focusVisibleClassName', () => {
     it('should merge the class names', () => {
       const { getByRole } = render(

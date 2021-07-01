@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { createClientRender, screen } from 'test/utils';
 import { isMuiElement, setRef, useForkRef } from '.';
 import { Input, ListItemSecondaryAction, SvgIcon } from '..';
 
 describe('utils/index.js', () => {
+  const render = createClientRender();
+
   describe('isMuiElement', () => {
     it('should match static muiName property', () => {
       const Component = () => null;
@@ -75,14 +76,10 @@ describe('utils/index.js', () => {
         return <div ref={handleRef}>{ownRef.current ? 'has a ref' : 'has no ref'}</div>;
       }
 
-      Component.propTypes = {
-        innerRef: PropTypes.any,
-      };
-
       const outerRef = React.createRef();
 
       expect(() => {
-        mount(<Component innerRef={outerRef} />);
+        render(<Component innerRef={outerRef} />);
       }).not.toErrorDev();
       expect(outerRef.current.textContent).to.equal('has a ref');
     });
@@ -93,14 +90,18 @@ describe('utils/index.js', () => {
         const handleOwnRef = React.useCallback(() => setHasRef(true), []);
         const handleRef = useForkRef(handleOwnRef, ref);
 
-        return <div ref={handleRef}>{String(hasRef)}</div>;
+        return (
+          <div ref={handleRef} data-testid="hasRef">
+            {String(hasRef)}
+          </div>
+        );
       });
 
-      let wrapper;
       expect(() => {
-        wrapper = mount(<Component />);
+        render(<Component />);
       }).not.toErrorDev();
-      expect(wrapper.containsMatchingElement(<div>true</div>)).to.equal(true);
+
+      expect(screen.getByTestId('hasRef')).to.have.text('true');
     });
 
     it('does nothing if none of the forked branches requires a ref', () => {
@@ -111,14 +112,12 @@ describe('utils/index.js', () => {
         return React.cloneElement(children, { ref: handleRef });
       });
 
-      Outer.propTypes = { children: PropTypes.element.isRequired };
-
       function Inner() {
         return <div />;
       }
 
       expect(() => {
-        mount(
+        render(
           <Outer>
             <Inner />
           </Outer>,
@@ -127,8 +126,6 @@ describe('utils/index.js', () => {
     });
 
     describe('changing refs', () => {
-      // use named props rather than ref attribute because enzyme ignores
-      // ref attributes on the root component
       function Div(props) {
         const { leftRef, rightRef, ...other } = props;
         const handleRef = useForkRef(leftRef, rightRef);
@@ -136,21 +133,16 @@ describe('utils/index.js', () => {
         return <div {...other} ref={handleRef} />;
       }
 
-      Div.propTypes = {
-        leftRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-        rightRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-      };
-
       it('handles changing from no ref to some ref', () => {
-        let wrapper;
+        let view;
 
         expect(() => {
-          wrapper = mount(<Div id="test" />);
+          view = render(<Div id="test" />);
         }).not.toErrorDev();
 
         const ref = React.createRef();
         expect(() => {
-          wrapper.setProps({ leftRef: ref });
+          view.setProps({ leftRef: ref });
         }).not.toErrorDev();
         expect(ref.current.id).to.equal('test');
       });
@@ -159,16 +151,16 @@ describe('utils/index.js', () => {
         const firstLeftRef = React.createRef();
         const firstRightRef = React.createRef();
         const secondRightRef = React.createRef();
-        let wrapper;
+        let view;
 
         expect(() => {
-          wrapper = mount(<Div leftRef={firstLeftRef} rightRef={firstRightRef} id="test" />);
+          view = render(<Div leftRef={firstLeftRef} rightRef={firstRightRef} id="test" />);
         }).not.toErrorDev();
         expect(firstLeftRef.current.id).to.equal('test');
         expect(firstRightRef.current.id).to.equal('test');
         expect(secondRightRef.current).to.equal(null);
 
-        wrapper.setProps({ rightRef: secondRightRef });
+        view.setProps({ rightRef: secondRightRef });
 
         expect(firstLeftRef.current.id).to.equal('test');
         expect(firstRightRef.current).to.equal(null);

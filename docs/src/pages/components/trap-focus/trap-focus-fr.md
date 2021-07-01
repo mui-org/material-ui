@@ -6,36 +6,43 @@ githubLabel: 'component: TrapFocus'
 
 # Trap Focus
 
-<p class="description">Trap focus within a DOM node.</p>
+<p class="description">Piéger le focus dans un nœud DOM.</p>
 
-TrapFocus is a component that manages focus for its descendants. This is useful when implementing overlays such as modal dialogs, which should not allow the focus to escape while open.
+TrapFocus est un composant qui gère le focus pour ses descendants. Ceci est utile lors de l'implémentation de superpositions telles que les dialogues modaux, qui ne devraient pas permettre au focus d'échapper pendant l'ouverture.
 
-When `open={true}` the trap is enabled, and pressing <kbd class="key">Tab</kbd> or <kbd><kbd  class="key">Shift</kbd>+<kbd class="key">Tab</kbd></kbd> will rotate focus within the inner focusable elements of the component.
-
-- 📦 [1,5 ko gzippé](https://material-ui.com/size-snapshot).
-- ⚛️ Les portails d'assistance
+Lorsque `open={true}` le piège est activé, et en appuyant sur <kbd class="key">Tab</kbd> ou <kbd><kbd  class="key">Maj</kbd>+<kbd class="key">Tab</kbd></kbd> fera pivoter le focus à l'intérieur des éléments internes du composant.
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
-> ⚠️ The component is experimental and unstable.
+> ⚠️ Le composant est expérimental et instable.
 
 ## Exemple
 
 {{"demo": "pages/components/trap-focus/BasicTrapFocus.js"}}
 
-## Disable enforce focus
+## Unstyled
 
-Clicks within the focus trap behave normally; but clicks outside the focus trap are blocked.
+- 📦 [1,5 ko gzippé](https://material-ui.com/size-snapshot).
 
-You can disable this behavior with the `disableEnforceFocus` prop.
+As the component does not have any styles, it also comes with the unstyled package.
+
+```js
+import TrapFocus from '@material-ui/unstyled/Unstable_TrapFocus';
+```
+
+## Désactiver le focus imposé
+
+Clicks within the focus trap behave normally, but clicks outside the focus trap are blocked.
+
+Vous pouvez désactiver ce comportement avec la propriété `disableEnforceFocus`.
 
 {{"demo": "pages/components/trap-focus/DisableEnforceFocus.js"}}
 
-## Lazy activation
+## Activation paresseuse (lazy)
 
-By default, the component moves the focus to its descendants as soon as it opens: `open={true}`.
+Par défaut, la composante déplace le focus vers ses descendants dès qu'elle s'ouvre : `open={true}`.
 
-You can disable this behavior and make it lazy with the `disableAutoFocus` prop. When auto focus is disabled, as in the demo below, the component only traps the focus once it gets focused.
+Vous pouvez désactiver ce comportement et le rendre paresseux avec la propriété `disableAutoFocus`. Lorsque la mise au point automatique est désactivée, comme dans la démo ci-dessous, le composant ne piège le focus qu'une fois qu'il est mis au point.
 
 {{"demo": "pages/components/trap-focus/LazyTrapFocus.js"}}
 

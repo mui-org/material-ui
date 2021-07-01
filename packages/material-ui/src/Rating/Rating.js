@@ -73,12 +73,12 @@ const RatingRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${ratingClasses.visuallyHidden}`]: styles.visuallyHidden,
-      ...styles.root,
-      ...styles[`size${capitalize(styleProps.size)}`],
-      ...(styleProps.readOnly && styles.readOnly),
-    };
+    return [
+      { [`& .${ratingClasses.visuallyHidden}`]: styles.visuallyHidden },
+      styles.root,
+      styles[`size${capitalize(styleProps.size)}`],
+      styleProps.readOnly && styles.readOnly,
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */
@@ -135,14 +135,14 @@ const RatingIcon = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.icon,
-      ...(styleProps.iconEmpty && styles.iconEmpty),
-      ...(styleProps.iconFilled && styles.iconFilled),
-      ...(styleProps.iconHover && styles.iconHover),
-      ...(styleProps.iconFocus && styles.iconFocus),
-      ...(styleProps.iconActive && styles.iconActive),
-    };
+    return [
+      styles.icon,
+      styleProps.iconEmpty && styles.iconEmpty,
+      styleProps.iconFilled && styles.iconFilled,
+      styleProps.iconHover && styles.iconHover,
+      styleProps.iconFocus && styles.iconFocus,
+      styleProps.iconActive && styles.iconActive,
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the icon wrapping elements. */
@@ -170,10 +170,7 @@ const RatingDecimal = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.decimal,
-      ...(styleProps.iconActive && styles.iconActive),
-    };
+    return [styles.decimal, styleProps.iconActive && styles.iconActive];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the icon wrapping elements when decimals are necessary. */
@@ -191,6 +188,116 @@ function IconContainer(props) {
 
 IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
+};
+
+function RatingItem(props) {
+  const {
+    classes,
+    disabled,
+    emptyIcon,
+    focus,
+    getLabelText,
+    highlightSelectedOnly,
+    hover,
+    icon,
+    IconContainerComponent,
+    isActive,
+    itemValue,
+    labelProps,
+    name,
+    onBlur,
+    onChange,
+    onClick,
+    onFocus,
+    readOnly,
+    styleProps,
+    ratingValue,
+    ratingValueRounded,
+  } = props;
+
+  const isFilled = highlightSelectedOnly ? itemValue === ratingValue : itemValue <= ratingValue;
+  const isHovered = itemValue <= hover;
+  const isFocused = itemValue <= focus;
+  const isChecked = itemValue === ratingValueRounded;
+
+  const id = useId();
+  const container = (
+    <RatingIcon
+      as={IconContainerComponent}
+      value={itemValue}
+      className={clsx(classes.icon, {
+        [classes.iconEmpty]: !isFilled,
+        [classes.iconFilled]: isFilled,
+        [classes.iconHover]: isHovered,
+        [classes.iconFocus]: isFocused,
+        [classes.iconActive]: isActive,
+      })}
+      styleProps={{
+        ...styleProps,
+        iconEmpty: !isFilled,
+        iconFilled: isFilled,
+        iconHover: isHovered,
+        iconFocus: isFocused,
+        iconActive: isActive,
+      }}
+    >
+      {emptyIcon && !isFilled ? emptyIcon : icon}
+    </RatingIcon>
+  );
+
+  if (readOnly) {
+    return <span {...labelProps}>{container}</span>;
+  }
+
+  return (
+    <React.Fragment>
+      <RatingLabel
+        styleProps={{ ...styleProps, emptyValueFocused: undefined }}
+        htmlFor={id}
+        {...labelProps}
+      >
+        {container}
+        <span className={classes.visuallyHidden}>{getLabelText(itemValue)}</span>
+      </RatingLabel>
+      <input
+        className={classes.visuallyHidden}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChange={onChange}
+        onClick={onClick}
+        disabled={disabled}
+        value={itemValue}
+        id={id}
+        type="radio"
+        name={name}
+        checked={isChecked}
+      />
+    </React.Fragment>
+  );
+}
+
+RatingItem.propTypes = {
+  classes: PropTypes.object.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  emptyIcon: PropTypes.node,
+  focus: PropTypes.number.isRequired,
+  getLabelText: PropTypes.func.isRequired,
+  highlightSelectedOnly: PropTypes.bool.isRequired,
+  hover: PropTypes.number.isRequired,
+  icon: PropTypes.node,
+  IconContainerComponent: PropTypes.elementType.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  itemValue: PropTypes.number.isRequired,
+  labelProps: PropTypes.object,
+  name: PropTypes.string,
+  onBlur: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  ratingValue: PropTypes.number,
+  ratingValueRounded: PropTypes.number,
+  readOnly: PropTypes.bool.isRequired,
+  styleProps: PropTypes.object.isRequired,
 };
 
 const defaultIcon = <Star fontSize="inherit" />;
@@ -397,67 +504,6 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
 
   const classes = useUtilityClasses(styleProps);
 
-  const item = (state, labelProps) => {
-    const id = `${name}-${String(state.value).replace('.', '-')}`;
-    const container = (
-      <RatingIcon
-        as={IconContainerComponent}
-        value={state.value}
-        className={clsx(classes.icon, {
-          [classes.iconEmpty]: !state.filled,
-          [classes.iconFilled]: state.filled,
-          [classes.iconHover]: state.hover,
-          [classes.iconFocus]: state.focus,
-          [classes.iconActive]: state.active,
-        })}
-        styleProps={{
-          ...styleProps,
-          iconEmpty: !state.filled,
-          iconFilled: state.filled,
-          iconHover: state.hover,
-          iconFocus: state.focus,
-          iconActive: state.active,
-        }}
-      >
-        {emptyIcon && !state.filled ? emptyIcon : icon}
-      </RatingIcon>
-    );
-
-    if (readOnly) {
-      return (
-        <span key={state.value} {...labelProps}>
-          {container}
-        </span>
-      );
-    }
-
-    return (
-      <React.Fragment key={state.value}>
-        <RatingLabel
-          styleProps={{ ...styleProps, emptyValueFocused: undefined }}
-          htmlFor={id}
-          {...labelProps}
-        >
-          {container}
-          <span className={classes.visuallyHidden}>{getLabelText(state.value)}</span>
-        </RatingLabel>
-        <input
-          className={classes.visuallyHidden}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onClick={handleClear}
-          disabled={disabled}
-          value={state.value}
-          id={id}
-          type="radio"
-          name={name}
-          checked={state.checked}
-        />
-      </React.Fragment>
-    );
-  };
-
   return (
     <RatingRoot
       ref={handleRef}
@@ -472,16 +518,37 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
       {Array.from(new Array(max)).map((_, index) => {
         const itemValue = index + 1;
 
+        const ratingItemProps = {
+          classes,
+          disabled,
+          emptyIcon,
+          focus,
+          getLabelText,
+          highlightSelectedOnly,
+          hover,
+          icon,
+          IconContainerComponent,
+          name,
+          onBlur: handleBlur,
+          onChange: handleChange,
+          onClick: handleClear,
+          onFocus: handleFocus,
+          ratingValue: value,
+          ratingValueRounded: valueRounded,
+          readOnly,
+          styleProps,
+        };
+
+        const isActive = itemValue === Math.ceil(value) && (hover !== -1 || focus !== -1);
         if (precision < 1) {
           const items = Array.from(new Array(1 / precision));
-          const iconActive = itemValue === Math.ceil(value) && (hover !== -1 || focus !== -1);
           return (
             <RatingDecimal
               key={itemValue}
-              className={clsx(classes.decimal, { [classes.iconActive]: iconActive })}
+              className={clsx(classes.decimal, { [classes.iconActive]: isActive })}
               styleProps={{
                 ...styleProps,
-                iconActive,
+                iconActive: isActive,
               }}
             >
               {items.map(($, indexDecimal) => {
@@ -490,44 +557,42 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
                   precision,
                 );
 
-                return item(
-                  {
-                    value: itemDecimalValue,
-                    filled: highlightSelectedOnly
-                      ? itemDecimalValue === value
-                      : itemDecimalValue <= value,
-                    hover: itemDecimalValue <= hover,
-                    focus: itemDecimalValue <= focus,
-                    checked: itemDecimalValue === valueRounded,
-                  },
-                  {
-                    style:
-                      items.length - 1 === indexDecimal
-                        ? {}
-                        : {
-                            width:
-                              itemDecimalValue === value
-                                ? `${(indexDecimal + 1) * precision * 100}%`
-                                : '0%',
-                            overflow: 'hidden',
-                            zIndex: 1,
-                            position: 'absolute',
-                          },
-                  },
+                return (
+                  <RatingItem
+                    key={itemDecimalValue}
+                    {...ratingItemProps}
+                    // The icon is already displayed as active
+                    isActive={false}
+                    itemValue={itemDecimalValue}
+                    labelProps={{
+                      style:
+                        items.length - 1 === indexDecimal
+                          ? {}
+                          : {
+                              width:
+                                itemDecimalValue === value
+                                  ? `${(indexDecimal + 1) * precision * 100}%`
+                                  : '0%',
+                              overflow: 'hidden',
+                              zIndex: 1,
+                              position: 'absolute',
+                            },
+                    }}
+                  />
                 );
               })}
             </RatingDecimal>
           );
         }
 
-        return item({
-          value: itemValue,
-          active: itemValue === value && (hover !== -1 || focus !== -1),
-          filled: highlightSelectedOnly ? itemValue === value : itemValue <= value,
-          hover: itemValue <= hover,
-          focus: itemValue <= focus,
-          checked: itemValue === valueRounded,
-        });
+        return (
+          <RatingItem
+            key={itemValue}
+            {...ratingItemProps}
+            isActive={isActive}
+            itemValue={itemValue}
+          />
+        );
       })}
       {!readOnly && !disabled && (
         <RatingLabel

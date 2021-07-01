@@ -32,14 +32,14 @@ const FabRoot = styled(ButtonBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.variant],
-      ...styles[`size${capitalize(styleProps.size)}`],
-      ...(styleProps.color === 'inherit' && styles.colorInherit),
-      ...(styleProps.color === 'primary' && styles.primary),
-      ...(styleProps.color === 'secondary' && styles.secondary),
-    };
+    return [
+      styles.root,
+      styles[styleProps.variant],
+      styles[`size${capitalize(styleProps.size)}`],
+      styleProps.color === 'inherit' && styles.colorInherit,
+      styleProps.color === 'primary' && styles.primary,
+      styleProps.color === 'secondary' && styles.secondary,
+    ];
   },
 })(
   ({ theme, styleProps }) => ({

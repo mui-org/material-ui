@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { useFakeTimers } from 'sinon';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, act, createClientRender } from 'test/utils';
+import { describeConformanceV5, act, createClientRender } from 'test/utils';
 import TouchRipple, { DELAY_RIPPLE } from './TouchRipple';
 
 const cb = () => {};
 
 describe('<TouchRipple />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   /**
    * @param {object} other props to spread to TouchRipple
@@ -47,7 +46,6 @@ describe('<TouchRipple />', () => {
     classes: {},
     inheritComponent: 'span',
     render,
-    mount,
     refInstanceof: Object,
     muiName: 'MuiTouchRipple',
     skip: [

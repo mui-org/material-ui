@@ -4,7 +4,8 @@
     "action": "The action to display. It renders after the message, at the end of the snackbar.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "message": "The message to display.",
-    "role": "The ARIA role attribute of the element."
+    "role": "The ARIA role attribute of the element.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

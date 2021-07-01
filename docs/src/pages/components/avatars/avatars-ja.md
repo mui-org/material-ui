@@ -22,6 +22,10 @@ Image Avatars(画像アバター) は通常の`img` propsである、 `src` も�
 
 {{"demo": "pages/components/avatars/LetterAvatars.js"}}
 
+You can use different background colors for the avatar. The following demo generates the color based on the name of the person.
+
+{{"demo": "pages/components/avatars/BackgroundLetterAvatars.js"}}
+
 ## サイズ
 
 アバターのサイズは、 `height` と `width` の CSS プロパティで変更できます。

@@ -8,7 +8,8 @@
     "itemsAfterCollapse": "If max items is exceeded, the number of items to show after the ellipsis.",
     "itemsBeforeCollapse": "If max items is exceeded, the number of items to show before the ellipsis.",
     "maxItems": "Specifies the maximum number of breadcrumbs to display. When there are more than the maximum number, only the first <code>itemsBeforeCollapse</code> and last <code>itemsAfterCollapse</code> will be shown, with an ellipsis in between.",
-    "separator": "Custom separator node."
+    "separator": "Custom separator node.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

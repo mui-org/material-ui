@@ -34,20 +34,21 @@ In general, you can expect the following release cycle:
 
 - Une version **majeure** tous les 12 mois.
 - 1-3 **mineur** versions pour chaque version majeure.
-- A **patch** release every week (anytime for urgent bugfix).
+- Une version de **patch** chaque semaine (à tout moment pour une correction de bogue urgente).
 
 ## Calendrier de version
 
-| Date           | Version | Status   |
-|:-------------- |:------- |:-------- |
-| May 2018       | v1.0.0  | Released |
-| September 2018 | v3.0.0  | Released |
-| May 2019       | v4.0.0  | Released |
-| Q1 2021        | v5.0.0  | ⏳        |
+| Date                | Version     | Status           |
+|:------------------- |:----------- |:---------------- |
+| May 2018            | v1.0.0      | Released         |
+| September 2018      | v3.0.0      | Released         |
+| May 2019            | v4.0.0      | Released         |
+| Q1 2021             | v5.0.beta.0 | Work in progress |
+| September 1st, 2021 | v5.0.0      | ⏳                |
 
 You can follow the [milestones](https://github.com/mui-org/material-ui/milestones) for a more detailed overview.
 
-> ⚠️ **Disclaimer**: We operate in a dynamic environment, and things are subject to change. The information provided is intended to outline the general framework direction. It's intended for informational purposes only. We may decide to add/remove new items at any time depending on our capability to deliver while meeting our quality standards. The development, releases and timing of any features or functionality of Material-UI remains at the sole discretion of Material-UI. The roadmap does not represent a commitment, obligation or promise to deliver at any time.
+> ⚠️ **Avertissement** : Nous opérons dans un environnement dynamique et les choses sont susceptibles de changer. Les informations fournies visent à définir l'orientation générale du cadre. Il est destiné à des fins d'information uniquement. Nous pouvons décider d'ajouter/supprimer de nouveaux articles à tout moment en fonction de notre capacité à livrer tout en respectant nos normes de qualité. Le développement, les versions et le calendrier de toute fonctionnalité ou fonctionnalité de Material-UI restent à la seule discrétion de Material-UI. La feuille de route ne représente pas un engagement, une obligation ou une promesse de livraison à tout moment.
 
 ## Politique de support
 
@@ -55,7 +56,7 @@ Find details on the [supported versions](/getting-started/support/#supported-ver
 
 ## Pratiques de l'obsolescence
 
-Sometimes **"breaking changes"**, such as the removal of support for select APIs and features, are necessary.
+Parfois, des **"changements de rupture"**, tels que la suppression de la prise en charge de certaines API et fonctionnalités, sont nécessaires.
 
 To make these transitions as easy as possible:
 

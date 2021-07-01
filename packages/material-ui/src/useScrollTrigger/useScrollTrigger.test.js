@@ -1,88 +1,80 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
-import { spy } from 'sinon';
-import { act, createClientRender } from 'test/utils';
+import { act, createClientRender, RenderCounter, screen } from 'test/utils';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 describe('useScrollTrigger', () => {
   const render = createClientRender();
-  let values;
-
-  beforeEach(() => {
-    values = spy();
-  });
-
-  const triggerRef = React.createRef();
-  const containerRef = React.createRef(); // Get the scroll container's parent
-  const getContainer = () => containerRef.current.children[0]; // Get the scroll container
-  const getTriggerValue = () => triggerRef.current.textContent; // Retrieve the trigger value
-
-  function Test(props) {
-    const { customContainer, ...other } = props;
-    const [container, setContainer] = React.useState();
-    const trigger = useScrollTrigger({ ...other, target: container });
-
-    React.useEffect(() => {
-      values(trigger);
-    });
-
-    return (
-      <React.Fragment>
-        <span ref={triggerRef}>{`${trigger}`}</span>
-        <div ref={containerRef}>
-          <Container ref={customContainer ? setContainer : null}>
-            <Box sx={{ my: 2 }}>Custom container</Box>
-          </Container>
-        </div>
-      </React.Fragment>
-    );
-  }
-
-  Test.propTypes = {
-    customContainer: PropTypes.bool,
-  };
 
   describe('defaultTrigger', () => {
     it('should be false by default', () => {
+      const getRenderCountRef = React.createRef();
       const TestDefault = () => {
         const trigger = useScrollTrigger();
-        React.useEffect(() => {
-          values(trigger);
-        });
-        return <span ref={triggerRef}>{`${trigger}`}</span>;
+        return (
+          <RenderCounter ref={getRenderCountRef}>
+            <span data-testid="trigger">{`${trigger}`}</span>
+          </RenderCounter>
+        );
       };
 
       render(<TestDefault />);
-      expect(getTriggerValue()).to.equal('false');
-      expect(values.callCount).to.equal(1);
+
+      expect(screen.getByTestId('trigger').textContent).to.equal('false');
+      expect(getRenderCountRef.current()).to.equal(1);
     });
 
     it('should be false by default when using ref', () => {
+      const getRenderCountRef = React.createRef();
+      const triggerRef = React.createRef();
       const TestDefaultWithRef = () => {
         const [container, setContainer] = React.useState();
         const trigger = useScrollTrigger({
           target: container,
         });
-        React.useEffect(() => {
-          values(trigger);
-        });
         return (
-          <React.Fragment>
+          <RenderCounter ref={getRenderCountRef}>
             <span ref={triggerRef}>{`${trigger}`}</span>
             <span ref={setContainer} />
-          </React.Fragment>
+          </RenderCounter>
         );
       };
       render(<TestDefaultWithRef />);
-      expect(getTriggerValue()).to.equal('false');
-      expect(values.callCount).to.equal(2);
+      expect(triggerRef.current.textContent).to.equal('false');
+      expect(getRenderCountRef.current()).to.equal(2);
     });
   });
 
   describe('scroll', () => {
+    const triggerRef = React.createRef();
+    const containerRef = React.createRef(); // Get the scroll container's parent
+    const getContainer = () => containerRef.current.children[0]; // Get the scroll container
+    const getTriggerValue = () => triggerRef.current.textContent; // Retrieve the trigger value
+
+    function Test(props) {
+      const { customContainer, ...other } = props;
+      const [container, setContainer] = React.useState();
+      const trigger = useScrollTrigger({ ...other, target: container });
+
+      return (
+        <React.Fragment>
+          <span ref={triggerRef}>{`${trigger}`}</span>
+          <div ref={containerRef}>
+            <Container ref={customContainer ? setContainer : null}>
+              <Box sx={{ my: 2 }}>Custom container</Box>
+            </Container>
+          </div>
+        </React.Fragment>
+      );
+    }
+
+    Test.propTypes = {
+      customContainer: PropTypes.bool,
+    };
+
     before(function beforeHook() {
       // Only run the test on node.
       if (!/jsdom/.test(window.navigator.userAgent)) {

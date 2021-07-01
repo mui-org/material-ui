@@ -8,12 +8,12 @@ githubLabel: 'ícones'
 
 # Ícones Material
 
-<p class="description">Mais de 1.100 ícones React, oficiais do Material e prontos para uso.</p>
+<p class="description">1,700+ React Material icons ready to use from the official website.</p>
 
-O pacote npm a seguir, [@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons), inclui os mais de 1,100 [Ícones Material](https://material.io/tools/icons/?style=baseline) oficiais, convertidos para componentes [`SvgIcon`](/api/svg-icon/).
+The following npm package, [@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons), includes the 1,700+ official [Material icons](https://fonts.google.com/icons) converted to [`SvgIcon`](/api/svg-icon/) components.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 {{"demo": "pages/components/material-icons/SearchIcons.js", "hideToolbar": true, "bg": true}}
 
-ℹ️ A pesquisa suporta sinônimos. Tente procurar por "hamburger" ou "logout".
+ℹ️ A pesquisa suporta sinônimos. Try searching for "hamburger" or "logout".

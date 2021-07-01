@@ -10,6 +10,7 @@
     "focused": "If <code>true</code>, the helper text should use focused classes key.",
     "margin": "If <code>dense</code>, will adjust vertical spacing. This is normally obtained via context from FormControl.",
     "required": "If <code>true</code>, the helper text should use required classes key.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

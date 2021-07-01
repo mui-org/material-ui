@@ -1,6 +1,6 @@
 {
   "name": "@material-ui/private-theming",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-beta.0",
   "private": false,
   "author": "Material-UI Team",
   "description": "Material-UI Theming - The React theme context to be shared between `@material-ui/styles` and `@material-ui/core`.",
@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@material-ui/utils": "5.0.0-alpha.35",
+    "@material-ui/utils": "5.0.0-beta.0",
     "prop-types": "^15.7.2"
   },
   "sideEffects": false,

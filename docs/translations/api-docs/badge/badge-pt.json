@@ -4,8 +4,8 @@
     "anchorOrigin": "The anchor of the badge.",
     "badgeContent": "The content rendered within the badge.",
     "children": "The badge will be added relative to this node.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "color": "A cor do componente. Ela da suporte para as cores do tema que fazem sentido para este componente.",
     "components": "The components used for each slot inside the Badge. Either a string to use a HTML element or a component.",
     "componentsProps": "The props used for each slot inside the Badge.",
     "invisible": "If <code>true</code>, the badge is invisible.",
@@ -13,7 +13,7 @@
     "overlap": "Wrapped shape the badge should overlap.",
     "showZero": "Controls whether the badge is hidden when <code>badgeContent</code> is zero.",
     "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
-    "variant": "The variant to use.",
+    "variant": "A variante a usar.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component."
   },
   "classDescriptions": {
@@ -75,22 +75,22 @@
       "conditions": "<code>anchorOrigin={{ 'bottom', 'left' }} overlap=\"circular\"</code>"
     },
     "invisible": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the badge `span` element",
       "conditions": "<code>invisible={true}</code>"
     },
     "colorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the badge `span` element",
       "conditions": "<code>color=\"primary\"</code>"
     },
     "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the badge `span` element",
       "conditions": "<code>color=\"secondary\"</code>"
     },
     "colorError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the badge `span` element",
       "conditions": "<code>color=\"error\"</code>"
     }

@@ -1,1 +1,1 @@
-export { StyledEngineProvider as default } from '@material-ui/styled-engine';
+export { StyledEngineProvider as default } from '@material-ui/system';

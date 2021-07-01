@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, act, createClientRender, fireEvent, describeConformanceV5 } from 'test/utils';
+import { act, createClientRender, fireEvent, describeConformanceV5 } from 'test/utils';
 import Link, { linkClasses as classes } from '@material-ui/core/Link';
 import Typography, { typographyClasses } from '@material-ui/core/Typography';
 
@@ -15,13 +15,11 @@ function focusVisible(element) {
 
 describe('<Link />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Link href="/">Home</Link>, () => ({
     classes,
     inheritComponent: Typography,
     render,
-    mount,
     muiName: 'MuiLink',
     refInstanceof: window.HTMLAnchorElement,
     testVariantProps: { color: 'secondary', variant: 'h1' },

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { useThemeProps } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PropTypes from 'prop-types';
 import DesktopTimePicker, { DesktopTimePickerProps } from '../DesktopTimePicker';
@@ -116,6 +116,13 @@ TimePicker.propTypes /* remove-proptypes */ = {
    * @default "CLEAR"
    */
   clearText: PropTypes.node,
+  /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   */
+  components: PropTypes.shape({
+    OpenPickerIcon: PropTypes.elementType,
+  }),
   /**
    * CSS media query when `Mobile` mode will be changed to `Desktop`.
    * @default '@media (pointer: fine)'
@@ -267,10 +274,6 @@ TimePicker.propTypes /* remove-proptypes */ = {
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps: PropTypes.object,
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon: PropTypes.node,
   /**
    * First view to show.
    */

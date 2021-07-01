@@ -93,6 +93,15 @@ function createUnexpectedConsoleMessagesHooks(Mocha, methodName, expectedMatcher
       }
     }
 
+    // Ignore legacy root deprecation warnings
+    // TODO: Remove once we no longer use legacy roots.
+    if (
+      message.indexOf('Use createRoot instead.') !== -1 ||
+      message.indexOf('Use hydrateRoot instead.') !== -1
+    ) {
+      return;
+    }
+
     unexpectedCalls.push([
       // first line includes the (empty) error message
       // i.e. Remove the `Error:` line

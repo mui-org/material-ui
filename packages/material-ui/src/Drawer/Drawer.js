@@ -16,12 +16,11 @@ import { getDrawerUtilityClass } from './drawerClasses';
 const overridesResolver = (props, styles) => {
   const { styleProps } = props;
 
-  return {
-    ...styles.root,
-    ...((styleProps.variant === 'permanent' || styleProps.variant === 'persistent') &&
-      styles.docked),
-    ...styles.modal,
-  };
+  return [
+    styles.root,
+    (styleProps.variant === 'permanent' || styleProps.variant === 'persistent') && styles.docked,
+    styles.modal,
+  ];
 };
 
 const useUtilityClasses = (styleProps) => {
@@ -45,7 +44,9 @@ const DrawerRoot = styled(Modal, {
   name: 'MuiDrawer',
   slot: 'Root',
   overridesResolver,
-})({});
+})(({ theme }) => ({
+  zIndex: theme.zIndex.drawer,
+}));
 
 const DrawerDockedRoot = styled('div', {
   shouldForwardProp: rootShouldForwardProp,
@@ -64,12 +65,12 @@ const DrawerPaper = styled(Paper, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.paper,
-      ...styles[`paperAnchor${capitalize(styleProps.anchor)}`],
-      ...(styleProps.variant !== 'temporary' &&
-        styles[`paperAnchorDocked${capitalize(styleProps.anchor)}`]),
-    };
+    return [
+      styles.paper,
+      styles[`paperAnchor${capitalize(styleProps.anchor)}`],
+      styleProps.variant !== 'temporary' &&
+        styles[`paperAnchorDocked${capitalize(styleProps.anchor)}`],
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the Paper component. */
@@ -79,7 +80,8 @@ const DrawerPaper = styled(Paper, {
   height: '100%',
   flex: '1 0 auto',
   zIndex: theme.zIndex.drawer,
-  WebkitOverflowScrolling: 'touch', // Add iOS momentum scrolling.
+  // Add iOS momentum scrolling for iOS < 13.0
+  WebkitOverflowScrolling: 'touch',
   // temporary style
   position: 'fixed',
   top: 0,

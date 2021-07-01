@@ -1,5 +1,5 @@
 ---
-title: React Divider component
+title: Composant React Divider
 components: Divider
 githubLabel: 'component: Divider'
 materialDesign: https://material.io/components/dividers
@@ -35,22 +35,28 @@ Dans une liste, vous devez vous assurer que le `Divider` est rendu en tant que `
 
 {{"demo": "pages/components/dividers/MiddleDividers.js", "bg": true}}
 
-## Vertical Dividers
+## Diviseurs avec texte
 
-You can also render a divider with content.
+Vous pouvez également rendre un séparateur avec le contenu.
 
 {{"demo": "pages/components/dividers/DividerText.js"}}
 
-## Vertical divider
+## Séparateurs verticaux
 
 Vous pouvez également rendre un séparateur verticalement en utilisant la propriété `orientation`.
 
 {{"demo": "pages/components/dividers/VerticalDividers.js", "bg": true}}
 
-> Note the use of the `flexItem` prop to accommodate for the flex container.
+> Notez l'utilisation de l'accessoire `flexItem` pour accueillir le conteneur flex.
 
-### Vertical with text
+### Vertical with variant middle
 
-You can also render a vertical divider with content.
+You can also render a vertical divider with `variant="middle"`.
+
+{{"demo": "pages/components/dividers/VerticalDividerMiddle.js", "bg": true}}
+
+### Vertical avec texte
+
+Vous pouvez également rendre un séparateur avec le contenu.
 
 {{"demo": "pages/components/dividers/VerticalDividerText.js"}}

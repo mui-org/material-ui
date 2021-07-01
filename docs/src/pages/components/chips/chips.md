@@ -66,7 +66,7 @@ Use the `avatar` prop to added a avatar or use the `icon` prop to added a icon.
 
 ## Color chip
 
-You can use the `color` prop to define a primary or secondary color.
+You can use the `color` prop to define a color from theme palette.
 
 {{"demo": "pages/components/chips/ColorChips.js"}}
 

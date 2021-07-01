@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
+import Stack from '@material-ui/core/Stack';
 import Slider from '@material-ui/core/Slider';
 
 function valuetext(value) {
@@ -27,7 +27,7 @@ const marks = [
 
 export default function VerticalSlider() {
   return (
-    <Box sx={{ height: 300 }}>
+    <Stack sx={{ height: 300 }} spacing={1} direction="row">
       <Slider
         aria-label="Temperature"
         orientation="vertical"
@@ -47,6 +47,6 @@ export default function VerticalSlider() {
         defaultValue={[20, 37]}
         marks={marks}
       />
-    </Box>
+    </Stack>
   );
 }

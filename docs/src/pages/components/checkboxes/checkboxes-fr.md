@@ -1,5 +1,5 @@
 ---
-title: React Checkbox component
+title: Composant React Checkbox
 components: Checkbox, FormControl, FormGroup, FormLabel, FormControlLabel
 materialDesign: 'https://material.io/components/selection-controls#checkboxes'
 githubLabel: 'component: Checkbox'
@@ -22,19 +22,41 @@ Si vous avez plusieurs options dans une liste, vous pouvez conserver de l'espace
 
 ## Checkbox avec FormControlLabel
 
-A checkbox input can only have two states in a form: checked or unchecked. It either submits its value or doesn't. Visually, there are actually three states a checkbox can be in: checked, unchecked, or indeterminate.
-
-{{"demo": "pages/components/checkboxes/IndeterminateCheckbox.js"}}
-
-## Checkbox avec FormGroup
-
-`La case à cocher` peut être fournie avec une étiquette grâce au composant `FormControlLabel`.
+You can provide a label to the `Checkbox` thanks to the `FormControlLabel` component.
 
 {{"demo": "pages/components/checkboxes/CheckboxLabels.js"}}
 
-## Emplacement du label
+## Size
+
+`La case à cocher` peut être fournie avec une étiquette grâce au composant `FormControlLabel`.
+
+{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js", "defaultCodeOpen": false}}
+
+## Couleur
 
 `FormGroup` est un wrapper utile utilisé pour regrouper les composants de contrôles de sélection et qui fournit une API plus simple.
+
+## Emplacement du label
+
+{{"demo": "pages/components/checkboxes/IconCheckboxes.js"}}
+
+## Checkbox personnalisée
+
+Vous pouvez changer l'emplacement du label:
+
+{{"demo": "pages/components/checkboxes/ControlledCheckbox.js"}}
+
+## Quand les utiliser
+
+Une entrée de case à cocher ne peut avoir que deux états dans un formulaire : coché ou non coché. Soit il soumet sa valeur soit non. Visually, there are actually three states a checkbox can be in: checked, unchecked, or indeterminate.
+
+{{"demo": "pages/components/checkboxes/IndeterminateCheckbox.js"}}
+
+> ⚠️ When indeterminate is set, the value of the `checked` prop only impacts the form submitted values. It has no accessibility or UX implications.
+
+## Accessibilité
+
+🎨 Si vous cherchez de l'inspiration, vous pouvez consulter les [exemples de personnalisation de MUI Treasury](https://mui-treasury.com/styles/checkbox).
 
 {{"demo": "pages/components/checkboxes/CheckboxesGroup.js"}}
 
@@ -48,7 +70,7 @@ Vous pouvez changer l'emplacement du label:
 
 Voici un exemple de personnalisation du composant. Vous pouvez en savoir plus dans la [page de documentation des overrides](/customization/how-to-customize/).
 
-{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js", "defaultCodeOpen": false}}
+{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js"}}
 
 🎨 Si vous cherchez de l'inspiration, vous pouvez consulter les [exemples de personnalisation de MUI Treasury](https://mui-treasury.com/styles/checkbox).
 

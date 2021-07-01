@@ -35,10 +35,10 @@ const FilledInputRoot = styled(InputBaseRoot, {
   slot: 'Root',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
+    return [
       ...inputBaseRootOverridesResolver(props, styles),
-      ...(!styleProps.disableUnderline && styles.underline),
-    };
+      !styleProps.disableUnderline && styles.underline,
+    ];
   },
 })(({ theme, styleProps }) => {
   const light = theme.palette.mode === 'light';
@@ -185,6 +185,7 @@ const FilledInput = React.forwardRef(function FilledInput(inProps, ref) {
     inputComponent = 'input',
     multiline = false,
     type = 'text',
+    hiddenLabel, // declare here to prevent spreading to DOM
     ...other
   } = props;
 

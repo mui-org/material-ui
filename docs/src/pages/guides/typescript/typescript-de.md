@@ -2,7 +2,7 @@
 
 <p class="description">Sie können statische Typisierung zu JavaScript hinzufügen, um die Produktivität und die Codequalität dank TypeScript zu verbessern.</p>
 
-Material-UI requires a minimum version of TypeScript 3.2.
+Material-UI requires a minimum version of TypeScript 3.5.
 
 Schauen Sie sich das [Create React App mit TypeScript](https://github.com/mui-org/material-ui/tree/master/examples/create-react-app-with-typescript) Beispiel an.
 
@@ -170,13 +170,21 @@ interface Props {
 Dies ist jedoch nicht sehr [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) weil Sie die Klassennamen (`'root'`, `'paper'`, `'button'`, ...) an zwei verschiedenen Stellen pflegen müssen. Wir stellen einen Typoperator `WithStyles` bereit, um damit zu helfen. So kannst du einfach schreiben:
 
 ```ts
-import { WithStyles, createStyles } from '@material-ui/core';
+import { createStyles } from '@material-ui/styles';
+import { WithStyles } from '@material-ui/core';
 
-const styles = (theme: Theme) => createStyles({
-  root: { /* ... */ },
-  paper: { /* ... */ },
-  button: { /* ... */ },
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      /* ... */
+    },
+    paper: {
+      /* ... */
+    },
+    button: {
+      /* ... */
+    },
+  });
 
 interface Props extends WithStyles<typeof styles> {
   foo: number;
@@ -218,22 +226,21 @@ Beim Hinzufügen benutzerdefinierter Eigenschaften zum `Theme` können Sie es we
 Im folgenden Beispiel wird eine `appDrawer` Eigenschaft hinzugefügt, welche in das von `material-ui` exportierte Theme eingefügt wird:
 
 ```ts
-import { Theme } from '@material-ui/core/styles/createTheme';
-import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import { Breakpoint, Theme } from '@material-ui/core/styles';
 
-declare module '@material-ui/core/styles/createTheme' {
+declare module '@material-ui/core/styles' {
   interface Theme {
     appDrawer: {
-      width: React.CSSProperties['width']
-      breakpoint: Breakpoint
-    }
+      width: React.CSSProperties['width'];
+      breakpoint: Breakpoint;
+    };
   }
   // allow configuration using `createTheme`
   interface ThemeOptions {
     appDrawer?: {
-      width?: React.CSSProperties['width']
-      breakpoint?: Breakpoint
-    }
+      width?: React.CSSProperties['width'];
+      breakpoint?: Breakpoint;
+    };
   }
 }
 ```
@@ -252,7 +259,7 @@ export default function createMyTheme(options: ThemeOptions) {
       breakpoint: 'lg',
     },
     ...options,
-  })
+  });
 }
 ```
 
@@ -266,7 +273,7 @@ const theme = createMyTheme({ appDrawer: { breakpoint: 'md' }});
 
 ## Usage of `component` prop
 
-Many Material-UI components allow you to replace their root node via a `component` prop, this will be detailed in the component's API documentation. For example, a Button's root node can be replaced with a React Router's Link, and any additional props that are passed to Button, such as `to`, will be spread to the Link component. For a code example concerning Button and react-router-dom checkout [these demos](/guides/composition/#routing-libraries).
+Many Material-UI components allow you to replace their root node via a `component` prop, this will be detailed in the component's API documentation. For example, a Button's root node can be replaced with a React Router's Link, and any additional props that are passed to Button, such as `to`, will be spread to the Link component. For a code example concerning Button and react-router-dom checkout [these demos](/guides/routing/#component-prop).
 
 To be able to use props of such a Material-UI component on their own, props should be used with type arguments. Otherwise, the `component` prop will not be present in the props of the Material-UI component.
 

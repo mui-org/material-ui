@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { capitalize } from '@material-ui/core/utils';
-import { styled, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { styled, useThemeProps } from '@material-ui/core/styles';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import Typography from '@material-ui/core/Typography';
 import TimelineContext from '../Timeline/TimelineContext';
@@ -23,10 +23,7 @@ const TimelineContentRoot = styled(Typography, {
   slot: 'Root',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
-      ...styles.root,
-      ...styles[`position${capitalize(styleProps.position)}`],
-    };
+    return [styles.root, styles[`position${capitalize(styleProps.position)}`]];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

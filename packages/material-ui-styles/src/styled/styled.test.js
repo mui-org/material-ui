@@ -2,14 +2,14 @@ import * as React from 'react';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { SheetsRegistry } from 'jss';
-import { createMount } from 'test/utils';
+import { createClientRender, screen } from 'test/utils';
 import { createGenerateClassName } from '@material-ui/styles';
 import styled from './styled';
 import StylesProvider from '../StylesProvider';
 
 describe('styled', () => {
   // StrictModeViolation: uses makeStyles
-  const mount = createMount({ strict: false });
+  const render = createClientRender({ strict: false });
   let StyledButton;
 
   before(() => {
@@ -28,7 +28,7 @@ describe('styled', () => {
     const sheetsRegistry = new SheetsRegistry();
     const generateClassName = createGenerateClassName();
 
-    mount(
+    render(
       <StylesProvider sheetsRegistry={sheetsRegistry} generateClassName={generateClassName}>
         <StyledButton>Styled Components</StyledButton>
       </StylesProvider>,
@@ -39,26 +39,26 @@ describe('styled', () => {
   });
 
   describe('prop: clone', () => {
-    let wrapper;
+    let view;
 
     beforeEach(() => {
-      wrapper = mount(
-        <StyledButton clone data-test="enzyme">
+      view = render(
+        <StyledButton clone data-test="styled">
           <div>Styled Components</div>
         </StyledButton>,
       );
     });
 
     it('should be able to pass props to cloned element', () => {
-      expect(wrapper.find('div').props()['data-test']).to.equal('enzyme');
+      expect(view.container.firstChild).to.have.attribute('data-test', 'styled');
     });
 
     it('should be able to clone the child element', () => {
-      expect(wrapper.getDOMNode().nodeName).to.equal('DIV');
-      wrapper.setProps({
+      expect(view.container.firstChild).to.have.tagName('DIV');
+      view.setProps({
         clone: false,
       });
-      expect(wrapper.getDOMNode().nodeName).to.equal('BUTTON');
+      expect(view.container.firstChild).to.have.tagName('BUTTON');
     });
   });
 
@@ -75,13 +75,12 @@ describe('styled', () => {
     style.filterProps = ['color'];
     style.propTypes = {};
     const StyledDiv = styled('div')(style);
-    const wrapper = mount(
-      <StyledDiv data-test="enzyme" color="blue">
+    render(
+      <StyledDiv data-testid="styled" data-color="blue">
         Styled Components
       </StyledDiv>,
     );
-    expect(wrapper.find('div').props().color).to.equal(undefined);
-    expect(wrapper.find('div').props()['data-test']).to.equal('enzyme');
+    expect(screen.getByTestId('styled')).to.have.attribute('data-color', 'blue');
   });
 
   describe('warnings', () => {
@@ -102,6 +101,6 @@ describe('styled', () => {
   });
 
   it('should accept a child function', () => {
-    mount(<StyledButton>{(props) => <div {...props}>Styled Components</div>}</StyledButton>);
+    render(<StyledButton>{(props) => <div {...props}>Styled Components</div>}</StyledButton>);
   });
 });

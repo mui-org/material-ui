@@ -80,10 +80,12 @@ const theme = {
 
 ## Horizontale Zentrierung
 
+The CSS flex and grid display properties are often used to align elements at the center. However, you can also use `margin-left: auto;`, `margin-right: auto;`, and a width for horizontally centering:
+
 {{"demo": "pages/system/spacing/HorizontalCentering.js", "defaultCodeOpen": false, "bg": true}}
 
 ```jsx
-<Box sx={{ mx: "auto" }}>…
+<Box sx={{ mx: "auto", width: 200 }}>…
 ```
 
 ## API

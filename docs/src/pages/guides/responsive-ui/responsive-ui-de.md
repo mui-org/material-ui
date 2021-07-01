@@ -8,4 +8,3 @@
 - [Container](/components/container/): Der Container zentriert Ihren Inhalt horizontal. Er ist das grundlegendste Layoutelement.
 - [ Rasterpunkte](/customization/breakpoints/): API, die die Verwendung von Rasterpunkten in einer Vielzahl von Kontexten ermöglicht.
 - [useMediaQuery](/components/use-media-query/): Dies ist ein CSS-Media-Abfrage-Hook für React. Es wartet auf Übereinstimmungen mit einer CSS-Medienabfrage.
-- [Hidden](/components/hidden/): Wechseln Sie mit unseren versteckten Komponenten schnell und ansprechend den Sichtbarkeitswert von Komponenten und mehr.

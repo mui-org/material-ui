@@ -108,10 +108,6 @@ function defaultGetTabbable(root) {
     .concat(regularTabNodes);
 }
 
-function defaultGetDoc() {
-  return document;
-}
-
 function defaultIsEnabled() {
   return true;
 }
@@ -125,7 +121,6 @@ function Unstable_TrapFocus(props) {
     disableAutoFocus = false,
     disableEnforceFocus = false,
     disableRestoreFocus = false,
-    getDoc = defaultGetDoc,
     getTabbable = defaultGetTabbable,
     isEnabled = defaultIsEnabled,
     open,
@@ -133,7 +128,7 @@ function Unstable_TrapFocus(props) {
   const ignoreNextEnforceFocus = React.useRef();
   const sentinelStart = React.useRef(null);
   const sentinelEnd = React.useRef(null);
-  const nodeToRestore = React.useRef();
+  const nodeToRestore = React.useRef(null);
   const reactFocusEventTarget = React.useRef(null);
   // This variable is useful when disableAutoFocus is true.
   // It waits for the active element to move into the component to activate.
@@ -142,23 +137,6 @@ function Unstable_TrapFocus(props) {
   const rootRef = React.useRef(null);
   const handleRef = useForkRef(children.ref, rootRef);
   const lastKeydown = React.useRef(null);
-
-  const prevOpenRef = React.useRef();
-  React.useEffect(() => {
-    prevOpenRef.current = open;
-  }, [open]);
-
-  if (!prevOpenRef.current && open && typeof window !== 'undefined' && !disableAutoFocus) {
-    // WARNING: Potentially unsafe in concurrent mode.
-    // The way the read on `nodeToRestore` is setup could make this actually safe.
-    // Say we render `open={false}` -> `open={true}` but never commit.
-    // We have now written a state that wasn't committed. But no committed effect
-    // will read this wrong value. We only read from `nodeToRestore` in effects
-    // that were committed on `open={true}`
-    // WARNING: Prevents the instance from being garbage collected. Should only
-    // hold a weak ref.
-    nodeToRestore.current = getDoc().activeElement;
-  }
 
   React.useEffect(() => {
     // We might render an empty child.
@@ -325,7 +303,7 @@ function Unstable_TrapFocus(props) {
   }, [disableAutoFocus, disableEnforceFocus, disableRestoreFocus, isEnabled, open, getTabbable]);
 
   const onFocus = (event) => {
-    if (!activated.current) {
+    if (nodeToRestore.current === null) {
       nodeToRestore.current = event.relatedTarget;
     }
     activated.current = true;
@@ -338,7 +316,7 @@ function Unstable_TrapFocus(props) {
   };
 
   const handleFocusSentinel = (event) => {
-    if (!activated.current) {
+    if (nodeToRestore.current === null) {
       nodeToRestore.current = event.relatedTarget;
     }
     activated.current = true;
@@ -391,14 +369,6 @@ Unstable_TrapFocus.propTypes /* remove-proptypes */ = {
    * @default false
    */
   disableRestoreFocus: PropTypes.bool,
-  /**
-   * Return the document the trap focus is mounted into.
-   * Provide the prop if you need the restore focus to work between different documents.
-   * @default function defaultGetDoc() {
-   *   return document;
-   * }
-   */
-  getDoc: PropTypes.func,
   /**
    * Returns an array of ordered tabbable nodes (i.e. in tab order) within the root.
    * For instance, you can provide the "tabbable" npm dependency.

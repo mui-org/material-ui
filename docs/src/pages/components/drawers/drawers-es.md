@@ -68,7 +68,7 @@ More details in the [Modal performance section](/components/modal/#performance).
 
 ## Drawer responsivo
 
-El componente utilitario responsivo `Hidden` permite mostrar diferentes tipos de cajones dependiendo del ancho de la pantalla. Un Drawer `temporary` se muestra para pantallas pequeñas mientras que un Drawer `permanent` se muestra para pantallas mas anchas.
+You can use the `temporary` variant to display a drawer for small screens and `permanent` for a drawer for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 

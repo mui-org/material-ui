@@ -22,6 +22,10 @@ Avatares com letras podem ser criados passando sua string como `children`.
 
 {{"demo": "pages/components/avatars/LetterAvatars.js"}}
 
+You can use different background colors for the avatar. The following demo generates the color based on the name of the person.
+
+{{"demo": "pages/components/avatars/BackgroundLetterAvatars.js"}}
+
 ## Tamanhos
 
 Você pode alterar o tamanho do avatar com as propriedades CSS  `height` e `width`.

@@ -8,8 +8,8 @@ A principal diferença entre o lab e o core (núcleo) é como os componentes sã
 
 Para que um componente esteja pronto para ir para o core, são considerados os seguintes critérios:
 
-- Ele precisa ser **utilizado**. A equipe do Material-UI usa o Google Analytics e outras métricas para avaliar o uso de cada componente. Um componente do lab com baixo uso significa que ainda não está totalmente funcional ou que há uma baixa demanda por ele.
-- Ele precisa atender critérios de **qualidade de código**, semelhante aos componentes do core. O componente não precisa ser perfeito para fazer parte do core, mas ele deve ser confiável o suficiente para que os desenvolvedores possam depender dele.
+- Ele precisa ser **utilizado**. The Material-UI team uses Google Analytics in the documentation (among other metrics) to evaluate the usage of each component. A lab component with low usage either means that it isn't fully working yet, or that there is low demand for it.
+- Ele precisa atender critérios de **qualidade de código**, semelhante aos componentes do core. It doesn't have to be perfect to be part of the core, but the component should be reliable enough that developers can depend on it.
   - Cada componente precisa de **definições de tipo**. Atualmente, não é necessário que um componente do lab seja tipado, mas ele precisará ser tipado para passar para o core.
   - Requer boa **cobertura de teste**. Atualmente, alguns dos componentes do lab não têm testes abrangentes.
 - O componente pode ser usado como **alavancagem** para incentivar os usuários a atualizar para a versão mais recente? Quanto menos fragmentada a comunidade, melhor.

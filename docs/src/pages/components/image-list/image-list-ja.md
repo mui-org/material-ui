@@ -9,51 +9,51 @@ githubLabel: 'component: ImageList'
 
 <p class="description">グリッドリストは、整理されたグリッドで画像のコレクションを表示します。</p>
 
-[グリッドリスト](https://material.io/design/components/image-lists.html) は、繰り返しパターンの項目の集まりを表します。 それらは、保持するコンテンツの視覚的理解を改善するのに役立ちます。
+画像リストは、繰り返しパターンの項目の集まりを表します。 それらは、保持するコンテンツの視覚的理解を改善するのに役立ちます。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## 画像のみのGrid list
 
-Standard image lists are best for items of equal importance. They have a uniform container size, ratio, and spacing.
+標準的な画像リストは、同じ重要度の項目のリストに最適です。 均一なコンテナーの大きさ、比率、および間隔を持ちます。
 
 {{"demo": "pages/components/image-list/StandardImageList.js"}}
 
-## タイトルバー付きのGrid list
+## ステッチ状の(Quilted)画像リスト
 
-Quilted image lists emphasize certain items over others in a collection. They create hierarchy using varied container sizes and ratios.
+ステッチ状の画像リスト特定のアイテムをコレクション内の他のアイテムより強調します。 さまざまなコンテナサイズと比率によって階層構造が作られます。
 
 {{"demo": "pages/components/image-list/QuiltedImageList.js"}}
 
-## Single line Grid list 単一行グリッドリスト
+## 織り込み(Woven)画像リスト
 
-Woven image lists use alternating container ratios to create a rhythmic layout. A woven image list is best for browsing peer content.
+織り込みイメージリストでは、交互のコンテナ比を使用して律動的なレイアウトを作成します。 織り込み画像リストは、ペアのコンテンツを閲覧するのに最適です。
 
 {{"demo": "pages/components/image-list/WovenImageList.js"}}
 
-## 高度なグリッドリスト
+## 積み上げ(Masonary)画像リスト
 
-Masonry image lists use dynamically sized container heights that reflect the aspect ratio of each image. This image list is best used for browsing uncropped peer content.
+積み上げ画像リストは、各画像のアスペクト比を反映した動的なコンテナの高さを使用します。 この画像リストは、トリミングされていないペアのコンテンツ閲覧に最適です。
 
 {{"demo": "pages/components/image-list/MasonryImageList.js"}}
 
-## Image list with title bars
+## タイトルバー付き画像リスト
 
 この例は、 `ImageListItemBar` を使用して、各 `ImageListItem`オーバーレイを追加する方法を示しています。 オーバーレイには、 `title`, `subtitle` および副次的アクション例えば`IconButton`を含めることができます。
 
 {{"demo": "pages/components/image-list/TitlebarImageList.js"}}
 
-### Title bar below image (standard)
+### 画像の下にタイトルバー（標準）
 
-The title bar can be placed below the image.
+タイトルバーは画像の下に配置できます。
 
 {{"demo": "pages/components/image-list/TitlebarBelowImageList.js"}}
 
-### Title bar below image (masonry)
+### 画像の下にタイトルバー（積み上げ）
 
 {{"demo": "pages/components/image-list/TitlebarBelowMasonryImageList.js"}}
 
-## Custom image list
+## カスタム画像リスト
 
 タイルには、上部にカスタムのタイトルバーがあり、カスタムのグラデーション`titleBackground`があります。 セカンダリアクション `IconButton` は左側に配置されます。 タイルには、上部にカスタムのタイトルバーがあり、カスタムのグラデーション`titleBackground`があります。
 

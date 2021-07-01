@@ -6,7 +6,7 @@ githubLabel: 'component: Badge'
 
 # Badge
 
-<p class="description">バッジは、その子供の右上に小さなバッジを生成します。</p>
+<p class="description">バッジは、その子要素の右上に小さなバッジを生成します。</p>
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -18,7 +18,7 @@ githubLabel: 'component: Badge'
 
 ## Customized badges （カスタマイズされたバッジ）
 
-コンポーネントのカスタマイズ例を次に示します。 詳細については、 [オーバーライドドキュメントページ](/customization/how-to-customize/)ご覧ください。
+コンポーネントのカスタマイズ例を次に示します。 詳細については、 [オーバーライドについてのドキュメント](/customization/how-to-customize/) を参照してください。
 
 {{"demo": "pages/components/badges/CustomizedBadges.js"}}
 
@@ -46,7 +46,7 @@ BadgeContentが0の場合、バッジは自動的に非表示になります。 
 
 ## バッジの重複
 
-`オーバーラップ` プロパティを使用して、ラップされた要素の角を基準にしてバッジを配置できます。
+`overlap` プロパティを使用して、ラップされた要素の角を基準にしてバッジを配置できます。
 
 {{"demo": "pages/components/badges/BadgeOverlap.js"}}
 
@@ -56,6 +56,18 @@ BadgeContentが0の場合、バッジは自動的に非表示になります。 
 
 {{"demo": "pages/components/badges/BadgeAlignment.js", "hideToolbar": true}}
 
-## Unstyled badge
+## Unstyled
+
+The badge also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import BadgeUnstyled from '@material-ui/unstyled/BadgeUnstyled';
+```
 
 {{"demo": "pages/components/badges/UnstyledBadge.js"}}
+
+## アクセシビリティ
+
+You can't rely on the content of the badge to be announced correctly. You should provide a full description, for instance, with `aria-label`:
+
+{{"demo": "pages/components/badges/AccessibleBadges.js"}}

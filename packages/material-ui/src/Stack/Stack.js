@@ -31,6 +31,7 @@ function joinChildren(children, separator) {
   }, []);
 }
 
+// Duplicated with Grid.js
 function resolveBreakpointValues({ values, base }) {
   const keys = Object.keys(base);
 

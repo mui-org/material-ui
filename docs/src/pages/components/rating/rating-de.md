@@ -1,5 +1,5 @@
 ---
-title: React Rating component
+title: React Rating Komponente
 components: Bewertung
 githubLabel: 'component: Rating'
 waiAria: 'https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating'
@@ -7,15 +7,15 @@ waiAria: 'https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating'
 
 # Bewertung
 
-<p class="description">Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.</p>
+<p class="description">Bewertungen geben Einblicke in die Meinungen und Erfahrungen anderer und können es dem Benutzer ermöglichen, eine eigene Bewertung abzugeben.</p>
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Basic rating
+## Grundbewertung
 
 {{"demo": "pages/components/rating/BasicRating.js"}}
 
-## Rating precision
+## Bewertungspräzision
 
 The rating can display any float number with the `value` prop. Use the `precision` prop to define the minimum increment value change allowed.
 
@@ -23,21 +23,27 @@ The rating can display any float number with the `value` prop. Use the `precisio
 
 ## Hover feedback
 
-You can display a label on hover to help the user pick the correct rating value. Die Demo verwendet die `onChangeActive` Prop.
+Sie können ein Etikett mit dem Mauszeiger anzeigen, um dem Benutzer bei der Auswahl des richtigen Bewertungswerts zu helfen. Die Demo verwendet die `onChangeActive` Prop.
 
 {{"demo": "pages/components/rating/HoverRating.js"}}
 
 ## Größen
 
-For larger or smaller ratings use the `size` prop.
+Für Größeren oder kleinerem Bewertungen benutze `size` prop.
 
 {{"demo": "pages/components/rating/RatingSize.js"}}
 
-## Customized rating
+## Benutzerdefinierte Bewertung
 
 Hier einige Beispiele zum Anpassen der Komponente. Mehr dazu erfahren Sie auf der [Überschreibungsdokumentationsseite](/customization/how-to-customize/).
 
 {{"demo": "pages/components/rating/CustomizedRating.js"}}
+
+## Radio group
+
+The rating is implemented with a radio group, set `highlightSelectedOnly` to restore the natural behavior.
+
+{{"demo": "pages/components/rating/RadioGroupRating.js"}}
 
 ## Barrierefreiheit
 

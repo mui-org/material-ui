@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import Table, { tableClasses as classes } from '@material-ui/core/Table';
 import TableContext from './TableContext';
 
 describe('<Table />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(
     <Table>
@@ -16,7 +15,6 @@ describe('<Table />', () => {
       classes,
       inheritComponent: 'table',
       render,
-      mount,
       muiName: 'MuiTable',
       testVariantProps: { variant: 'foo' },
       refInstanceof: window.HTMLTableElement,

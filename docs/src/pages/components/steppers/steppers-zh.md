@@ -68,7 +68,7 @@ materialDesign: https://material.io/archive/guidelines/components/steppers.html
 
 ### 文本
 
-The content of a step is unmounted when closed. If you need to make the content available to search engines or render expensive component trees inside your modal while optimizing for interaction responsiveness it might be a good idea to keep the step mounted with:
+步骤内容将在关闭时自动卸载。 若您需要提供内容给搜索引擎，亦或是在您的模态框内渲染复杂的组件树，同时还要达到最佳的优化性能，您一般需要以下代码来装载模态框：
 
 ```jsx
 <StepContent TransitionProps={{ unmountOnExit: false }} />

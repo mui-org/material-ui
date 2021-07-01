@@ -7,14 +7,10 @@
     "loading": "If <code>true</code>, the loading indicator is shown.",
     "loadingIndicator": "Element placed before the children if the button is in loading state.",
     "loadingPosition": "The loading indicator can be positioned on the start, end, or the center of the button.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": { "description": "Styles applied to the root element." },
-    "label": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the span element that wraps the children"
-    },
     "text": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
@@ -218,11 +214,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the startIcon element",
       "conditions": "<code>loading={true}</code> and <code>loadingPosition=\"start\"</code>"
-    },
-    "labelLoadingCenter": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the label element",
-      "conditions": "<code>loading={true}</code> and <code>loadingPosition=\"center\"</code>"
     }
   }
 }

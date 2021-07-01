@@ -4,7 +4,7 @@ import { Theme } from '..';
 
 export interface NativeSelectInputProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   disabled?: boolean;
-  IconComponent?: React.ElementType;
+  IconComponent: React.ElementType;
   inputRef?: React.Ref<HTMLSelectElement>;
   variant?: 'standard' | 'outlined' | 'filled';
   sx?: SxProps<Theme>;

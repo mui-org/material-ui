@@ -2,32 +2,33 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "This prop isn&#39;t supported. Use the <code>component</code> prop if you need to change the children structure.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "icon": "The icon element.",
     "label": "The label element.",
     "showLabel": "If <code>true</code>, the <code>BottomNavigationAction</code> will show its label. By default, only the selected <code>BottomNavigationAction</code> inside <code>BottomNavigation</code> will show its label.<br>The prop defaults to the value (<code>false</code>) inherited from the parent BottomNavigation component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "You can provide your own value. Otherwise, we fallback to the child position index."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "selected": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "selected"
     },
     "iconOnly": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>showLabel={false}</code> and not selected"
     },
     "wrapper": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the span element that wraps the icon and label"
     },
     "label": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the label's span element"
     }
   }

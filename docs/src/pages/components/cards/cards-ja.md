@@ -1,5 +1,5 @@
 ---
-title: React Card component
+title: React Card コンポーネント
 components: Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Collapse, Paper
 githubLabel: 'component: Card'
 materialDesign: https://material.io/components/cards
@@ -9,17 +9,17 @@ materialDesign: https://material.io/components/cards
 
 <p class="description">Cardは一つの主題に関してのコンテンツとアクションを含みます。</p>
 
-[Card](https://material.io/design/components/cards.html) は、1つのトピックに関するコンテンツとアクションを表示する面です。
+Card は、1つのトピックに関するコンテンツとアクションを表示する面です。
 
 関連する実行可能な情報を容易にスキャンできる必要があります。 テキストや画像などの要素は、階層を明確に示すように配置する必要があります。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## シンプルなCard
+## Basic card
 
 Cardは複数のアクション、UIコントロール、およびオーバーフローメニューをサポートできますが制限してください。Cardがより複雑で詳細な情報への入り口であることを忘れてはいけません。
 
-{{"demo": "pages/components/cards/SimpleCard.js", "bg": true}}
+{{"demo": "pages/components/cards/BasicCard.js", "bg": true}}
 
 ### Outlined Card
 
@@ -29,7 +29,7 @@ Set `variant="outlined"` to render an outlined card.
 
 ## 複雑なインタラクション
 
-デスクトップでは、Cardの内容が展開できる可能性があります。 (Click the downward chevron to view the recipe.)
+デスクトップでは、Cardの内容が展開できる可能性があります。 (レシピを見るには下向きの矢印をクリックしてください。)
 
 {{"demo": "pages/components/cards/RecipeReviewCard.js", "bg": true}}
 
@@ -39,19 +39,19 @@ Set `variant="outlined"` to render an outlined card.
 
 {{"demo": "pages/components/cards/MediaCard.js", "bg": true}}
 
-デフォルトでは、メディアを表示する為に `<div>` 要素と *背景画像* の組み合わせを使用します。 It can be problematic in some situations, for example, you might want to display a video or a responsive image. そのような場合は `component` プロパティを使用します。
+デフォルトでは、メディアを表示する為に `<div>` 要素と *背景画像* の組み合わせを使用します。 しかし、これは例えばビデオやレスポンシブ画像を表​​示したい場合など、状況によっては問題が発生する可能性があります。 そのような場合は `component` プロパティを使用します。
 
 {{"demo": "pages/components/cards/ImgMediaCard.js", "bg": true}}
 
-> `component="img"`の場合、CardMediaはイメージのセンタリングを`object-fit`に依存します。 It's not supported by IE11.
+> `component="img"`の場合、CardMediaはイメージのセンタリングを`object-fit`に依存します。 これはIE11ではサポートされていません。
 
-## Primary action
+## プライマリーアクション
 
-Often a card allow users to interact with the entirety of its surface to trigger its main action, be it an expansion, a link to another screen or some other behavior. The action area of the card can be specified by wrapping its contents in a `CardActionArea` component.
+よくそのカード全体をクリックすることによって、カードの拡張、別の画面へのリンク、その他の動作などのメインアクションを実行できるようにすることがあります。。 そのようなとき、`CardActionArea` コンポーネントでその内容をラップすることでカードのアクション領域を指定できます。
 
 {{"demo": "pages/components/cards/ActionAreaCard.js", "bg": true}}
 
-A card can also offer supplemental actions which should stand detached from the main action area in order to avoid event overlap.
+カードは、イベントの重複を避けるために、メインアクションエリアから離れている補足アクションを提供することもできます。
 
 {{"demo": "pages/components/cards/MultiActionAreaCard.js", "bg": true}}
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import prism from 'docs/src/modules/utils/prism';
+import prism from '@material-ui/markdown/prism';
 import MarkdownElement from './MarkdownElement';
 
 const HighlightedCode = React.forwardRef(function HighlightedCode(props, ref) {

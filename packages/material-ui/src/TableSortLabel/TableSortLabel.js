@@ -26,10 +26,7 @@ const TableSortLabelRoot = styled(ButtonBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.active && styles.active),
-    };
+    return [styles.root, styleProps.active && styles.active];
   },
 })(({ theme }) => ({
   /* Styles applied to the root element. */
@@ -62,10 +59,7 @@ const TableSortLabelIcon = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.icon,
-      ...styles[`iconDirection${capitalize(styleProps.direction)}`],
-    };
+    return [styles.icon, styles[`iconDirection${capitalize(styleProps.direction)}`]];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the icon component. */

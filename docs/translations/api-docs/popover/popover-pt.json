@@ -6,26 +6,26 @@
     "anchorOrigin": "This is the point on the anchor where the popover&#39;s <code>anchorEl</code> will attach to. This is not used when the anchorReference is &#39;anchorPosition&#39;.<br>Options: vertical: [top, center, bottom]; horizontal: [left, center, right].",
     "anchorPosition": "This is the position that may be used to set the position of the popover. The coordinates are relative to the application&#39;s client area.",
     "anchorReference": "This determines which anchor prop to refer to to set the position of the popover.",
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "container": "A HTML element, component instance, or function that returns either. The <code>container</code> will passed to the Modal component.<br>By default, it uses the body of the anchorEl&#39;s top-level document object, so it&#39;s simply <code>document.body</code> most of the time.",
     "elevation": "The elevation of the popover.",
-    "getContentAnchorEl": "This function is called in order to retrieve the content anchor element. It&#39;s the opposite of the <code>anchorEl</code> prop. The content anchor element should be an element inside the popover. It&#39;s used to correctly scroll and set the position of the popover. The positioning strategy tries to make the content anchor element just above the anchor element.",
     "marginThreshold": "Specifies how close to the edge of the window the popover can appear.",
     "onClose": "Callback fired when the component requests to be closed. The <code>reason</code> parameter can optionally be used to control the response to <code>onClose</code>.",
     "open": "Control the popup` open state.",
     "PaperProps": "Props applied to the <a href=\"/api/paper/\"><code>Paper</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "transformOrigin": "This is the point on the popover which will attach to the anchor&#39;s origin.<br>Options: vertical: [top, center, bottom, x(px)]; horizontal: [left, center, right, x(px)].",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "TransitionComponent": "O componente usado para a transição. <a href=\"/components/transitions/#transitioncomponent-prop\">Siga este guia</a> para saber mais sobre os requisitos para este componente.",
     "transitionDuration": "Set to &#39;auto&#39; to automatically calculate transition time based on height.",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
+    "TransitionProps": "Propriedades aplicadas ao elemento de transição. Por padrão, o elemento é baseado neste componente <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "paper": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Paper component"
     }
   }

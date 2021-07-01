@@ -4,13 +4,14 @@ import { EOL } from 'os';
 import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './theme-spacing-api';
+import readFile from '../util/readFile';
 
 function trim(str) {
   return str.replace(/^\s+|\s+$/, '').replace(/\r*\n/g, EOL);
 }
 
 function read(fileName) {
-  return fs.readFileSync(path.join(__dirname, fileName), 'utf8').toString();
+  return readFile(path.join(__dirname, fileName));
 }
 
 describe('@material-ui/codemod', () => {

@@ -14,17 +14,7 @@ githubLabel: 'component: CssBaseline'
 Tal vez tengas familiaridad con [normalize.css](https://github.com/necolas/normalize.css), una colección de atributos de estilos normalizados para elementos HTML.
 
 ```jsx
-import * as React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-export default function MyApp() {
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* The rest of your application */}
-    </React.Fragment>
-  );
-}
+Reinicio global
 ```
 
 ## Scoping on children
@@ -63,7 +53,23 @@ The `<html>` and `<body>` elements are updated to provide better page-wide defau
 
 ### Scrollbars
 
-In dark mode, the colors of the scrollbars are customized to provide a better contrast.
+In dark mode, the colors of the scrollbars are customized to provide a better contrast. Add this code to your theme (for dark mode).
+
+```jsx
+import darkScrollbar from '@material-ui/core/darkScrollbar';
+
+const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: theme.palette.mode === 'dark' ? darkScrollbar() : null,
+      },
+    },
+  },
+});
+```
+
+This website uses `darkScrollbar` when dark mode is enabled. Be aware, however, that using this utility (and customizing `-webkit-scrollbar`) forces MacOS to always show the scrollbar.
 
 ### Tipografía
 

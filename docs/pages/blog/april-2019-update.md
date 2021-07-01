@@ -16,7 +16,7 @@ Here are the most significant improvements in April:
   Supporting these TypeScript demos has one important implication, it forces us to have working TypeScript definitions ✨.
 
 - 🎀 We have migrated a large chunk of our components from classes to hooks. **@joshwooding** has lead the effort. We will explain why in the v4 release blog post.
-- 📐 We have updated our components to better match the Material Design specification
+- 📐 We have updated our components to better match the Material Design guidelines
   (Snackbar, List, Checkbox, Radio & Switch).
 - 🎁 We have added a demo for building a [TransferList](/components/transfer-list/) component.
 

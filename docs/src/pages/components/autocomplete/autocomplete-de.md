@@ -52,7 +52,7 @@ However, you can use different structures by providing a `getOptionLabel` prop.
 
 ### Spielwiese
 
-Die folgenden Beispiele demonstrieren je eine Funktion der Autocomplete-Komponente.
+Each of the following examples demonstrates one feature of the Autocomplete component.
 
 {{"demo": "pages/components/autocomplete/Playground.js"}}
 
@@ -62,14 +62,14 @@ Wählen Sie eines der 248 Länder.
 
 {{"demo": "pages/components/autocomplete/CountrySelect.js"}}
 
-### Controllable states
+### Controlled states
 
 The component has two states that can be controlled:
 
 1. the "value" state with the `value`/`onChange` props combination. This state represents the value selected by the user, for instance when pressing <kbd class="key">Enter</kbd>.
 2. the "input value" state with the `inputValue`/`onInputChange` props combination. This state represents the value displayed in the textbox.
 
-> ⚠️ These two state are isolated, they should be controlled independently.
+> ⚠️ These two states are isolated, they should be controlled independently.
 
 {{"demo": "pages/components/autocomplete/ControllableStates.js"}}
 
@@ -110,7 +110,7 @@ You can group the options with the `groupBy` prop. If you do so, make sure that 
 
 ## `useAutocomplete`
 
-For advanced customization use cases, we expose a headless `useAutocomplete()` hook. It accepts almost the same options as the Autocomplete component minus all the props related to the rendering of JSX. The Autocomplete component uses this hook internally.
+For advanced customization use cases, a headless `useAutocomplete()` hook is exposed. It accepts almost the same options as the Autocomplete component minus all the props related to the rendering of JSX. The Autocomplete component is built on this hook.
 
 ```jsx
 import useAutocomplete from '@material-ui/core/useAutocomplete';
@@ -226,14 +226,14 @@ import { createFilterOptions } from '@material-ui/core/Autocomplete';
 
 #### Parameter
 
-1. `config` (*Object* [optional]):
+1. `config` (_object_ [optional]):
 
-- `config.ignoreAccents` (*Boolean* [optional]): Defaults to `true`. Remove diacritics.
-- `config.ignoreCase` (*Boolean* [optional]): Defaults to `true`. Alles in Kleinbuchstaben.
-- `config.limit` (*Number* [optional]): Default to null. Limit the number of suggested options to be shown. For example, if `config.limit` is `100`, only the first `100` matching options are shown. It can be useful if a lot of options match and virtualization wasn't set up.
+- `config.ignoreAccents` (_bool_ [optional]): Defaults to `true`. Remove diacritics.
+- `config.ignoreCase` (_bool_ [optional]): Defaults to `true`. Alles in Kleinbuchstaben.
+- `config.limit` (*number* [optional]): Default to null. Limit the number of suggested options to be shown. For example, if `config.limit` is `100`, only the first `100` matching options are shown. It can be useful if a lot of options match and virtualization wasn't set up.
 - `config.matchFrom` (*'any' | 'start'* [optional]): Defaults to `'any'`.
-- `config.stringify` (*Func* [optional]): Controls how an option is converted into a string so that it can be matched against the input text fragment.
-- `config.trim` (*Boolean* [optional]): Standardeinstellung ist `false`. Abschließende Leerzeichen entfernen.
+- `config.stringify` (*func* [optional]): Controls how an option is converted into a string so that it can be matched against the input text fragment.
+- `config.trim` (_bool_ [optional]): Defaults to `false`. Abschließende Leerzeichen entfernen.
 
 #### Rückgabewerte
 
@@ -279,7 +279,7 @@ If you would like to prevent the default key handler behavior, you can set the e
   onKeyDown={(event) => {
     if (event.key === 'Enter') {
       // Prevent's default 'Enter' behavior.
-      event.defaultMuiPrevented = false;
+      event.defaultMuiPrevented = true;
       // your handler code
     }
   }}
@@ -290,9 +290,9 @@ If you would like to prevent the default key handler behavior, you can set the e
 
 ### autocomplete/autofill
 
-Die Browser haben Heuristiken, um den Benutzern zu helfen, die Formulareingaben auszufüllen. Es kann jedoch die UX der Komponente negativ beeinflussen.
+Browsers have heuristics to help the user fill in form inputs. However, this can harm the UX of the component.
 
-By default, the component disables the **autocomplete** feature (remembering what the user has typed for a given field in a previous session) with the `autoComplete="off"` attribute. Google Chrome does not currently support this attribute setting ([Issue 587466](https://bugs.chromium.org/p/chromium/issues/detail?id=587466)). A possible workaround is to remove the `id` to have the component generate a random one.
+By default, the component disables the input **autocomplete** feature (remembering what the user has typed for a given field in a previous session) with the `autoComplete="off"` attribute. Google Chrome does not currently support this attribute setting ([Issue 587466](https://bugs.chromium.org/p/chromium/issues/detail?id=587466)). A possible workaround is to remove the `id` to have the component generate a random one.
 
 In addition to remembering past entered values, the browser might also propose **autofill** suggestions (saved login, address, or payment details). Falls Sie die automatische Füllung vermeiden möchten, können Sie Folgendes versuchen:
 

@@ -1,7 +1,7 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
+    "children": "O conteúdo do componente.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
     "name": "The name used to reference the value of the control. If you don&#39;t provide this prop, it falls back to a randomly generated name.",
     "onChange": "Callback fired when a radio button is selected.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (string).",

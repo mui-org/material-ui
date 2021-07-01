@@ -1,18 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import CardMedia, { cardMediaClasses as classes } from '@material-ui/core/CardMedia';
 
 describe('<CardMedia />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<CardMedia image="/fake.png" />, () => ({
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     muiName: 'MuiCardMedia',
     refInstanceof: window.HTMLDivElement,
     testComponentPropWith: 'span',

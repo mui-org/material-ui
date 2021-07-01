@@ -15,9 +15,9 @@ Things to know when using the `Popover` component:
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
-## Simple Popover
+## Basic Popover
 
-{{"demo": "pages/components/popover/SimplePopover.js" }}
+{{"demo": "pages/components/popover/BasicPopover.js" }}
 
 ## Anchor playground
 
@@ -27,13 +27,13 @@ Use the radio buttons to adjust the `anchorOrigin` and `transformOrigin` positio
 
 ## Mouse over interaction
 
-This demonstrates how to use the `Popover` component to implement a popover behavior based on the mouse over event.
+This demo demonstrates how to use the `Popover` component and the mouseover event to achieve popover behavior.
 
 {{"demo": "pages/components/popover/MouseOverPopover.js"}}
 
 ## Дополнительные проекты
 
-Для более сложных вариантов использования вы можете воспользоваться:
+For more advanced use cases, you might be able to take advantage of:
 
 ### PopupState helper
 

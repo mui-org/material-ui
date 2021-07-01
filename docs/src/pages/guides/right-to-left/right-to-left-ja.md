@@ -12,6 +12,20 @@ Make sure the `dir` attribute is set on the body, otherwise native components wi
 <body dir="rtl">
 ```
 
+As an alternative to the above, you can also wrap your application in an element with the `dir` attribute:
+
+```jsx
+function App() {
+  return (
+    <div dir="rtl">
+      <MyComponent />
+    </div>
+  );
+}
+```
+
+This can be helpful for creating components to toggle language settings in the live application.
+
 ### 2. テーマ
 
 Set the direction in your custom theme:
@@ -51,17 +65,15 @@ Once you have created a new JSS instance with the plugin, you need to make it av
 ```jsx
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 // Configure JSS
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+const jss = create({
+  plugins: [...jssPreset().plugins, rtl()],
+});
 
 function RTL(props) {
-  return (
-    <StylesProvider jss={jss}>
-      {props.children}
-    </StylesProvider>
-  );
+  return <StylesProvider jss={jss}>{props.children}</StylesProvider>;
 }
 ```
 

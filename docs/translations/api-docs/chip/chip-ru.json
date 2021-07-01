@@ -4,15 +4,16 @@
     "avatar": "The Avatar for the Card Header.",
     "children": "This prop isn&#39;t supported. Use the <code>component</code> prop if you need to change the children structure.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "clickable": "If <code>true</code>, the chip will appear clickable, and will raise when pressed, even if the onClick prop is not defined. If false, the chip will not be clickable, even if onClick prop is defined. This can be used, for example, along with the component prop to indicate an anchor Chip is clickable. Note: this controls the UI and does not affect the onClick event.",
+    "clickable": "If <code>true</code>, the chip will appear clickable, and will raise when pressed, even if the onClick prop is not defined. If <code>false</code>, the chip will not appear clickable, even if onClick prop is defined. This can be used, for example, along with the component prop to indicate an anchor Chip is clickable. Note: this controls the UI and does not affect the onClick event.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "deleteIcon": "Override the default delete icon element. Shown only if <code>onDelete</code> is set.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "Если <code>true</code>, компонент отключен.",
     "icon": "Icon element.",
     "label": "The content of the component.",
     "onDelete": "Callback fired when the delete icon is clicked. If set, the delete icon will be shown.",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {
@@ -23,6 +24,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>size=\"small\"</code>"
+    },
+    "sizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code>"
     },
     "colorPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -98,6 +104,11 @@
       "nodeName": "the avatar element",
       "conditions": "<code>size=\"small\"</code>"
     },
+    "avatarMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the avatar element",
+      "conditions": "<code>size=\"medium\"</code>"
+    },
     "avatarColorPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the avatar element",
@@ -116,6 +127,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the icon element",
       "conditions": "<code>size=\"small\"</code>"
+    },
+    "iconMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the icon element",
+      "conditions": "<code>size=\"medium\"</code>"
     },
     "iconColorPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -136,6 +152,11 @@
       "nodeName": "the label `span` element",
       "conditions": "<code>size=\"small\"</code>"
     },
+    "labelMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the label `span` element",
+      "conditions": "<code>size=\"medium\"</code>"
+    },
     "deleteIcon": {
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the deleteIcon element"
@@ -144,6 +165,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the deleteIcon element",
       "conditions": "<code>size=\"small\"</code>"
+    },
+    "deleteIconMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the deleteIcon element",
+      "conditions": "<code>size=\"medium\"</code>"
     },
     "deleteIconColorPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

@@ -148,39 +148,39 @@ export default function ScrollPlayground() {
   const classes = useStyles();
 
   const jsx = `
-  <Popper
-    placement="${placement}"
-    disablePortal={${disablePortal}}
-    modifiers={[
-      {
-          name: 'flip',
-          enabled: ${flip.enabled},
-          options: {
-            altBoundary: ${flip.altBoundary},
-            rootBoundary: '${flip.rootBoundary}',
-            padding: 8
-          }
+<Popper
+  placement="${placement}"
+  disablePortal={${disablePortal}}
+  modifiers={[
+    {
+      name: 'flip',
+      enabled: ${flip.enabled},
+      options: {
+        altBoundary: ${flip.altBoundary},
+        rootBoundary: '${flip.rootBoundary}',
+        padding: 8,
       },
-      {
-        name: 'preventOverflow',
-        enabled: ${preventOverflow.enabled},
-        options: {
-          altAxis: ${preventOverflow.altAxis},
-          altBoundary: ${preventOverflow.altBoundary},
-          tether: ${preventOverflow.tether},
-          rootBoundary: ${preventOverflow.rootBoundary},
-          padding: 8
-        }
+    },
+    {
+      name: 'preventOverflow',
+      enabled: ${preventOverflow.enabled},
+      options: {
+        altAxis: ${preventOverflow.altAxis},
+        altBoundary: ${preventOverflow.altBoundary},
+        tether: ${preventOverflow.tether},
+        rootBoundary: '${preventOverflow.rootBoundary}',
+        padding: 8,
       },
-      {
-        name: 'arrow',
-        enabled: ${arrow},
-        options: {
-            element: arrowRef,
-        }
+    },
+    {
+      name: 'arrow',
+      enabled: ${arrow},
+      options: {
+        element: arrowRef,
       },
-    ]}
-  >
+    },
+  ]}
+>
   `;
   const id = open ? 'scroll-playground' : null;
 

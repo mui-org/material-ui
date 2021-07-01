@@ -1,16 +1,17 @@
 {
-  "componentDescription": "A simple wrapper to apply <code>List</code> styles to an <code>Avatar</code>.",
+  "componentDescription": "A simple wrapper to apply `List` styles to an `Avatar`.",
   "propDescriptions": {
     "children": "The content of the component – normally <code>Avatar</code>.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details."
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "alignItemsFlexStart": {
       "description": "Styles applied to {{nodeName}} when {{conditions}}.",
-      "nodeName": "the root element",
+      "nodeName": "o elemento raiz",
       "conditions": "the parent <code>ListItem</code> uses <code>alignItems=\"flex-start\"</code>"
     }
   }

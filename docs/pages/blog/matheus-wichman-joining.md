@@ -25,4 +25,4 @@ At the current pace, we will soon open new positions.
 You can [follow us on Twitter](https://twitter.com/MaterialUI) to hear about upcoming positions.
 These new roles will help accelerate our mission, strengthen our existing offering, and initiate a new vertical.
 
-We couldn’t be more excited to have Matheus on the team!
+We couldn't be more excited to have Matheus on the team!

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box } from '@material-ui/system';
+import { Box, Theme } from '@material-ui/system';
 
 interface TestProps {
   test?: string;
@@ -46,4 +46,5 @@ function GapTest() {
 function ComponentPropTest() {
   <Box component="img" src="https://material-ui.com/" alt="Material UI" />;
   <Box component={Test} test="Test string" />;
+  <Box maxWidth={(theme: Theme) => theme.breakpoints.values.sm} />;
 }

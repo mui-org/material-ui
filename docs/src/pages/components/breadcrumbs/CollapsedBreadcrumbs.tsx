@@ -13,16 +13,16 @@ export default function CollapsedBreadcrumbs() {
   return (
     <div role="presentation" onClick={handleClick}>
       <Breadcrumbs maxItems={2} aria-label="breadcrumb">
-        <Link color="inherit" href="#">
+        <Link underline="hover" color="inherit" href="#">
           Home
         </Link>
-        <Link color="inherit" href="#">
+        <Link underline="hover" color="inherit" href="#">
           Catalog
         </Link>
-        <Link color="inherit" href="#">
+        <Link underline="hover" color="inherit" href="#">
           Accessories
         </Link>
-        <Link color="inherit" href="#">
+        <Link underline="hover" color="inherit" href="#">
           New Collection
         </Link>
         <Typography color="text.primary">Belts</Typography>

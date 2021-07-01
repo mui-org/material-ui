@@ -2,7 +2,6 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
 import {
-  createMount,
   describeConformanceV5,
   act,
   createClientRender,
@@ -45,7 +44,6 @@ describe('<Tooltip />', () => {
     });
   });
 
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(
@@ -56,7 +54,6 @@ describe('<Tooltip />', () => {
       classes,
       inheritComponent: 'button',
       render,
-      mount,
       muiName: 'MuiTooltip',
       refInstanceof: window.HTMLButtonElement,
       testRootOverrides: { slotName: 'popper', slotClassName: classes.popper },

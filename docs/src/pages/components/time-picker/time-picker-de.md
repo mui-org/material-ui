@@ -1,6 +1,6 @@
 ---
 title: React Time Picker component
-components: TimePicker
+components: DesktopTimePicker, MobileTimePicker, StaticTimePicker, TimePicker, ClockPicker
 githubLabel: 'component: TimePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/time-pickers
@@ -34,40 +34,52 @@ function App() {
 
 ## Basic usage
 
-The time picker will automatically adjust to the locale's time setting, i.e. the 12-hour or 24-hour format. This can be controlled with `ampm` prop.
+The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop.
 
 {{"demo": "pages/components/time-picker/BasicTimePicker.js"}}
 
-## Lokalisierung
+## Static mode
 
-Use `LocalizationProvider` to change the date-engine locale that is used to render the time picker. Note that `am/pm` setting is switched automatically:
+It's possible to render any time picker inline. This will enable building custom popover/modal containers.
 
-{{"demo": "pages/components/time-picker/LocalizedTimePicker.js"}}
+{{"demo": "pages/components/time-picker/StaticTimePickerDemo.js", "bg": true}}
 
 ## Responsiveness
 
 The time picker component is designed and optimized for the device it runs on.
 
-- The "Mobile" version works best for touch devices and small screens.
-- The "Desktop" version works best for mouse devices and large screens.
+- The `MobileTimePicker` component works best for touch devices and small screens.
+- The `DesktopTimePicker` component works best for mouse devices and large screens.
 
-By default, the `TimePicker` component uses a `@media (pointer: fine)` media query to determine which version to use. This can be customized with the `desktopModeMediaQuery` prop.
+By default, the `TimePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. This can be customized with the `desktopModeMediaQuery` prop.
 
 {{"demo": "pages/components/time-picker/ResponsiveTimePickers.js"}}
+
+## Form props
+
+The time picker component can be disabled or read-only.
+
+{{"demo": "pages/components/time-picker/FormPropsTimePickers.js"}}
+
+## Lokalisierung
+
+Use `LocalizationProvider` to change the date-engine locale that is used to render the time picker. The time picker will automatically adjust to the locale's time setting, i.e. the 12-hour or 24-hour format. This can be controlled with `ampm` prop.
+
+{{"demo": "pages/components/time-picker/LocalizedTimePicker.js"}}
 
 ## Time validation
 
 {{"demo": "pages/components/time-picker/TimeValidationTimePicker.js"}}
 
-## Static mode
-
-It's possible to render any picker inline. This will enable building custom popover/modal containers.
-
-{{"demo": "pages/components/time-picker/StaticTimePickerDemo.js", "bg": true}}
-
 ## Landscape
 
 {{"demo": "pages/components/time-picker/StaticTimePickerLandscape.js", "bg": true}}
+
+## Sub-components
+
+Some lower-level sub-components (`ClockPicker`) are also exported. These are rendered without a wrapper or outer logic (masked input, date values parsing and validation, etc.).
+
+{{"demo": "pages/components/time-picker/SubComponentsTimePickers.js"}}
 
 ## Seconds
 

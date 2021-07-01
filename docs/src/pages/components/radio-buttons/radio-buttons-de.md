@@ -16,19 +16,39 @@ Bei Optionsschaltflächen sollte die am häufigsten verwendete Option standardm�
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## RadioGroup
+## Radio group
 
 `RadioGroup` ist ein hilfreicher Wrapper zur Gruppierung von `Optionsfelder` Komponenten, der eine einfachere API und den richtigen Zugriff der Tastatur auf die Gruppe bietet.
 
 {{"demo": "pages/components/radio-buttons/RadioButtonsGroup.js"}}
 
-To lay out the buttons horizontally, set the `row` prop: `<RadioGroup row />`.
+### Direction
+
+To lay out the buttons horizontally, set the `row` prop:
+
+{{"demo": "pages/components/radio-buttons/RowRadioButtonsGroup.js"}}
+
+### Controlled
+
+You can control the radio with the `value` and `onChange` props:
+
+{{"demo": "pages/components/radio-buttons/ControlledRadioButtonsGroup.js"}}
 
 ## Standalone radio buttons
 
 `Radio` can also be used standalone, without the RadioGroup wrapper.
 
 {{"demo": "pages/components/radio-buttons/RadioButtons.js"}}
+
+## Size
+
+Use the `size` prop or customize the font size of the svg icons to change the size of the radios.
+
+{{"demo": "pages/components/radio-buttons/SizeRadioButtons.js"}}
+
+## Farbe (Color)
+
+{{"demo": "pages/components/radio-buttons/ColorRadioButtons.js"}}
 
 ## Etikettenplatzierung
 
@@ -63,11 +83,11 @@ For advanced customization use cases, a `useRadioGroup()` hook is exposed. It re
 
 #### Rückgabewerte
 
-`value` (_Object_):
+`value` (_object_):
 
-- `value.name` (_String_ [optional]): The name used to reference the value of the control.
-- `value.onChange` (_Void_ [optional]): Callback fired when a radio button is selected.
-- `value.value` (_Any_ [optional]): Value of the selected radio button.
+- `value.name` (_string_ [optional]): The name used to reference the value of the control.
+- `value.onChange` (_func_ [optional]): Callback fired when a radio button is selected.
+- `value.value` (_any_ [optional]): Value of the selected radio button.
 
 #### Beispiel
 
@@ -85,7 +105,7 @@ For advanced customization use cases, a `useRadioGroup()` hook is exposed. It re
 - Wenn ein Label nicht verwendet werden kann, muss der Eingabekomponente ein Attribut direkt hinzugefügt werden. In diesem Fall können Sie das zusätzliche Attribut (z. B. `aria-label`, `aria-labelby`, `title`) über die Eigenschaft `inputProps` anwenden.
 
 ```jsx
-<RadioButton
+<Radio
   value="radioA"
   inputProps={{
     'aria-label': 'Radio A',

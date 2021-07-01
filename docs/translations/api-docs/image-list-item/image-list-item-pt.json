@@ -2,28 +2,39 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "While you can pass any node as children, the main use case is for an img.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "cols": "Width of the item in number of grid columns.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "rows": "Height of the item in number of grid rows."
+    "rows": "Height of the item in number of grid rows.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "img": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "an `img` element to ensure it covers the item"
     },
     "standard": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"standard\"</code>"
     },
     "woven": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"woven\"</code>"
+    },
+    "masonry": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"masonry\"</code>"
+    },
+    "quilted": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"quilted\"</code>"
     }
   }
 }

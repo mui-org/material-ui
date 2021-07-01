@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup, { avatarGroupClasses as classes } from '@material-ui/core/AvatarGroup';
 
 describe('<AvatarGroup />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(
     <AvatarGroup>
@@ -16,7 +15,6 @@ describe('<AvatarGroup />', () => {
       classes,
       inheritComponent: 'div',
       render,
-      mount,
       muiName: 'MuiAvatarGroup',
       refInstanceof: window.HTMLDivElement,
       testVariantProps: { max: 10, spacing: 'small', variant: 'square' },

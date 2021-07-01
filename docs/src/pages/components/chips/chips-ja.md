@@ -1,5 +1,5 @@
 ---
-title: React Chip component
+title: React Chip コンポーネント
 components: Chip
 githubLabel: 'component: Chip'
 materialDesign: https://material.io/components/chips
@@ -9,49 +9,81 @@ materialDesign: https://material.io/components/chips
 
 <p class="description">Chipsは、入力、属性、やアクションを表すコンパクトな要素です。</p>
 
-[Chips](https://material.io/design/components/chips.html) 使用すると、ユーザーは情報を入力したり、選択を行ったり、コンテンツをフィルター処理したり、アクションを起動したりできます。
+Chipを使用すると、情報の入力、選択、内容のフィルター、またはアクションのトリガーを行うことができます。
 
-ここで、スタンドアロンコンポーネントとして含まれているが、最も一般的な用途は、 何らかの形の入力ので、ここで示した挙動の一部はコンテキストに表示されません。
+ここで、スタンドアロンコンポーネントとして含まれていますが、最も一般的な用途は、 何らかの形の入力なので、ここで示した挙動の一部はコンテキストに表示されません。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Chip
+## Basic chip
 
-Chipsの例としてアバター画像やSVGアイコンや文字などがあります。
+The `Chip` component supports outlined and filled styling.
 
-- `onClick` プロパティが定義されたチップは、フォーカスの変更外観、 ホバー、およびクリックすることができます。
-- `onDelete` プロパティが定義されたチップは、ホバー時の外観を変更する削除 アイコンを表示します。
+{{"demo": "pages/components/chips/BasicChips.js"}}
 
-{{"demo": "pages/components/chips/Chips.js"}}
+## Chip actions
 
-### Outlined Chips
+You can use the following actions.
 
-Outlined chipsは代替スタイルを提供します。
+- Chips with the `onClick` prop defined change appearance on focus, hover, and click.
+- Chips with the `onDelete` prop defined will display a delete icon which changes appearance on hover.
 
-{{"デモ": "pages/components/chips/OutlinedChips.js"}}
+### Clickeable
 
-## Chip array
+{{"demo": "pages/components/chips/ClickeableChips.js"}}
 
-値の配列から複数のチップをレンダリングする例。 チップを削除すると、それがアレイから削除されます。 何のため、ことに注意してください `のonClick` プロパティが定義されていないchipはフォーカスされないだけでなく、 クリックされたか、触られた間、gaindepthもありません。
+### Deleteable
 
-{{"demo": "pages/components/chips/ChipsArray.js", "bg": true}}
+{{"demo": "pages/components/chips/DeleteableChips.js"}}
 
-## Small Chip
+### Clickeable and deleteable
+
+{{"demo": "pages/components/chips/ClickeableAndDeleteableChips.js"}}
+
+### Clickeable link
+
+{{"demo": "pages/components/chips/ClickeableLinkChips.js"}}
+
+### Custom delete icon
+
+{{"demo": "pages/components/chips/CustomDeleteIconChips.js"}}
+
+## Chip adornments
+
+You can add ornaments to the beginning of the component.
+
+Use the `avatar` prop to added a avatar or use the `icon` prop to added a icon.
+
+### Avatar chip
+
+{{"demo": "pages/components/chips/AvatarChips.js"}}
+
+### Icon chip
+
+{{"demo": "pages/components/chips/IconChips.js"}}
+
+## Color chip
+
+You can use the `color` prop to define a primary or secondary color.
+
+{{"demo": "pages/components/chips/ColorChips.js"}}
+
+## Sizes chip
 
 あなたは小さなチップを定義するために `サイズ` propsを使うことができます。
 
-### デフォルトのバリアント
+{{"demo": "pages/components/chips/SizesChips.js"}}
 
-{{"demo": "pages/components/chips/SmallChips.js"}}
+## Chip array
 
-### アウトライン化されたバリアント
+An example of rendering multiple chips from an array of values. チップを削除すると、それがアレイから削除されます。 Note that since no `onClick` prop is defined, the `Chip` can be focused, but does not gain depth while clicked or touched.
 
-{{"demo": "pages/components/chips/SmallOutlinedChips.js"}}
+{{"demo": "pages/components/chips/ChipsArray.js", "bg": true}}
 
-## Chip Playground
+## Chip playground
 
 {{"demo": "pages/components/chips/ChipsPlayground.js", "hideToolbar": true}}
 
 ## アクセシビリティ
 
-If the Chip is deletable or clickable then it is a button in tab order. When the Chip is focused (e.g. when tabbing) releasing (`keyup` event) `Backspace` or `Delete` will call the `onDelete` handler while releasing `Escape` will blur the Chip.
+チップが削除またはクリック可能な場合は、タブの順序でボタンになります。 When the Chip is focused (e.g. when tabbing) releasing (`keyup` event) `Backspace` or `Delete` will call the `onDelete` handler while releasing `Escape` will blur the Chip.

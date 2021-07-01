@@ -273,7 +273,6 @@ const ModalUnstyled = React.forwardRef(function ModalUnstyled(props, ref) {
           disableEnforceFocus={disableEnforceFocus}
           disableAutoFocus={disableAutoFocus}
           disableRestoreFocus={disableRestoreFocus}
-          getDoc={getDoc}
           isEnabled={isTopModal}
           open={open}
         >

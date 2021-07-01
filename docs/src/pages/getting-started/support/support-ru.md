@@ -1,4 +1,4 @@
-# Support
+# Поддержка
 
 <p class="description">From community help to premium critical business support, we're here to help.</p>
 

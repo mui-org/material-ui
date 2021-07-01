@@ -17,7 +17,7 @@ Material-UI fornece suporte de ícones de três maneiras:
 
 ## Ícones Material
 
-O Material Design padronizou mais de 1.100 ícones oficiais, cada um em cinco "temas" diferentes (veja abaixo). Para cada ícone SVG, exportamos o respectivo componente React do pacote @material-ui/icons. Você pode [pesquisar na lista completa destes ícones](/components/material-icons/).
+Google has created over 1,700 official Material icons, each in five different "themes" (see below). Para cada ícone SVG, exportamos o respectivo componente React do pacote @material-ui/icons. Você pode [pesquisar na lista completa destes ícones](/components/material-icons/).
 
 ### Instalação
 
@@ -70,7 +70,7 @@ Cada ícone Material também tem um "tema": Filled (padrão), Outlined, Rounded,
 - Tema Two tone (dois tons) é exportado como `@material-ui/icons/DeleteTwoTone`,
 - Tema Sharp (pontiagudo) é exportado como `@material-ui/icons/DeleteSharp`.
 
-> Nota: A especificação Material Design nomeia os ícones usando a nomeação "snake_case" (por exemplo, `delete_forever`, `add_a_photo`), enquanto `@material-ui/icons` exporta os respectivos ícones usando a nomeação "PascalCase" (por exemplo `DeleteForever`, `AddAPhoto`). Há três exceções a essa regra de nomenclatura: `3d_rotation` exportado como `ThreeDRotation`, `4k` exportado como `FourK`e `360` exportado como `ThreeSixty`.
+> Note: The Material Design guidelines name the icons using "snake_case" naming (for example `delete_forever`, `add_a_photo`), while `@material-ui/icons` exports the respective icons using "PascalCase" naming (for example `DeleteForever`, `AddAPhoto`). Há três exceções a essa regra de nomenclatura: `3d_rotation` exportado como `ThreeDRotation`, `4k` exportado como `FourK`e `360` exportado como `ThreeSixty`.
 
 {{"demo": "pages/components/icons/SvgMaterialIcons.js"}}
 
@@ -224,7 +224,7 @@ const theme = createTheme({
   components: {
     MuiIcon: {
       defaultProps: {
-        // Substitui o valor padrão `material-icons`.
+        // Replace the `material-icons` default value.
         baseClassName: 'material-icons-two-tone',
       },
     },
@@ -252,7 +252,7 @@ const theme = createTheme({
     MuiIcon: {
       styleOverrides: {
         root: {
-          // Corresponde 24px = 3 * 2 + 1.125 * 16
+          // Match 24px = 3 * 2 + 1.125 * 16
           boxSizing: 'content-box',
           padding: 3,
           fontSize: '1.125rem',
@@ -273,7 +273,7 @@ Para maiores detalhes, dê uma olhada no [porque o GitHub migrou ícones de font
 
 ## Acessibilidade
 
-Icons can convey all sorts of meaningful information, so it's important to ensure they are accessible where appropriate. There are two use cases you'll want to consider:
+Ícones podem transmitir todos os tipos de informações significativas, então é importante garantir que eles estejam apropriadamente acessíveis. Há dois casos de uso que você deve considerar:
 
 - **Ícones decorativos** que são usados apenas para reforço visual ou de marca. Se eles forem removidos da página, os usuários ainda entenderiam e poderiam usar sua página.
 - **Semantic icons** are ones that you're using to convey meaning, rather than just pure decoration. Isso inclui ícones sem texto ao lado deles que são usados como controles interativos — botões, elementos de forma, toggles, etc.
@@ -308,16 +308,14 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 Você precisa fornecer um texto alternativo que só seja visível para tecnologia assistiva.
 
 ```jsx
+import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import { visuallyHidden } from '@material-ui/utils';
-import { makeStyles } from '@material-ui/core/styles';
-
-const classes = makeStyles({ visuallyHidden })();
 
 // ...
 
 <Icon>add_circle</Icon>
-<Typography variant="srOnly">Crie um usuário</Typography>
+<Box component="span" sx={visuallyHidden}>Create a user</Box>
 ```
 
 #### Referência

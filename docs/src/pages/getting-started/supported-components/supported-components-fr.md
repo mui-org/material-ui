@@ -45,7 +45,7 @@ If you wish to add support for a component or feature not highlighted here, plea
   - **[Inset](https://material.io/design/components/dividers.html#types) ✓**
   - **[Inset](https://material.io/design/components/dividers.html#types) ✓**
 - **[Image lists](https://material.io/design/components/image-lists.html) ✓** (AKA Grid Lists)********
-- ****[Image lists](https://material.io/design/components/image-lists.html) ✓** (AKA Grid Lists)******
+- ****[Image lists](https://material.io/design/components/image-lists.html) ✓** (AKA Grid Lists)**********
   - [Types:](https://material.io/design/components/lists.html#types)
     - **Single line ✓**
     - **Two line ✓**
@@ -58,7 +58,7 @@ If you wish to add support for a component or feature not highlighted here, plea
     - **Expand/collapse ✓** (AKA Nested)
     - **Switch ✓**
     - Reorder
-- **[Progress indicators](https://material.io/design/components/progress-indicators.html) ✓**
+- ****[Image lists](https://material.io/design/components/image-lists.html) ✓** (AKA Grid Lists)**********
   - **[Dropdown menu](https://material.io/design/components/menus.html#dropdown-menu) ✓** (Can be composed)
     - [Cascade](https://material.io/design/components/menus.html#dropdown-menu)
   - [Exposed dropdown menus](https://material.io/design/components/menus.html#exposed-dropdown-menu)

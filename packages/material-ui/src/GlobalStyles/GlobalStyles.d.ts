@@ -1,4 +1,4 @@
-import { GlobalStylesProps as StyledGlobalStylesProps } from '@material-ui/styled-engine';
+import { GlobalStylesProps as StyledGlobalStylesProps } from '@material-ui/system';
 
 export interface GlobalStylesProps {
   /**

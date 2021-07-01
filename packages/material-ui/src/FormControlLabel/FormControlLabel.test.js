@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import FormControlLabel, {
   formControlLabelClasses as classes,
 } from '@material-ui/core/FormControlLabel';
@@ -10,13 +10,11 @@ import Typography from '@material-ui/core/Typography';
 
 describe('<FormControlLabel />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<FormControlLabel label="Pizza" control={<Checkbox />} />, () => ({
     classes,
     inheritComponent: 'label',
     render,
-    mount,
     muiName: 'MuiFormControlLabel',
     testVariantProps: { disabled: true },
     refInstanceof: window.HTMLLabelElement,

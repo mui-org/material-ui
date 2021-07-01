@@ -1,16 +1,7 @@
 // A change of the browser zoom change the scrollbar size.
-// Credit https://github.com/twbs/bootstrap/blob/3ffe3a5d82f6f561b82ff78d82b32a7d14aed558/js/src/modal.js#L512-L519
+// Credit https://github.com/twbs/bootstrap/blob/488fd8afc535ca3a6ad4dc581f5e89217b6a36ac/js/src/util/scrollbar.js#L14-L18
 export default function getScrollbarSize(doc: Document): number {
-  const scrollDiv = doc.createElement('div');
-  scrollDiv.style.width = '99px';
-  scrollDiv.style.height = '99px';
-  scrollDiv.style.position = 'absolute';
-  scrollDiv.style.top = '-9999px';
-  scrollDiv.style.overflow = 'scroll';
-
-  doc.body.appendChild(scrollDiv);
-  const scrollbarSize = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  doc.body.removeChild(scrollDiv);
-
-  return scrollbarSize;
+  // https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth#usage_notes
+  const documentWidth = doc.documentElement.clientWidth;
+  return Math.abs(window.innerWidth - documentWidth);
 }

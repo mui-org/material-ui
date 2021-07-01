@@ -1,23 +1,24 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "TransitionComponent": "O componente usado para a transição. <a href=\"/components/transitions/#transitioncomponent-prop\">Siga este guia</a> para saber mais sobre os requisitos para este componente.",
     "transitionDuration": "Adjust the duration of the content expand transition. Passed as a prop to the transition component.<br>Set to &#39;auto&#39; to automatically calculate transition time based on height.",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
+    "TransitionProps": "Propriedades aplicadas ao elemento de transição. Por padrão, o elemento é baseado neste componente <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "last": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>last={true}</code> (controlled by <code>Step</code>)"
     },
     "transition": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Transition component"
     }
   }

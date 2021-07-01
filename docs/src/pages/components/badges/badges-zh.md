@@ -56,6 +56,18 @@ githubLabel: 'component: Badge'
 
 {{"demo": "pages/components/badges/BadgeAlignment.js", "hideToolbar": true}}
 
-## 无样式的徽章
+## Unstyled
+
+The badge also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import BadgeUnstyled from '@material-ui/unstyled/BadgeUnstyled';
+```
 
 {{"demo": "pages/components/badges/UnstyledBadge.js"}}
+
+## 无障碍设计
+
+You can't rely on the content of the badge to be announced correctly. You should provide a full description, for instance, with `aria-label`:
+
+{{"demo": "pages/components/badges/AccessibleBadges.js"}}

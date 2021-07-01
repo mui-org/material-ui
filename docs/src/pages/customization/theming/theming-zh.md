@@ -18,19 +18,45 @@
 
 更改主题配置变量是将 Material-UI 与您的需求相匹配的最有效方法。 以下各节涵盖了一些最重要的主题变量：
 
-- [Palette 调色板](/customization/palette/)
-- [文字铸排](/customization/typography/)
-- [Spacing 间距](/customization/spacing/)
-- [Breakpoints 断点](/customization/breakpoints/)
-- [z-index](/customization/z-index/)
-- [Components 组件](/customization/theme-components/)
-- [过渡动画](/customization/transitions/)
+- [`.调色板`](/customization/palette/)
+- [`.typography`](/customization/typography/)
+- [`.spacing 间距`](/customization/spacing/)
+- [`.breakpoints 断点`](/customization/breakpoints/)
+- [`.zIndex`](/customization/z-index/)
+- [`.过渡动画`](/customization/transitions/)
+- [`.组件`](/customization/theme-components/)
 
 您可以在[默认主题部分](/customization/default-theme/)查看完整的默认样式。
 
 ### 自定义变量
 
 当 Material-UI 的主题与[样式解决方案（styling solution）](/styles/basics/)或[任何其他解决方案](/guides/interoperability/#themeprovider)一起使用时，若您将额外的变量添加到主题中，这样就能便于在任何地方使用它们。 就像这样：
+
+```jsx
+const theme = createTheme({
+  status: {
+    danger: orange[500],
+  },
+});
+```
+
+如果您使用的是 TypeScript，您还需要使用 [module augmentation](/guides/typescript/#customization-of-theme) 来让主题接受上述值。
+
+```tsx
+declare module '@material-ui/core/styles' {
+  interface Theme {
+    status: {
+      danger: string;
+    };
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    status?: {
+      danger?: string;
+    };
+  }
+}
+```
 
 {{"demo": "pages/customization/theming/CustomStyles.js"}}
 
@@ -75,12 +101,12 @@
 
 #### 参数
 
-1. `options` （*Object*）：采用不完整的主题对象并添加缺少的部分。
-2. `...args` (*Array*): 将参数与即将返回的主题深度合并(deep merge)。
+1. `options` (_object_): Takes an incomplete theme object and adds the missing parts.
+2. `...args` (_object[]_): Deep merge the arguments with the about to be returned theme.
 
 #### 返回结果
 
-`theme` (*Object*): 响应式排版的新主题。
+`theme` (_object_): A complete, ready-to-use theme object.
 
 #### 例子
 
@@ -107,17 +133,17 @@ const theme = createTheme({
 
 #### 参数
 
-1. `theme` (*Object*): 要增强的主题对象。
-2. `options` (_Object_ [optional]):
+1. `theme` (_object_): The theme object to enhance.
+2. `options` (_object_ [optional]):
 
-- `breakpoints` (*Array\<String\>* [optional]): Default to `['sm', 'md', 'lg']`. Array of [breakpoints](/customization/breakpoints/) (identifiers). 一个 [breakpoints](/customization/breakpoints/) 的数组（identifiers）。 一个 [breakpoints](/customization/breakpoints/) 的数组（identifiers）。
-- `disableAlign` (_Boolean_ [optional]): 默认值为`false`。 字体大小是否略有变化，这样能够保持行高并与 Material Design 的 4px 行高网格相对齐。 这需要主题样式中的无单位行高度。
-- `factor` (_Number_ [optional]): 默认值是 `2`。 此值决定了字体大小调整的强度。 值越高的话，在较小的屏幕上字体大小之间的差异就越小。 值越低的话，在较小屏幕上的字体就越大。 该值必须大于1。
-- `variants` (_Array\<String\>_ [optional])：默认值为 all。 需要处理的文字变体。
+- `breakpoints` (_array\<string\>_ [optional]): Default to `['sm', 'md', 'lg']`. 一个 [breakpoints](/customization/breakpoints/) 的数组（identifiers）。
+- `disableAlign` (_bool_ [optional]): Default to `false`. 字体大小是否略有变化，这样能够保持行高并与 Material Design 的 4px 行高网格相对齐。 这需要主题样式中的无单位行高度。
+- `factor` (_number_ [optional]): Default to `2`. 此值决定了字体大小调整的强度。 值越高的话，在较小的屏幕上字体大小之间的差异就越小。 值越低的话，在较小屏幕上的字体就越大。 该值必须大于1。
+- `variants` (_array\<string\>_ [optional]): Default to all. 需要处理的文字变体。
 
 #### 返回结果
 
-生成一个主题，该主题减少 [`React.StrictMode`](https://reactjs.org/docs/strict-mode.html) 内的警告数量，类似于 `Warning: findDOMNode is deprecated in StrictMode`。
+`theme` (_object_): The new theme with a responsive typography.
 
 #### 例子
 
@@ -140,12 +166,12 @@ theme = responsiveFontSizes(theme);
 
 #### 参数
 
-1. `options` （*Object*）：采用不完整的主题对象并添加缺少的部分。
-2. `...args` (*Array*): 将参数与即将返回的主题深度合并(deep merge)。
+1. `options` (_object_): Takes an incomplete theme object and adds the missing parts.
+2. `...args` (_object[]_): Deep merge the arguments with the about to be returned theme.
 
 #### 返回结果
 
-`theme` (*Object*): 响应式排版的新主题。
+`theme` (_object_): A complete, ready to use theme object.
 
 #### 例子
 

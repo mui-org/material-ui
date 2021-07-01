@@ -33,12 +33,12 @@ const StepConnectorRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.orientation],
-      ...(styleProps.alternativeLabel && styles.alternativeLabel),
-      ...(styleProps.completed && styles.completed),
-    };
+    return [
+      styles.root,
+      styles[styleProps.orientation],
+      styleProps.alternativeLabel && styles.alternativeLabel,
+      styleProps.completed && styles.completed,
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */
@@ -62,10 +62,7 @@ const StepConnectorLine = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.line,
-      ...styles[`line${capitalize(styleProps.orientation)}`],
-    };
+    return [styles.line, styles[`line${capitalize(styleProps.orientation)}`]];
   },
 })(({ styleProps, theme }) => ({
   /* Styles applied to the line element. */

@@ -22,11 +22,11 @@ Durch die Auswahl einer Option wird die Option sofort übernommen und das Menü 
 
 **Begriffserklärung**: Im Gegensatz zu einfachen Menüs können einfache Dialogfelder zusätzliche Details in Bezug auf die für ein Listenelement verfügbaren Optionen enthalten oder Navigations- oder orthogonale Aktionen in Bezug auf die primäre Aufgabe bereitstellen. Although they can display the same content, simple menus are preferred over simple dialogs because simple menus are less disruptive to the user's current context.
 
-{{"demo": "pages/components/menus/SimpleMenu.js"}}
+{{"demo": "pages/components/menus/BasicMenu.js"}}
 
 ## Selected menu
 
-Bei der Elementauswahl versuchen einfache Menüs beim Öffnen, das aktuell ausgewählte Menüelement mit dem Ankerelement vertikal auszurichten, und der ursprüngliche Fokus wird auf das ausgewählte Menüelement gesetzt. Das aktuell ausgewählte Menüelement wird mit der Eigenschaft `selected` (von [ListItem](/api/list-item/)) festgelegt. Um ein ausgewähltes Menüelement zu verwenden, ohne den anfänglichen Fokus oder die vertikale Positionierung des Menüs zu beeinflussen, setzen Sie die Eigenschaft `variant` auf `menu`.
+If used for item selection, when opened, simple menus places the initial focus on the selected menu item. Das aktuell ausgewählte Menüelement wird mit der Eigenschaft `selected` (von [ListItem](/api/list-item/)) festgelegt. To use a selected menu item without impacting the initial focus, set the `variant` prop to "menu".
 
 {{"demo": "pages/components/menus/SimpleListMenu.js"}}
 

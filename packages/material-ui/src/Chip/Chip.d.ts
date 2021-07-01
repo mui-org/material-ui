@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { OverridableStringUnion } from '@material-ui/types';
 import { SxProps } from '@material-ui/system';
-import { PropTypes, Theme } from '..';
+import { Theme } from '..';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { ChipClasses } from './chipClasses';
 
@@ -39,7 +39,10 @@ export interface ChipTypeMap<P = {}, D extends React.ElementType = 'div'> {
      * The color of the component. It supports those theme colors that make sense for this component.
      * @default 'default'
      */
-    color?: OverridableStringUnion<Exclude<PropTypes.Color, 'inherit'>, ChipPropsColorOverrides>;
+    color?: OverridableStringUnion<
+      'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+      ChipPropsColorOverrides
+    >;
     /**
      * Override the default delete icon element. Shown only if `onDelete` is set.
      */
@@ -93,7 +96,9 @@ export interface ChipTypeMap<P = {}, D extends React.ElementType = 'div'> {
  */
 declare const Chip: OverridableComponent<ChipTypeMap>;
 
-export type ChipProps<D extends React.ElementType = ChipTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<ChipTypeMap<P, D>, D>;
+export type ChipProps<
+  D extends React.ElementType = ChipTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<ChipTypeMap<P, D>, D>;
 
 export default Chip;

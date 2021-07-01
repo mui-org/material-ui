@@ -40,12 +40,13 @@ function createTheme(options = {}, ...args) {
     const pseudoClasses = [
       'active',
       'checked',
+      'completed',
       'disabled',
       'error',
+      'expanded',
       'focused',
       'focusVisible',
       'required',
-      'expanded',
       'selected',
     ];
 

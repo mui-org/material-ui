@@ -92,13 +92,22 @@ export type TypographyProps = PropsFor<typeof typography>;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function unstable_getThemeValue(prop: string, value: any, theme: object): any;
-
 /**
  * The `css` function accepts arrays as values for mobile-first responsive styles.
  * Note that this extends to non-theme values also. For example `display=['none', 'block']`
  * will also works.
  */
 export type ResponsiveStyleValue<T> = T | Array<T | null> | { [key: string]: T | null };
+
+export { DefaultTheme } from '@material-ui/private-theming';
+
+export {
+  css,
+  keyframes,
+  GlobalStyles,
+  GlobalStylesProps,
+  StyledEngineProvider,
+} from '@material-ui/styled-engine';
 
 export * from './style';
 export * from './spacing';
@@ -131,3 +140,16 @@ export { SpacingOptions, Spacing } from './createTheme/createSpacing';
 
 export { default as shape } from './createTheme/shape';
 export * from './createTheme/shape';
+
+export { default as useThemeProps, getThemeProps } from './useThemeProps';
+
+export { default as useTheme } from './useTheme';
+export * from './useTheme';
+
+export { default as useThemeWithoutDefault } from './useThemeWithoutDefault';
+export * from './useThemeWithoutDefault';
+
+export * from './colorManipulator';
+
+export { default as ThemeProvider } from './ThemeProvider';
+export * from './ThemeProvider';

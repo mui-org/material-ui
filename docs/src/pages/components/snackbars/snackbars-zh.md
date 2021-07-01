@@ -10,7 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-1.1/#alert'
 
 <p class="description">消息条提供简短的通知信息。 该组件也被称为 toast。</p>
 
-消息条将应用程序已执行或即将执行的进程通知给用户。 它们会从屏幕底部短暂地出现。 They shouldn't interrupt the user experience, and they don't require user input to disappear.
+消息条将应用程序已执行或即将执行的进程通知给用户。 它们会从屏幕底部短暂地出现。 它们不应该打断用户体验，也不需要用户输入就能消失。
 
 消息条包含了一行直接与所执行操作相关的文本。 它们可能包含一些文本操作，但并不会展示图标。 您也可以用他们展示通知。
 
@@ -78,9 +78,9 @@ waiAria: 'https://www.w3.org/TR/wai-aria-1.1/#alert'
 
 ![stars](https://img.shields.io/github/stars/iamhosseindhv/notistack.svg?style=social&label=Stars) ![npm下载](https://img.shields.io/npm/dm/notistack.svg)
 
-以下例子演示了如何使用 [notistack](https://github.com/iamhosseindhv/notistack)。 notistack 有一个 **imperative API** 可以轻松地显示一串消息条，且无需处理其打开/关闭状态。 您也可以把它们 **堆叠** 在一起（尽管 Material Design 规范不鼓励这样做）。
+以下例子演示了如何使用 [notistack](https://github.com/iamhosseindhv/notistack)。 notistack 有一个 **imperative API** 可以轻松地显示一串消息条，且无需处理其打开/关闭状态。 It also enables you to **stack** them on top of one another (although this is discouraged by the Material Design guidelines).
 
-{{"demo": "pages/components/snackbars/IntegrationNotistack.js", "defaultCodeOpen": false}}
+TODO: Add example once notistack is compatible with v5 or replace with [#1824](https://github.com/mui-org/material-ui/issues/1824).
 
 ## 无障碍设计
 

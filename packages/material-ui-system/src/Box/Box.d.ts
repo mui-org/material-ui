@@ -3,7 +3,7 @@ import { OverridableComponent, OverrideProps } from '@material-ui/types';
 import { Theme } from '../createTheme';
 import {
   SxProps,
-  StandardCSSProperties,
+  AllSystemCSSProperties,
   ResponsiveStyleValue,
   OverwriteCSSProperties,
   AliasesCSSProperties,
@@ -140,40 +140,38 @@ export type ComposedStyleFunction<T extends Array<StyleFunction<any>>> = StyleFu
   ComposedStyleProps<T>
 >;
 
-export type CustomSystemProps = OverwriteCSSProperties & AliasesCSSProperties;
+export interface CustomSystemProps extends AliasesCSSProperties, OverwriteCSSProperties {}
 
-export type SimpleSystemKeys = keyof Omit<
-  PropsFor<
-    ComposedStyleFunction<
-      [
-        typeof borders,
-        typeof display,
-        typeof flexbox,
-        typeof grid,
-        typeof palette,
-        typeof positions,
-        typeof shadows,
-        typeof sizing,
-        typeof spacing,
-        typeof typography,
-      ]
-    >
-  >,
-  keyof CustomSystemProps
+export type SimpleSystemKeys = keyof PropsFor<
+  ComposedStyleFunction<
+    [
+      typeof borders,
+      typeof display,
+      typeof flexbox,
+      typeof grid,
+      typeof palette,
+      typeof positions,
+      typeof shadows,
+      typeof sizing,
+      typeof spacing,
+      typeof typography,
+    ]
+  >
 >;
 
-// The SimpleSystemKeys are subset of the StandardCSSProperties, so this should be ok
-// This is needed as these are used as keys inside StandardCSSProperties
-type StandardSystemKeys = Extract<SimpleSystemKeys, keyof StandardCSSProperties>;
+// The SimpleSystemKeys are subset of the AllSystemCSSProperties, so this should be ok
+// This is needed as these are used as keys inside AllSystemCSSProperties
+type StandardSystemKeys = Extract<SimpleSystemKeys, keyof AllSystemCSSProperties>;
 
-export type SystemProps = {
-  [K in StandardSystemKeys]?: ResponsiveStyleValue<StandardCSSProperties[K]>;
-} &
-  CustomSystemProps;
+export type SystemProps<Theme extends object = {}> = {
+  [K in StandardSystemKeys]?:
+    | ResponsiveStyleValue<AllSystemCSSProperties[K]>
+    | ((theme: Theme) => ResponsiveStyleValue<AllSystemCSSProperties[K]>);
+};
 
 export interface BoxTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P &
-    SystemProps & {
+    SystemProps<Theme> & {
       children?: React.ReactNode;
       component?: React.ElementType;
       ref?: React.Ref<unknown>;
@@ -184,7 +182,9 @@ export interface BoxTypeMap<P = {}, D extends React.ElementType = 'div'> {
 
 declare const Box: OverridableComponent<BoxTypeMap>;
 
-export type BoxProps<D extends React.ElementType = BoxTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<BoxTypeMap<P, D>, D>;
+export type BoxProps<
+  D extends React.ElementType = BoxTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<BoxTypeMap<P, D>, D>;
 
 export default Box;

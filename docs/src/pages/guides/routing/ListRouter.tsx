@@ -27,7 +27,7 @@ function ListItemLink(props: ListItemLinkProps) {
         itemProps,
         ref,
       ) {
-        return <RouterLink to={to} ref={ref} {...itemProps} />;
+        return <RouterLink to={to} ref={ref} {...itemProps} role={undefined} />;
       }),
     [to],
   );

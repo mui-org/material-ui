@@ -31,7 +31,6 @@
     "onYearChange": "Callback firing on year change @DateIOType.",
     "open": "Control the popup or dialog open state.",
     "OpenPickerButtonProps": "Props to pass to keyboard adornment button.",
-    "openPickerIcon": "Icon displaying for open picker button.",
     "openTo": "First view to show.",
     "orientation": "Force rendering in particular orientation.",
     "readOnly": "Make picker read only.",

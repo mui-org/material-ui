@@ -24,6 +24,10 @@ materialDesign: https://material.io/components/progress-indicators
 
 {{"demo": "pages/components/progress/CircularIndeterminate.js"}}
 
+### Circular color
+
+{{"demo": "pages/components/progress/CircularColor.js"}}
+
 ### 定量的环形进度条
 
 {{"demo": "pages/components/progress/CircularDeterminate.js"}}
@@ -41,6 +45,10 @@ materialDesign: https://material.io/components/progress-indicators
 ### 不定量的线性进度条
 
 {{"demo": "pages/components/progress/LinearIndeterminate.js"}}
+
+### Linear color
+
+{{"demo": "pages/components/progress/LinearColor.js"}}
 
 ### 定量的线性进度条
 
@@ -111,7 +119,7 @@ function Progress(props) {
 }
 ```
 
-### IE11
+### IE 11
 
 IE 11 上的循环进度组件动画会退化。 Stroke dash 动画将不起作用（相当于`disableShrink`），并且 circular 动画将会抖动。 你可以通过以下方式来解决后者：
 

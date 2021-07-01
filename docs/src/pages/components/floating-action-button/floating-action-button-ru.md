@@ -21,9 +21,11 @@ A [floating action button](https://material.io/design/components/buttons-floatin
 
 ## Size
 
-Use the `size` prop for larger or smaller floating action buttons.
+By default, the size is `large`. Use the `size` prop for smaller floating action buttons.
 
 {{"demo": "pages/components/floating-action-button/FloatingActionButtonSize.js"}}
+
+{{"demo": "pages/components/floating-action-button/FloatingActionButtonExtendedSize.js"}}
 
 ## Animation
 

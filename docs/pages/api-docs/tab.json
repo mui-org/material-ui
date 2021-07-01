@@ -22,8 +22,7 @@
       "selected",
       "disabled",
       "fullWidth",
-      "wrapped",
-      "wrapper"
+      "wrapped"
     ],
     "globalClasses": { "selected": "Mui-selected", "disabled": "Mui-disabled" },
     "name": "MuiTab"

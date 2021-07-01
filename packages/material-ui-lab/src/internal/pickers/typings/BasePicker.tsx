@@ -79,7 +79,7 @@ export interface BasePickerProps<TInputValue, TDateValue> {
   /**
    * Component that will replace default toolbar renderer.
    */
-  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps>;
+  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps<TDateValue>>;
   /**
    * Date format, that is displaying in toolbar.
    */

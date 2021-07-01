@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createClientRender, createMount, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import { collapseClasses } from '@material-ui/core/Collapse';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -8,12 +8,11 @@ import StepContent, { stepContentClasses as classes } from '@material-ui/core/St
 
 describe('<StepContent />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<StepContent />, () => ({
     classes,
     inheritComponent: 'div',
-    mount: (node) => {
+    wrapMount: (mount) => (node) => {
       const wrapper = mount(
         <Stepper orientation="vertical">
           <Step>{node}</Step>

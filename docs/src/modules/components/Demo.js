@@ -106,6 +106,7 @@ const useStyles = makeStyles(
     /* Isolate the demo with an outline. */
     demoBgOutlined: {
       padding: theme.spacing(3),
+      backgroundColor: theme.palette.background.paper,
       border: `1px solid ${alpha(theme.palette.action.active, 0.12)}`,
       borderLeftWidth: 0,
       borderRightWidth: 0,
@@ -117,7 +118,7 @@ const useStyles = makeStyles(
     /* Prepare the background to display an inner elevation. */
     demoBgTrue: {
       padding: theme.spacing(3),
-      backgroundColor: theme.palette.background.level2,
+      backgroundColor: theme.palette.mode === 'dark' ? '#333' : theme.palette.grey[100],
     },
     /* Make no difference between the demo and the markdown. */
     demoBgInline: {

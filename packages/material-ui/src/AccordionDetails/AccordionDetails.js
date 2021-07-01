@@ -28,9 +28,7 @@ const AccordionDetailsRoot = styled('div', {
 const AccordionDetails = React.forwardRef(function AccordionDetails(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiAccordionDetails' });
   const { className, ...other } = props;
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
-
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   return (

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformance } from 'test/utils';
+import { createClientRender, describeConformance } from 'test/utils';
 import BadgeUnstyled, {
   badgeUnstyledClasses as classes,
 } from '@material-ui/unstyled/BadgeUnstyled';
 
 describe('<BadgeUnstyled />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformance(
@@ -17,7 +16,6 @@ describe('<BadgeUnstyled />', () => {
       classes,
       inheritComponent: 'span',
       render,
-      mount,
       refInstanceof: window.HTMLSpanElement,
       testComponentPropWith: 'div',
     }),

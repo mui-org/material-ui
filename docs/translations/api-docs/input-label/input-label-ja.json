@@ -5,12 +5,13 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "disableAnimation": "If <code>true</code>, the transition animation is disabled.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
     "error": "If <code>true</code>, the label should be displayed in an error state.",
     "focused": "If <code>true</code>, the <code>input</code> of this label is focused.",
     "margin": "If <code>dense</code>, will adjust vertical spacing. This is normally obtained via context from FormControl.",
     "required": "if <code>true</code>, the label will indicate that the <code>input</code> is required.",
     "shrink": "If <code>true</code>, the label is shrunk.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {
@@ -70,6 +71,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"outlined\"</code>"
+    },
+    "standard": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"standard\"</code>"
     }
   }
 }

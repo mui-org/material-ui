@@ -2,7 +2,7 @@
 title: React Speed Dial component
 components: SpeedDial, SpeedDialAction, SpeedDialIcon
 githubLabel: 'component: SpeedDial'
-0: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
+materialDesign: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 ---
 
@@ -19,6 +19,10 @@ If more than six actions are needed, something other than a FAB should be used t
 The floating action button can display related actions.
 
 {{"demo": "pages/components/speed-dial/BasicSpeedDial.js"}}
+
+## Campo de pruebas
+
+{{"demo": "pages/components/speed-dial/PlaygroundSpeedDial.js"}}
 
 ## Controlled speed dial
 

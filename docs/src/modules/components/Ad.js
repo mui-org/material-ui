@@ -97,13 +97,6 @@ const inHouseAds = [
     description:
       '<b>For Figma</b>. A large UI kit with over 600 handcrafted Material-UI components 🎨.',
   },
-  {
-    name: 'divjoy',
-    link: 'https://divjoy.com?via=material-ui',
-    img: '/static/ads-in-house/divjoy.png',
-    description:
-      '<b>Divjoy</b>. Create your Material-UI app in minutes. You’ll get a nice template, authentication, database integration, subscription payments, and more.',
-  },
 ];
 
 function Ad(props) {

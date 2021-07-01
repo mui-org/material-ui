@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import Container, { containerClasses as classes } from '@material-ui/core/Container';
 
 describe('<Container />', () => {
   const render = createClientRender();
-  const mount = createMount();
+
   const defaultProps = {
     children: <div />,
   };
@@ -14,7 +14,6 @@ describe('<Container />', () => {
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     refInstanceof: window.HTMLElement,
     muiName: 'MuiContainer',
     skip: ['componentsProp'],

@@ -13,7 +13,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#breadcrumb'
 
 ## Простые хлебные крошки
 
-{{"demo": "pages/components/breadcrumbs/SimpleBreadcrumbs.js"}}
+{{"demo": "pages/components/breadcrumbs/BasicBreadcrumbs.js"}}
 
 ## Active last breadcrumb
 
@@ -23,7 +23,7 @@ Keep the last breadcrumb interactive.
 
 ## Пользовательский разделитель
 
-В следующих примерах мы используем два строковых разделителя и SVG иконку.
+In the following examples, we are using two string separators and an SVG icon.
 
 {{"demo": "pages/components/breadcrumbs/CustomSeparator.js"}}
 
@@ -37,7 +37,7 @@ Keep the last breadcrumb interactive.
 
 ## Пользовательские хлебные крошки
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/breadcrumbs/CustomizedBreadcrumbs.js"}}
 

@@ -10,13 +10,16 @@ export { StyledComponentProps };
  * `style`.
  * @deprecated will be removed in v5 for internal usage only
  */
-export type StandardProps<C, ClassKey extends string, Removals extends keyof C = never> =
-  DistributiveOmit<C, 'classes' | Removals> &
-    StyledComponentProps<ClassKey> & {
-      className?: string;
-      ref?: C extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
-      style?: React.CSSProperties;
-    };
+export type StandardProps<
+  C,
+  ClassKey extends string,
+  Removals extends keyof C = never,
+> = DistributiveOmit<C, 'classes' | Removals> &
+  StyledComponentProps<ClassKey> & {
+    className?: string;
+    ref?: C extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
+    style?: React.CSSProperties;
+  };
 
 /**
  * @private ONLY USE FROM WITHIN mui-org/material-ui
@@ -222,6 +225,9 @@ export * from './Grid';
 export { default as Grow } from './Grow';
 export * from './Grow';
 
+export { default as Hidden } from './Hidden';
+export * from './Hidden';
+
 export { default as Icon } from './Icon';
 export * from './Icon';
 
@@ -263,6 +269,9 @@ export * from './ListItem';
 
 export { default as ListItemAvatar } from './ListItemAvatar';
 export * from './ListItemAvatar';
+
+export { default as ListItemButton } from './ListItemButton';
+export * from './ListItemButton';
 
 export { default as ListItemIcon } from './ListItemIcon';
 export * from './ListItemIcon';

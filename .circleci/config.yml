@@ -242,7 +242,9 @@ jobs:
           command: yarn typescript:ci
       - run:
           name: Test module augmenation
-          command: yarn workspace @material-ui/core typescript:module-augmentation
+          command: |
+            yarn workspace @material-ui/core typescript:module-augmentation
+            yarn workspace @material-ui/unstyled typescript:module-augmentation
 
       - restore_cache:
           name: Restore generated declaration files
@@ -422,11 +424,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture node-esm
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: |
@@ -449,11 +452,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture next-webpack4
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: yarn start
@@ -472,11 +476,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture next-webpack5
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: yarn start
@@ -495,11 +500,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture create-react-app
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: yarn start
@@ -518,11 +524,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture snowpack
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: yarn start
@@ -541,11 +548,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture vite
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: yarn start
@@ -564,11 +572,12 @@ jobs:
       - run:
           name: Prepare fixture
           command: |
-            node ../../scripts/useBuildFromSource.js .
             node ../../scripts/createFixture esbuild
       - run:
           name: Install dependencies
-          command: yarn
+          command: |
+            yarn
+            node ../../scripts/useBuildFromSource.js .
       - run:
           name: Test fixture
           command: |
@@ -676,6 +685,8 @@ workflows:
       - test_browser:
           react-dist-tag: next
       - test_regressions:
+          react-dist-tag: next
+      - test_e2e:
           react-dist-tag: next
   typescript-next:
     triggers:

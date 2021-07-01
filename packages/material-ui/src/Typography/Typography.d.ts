@@ -10,7 +10,7 @@ export interface TypographyPropsVariantOverrides {}
 
 export interface TypographyTypeMap<P = {}, D extends React.ElementType = 'span'> {
   props: P &
-    SystemProps & {
+    SystemProps<Theme> & {
       /**
        * Set the text-align on the component.
        * @default 'inherit'

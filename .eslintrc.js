@@ -229,6 +229,9 @@ module.exports = {
     {
       files: ['docs/pages/**/*.js'],
       rules: {
+        // The code is already coupled to webpack.
+        'import/no-webpack-loader-syntax': 'off',
+
         'react/prop-types': 'off',
       },
     },

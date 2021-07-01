@@ -9,7 +9,7 @@ materialDesign: https://material.io/components/app-bars-top
 
 <p class="description">La barre d'application affiche des informations et des actions relatives à l'écran actuel.</p>
 
-[La barre d'application](https://material.io/design/components/app-bars-top.html) de la page fournit le contenu et les actions liés à l'écran actuel. It's used for branding, screen titles, navigation, and actions.
+[La barre d'application](https://material.io/design/components/app-bars-top.html) de la page fournit le contenu et les actions liés à l'écran actuel. Elle est utilisée pour le marquage, les titres d'écran, la navigation et les actions.
 
 Il peut être utilisé en tant que barre d'action contextuel ou en tant que barre de navigation.
 
@@ -53,7 +53,7 @@ Barre d'application étendu.
 
 Quand vous rendez la barre d'application en position fixe, les dimensions de l'élément n'impact pas le reste de page. Cela peut rendre certaine partie de votre contenu invisible, caché derrière la barre d'application. Voici 3 solutions possible:
 
-1. Vous pouvez utiliser `position="sticky"` au lieu de `position="fixed"`. ⚠️ sticky is not supported by IE11.
+1. Vous pouvez utiliser `position="sticky"` au lieu de `position="fixed"`. ⚠️ sticky n'est pas supporté par IE11.
 2. Vous pouvez rendre un deuxième composant `<Toolbar />` :
 
 ```jsx
@@ -118,7 +118,7 @@ Au défilement un bouton d'action flottant apparaît pour faciliter le retour au
 1. `options` (*Object* [optional]):
 
    - `options.disableHysteresis` (*Boolean* [optional]): Valeur par défaut `false`. Désactive l'hystérésis. Ignore le sens de défilement lors de la détermination de la valeur `trigger`.
-   - `options.target` (*Node* [optional]): Valeur par défaut `window`.
+   - `options.target` (_Nœud_ [optionnel]) : Valeur par défaut `window`.
    - `options.threshold` (*Nombre* [optional]): Valeur par défaut `100`. Modifier la valeur de `déclenchement` quand lorsque le défilement vertical dépasse strictement ce seuil (exclusif).
 
 #### Valeur de retour
@@ -138,4 +138,28 @@ function HideOnScroll(props) {
     </Slide>
   );
 }
+```
+
+## Enable Color on Dark
+
+Following the [Material Design guidelines](https://material.io/design/color/dark-theme.html), the `color` prop has no effect on the appearance of the AppBar in dark mode. You can override this behavior by setting the `enableColorOnDark` prop to `true`.
+
+```jsx
+// Specific element via prop
+<AppBar enableColorOnDark />
+
+// Affect all AppBars via theme
+<ThemeProvider
+  theme={createTheme({
+    components: {
+      MuiAppBar: {
+        defaultProps: {
+          enableColorOnDark: true,
+        },
+      },
+    },
+  })}
+>
+  <AppBar />
+</ThemeProvider>
 ```

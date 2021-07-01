@@ -3,6 +3,7 @@
   "propDescriptions": {
     "aria-describedby": "The id(s) of the element(s) that describe the dialog.",
     "aria-labelledby": "The id(s) of the element(s) that label the dialog.",
+    "BackdropComponent": "A backdrop component. This prop enables custom backdrop rendering.",
     "children": "Dialog children, usually the included sub-components.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "disableEscapeKeyDown": "If <code>true</code>, hitting escape will not fire the <code>onClose</code> callback.",
@@ -15,6 +16,7 @@
     "PaperComponent": "The component used to render the body of the dialog.",
     "PaperProps": "Props applied to the <a href=\"/api/paper/\"><code>Paper</code></a> element.",
     "scroll": "Determine the container for scrolling the dialog.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
     "transitionDuration": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.",
     "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."

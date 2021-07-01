@@ -1,31 +1,33 @@
 ---
-title: React Date Range Picker component
-components: DateRangePicker
+title: 日付範囲入力コンポーネント
+components: DateRangePicker, DateRangePickerDay, DesktopDateRangePicker, MobileDateRangePicker, StaticDateRangePicker
 githubLabel: 'component: DateRangePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
 ---
 
-# Date Range Picker [<span role="img" title="Enterprise">⚡️</span>](https://material-ui.com/store/items/material-ui-x/)
+# 日付範囲の入力[<span role="img" title="Enterprise">⚡️</span>](https://material-ui.com/store/items/material-ui-pro/)
 
-<p class="description">Date pickers let the user select a range of dates.</p>
+<p class="description">日付の範囲を選択することができます。</p>
 
-> ⚠️ Premium component <br /><br /> The date range picker is intended for Material-UI X, a commercial set of advanced components built on top of the community edition (MIT license) of Material-UI. <br /><br /> This paid extension will include more advanced components (rich data grid, date range picker, tree view drag & drop, etc.). [Early access](https://material-ui.com/store/items/material-ui-x/) starts at an affordable price.
+> ⚠️ Pro component <br /><br /> The date range picker is intended for Material-UI X Pro, a commercial set of advanced components built on top of the community edition (MIT license). <br /><br /> この有料コンポーネントには、リッチなData Gridや、カレンダーによる日付範囲入力コンポーネント、ドラッグ&ドロップできるツリービューなどがあります。 お求めやすい価格にて[提供](https://material-ui.com/store/items/material-ui-pro/) しております。
 
-The date range pickers let the user select a range of dates.
+日付範囲の入力コンポーネントを使うことによって、ユーザーは直感的に日付の範囲を選択できるようになります。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Requirements
 
-This component relies on the date management library of your choice. It supports [date-fns](https://date-fns.org/), [luxon](https://moment.github.io/luxon/), [dayjs](https://github.com/iamkun/dayjs), [moment](https://momentjs.com/) and any other library via a public `dateAdapter` interface.
+このコンポーネントはあなたが選択した日付管理ライブラリに依存します。 [date-fns](https://date-fns.org/)、 [luxon](https://moment.github.io/luxon/)、 [dayjs](https://github.com/iamkun/dayjs)、 [moment](https://momentjs.com/) とパブリックな `dateAdapter` インターフェイスを持っている他のライブラリをサポートしています。
 
-Please install any of these libraries and set up the right date engine by wrapping your root (or the highest level you wish the pickers to be available) with `LocalizationProvider`:
+これらのライブラリのうちいずれかをインストールし、ルート（またはピッカーを使用できるようにする最高レベル）を`LocalizationProvider`でラップして、適切な日付エンジンを設定してください。
 
 ```jsx
-// or @material-ui/lab/dateAdapter/{dayjs,luxon,moment} or any valid date-io adapter
+// 以下のようにするか、 
 import DateFnsAdapter from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+//@material-ui/lab/dateAdapter/{dayjs,luxon,moment} を使うか、
+//その他のdate-ioアダプターを設定してください
 
 function App() {
   return (
@@ -34,43 +36,55 @@ function App() {
 }
 ```
 
-## Basic usage
+## 基本的な用法
 
-Note that you can pass almost any prop from [DatePicker]('/api/date-picker/').
+[DatePicker](/api/date-picker/)からほぼすべてのプロパティを渡すことができます。
 
 {{"demo": "pages/components/date-range-picker/BasicDateRangePicker.js"}}
 
-## Responsiveness
+## static モード
 
-The date range picker component is designed to be optimized for the device it runs on.
+It's possible to render any picker inline. This will enable building custom popover/modal containers.
 
-- The "Mobile" version works best for touch devices and small screens.
-- The "Desktop" version works best for mouse devices and large screens.
+{{"demo": "pages/components/date-range-picker/StaticDateRangePickerDemo.js", "bg": true}}
 
-By default, the `DateRangePicker` component uses a `@media (pointer: fine)` media query to determine which version to use. This can be customized with the `desktopModeMediaQuery` prop.
+## レスポンシブ対応
+
+DateRangePickerコンポーネントは実行されるデバイス用に最適化されるように設計されています。
+
+- The `MobileDateRangePicker` component works best for touch devices and small screens.
+- The `DesktopDateRangePicker` component works best for mouse devices and large screens.
+
+By default, the `DateRangePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. これは  `desktopModeMediaQuery` プロパティでカスタマイズできます。 これは  `desktopModeMediaQuery` プロパティでカスタマイズできます。
 
 {{"demo": "pages/components/date-range-picker/ResponsiveDateRangePicker.js"}}
 
-## Different number of months
+## Form props
 
-Note that the `calendars` prop only works in desktop mode.
+The date range picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-range-picker/FormPropsDateRangePickers.js"}}
+
+## 異なる月数の場合
+
+`calendars`プロパティは、デスクトップモードでのみ動作します。
 
 {{"demo": "pages/components/date-range-picker/CalendarsDateRangePicker.js"}}
 
-## Disabling dates
+## 日付の無効化
 
-Disabling dates behaves the same as the simple `DatePicker`.
+日付を無効化すると、単純な `DatePicker` と同じ動作をします。
 
 {{"demo": "pages/components/date-range-picker/MinMaxDateRangePicker.js"}}
 
-## Custom input component
+## 入力コンポーネントのカスタマイズ
 
-You can customize the rendered input with the `renderInput` prop. For `DateRangePicker` it takes **2** parameters – for start and end input respectively. If you need to render custom inputs make sure to spread `ref` and `inputProps` correctly to the input components.
+`renderInput` プロパティを使用して入力欄の表示をカスタマイズできます。 `DateRangePicker` では **2 個の** パラメータ(開始と終了)が必要です。 カスタマイズした入力コンポーネントを使う場合は、 `ref` と `inputProps` を正しく入力コンポーネントに設定してください。
 
 {{"demo": "pages/components/date-range-picker/CustomDateRangeInputs.js"}}
 
-## Static mode
+## 日付表示のカスタマイズ
 
-It is possible to render any picker without a modal or popper. For this use `StaticDateRangePicker`.
+表示される日付は `renderDay` プロパティに関数を与えることでカスタマイズできます。 You can take advantage of the internal [DateRangePickerDay](/api/date-range-picker-day/) component.
 
-{{"demo": "pages/components/date-range-picker/StaticDateRangePicker.js"}}
+{{"demo": "pages/components/date-range-picker/CustomDateRangePickerDay.js"}}

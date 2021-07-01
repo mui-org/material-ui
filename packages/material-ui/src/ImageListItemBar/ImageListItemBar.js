@@ -31,10 +31,7 @@ const ImageListItemBarRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`position${capitalize(styleProps.position)}`],
-    };
+    return [styles.root, styles[`position${capitalize(styleProps.position)}`]];
   },
 })(({ theme, styleProps }) => {
   return {
@@ -69,12 +66,11 @@ const ImageListItemBarTitleWrap = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.titleWrap,
-      ...styles[`titleWrap${capitalize(styleProps.position)}`],
-      ...(styleProps.actionIcon &&
-        styles[`titleWrapActionPos${capitalize(styleProps.actionPosition)}`]),
-    };
+    return [
+      styles.titleWrap,
+      styles[`titleWrap${capitalize(styleProps.position)}`],
+      styleProps.actionIcon && styles[`titleWrapActionPos${capitalize(styleProps.actionPosition)}`],
+    ];
   },
 })(({ theme, styleProps }) => {
   return {
@@ -137,10 +133,10 @@ const ImageListItemBarActionIcon = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.actionIcon,
-      ...styles[`actionIconActionPos${capitalize(styleProps.actionPosition)}`],
-    };
+    return [
+      styles.actionIcon,
+      styles[`actionIconActionPos${capitalize(styleProps.actionPosition)}`],
+    ];
   },
 })(({ styleProps }) => {
   return {

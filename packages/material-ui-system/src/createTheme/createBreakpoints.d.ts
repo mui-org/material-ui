@@ -6,12 +6,11 @@ export type Breakpoint = OverridableStringUnion<
   'xs' | 'sm' | 'md' | 'lg' | 'xl',
   BreakpointOverrides
 >;
-export type BreakpointValues = { [key in Breakpoint]: number };
 export const keys: Breakpoint[];
 
 export interface Breakpoints {
   keys: Breakpoint[];
-  values: BreakpointValues;
+  values: { [key in Breakpoint]: number };
   up: (key: Breakpoint | number) => string;
   down: (key: Breakpoint | number) => string;
   between: (start: Breakpoint | number, end: Breakpoint | number) => string;

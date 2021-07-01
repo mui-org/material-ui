@@ -283,7 +283,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
 
   let ComponentProp = component;
 
-  if (ComponentProp === 'button' && other.href) {
+  if (ComponentProp === 'button' && (other.href || other.to)) {
     ComponentProp = LinkComponent;
   }
 
@@ -292,7 +292,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
     buttonProps.type = type === undefined ? 'button' : type;
     buttonProps.disabled = disabled;
   } else {
-    if (!other.href) {
+    if (!other.href && !other.to) {
       buttonProps.role = 'button';
     }
     if (disabled) {

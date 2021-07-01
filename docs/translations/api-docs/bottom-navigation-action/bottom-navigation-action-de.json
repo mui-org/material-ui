@@ -6,6 +6,7 @@
     "icon": "The icon element.",
     "label": "The label element.",
     "showLabel": "If <code>true</code>, the <code>BottomNavigationAction</code> will show its label. By default, only the selected <code>BottomNavigationAction</code> inside <code>BottomNavigation</code> will show its label.<br>The prop defaults to the value (<code>false</code>) inherited from the parent BottomNavigation component.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "value": "You can provide your own value. Otherwise, we fallback to the child position index."
   },
   "classDescriptions": {

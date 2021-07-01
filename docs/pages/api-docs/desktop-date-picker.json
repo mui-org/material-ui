@@ -11,7 +11,7 @@
     "components": {
       "type": {
         "name": "shape",
-        "description": "{ LeftArrowButton?: elementType, LeftArrowIcon?: elementType, RightArrowButton?: elementType, RightArrowIcon?: elementType, SwitchViewButton?: elementType, SwitchViewIcon?: elementType }"
+        "description": "{ LeftArrowButton?: elementType, LeftArrowIcon?: elementType, OpenPickerIcon?: elementType, RightArrowButton?: elementType, RightArrowIcon?: elementType, SwitchViewButton?: elementType, SwitchViewIcon?: elementType }"
       },
       "default": "{}"
     },
@@ -47,7 +47,6 @@
     "onYearChange": { "type": { "name": "func" } },
     "open": { "type": { "name": "bool" } },
     "OpenPickerButtonProps": { "type": { "name": "object" } },
-    "openPickerIcon": { "type": { "name": "node" } },
     "openTo": {
       "type": {
         "name": "enum",

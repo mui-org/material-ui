@@ -8,12 +8,12 @@
 
 #### Argumentos
 
-1. `props` (_String_ | _String[]_): Padrão `['all']`. Fornece uma propriedade CSS, ou uma lista de propriedades CSS que devem ser transicionadas.
-2. `options` (_Object_ [opcional]):
+1. `props` (_string_ | _string[]_): Defaults to `['all']`. Fornece uma propriedade CSS, ou uma lista de propriedades CSS que devem ser transicionadas.
+2. `options` (_object_ [optional]):
 
-- `options.duration` (_String_ | _Number_ [opcional]): Padrão `theme.transitions.duration.standard`. Fornece a duração da transição.
-- `options.easing` (_String_ [opcional]): Padrão `theme.transitions.easing.easeInOut`. Fornece a atenuação para a transição.
-- `options.delay` (_String_ | _Number_ [opcional]): Padrão `0`. Fornece o atraso para a transição.
+- `options.duration` (_string_ | _number_ [optional]): Defaults to `theme.transitions.duration.standard`. Fornece a duração da transição.
+- `options.easing` (_string_ [opcional]): Padrão `theme.transitions.easing.easeInOut`. Fornece a atenuação para a transição.
+- `options.delay` (_string_ | _number_ [optional]): Defaults to `0`. Fornece o atraso para a transição.
 
 #### Retornos
 
@@ -33,7 +33,7 @@ theme.transitions.create(['background-color', 'transform']);
 
 #### Argumentos
 
-1. `height` (_Number_): A altura do componente.
+1. `height` (_number_): The height of the component.
 
 #### Retornos
 
@@ -50,13 +50,13 @@ const theme = createTheme({
       shortest: 150,
       shorter: 200,
       short: 250,
-      // mais básico recomendado periodicidade
+      // most basic recommended timing
       standard: 300,
-      // isto é para ser utilizado em animações complexas
+      // this is to be used in complex animations
       complex: 375,
-      // recomendado quando algo esta entrando na tela
+      // recommended when something is entering screen
       enteringScreen: 225,
-      // recomendado quando algo esta deixando a tela
+      // recommended when something is leaving screen
       leavingScreen: 195,
     },
   },
@@ -71,7 +71,7 @@ Você pode alterar alguns ou todos os valores de atenuação, ou fornecer valore
 const theme = createTheme({
   transitions: {
     easing: {
-      // Esta é a curva de atenuação mais comum.
+      // This is the most common easing curve.
       easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
       // Objetos que entram na tela na velocidade total e
       // lentamente desaceleram até um ponto de repouso.

@@ -9,12 +9,12 @@ materialDesign: https://material.io/components/progress-indicators
 
 <p class="description">一般にスピナーと呼ばれる進行状況インジケータは、指定されていない待機時間を表したり、プロセスの長さを表示します。</p>
 
-[進行状況インジケータ](https://material.io/design/components/progress-indicators.html) 、アプリの読み込み、フォームの送信、更新の保存など、進行中のプロセスのステータスについてユーザーに通知します。
+進行状況インジケータは 、アプリの読み込み、フォームの送信、更新の保存など、進行中のプロセスのステータスをユーザーに通知します。
 
-- **Determinate** 円形インジケーターは、インジケーターが0から360度に移動するときに、見えない円形のトラックを色で塗りつぶします。
+- **Determinate** インジケーターは、操作にかかる時間を表示します。
 - **Indeterminate**インジケータは、不特定の待機時間を視覚化します。
 
-**Determinate** インジケータは、操作にかかる時間を表示します。
+Componentのアニメーションは、JavaScript が読み込まれる前でも可能な限り動作するよう、CSS に依存しています。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -23,6 +23,10 @@ materialDesign: https://material.io/components/progress-indicators
 ### Circular indeterminate
 
 {{"demo": "pages/components/progress/CircularIndeterminate.js"}}
+
+### Circular color
+
+{{"demo": "pages/components/progress/CircularColor.js"}}
 
 ### Circular determinate
 
@@ -42,6 +46,10 @@ materialDesign: https://material.io/components/progress-indicators
 
 {{"demo": "pages/components/progress/LinearIndeterminate.js"}}
 
+### Linear color
+
+{{"demo": "pages/components/progress/LinearColor.js"}}
+
 ### Linear determinate
 
 {{"demo": "pages/components/progress/LinearDeterminate.js"}}
@@ -59,12 +67,12 @@ materialDesign: https://material.io/components/progress-indicators
 進捗コンポーネントは、0〜100の範囲の値を受け入れます。 これにより、これらがデフォルトの最小値/最大値であるスクリーンリーダーユーザーの作業が簡素化されます。 ただし、場合によっては、値がこの範囲外のデータソースを使用している場合があります。 範囲内の値を0〜100のスケールに簡単に変換する方法は次のとおりです。
 
 ```jsx
-// MIN = Minimum expected value
-// MAX = Maximium expected value
-// Function to normalise the values (MIN / MAX could be integrated)
+// MIN = 最小値
+// MAX = 最大値
+// 値を正規化する関数(MIN / MAX が積分される)
 const normalise = value => (value - MIN) * 100 / (MAX - MIN);
 
-// Example component that utilizes the `normalise` function at the point of render.
+// レンダリング時に「正規化」関数を使うComponentの例です
 function Progress(props) {
   return (
     <React.Fragment>
@@ -77,7 +85,7 @@ function Progress(props) {
 
 ## Customized progress
 
-コンポーネントのカスタマイズの例を次に示します。 詳細については、 [overrides documentation page](/customization/how-to-customize/)を参照してください。
+コンポーネントのカスタマイズの例を次に示します。 詳細については、 [こちら](/customization/how-to-customize/)を参照してください。
 
 {{"demo": "pages/components/progress/CustomizedProgressBars.js", "defaultCodeOpen": false}}
 
@@ -89,17 +97,17 @@ function Progress(props) {
 
 ## 制限事項
 
-### High CPU load
+### CPU負荷が高い場合
 
-負荷が高いと、ストロークダッシュアニメーションが失われるか、ランダムなCircularProgressリング幅が表示される場合があります。 メインレンダリングスレッドをブロックしないように、プロセッサを集中的に使用する操作をWebワーカーで、またはバッチで実行する必要があります。
+負荷が高いと、ストロークダッシュアニメーションが失われるか、ランダムな幅の `CircularProgress`が表示される場合があります。 メインレンダリングスレッドをブロックしないように、プロセッサを集中的に使用する操作をWebワーカーで、またはバッチで実行する必要があります。
 
 ![heavy load](/static/images/progress/heavy-load.gif)
 
-不可能な場合は、 `disableShrink` プロパティを活用して問題を軽減できます。 不可能な場合は、 `disableShrink` プロパティを活用して問題を軽減できます。 [この問題](https://github.com/mui-org/material-ui/issues/10327)参照してください。 不可能な場合は、 `disableShrink` プロパティを活用して問題を軽減できます。 [この問題](https://github.com/mui-org/material-ui/issues/10327)参照してください。
+不可能な場合は、 `disableShrink` プロパティを設定して問題を軽減できます。 [この問題](https://github.com/mui-org/material-ui/issues/10327)参照してください。
 
 {{"demo": "pages/components/progress/CircularUnderLoad.js"}}
 
-### High frequency updates
+### 高頻度な更新
 
 The `LinearProgress` uses a transition on the CSS transform property to provide a smooth update between different values. The default transition duration is 200ms. In the event a parent component updates the `value` prop too quickly, you will at least experience a 200ms delay between the re-render and the progress bar fully updated.
 
@@ -111,9 +119,9 @@ If you need to perform 30 re-renders per second or more, we recommend disabling 
 }
 ```
 
-### IE11
+### IE 11
 
-The circular progress component animation on IE11 is degraded. The stroke dash animation is not working (equivalent to `disableShrink`) and the circular animation wobbles. You can solve the latter with:
+The circular progress component animation on IE 11 is degraded. The stroke dash animation is not working (equivalent to `disableShrink`) and the circular animation wobbles. You can solve the latter with:
 
 ```css
 .MuiCircularProgress-indeterminate {

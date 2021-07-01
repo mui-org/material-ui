@@ -12,6 +12,20 @@ Make sure the `dir` attribute is set on the body, otherwise native components wi
 <body dir="rtl">
 ```
 
+As an alternative to the above, you can also wrap your application in an element with the `dir` attribute:
+
+```jsx
+function App() {
+  return (
+    <div dir="rtl">
+      <MyComponent />
+    </div>
+  );
+}
+```
+
+You need this JSS plugin to flip the styles: [jss-rtl](https://github.com/alitaheri/jss-rtl).
+
 ### 2. Thème
 
 Set the direction in your custom theme:

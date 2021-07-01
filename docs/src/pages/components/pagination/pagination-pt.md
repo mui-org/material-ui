@@ -48,7 +48,7 @@ Você pode especificar quantos dígitos exibir a qualquer lado da página atual 
 
 ## `usePagination`
 
-Para casos avançados de uso de customização, nós expomos um hook sem dependência, `usePagination()`. Ele aceita quase as mesmas opções que o componente de paginação, menos todas as propriedades relacionadas à renderização de JSX. O componente de paginação usa este hook internamente.
+For advanced customization use cases, a headless `usePagination()` hook is exposed. Ele aceita quase as mesmas opções que o componente de paginação, menos todas as propriedades relacionadas à renderização de JSX. The Pagination component is built on this hook.
 
 ```jsx
 import { usePagination } from '@material-ui/core/Pagination';

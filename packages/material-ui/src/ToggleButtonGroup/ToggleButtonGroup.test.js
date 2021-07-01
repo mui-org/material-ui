@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import ToggleButtonGroup, {
   toggleButtonGroupClasses as classes,
 } from '@material-ui/core/ToggleButtonGroup';
@@ -9,13 +9,11 @@ import ToggleButton from '@material-ui/core/ToggleButton';
 
 describe('<ToggleButtonGroup />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<ToggleButtonGroup />, () => ({
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     muiName: 'MuiToggleButtonGroup',
     refInstanceof: window.HTMLDivElement,
     skip: ['componentProp', 'componentsProp'],

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy, stub, useFakeTimers } from 'sinon';
-import { createClientRender, createMount, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { Transition } from 'react-transition-group';
 import Collapse, { collapseClasses as classes } from '@material-ui/core/Collapse';
 
 describe('<Collapse />', () => {
   const render = createClientRender();
-  const mount = createMount();
+
   const defaultProps = {
     in: true,
     children: <div />,
@@ -18,7 +18,6 @@ describe('<Collapse />', () => {
     classes,
     inheritComponent: Transition,
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiCollapse',
     testVariantProps: { orientation: 'horizontal' },

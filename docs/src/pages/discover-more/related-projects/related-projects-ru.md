@@ -6,14 +6,15 @@ Because the scope of problems Material-UI solves is bound, we try to play nicely
 
 ## Design resources
 
-<a href="https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-sketch" style="margin-left: 8px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-sketch.svg" alt="sketch" /></a>
-<a href="https://material-ui.com/store/items/figma-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-figma" style="margin-left: 32px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-figma.svg" alt="figma" /></a>
+<a href="https://material-ui.com/store/items/figma-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-figma" style="margin-left: 8px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-figma.svg" alt="figma" /></a>
+<a href="https://material-ui.com/store/items/adobe-xd-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-adobe-xd" style="margin-left: 32px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-adobe-xd.svg" alt="adobe-xd" /></a>
+<a href="https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-sketch" style="margin-left: 32px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-sketch.svg" alt="sketch" /></a>
 
 A set of reusable components for design tools is available, designed to match the React components, and to help you craft great products:
 
 - **Figma**: [Figma for Material-UI](https://material-ui.com/store/items/figma-react/?utm_source=docs&utm_medium=referral&utm_campaign=related-projects-sketch) — A large UI kit with over 600 handcrafted Material-UI's components 🎨.
+- [Adobe XD](https://material-ui.com/store/items/adobe-xd-react/?utm_source=docs&utm_medium=referral&utm_campaign=related-projects-adobe-xd): Большой UI-набор из более чем 600 самодельных компонентов Material-UI.
 - **Sketch**: [Sketch for Material-UI](https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=related-projects-sketch) — A large UI kit with over 600 handcrafted Material-UI's symbols 💎.
-- [Adobe XD](https://material-ui.com/store/items/adobe-xd-react/?utm_source=docs&utm_medium=referral&utm_campaign=related-projects-adobe-xd): A large UI kit with over 600 handcrafted Material-UI components.
 - **Framer**: [Framer for Material-UI](https://packages.framer.com/package/material-ui/material-ui) — A small MIT UI kit preview of handcrafted Material-UI's component.
 
 ## Images and illustrations
@@ -63,10 +64,6 @@ This is a collection of third-party projects that extend Material-UI.
 ### Image
 
 - [material-ui-image](https://mui.wertarbyte.com/#material-ui-image): Images are ugly until they're loaded. Materialize it with material image! It will fade in like the material image loading pattern suggests.
-
-### Pagination
-
-- [material-ui-flat-pagination](https://github.com/szmslab/material-ui-flat-pagination): A flat design pagination component for Material-UI.
 
 ### Scheduler/Calendar
 

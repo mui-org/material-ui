@@ -1,5 +1,5 @@
 ---
-title: React Fab component
+title: Composant React Fab
 components: Fab
 githubLabel: 'component: Fab'
 materialDesign: https://material.io/components/buttons-floating-action-button
@@ -9,21 +9,23 @@ materialDesign: https://material.io/components/buttons-floating-action-button
 
 <p class="description">A floating action button (FAB) performs the primary, or most common, action on a screen.</p>
 
-A [floating action button](https://material.io/design/components/buttons-floating-action-button.html) appears in front of all screen content, typically as a circular shape with an icon in its center. Il existe deux types de FAB: régulier et étendu.
+Un [bouton d'action flottant](https://material.io/design/components/buttons-floating-action-button.html) apparaît devant tout le contenu de l'écran, généralement sous la forme d'une forme circulaire avec une icône en son centre. Il existe deux types de FAB: régulier et étendu.
 
-Utilisez un FAB uniquement si c'est le moyen le plus approprié pour présenter l'action principale d'un écran. Only use a FAB if it is the most suitable way to present a screen's primary action.
+N'utilisez un FAB que s'il s'agit de la manière la plus appropriée de présenter l'action principale d'un écran. Un seul composant est recommandé par écran pour représenter l'action la plus courante.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Floating Action Button
+## FAB de base
 
 {{"demo": "pages/components/floating-action-button/FloatingActionButtons.js"}}
 
 ## Size
 
-Use the `size` prop for larger or smaller floating action buttons.
+By default, the size is `large`. Use the `size` prop for larger or smaller floating action buttons.
 
 {{"demo": "pages/components/floating-action-button/FloatingActionButtonSize.js"}}
+
+Le bouton d'action flottante s'anime sur l'écran en tant que matériau en expansion, par défaut.
 
 ## Animation
 

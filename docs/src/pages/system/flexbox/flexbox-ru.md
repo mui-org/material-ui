@@ -2,7 +2,7 @@
 
 <p class="description">Quickly manage the layout, alignment, and sizing of grid columns, navigation, components, and more with a full suite of responsive flexbox utilities.</p>
 
-Если вы **слабо знакомы (или совсем незнакомы) с Flexbox**, мы рекомендуем Вам прочитать это руководство [CSS-трюки Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
+Если вы **слабо знакомы (или совсем незнакомы) с Flexbox**, мы рекомендуем Вам прочитать это руководство [CSS-Tricks Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
 
 ## Properties for the Parent
 

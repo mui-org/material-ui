@@ -8,6 +8,7 @@ import MenuList from '../MenuList';
 import Paper from '../Paper';
 import Popover from '../Popover';
 import styled, { rootShouldForwardProp } from '../styles/styled';
+import useTheme from '../styles/useTheme';
 import useThemeProps from '../styles/useThemeProps';
 import { getMenuUtilityClass } from './menuClasses';
 
@@ -49,7 +50,7 @@ const MenuPaper = styled(Paper, {
   // height. This ensures a tapable area outside of the simple menu with which to dismiss
   // the menu.
   maxHeight: 'calc(100% - 96px)',
-  // Add iOS momentum scrolling.
+  // Add iOS momentum scrolling for iOS < 13.0
   WebkitOverflowScrolling: 'touch',
 });
 
@@ -63,7 +64,7 @@ const MenuMenuList = styled(MenuList, {
 });
 
 const Menu = React.forwardRef(function Menu(inProps, ref) {
-  const { isRtl, theme, ...props } = useThemeProps({ props: inProps, name: 'MuiMenu' });
+  const props = useThemeProps({ props: inProps, name: 'MuiMenu' });
 
   const {
     autoFocus = true,
@@ -72,7 +73,6 @@ const Menu = React.forwardRef(function Menu(inProps, ref) {
     MenuListProps = {},
     onClose,
     open,
-    // eslint-disable-next-line react/prop-types
     PaperProps = {},
     PopoverClasses,
     transitionDuration = 'auto',
@@ -80,6 +80,9 @@ const Menu = React.forwardRef(function Menu(inProps, ref) {
     variant = 'selectedMenu',
     ...other
   } = props;
+
+  const theme = useTheme();
+  const isRtl = theme.direction === 'rtl';
 
   const styleProps = {
     ...props,
@@ -157,7 +160,10 @@ const Menu = React.forwardRef(function Menu(inProps, ref) {
     <MenuRoot
       classes={PopoverClasses}
       onClose={onClose}
-      anchorOrigin={isRtl ? RTL_ORIGIN : LTR_ORIGIN}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: isRtl ? 'right' : 'left',
+      }}
       transformOrigin={isRtl ? RTL_ORIGIN : LTR_ORIGIN}
       PaperProps={{
         component: MenuPaper,
@@ -243,6 +249,10 @@ Menu.propTypes /* remove-proptypes */ = {
    * If `true`, the component is shown.
    */
   open: PropTypes.bool.isRequired,
+  /**
+   * @ignore
+   */
+  PaperProps: PropTypes.object,
   /**
    * `classes` prop applied to the [`Popover`](/api/popover/) element.
    */

@@ -1,6 +1,6 @@
 {
   "name": "@material-ui/unstyled",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-alpha.39",
   "private": false,
   "author": "Material-UI Team",
   "description": "Unstyled React components with which to implement custom design systems.",
@@ -33,7 +33,8 @@
     "prebuild": "rimraf build tsconfig.build.tsbuildinfo",
     "release": "yarn build && npm publish build --tag next",
     "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/material-ui-unstyled/**/*.test.{js,ts,tsx}'",
-    "typescript": "tslint -p tsconfig.json \"{src,test}/**/*.{spec,d}.{ts,tsx}\" && tsc -p tsconfig.json"
+    "typescript": "tslint -p tsconfig.json \"{src,test}/**/*.{spec,d}.{ts,tsx}\" && tsc -p tsconfig.json",
+    "typescript:module-augmentation": "node scripts/testModuleAugmentation.js"
   },
   "peerDependencies": {
     "@types/react": "^16.8.6 || ^17.0.0",
@@ -47,7 +48,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@material-ui/utils": "5.0.0-alpha.35",
+    "@material-ui/utils": "5.0.0-beta.0",
     "clsx": "^1.0.4",
     "prop-types": "^15.7.2",
     "react-is": "^17.0.0"

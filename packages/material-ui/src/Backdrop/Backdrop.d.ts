@@ -9,30 +9,32 @@ import { TransitionProps } from '../transitions/transition';
 import { Theme } from '../styles';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 
-export type BackdropTypeMap<D extends React.ElementType = 'span', P = {}> =
-  ExtendBackdropUnstyledTypeMap<{
-    props: P &
-      Partial<Omit<FadeProps, 'children'>> & {
-        /**
-         * Override or extend the styles applied to the component.
-         */
-        classes?: BackdropUnstyledTypeMap['props']['classes'];
-        /**
-         * If `true`, the component is shown.
-         */
-        open: boolean;
-        /**
-         * The system prop that allows defining system overrides as well as additional CSS styles.
-         */
-        sx?: SxProps<Theme>;
-        /**
-         * The duration for the transition, in milliseconds.
-         * You may specify a single timeout for all transitions, or individually with an object.
-         */
-        transitionDuration?: TransitionProps['timeout'];
-      };
-    defaultComponent: D;
-  }>;
+export type BackdropTypeMap<
+  D extends React.ElementType = 'span',
+  P = {},
+> = ExtendBackdropUnstyledTypeMap<{
+  props: P &
+    Partial<Omit<FadeProps, 'children'>> & {
+      /**
+       * Override or extend the styles applied to the component.
+       */
+      classes?: BackdropUnstyledTypeMap['props']['classes'];
+      /**
+       * If `true`, the component is shown.
+       */
+      open: boolean;
+      /**
+       * The system prop that allows defining system overrides as well as additional CSS styles.
+       */
+      sx?: SxProps<Theme>;
+      /**
+       * The duration for the transition, in milliseconds.
+       * You may specify a single timeout for all transitions, or individually with an object.
+       */
+      transitionDuration?: TransitionProps['timeout'];
+    };
+  defaultComponent: D;
+}>;
 
 type BackdropRootProps = NonNullable<BackdropTypeMap['props']['componentsProps']>['root'];
 

@@ -1,5 +1,5 @@
 ---
-title: React Drawer component
+title: Composant React Drawer
 components: Drawer, SwipeableDrawer
 githubLabel: 'component: Drawer'
 materialDesign: https://material.io/components/navigation-drawer
@@ -9,31 +9,31 @@ materialDesign: https://material.io/components/navigation-drawer
 
 <p class="description">Les tiroirs de navigation permettent d'accéder aux destinations de votre application. Les feuilles latérales sont des surfaces contenant du contenu supplémentaire ancré au bord gauche ou droit de l'écran.</p>
 
-[Navigation drawers](https://material.io/design/components/navigation-drawer.html) (or "sidebars") provide access to destinations and app functionality, such as switching accounts. They can either be permanently on-screen or controlled by a navigation menu icon.
+[Navigation drawers](https://material.io/design/components/navigation-drawer.html) (or "sidebars") permettent d'accéder aux destinations et aux fonctionnalités de l'application, telles que le changement de compte. Ils peuvent être : soit affichés en permanence à l'écran, soit contrôlés par une une icône de menu de navigation
 
-[Side sheets](https://material.io/design/components/sheets-side.html) are supplementary surfaces primarily used on tablet and desktop.
+[Side sheets](https://material.io/design/components/sheets-side.html) (appelé: "Les feuilles latérales") sont des surfaces supplémentaires principalement utilisées sur les tablettes et les ordinateurs de bureau.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Tiroir temporaire
 
-Temporary navigation drawers can toggle open or closed. Closed by default, the drawer opens temporarily above all other content until a section is selected.
+Les drawers de navigation temporaire peuvent activer l'ouverture ou la fermeture. Fermés par défaut, le drawer s'ouvre temporairement au dessus de tout autre contenu jusqu'à qu'une section soit sélectionnée.
 
-The Drawer can be cancelled by clicking the overlay or pressing the Esc key. It closes when an item is selected, handled by controlling the `open` prop.
+Le drawer peut être annulé en cliquant ailleurs dans la zone sombre ou en appuyant sur la touche Échap. Il se ferme quand un élément est sélectionné et est géré par le contrôle de la propriété `open`.
 
 {{"demo": "pages/components/drawers/TemporaryDrawer.js"}}
 
-### Swipeable
+### Swipeable (glissable)
 
 You can make the drawer swipeable with the `SwipeableDrawer` component.
 
-This component comes with a 2 kB gzipped payload overhead. Some low-end mobile devices won't be able to follow the fingers at 60 FPS. You can use the `disableBackdropTransition` property to help.
+Ce composant est livré avec une charge utile gzip de 2 kB. Certains appareils mobiles bas de gamme ne peuvent pas suivre les doigts à 60 FPS. Vous pouvez utiliser le prop `disableBackdropTransition` pour vous aider.
 
 {{"demo": "pages/components/drawers/SwipeableTemporaryDrawer.js"}}
 
-The following properties are used in this documentation website for optimal usability of the component:
+Les propriétés suivantes sont utilisées dans la documentation du site pour une utilisation optimale du composant:
 
-- iOS is hosted on high-end devices. The performance will be good enough. The backdrop transition can be enabled without dropping frames.
+- iOS est hébergé sur des appareils haut de gamme. The performance will be good enough. The backdrop transition can be enabled without dropping frames.
 - iOS has a "swipe to go back" feature that interferes with the discovery feature, so discovery has to be disabled.
 
 ```jsx
@@ -43,17 +43,17 @@ const iOS =
 <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} />;
 ```
 
-### Swipeable edge
+### Bord glissant
 
-You can configure the `SwipeableDrawer` to have a visible edge when closed.
+Vous pouvez configurer le `SwipeableDrawer` pour avoir un bord visible lorsqu'il est fermé.
 
-If you are on a desktop, you can toggle the drawer with the "OPEN" button. If you are on mobile, you can open the demo in CodeSandbox ("edit" icon) and swipe.
+Si vous êtes sur un bureau, vous pouvez basculer le tiroir avec le bouton "OUVERT". Si vous êtes sur mobile, vous pouvez ouvrir la démo dans CodeSandbox (icône "modifier") et glisser.
 
 {{"demo": "pages/components/drawers/SwipeableEdgeDrawer.js", "iframe": true, "height": 400, "maxWidth": 300}}
 
-### Keep mounted
+### Garder monté
 
-To ensure a temporary drawer is not unmounted, specify the `ModalProps` prop like:
+Pour vous assurer qu'un tiroir temporaire n'est pas démonté, spécifiez la prop `ModalProps` comme :
 
 ```jsx
 <Drawer
@@ -64,11 +64,11 @@ To ensure a temporary drawer is not unmounted, specify the `ModalProps` prop lik
 />
 ```
 
-More details in the [Modal performance section](/components/modal/#performance).
+Plus de détails dans la [section Performances modales](/components/modal/#performance).
 
-## Responsive drawer
+## Tiroir adaptatif
 
-The `Hidden` responsive helper component allows showing different types of drawer depending on the screen width. A `temporary` drawer is shown for small screens while a `permanent` drawer is shown for wider screens.
+A `temporary` drawer is shown for small screens while a `permanent` drawer is shown for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 
@@ -94,9 +94,9 @@ The mini variant is recommended for apps sections that need quick selection acce
 
 ## Tiroir permanent
 
-Permanent navigation drawers are always visible and pinned to the left edge, at the same elevation as the content or background. They cannot be closed.
+Les tiroirs de navigation permanents sont toujours visibles et épinglés au bord gauche, à la même altitude que le contenu ou l'arrière-plan. Ils ne peuvent pas être fermés.
 
-Applications axées sur la consommation d'informations utilisant une hiérarchie de gauche à droite.
+Les tiroirs de navigation permanents sont les **recommandés par défaut pour le bureau**.
 
 ### Navigation pleine hauteur
 

@@ -12,10 +12,11 @@ function handleClick(event) {
 
 export default function CustomSeparator() {
   const breadcrumbs = [
-    <Link key="1" color="inherit" href="/" onClick={handleClick}>
+    <Link underline="hover" key="1" color="inherit" href="/" onClick={handleClick}>
       Material-UI
     </Link>,
     <Link
+      underline="hover"
       key="2"
       color="inherit"
       href="/getting-started/installation/"

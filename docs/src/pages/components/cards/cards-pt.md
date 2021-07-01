@@ -15,11 +15,11 @@ Eles devem ser relevantes, de fácil verificação e apresentar informações ú
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Cartão Simples
+## Basic card
 
 Apesar dos componentes cartões poderem suportar múltiplas ações tais como: controles de UI, e overflow de menu, use-os com moderação e lembre-se que cartões são pontos de entrada de informações mais complexas e detalhadas.
 
-{{"demo": "pages/components/cards/SimpleCard.js", "bg": true}}
+{{"demo": "pages/components/cards/BasicCard.js", "bg": true}}
 
 ### Cartão Delineado
 

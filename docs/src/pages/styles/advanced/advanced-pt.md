@@ -6,7 +6,7 @@
 
 Adicione um `ThemeProvider` para o nível superior de sua aplicação para passar um tema pela árvore de componentes do React. Dessa maneira, você poderá acessar o objeto de tema em funções de estilo.
 
-> Este exemplo cria um objeto de tema para componentes customizados. Se você pretende usar alguns dos componentes do Material-UI, você precisa fornecer uma estrutura de tema mais rica usando o método `createTheme()`. Vá até a [seção de temas](/customization/theming/) para aprender como construir seu tema customizado do Material-UI.
+> Este exemplo cria um objeto de tema para componentes customizados. If you intend to use some of the Material-UI's components you need to provide a richer theme structure using the `createTheme()` method. Vá até a [seção de temas](/customization/theming/) para aprender como construir seu tema customizado do Material-UI.
 
 ```jsx
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -182,18 +182,15 @@ Claro, você é livre para usar plugins adicionais. Aqui está um exemplo com o 
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
-import rtl from 'jss-rtl'
+import { StylesProvider, jssPreset } from '@material-ui/styles';
+import rtl from 'jss-rtl';
 
 const jss = create({
   plugins: [...jssPreset().plugins, rtl()],
 });
 
 export default function App() {
-  return (
-    <StylesProvider jss={jss}>
-      ... </StylesProvider>
-  );
+  return <StylesProvider jss={jss}>...</StylesProvider>;
 }
 ```
 
@@ -231,12 +228,12 @@ Por padrão, os estilos são inseridos **por último** no elemento `<head>` da s
 O componente `StylesProvider` tem uma propriedade `injectFirst` para injetar as tags de estilo em **primeiro** no cabeçalho (menor prioridade):
 
 ```jsx
-import { StylesProvider } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/styles';
 
 <StylesProvider injectFirst>
   {/* Sua árvore de componentes.
       Componentes com estilo podem sobrescrever os estilos de Material-UI. */}
-</StylesProvider>
+</StylesProvider>;
 ```
 
 ### `makeStyles` / `withStyles` / `styled`
@@ -245,7 +242,7 @@ A injeção de tags de estilo acontece na **mesma ordem** com as invocações de
 
 ```jsx
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
 const useStylesBase = makeStyles({
   root: {
@@ -260,14 +257,14 @@ const useStyles = makeStyles({
 });
 
 export default function MyComponent() {
-  // Ordem não importa
+  // Order doesn't matter
   const classes = useStyles();
   const classesBase = useStylesBase();
 
-  // Ordem não importa
-  const className = clsx(classes.root, classesBase.root)
+  // Order doesn't matter
+  const className = clsx(classes.root, classesBase.root);
 
-  // color: red 🔴 vence.
+  // color: red 🔴 wins.
   return <div className={className} />;
 }
 ```
@@ -291,7 +288,7 @@ A abordagem mais simples é adicionar um comentário HTML no `<head>` que determ
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 const jss = create({
   ...jssPreset(),
@@ -317,7 +314,7 @@ export default function App() {
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 const jss = create({
   ...jssPreset(),
@@ -336,7 +333,7 @@ codesandbox.io impede o acesso ao elemento `<head>`. Para contornar esse comport
 
 ```jsx
 import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 const styleNode = document.createComment('jss-insertion-point');
 document.head.insertBefore(styleNode, document.head.firstChild);
@@ -358,7 +355,7 @@ This example returns a string of HTML and inlines the critical CSS required, rig
 
 ```jsx
 import ReactDOMServer from 'react-dom/server';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ServerStyleSheets } from '@material-ui/styles';
 
 function render() {
   const sheets = new ServerStyleSheets();

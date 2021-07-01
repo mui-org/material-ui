@@ -1,16 +1,16 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "alt": "Used in combination with <code>src</code> or <code>srcSet</code> to provide an alt attribute for the rendered <code>img</code> element.",
-    "children": "Used to render icon or text elements inside the Avatar if <code>src</code> is not set. This can be an element, or just a string.",
+    "alt": "Wird in Kombination mit <code>src</code> oder <code>srcSet</code> verwendet, um ein alternatives Attribut für das gerenderte <code>img</code> Element bereitzustellen.",
+    "children": "Wird verwendet, um Symbole oder Textelemente innerhalb des Avatars zu rendern, wenn <code>src</code> nicht gesetzt ist. Dies kann ein Element oder nur ein String sein.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "imgProps": "Attributes applied to the <code>img</code> element if the component is used to display an image. It can be used to listen for the loading error event.",
-    "sizes": "The <code>sizes</code> attribute for the <code>img</code> element.",
-    "src": "The <code>src</code> attribute for the <code>img</code> element.",
-    "srcSet": "The <code>srcSet</code> attribute for the <code>img</code> element. Use this attribute for responsive image display.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
-    "variant": "The shape of the avatar."
+    "sizes": "Das <code>size</code> Attribut für das <code>img</code> Element.",
+    "src": "Das <code>src</code> Attribut für das <code>img</code> Element.",
+    "srcSet": "Das <code>srcSet</code> Attribut für das <code>img</code> Element. Verwenden Sie dieses Attribut für eine responsive Bildanzeige.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
+    "variant": "Die Form des Avatars."
   },
   "classDescriptions": {
     "root": {
@@ -38,11 +38,11 @@
     },
     "img": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the img element",
-      "conditions": "either <code>src</code> or <code>srcSet</code> is defined"
+      "nodeName": "das img Element",
+      "conditions": "entweder <code>src</code> oder <code>srcSet</code> ist definiert"
     },
     "fallback": {
-      "description": "Styles applied to the fallback icon"
+      "description": "Stile, die auf das Fallback-Symbol angewendet werden"
     }
   }
 }

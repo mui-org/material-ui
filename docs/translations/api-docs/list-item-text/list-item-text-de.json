@@ -8,7 +8,8 @@
     "primary": "The main content element.",
     "primaryTypographyProps": "These props will be forwarded to the primary typography component (as long as disableTypography is not <code>true</code>).",
     "secondary": "The secondary content element.",
-    "secondaryTypographyProps": "These props will be forwarded to the secondary typography component (as long as disableTypography is not <code>true</code>)."
+    "secondaryTypographyProps": "These props will be forwarded to the secondary typography component (as long as disableTypography is not <code>true</code>).",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

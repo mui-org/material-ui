@@ -1,42 +1,45 @@
 {
-  "componentDescription": "Drop in replacement of the <code>Radio</code>, <code>Switch</code> and <code>Checkbox</code> component.\nUse this component if you want to display an extra label.",
+  "componentDescription": "Drop-in replacement of the `Radio`, `Switch` and `Checkbox` component.\nUse this component if you want to display an extra label.",
   "propDescriptions": {
     "checked": "If <code>true</code>, the component appears selected.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "componentProps": "The props used for each slot inside.",
     "control": "A control element. For instance, it can be a <code>Radio</code>, a <code>Switch</code> or a <code>Checkbox</code>.",
     "disabled": "If <code>true</code>, the control is disabled.",
+    "disableTypography": "If <code>true</code>, the label is rendered as it is passed without an additional typography node.",
     "inputRef": "Pass a ref to the <code>input</code> element.",
     "label": "The text to be used in an enclosing label element.",
     "labelPlacement": "The position of the label.",
     "onChange": "Callback fired when the state is changed.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new checked state by accessing <code>event.target.checked</code> (boolean).",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The value of the component."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "labelPlacementStart": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>labelPlacement=\"start\"</code>"
     },
     "labelPlacementTop": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>labelPlacement=\"top\"</code>"
     },
     "labelPlacementBottom": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>labelPlacement=\"bottom\"</code>"
     },
     "disabled": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>disabled={true}</code>"
     },
     "label": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the label's Typography component"
     }
   }

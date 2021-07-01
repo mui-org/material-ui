@@ -1,7 +1,7 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
+    "children": "O conteúdo do componente.",
     "value": "The value of the currently selected <code>Tab</code>."
   },
   "classDescriptions": {}

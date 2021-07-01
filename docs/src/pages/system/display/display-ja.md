@@ -1,6 +1,6 @@
 # ディスプレイ
 
-<p class="description">一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 Quickly and responsively toggle the display value of components and more with the display utilities.</p>
+<p class="description">一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 一般的な値の一部のサポートと、印刷時の表示を制御するための追加機能が含まれています。 Quickly and responsively toggle the display value of components and more with the display utilities.</p>
 
 ## 例
 

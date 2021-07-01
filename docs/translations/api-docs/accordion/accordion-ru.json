@@ -3,13 +3,15 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "defaultExpanded": "If <code>true</code>, expands the accordion by default.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "expanded": "If <code>true</code>, expands the accordion, otherwise collapse it. Setting this prop enables control over the accordion.",
-    "onChange": "Callback fired when the expand/collapse state is changed.<br><br><strong>Signature:</strong><br><code>function(event: object, expanded: boolean) =&gt; void</code><br><em>event:</em> The event source of the callback. <strong>Warning</strong>: This is a generic event not a change event.<br><em>expanded:</em> The <code>expanded</code> state of the accordion.",
-    "square": "If <code>true</code>, rounded corners are disabled.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
+    "defaultExpanded": "Если <code>true</code>, аккордеон по умолчанию развернут.",
+    "disabled": "Если <code>true</code>, компонент отключен.",
+    "disableGutters": "If <code>true</code>, it removes the margin between two expanded accordion items and the increase of height.",
+    "expanded": "Если <code>true</code>, разворачивает аккордеон, в противном случае - сворачивает его. Установка этого свойства позволяет управлять аккордеоном.",
+    "onChange": "Коллбэк, вызываемый при изменении состояния \"развернут/свернут\".<br><br><strong>Сигнатура:</strong><br><code>function(event: object, expanded: boolean) =&gt; void</code><br><em>event:</em> Объект события. <strong>Предупреждение</strong>: Это универсальное событие, а не событие изменения.<br><em>expanded:</em> Состояние <code>expanded</code>.",
+    "square": "Если <code>true</code>, скругленные углы отключены.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "TransitionComponent": "Компонент, используемый в анимации сворачивания. <a href=\"/components/transitions/#transitioncomponent-prop\">Прочтите это руководство</a>, чтобы узнать больше о требованиях к этому компоненту.",
+    "TransitionProps": "Свойства, передаваемые в анимируемый компонент. По умолчанию элемент основывается на компоненте <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>."
   },
   "classDescriptions": {
     "root": {
@@ -30,10 +32,15 @@
       "nodeName": "the root element",
       "conditions": "<code>disabled={true}</code>"
     },
+    "gutters": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disableGutters={true}</code>"
+    },
     "region": {
-      "description": "Styles applied to {{nodeName}}, {{conditions}}.",
-      "nodeName": "the region element",
-      "conditions": "the container of the children"
+      "description": "Стили, применяемые к {{nodeName}}, {{conditions}}.",
+      "nodeName": "элементу региона",
+      "conditions": "контейнеру с детьми"
     }
   }
 }

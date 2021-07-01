@@ -28,7 +28,7 @@ const mainColors = [
 const mainPalette = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 const altPalette = ['A100', 'A200', 'A400', 'A700'];
 
-const ColorGroup = styled('ul')(({ theme }) => ({
+const ColorGroup = styled('ul', { name: 'ColorGroup' })(({ theme }) => ({
   padding: 0,
   margin: theme.spacing(0, 2, 2, 0),
   flexGrow: 1,
@@ -38,13 +38,15 @@ const ColorGroup = styled('ul')(({ theme }) => ({
   },
 }));
 
-const ColorValue = styled('span')(({ theme }) => ({
+const ColorValue = styled('span', { name: 'ColorValue' })(({ theme }) => ({
   ...theme.typography.caption,
   color: 'inherit',
   fontWeight: 'inherit',
 }));
 
-const ColorBlock = styled('li')(({ theme }) => theme.typography.body2);
+const ColorBlock = styled('li', { name: 'ColorBlock' })(
+  ({ theme }) => theme.typography.body2,
+);
 
 function getColorBlock(theme, colorName, colorValue, colorTitle) {
   const bgColor = colors[colorName][colorValue];
@@ -105,7 +107,7 @@ function getColorGroup(options) {
   return (
     <ColorGroup key={cssColor}>
       {getColorBlock(theme, cssColor, 500, true)}
-      <Box sx={{ height: 4 }} />
+      <Box sx={{ height: 4, listStyle: 'none' }} component="li" role="separator" />
       {colorsList}
     </ColorGroup>
   );

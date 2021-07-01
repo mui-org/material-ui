@@ -16,19 +16,39 @@ Use [radio buttons](https://material.io/design/components/selection-controls.htm
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## RadioGroup
+## Radio group
 
 `RadioGroup` - это полезная обертка, используемая для группировки `компонентов Radio`, она обеспечивает более простой API и управление с клавиатуры.
 
 {{"demo": "pages/components/radio-buttons/RadioButtonsGroup.js"}}
 
-To lay out the buttons horizontally, set the `row` prop: `<RadioGroup row />`.
+### Direction
+
+To lay out the buttons horizontally, set the `row` prop:
+
+{{"demo": "pages/components/radio-buttons/RowRadioButtonsGroup.js"}}
+
+### Controlled
+
+You can control the radio with the `value` and `onChange` props:
+
+{{"demo": "pages/components/radio-buttons/ControlledRadioButtonsGroup.js"}}
 
 ## Standalone radio buttons
 
 `Radio` can also be used standalone, without the RadioGroup wrapper.
 
 {{"demo": "pages/components/radio-buttons/RadioButtons.js"}}
+
+## Size
+
+Use the `size` prop or customize the font size of the svg icons to change the size of the radios.
+
+{{"demo": "pages/components/radio-buttons/SizeRadioButtons.js"}}
+
+## Цвет
+
+{{"demo": "pages/components/radio-buttons/ColorRadioButtons.js"}}
 
 ## Расположение метки
 
@@ -44,7 +64,7 @@ In general, radio buttons should have a value selected by default. If this is no
 
 ## Customized radios
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/radio-buttons/CustomizedRadios.js"}}
 
@@ -63,11 +83,11 @@ For advanced customization use cases, a `useRadioGroup()` hook is exposed. It re
 
 #### Возвращает
 
-`value` (_Object_):
+`value` (_object_):
 
-- `value.name` (_String_ [optional]): The name used to reference the value of the control.
-- `value.onChange` (_Void_ [optional]): Callback fired when a radio button is selected.
-- `value.value` (_Any_ [optional]): Value of the selected radio button.
+- `value.name` (_string_ [optional]): The name used to reference the value of the control.
+- `value.onChange` (_func_ [optional]): Callback fired when a radio button is selected.
+- `value.value` (_any_ [optional]): Value of the selected radio button.
 
 #### Пример
 
@@ -75,7 +95,7 @@ For advanced customization use cases, a `useRadioGroup()` hook is exposed. It re
 
 ## Бесплатно
 
-- [Чекбоксы. Radio Buttons (радиокнопки) ](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/)
+- [Checkboxes или Radio Buttons](https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/)
 
 ## Доступность
 
@@ -85,7 +105,7 @@ For advanced customization use cases, a `useRadioGroup()` hook is exposed. It re
 - Когда метка не может быть использована, необходимо добавить атрибут непосредственно на поле ввода. В этом случае можно применить дополнительный атрибут (например, `aria-label`, `aria-labelledby`, `title`) через свойство `inputProps`.
 
 ```jsx
-<RadioButton
+<Radio
   value="radioA"
   inputProps={{
     'aria-label': 'Radio A',

@@ -91,7 +91,7 @@ There are so many new things, we can't be exhaustive. Aside from what we have al
 
 ## What's next?
 
-- **Material Design.** The Google Design team has recently released a new iteration on the Material Design specification, it's focused on themability. This is great news! We will do our best to be up to date. It also confirms that heavily investing in customizability for v1 was a good call. We will continue our efforts.
+- **Material Design.** The Google Design team has recently released a new iteration on the Material Design guidelines, it's focused on themability. This is great news! We will do our best to be up to date. It also confirms that heavily investing in customizability for v1 was a good call. We will continue our efforts.
 
 - **More utils.** We want to work on new utility components: Spacing, Display, Color, etc.
 - **Documentation.** We want to host multiple version of the documentation. Each minor release will bring a new hosted version of our documentation. Right now, we have v1.0.0, and come v1.1.0's release, we'll add that too. Prior releases will continue to be linked from our navigation as is already the case for v0.x.

@@ -2,39 +2,33 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "Le contenu du composant.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details."
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "position": "The position where the timeline&#39;s item should appear.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
       "description": "Styles applied to the root element."
     },
-    "alignLeft": {
+    "positionLeft": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>align=\"left\"</code>"
+      "conditions": "<code>position=\"left\"</code>"
     },
-    "alignRight": {
+    "positionRight": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>align=\"right\"</code>"
+      "conditions": "<code>position=\"right\"</code>"
     },
-    "alignAlternate": {
+    "positionAlternate": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>align=\"alternate\"</code>"
+      "conditions": "<code>position=\"alternate\"</code>"
     },
     "missingOppositeContent": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "TimelineOppositeContent isn't provided"
-    },
-    "content": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the timeline content node"
-    },
-    "oppositeContent": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the timeline opposite content node"
     }
   }
 }

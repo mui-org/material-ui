@@ -52,7 +52,7 @@ The Typography component makes it easy to apply a default set of font weights an
 
 ## テーマ
 
-状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 このテーマのe [`typography`](/customization/default-theme/?expand-path=$.typography)キーを活用できることを願っています。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 このテーマのe [`typography`](/customization/default-theme/?expand-path=$.typography)キーを活用できることを願っています。
+状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 状況によっては、 `Typography` コンポーネントを使用できない場合があります。 このテーマのe [`typography`](/customization/default-theme/?expand-path=$.typography)キーを活用できることを願っています。 このテーマのe [`typography`](/customization/default-theme/?expand-path=$.typography)キーを活用できることを願っています。
 
 {{"demo": "pages/components/typography/TypographyTheme.js"}}
 
@@ -74,19 +74,21 @@ Typographyコンポーネントは、 `variantMapping` プロパティを使用�
 
 ```js
 const theme = createTheme({
-  props: {
+  components: {
     MuiTypography: {
-      variantMapping: {
-        h1: 'h2',
-        h2: 'h2',
-        h3: 'h2',
-        h4: 'h2',
-        h5: 'h2',
-        h6: 'h2',
-        subtitle1: 'h2',
-        subtitle2: 'h2',
-        body1: 'span',
-        body2: 'span',
+      defaultProps: {
+        variantMapping: {
+          h1: 'h2',
+          h2: 'h2',
+          h3: 'h2',
+          h4: 'h2',
+          h5: 'h2',
+          h6: 'h2',
+          subtitle1: 'h2',
+          subtitle2: 'h2',
+          body1: 'span',
+          body2: 'span',
+        },
       },
     },
   },
@@ -96,6 +98,14 @@ const theme = createTheme({
 ## Adding & disabling variants
 
 In addition to using the default typography variants, you can add custom ones, or disable any you don't need. See the [Adding & disabling variants](/customization/typography/#adding-amp-disabling-variants) example for more info.
+
+## System props
+
+As a CSS utility component, the `Typography` supports all [`system`](/system/properties/) properties. You can use them as prop directly on the component. For instance, a margin-top:
+
+```jsx
+<Typography mt={2}>
+```
 
 ## アクセシビリティ
 

@@ -57,6 +57,38 @@ The prop is converted into a CSS property using the [`theme.spacing()`](/customi
 
 {{"demo": "pages/components/grid/SpacingGrid.js", "bg": true}}
 
+## Responsive values
+
+You can switch the props' value based on the active breakpoint.
+For instance, we can implement the ["recommended"](https://material.io/design/layout/responsive-layout-grid.html) responsive layout grid of Material Design.
+
+{{"demo": "pages/components/grid/ResponsiveGrid.js", "bg": true}}
+
+Responsive values is supported by:
+
+- `columns`
+- `columnSpacing`
+- `direction`
+- `rowSpacing`
+- `spacing`
+- all the [other props](#system-props) of the system
+
+> ⚠️ When using a responsive `columns` prop, each grid item needs its corresponding breakpoint.
+> For instance, this is not working. The grid item misses the value for `md`:
+>
+> ```jsx
+> <Grid container columns={{ xs: 4, md: 12 }}>
+>   <Grid item xs={2} />
+> </Grid>
+> ```
+
+### Row & column spacing
+
+The `rowSpacing` and `columnSpacing` props allow for specifying the row and column gaps independently.
+It's similar to the `row-gap` and `column-gap` properties of [CSS Grid](/system/grid/#row-gap-amp-column-gap).
+
+{{"demo": "pages/components/grid/RowAndColumnSpacing.js", "bg": true}}
+
 ## Interactive
 
 Below is an interactive demo that lets you explore the visual results of the different settings:
@@ -72,7 +104,7 @@ That also means you can set the width of one _item_ and the others will automati
 
 ## Complex Grid
 
-The following demo doesn't follow the Material Design specification, but illustrates how the grid can be used to build complex layouts.
+The following demo doesn't follow the Material Design guidelines, but illustrates how the grid can be used to build complex layouts.
 
 {{"demo": "pages/components/grid/ComplexGrid.js", "bg": true}}
 

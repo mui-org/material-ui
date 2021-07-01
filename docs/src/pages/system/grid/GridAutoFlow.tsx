@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box, { BoxProps } from '@material-ui/core/Box';
 
-const GridItem = (props: BoxProps) => {
+function Item(props: BoxProps) {
   const { sx, ...other } = props;
   return (
     <Box
@@ -11,14 +11,14 @@ const GridItem = (props: BoxProps) => {
         p: 1,
         borderRadius: 1,
         textAlign: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 19,
+        fontWeight: '700',
         ...sx,
       }}
       {...other}
     />
   );
-};
+}
 
 export default function GridAutoFlow() {
   return (
@@ -27,16 +27,16 @@ export default function GridAutoFlow() {
         sx={{
           display: 'grid',
           gridAutoFlow: 'row',
-          gridTemplateColumns: 'repeat(5, 0.2fr)',
+          gridTemplateColumns: 'repeat(5, 1fr)',
           gridTemplateRows: 'repeat(2, 50px)',
           gap: 1,
         }}
       >
-        <GridItem sx={{ gridColumn: '1', gridRow: '1 / 3', border: 1 }}>1</GridItem>
-        <GridItem sx={{ border: 1 }}>2</GridItem>
-        <GridItem sx={{ border: 1 }}>3</GridItem>
-        <GridItem sx={{ border: 1 }}>4</GridItem>
-        <GridItem sx={{ gridColumn: '5', gridRow: '1 / 3', border: 1 }}>5</GridItem>
+        <Item sx={{ gridColumn: '1', gridRow: '1 / 3' }}>1</Item>
+        <Item>2</Item>
+        <Item>3</Item>
+        <Item>4</Item>
+        <Item sx={{ gridColumn: '5', gridRow: '1 / 3' }}>5</Item>
       </Box>
     </div>
   );

@@ -6,7 +6,7 @@
     "direction": "Defines the <code>flex-direction</code> style property. It is applied for all screen sizes.",
     "divider": "Add an element between each child.",
     "spacing": "Defines the space between immediate children.",
-    "sx": "The system prop, which allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+    "sx": "The system prop, which allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
   },
   "classDescriptions": {}
 }

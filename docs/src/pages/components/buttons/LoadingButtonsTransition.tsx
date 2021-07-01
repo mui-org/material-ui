@@ -28,8 +28,13 @@ export default function LoadingButtonsTransition() {
         }
         label="Loading"
       />
-      <LoadingButton onClick={handleClick} loading={loading} variant="outlined">
-        Submit
+      <LoadingButton
+        onClick={handleClick}
+        loading={loading}
+        variant="outlined"
+        disabled
+      >
+        disabled
       </LoadingButton>
       <LoadingButton
         onClick={handleClick}

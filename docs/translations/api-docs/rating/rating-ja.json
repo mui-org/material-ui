@@ -3,19 +3,21 @@
   "propDescriptions": {
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
     "emptyIcon": "The icon to display when empty.",
     "emptyLabelText": "The label read when the rating input is empty.",
-    "getLabelText": "Accepts a function which returns a string value that provides a user-friendly name for the current value of the rating.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.<br><br><strong>Signature:</strong><br><code>function(value: number) =&gt; string</code><br><em>value:</em> The rating label&#39;s value to format.",
+    "getLabelText": "Accepts a function which returns a string value that provides a user-friendly name for the current value of the rating. This is important for screen reader users.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.<br><br><strong>Signature:</strong><br><code>function(value: number) =&gt; string</code><br><em>value:</em> The rating label&#39;s value to format.",
+    "highlightSelectedOnly": "If <code>true</code>, only the selected icon will be highlighted.",
     "icon": "The icon element.",
     "IconContainerComponent": "The component containing the icon.",
     "max": "Maximum rating.",
     "name": "The name attribute of the radio <code>input</code> elements. This input <code>name</code> should be unique within the page. Being unique within a form is insufficient since the <code>name</code> is used to generated IDs.",
-    "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value.",
+    "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number | null) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value.",
     "onChangeActive": "Callback function that is fired when the hover state changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value.",
     "precision": "The minimum increment value change allowed.",
     "readOnly": "Removes all hover effects and pointer events.",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The rating value."
   },
   "classDescriptions": {
@@ -26,6 +28,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>size=\"small\"</code>"
+    },
+    "sizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code>"
     },
     "sizeLarge": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

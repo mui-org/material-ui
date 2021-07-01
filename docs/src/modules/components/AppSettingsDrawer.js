@@ -21,10 +21,9 @@ import { useTranslate } from 'docs/src/modules/utils/i18n';
 import { useChangeTheme } from 'docs/src/modules/components/ThemeContext';
 import { getCookie } from 'docs/src/modules/utils/helpers';
 
-const styles = (theme) => ({
+const styles = () => ({
   paper: {
     width: 352,
-    backgroundColor: theme.palette.background.level1,
   },
   heading: {
     margin: '16px 0 8px',

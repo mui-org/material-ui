@@ -1,1 +1,20 @@
-{ "componentDescription": "", "propDescriptions": {}, "classDescriptions": {} }
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
+  },
+  "classDescriptions": {
+    "root": {
+      "description": "Styles applied to the root element."
+    },
+    "week": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the week element"
+    },
+    "daySkeleton": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the day element"
+    }
+  }
+}

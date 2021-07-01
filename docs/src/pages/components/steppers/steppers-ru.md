@@ -56,7 +56,7 @@ Labels can be placed below the step icon by setting the `alternativeLabel` prop 
 
 ### Non-linear - Alternative Label
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/steppers/CustomizedSteppers.js"}}
 

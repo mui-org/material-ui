@@ -32,7 +32,7 @@ export interface LinkTypeMap<P = {}, D extends React.ElementType = 'a'> {
       TypographyClasses?: TypographyProps['classes'];
       /**
        * Controls when the link should have an underline.
-       * @default 'hover'
+       * @default 'always'
        */
       underline?: 'none' | 'hover' | 'always';
       /**
@@ -61,7 +61,9 @@ declare const Link: OverridableComponent<LinkTypeMap>;
 export type LinkBaseProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'color'> &
   DistributiveOmit<TypographyProps, 'children' | 'component' | 'color' | 'variant'>;
 
-export type LinkProps<D extends React.ElementType = LinkTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<LinkTypeMap<P, D>, D>;
+export type LinkProps<
+  D extends React.ElementType = LinkTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<LinkTypeMap<P, D>, D>;
 
 export default Link;

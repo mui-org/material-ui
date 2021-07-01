@@ -118,7 +118,7 @@ const theme = createTheme({
 
 - [`<Box display>`](/system/display/#hiding-elements)
 - [`themes.breakpoints.up(x)`](/customization/breakpoints/#css-media-queries)
-- 或者 [`<Hidden implementation="css">`](/components/hidden/#css)
+- or [`sx prop`](/system/basics/#heading-the-sx-prop)
 
 如果上述的方案都不可用，那么你也可以继续阅读本节文档的其余内容。
 
@@ -181,13 +181,13 @@ function handleRender(req, res) {
 
 #### 参数
 
-1. `query` (_String_ | _Function_)：代表要处理的媒体查询的字符串或接受主题（在上下文中）的回调函数，它会返回一个字符串。
-2. `options` (_Object_ [optional]):
+1. `query` (_string_ | _func_): A string representing the media query to handle or a callback function accepting the theme (in the context) that returns a string.
+2. `options` (_object_ [optional]):
 
-- `options.defaultMatches` （*布尔值* [optional]）： 作为 `window.matchMedia()` 在服务器上不可用， 我们在第一次安装时返回默认匹配。 默认值为 `false`。
-- `options.matchMedia` (_Function_ [optional])：你可以提供你自己的 _matchMedia_ 实现。 用其您可以处理一个 iframe 内容窗口。
-- `options.noSsr` (*Boolean* [optional]): 默认值为 `false`。 要和服务器进行同步使用（hydration），hook 需要渲染两次。 第一次使用 `false` 表示服务端的值，第二次使用已解析的值。 这个双向渲染周期带有一个缺点。 速度较慢。 如果你只需要 **客户端**渲染，那么可以将该选项设置为 `true`。
-- `options.ssrMatchMedia` (_Function_ [optional])：你可以在 [服务器端渲染上下文](#server-side-rendering) 中提供你自己的 _matchMedia_ 实现。
+- `options.defaultMatches` (_bool_ [optional]): As `window.matchMedia()` is unavailable on the server, we return a default matches during the first mount. 默认值为 `false`。
+- `options.matchMedia` (_func_ [optional]): You can provide your own implementation of _matchMedia_. 用其您可以处理一个 iframe 内容窗口。
+- `options.noSsr` (_bool_ [optional]): Defaults to `false`. 要和服务器进行同步使用（hydration），hook 需要渲染两次。 第一次使用 `false` 表示服务端的值，第二次使用已解析的值。 这个双向渲染周期带有一个缺点。 速度较慢。 如果你只需要 **客户端**渲染，那么可以将该选项设置为 `true`。
+- `options.ssrMatchMedia` (_func_ [optional]): You can provide your own implementation of _matchMedia_ in a [server-side rendering context](#server-side-rendering).
 
 注意：你可以使用主题的 [`默认属性`](/customization/theme-components/#default-props) 功能和 `MuiUseMediaQuery` 键（key）来更改默认的选项。
 

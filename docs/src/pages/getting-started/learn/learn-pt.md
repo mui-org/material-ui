@@ -52,5 +52,5 @@ Ao começar a aprender o Material-UI, você pode encontrar postagens de blogs de
 
 [![cookbook](/static/blog/material-ui-v4-is-out/cookbook.png)](https://www.amazon.com/gp/product/1789615224/)
 
-- **Builder Book**: Aprenda como criar um aplicativo web totalmente com JavaScript a partir do zero, usando uma stack moderna de JavaScript e Material-UI.
-  - 📘 [The book](https://builderbook.org/book)
+- **Builder Book**: Learn how to build a full-stack JavaScript and SaaS web application from scratch, using a Modern JavaScript stack and Material-UI.
+  - 📘 [O livro](https://builderbook.org/)

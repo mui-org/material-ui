@@ -1,21 +1,19 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createClientRender, createMount, describeConformanceV5 } from 'test/utils';
-import Typography, { typographyClasses } from '@material-ui/core/Typography';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
+import Typography from '@material-ui/core/Typography';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import { stepIconClasses as iconClasses } from '@material-ui/core/StepIcon';
 import StepLabel, { stepLabelClasses as classes } from '@material-ui/core/StepLabel';
 
 describe('<StepLabel />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<StepLabel />, () => ({
     classes,
     inheritComponent: 'span',
     muiName: 'MuiStepLabel',
-    mount,
     render,
     refInstanceof: window.HTMLSpanElement,
     testVariantProps: { error: true },
@@ -84,8 +82,8 @@ describe('<StepLabel />', () => {
         </Step>,
       );
 
-      const typography = container.querySelector(`.${typographyClasses.root}`);
-      expect(typography).to.have.class(classes.active);
+      const label = container.querySelector(`.${classes.label}`);
+      expect(label).to.have.class(classes.active);
     });
 
     it('renders <StepIcon> with the <Step /> prop active set to true', () => {
@@ -108,8 +106,8 @@ describe('<StepLabel />', () => {
         </Step>,
       );
 
-      const typography = container.querySelector(`.${typographyClasses.root}`);
-      expect(typography).not.to.have.class(classes.active);
+      const label = container.querySelector(`.${classes.label}`);
+      expect(label).not.to.have.class(classes.active);
     });
   });
 
@@ -121,8 +119,8 @@ describe('<StepLabel />', () => {
         </Step>,
       );
 
-      const typography = container.querySelector(`.${typographyClasses.root}`);
-      expect(typography).to.have.class(classes.active);
+      const label = container.querySelector(`.${classes.label}`);
+      expect(label).to.have.class(classes.active);
     });
 
     it('renders <StepIcon> with the prop completed set to true', () => {
@@ -143,8 +141,8 @@ describe('<StepLabel />', () => {
     it('renders <Typography> with the className error', () => {
       const { container } = render(<StepLabel error>Step One</StepLabel>);
 
-      const typography = container.querySelector(`.${typographyClasses.root}`);
-      expect(typography).to.have.class(classes.error);
+      const label = container.querySelector(`.${classes.label}`);
+      expect(label).to.have.class(classes.error);
     });
 
     it('renders <StepIcon> with the prop error set to true', () => {
@@ -183,6 +181,24 @@ describe('<StepLabel />', () => {
       );
 
       getByText('Optional Text');
+    });
+  });
+
+  describe('componentsProps: label', () => {
+    it('spreads the props on the label element', () => {
+      const { getByTestId } = render(
+        <StepLabel
+          componentsProps={{
+            label: {
+              'data-testid': 'label',
+              className: 'step-label-test',
+            },
+          }}
+        >
+          Label
+        </StepLabel>,
+      );
+      expect(getByTestId('label')).to.have.class('step-label-test');
     });
   });
 });

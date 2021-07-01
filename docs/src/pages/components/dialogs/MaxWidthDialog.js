@@ -44,9 +44,8 @@ export default function MaxWidthDialog() {
         maxWidth={maxWidth}
         open={open}
         onClose={handleClose}
-        aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
+        <DialogTitle>Optional sizes</DialogTitle>
         <DialogContent>
           <DialogContentText>
             You can set my maximum width and whether to adapt or not.

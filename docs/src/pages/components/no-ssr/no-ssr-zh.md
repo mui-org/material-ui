@@ -17,7 +17,7 @@ components: NoSsr
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
-## 客户端延迟
+## Client-side deferring
 
 {{"demo": "pages/components/no-ssr/SimpleNoSsr.js"}}
 

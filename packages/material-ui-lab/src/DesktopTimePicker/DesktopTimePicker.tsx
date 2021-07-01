@@ -55,22 +55,23 @@ const DesktopTimePicker = React.forwardRef(function DesktopTimePicker<TDate>(
     value,
     ...other
   } = props;
-  const AllDateInputProps = { ...inputProps, ...other, ref, validationError };
+  const DateInputProps = { ...inputProps, ...other, ref, validationError };
 
   return (
     <DesktopWrapper
       {...wrapperProps}
-      DateInputProps={AllDateInputProps}
+      DateInputProps={DateInputProps}
       KeyboardDateInputComponent={KeyboardDateInput}
       PopperProps={PopperProps}
       TransitionComponent={TransitionComponent}
     >
+      {/* @ts-ignore time picker has no component slot for the calendar header */}
       <Picker
         {...pickerProps}
         autoFocus
         toolbarTitle={props.label || props.toolbarTitle}
         ToolbarComponent={ToolbarComponent}
-        DateInputProps={AllDateInputProps}
+        DateInputProps={DateInputProps}
         {...other}
       />
     </DesktopWrapper>
@@ -105,6 +106,13 @@ DesktopTimePicker.propTypes /* remove-proptypes */ = {
    * className applied to the root component.
    */
   className: PropTypes.string,
+  /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   */
+  components: PropTypes.shape({
+    OpenPickerIcon: PropTypes.elementType,
+  }),
   /**
    * If `true` the popup or dialog will immediately close after submitting full date.
    * @default `true` for Desktop, `false` for Mobile (based on the chosen wrapper and `desktopModeMediaQuery` prop).
@@ -241,10 +249,6 @@ DesktopTimePicker.propTypes /* remove-proptypes */ = {
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps: PropTypes.object,
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon: PropTypes.node,
   /**
    * First view to show.
    */

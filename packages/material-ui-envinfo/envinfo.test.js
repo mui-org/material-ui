@@ -2,6 +2,8 @@ const { expect } = require('chai');
 const { execFileSync } = require('child_process');
 const path = require('path');
 
+const isRunningOnWindows = process.platform === 'win32';
+
 describe('@material-ui/envinfo', () => {
   const packagePath = __dirname;
   before(function beforeHook() {
@@ -12,15 +14,22 @@ describe('@material-ui/envinfo', () => {
 
     // Building might take some time
     this.timeout(10000);
-    execFileSync('yarn', ['build'], { cwd: packagePath, stdio: 'pipe' });
+    execFileSync(isRunningOnWindows ? 'yarn.cmd' : 'yarn', ['build'], {
+      cwd: packagePath,
+      stdio: 'pipe',
+    });
   });
 
   function execEnvinfo(args) {
     const buildPath = path.resolve(packagePath, 'build');
-    return execFileSync('npx', ['--package', buildPath, 'envinfo', ...args], {
-      encoding: 'utf-8',
-      stdio: 'pipe',
-    });
+    return execFileSync(
+      isRunningOnWindows ? 'npx.cmd' : 'npx',
+      ['--package', buildPath, 'envinfo', ...args],
+      {
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      },
+    );
   }
 
   it('includes info about the environment relevant to Material-UI', function test() {

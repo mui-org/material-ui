@@ -5,6 +5,7 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "disableGutters": "If <code>true</code>, disables gutter padding.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

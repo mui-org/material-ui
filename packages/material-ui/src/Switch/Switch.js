@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { refType } from '@material-ui/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
-import { alpha, darken, lighten } from '../styles/colorManipulator';
+import { alpha, darken, lighten } from '@material-ui/system';
 import capitalize from '../utils/capitalize';
 import SwitchBase from '../internal/SwitchBase';
 import useThemeProps from '../styles/useThemeProps';
@@ -41,11 +41,11 @@ const SwitchRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.edge && styles[`edge${capitalize(styleProps.edge)}`]),
-      ...styles[`size${capitalize(styleProps.size)}`],
-    };
+    return [
+      styles.root,
+      styleProps.edge && styles[`edge${capitalize(styleProps.edge)}`],
+      styles[`size${capitalize(styleProps.size)}`],
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */
@@ -93,11 +93,11 @@ const SwitchSwitchBase = styled(SwitchBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.switchBase,
-      ...styles.input,
-      ...(styleProps.color !== 'default' && styles[`color${capitalize(styleProps.color)}`]),
-    };
+    return [
+      styles.switchBase,
+      styles.input,
+      styleProps.color !== 'default' && styles[`color${capitalize(styleProps.color)}`],
+    ];
   },
 })(
   ({ theme }) => ({
@@ -253,7 +253,7 @@ Switch.propTypes /* remove-proptypes */ = {
    * @default 'primary'
    */
   color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-    PropTypes.oneOf(['default', 'primary', 'secondary']),
+    PropTypes.oneOf(['default', 'primary', 'secondary', 'error', 'info', 'success', 'warning']),
     PropTypes.string,
   ]),
   /**

@@ -2,14 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { spy, stub } from 'sinon';
 import { expect } from 'chai';
-import {
-  createMount,
-  describeConformanceV5,
-  act,
-  createClientRender,
-  fireEvent,
-  screen,
-} from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent, screen } from 'test/utils';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { SliderUnstyled } from '@material-ui/unstyled';
 import Slider, { sliderClasses as classes } from '@material-ui/core/Slider';
@@ -35,17 +28,15 @@ describe('<Slider />', () => {
   });
 
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Slider value={0} />, () => ({
     classes,
     inheritComponent: SliderUnstyled,
     render,
-    mount,
     refInstanceof: window.HTMLSpanElement,
     muiName: 'MuiSlider',
     testDeepOverrides: { slotName: 'thumb', slotClassName: classes.thumb },
-    testVariantProps: { color: 'primary', orientation: 'vertical' },
+    testVariantProps: { color: 'primary', orientation: 'vertical', size: 'small' },
     testStateOverrides: { prop: 'color', value: 'secondary', styleKey: 'colorSecondary' },
   }));
 
@@ -1168,6 +1159,26 @@ describe('<Slider />', () => {
       expect(handleChange.args[0][1]).to.deep.equal([20, 35]);
       expect(handleChange.args[1][1]).to.deep.equal([20, 20]);
       expect(document.activeElement).to.have.attribute('data-index', '1');
+    });
+  });
+
+  describe('prop: size', () => {
+    it('should render default slider', () => {
+      render(<Slider />);
+
+      const root = document.querySelector(`.${classes.root}`);
+      const thumb = document.querySelector(`.${classes.thumb}`);
+      expect(root).not.to.have.class(classes.sizeSmall);
+      expect(thumb).not.to.have.class(classes.thumbSizeSmall);
+    });
+
+    it('should render small slider', () => {
+      render(<Slider size="small" />);
+
+      const root = document.querySelector(`.${classes.root}`);
+      const thumb = document.querySelector(`.${classes.thumb}`);
+      expect(root).to.have.class(classes.sizeSmall);
+      expect(thumb).to.have.class(classes.thumbSizeSmall);
     });
   });
 });

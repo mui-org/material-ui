@@ -1,18 +1,16 @@
 import * as React from 'react';
-import { createClientRender, createMount, describeConformanceV5, screen } from 'test/utils';
+import { createClientRender, describeConformanceV5, screen } from 'test/utils';
 import { expect } from 'chai';
 import Button from '@material-ui/core/Button';
 import LoadingButton, { loadingButtonClasses as classes } from '@material-ui/lab/LoadingButton';
 
 describe('<LoadingButton />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<LoadingButton>Conformance?</LoadingButton>, () => ({
     classes,
     inheritComponent: Button,
     render,
-    mount,
     muiName: 'MuiLoadingButton',
     testVariantProps: { loading: true },
     refInstanceof: window.HTMLButtonElement,

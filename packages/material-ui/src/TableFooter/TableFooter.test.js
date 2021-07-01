@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import TableFooter, { tableFooterClasses as classes } from '@material-ui/core/TableFooter';
 import Tablelvl2Context from '../Table/Tablelvl2Context';
 
 describe('<TableFooter />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   function renderInTable(node) {
     return render(<table>{node}</table>);
@@ -19,7 +18,7 @@ describe('<TableFooter />', () => {
       const { container, ...other } = render(<table>{node}</table>);
       return { container: container.firstChild, ...other };
     },
-    mount: (node) => {
+    wrapMount: (mount) => (node) => {
       const wrapper = mount(<table>{node}</table>);
       return wrapper.find('table').childAt(0);
     },

@@ -1,60 +1,60 @@
 ---
-title: Composant React Grid List
+title: Composant React Image List
 components: ImageList, ImageListItem, ImageListItemBar
 materialDesign: https://material.io/components/image-lists
 githubLabel: 'component: ImageList'
 ---
 
-# Grid list
+# Liste d'images
 
-<p class="description">Les listes de grille affichent une collection d'images dans une grille organisée.</p>
+<p class="description">Les listes d'images affichent une collection d'images dans une grille organisée.</p>
 
-[Les listes de grille](https://material.io/design/components/image-lists.html) représentent une collection d'éléments dans un motif répété. Ils aident à améliorer la compréhension visuelle du contenu qu'ils contiennent.
+Les listes d'images représentent une collection d'éléments dans un motif répété. Ils aident à améliorer la compréhension visuelle du contenu qu'ils contiennent.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Grid list contenant uniquement des images
+## Liste d'images standard
 
-Standard image lists are best for items of equal importance. They have a uniform container size, ratio, and spacing.
+Les listes d'images standard sont idéales pour les éléments d'égale importance. Ils ont une taille, un rapport et un espacement de conteneur uniformes.
 
 {{"demo": "pages/components/image-list/StandardImageList.js"}}
 
-## Grid list avec barres de titre
+## Liste d'images matelassées
 
-Quilted image lists emphasize certain items over others in a collection. They create hierarchy using varied container sizes and ratios.
+Les listes d'images matelassées mettent en valeur certains éléments par rapport à d'autres dans une collection. Ils créent une hiérarchie en utilisant des tailles et des ratios de conteneurs variés.
 
 {{"demo": "pages/components/image-list/QuiltedImageList.js"}}
 
-## Grid List sur une ligne
+## Liste d'images tissées
 
-Woven image lists use alternating container ratios to create a rhythmic layout. A woven image list is best for browsing peer content.
+Les listes d'images tissées utilisent des ratios de conteneurs alternés pour créer une mise en page rythmique. Une liste d'images tissées est idéale pour parcourir le contenu des pairs.
 
 {{"demo": "pages/components/image-list/WovenImageList.js"}}
 
-## Grid list avancée
+## Liste d'images avancée
 
-Masonry image lists use dynamically sized container heights that reflect the aspect ratio of each image. This image list is best used for browsing uncropped peer content.
+Les listes d'images avancées utilisent des hauteurs de conteneurs de taille dynamique qui reflètent le rapport hauteur/largeur de chaque image. Cette liste d'images est mieux utilisée pour parcourir le contenu de pairs non rogné.
 
 {{"demo": "pages/components/image-list/MasonryImageList.js"}}
 
-## Image list with title bars
+## Liste d'images avec barres de titre
 
 Cet exemple illustre l'utilisation de `ImageListItemBar` pour ajouter une superposition à chaque `ImageListItem`. La superposition peut accueillir un `titre`, `sous - titre` et une action secondaire - dans cet exemple un `IconButton`.
 
 {{"demo": "pages/components/image-list/TitlebarImageList.js"}}
 
-### Title bar below image (standard)
+### Barre de titre sous l'image (standard)
 
-The title bar can be placed below the image.
+La barre de titre peut être placée sous l'image.
 
 {{"demo": "pages/components/image-list/TitlebarBelowImageList.js"}}
 
-### Title bar below image (masonry)
+### Barre de titre sous l'image (avancé)
 
 {{"demo": "pages/components/image-list/TitlebarBelowMasonryImageList.js"}}
 
-## Custom image list
+## Liste d'images personnalisée
 
-Les tuiles ont une barre de titre personnalisée, placée en haut et avec un dégradé personnalisé `titleBackground`. L'action secondaire `IconButton` est positionnée sur la gauche. Les tuiles ont une barre de titre personnalisée, placée en haut et avec un dégradé personnalisé `titleBackground`.
+Dans cet exemple, les éléments ont une barre de titre personnalisée, positionnée en haut et avec un dégradé `titleBackground` personnalisé. L'action secondaire `IconButton` est positionnée sur la gauche. La prop `gap` est utilisée pour ajuster l'écart entre les éléments.
 
 {{"demo": "pages/components/image-list/CustomImageList.js", "defaultCodeOpen": false}}

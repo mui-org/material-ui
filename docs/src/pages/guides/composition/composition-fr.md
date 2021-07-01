@@ -114,22 +114,6 @@ import { Link } from 'react-router-dom';
 
 You can find the details in the [TypeScript guide](/guides/typescript/#usage-of-component-prop).
 
-## Routing libraries
-
-The integration with third-party routing libraries is achieved with the `component` prop. The behavior is identical to the description of the prop above. Here are a few demos with [react-router-dom](https://github.com/ReactTraining/react-router). They cover the Button, Link, and List components. You can apply the same strategy with all the components (BottomNavigation, Card, etc.).
-
-### Button
-
-{{"demo": "pages/guides/composition/ButtonRouter.js"}}
-
-### Link
-
-{{"demo": "pages/guides/composition/LinkRouter.js"}}
-
-### List (Liste)
-
-{{"demo": "pages/guides/composition/ListRouter.js"}}
-
 ## Caveat with refs
 
 This section covers caveats when using a custom component as `children` or for the `component` prop.

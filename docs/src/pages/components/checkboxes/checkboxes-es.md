@@ -22,19 +22,41 @@ Si tienes varias opciones en una lista, puedes ahorrar espacio usando checkboxes
 
 ## Checkbox con FormControlLabel
 
-A checkbox input can only have two states in a form: checked or unchecked. It either submits its value or doesn't. Visually, there are actually three states a checkbox can be in: checked, unchecked, or indeterminate.
-
-`Checkbox` puede ser provisto de una etiqueta gracias al componente `FormControlLabel`.
-
-## Checkboxes con FormGroup
-
 `Checkbox` puede ser provisto de una etiqueta gracias al componente `FormControlLabel`.
 
 {{"demo": "pages/components/checkboxes/CheckboxLabels.js"}}
 
-## Ubicación de Etiqueta
+## Tamaño
+
+`Checkbox` puede ser provisto de una etiqueta gracias al componente `FormControlLabel`.
+
+{{"demo": "pages/components/checkboxes/SizeCheckboxes.js"}}
+
+## Color
 
 `FormGroup` es un contenedor muy útil usado para agrupar componentes de controles de selección que proporciona una API más sencilla.
+
+## Ubicación de Etiqueta
+
+{{"demo": "pages/components/checkboxes/IconCheckboxes.js"}}
+
+## Controlled
+
+Puede cambiar la ubicación de la etiqueta:
+
+{{"demo": "pages/components/checkboxes/ControlledCheckbox.js"}}
+
+## Cuándo usarlo
+
+A checkbox input can only have two states in a form: checked or unchecked. It either submits its value or doesn't. Visually, there are actually three states a checkbox can be in: checked, unchecked, or indeterminate.
+
+{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js", "defaultCodeOpen": false}}
+
+> ⚠️ When indeterminate is set, the value of the `checked` prop only impacts the form submitted values. It has no accessibility or UX implications.
+
+## Accesibilidad
+
+🎨 Si estás buscando inspiración, puedes mirar [los ejemplos de MUI Treasury](https://mui-treasury.com/styles/checkbox).
 
 {{"demo": "pages/components/checkboxes/CheckboxesGroup.js"}}
 
@@ -48,7 +70,7 @@ Puede cambiar la ubicación de la etiqueta:
 
 He aquí un ejemplo de personalización del componente. Puedes aprender más sobre esto en la [sección Personalizando Componentes de la documentación](/customization/how-to-customize/).
 
-{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js", "defaultCodeOpen": false}}
+{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js"}}
 
 🎨 Si estás buscando inspiración, puedes mirar [los ejemplos de MUI Treasury](https://mui-treasury.com/styles/checkbox).
 

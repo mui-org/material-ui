@@ -7,6 +7,7 @@ import ComponentLinkHeader from 'docs/src/modules/components/ComponentLinkHeader
 import AppLayoutDocs from 'docs/src/modules/components/AppLayoutDocs';
 import { useTranslate, useUserLanguage } from 'docs/src/modules/utils/i18n';
 
+// TODO: Only import on demand via @material-ui/markdown/loader
 const markdownComponents = {
   'modules/components/ComponentLinkHeader.js': ComponentLinkHeader,
 };

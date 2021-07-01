@@ -1,6 +1,6 @@
 {
   "name": "@material-ui/styled-engine",
-  "version": "5.0.0-alpha.34",
+  "version": "5.0.0-beta.0",
   "private": false,
   "author": "Material-UI Team",
   "description": "styled() API wrapper package for emotion.",

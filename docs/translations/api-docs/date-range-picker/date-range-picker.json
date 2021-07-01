@@ -40,7 +40,6 @@
     "onViewChange": "Callback fired on view change.",
     "open": "Control the popup or dialog open state.",
     "OpenPickerButtonProps": "Props to pass to keyboard adornment button.",
-    "openPickerIcon": "Icon displaying for open picker button.",
     "orientation": "Force rendering in particular orientation.",
     "PopperProps": "Popper props passed down to <a href=\"https://material-ui.com/api/popper/\">Popper</a> component.",
     "readOnly": "Make picker read only.",

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import ModalUnstyled, {
   modalUnstyledClasses as classes,
 } from '@material-ui/unstyled/ModalUnstyled';
 
 describe('<ModalUnstyled />', () => {
-  const mount = createMount();
   const render = createClientRender();
   let savedBodyStyle;
 
@@ -26,7 +25,6 @@ describe('<ModalUnstyled />', () => {
       classes,
       inheritComponent: 'div',
       render,
-      mount,
       refInstanceof: window.HTMLDivElement,
       skip: [
         'rootClass', // portal, can't determin the root

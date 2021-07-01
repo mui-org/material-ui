@@ -3,7 +3,7 @@ import { SxProps } from '@material-ui/system';
 import { Theme } from '../styles';
 import { InternalStandardProps as StandardProps } from '..';
 import { SnackbarContentProps } from '../SnackbarContent';
-import { TransitionHandlerProps, TransitionProps } from '../transitions/transition';
+import { TransitionProps } from '../transitions/transition';
 import { ClickAwayListenerProps } from '../ClickAwayListener';
 import { SnackbarClasses } from './snackbarClasses';
 
@@ -14,8 +14,7 @@ export interface SnackbarOrigin {
 
 export type SnackbarCloseReason = 'timeout' | 'clickaway';
 
-export interface SnackbarProps
-  extends StandardProps<React.HTMLAttributes<HTMLDivElement> & Partial<TransitionHandlerProps>> {
+export interface SnackbarProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
   /**
    * The action to display. It renders after the message, at the end of the snackbar.
    */

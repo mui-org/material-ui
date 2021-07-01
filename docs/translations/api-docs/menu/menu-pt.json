@@ -4,23 +4,27 @@
     "anchorEl": "A HTML element, or a function that returns it. It&#39;s used to set the position of the menu.",
     "autoFocus": "If <code>true</code> (Default) will focus the <code>[role=&quot;menu&quot;]</code> if no focusable child is found. Disabled children are not focusable. If you set this prop to <code>false</code> focus will be placed on the parent modal container. This has severe accessibility implications and should only be considered if you manage focus otherwise.",
     "children": "Menu contents, normally <code>MenuItem</code>s.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "disableAutoFocusItem": "When opening the menu will not focus the active item but the <code>[role=&quot;menu&quot;]</code> unless <code>autoFocus</code> is also set to <code>false</code>. Not using the default means not following WAI-ARIA authoring practices. Please be considerate about possible accessibility implications.",
     "MenuListProps": "Props applied to the <a href=\"/api/menu-list/\"><code>MenuList</code></a> element.",
     "onClose": "Callback fired when the component requests to be closed.<br><br><strong>Signature:</strong><br><code>function(event: object, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>reason:</em> Can be: <code>&quot;escapeKeyDown&quot;</code>, <code>&quot;backdropClick&quot;</code>, <code>&quot;tabKeyDown&quot;</code>.",
     "open": "Control the popup` open state.",
     "PopoverClasses": "<code>classes</code> prop applied to the <a href=\"/api/popover/\"><code>Popover</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "transitionDuration": "The length of the transition in <code>ms</code>, or &#39;auto&#39;",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component.",
-    "variant": "The variant to use. Use <code>menu</code> to prevent selected items from impacting the initial focus and the vertical alignment relative to the anchor element."
+    "TransitionProps": "Propriedades aplicadas ao elemento de transição. Por padrão, o elemento é baseado neste componente <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>.",
+    "variant": "The variant to use. Use <code>menu</code> to prevent selected items from impacting the initial focus."
   },
   "classDescriptions": {
+    "root": {
+      "description": "Estilos aplicados ao elemento raiz."
+    },
     "paper": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Paper component"
     },
     "list": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the List component via `MenuList`"
     }
   }

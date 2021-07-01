@@ -23,10 +23,7 @@ const ListItemSecondaryActionRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.disableGutters && styles.disableGutters),
-    };
+    return [styles.root, styleProps.disableGutters && styles.disableGutters];
   },
 })(({ styleProps }) => ({
   position: 'absolute',

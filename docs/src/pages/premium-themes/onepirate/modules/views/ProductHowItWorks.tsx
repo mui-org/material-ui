@@ -1,118 +1,106 @@
 import * as React from 'react';
 import { Theme } from '@material-ui/core/styles';
-import { withStyles, WithStyles } from '@material-ui/styles';
+import { SxProps } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 
-const styles = (theme: Theme) =>
-  ({
-    root: {
-      display: 'flex',
-      backgroundColor: theme.palette.secondary.light,
-      overflow: 'hidden',
-    },
-    container: {
-      marginTop: theme.spacing(10),
-      marginBottom: theme.spacing(15),
-      position: 'relative',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    item: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: theme.spacing(0, 5),
-    },
-    title: {
-      marginBottom: theme.spacing(14),
-    },
-    number: {
-      fontSize: 24,
-      fontFamily: theme.typography.fontFamily,
-      color: theme.palette.secondary.main,
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-    image: {
-      height: 55,
-      marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(4),
-    },
-    curvyLines: {
-      pointerEvents: 'none',
-      position: 'absolute',
-      top: -180,
-      opacity: 0.7,
-    },
-    button: {
-      marginTop: theme.spacing(8),
-    },
-  } as const);
+const item: SxProps<Theme> = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  px: 5,
+};
 
-function ProductHowItWorks(props: WithStyles<typeof styles>) {
-  const { classes } = props;
+const number = {
+  fontSize: 24,
+  fontFamily: 'default',
+  color: 'secondary.main',
+  fontWeight: 'medium',
+};
 
+const image = {
+  height: 55,
+  my: 4,
+};
+
+function ProductHowItWorks() {
   return (
-    <section className={classes.root}>
-      <Container className={classes.container}>
-        <img
+    <Box
+      component="section"
+      sx={{ display: 'flex', bgcolor: 'secondary.light', overflow: 'hidden' }}
+    >
+      <Container
+        sx={{
+          mt: 10,
+          mb: 15,
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          component="img"
           src="/static/themes/onepirate/productCurvyLines.png"
-          className={classes.curvyLines}
           alt="curvy lines"
+          sx={{
+            pointerEvents: 'none',
+            position: 'absolute',
+            top: -180,
+            opacity: 0.7,
+          }}
         />
-        <Typography
-          variant="h4"
-          marked="center"
-          className={classes.title}
-          component="h2"
-        >
+        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
           How it works
         </Typography>
         <div>
           <Grid container spacing={5}>
             <Grid item xs={12} md={4}>
-              <div className={classes.item}>
-                <div className={classes.number}>1.</div>
-                <img
+              <Box sx={item}>
+                <Box sx={number}>1.</Box>
+                <Box
+                  component="img"
                   src="/static/themes/onepirate/productHowItWorks1.svg"
                   alt="suitcase"
-                  className={classes.image}
+                  sx={image}
                 />
                 <Typography variant="h5" align="center">
                   Appointment every Wednesday 9am.
                 </Typography>
-              </div>
+              </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <div className={classes.item}>
-                <div className={classes.number}>2.</div>
-                <img
+              <Box sx={item}>
+                <Box sx={number}>2.</Box>
+                <Box
+                  component="img"
                   src="/static/themes/onepirate/productHowItWorks2.svg"
                   alt="graph"
-                  className={classes.image}
+                  sx={image}
                 />
                 <Typography variant="h5" align="center">
                   First come, first served. Our offers are in limited quantities, so
                   be quick.
                 </Typography>
-              </div>
+              </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <div className={classes.item}>
-                <div className={classes.number}>3.</div>
-                <img
+              <Box sx={item}>
+                <Box sx={number}>3.</Box>
+                <Box
+                  component="img"
                   src="/static/themes/onepirate/productHowItWorks3.svg"
                   alt="clock"
-                  className={classes.image}
+                  sx={image}
                 />
                 <Typography variant="h5" align="center">
                   {'New offers every week. New experiences, new surprises. '}
                   {'Your Sundays will no longer be alike.'}
                 </Typography>
-              </div>
+              </Box>
             </Grid>
           </Grid>
         </div>
@@ -120,14 +108,15 @@ function ProductHowItWorks(props: WithStyles<typeof styles>) {
           color="secondary"
           size="large"
           variant="contained"
-          className={classes.button}
           component="a"
           href="/premium-themes/onepirate/sign-up/"
+          sx={{ mt: 8 }}
         >
           Get started
         </Button>
       </Container>
-    </section>
+    </Box>
   );
 }
-export default withStyles(styles)(ProductHowItWorks);
+
+export default ProductHowItWorks;

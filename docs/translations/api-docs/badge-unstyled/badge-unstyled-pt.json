@@ -4,7 +4,7 @@
     "anchorOrigin": "The anchor of the badge.",
     "badgeContent": "The content rendered within the badge.",
     "children": "The badge will be added relative to this node.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "components": "The components used for each slot inside the Badge. Either a string to use a HTML element or a component.",
     "componentsProps": "The props used for each slot inside the Badge.",
@@ -12,7 +12,7 @@
     "max": "Max count to show.",
     "overlap": "Wrapped shape the badge should overlap.",
     "showZero": "Controls whether the badge is hidden when <code>badgeContent</code> is zero.",
-    "variant": "The variant to use."
+    "variant": "A variante a usar."
   },
   "classDescriptions": {
     "root": {
@@ -73,7 +73,7 @@
       "conditions": "<code>anchorOrigin={{ 'bottom', 'left' }} overlap=\"circular\"</code>"
     },
     "invisible": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the badge `span` element",
       "conditions": "<code>invisible={true}</code>"
     }

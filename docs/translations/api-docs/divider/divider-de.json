@@ -8,6 +8,7 @@
     "flexItem": "If <code>true</code>, a vertical divider will have the correct height when used in flex container. (By default, a vertical divider will have a calculated height of <code>0px</code> if it is the child of a flex container.)",
     "light": "If <code>true</code>, the divider will have a lighter color.",
     "orientation": "The divider orientation.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "textAlign": "The text alignment.",
     "variant": "The variant to use."
   },

@@ -1,6 +1,6 @@
 {
   "name": "benchmark",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-beta.0",
   "private": "true",
   "scripts": {
     "browser": "yarn webpack --config browser/webpack.config.js && node browser/scripts/benchmark.js",
@@ -14,9 +14,9 @@
     "@chakra-ui/system": "^1.0.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
-    "@material-ui/core": "5.0.0-alpha.35",
-    "@material-ui/styles": "5.0.0-alpha.35",
-    "@material-ui/system": "5.0.0-alpha.35",
+    "@material-ui/core": "5.0.0-beta.0",
+    "@material-ui/styles": "5.0.0-beta.0",
+    "@material-ui/system": "5.0.0-beta.0",
     "@styled-system/css": "^5.1.5",
     "benchmark": "^2.1.4",
     "playwright": "^1.6.1",

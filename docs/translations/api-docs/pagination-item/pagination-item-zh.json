@@ -9,6 +9,7 @@
     "selected": "If <code>true</code> the pagination item is selected.",
     "shape": "The shape of the pagination item.",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "type": "The type of pagination item.",
     "variant": "The variant to use."
   },
@@ -71,6 +72,12 @@
       "nodeName": "the root element",
       "conditions": "<code>type=\"start-ellipsis\"</code> or <code>type=\"end-ellipsis\"</code>"
     },
+    "firstLast": {
+      "description": "Styles applyed to the root element if `type=\"first\"` or type=\"last\"."
+    },
+    "previousNext": {
+      "description": "Styles applyed to the root element if `type=\"previous\"` or type=\"next\"."
+    },
     "focusVisible": {
       "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
@@ -88,7 +95,7 @@
     },
     "icon": {
       "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "tThe icon to display"
+      "nodeName": "the icon element"
     }
   }
 }

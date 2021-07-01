@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { useThemeProps } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PropTypes from 'prop-types';
 import DesktopDateTimePicker, { DesktopDateTimePickerProps } from '../DesktopDateTimePicker';
@@ -133,6 +133,7 @@ DateTimePicker.propTypes /* remove-proptypes */ = {
   components: PropTypes.shape({
     LeftArrowButton: PropTypes.elementType,
     LeftArrowIcon: PropTypes.elementType,
+    OpenPickerIcon: PropTypes.elementType,
     RightArrowButton: PropTypes.elementType,
     RightArrowIcon: PropTypes.elementType,
     SwitchViewButton: PropTypes.elementType,
@@ -381,10 +382,6 @@ DateTimePicker.propTypes /* remove-proptypes */ = {
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps: PropTypes.object,
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon: PropTypes.node,
   /**
    * First view to show.
    */

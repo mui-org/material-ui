@@ -5,7 +5,8 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "completed": "Mark the step as completed. Is passed to child components.",
     "error": "Mark the step as failed.",
-    "icon": "The label displayed in the step icon."
+    "icon": "The label displayed in the step icon.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

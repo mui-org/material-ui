@@ -1,7 +1,6 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "allowKeyboardControl": "Enables keyboard listener for moving between days in calendar. Defaults to <code>true</code> unless the <code>ClockPicker</code> is used inside a <code>Static*</code> picker component.",
     "defaultCalendarMonth": "Default calendar month displayed when <code>value={null}</code>.",
     "loading": "If <code>true</code> renders <code>LoadingComponent</code> in calendar instead of calendar view. Can be used to preload information and show it in calendar.",
     "maxDate": "Max selectable date. @DateIOType",
@@ -17,5 +16,13 @@
     "view": "Controlled open view.",
     "views": "Views for calendar picker."
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "root": {
+      "description": "Styles applied to the root element."
+    },
+    "viewTransitionContainer": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the transition group element"
+    }
+  }
 }

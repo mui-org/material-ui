@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { chainPropTypes, integerPropType } from '@material-ui/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { alpha } from '@material-ui/system';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
 import useTheme from '../styles/useTheme';
 import { getPaperUtilityClass } from './paperClasses';
 
@@ -41,12 +41,12 @@ const PaperRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[styleProps.variant],
-      ...(!styleProps.square && styles.rounded),
-      ...(styleProps.variant === 'elevation' && styles[`elevation${styleProps.elevation}`]),
-    };
+    return [
+      styles.root,
+      styles[styleProps.variant],
+      !styleProps.square && styles.rounded,
+      styleProps.variant === 'elevation' && styles[`elevation${styleProps.elevation}`],
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */

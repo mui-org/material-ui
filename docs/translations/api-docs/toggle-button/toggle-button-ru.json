@@ -3,11 +3,14 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "color": "The color of the button when it is in an active state.",
+    "disabled": "Если <code>true</code>, компонент отключен.",
     "disableFocusRipple": "If <code>true</code>, the  keyboard focus ripple is disabled.",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
+    "fullWidth": "If <code>true</code>, the button will take up the full width of its container.",
     "selected": "If <code>true</code>, the button is rendered in an active state.",
     "size": "The size of the button. The prop defaults to the value inherited from the parent ToggleButtonGroup component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The value to associate with the button when selected in a ToggleButtonGroup."
   },
   "classDescriptions": {
@@ -24,6 +27,21 @@
       "nodeName": "the root element",
       "conditions": "<code>selected={true}</code>"
     },
+    "standard": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>color=\"standard\"</code>"
+    },
+    "primary": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>color=\"primary\"</code>"
+    },
+    "secondary": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>color=\"secondary\"</code>"
+    },
     "label": {
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the `label` wrapper element"
@@ -32,6 +50,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>size=\"small\"</code>"
+    },
+    "sizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code>"
     },
     "sizeLarge": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

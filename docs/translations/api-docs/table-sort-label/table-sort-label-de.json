@@ -1,12 +1,13 @@
 {
-  "componentDescription": "A button based label for placing inside <code>TableCell</code> for column sorting.",
+  "componentDescription": "A button based label for placing inside `TableCell` for column sorting.",
   "propDescriptions": {
     "active": "If <code>true</code>, the label will have the active styling (should be true for the sorted column).",
     "children": "Label contents, the arrow will be appended automatically.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "direction": "The current sort direction.",
     "hideSortIcon": "Hide sort icon when active is false.",
-    "IconComponent": "Sort icon to use."
+    "IconComponent": "Sort icon to use.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

@@ -1,5 +1,5 @@
 ---
-title: React Popover component
+title: React Popoverコンポーネント
 components: Grow, Popover
 githubLabel: 'component: Popover'
 ---
@@ -15,9 +15,9 @@ githubLabel: 'component: Popover'
 
 [The palette](/system/palette/) style関数。
 
-## Simple Popover
+## Basic Popover
 
-{{"demo": "pages/components/popover/SimplePopover.js" }}
+{{"demo": "pages/components/popover/BasicPopover.js" }}
 
 ## Anchor playground
 
@@ -27,13 +27,13 @@ githubLabel: 'component: Popover'
 
 ## マウスオーバー操作
 
-This demonstrates how to use the `Popover` component to implement a popover behavior based on the mouse over event.
+This demo demonstrates how to use the `Popover` component and the mouseover event to achieve popover behavior.
 
 {{"demo": "pages/components/popover/MouseOverPopover.js"}}
 
 ## 補完プロジェクト
 
-より高度な使用例では、以下を利用できます。
+For more advanced use cases, you might be able to take advantage of:
 
 ### PopupState helper
 

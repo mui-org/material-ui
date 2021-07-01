@@ -4,10 +4,10 @@ import { InternalStandardProps as StandardProps } from '..';
 import { PopoverProps } from '../Popover';
 import { MenuListProps } from '../MenuList';
 import { Theme } from '../styles';
-import { TransitionHandlerProps, TransitionProps } from '../transitions/transition';
+import { TransitionProps } from '../transitions/transition';
 import { MenuClasses } from './menuClasses';
 
-export interface MenuProps extends StandardProps<PopoverProps & Partial<TransitionHandlerProps>> {
+export interface MenuProps extends StandardProps<PopoverProps> {
   /**
    * An HTML element, or a function that returns one.
    * It's used to set the position of the menu.

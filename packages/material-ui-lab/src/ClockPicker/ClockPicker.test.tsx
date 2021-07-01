@@ -11,13 +11,12 @@ import {
 import ClockPicker, { clockPickerClasses as classes } from '@material-ui/lab/ClockPicker';
 import {
   adapterToUse,
-  createPickerMount,
+  wrapPickerMount,
   createPickerRender,
   getByMuiTest,
 } from '../internal/pickers/test-utils';
 
 describe('<ClockPicker />', () => {
-  const mount = createPickerMount();
   const render = createPickerRender();
 
   describeConformanceV5(
@@ -25,7 +24,7 @@ describe('<ClockPicker />', () => {
     () => ({
       classes,
       inheritComponent: 'div',
-      mount,
+      wrapMount: wrapPickerMount,
       render,
       refInstanceof: window.HTMLDivElement,
       muiName: 'MuiClockPicker',

@@ -30,10 +30,7 @@ const MobileStepperRoot = styled(Paper, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`position${capitalize(styleProps.position)}`],
-    };
+    return [styles.root, styles[`position${capitalize(styleProps.position)}`]];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */
@@ -79,10 +76,7 @@ const MobileStepperDot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.dot,
-      ...(styleProps.dotActive && styles.dotActive),
-    };
+    return [styles.dot, styleProps.dotActive && styles.dotActive];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to each dot if `variant="dots"`. */

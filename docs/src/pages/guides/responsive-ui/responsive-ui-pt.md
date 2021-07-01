@@ -8,4 +8,3 @@
 - [Container](/components/container/): O contêiner centraliza seu conteúdo horizontalmente. É o elemento de leiaute mais básico.
 - [Pontos de quebra](/customization/breakpoints/): API que permite o uso de pontos de quebra em uma ampla variedade de contextos.
 - [useMediaQuery](/components/use-media-query/): Este é um hook CSS de consulta de mídia para React. Ele ouve correspondências para uma consulta de mídia no CSS.
-- [Hidden](/components/hidden/): Modifique rapidamente e de forma responsiva a visibilidade dos componentes e muito mais com nosso utilitário hidden.

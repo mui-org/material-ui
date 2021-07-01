@@ -7,15 +7,15 @@ waiAria: 'https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating'
 
 # Rating
 
-<p class="description">Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.</p>
+<p class="description">Рейтинги дают представление о мнении и опыте других и позволяют пользователю дать собственную оценку.</p>
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Basic rating
+## Базовый рейтинг
 
 {{"demo": "pages/components/rating/BasicRating.js"}}
 
-## Rating precision
+## Точность рейтинга
 
 The rating can display any float number with the `value` prop. Use the `precision` prop to define the minimum increment value change allowed.
 
@@ -23,29 +23,35 @@ The rating can display any float number with the `value` prop. Use the `precisio
 
 ## Hover feedback
 
-You can display a label on hover to help the user pick the correct rating value. The demo uses the `onChangeActive` prop.
+Вы можете показать lable при наведении курсора, чтобы помочь пользователю выбрать правильное значение рейтинга. The demo uses the `onChangeActive` prop.
 
 {{"demo": "pages/components/rating/HoverRating.js"}}
 
 ## Размеры
 
-For larger or smaller ratings use the `size` prop.
+Для больших или меньших рейтингов используйте prop `size`.
 
 {{"demo": "pages/components/rating/RatingSize.js"}}
 
-## Customized rating
+## Настраиваемые кнопки
 
-Ниже находятся примеры кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находятся примеры кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/rating/CustomizedRating.js"}}
 
+## Radio group
+
+The rating is implemented with a radio group, set `highlightSelectedOnly` to restore the natural behavior.
+
+{{"demo": "pages/components/rating/RadioGroupRating.js"}}
+
 ## Доступность
 
-([WAI tutorial](https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating))
+([WAI Учебник](https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating))
 
 Доступность этого компонента зависит от:
 
-- A radio group with its fields visually hidden. It contains six radio buttons, one for each star, and another for 0 stars that is checked by default. Be sure to provide a value for the `name` prop that is unique to the parent form.
+- Скрыта ли визуально группа radio-кнопок. Rating содержит шесть radio-кнопок, по одному для каждой звёздочки, а ещё одна для 0 звёзд, которые проверяются по умолчанию. Не забудьте предоставить значение для prop `name`, который уникален для родительской формы.
 - Labels for the radio buttons containing actual text (“1 Star”, “2 Stars”, …). Be sure to provide a suitable function to the `getLabelText` prop when the page is in a language other than English. You can use the [included locales](https://material-ui.com/guides/localization/), or provide your own.
 - A visually distinct appearance for the rating icons. By default, the rating component uses both a difference of color and shape (filled and empty icons) to indicate the value. In the event that you are using color as the only means to indicate the value, the information should also be also displayed as text, as in this demo. This is important to match [success Criterion 1.4.1](https://www.w3.org/TR/WCAG21/#use-of-color) of WCAG2.1.
 

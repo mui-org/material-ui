@@ -6,7 +6,7 @@
 
 Add a `ThemeProvider` to the top level of your app to pass a theme down the React component tree. Then, you can access the theme object in style functions.
 
-> This example creates a theme object for custom-built components. If you intend to use some of the Material-UI's components you need to provide a richer theme structure using the `createTheme()` method. Head to the the [theming section](/customization/theming/) to learn how to build your custom Material-UI theme.
+> This example creates a theme object for custom-built components. Head to the the [theming section](/customization/theming/) to learn how to build your custom Material-UI theme. If you intend to use some of the Material-UI's components you need to provide a richer theme structure using the `createTheme()` method.
 
 ```jsx
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -231,7 +231,9 @@ By default, the style tags are injected **last** in the `<head>` element of the 
 The `StylesProvider` component has an `injectFirst` prop to inject the style tags **first** in the head (less priority):
 
 ```jsx
-import { StylesProvider } from '@material-ui/core/styles';
+*/}
+</StylesProvider>
+      import { StylesProvider } from '@material-ui/core/styles';
 
 <StylesProvider injectFirst>
   {/* Your component tree.
@@ -295,12 +297,12 @@ The simplest approach is to add an HTML comment to the `<head>` that determines 
 ```
 
 ```jsx
-import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+insertionPoint: 'jss-insertion-point',
+});
 
-const jss = create({
-  ...jssPreset(),
-  // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
+export default function App() {
+  return <StylesProvider jss={jss}>...</StylesProvider>;
+}
   insertionPoint: 'jss-insertion-point',
 });
 
@@ -322,12 +324,12 @@ export default function App() {
 ```
 
 ```jsx
-import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+insertionPoint: 'jss-insertion-point',
+});
 
-const jss = create({
-  ...jssPreset(),
-  // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
+export default function App() {
+  return <StylesProvider jss={jss}>...</StylesProvider>;
+}
   insertionPoint: 'jss-insertion-point',
 });
 
@@ -341,18 +343,12 @@ export default function App() {
 codesandbox.io prevents access to the `<head>` element. To get around this issue, you can use the JavaScript `document.createComment()` API:
 
 ```jsx
-import { create } from 'jss';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
-import rtl from 'jss-rtl'
-
-const jss = create({
-  plugins: [...jssPreset().plugins, rtl()],
+insertionPoint: 'jss-insertion-point',
 });
 
 export default function App() {
-  return (
-    <StylesProvider jss={jss}>
-      ...
+  return <StylesProvider jss={jss}>...</StylesProvider>;
+}
   insertionPoint: 'jss-insertion-point',
 });
 

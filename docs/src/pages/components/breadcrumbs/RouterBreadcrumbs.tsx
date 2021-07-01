@@ -65,7 +65,7 @@ export default function RouterBreadcrumbs() {
 
             return (
               <Breadcrumbs aria-label="breadcrumb">
-                <LinkRouter color="inherit" to="/">
+                <LinkRouter underline="hover" color="inherit" to="/">
                   Home
                 </LinkRouter>
                 {pathnames.map((value, index) => {
@@ -77,7 +77,7 @@ export default function RouterBreadcrumbs() {
                       {breadcrumbNameMap[to]}
                     </Typography>
                   ) : (
-                    <LinkRouter color="inherit" to={to} key={to}>
+                    <LinkRouter underline="hover" color="inherit" to={to} key={to}>
                       {breadcrumbNameMap[to]}
                     </LinkRouter>
                   );

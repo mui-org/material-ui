@@ -1,5 +1,5 @@
 ---
-title: React Popper component
+title: Composant React Popper
 components: Popper
 githubLabel: 'component: Popper'
 ---
@@ -10,7 +10,7 @@ githubLabel: 'component: Popper'
 
 Some important features of the `Popper` component:
 
-- 🕷 Popper relies on the 3rd party library ([Popper.js](https://github.com/popperjs/popper-core)) for perfect positioning.
+- 🕷 Popper s'appuie sur la bibliothèque tierce ([Popper.js](https://github.com/popperjs/popper-core)) pour un positionnement parfait.
 - 💄 It's an alternative API to react-popper. It aims for simplicity.
 - 📦 [8 kB gzippé](/size-snapshot).
 - The children is [`Portal`](/components/portal/) to the body of the document to avoid rendering problems. You can disable this behavior with `disablePortal`.
@@ -40,7 +40,7 @@ Alternativement, vous pouvez utiliser [react-spring](https://github.com/react-sp
 
 {{"demo": "pages/components/popper/SpringPopper.js"}}
 
-## Positioned popper
+## Popper positionné
 
 {{"demo": "pages/components/popper/PositionedPopper.js"}}
 
@@ -48,9 +48,9 @@ Alternativement, vous pouvez utiliser [react-spring](https://github.com/react-sp
 
 {{"demo": "pages/components/popper/ScrollPlayground.js", "hideToolbar": true, "bg": true}}
 
-## Virtual element
+## Élément virtuel
 
-The `anchorEl` property can be a reference to a fake DOM element. You need to create an object shaped like the [`VirtualElement`](https://popper.js.org/docs/v2/virtual-elements/).
+La valeur de la propriété `anchorEl` peut être une référence à un élément DOM faux. Vous devez créer un objet formé comme le [`VirtualElement`](https://popper.js.org/docs/v2/virtual-elements/).
 
 Highlight part of the text to see the popper:
 

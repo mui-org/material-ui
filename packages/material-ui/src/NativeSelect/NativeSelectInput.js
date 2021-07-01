@@ -72,10 +72,7 @@ const NativeSelectSelect = styled('select', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.select,
-      ...styles[styleProps.variant],
-    };
+    return [styles.select, styles[styleProps.variant]];
   },
 })(nativeSelectSelectStyles);
 
@@ -106,11 +103,11 @@ const NativeSelectIcon = styled('svg', {
   slot: 'Icon',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
-      ...styles.icon,
-      ...(styleProps.variant && styles[`icon${capitalize(styleProps.variant)}`]),
-      ...(styleProps.open && styles.iconOpen),
-    };
+    return [
+      styles.icon,
+      styleProps.variant && styles[`icon${capitalize(styleProps.variant)}`],
+      styleProps.open && styles.iconOpen,
+    ];
   },
 })(nativeSelectIconStyles);
 

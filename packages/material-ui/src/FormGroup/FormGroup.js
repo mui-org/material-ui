@@ -22,10 +22,7 @@ const FormGroupRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.row && styles.row),
-    };
+    return [styles.root, styleProps.row && styles.row];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

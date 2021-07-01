@@ -1,6 +1,6 @@
 ---
 title: React Modal component
-components: Modal
+components: Modal, ModalUnstyled
 githubLabel: 'component: Modal'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 ---
@@ -16,7 +16,6 @@ The component renders its `children` node in front of a backdrop component. The 
 - 🔐 It disables scrolling of the page content while open.
 - ♿️ It properly manages focus; moving to the modal content, and keeping it there until the modal is closed.
 - ♿️ Adds the appropriate ARIA roles automatically.
-- 📦 [5 kB comprimido](/size-snapshot).
 
 [La función de estilo de la paleta](/system/palette/).
 
@@ -29,20 +28,36 @@ If you are creating a modal dialog, you probably want to use the [Dialog](/compo
 - [Menu](/components/menus/)
 - [Popover](/components/popover/)
 
-## Modal simple
+## Basic modal
 
-This demo stacks Modals, but it is strongly discouraged to do so in practice.
-
-{{"demo": "pages/components/modal/SimpleModal.js"}}
+{{"demo": "pages/components/modal/BasicModal.js"}}
 
 Notice that you can disable the outline (often blue or gold) with the `outline: 0` CSS property.
+
+## Unstyled
+
+- 📦 [4.7 kB comprimido](https://bundlephobia.com/result?p=@material-ui/unstyled@next)
+
+The modal also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import ModalUnstyled from '@material-ui/unstyled/ModalUnstyled';
+```
+
+{{"demo": "pages/components/modal/ModalUnstyled.js"}}
+
+## Nested modal
+
+Modals can be nested, for example a select within a dialog, but stacking of more than two modals, or any two modals with a backdrop is discouraged.
+
+{{"demo": "pages/components/modal/NestedModal.js"}}
 
 ## Transiciones
 
 The open/close state of the modal can be animated with a transition component. Este componente debe respetar las siguientes condiciones:
 
 - Ser un hijo directo del modal.
-- Have an `in` prop. This corresponds to the open / close state.
+- Have an `in` prop. This corresponds to the open/close state.
 - Call the `onEnter` callback prop when the enter transition starts.
 - Call the `onExited` callback prop when the exit transition is completed. These two callbacks allow the modal to unmount the child content when closed and fully transitioned.
 
@@ -64,7 +79,7 @@ The content of modal is unmounted when closed. If you need to make the content a
 
 {{"demo": "pages/components/modal/KeepMountedModal.js", "defaultCodeOpen": false}}
 
-Como en cualquier optimización de rendimiento esto no es una bala de plata. Be sure to identify bottlenecks first and then try out these optimization strategies.
+As with any performance optimization, this is not a silver bullet. Be sure to identify bottlenecks first, and then try out these optimization strategies.
 
 ## Server-side modal
 
@@ -78,7 +93,7 @@ React [doesn't support](https://github.com/facebook/react/issues/13097) the [`cr
 
 The modal moves the focus back to the body of the component if the focus tries to escape it.
 
-This is done for accessibility purposes, however, it might create issues. In the event the users need to interact with another part of the page, e.g. with a chatbot window, you can disable the behavior:
+This is done for accessibility purposes. However, it might create issues. In the event the users need to interact with another part of the page, e.g. with a chatbot window, you can disable the behavior:
 
 ```jsx
 <Modal disableEnforceFocus />

@@ -141,9 +141,9 @@ function muiError({ references, babel, config, source }) {
           '@material-ui/utils',
         );
       } else {
-        const normalizedRelativeImport = path.normalize(
-          source.replace('../macros/MuiError.macro', './formatMuiErrorMessage'),
-        );
+        const normalizedRelativeImport = path
+          .normalize(source.replace('../macros/MuiError.macro', './formatMuiErrorMessage'))
+          .replace(/\\/g, '/');
         // 'formatMuiErrorMessage' implies './formatMuiErrorMessage' for fs paths but not for import specifiers.
         const formatMuiErrorMessageImportSource = normalizedRelativeImport.startsWith('.')
           ? normalizedRelativeImport

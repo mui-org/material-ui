@@ -78,9 +78,9 @@ Para usos más avanzados tal vez puedas aprovercharte de:
 
 ![estrellas](https://img.shields.io/github/stars/iamhosseindhv/notistack.svg?style=social&label=Stars) ![descargas npm](https://img.shields.io/npm/dm/notistack.svg)
 
-Este ejemplo demuestra cómo usar [notistack](https://github.com/iamhosseindhv/notistack). notistack has an **imperative API** that makes it easy to display snackbars, without having to handle their open/close state. It also enables you to **stack** them on top of one another (although this is discouraged by the Material Design specification).
+Este ejemplo demuestra cómo usar [notistack](https://github.com/iamhosseindhv/notistack). notistack has an **imperative API** that makes it easy to display snackbars, without having to handle their open/close state. It also enables you to **stack** them on top of one another (although this is discouraged by the Material Design guidelines).
 
-{{"demo": "pages/components/snackbars/IntegrationNotistack.js", "defaultCodeOpen": false}}
+TODO: Add example once notistack is compatible with v5 or replace with [#1824](https://github.com/mui-org/material-ui/issues/1824).
 
 ## Accesibilidad
 

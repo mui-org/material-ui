@@ -2,9 +2,9 @@
 
 <p class="description">Material-UIとReactを今すぐ始めましょう。</p>
 
-Material-UIコンポーネントは独立して機能します。 **これらは自立しており**、表示するのに必要なスタイルだけを加えます。 Material-UIコンポーネントは独立して機能します。 **これらは自立しており**、表示するのに必要なスタイルだけを加えます。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。
+Material-UIコンポーネントは独立して機能します。 **これらは自立しており**、表示するのに必要なスタイルだけを加えます。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。
 
-ドキュメントに示されているように、任意のコンポーネントを使用できます。 ドキュメントに示されているように、任意のコンポーネントを使用できます。 ドキュメントに示されているように、任意のコンポーネントを使用できます。 ドキュメントに示されているように、任意のコンポーネントを使用できます。 ドキュメントに示されているように、任意のコンポーネントを使用できます。 ドキュメントに示されているように、任意のコンポーネントを使用できます。 どのようにインポートされるか確認する為にそれぞれのコンポーネントの[デモページ](/components/buttons/)を参照してください。
+ドキュメントに示されているように、任意のコンポーネントを使用できます。 どのようにインポートされるか確認する為にそれぞれのコンポーネントの[デモページ](/components/buttons/)を参照してください。
 
 ## 今すぐ始める
 
@@ -36,7 +36,7 @@ Material-UI usage experience can be improved with a handful of important globals
 
 ### Responsive meta tag
 
-すべてのデバイスで適切なレンダリングとタッチズームを確実なものにするには、responsive viewport metaタグを`<head>`に追加します。 すべてのデバイスで適切なレンダリングとタッチズームを確実なものにするには、responsive viewport metaタグを`<head>`に追加します。 すべてのデバイスで適切なレンダリングとタッチズームを確実なものにするには、responsive viewport metaタグを`<head>`に追加します。 すべてのデバイスで適切なレンダリングとタッチズームを確実なものにするには、responsive viewport metaタグを`<head>`に追加します。 すべてのデバイスで適切なレンダリングとタッチズームを確実なものにするには、responsive viewport metaタグを`<head>`に追加します。 すべてのデバイスで適切なレンダリングとタッチズームを確実なものにするには、responsive viewport metaタグを`<head>`に追加します。
+Material-UIはモバイルファーストで開発されています。最初にモバイル端末用のコードを記述し、次にCSSメディアクエリを使用して必要に応じてコンポーネントを拡張するという方法を用いています。 すべてのデバイスで適切なレンダリングとタッチズームを確実に行うには、responsive viewport meta tagを `<head>` 要素に追加します。
 
 ```html
 <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -44,11 +44,11 @@ Material-UI usage experience can be improved with a handful of important globals
 
 ### CssBaseline
 
-Material-UIはオプションで[CssBaseline](/components/css-baseline/)コンポーネントを提供しています。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。 それらは[normalize.css](https://github.com/necolas/normalize.css/)のようなグローバルのスタイルシートには依存しません。
+Material-UIはオプションで[CssBaseline](/components/css-baseline/)コンポーネントを提供しています。 これは、ブラウザやデバイス間の不整合を修正すると同時に、一般的なHTML要素に対して少しだけ独自のリセットを提供します。
 
 ## バージョン管理されたドキュメント
 
-このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。 このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。
+このドキュメントは常に最新の安定版のMaterial-UIを反映しています。 古いバージョンのドキュメントは、[別のページ ](https://material-ui.com/versions/)にあります。
 
 ## 次のステップ
 

@@ -34,10 +34,7 @@ const ToggleButtonRoot = styled(ButtonBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`size${capitalize(styleProps.size)}`],
-    };
+    return [styles.root, styles[`size${capitalize(styleProps.size)}`]];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */

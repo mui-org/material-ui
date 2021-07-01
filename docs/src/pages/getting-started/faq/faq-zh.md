@@ -52,7 +52,7 @@ const theme = createTheme({
     MuiButtonBase: {
       defaultProps: {
         // The props to apply
-        disableRipple: true, // 全局禁用波纹 💣!
+        disableRipple: true, // No more ripple, on the whole application 💣!
       },
     },
   },
@@ -68,7 +68,7 @@ import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
   transitions: {
-    // 这样就设定了全局的 `transition: none;`
+    // So we have `transition: none;` everywhere
     create: () => 'none',
   },
 });
@@ -113,7 +113,7 @@ const theme = createTheme({
 
 然而，也许您正在给应用程序添加一些 Material-UI 组件，而应用程序以及使用了其他的样式解决方案，或者您已经熟悉了不同的 API，而不想学习一个新的 API？ 在这种情况下，请访问 [样式库互用](/guides/interoperability/) 章节，在那你可以发现我们使用了一些替代样式库来重新设置 Material-UI 组件的样式，而这是多么的简单。
 
-## 内联样式与 CSS 之间我应该怎么选择使用的时机？
+## When should I use inline-style vs. CSS?
 
 根据经验，仅对动态样式属性使用内联样式。 CSS 的替代方案也有诸多优势，例如：
 
@@ -124,7 +124,7 @@ const theme = createTheme({
 
 ## 我应该怎么使用 react-router？
 
-在我们的指南中详细介绍了如何与 react-router、Gatsby 或 Next.js 这样的 [第三方路由库](/guides/composition/#routing-libraries) 整合。
+在我们的指南中详细介绍了如何与 react-router、Gatsby 或 Next.js 这样的 [第三方路由库](/guides/routing/) 整合。
 
 ## 我应该怎么访问 DOM 元素？
 
@@ -352,14 +352,15 @@ function Portal({ children, container }) {
 ```jsx
 function App() {
   const [container, setContainer] = React.useState(null);
-  const handleRef = React.useCallback((instance) => setContainer(instance), [
-    setContainer,
-  ]);
+  const handleRef = React.useCallback(
+    (instance) => setContainer(instance),
+    [setContainer],
+  );
 
   return (
     <div className="App">
       <Portal container={container}>
-        <span>传送门</span>
+        <span>Portaled</span>
       </Portal>
       <div ref={handleRef} />
     </div>

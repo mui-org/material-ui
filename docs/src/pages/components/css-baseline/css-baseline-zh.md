@@ -63,12 +63,28 @@ export default function MyApp() {
 
 ### 滚动条
 
-在黑暗模式下，滚动条的颜色是定制的，以提供更好的对比度。
+The colors of the scrollbars can be customized to improve the contrast (especially on Windows). Add this code to your theme (for dark mode).
+
+```jsx
+import darkScrollbar from '@material-ui/core/darkScrollbar';
+
+const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: theme.palette.mode === 'dark' ? darkScrollbar() : null,
+      },
+    },
+  },
+});
+```
+
+This website uses `darkScrollbar` when dark mode is enabled. Be aware, however, that using this utility (and customizing `-webkit-scrollbar`) forces MacOS to always show the scrollbar.
 
 ### 文字铸排
 
 - 在 `<html>` 里面不会声明基础的 font-size，但是我们假设是 16px (浏览器的默认设置)。 您可以在 [主题文档](/customization/typography/#typography-html-font-size) 页面中了解更多有关更改 `<html>` 默认字体大小的影响 。
-- 在 `theme.typography.body2` 元素上设置 `<body>` 样式。
+- 在 `theme.typography.body1` 元素上设置 `<body>` 样式。
 - 您可以通过设置 `theme.typography.fontWeightBold` 来设置 `<b>` 和 `<strong>` 元素的 font-weight。
 - 启用自定义字体平滑功能可以更好地显示 Roboto 字体。
 

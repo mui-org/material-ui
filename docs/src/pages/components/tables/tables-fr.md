@@ -1,5 +1,5 @@
 ---
-title: React Table component
+title: Composant React Table
 components: Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel
 githubLabel: 'component: Table'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#table'
@@ -10,7 +10,7 @@ materialDesign: https://material.io/components/data-tables
 
 <p class="description">Tables display sets of data. They can be fully customized.</p>
 
-Tables display information in a way that's easy to scan, so that users can look for patterns and insights. Ils peuvent être intégrés au contenu principal, tel que les cartes. They can include:
+Les tables affichent des informations d'une manière facile à numériser, afin que les utilisateurs puissent rechercher des modèles et des aperçus. Ils peuvent être intégrés au contenu principal, tel que les cartes. Ils peuvent inclure :
 
 - Une visualisation correspondante
 - Menu principal
@@ -18,7 +18,7 @@ Tables display information in a way that's easy to scan, so that users can look 
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Structure
+## Tableau de base
 
 Un exemple simple et sans fioritures.
 
@@ -29,6 +29,8 @@ Une table de données contient en haut une ligne d’en-tête qui répertorie le
 The `Table` component has a close mapping to the native `<table>` elements. This constraint makes building rich data tables challenging.
 
 The [`DataGrid` component](/components/data-grid/) is designed for use-cases that are focused around handling a large amounts of tabular data. While it comes with a more rigid structure, in exchange, you gain more powerful features.
+
+{{"demo": "pages/components/tables/DataTable.js", "bg": "inline"}}
 
 ## Tableau simple
 
@@ -54,13 +56,13 @@ Voici un exemple de personnalisation du composant. Vous pouvez en savoir plus da
 
 It's possible to customise the options shown in the "Rows per page" select using the `rowsPerPageOptions` prop. You should either provide an array of:
 
-- **numbers**, each number will be used for the option's label and value.
+- **nombres**, chaque nombre sera utilisé pour l'étiquette et la valeur de l'option.
 
   ```jsx
   <TablePagination rowsPerPageOptions={[10, 50]} />
   ```
 
-- **objects**, the `value` and `label` keys will be used respectively for the value and label of the option (useful for language strings such as 'All').
+- **objects**, `value`, et `label` des clés seront utilisées respectivement pour la valeur et l'étiquette de l'option (utile pour les chaînes de langue telles que 'Tout').
 
   ```jsx
   <TablePagination rowsPerPageOptions={[10, 50, { value: -1, label: 'All' }]} />
@@ -74,13 +76,13 @@ La propriété `Action` du composant `TablePagination` permet l'implémentation 
 
 ## Fixed header
 
-An example of a table with scrollable rows and fixed column headers. It leverages the `stickyHeader` prop.<br /> (⚠️ no IE11 support)
+An example of a table with scrollable rows and fixed column headers. It leverages the `stickyHeader` prop.<br /> (⚠️ no IE11 support) (⚠️ no IE 11 support)
 
 {{"demo": "pages/components/tables/StickyHeadTable.js", "bg": true}}
 
-## Column grouping
+## Regroupement de colonnes
 
-You can group column headers by rendering multiple table rows inside a table head:
+Vous pouvez regrouper les en-têtes de colonne en affichant plusieurs lignes de la table dans une tête de la table :
 
 ```jsx
 <TableHead>
@@ -113,8 +115,8 @@ Dans l'exemple suivant, nous montrons comment utiliser [react-virtualized](https
 
 (WAI tutorial: https://www.w3.org/WAI/tutorials/tables/)
 
-### Caption
+### Légende
 
-A caption functions like a heading for a table. Most screen readers announce the content of captions. Captions help users to find a table and understand what it's about and decide if they want to read it.
+A caption functions like a heading for a table. Most screen readers announce the content of captions. Les légendes aident les utilisateurs à trouver une table et à comprendre ce dont il est question et à décider s'ils veulent la lire.
 
 {{"demo": "pages/components/tables/AcccessibleTable.js", "bg": true}}

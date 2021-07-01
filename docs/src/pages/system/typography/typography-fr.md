@@ -2,7 +2,7 @@
 
 <p class="description">Documentation and examples for common text utilities to control alignment, wrapping, weight, and more.</p>
 
-## Variant
+## Une variante
 
 {{"demo": "pages/system/typography/Variant.js", "defaultCodeOpen": false}}
 
@@ -44,7 +44,7 @@
 <Box sx={{ fontSize: 16 }}>…
 ```
 
-## Font style
+## Le style de police
 
 {{"demo": "pages/system/typography/FontStyle.js", "defaultCodeOpen": false}}
 
@@ -63,7 +63,7 @@
 <Box sx={{ fontFamily: 'Monospace' }}>…
 ```
 
-## Letter spacing
+## L'espacement des lettres
 
 {{"demo": "pages/system/typography/LetterSpacing.js", "defaultCodeOpen": false}}
 
@@ -72,7 +72,7 @@
 <Box sx={{ letterSpacing: 10 }}>…
 ```
 
-## Line height
+## Hauteur de la ligne
 
 {{"demo": "pages/system/typography/LineHeight.js", "defaultCodeOpen": false}}
 
@@ -87,7 +87,7 @@
 import { typography } from '@material-ui/system';
 ```
 
-| Import name     | Prop            | Propriété CSS                                                                                | Clé du thème                                                           |
+| Nom importé     | Propriété       | Propriété CSS                                                                                | Clé du thème                                                           |
 |:--------------- |:--------------- |:-------------------------------------------------------------------------------------------- |:---------------------------------------------------------------------- |
 | `typography`    | `typography`    | `font-family`, `font-weight`, `font-size`, `line-height`, `letter-spacing`, `text-transform` | [`typography`](/customization/default-theme/?expand-path=$.typography) |
 | `fontFamily`    | `fontFamily`    | `font-family`                                                                                | [`typography`](/customization/default-theme/?expand-path=$.typography) |

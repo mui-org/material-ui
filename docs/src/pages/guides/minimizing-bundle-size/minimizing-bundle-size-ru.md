@@ -105,6 +105,7 @@ Pick one of the following plugins:
       'babel-plugin-import',
       {
         libraryName: '@material-ui/core',
+        libraryDirectory: '',
         camel2DashComponentName: false,
       },
       'core',
@@ -113,6 +114,7 @@ Pick one of the following plugins:
       'babel-plugin-import',
       {
         libraryName: '@material-ui/icons',
+        libraryDirectory: '',
         camel2DashComponentName: false,
       },
       'icons',
@@ -155,10 +157,11 @@ If you are using Create React App, you will need to use a couple of projects tha
 Create a `config-overrides.js` file in the root directory:
 
 ```js
-"scripts": {
--  "start": "react-scripts start"
-+  "start": "react-app-rewired start"
-  }
+/* config-overrides.js */
+/* eslint-disable react-hooks/rules-of-hooks */
+const { useBabelRc, override } = require('customize-cra');
+
+module.exports = override(useBabelRc());
 ```
 
 If you wish, `babel-plugin-import` can be configured through `config-overrides.js` instead of `.babelrc` by using this [configuration](https://github.com/arackaf/customize-cra/blob/master/api.md#fixbabelimportslibraryname-options).
@@ -175,24 +178,6 @@ Modify your `package.json` start command:
 +   "test": "react-app-rewired test",
     "eject": "react-scripts eject"
 }
-```
-
-Note: You may run into errors like these:
-
-> Module not found: Can't resolve '@material-ui/core/makeStyles' in '/your/project'
-
-This is because `@material-ui/styles` is re-exported through `core`, but the full import is not allowed.
-
-You have an import like this in your code:
-
-```js
-import { makeStyles, createStyles } from '@material-ui/core';
-```
-
-The fix is simple, define the import separately:
-
-```js
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 ```
 
 Enjoy significantly faster start times.

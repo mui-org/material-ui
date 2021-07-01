@@ -3,36 +3,37 @@
   "propDescriptions": {
     "action": "The action to display in the card header.",
     "avatar": "The Avatar for the Card Header.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "disableTypography": "If <code>true</code>, <code>subheader</code> and <code>title</code> won&#39;t be wrapped by a Typography component. This can be useful to render an alternative Typography variant by wrapping the <code>title</code> text, and optional <code>subheader</code> text with the Typography component.",
-    "subheader": "The content of the component.",
+    "subheader": "O conteúdo do componente.",
     "subheaderTypographyProps": "These props will be forwarded to the subheader (as long as disableTypography is not <code>true</code>).",
-    "title": "The content of the component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "title": "O conteúdo do componente.",
     "titleTypographyProps": "These props will be forwarded to the title (as long as disableTypography is not <code>true</code>)."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "avatar": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the avatar element"
     },
     "action": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the action element"
     },
     "content": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the content wrapper element"
     },
     "title": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the title Typography element"
     },
     "subheader": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the subheader Typography element"
     }
   }

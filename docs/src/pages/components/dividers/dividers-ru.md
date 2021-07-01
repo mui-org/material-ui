@@ -27,7 +27,7 @@ In a list, you should ensure the `Divider` is rendered as an `<li>` to match the
 
 {{"demo": "pages/components/dividers/InsetDividers.js", "bg": true}}
 
-## Подтитульные разделлители
+## Подтитульные разделители
 
 {{"demo": "pages/components/dividers/SubheaderDividers.js", "bg": true}}
 
@@ -49,7 +49,13 @@ You can also render a divider vertically using the `orientation` prop.
 
 > Note the use of the `flexItem` prop to accommodate for the flex container.
 
-### Vertical with text
+### Vertical with variant middle
+
+You can also render a vertical divider with `variant="middle"`.
+
+{{"demo": "pages/components/dividers/VerticalDividerMiddle.js", "bg": true}}
+
+### Вертикальный с текстом
 
 You can also render a vertical divider with content.
 

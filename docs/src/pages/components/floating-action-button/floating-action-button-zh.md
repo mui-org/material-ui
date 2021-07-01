@@ -21,9 +21,11 @@ Only use a FAB if it is the most suitable way to present a screen's primary acti
 
 ## Size 大小
 
-您可以使用 `size` 属性来控制浮动操作按钮的大小。
+By default, the size is `large`. Use the `size` prop for smaller floating action buttons.
 
 {{"demo": "pages/components/floating-action-button/FloatingActionButtonSize.js"}}
+
+{{"demo": "pages/components/floating-action-button/FloatingActionButtonExtendedSize.js"}}
 
 ## Animation 动画
 

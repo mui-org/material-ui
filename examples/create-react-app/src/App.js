@@ -23,7 +23,7 @@ export default function App() {
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Create React App v5-alpha example
+          Create React App v5-beta example
         </Typography>
         <ProTip />
         <Copyright />

@@ -38,7 +38,7 @@
 
 ### CSS classes
 
-为了自定义样式，所有组件都接受 [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) 属性。 类的设计解决了两个约束：使类的结构尽可能简单，同时足以实现 Material Design 的规范。
+为了自定义样式，所有组件都接受 [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) 属性。 The classes design answers two constraints: to make the classes structure as simple as possible, while sufficient to implement the Material Design guidelines.
 
 - 应用于根元素的类始终称为 `root`。
 - 所有默认样式都分组在单个类中。
@@ -82,7 +82,7 @@ const styles = {
 
 大多数受控组件通过 `value` 和 `onChange` 属性进行控制, 但是, `onChange`/`onClose`/`onOpen` 组合用于显示相关状态。 在事件较多的情况下，我们先放名词，再放动词，例如：`onPageChange`，`onRowsChange`。
 
-### boolean vs enum
+### boolean vs. enum
 
 为组件的变体设计API有两种选择：使用* boolean*; 或者使用* enum *。 比如说，我们选取了一个有着不同类型的按钮组件。 每个选项都有其优缺点：
 
@@ -107,7 +107,7 @@ const styles = {
 
   这个 API 会更加详细：`<Button>`，`<Button variant="contained">`， `<Button variant="fab">`。
 
-  但是它可以防止无效的组合被使用，约束暴露的属性数量，并且可以在未来轻松支持新的值。
+  However, it prevents an invalid combination from being used, bounds the number of props exposed, and can easily support new values in the future.
 
 Material-UI 组件根据以下规则将两种方法结合使用：
 

@@ -22,11 +22,11 @@ Elegir una opción debiera inmediatamente confirmar la opción y cerrar el menú
 
 **Desambiguación**: En contraste con los menús simples, los diálogos simples pueden presentar detalles adicionales a las opciones disponibles para un ítem de lista o proveer acciones de navegación u ortogonales relacionadas a la tarea primaria. Although they can display the same content, simple menus are preferred over simple dialogs because simple menus are less disruptive to the user's current context.
 
-{{"demo": "pages/components/menus/SimpleMenu.js"}}
+{{"demo": "pages/components/menus/BasicMenu.js"}}
 
 ## Selected menu
 
-If used for item selection, when opened, simple menus attempt to vertically align the currently selected menu item with the anchor element, and the initial focus will be placed on the selected menu item. El elemento de menú actualmente seleccionado se establece usando la propiedad `selected` (de [ListItem](/api/list-item/)). To use a selected menu item without impacting the initial focus or the vertical positioning of the menu, set the `variant` property to `menu`.
+If used for item selection, when opened, simple menus places the initial focus on the selected menu item. El elemento de menú actualmente seleccionado se establece usando la propiedad `selected` (de [ListItem](/api/list-item/)). To use a selected menu item without impacting the initial focus, set the `variant` prop to "menu".
 
 {{"demo": "pages/components/menus/SimpleListMenu.js"}}
 

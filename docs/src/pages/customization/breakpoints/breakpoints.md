@@ -15,9 +15,9 @@ Each breakpoint (a key) matches with a _fixed_ screen width (a value):
 
 - **xs,** extra-small: 0px
 - **sm,** small: 600px
-- **md,** medium: 960px
-- **lg,** large: 1280px
-- **xl,** extra-large: 1920px
+- **md,** medium: 900px
+- **lg,** large: 1200px
+- **xl,** extra-large: 1536px
 
 These values can be [customized](#custom-breakpoints).
 
@@ -77,9 +77,9 @@ const theme = createTheme({
     values: {
       xs: 0,
       sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
     },
   },
 });
@@ -94,7 +94,7 @@ const theme = createTheme({
       mobile: 0,
       tablet: 640,
       laptop: 1024,
-      desktop: 1280,
+      desktop: 1200,
     },
   },
 });
@@ -139,7 +139,7 @@ const styles = (theme) => ({
   root: {
     backgroundColor: 'blue',
     // Match [md, ∞)
-    //       [960px, ∞)
+    //       [900px, ∞)
     [theme.breakpoints.up('md')]: {
       backgroundColor: 'red',
     },
@@ -164,7 +164,7 @@ const styles = (theme) => ({
   root: {
     backgroundColor: 'blue',
     // Match [0, md)
-    //       [0, 960px)
+    //       [0, 900px)
     [theme.breakpoints.down('md')]: {
       backgroundColor: 'red',
     },
@@ -190,7 +190,7 @@ const styles = (theme) => ({
     backgroundColor: 'blue',
     // Match [md, md + 1)
     //       [md, lg)
-    //       [960px, 1280px)
+    //       [900px, 1200px)
     [theme.breakpoints.only('md')]: {
       backgroundColor: 'red',
     },
@@ -216,7 +216,7 @@ const styles = (theme) => ({
   root: {
     backgroundColor: 'blue',
     // Match [sm, md)
-    //       [600px, 960px)
+    //       [600px, 900px)
     [theme.breakpoints.between('sm', 'md')]: {
       backgroundColor: 'red',
     },

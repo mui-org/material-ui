@@ -20,7 +20,7 @@ packageName: '@material-ui/lab'
 
 ## 複数選択
 
-Tree views also support multi selection.
+ツリー ビューでは、複数選択もサポートします。
 
 {{"demo": "pages/components/tree-view/MultiSelectTreeView.js"}}
 

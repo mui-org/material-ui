@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import { withStyles, WithStyles } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from './Navigator';
@@ -59,13 +59,13 @@ theme = {
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#18202c',
+          backgroundColor: '#081627',
         },
       },
     },
     MuiButton: {
       styleOverrides: {
-        label: {
+        root: {
           textTransform: 'none',
         },
         contained: {
@@ -120,13 +120,23 @@ theme = {
     MuiDivider: {
       styleOverrides: {
         root: {
-          backgroundColor: '#404854',
+          backgroundColor: 'rgb(255,255,255,0.15)',
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            color: '#4fc3f7',
+          },
         },
       },
     },
     MuiListItemText: {
       styleOverrides: {
         primary: {
+          fontSize: 14,
           fontWeight: theme.typography.fontWeightMedium,
         },
       },
@@ -135,7 +145,8 @@ theme = {
       styleOverrides: {
         root: {
           color: 'inherit',
-          marginRight: 0,
+          minWidth: 'auto',
+          marginRight: theme.spacing(2),
           '& svg': {
             fontSize: 20,
           },
@@ -155,37 +166,7 @@ theme = {
 
 const drawerWidth = 256;
 
-const styles = {
-  root: {
-    display: 'flex',
-    minHeight: '100vh',
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  app: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  main: {
-    flex: 1,
-    padding: theme.spacing(6, 4),
-    background: '#eaeff1',
-  },
-  footer: {
-    padding: theme.spacing(2),
-    background: '#eaeff1',
-  },
-} as const;
-
-export interface PaperbaseProps extends WithStyles<typeof styles> {}
-
-function Paperbase(props: PaperbaseProps) {
-  const { classes } = props;
+export default function Paperbase() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -195,9 +176,12 @@ function Paperbase(props: PaperbaseProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
         <CssBaseline />
-        <nav className={classes.drawer}>
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        >
           {isSmUp ? null : (
             <Navigator
               PaperProps={{ style: { width: drawerWidth } }}
@@ -210,19 +194,17 @@ function Paperbase(props: PaperbaseProps) {
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
           />
-        </nav>
-        <div className={classes.app}>
+        </Box>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
+          <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
             <Content />
-          </main>
-          <footer className={classes.footer}>
+          </Box>
+          <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
             <Copyright />
-          </footer>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }
-
-export default withStyles(styles, { defaultTheme: theme })(Paperbase);

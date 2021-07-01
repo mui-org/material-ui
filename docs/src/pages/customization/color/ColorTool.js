@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { rgbToHex, useTheme } from '@material-ui/core/styles';
 import * as colors from '@material-ui/core/colors';
 import Box from '@material-ui/core/Box';
@@ -35,6 +36,34 @@ const shades = [
   'A200',
   'A100',
 ];
+
+const TooltipRadio = React.forwardRef(function TooltipRadio(props, ref) {
+  const {
+    'aria-labelledby': ariaLabelledBy,
+    'aria-label': ariaLabel,
+    inputProps,
+    ...other
+  } = props;
+
+  return (
+    <Radio
+      ref={ref}
+      {...other}
+      inputProps={{
+        ...inputProps,
+        'aria-labelledby': ariaLabelledBy,
+        'aria-label': ariaLabel,
+      }}
+    />
+  );
+});
+
+TooltipRadio.propTypes = {
+  // possibly opaque identifier
+  'aria-label': PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  'aria-labelledby': PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  inputProps: PropTypes.object,
+};
 
 function ColorTool() {
   const dispatch = React.useContext(DispatchContext);
@@ -202,14 +231,13 @@ function ColorTool() {
 
             return (
               <Tooltip placement="right" title={hue} key={hue}>
-                <Radio
+                <TooltipRadio
                   sx={{ p: 0 }}
                   color="default"
                   checked={state[intent] === backgroundColor}
                   onChange={handleChangeHue(intent)}
                   value={hue}
                   name={intent}
-                  aria-labelledby={`tooltip-${intent}-${hue}`}
                   icon={
                     <Box
                       sx={{ width: 48, height: 48 }}

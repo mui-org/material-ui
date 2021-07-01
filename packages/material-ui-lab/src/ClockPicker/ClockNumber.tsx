@@ -52,8 +52,7 @@ const ClockNumberRoot = styled('span', { skipSx: true })<{ styleProps: ClockNumb
  */
 function ClockNumber(props: ClockNumberProps) {
   const { className, disabled, index, inner, label, selected, ...other } = props;
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
 
   const angle = ((index % 12) / 12) * Math.PI * 2 - Math.PI / 2;
   const length = ((CLOCK_WIDTH - CLOCK_HOUR_WIDTH - 2) / 2) * (inner ? 0.65 : 1);

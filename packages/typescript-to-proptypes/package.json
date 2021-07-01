@@ -1,6 +1,6 @@
 {
   "name": "typescript-to-proptypes",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-beta.0",
   "private": true,
   "description": "Generate proptypes from TypeScript declarations",
   "engines": {
@@ -26,7 +26,7 @@
     "@types/babel__core": "^7.1.2",
     "@types/doctrine": "^0.0.3",
     "@types/lodash": "^4.14.136",
-    "@types/node": "^14.0.26",
+    "@types/node": "^15.12.5",
     "@types/prettier": "^2.0.1",
     "@types/react": "^17.0.0",
     "@types/uuid": "^8.0.0",

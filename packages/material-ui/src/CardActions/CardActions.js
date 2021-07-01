@@ -22,10 +22,7 @@ const CardActionsRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(!styleProps.disableSpacing && styles.spacing),
-    };
+    return [styles.root, !styleProps.disableSpacing && styles.spacing];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

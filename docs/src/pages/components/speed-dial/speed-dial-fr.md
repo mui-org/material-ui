@@ -1,8 +1,8 @@
 ---
-title: React Speed Dial component
+title: Composant React Speed Dial
 components: SpeedDial, SpeedDialAction, SpeedDialIcon
 githubLabel: 'component: SpeedDial'
-0: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
+materialDesign: 'https://material.io/components/buttons-floating-action-button#types-of-transitions'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 ---
 
@@ -20,11 +20,15 @@ The floating action button can display related actions.
 
 {{"demo": "pages/components/speed-dial/BasicSpeedDial.js"}}
 
-## Controlled speed dial
+## Playground
 
 You can provide an alternate icon for the closed and open states using the `icon` and `openIcon` props of the `SpeedDialIcon` component.
 
+## Numérotation rapide contrôlée
+
 The SpeedDialActions tooltips can be be displayed persistently so that users don't have to long-press in order to see the tooltip on touch devices.
+
+You can provide an alternate icon for the closed and open states using the `icon` and `openIcon` props of the `SpeedDialIcon` component.
 
 ## Custom close icon
 
@@ -34,9 +38,9 @@ You can provide an alternate icon for the closed and open states using the `icon
 
 ## Persistent action tooltips
 
-The SpeedDialActions tooltips can be displayed persistently so that users don't have to long-press to see the tooltip on touch devices.
+Les info-bulles SpeedDialActions peuvent être affichées de manière persistante afin que les utilisateurs n'aient pas à appuyer longuement pour voir l'info-bulle sur les appareils tactiles.
 
-It is enabled here across all devices for demo purposes, but in production it could use the `isTouch` logic to conditionally set the prop.
+Il est activé ici sur tous les appareils à des fins de démonstration, mais en production, il pourrait utiliser la logique `isTouch` pour définir l'accessoire de manière conditionnelle.
 
 {{"demo": "pages/components/speed-dial/SpeedDialTooltipOpen.js"}}
 
@@ -44,20 +48,20 @@ It is enabled here across all devices for demo purposes, but in production it co
 
 ### ARIA
 
-#### Required
+#### Obligatoire
 
-- You should provide an `ariaLabel` for the speed dial component.
-- You should provide a `tooltipTitle` for each speed dial action.
+- Vous devez fournir un `ariaLabel` pour le composant de numérotation rapide.
+- Vous devez fournir un `tooltipTitle` pour chaque action de numérotation rapide.
 
-#### Provided
+#### Fourni
 
-- The Fab has `aria-haspopup`, `aria-expanded` and `aria-controls` attributes.
-- The speed dial actions container has `role="menu"` and `aria-orientation` set according to the direction.
-- The speed dial actions have `role="menuitem"`, and an `aria-describedby` attribute that references the associated tooltip.
+- Le Fab a les attributs `aria-haspopup`, `aria-expanded` et `aria-controls`.
+- Le conteneur d'actions de numérotation rapide a `role="menu"` et `aria-orientation` définis en fonction de la direction.
+- Les actions de numérotation rapide ont `role="menuitem"`, et un attribut `aria-describedby` qui fait référence à l'info-bulle associée.
 
 ### Clavier
 
-- The speed dial opens on focus.
-- The Space and Enter keys trigger the selected speed dial action, and toggle the speed dial open state.
-- The cursor keys move focus to the next or previous speed dial action. (Note that any cursor direction can be used initially to open the speed dial. This enables the expected behavior for the actual or perceived orientation of the speed dial, for example for a screen reader user who perceives the speed dial as a drop-down menu.)
-- The Escape key closes the speed dial and, if a speed dial action was focused, returns focus to the Fab.
+- Le cadran abrégé s'ouvre sur la mise au point.
+- Les touches Espace et Entrée déclenchent l'action de numérotation rapide sélectionnée et basculent l'état ouvert de la numérotation rapide.
+- Les touches du curseur déplacent le focus vers l'action de numérotation rapide suivante ou précédente. (Notez que n'importe quelle direction du curseur peut être utilisée initialement pour ouvrir la numérotation abrégée. Cela permet le comportement attendu pour l'orientation réelle ou perçue de la numérotation rapide, par exemple pour un utilisateur de lecteur d'écran qui perçoit la numérotation rapide comme un menu déroulant.)
+- La touche Échap ferme la numérotation abrégée et, si une action de numérotation abrégée a été focalisée, renvoie la focalisation au Fab.

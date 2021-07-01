@@ -1,18 +1,18 @@
-# Migration from @material-ui-pickers
+# Migration depuis @material-ui-pickers
 
-<p class="description">@material-ui/pickers was moved to the @material-ui/lab.</p>
+<p class="description">@material-ui/pickers a été déplacé vers le @material-ui/lab.</p>
 
-> **⚠️ The date picker components were rewritten**. In most places, the logic was rewritten from scratch, so it isn't possible to maintain the whole list of changes. Here's an overview of the most important concepts that were changed. If you are going to upgrade, the easiest way might be to go through each picker usage in your codebase, and rewrite them one at a time. Don't forget to run your tests after each!
+> **⚠️ Les composants du sélecteur de date ont été réécrit**. Dans la plupart des endroits, la logique a été réécrite à partir de zéro, donc il n'est pas possible de maintenir la liste complète des changements. Voici un aperçu des concepts les plus importants qui ont été changés. Si vous voulez mettre à jour, la façon la plus simple pourrait être de passer par chaque utilisation du sélecteur dans votre codebase, et les réécrire un à la fois. N'oubliez pas d'exécuter vos tests après chaque!
 
-This guide is an overview of the core concepts that were changed from pickers v3.2.10.
+Ce guide est un aperçu des concepts de base qui ont été changés des sélecteurs v3.2.10.
 
 ## Installation
 
-You simply need to install the `@material-ui/lab` package if it's not already installed. Nothing more is required.
+You simply need to install the `@material-ui/lab` package if it's not already installed. ⚠️ Make sure you have installed the latest version, `"@material-ui/lab": ^5.0.0-alpha.30"` or above.
 
 ## Importations
 
-The `keyboard` version of pickers is no longer published. All versions of mobile and desktop pickers implement keyboard input for accessibility.
+La version `keyboard` des sélecteurs n'est plus publiée. Toutes les versions des sélecteurs de téléphones mobiles et de bureau implémentent l'entrée du clavier pour l'accessibilité.
 
 ```diff
 -import { KeyboardDatePicker } from '@material-ui/pickers';
@@ -22,12 +22,12 @@ The `keyboard` version of pickers is no longer published. All versions of mobile
 +<DatePicker />
 ```
 
-Also, instead of providing a `variant` prop, these were moved to different imports, meaning that your bundle won't include `Dialog` if you are using only the desktop picker.
+De plus, au lieu de fournir une prop `variante` , ceux-ci ont été déplacés vers des importations différentes, ce qui signifie que votre paquet n'inclura pas `Dialog` si vous n'utilisez que le sélecteur de bureau.
 
-- `<DesktopDatePicker />` – Only desktop view.
-- `<MobileDatePicker />` – Only mobile view.
-- `<DatePicker />` – Mobile or Desktop view according to the user **pointer** preference.
-- `<StaticDatePicker />` – The picker view itself, without input or any other wrapper.
+- `<DesktopDatePicker />` – Uniquement la vue bureau.
+- `<MobileDatePicker />` – Seulement la vue mobile.
+- `<DatePicker />` – Vue mobile ou bureau selon la préférence du pointeur **utilisateur**.
+- `<StaticDatePicker />` – La vue du sélecteur elle-même, sans entrée ou aucun autre emballage.
 
 ```diff
 -import { DatePicker } from '@material-ui/pickers';
@@ -37,20 +37,20 @@ Also, instead of providing a `variant` prop, these were moved to different impor
 +<DesktopDatePicker />
 ```
 
-The same convention applies to `TimePicker` – `<DesktopTimePicker>` and `<MobileTimePicker />`.
+La même convention s'applique à `TimePicker` – `<DesktopTimePicker>` et `<MobileTimePicker />`.
 
 ## MuiPickersUtilsProvider
 
-The `MuiPickersUtilsProvider` was removed in favor of `LocalizationProvider`. Also, pickers do not require you to install date-io adapters manually. Everything is included with the `lab`.
+Le `MuiPickersUtilsProvider` a été supprimé pour  `LocalizationProvider`. De plus, les sélecteurs ne vous demandent pas d'installer les adaptateurs date-io manuellement. Tout est inclus avec le  `lab`.
 
-❌ Before:
+❌ Avant:
 
 ```js
 import AdapterDateFns from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 ```
 
-✅ After:
+✅ Après :
 
 ```jsx
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
@@ -68,14 +68,14 @@ function App() {
 
 ## Render input
 
-We introduced a new **required** `renderInput` prop. This simplifies using non-Material-UI text field input components.
+Nous avons introduit une nouvelle propriété **requise** `renderInput`. Cela simplifie l'utilisation de composants de saisie de champ de texte non Material-UI.
 
 ```jsx
 <DatePicker renderInput={(props) => <TextField {...props} />} />
 <TimePicker renderInput={(props) => <TextField {...props} />} />
 ```
 
-Previously, props were spread on the `<TextField />` component. From now on you will need to use the new `renderInput` prop to provide these:
+Auparavant, les propriétés étaient réparties sur le composant `<TextField />`. À partir de maintenant, vous devrez utiliser la nouvelle propriété `renderInput` pour fournir ceci:
 
 ```diff
 <DatePicker
@@ -85,13 +85,13 @@ Previously, props were spread on the `<TextField />` component. From now on you 
 />
 ```
 
-## State management
+## Gestion des états
 
-The state/value management logic for pickers was rewritten from scratch. Pickers will now call the `onChange` prop when each view of the date picker ends is completed. The `onError` handler is also completely different. Triple-check your pickers with forms integration, because form-integration issues can be subtle.
+La logique de gestion de l'état/des valeurs pour les sélecteurs a été réécrite à partir de zéro. Les sélecteurs appelleront maintenant la prop `onChange` lorsque chaque vue du sélecteur de date se terminera. Le gestionnaire `onError` est également complètement différent. Triple-vérifiez vos sélecteurs avec l'intégration de formulaires, car les problèmes d'intégration de formulaire peuvent être subtiles.
 
-## No required mask
+## Aucun mask requis
 
-Mask is no longer required. Also, if your provided mask is not valid, pickers will just ignore the mask, and allow arbitrary input.
+Le mask n'est plus requis. En outre, si le mask fourni n'est pas valide, les sélecteurs ignoreront simplement le mask et autoriseront une entrée arbitraire.
 
 ```jsx
 <DatePicker
@@ -112,12 +112,12 @@ Mask is no longer required. Also, if your provided mask is not valid, pickers wi
 />
 ```
 
-## And many more
+## Et bien plus encore !
 
 - ```diff <DatePicker
   - format="DD-MMM-YYYY"
   + inputFormat="DD-MMM-YYYY" ```
 
-There are many changes, be careful, make sure your tests, and build pass. In the event you have an advanced usage of the date picker, it will likely be simpler to rewrite it.
+Il y a beaucoup de changements, soyez prudent, assurez-vous que vos tests et votre build réussissent. Si vous avez une utilisation avancée du sélecteur de date, il sera probablement plus simple de le réécrire.
 
-Please open a pull request to improve the guide if you notice an opportunity for doing such.
+Veuillez ouvrir une pull request pour améliorer le guide si vous remarquez une opportunité de le faire.

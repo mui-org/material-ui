@@ -21,7 +21,6 @@
   "styles": {
     "classes": [
       "root",
-      "label",
       "text",
       "textInherit",
       "textPrimary",
@@ -62,8 +61,7 @@
       "loadingIndicatorStart",
       "loadingIndicatorEnd",
       "endIconLoadingEnd",
-      "startIconLoadingStart",
-      "labelLoadingCenter"
+      "startIconLoadingStart"
     ],
     "globalClasses": { "focusVisible": "Mui-focusVisible", "disabled": "Mui-disabled" },
     "name": "MuiLoadingButton"

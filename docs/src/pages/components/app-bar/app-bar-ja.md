@@ -9,13 +9,13 @@ materialDesign: https://material.io/components/app-bars-top
 
 <p class="description">App Barには、現在の画面に関する情報と操作が表示されます。</p>
 
-[top App Bar](https://material.io/design/components/app-bars-top.html) は、現在の画面に関連するコンテンツとアクションを提供します。 It's used for branding, screen titles, navigation, and actions.
+トップにあるApp Barは、現在の画面に関連するコンテンツとアクションを提供します。 それらはブランディング、画面タイトル、ナビゲーション、およびアクションに使用されます。
 
 アクションバーに変換したり、ナビゲーションバーとして使うことができます。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## シンプルなアプリバー
+## 基本的なApp Bar
 
 {{"demo": "pages/components/app-bar/ButtonAppBar.js", "bg": true}}
 
@@ -51,9 +51,9 @@ materialDesign: https://material.io/components/app-bars-top
 
 ## ラベルの配置
 
-アプリバーの位置を固定してレンダリングすると、要素の寸法はページの残りの部分に影響しません。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。
+アプリバーの位置を固定してレンダリングすると、要素の寸法はページの残りの部分に影響しません。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。 これにより、コンテンツの一部がアプリバーの背後で見えなくなる可能性があります。 以下に3つの解決策を示します。
 
-1. fixed の代わりに `position="sticky"` を使用できます。 ⚠️ sticky is not supported by IE11.
+1. fixed の代わりに `position="sticky"` を使用できます。 ⚠️ stickyはIE11ではサポートされていません。
 2. 2番目の `<Toolbar />` コンポーネントをレンダリングできます:
 
 ```jsx
@@ -72,21 +72,18 @@ function App() {
 3. `theme.mixins.toolbar` CSSを使えます。:
 
 ```jsx
-const useStyles = makeStyles(theme => ({
-  offset: theme.mixins.toolbar,
-}))
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 function App() {
-  const classes = useStyles();
   return (
     <React.Fragment>
       <AppBar position="fixed">
         <Toolbar>{/* content */}</Toolbar>
       </AppBar>
-      <div className={classes.offset} />
+      <Offset />
     </React.Fragment>
-  )
-};
+  );
+}
 ```
 
 ## スクロール
@@ -115,11 +112,11 @@ function App() {
 
 #### 引数
 
-1. `オプション` (*オプジェクト* [任意]):
+1. `options` (_object_ [optional]):
 
-   - `options.disableHysteresis` (*ブール値* [任意]): デフォルト値 `false`. ヒステリシスを無効にします。 ヒステリシスを無効にします。 ヒステリシスを無効にします。 ヒステリシスを無効にします。 ヒステリシスを無効にします。 `trigger` 値を決定するときにスクロール方向を無視します。
-   - `options.target` (*ノード* [任意]): デフォルト地 `window`.
-   - `options.threshold` (*Number* [optional]): デフォルトは`100`. 垂直スクロールがこのしきい値(排他的) を厳密に超えたときに`trigger` 値を変更します。
+   - `options.disableHysteresis` (_bool_ [optional]): Defaults to `false`. ヒステリシスを無効にします。 ` trigger ` 値を決定するときにスクロール方向を無視します。
+   - `options.target` (*Node* [optional]): デフォルト値: `window`.
+   - `options.threshold` (*number* [optional]): デフォルト値:`100`. 垂直スクロールがこのしきい値(排他的) を厳密に超えたときに`trigger` 値を変更します。
 
 #### 戻り値
 
@@ -138,4 +135,28 @@ function HideOnScroll(props) {
     </Slide>
   );
 }
+```
+
+## Enable Color on Dark
+
+Following the [Material Design guidelines](https://material.io/design/color/dark-theme.html), the `color` prop has no effect on the appearance of the AppBar in dark mode. You can override this behavior by setting the `enableColorOnDark` prop to `true`.
+
+```jsx
+// Specific element via prop
+<AppBar enableColorOnDark />
+
+// Affect all AppBars via theme
+<ThemeProvider
+  theme={createTheme({
+    components: {
+      MuiAppBar: {
+        defaultProps: {
+          enableColorOnDark: true,
+        },
+      },
+    },
+  })}
+>
+  <AppBar />
+</ThemeProvider>
 ```

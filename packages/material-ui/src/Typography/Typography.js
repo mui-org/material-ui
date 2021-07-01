@@ -31,14 +31,14 @@ export const TypographyRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.variant && styles[styleProps.variant]),
-      ...(styleProps.align !== 'inherit' && styles[`align${capitalize(styleProps.align)}`]),
-      ...(styleProps.noWrap && styles.noWrap),
-      ...(styleProps.gutterBottom && styles.gutterBottom),
-      ...(styleProps.paragraph && styles.paragraph),
-    };
+    return [
+      styles.root,
+      styleProps.variant && styles[styleProps.variant],
+      styleProps.align !== 'inherit' && styles[`align${capitalize(styleProps.align)}`],
+      styleProps.noWrap && styles.noWrap,
+      styleProps.gutterBottom && styles.gutterBottom,
+      styleProps.paragraph && styles.paragraph,
+    ];
   },
 })(({ theme, styleProps }) => ({
   margin: 0,
@@ -88,8 +88,8 @@ const transformDeprecatedColors = (color) => {
 
 const Typography = React.forwardRef(function Typography(inProps, ref) {
   const themeProps = useThemeProps({ props: inProps, name: 'MuiTypography' });
-  themeProps.color = transformDeprecatedColors(themeProps.color);
-  const props = extendSxProp(themeProps);
+  const color = transformDeprecatedColors(themeProps.color);
+  const props = extendSxProp({ ...themeProps, color });
 
   const {
     align = 'inherit',
@@ -106,6 +106,7 @@ const Typography = React.forwardRef(function Typography(inProps, ref) {
   const styleProps = {
     ...props,
     align,
+    color,
     className,
     component,
     gutterBottom,

@@ -8,7 +8,7 @@
     "easing": "The transition timing function. You may specify a single easing or a object containing enter and exit values.",
     "in": "If <code>true</code>, the component will transition in.",
     "orientation": "The transition orientation.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "timeout": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.<br>Set to &#39;auto&#39; to automatically calculate transition time based on height."
   },
   "classDescriptions": {

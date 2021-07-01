@@ -1,6 +1,6 @@
 # Color 颜色
 
-<p class="description">颜色承载了不同的寓意。 开箱即用，您可以查看 Material Design 规范中的所有颜色。</p>
+<p class="description">颜色承载了不同的寓意。 Out of the box you get access to all colors in the Material Design guidelines.</p>
 
 使用 Material Design 的[颜色系统](https://material.io/design/color/)，您可创建表现独特品牌或风格的颜色主题。
 
@@ -18,7 +18,7 @@ Material Design 团队也搭建了一个非常棒的调色板配置工具： [ma
 <br />
 <br />
 
-输出的结果可以被传入到 `createTheme()` 函数中：
+The output can be fed into `createTheme()` function:
 
 ```js
 import { createTheme } from '@material-ui/core/styles';
@@ -47,7 +47,7 @@ const theme = createTheme({
 
 {{"demo": "pages/customization/color/ColorTool.js", "hideToolbar": true, "bg": true}}
 
-您可以把颜色的例子中显示的输出结果直接粘贴到一个 [`createTheme()`](/customization/theming/#createtheme-options-theme) 函数里（需要与 [`ThemeProvider`](/customization/theming/#theme-provider) 配合使用）：
+The output shown in the color sample can be pasted directly into a [`createTheme()`](/customization/theming/#createtheme-options-theme) function (to be used with [`ThemeProvider`](/customization/theming/#theme-provider)):
 
 ```jsx
 import { createTheme } from '@material-ui/core/styles';
@@ -65,9 +65,9 @@ const theme = createTheme({
 });
 ```
 
-您只需提供 `主要的` 阴影（shades）（除非您希望进一步自定义 `light`，`dark` 或 `contrastText` 这几个属性），在 [定制主题](/customization/palette/) 章节中提到，这是因为其他颜色会由 `createTheme()` 自动计算。
+Only the `main` shades need be provided (unless you wish to further customize `light`, `dark` or `contrastText`), as the other colors will be calculated by `createTheme()`, as described in the [Theme customization](/customization/palette/) section.
 
-如果你在使用默认的主要和/或次要阴影，那么通过提供一个颜色对象（color object） ，`createTheme()` 将会根据主（main）、亮（light）和暗（dark）三种 material 颜色使用合适的阴影。
+If you are using the default primary and / or secondary shades then by providing the color object, `createTheme()` will use the appropriate shades from the material color for main, light and dark.
 
 ### 社区提供的一些工具
 

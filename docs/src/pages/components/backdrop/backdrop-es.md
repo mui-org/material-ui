@@ -1,6 +1,6 @@
 ---
 title: Backdrop React Componente
-components: Backdrop
+components: Backdrop, BackdropUnstyled
 githubLabel: 'component: Backdrop'
 ---
 
@@ -15,3 +15,11 @@ El backdrop señala al usuario de un cambio de estado dentro de una aplicación 
 ## Ejemplo
 
 {{"demo": "pages/components/backdrop/SimpleBackdrop.js"}}
+
+## Unstyled
+
+The backdrop also comes with the unstyled package. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import Backdrop from '@material-ui/unstyled/Backdrop';
+```

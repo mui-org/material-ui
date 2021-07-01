@@ -15,11 +15,11 @@ They should be easy to scan for relevant and actionable information. Elements, l
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Простая Карточка
+## Basic card
 
 Несмотря на то, что на карточках можно располагать несколько действий, элементы управления и выпадающие меню, будьте сдержаны и помните, что карточки - это входные точки для более сложной и детальной информации.
 
-{{"demo": "pages/components/cards/SimpleCard.js", "bg": true}}
+{{"demo": "pages/components/cards/BasicCard.js", "bg": true}}
 
 ### Outlined Card
 
@@ -47,7 +47,7 @@ Set `variant="outlined"` to render an outlined card.
 
 ## Primary action
 
-Often a card allow users to interact with the entirety of its surface to trigger its main action, be it an expansion, a link to another screen or some other behavior. The action area of the card can be specified by wrapping its contents in a `CardActionArea` component.
+Часто карта позволяет пользователям взаимодействовать со всей ее поверхностью, чтобы вызвать ее основное действие, будь то расширение, ссылка на другой экран или какое-либо другое поведение. The action area of the card can be specified by wrapping its contents in a `CardActionArea` component.
 
 {{"demo": "pages/components/cards/ActionAreaCard.js", "bg": true}}
 

@@ -155,7 +155,7 @@ Link a style sheet with a function component using the **styled components** pat
 3. `options` (*Object* [optional]):
 
 - `options.defaultTheme` (*Object* [optional]): The default theme to use if a theme isn't supplied through a Theme Provider.
-- `options.withTheme` (*Boolean* [optional]): Valeur par défaut `false`. Provide the `theme` object to the component as a property.
+- `options.withTheme` (*Boolean* [optional]): Valeur par défaut `false`. Fournissez l'objet `theme` au composant en tant que prop.
 - `options.name` (*String* [optional]): The name of the style sheet. Useful for debugging. If the value isn't provided, it will try to fallback to the name of the component.
 - `options.flip` (*Boolean* [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. When set to `true`, the styles are inversed. When set to `null`, it follows `theme.direction`.
 - The other keys are forwarded to the options argument of [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).
@@ -279,7 +279,6 @@ Some implementation details that might be interesting to being aware of:
 
 - It adds a `classes` property so you can override the injected class names from the outside.
 - It forwards refs to the inner component.
-- The `innerRef` prop is deprecated. Use `ref` instead.
 - It does **not** copy over statics. For instance, it can be used to defined a `getInitialProps()` static method (next.js).
 
 ### Paramètres
@@ -288,7 +287,7 @@ Some implementation details that might be interesting to being aware of:
 2. `options` (*Object* [optional]):
 
 - `options.defaultTheme` (*Object* [optional]): The default theme to use if a theme isn't supplied through a Theme Provider.
-- `options.withTheme` (*Boolean* [optional]): Valeur par défaut `false`. Provide the `theme` object to the component as a property.
+- `options.withTheme` (*Boolean* [optional]): Valeur par défaut `false`. Fournissez l'objet `theme` au composant en tant que prop.
 - `options.name` (*String* [optional]): The name of the style sheet. Useful for debugging. If the value isn't provided, it will try to fallback to the name of the component.
 - `options.flip` (*Boolean* [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. When set to `true`, the styles are inversed. When set to `null`, it follows `theme.direction`.
 - The other keys are forwarded to the options argument of [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).

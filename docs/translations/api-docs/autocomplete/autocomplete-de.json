@@ -27,12 +27,12 @@
     "getLimitTagsText": "The label to display when the tags are truncated (<code>limitTags</code>).<br><br><strong>Signature:</strong><br><code>function(more: number) =&gt; ReactNode</code><br><em>more:</em> The number of truncated tags.",
     "getOptionDisabled": "Used to determine the disabled state for a given option.<br><br><strong>Signature:</strong><br><code>function(option: T) =&gt; boolean</code><br><em>option:</em> The option to test.",
     "getOptionLabel": "Used to determine the string value for a given option. It&#39;s used to fill the input (and the list box options if <code>renderOption</code> is not provided).<br><br><strong>Signature:</strong><br><code>function(option: T) =&gt; string</code><br>",
-    "getOptionSelected": "Used to determine if an option is selected, considering the current value(s). Uses strict equality by default. ⚠️ Both arguments need to be handled, an option can only match with one value.<br><br><strong>Signature:</strong><br><code>function(option: T, value: T) =&gt; boolean</code><br><em>option:</em> The option to test.<br><em>value:</em> The value to test against.",
     "groupBy": "If provided, the options will be grouped under the returned string. The groupBy value is also used as the text for group headings when <code>renderGroup</code> is not provided.<br><br><strong>Signature:</strong><br><code>function(options: T) =&gt; string</code><br><em>options:</em> The options to group.",
     "handleHomeEndKeys": "If <code>true</code>, the component handles the &quot;Home&quot; and &quot;End&quot; keys when the popup is open. It should move focus to the first option and last option, respectively.",
-    "id": "This prop is used to help implement the accessibility logic. If you don&#39;t provide this prop. It falls back to a randomly generated id.",
+    "id": "This prop is used to help implement the accessibility logic. If you don&#39;t provide an id it will fall back to a randomly generated one.",
     "includeInputInList": "If <code>true</code>, the highlight can move to the input.",
     "inputValue": "The input value.",
+    "isOptionEqualToValue": "Used to determine if the option represents the given value. Uses strict equality by default. ⚠️ Both arguments need to be handled, an option can only match with one value.<br><br><strong>Signature:</strong><br><code>function(option: T, value: T) =&gt; boolean</code><br><em>option:</em> The option to test.<br><em>value:</em> The value to test against.",
     "limitTags": "The maximum number of tags that will be visible when not focused. Set <code>-1</code> to disable the limit.",
     "ListboxComponent": "The component used to render the listbox.",
     "ListboxProps": "Props applied to the Listbox element.",
@@ -40,8 +40,8 @@
     "loadingText": "Text to display when in a loading state.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.",
     "multiple": "If <code>true</code>, <code>value</code> must be an array and the menu will support multiple selections.",
     "noOptionsText": "Text to display when there are no options.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.",
-    "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: T \\| T[], reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value of the component.<br><em>reason:</em> One of &quot;create-option&quot;, &quot;select-option&quot;, &quot;remove-option&quot;, &quot;blur&quot; or &quot;clear&quot;.",
-    "onClose": "Callback fired when the popup requests to be closed. Use in controlled mode (see open).<br><br><strong>Signature:</strong><br><code>function(event: object, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>reason:</em> Can be: <code>&quot;toggleInput&quot;</code>, <code>&quot;escape&quot;</code>, <code>&quot;select-option&quot;</code>, <code>&quot;remove-option&quot;</code>, <code>&quot;blur&quot;</code>.",
+    "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: T | T[], reason: string, details?: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value of the component.<br><em>reason:</em> One of &quot;createOption&quot;, &quot;selectOption&quot;, &quot;removeOption&quot;, &quot;blur&quot; or &quot;clear&quot;.",
+    "onClose": "Callback fired when the popup requests to be closed. Use in controlled mode (see open).<br><br><strong>Signature:</strong><br><code>function(event: object, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>reason:</em> Can be: <code>&quot;toggleInput&quot;</code>, <code>&quot;escape&quot;</code>, <code>&quot;selectOption&quot;</code>, <code>&quot;removeOption&quot;</code>, <code>&quot;blur&quot;</code>.",
     "onHighlightChange": "Callback fired when the highlight option changes.<br><br><strong>Signature:</strong><br><code>function(event: object, option: T, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>option:</em> The highlighted option.<br><em>reason:</em> Can be: <code>&quot;keyboard&quot;</code>, <code>&quot;auto&quot;</code>, <code>&quot;mouse&quot;</code>.",
     "onInputChange": "Callback fired when the input value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: string, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value of the text input.<br><em>reason:</em> Can be: <code>&quot;input&quot;</code> (user input), <code>&quot;reset&quot;</code> (programmatic change), <code>&quot;clear&quot;</code>.",
     "onOpen": "Callback fired when the popup requests to be opened. Use in controlled mode (see open).<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",
@@ -58,14 +58,12 @@
     "renderTags": "Render the selected value.<br><br><strong>Signature:</strong><br><code>function(value: T[], getTagProps: function) =&gt; ReactNode</code><br><em>value:</em> The <code>value</code> provided to the component.<br><em>getTagProps:</em> A tag props getter.",
     "selectOnFocus": "If <code>true</code>, the input&#39;s text is selected on focus. It helps the user clear the selected value.",
     "size": "The size of the autocomplete.",
-    "value": "The value of the autocomplete.<br>The value must have reference equality with the option in order to be selected. You can customize the equality behavior with the <code>getOptionSelected</code> prop."
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
+    "value": "The value of the autocomplete.<br>The value must have reference equality with the option in order to be selected. You can customize the equality behavior with the <code>isOptionEqualToValue</code> prop."
   },
   "classDescriptions": {
     "root": {
       "description": "Styles applied to the root element."
-    },
-    "@media (pointer": {
-      "description": "Avoid double tap issue on iOS"
     },
     "fullWidth": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -86,6 +84,11 @@
       "description": "Styles applied to {{nodeName}}, {{conditions}}.",
       "nodeName": "the tag elements",
       "conditions": "e.g. the chips if <code>size=\"small\"</code>"
+    },
+    "tagSizeMedium": {
+      "description": "Styles applied to {{nodeName}}, {{conditions}}.",
+      "nodeName": "the tag elements",
+      "conditions": "e.g. the chips if <code>size=\"medium\"</code>"
     },
     "hasPopupIcon": {
       "description": "Styles applied when the popup icon is rendered."

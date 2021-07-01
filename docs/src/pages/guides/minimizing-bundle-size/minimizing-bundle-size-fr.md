@@ -177,24 +177,6 @@ Modify your `package.json` start command:
 }
 ```
 
-Note: You may run into errors like these:
-
-> Module not found: Can't resolve '@material-ui/core/makeStyles' in '/your/project'
-
-This is because `@material-ui/styles` is re-exported through `core`, but the full import is not allowed.
-
-You have an import like this in your code:
-
-```js
-import { makeStyles, createStyles } from '@material-ui/core';
-```
-
-The fix is simple, define the import separately:
-
-```js
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-```
-
 Enjoy significantly faster start times.
 
 #### 2. Convert all your imports

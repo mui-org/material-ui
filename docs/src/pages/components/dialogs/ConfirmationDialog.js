@@ -64,11 +64,10 @@ function ConfirmationDialogRaw(props) {
       sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
       maxWidth="xs"
       TransitionProps={{ onEntering: handleEntering }}
-      aria-labelledby="confirmation-dialog-title"
       open={open}
       {...other}
     >
-      <DialogTitle id="confirmation-dialog-title">Phone Ringtone</DialogTitle>
+      <DialogTitle>Phone Ringtone</DialogTitle>
       <DialogContent dividers>
         <RadioGroup
           ref={radioGroupRef}

@@ -13,7 +13,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#breadcrumb'
 
 ## Navegação estrutural simples
 
-{{"demo": "pages/components/breadcrumbs/SimpleBreadcrumbs.js"}}
+{{"demo": "pages/components/breadcrumbs/BasicBreadcrumbs.js"}}
 
 ## Último caminho ativo
 
@@ -23,7 +23,7 @@ Mantendo o último caminho de navegação interativo.
 
 ## Separador customizado
 
-No exemplo a seguir, nós usamos duas strings separadoras, e um ícone SVG.
+In the following examples, we are using two string separators and an SVG icon.
 
 {{"demo": "pages/components/breadcrumbs/CustomSeparator.js"}}
 

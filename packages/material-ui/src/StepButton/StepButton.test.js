@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import { fireEvent } from '@testing-library/dom';
 import StepButton, { stepButtonClasses as classes } from '@material-ui/core/StepButton';
 import Step from '@material-ui/core/Step';
@@ -12,12 +12,9 @@ describe('<StepButton />', () => {
   const render = createClientRender();
 
   describe('internals', () => {
-    const mount = createMount();
-
     describeConformanceV5(<StepButton />, () => ({
       classes,
       inheritComponent: ButtonBase,
-      mount,
       muiName: 'MuiStepButton',
       refInstanceof: window.HTMLButtonElement,
       render,

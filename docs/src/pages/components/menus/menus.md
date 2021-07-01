@@ -24,6 +24,18 @@ Choosing an option should immediately ideally commit the option and close the me
 
 {{"demo": "pages/components/menus/BasicMenu.js"}}
 
+## Icon menu
+
+In desktop viewport, padding is increased to give more space to the menu.
+
+{{"demo": "pages/components/menus/IconMenu.js", "bg": true}}
+
+## Dense menu
+
+For the menu that has long list and long text, you can use the `dense` prop to reduce the padding (this property only affects desktop viewport).
+
+{{"demo": "pages/components/menus/DenseMenu.js", "bg": true}}
+
 ## Selected menu
 
 If used for item selection, when opened, simple menus places the initial focus on the selected menu item.
@@ -35,7 +47,7 @@ To use a selected menu item without impacting the initial focus, set the `varian
 ## Positioned menu
 
 Because the `Menu` component uses the `Popover` component to position itself, you can use the same [positioning props](/components/popover/#anchor-playground) to position it.
-For instance, you can display the menu below the anchor:
+For instance, you can display the menu on top of the anchor:
 
 {{"demo": "pages/components/menus/PositionedMenu.js"}}
 
@@ -48,6 +60,12 @@ For answering those needs, we expose a `MenuList` component that you can compose
 The primary responsibility of the `MenuList` component is to handle the focus.
 
 {{"demo": "pages/components/menus/MenuListComposition.js", "bg": true}}
+
+## Account menu
+
+`Menu` content can be mixed with other components like `Avatar`.
+
+{{"demo": "pages/components/menus/AccountMenu.js"}}
 
 ## Customized menu
 

@@ -6,7 +6,7 @@ githubLabel: 'component: Pagination'
 
 # Pagination
 
-<p class="description">The Pagination component enables the user to select a specific page from a range of pages.</p>
+<p class="description">Pagination コンポーネントにより、範囲から特定のページを選択できます。</p>
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -28,11 +28,11 @@ githubLabel: 'component: Pagination'
 
 ## Button
 
-You can optionally enable first-page and last-page buttons, or disable the previous-page and next-page buttons.
+必要に応じて、最初のページと最後のページへのボタンを有効にしたり、前のページと次のページへのボタンを無効にしたりできます。
 
 {{"demo": "pages/components/pagination/PaginationButtons.js"}}
 
-## Pagination ranges
+## ページネーションの範囲
 
 You can specify how many digits to display either side of current page with the `siblingRange` prop, and adjacent to the start and end page number with the `boundaryRange` prop.
 
@@ -48,7 +48,7 @@ You can specify how many digits to display either side of current page with the 
 
 ## `usePagination`
 
-For advanced customization use cases, we expose a headless `usePagination()` hook. It accepts almost the same options as the Pagination component minus all the props related to the rendering of JSX. The Pagination component uses this hook internally.
+For advanced customization use cases, a headless `usePagination()` hook is exposed. It accepts almost the same options as the Pagination component minus all the props related to the rendering of JSX. The Pagination component is built on this hook.
 
 ```jsx
 import { usePagination } from '@material-ui/core/Pagination';
@@ -58,13 +58,13 @@ import { usePagination } from '@material-ui/core/Pagination';
 
 ## Table pagination
 
-The `Pagination` component was designed to paginate a list of arbitrary items when infinite loading isn't used. It's preferred in contexts where SEO is important, for instance, a blog.
+`Pagination` コンポーネントは、無限ローディングが使用されない場合に任意のアイテムのリストをページネーションするように設計されています。 It's preferred in contexts where SEO is important, for instance, a blog.
 
 For the pagination of a large set of tabular data, you should use the `TablePagination` component.
 
 {{"demo": "pages/components/pagination/TablePagination.js"}}
 
-> ⚠️ Note that the `Pagination` page prop starts at 1 to match the requirement of including the value in the URL, while the `TablePagination` page prop stats at 0 to match the requirement of zero-based JavaScript arrays that comes with rendering a lot of tabular data.
+> 注意　`Pagination`ページプロパティは、URLに値を含むという要件に合わせるため1から始まります。一方、`TablePagination`ページプロパティは、たくさんの表形式データをレンダリングすることからゼロ基点であるJavaScript配列に合わせて0から始まります。
 
 You can learn more about this use case in the [table section](/components/tables/#custom-pagination-options) of the documentation.
 

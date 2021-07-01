@@ -28,7 +28,7 @@ Here are the most significant improvements since the beginning of the year:
 
   ![date picker](/static/blog/2020-q1-update/date-picker.png)
 
-- ⚠️ We have introduced a new [Alert](https://material-ui.com/components/alert/) component in the lab. While this component isn't mentioned in the Material Design specification, it's a common and well-established pattern. For instance, it can be interested when [combined](https://material-ui.com/components/snackbars/#notistack) with the Snackbar.
+- ⚠️ We have introduced a new [Alert](https://material-ui.com/components/alert/) component in the lab. While this component isn't mentioned in the Material Design guidelines, it's a common and well-established pattern. For instance, it can be interested when [combined](https://material-ui.com/components/snackbars/#notistack) with the Snackbar.
 
   <img src="/static/blog/2020-q1-update/alert.png" alt="alert" style="max-height: 369px; margin-bottom: 24px;" />
 

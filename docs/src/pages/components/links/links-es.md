@@ -36,16 +36,14 @@ When you use `target="_blank"` with Links, it is [recommended](https://developer
 
 ## Librería externa de routing
 
-Un uso comun es realizar la navegacion solo en el cliente, sin realizar el viaje HTTP Ida-Vuelta al servidor. The `Link` component provides a property to handle this use case: `component`.
-
-Here is an [integration example with react-router](/guides/composition/#link).
+One frequent use case is to perform navigation on the client only, without an HTTP round-trip to the server. The `Link` component provides a property to handle this use case: `component`. Here is a [more detailed guide](/guides/routing/#link).
 
 ## Accesibilidad
 
 (WAI-ARIA: https://www.w3.org/TR/wai-aria-practices/#link)
 
 - Al proporcionar el contenido del enlace, evitar descripciones genéricas como "haga clic aquí" o "ir a". En su lugar, utilice [descripciones específicas](https://developers.google.com/web/tools/lighthouse/audits/descriptive-link-text).
-- Para una mejor experiencia de usuario, los enlaces deben sobresalir del texto en la página.
+- Para una mejor experiencia de usuario, los enlaces deben sobresalir del texto en la página. For instance, you can keep the default `underline="always"` behavior.
 - Si un enlace no tiene un significativo href, [se debe representarse mediante un `<button>` elemento](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md).
 
 {{"demo": "pages/components/links/ButtonLink.js"}}

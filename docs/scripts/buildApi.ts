@@ -27,10 +27,7 @@ import generatePropTypeDescription, {
   isElementAcceptingRefProp,
 } from 'docs/src/modules/utils/generatePropTypeDescription';
 import { findPages, findPagesMarkdown, findComponents } from 'docs/src/modules/utils/find';
-import {
-  getHeaders,
-  renderInline as renderMarkdownInline,
-} from 'docs/src/modules/utils/parseMarkdown';
+import { getHeaders, renderInline as renderMarkdownInline } from '@material-ui/markdown';
 import { pageToTitle } from 'docs/src/modules/utils/helpers';
 import createGenerateClassName from '@material-ui/styles/createGenerateClassName';
 import * as ttp from 'typescript-to-proptypes';
@@ -217,7 +214,7 @@ function resolveType(type: NonNullable<doctrine.Tag['type']>): string {
   }
 
   if (type.type === 'UnionType') {
-    return type.elements.map((t) => resolveType(t)).join(' \\| ');
+    return type.elements.map((t) => resolveType(t)).join(' | ');
   }
 
   if ('name' in type) {
@@ -836,6 +833,8 @@ async function buildDocs(options: {
     default: string | undefined;
     required: boolean | undefined;
     type: { name: string | undefined; description: string | undefined };
+    deprecated: true | undefined;
+    deprecationInfo: string | undefined;
   }>(
     Object.entries(reactApi.props).map(([propName, propDescriptor]) => {
       let prop: DescribeablePropDescriptor | null;
@@ -856,14 +855,9 @@ async function buildDocs(options: {
       if (propName === 'classes') {
         description += ' See <a href="#css">CSS API</a> below for more details.';
       } else if (propName === 'sx') {
-        description +=
-          ' See the <a href="/system/basics/#the-sx-prop">`sx` page</a> for more details.';
+        description += ' See the <a href="/system/the-sx-prop/">`sx` page</a> for more details.';
       }
-
-      componentApi.propDescriptions = {
-        ...componentApi.propDescriptions,
-        [propName]: description && description.replace(/\n@default.*$/, ''),
-      };
+      componentApi.propDescriptions[propName] = description.replace(/\n@default.*$/, '');
 
       // Only keep `default` for bool props if it isn't 'false'.
       let defaultValue: string | undefined;
@@ -882,6 +876,8 @@ async function buildDocs(options: {
         /\.isRequired/.test(prop.type.raw) ||
         (chainedPropType !== false && chainedPropType.required);
 
+      const deprecation = (propDescriptor.description || '').match(/@deprecated(\s+(?<info>.*))?/);
+
       return [
         propName,
         {
@@ -893,6 +889,9 @@ async function buildDocs(options: {
           default: defaultValue,
           // undefined values are not serialized => saving some bytes
           required: requiredProp || undefined,
+          deprecated: !!deprecation || undefined,
+          deprecationInfo:
+            renderMarkdownInline(deprecation?.groups?.info || '').trim() || undefined,
         },
       ];
     }),

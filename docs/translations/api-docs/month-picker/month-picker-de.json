@@ -1,12 +1,19 @@
 {
   "componentDescription": "",
   "propDescriptions": {
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "className": "className applied to the root element.",
     "date": "Date value for the MonthPicker",
     "disableFuture": "If <code>true</code> future days are disabled.",
     "disablePast": "If <code>true</code> past days are disabled.",
     "maxDate": "Maximal selectable date.",
     "minDate": "Minimal selectable date.",
-    "onChange": "Callback fired on date change."
+    "onChange": "Callback fired on date change.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "root": {
+      "description": "Styles applied to the root element."
+    }
+  }
 }

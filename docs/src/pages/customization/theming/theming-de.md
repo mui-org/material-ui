@@ -18,19 +18,45 @@ Mehr darüber erfahren Sie im [API](/styles/api/#themeprovider) Abschnitt. `Them
 
 Das Ändern der Konfigurationsvariablen für das Theme ist der effektivste Weg, um die Material-UI an Ihre Bedürfnisse anzupassen. Die folgenden Abschnitte behandeln die wichtigsten Theme-Variablen:
 
-- [Palette](/customization/palette/)
-- [Typografie](/customization/typography/)
-- [Abstände](/customization/spacing/)
-- [Haltepunkte](/customization/breakpoints/)
-- [z-index](/customization/z-index/)
-- [Komponenten](/customization/theme-components/)
-- [Übergänge](/customization/transitions/)
+- [`.palette`](/customization/palette/)
+- [`.typography`](/customization/typography/)
+- [`.abstände`](/customization/spacing/)
+- [`.haltepunkte`](/customization/breakpoints/)
+- [`.zIndex`](/customization/z-index/)
+- [`.transições`](/customization/transitions/)
+- [`.komponenten`](/customization/theme-components/)
 
 Sie können den [Standard-Themenbereich](/customization/default-theme/) auschecken, um das Standarddesign vollständig anzuzeigen.
 
 ### Benutzerdefinierte Variablen
 
 When using Material-UI's theme with the [styling solution](/styles/basics/) or [any others](/guides/interoperability/#themeprovider), it can be convenient to add additional variables to the theme so you can use them everywhere. Zum Beispiel:
+
+```jsx
+const theme = createTheme({
+  status: {
+    danger: orange[500],
+  },
+});
+```
+
+If you are using TypeScript, you would also need to use [module augmentation](/guides/typescript/#customization-of-theme) for the theme to accept the above values.
+
+```tsx
+declare module '@material-ui/core/styles' {
+  interface Theme {
+    status: {
+      danger: string;
+    };
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    status?: {
+      danger?: string;
+    };
+  }
+}
+```
 
 {{"demo": "pages/customization/theming/CustomStyles.js"}}
 
@@ -75,12 +101,12 @@ Generieren Sie eine Themenbasis von den gegebenen Optionen.
 
 #### Parameter
 
-1. `options` (*Object*): Nimmt ein unvollständiges Themeobjekt auf und fügt die fehlenden Teile hinzu.
-2. `...args` (*Array*): Deep merge the arguments with the about to be returned theme.
+1. `options` (_object_): Takes an incomplete theme object and adds the missing parts.
+2. `...args` (_object[]_): Deep merge the arguments with the about to be returned theme.
 
 #### Rückgabewerte
 
-`theme` (*Object*): Das neue Theme mit einer responsiven Typografie.
+`theme` (_object_): A complete, ready-to-use theme object.
 
 #### Beispiele
 
@@ -107,17 +133,17 @@ Generieren Sie responsive Typografieeinstellungen basierend auf den erhaltenen O
 
 #### Parameter
 
-1. `theme` (*Object*): Das zu verbessernde Themeobjekt.
-2. `options` (*Object* [optional]):
+1. `theme` (_object_): The theme object to enhance.
+2. `options` (_object_ [optional]):
 
-- `breakpoints` (*Array\<String\>* [optional]): Default to `['sm', 'md', 'lg']`. Array von [Haltepunkten](/customization/breakpoints/) (Bezeichner).
-- `disableAlign` (*Boolean* [optional]): Standardmäßig auf `false`. Ob sich die Schriftgrößen geringfügig ändern, um die Höhen der Linie beizubehalten und an das 4px-Linienhöhenraster von Material Design anzupassent. Dies erfordert eine einheitlose Zeilenhöhe in den Stilen des Designs.
-- `factor` (*Nummer* [optional]): Standardmäßig auf `2`. Dieser Wert bestimmt die Stärke der Größenänderung der Schriftgröße. Je höher der Wert, desto geringer ist der Unterschied zwischen den Schriftgrößen auf kleinen Bildschirmen. Je niedriger der Wert, desto größer die Schriftgröße für kleine Bildschirme. The value must be greater than 1.
-- `variants` (*Array\<String\>* [optional]): Default to all. Die zu behandelnden Typografie-Varianten.
+- `breakpoints` (_array\<string\>_ [optional]): Default to `['sm', 'md', 'lg']`. Array von [Haltepunkten](/customization/breakpoints/) (Bezeichner).
+- `disableAlign` (_bool_ [optional]): Default to `false`. Ob sich die Schriftgrößen geringfügig ändern, um die Höhen der Linie beizubehalten und an das 4px-Linienhöhenraster von Material Design anzupassent. Dies erfordert eine einheitlose Zeilenhöhe in den Stilen des Designs.
+- `factor` (_number_ [optional]): Default to `2`. Dieser Wert bestimmt die Stärke der Größenänderung der Schriftgröße. Je höher der Wert, desto geringer ist der Unterschied zwischen den Schriftgrößen auf kleinen Bildschirmen. Je niedriger der Wert, desto größer die Schriftgröße für kleine Bildschirme. The value must be greater than 1.
+- `variants` (_array\<string\>_ [optional]): Default to all. Die zu behandelnden Typografie-Varianten.
 
 #### Rückgabewerte
 
-`theme` (*Object*): Ein vollständiges, gebrauchsfertiges Themeobjekt.
+`theme` (_object_): The new theme with a responsive typography.
 
 #### Beispiele
 
@@ -140,12 +166,12 @@ Using `unstable_createMuiStrictModeTheme` restricts the usage of some of our com
 
 #### Parameter
 
-1. `options` (*Object*): Nimmt ein unvollständiges Themeobjekt auf und fügt die fehlenden Teile hinzu.
-2. `...args` (*Array*): Deep merge the arguments with the about to be returned theme.
+1. `options` (_object_): Takes an incomplete theme object and adds the missing parts.
+2. `...args` (_object[]_): Deep merge the arguments with the about to be returned theme.
 
 #### Rückgabewerte
 
-`theme` (*Object*): Das neue Theme mit einer responsiven Typografie.
+`theme` (_object_): A complete, ready to use theme object.
 
 #### Beispiele
 

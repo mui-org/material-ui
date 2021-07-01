@@ -16,7 +16,21 @@ npm install @material-ui/core@next @emotion/react @emotion/styled
 yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 
-Ten en cuenta que [ react ](https://www.npmjs.com/package/react) > = 16.8.0 y [ react-dom ](https://www.npmjs.com/package/react-dom) > = 16.8.0 son dependencias tipo "peer".
+<!-- #react-peer-version -->
+
+Ten en cuenta que [ react ](https://www.npmjs.com/package/react) > = 17.0.0 y [ react-dom ](https://www.npmjs.com/package/react-dom) > = 17.0.0 son dependencias tipo "peer".
+
+Or if you want to use `styled-components` as a styling engine:
+
+```sh
+// with npm
+npm install @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
+
+// with yarn
+yarn add @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
+```
+
+Take a look at the [Styled Engine guide](/guides/styled-engine/) for more information about how to configure `styled-components` as the style engine.
 
 ## Fuente Roboto
 
@@ -28,7 +42,7 @@ Material-UI fue diseñado con la fuente [ Roboto ](https://fonts.google.com/spec
 
 ## Fuente de Iconos
 
-Aquí hay [ algunas instrucciones ](/components/icons/#font-icons) sobre cómo hacerlo. Aquí hay [ algunas instrucciones ](/components/icons/#font-icons) sobre cómo hacerlo. Por ejemplo, a través de Google Web Fonts:
+To use the font `Icon` component, you must first add the [Material icons](https://fonts.google.com/icons) font. Here are [some instructions](/components/icons/#font-icons) on how to do so. Por ejemplo, a través de Google Web Fonts:
 
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -64,12 +78,12 @@ Puedes seguir [ este ejemplo sobre CDN ](https://github.com/mui-org/material-ui/
 ## Recursos de diseño
 
 <a href="https://material-ui.com/store/items/figma-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-figma" style="margin-left: 8px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-figma.svg" alt="figma" /></a>
-<a href="https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-sketch" style="margin-left: 32px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-sketch.svg" alt="sketch" /></a>
 <a href="https://material-ui.com/store/items/adobe-xd-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-adobe-xd" style="margin-left: 32px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-adobe-xd.svg" alt="adobe-xd" /></a>
+<a href="https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-sketch" style="margin-left: 32px; margin-top: 8px; display: inline-block;"><img src="/static/images/download-sketch.svg" alt="sketch" /></a>
 
-A set of reusable components for design tools is available, designed to match the React components, and to help you craft great products:
+A set of reusable components for design tools is available, designed to match the React components and to help you craft great products:
 
 - [Figma](https://material-ui.com/store/items/figma-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-figma): A large UI kit with over 600 handcrafted Material-UI components.
-- **Sketch**: [Sketch for Material-UI](https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-sketch) — A large UI kit with over 600 handcrafted Material-UI's symbols 💎.
 - [Adobe XD](https://material-ui.com/store/items/adobe-xd-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-adobe-xd): A large UI kit with over 600 handcrafted Material-UI components.
+- **Sketch**: [Sketch for Material-UI](https://material-ui.com/store/items/sketch-react/?utm_source=docs&utm_medium=referral&utm_campaign=installation-sketch) — A large UI kit with over 600 handcrafted Material-UI's symbols 💎.
 - **Framer**: [Framer for Material-UI](https://packages.framer.com/package/material-ui/material-ui) — A small MIT UI kit preview of handcrafted Material-UI's component.

@@ -2,10 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { refType } from '@material-ui/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { alpha } from '@material-ui/system';
 import SwitchBase from '../internal/SwitchBase';
 import CheckBoxOutlineBlankIcon from '../internal/svg-icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '../internal/svg-icons/CheckBox';
-import { alpha } from '../styles/colorManipulator';
 import IndeterminateCheckBoxIcon from '../internal/svg-icons/IndeterminateCheckBox';
 import capitalize from '../utils/capitalize';
 import useThemeProps from '../styles/useThemeProps';
@@ -34,11 +34,11 @@ const CheckboxRoot = styled(SwitchBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.indeterminate && styles.indeterminate),
-      ...(styleProps.color !== 'default' && styles[`color${capitalize(styleProps.color)}`]),
-    };
+    return [
+      styles.root,
+      styleProps.indeterminate && styles.indeterminate,
+      styleProps.color !== 'default' && styles[`color${capitalize(styleProps.color)}`],
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */
@@ -98,7 +98,6 @@ const Checkbox = React.forwardRef(function Checkbox(inProps, ref) {
   return (
     <CheckboxRoot
       type="checkbox"
-      color={color}
       inputProps={{
         'data-indeterminate': indeterminate,
         ...inputProps,
@@ -144,7 +143,7 @@ Checkbox.propTypes /* remove-proptypes */ = {
    * @default 'primary'
    */
   color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-    PropTypes.oneOf(['default', 'primary', 'secondary']),
+    PropTypes.oneOf(['default', 'primary', 'secondary', 'error', 'info', 'succes', 'warning']),
     PropTypes.string,
   ]),
   /**

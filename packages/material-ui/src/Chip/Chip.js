@@ -2,8 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { alpha } from '@material-ui/system';
 import CancelIcon from '../internal/svg-icons/Cancel';
-import { alpha } from '../styles/colorManipulator';
 import useForkRef from '../utils/useForkRef';
 import unsupportedProp from '../utils/unsupportedProp';
 import capitalize from '../utils/capitalize';
@@ -49,33 +49,27 @@ const ChipRoot = styled('div', {
     const { styleProps } = props;
     const { color, clickable, onDelete, size, variant } = styleProps;
 
-    return {
-      [`& .${chipClasses.avatar}`]: {
-        ...styles.avatar,
-        ...styles[`avatar${capitalize(size)}`],
-        ...styles[`avatarColor${capitalize(color)}`],
-      },
-      [`& .${chipClasses.icon}`]: {
-        ...styles.icon,
-        ...styles[`icon${capitalize(size)}`],
-        ...styles[`iconColor${capitalize(color)}`],
-      },
-      [`& .${chipClasses.deleteIcon}`]: {
-        ...styles.deleteIcon,
-        ...styles[`deleteIcon${capitalize(size)}`],
-        ...styles[`deleteIconColor${capitalize(color)}`],
-        ...styles[`deleteIconOutlinedColor${capitalize(color)}`],
-      },
-      ...styles.root,
-      ...styles[`size${capitalize(size)}`],
-      ...styles[`color${capitalize(color)}`],
-      ...(clickable && styles.clickable),
-      ...(clickable && color !== 'default' && styles[`clickableColor${capitalize(color)})`]),
-      ...(onDelete && styles.deletable),
-      ...(onDelete && color !== 'default' && styles[`deletableColor${capitalize(color)}`]),
-      ...styles[variant],
-      ...(variant === 'outlined' && styles[`outlined${capitalize(color)}`]),
-    };
+    return [
+      { [`& .${chipClasses.avatar}`]: styles.avatar },
+      { [`& .${chipClasses.avatar}`]: styles[`avatar${capitalize(size)}`] },
+      { [`& .${chipClasses.avatar}`]: styles[`avatarColor${capitalize(color)}`] },
+      { [`& .${chipClasses.icon}`]: styles.icon },
+      { [`& .${chipClasses.icon}`]: styles[`icon${capitalize(size)}`] },
+      { [`& .${chipClasses.icon}`]: styles[`iconColor${capitalize(color)}`] },
+      { [`& .${chipClasses.deleteIcon}`]: styles.deleteIcon },
+      { [`& .${chipClasses.deleteIcon}`]: styles[`deleteIcon${capitalize(size)}`] },
+      { [`& .${chipClasses.deleteIcon}`]: styles[`deleteIconColor${capitalize(color)}`] },
+      { [`& .${chipClasses.deleteIcon}`]: styles[`deleteIconOutlinedColor${capitalize(color)}`] },
+      styles.root,
+      styles[`size${capitalize(size)}`],
+      styles[`color${capitalize(color)}`],
+      clickable && styles.clickable,
+      clickable && color !== 'default' && styles[`clickableColor${capitalize(color)})`],
+      onDelete && styles.deletable,
+      onDelete && color !== 'default' && styles[`deletableColor${capitalize(color)}`],
+      styles[variant],
+      variant === 'outlined' && styles[`outlined${capitalize(color)}`],
+    ];
   },
 })(
   ({ theme, styleProps }) => {
@@ -294,10 +288,7 @@ const ChipLabel = styled('span', {
     const { styleProps } = props;
     const { size } = styleProps;
 
-    return {
-      ...styles.label,
-      ...styles[`label${capitalize(size)}`],
-    };
+    return [styles.label, styles[`label${capitalize(size)}`]];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the label `span` element. */
@@ -512,7 +503,7 @@ Chip.propTypes /* remove-proptypes */ = {
    * @default 'default'
    */
   color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-    PropTypes.oneOf(['default', 'primary', 'secondary']),
+    PropTypes.oneOf(['default', 'primary', 'secondary', 'error', 'info', 'success', 'warning']),
     PropTypes.string,
   ]),
   /**

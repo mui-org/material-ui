@@ -1,15 +1,7 @@
 import * as React from 'react';
 import TopLayoutBlog from 'docs/src/modules/components/TopLayoutBlog';
-import { prepareMarkdown } from 'docs/src/modules/utils/parseMarkdown';
+import { docs } from '!@material-ui/markdown/loader!./marija-najdova-joining.md';
 
-const pageFilename = 'blog/marija-najdova-joining';
-const requireRaw = require.context('!raw-loader!./', false, /marija-najdova-joining\.md$/);
-
-export default function Page({ docs }) {
+export default function Page() {
   return <TopLayoutBlog docs={docs} />;
 }
-
-Page.getInitialProps = () => {
-  const { demos, docs } = prepareMarkdown({ pageFilename, requireRaw });
-  return { demos, docs };
-};

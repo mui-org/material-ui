@@ -1,58 +1,59 @@
 {
-  "componentDescription": "## ARIA\n\nIf the progress bar is describing the loading progress of a particular region of a page,\nyou should use <code>aria-describedby</code> to point to the progress bar, and set the <code>aria-busy</code>\nattribute to <code>true</code> on that region until it has finished loading.",
+  "componentDescription": "## ARIA\n\nIf the progress bar is describing the loading progress of a particular region of a page,\nyou should use `aria-describedby` to point to the progress bar, and set the `aria-busy`\nattribute to `true` on that region until it has finished loading.",
   "propDescriptions": {
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "color": "A cor do componente. Ela da suporte para as cores do tema que fazem sentido para este componente.",
     "disableShrink": "If <code>true</code>, the shrink animation is disabled. This only works if variant is <code>indeterminate</code>.",
     "size": "The size of the circle. If using a number, the pixel unit is assumed. If using a string, you need to provide the CSS unit, e.g &#39;3rem&#39;.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "thickness": "The thickness of the circle.",
     "value": "The value of the progress indicator for the determinate variant. Value between 0 and 100.",
     "variant": "The variant to use. Use indeterminate when there is no progress value."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "determinate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"determinate\"</code>"
     },
     "indeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"indeterminate\"</code>"
     },
     "colorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"primary\"</code>"
     },
     "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"secondary\"</code>"
     },
     "svg": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the svg element"
     },
     "circle": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the `circle` svg path"
     },
     "circleDeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the `circle` svg path",
       "conditions": "<code>variant=\"determinate\"</code>"
     },
     "circleIndeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the `circle` svg path",
       "conditions": "<code>variant=\"indeterminate\"</code>"
     },
     "circleDisableShrink": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the `circle` svg path",
       "conditions": "<code>disableShrink={true}</code>"
     }

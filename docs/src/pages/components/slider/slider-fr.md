@@ -1,5 +1,5 @@
 ---
-title: React Slider component
+title: Composant React Sider
 components: Slider, SliderUnstyled
 githubLabel: 'component: Slider'
 materialDesign: https://material.io/components/sliders
@@ -12,8 +12,6 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#slider'
 
 [Les curseurs](https://material.io/design/components/sliders.html) reflètent une plage de valeurs sur une barre, à partir de laquelle les utilisateurs peuvent sélectionner une seule valeur. Ils sont idéaux pour ajuster des paramètres tels que le volume, la luminosité ou l'application de filtres d'images.
 
-- 📦 [22 kB gzipped](/size-snapshot) (but only +8 kB when used together with other Material-UI components).
-
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Continuous sliders
@@ -22,11 +20,15 @@ Continuous sliders allow users to select a value along a subjective range.
 
 {{"demo": "pages/components/slider/ContinuousSlider.js"}}
 
+## Tailles
+
+For smaller slider, use the prop `size="small"`.
+
+{{"demo": "pages/components/slider/SliderSizes.js"}}
+
 ## Discrete sliders
 
-Discrete sliders can be adjusted to a specific value by referencing its value indicator. By order of demos:
-
-You can generate a mark for each step with `marks={true}`.
+Discrete sliders can be adjusted to a specific value by referencing its value indicator. You can generate a mark for each step with `marks={true}`.
 
 {{"demo": "pages/components/slider/DiscreteSlider.js"}}
 
@@ -60,11 +62,21 @@ The slider can be used to set the start and end of a range by supplying an array
 
 {{"demo": "pages/components/slider/RangeSlider.js"}}
 
-## Slider with input field
+### Minimum distance
+
+You can enforce a minimum distance between values in the `onChange` event handler. By default, when you move the pointer over a thumb while dragging another thumb, the active thumb will swap to the hovered thumb. You can disable this behavior with the `disableSwap` prop. If you want the range to shift when reaching minimum distance, you can utilize the `activeThumb` parameter in `onChange`.
 
 In this example an input allows a discrete value to be set.
 
+## Slider with input field
+
+In this example, an input allows a discrete value to be set.
+
 {{"demo": "pages/components/slider/InputSlider.js"}}
+
+## Couleur
+
+{{"demo": "pages/components/slider/ColorSlider.js"}}
 
 ## Curseurs personnalisés
 
@@ -72,13 +84,17 @@ Here are some examples of customizing the component. Vous pouvez en apprendre pl
 
 {{"demo": "pages/components/slider/CustomizedSlider.js"}}
 
+### Lecteur de musique
+
+{{"demo": "pages/components/slider/MusicPlayerSlider.js"}}
+
 ## Vertical sliders
 
 {{"demo": "pages/components/slider/VerticalSlider.js"}}
 
-**WARNING**: Chrome, Safari and newer Edge versions i.e. any browser based on WebKit exposes `<Slider orientation="vertical" />` as horizontal ([chromium issue #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217)). By applying `-webkit-appearance: slider-vertical;` the slider is exposed as vertical.
+**AVERTISSEMENT** : Chrome, Safari et les versions plus récentes d'Edge, c'est-à-dire que tout navigateur basé sur WebKit expose `<Slider orientation="vertical" />` comme horizontal ([problème de chrome #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217)). En appliquant la propriété `-webkit-appearance: slider-vertical;` le curseur est exposé comme vertical.
 
-However, by applying `-webkit-appearance: slider-vertical;` keyboard navigation for horizontal keys (<kbd class="key">Arrow Left</kbd>, <kbd class="key">Arrow Right</kbd>) is reversed ([chromium issue #1162640](https://bugs.chromium.org/p/chromium/issues/detail?id=1162640)). Usually, up and right should increase and left and down should decrease the value. If you apply `-webkit-appearance` you could prevent keyboard navigation for horizontal arrow keys for a truly vertical slider. This might be less confusing to users compared to a change in direction.
+En appliquant la propriétés  `-webkit-appearance: slider-vertical;` la navigation au clavier pour les touches horizontales (<kbd class="key">flèche gauche</kbd>, <kbd class="key">flèche droite</kbd>) est inversée ([problème de chrome #1162640](https://bugs. chromium.org/p/chromium/issues/detail?id=1162640)). Habituellement, haut et droite devrait augmenter, gauche et bas devrait diminuer la valeur. Si vous appliquez `-webkit-appearance` vous pouvez empêcher la navigation du clavier pour les touches fléchées horizontales pour un curseur vraiment vertical. Cela peut être moins déroutant pour les utilisateurs par rapport à un changement de direction.
 
 {{"demo": "pages/components/slider/VerticalAccessibleSlider.js"}}
 
@@ -102,11 +118,21 @@ The track can be inverted with `track="inverted"`.
 
 You can use the `scale` prop to represent the `value` on a different scale.
 
-In the following demo, the value _x_ represents the value _2^x_. Increasing _x_ by one increases the represented value by factor _2_.
+Dans la démo suivante, la valeur _x_ représente la valeur _2^x_. Chaque augmentation de _x_ est multiplié par  _2_ pour chaque nouvelle valeur.
 
 {{"demo": "pages/components/slider/NonLinearSlider.js"}}
 
-## Unstyled slider
+## Unstyled
+
+<!-- #default-branch-switch -->
+
+- 📦 [22 kB gzipped](/size-snapshot) (but only +8 kB when used together with other Material-UI components).
+
+The slider also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import SliderUnstyled from '@material-ui/unstyled/SliderUnstyled';
+```
 
 {{"demo": "pages/components/slider/UnstyledSlider.js"}}
 
@@ -118,3 +144,15 @@ The component handles most of the work necessary to make it accessible. However,
 
 - Each thumb has a user-friendly label (`aria-label`, `aria-labelledby` or `getAriaLabel` prop).
 - Each thumb has a user-friendly text for its current value. This is not required if the value matches the semantics of the label. You can change the name with the `getAriaValueText` or `aria-valuetext` prop.
+
+## Limites
+
+### IE11
+
+Le libellé de la valeur du curseur n'est pas centré dans IE 11. L'alignement n'est pas géré pour faciliter la personnalisation avec les derniers navigateurs. Vous pouvez résoudre ce problème avec:
+
+```css
+.MuiSlider-valueLabel {
+  left: calc(-50% - 4px);
+}
+```

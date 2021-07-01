@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { ServerStyleSheets } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { ServerStyleSheet } from 'styled-components';
 import createEmotionServer from '@emotion/server/create-instance';
 import { CacheProvider } from '@emotion/react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { LANGUAGES_SSR } from 'docs/src/modules/constants';
 import { pathnameToLanguage } from 'docs/src/modules/utils/helpers';
-import { themeColor } from 'docs/src/modules/components/ThemeContext';
 import createCache from '@emotion/cache';
 
-const getCache = () => {
+function getCache() {
   const cache = createCache({ key: 'css', prepend: true });
   cache.compat = true;
-
   return cache;
-};
+}
+
+const defaultTheme = createTheme();
 
 // You can find a benchmark of the available CSS minifiers under
 // https://github.com/GoalSmashers/css-minification-benchmark
@@ -51,7 +52,7 @@ export default class MyDocument extends Document {
           */}
           <link rel="manifest" href="/static/manifest.json" />
           {/* PWA primary color */}
-          <meta name="theme-color" content={themeColor} />
+          <meta name="theme-color" content={defaultTheme.palette.primary.main} />
           <link rel="shortcut icon" href="/static/favicon.ico" />
           {/* iOS Icon */}
           <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/180x180.png" />

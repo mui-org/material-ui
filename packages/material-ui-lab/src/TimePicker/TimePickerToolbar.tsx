@@ -139,7 +139,7 @@ const TimePickerToolbar: React.FC<ToolbarComponentProps> = (props) => {
   const formatHours = (time: unknown) =>
     ampm ? utils.format(time, 'hours12h') : utils.format(time, 'hours24h');
 
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses({ ...styleProps, theme });
 
   const separator = (

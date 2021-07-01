@@ -1,5 +1,5 @@
 ---
-title: Componente React Drawer
+title: Componente Drawer para React
 components: Drawer, SwipeableDrawer
 githubLabel: 'component: Drawer'
 materialDesign: https://material.io/components/navigation-drawer
@@ -7,11 +7,11 @@ materialDesign: https://material.io/components/navigation-drawer
 
 # Drawer
 
-<p class="description">A navegação por drawers fornece acessos para destinos dentro de sua aplicação. As folhas laterais são locais contendo o conteúdo suplementar que é ancorado do lado esquerdo ou direito da tela.</p>
+<p class="description">A navegação por drawers fornece acesso à partes dentro de sua aplicação. As seções laterais possuem o conteúdo suplementar que é vinculado do lado esquerdo ou direito da tela.</p>
 
-[Navegação por drawers](https://material.io/design/components/navigation-drawer.html) (ou "barras laterais") fornecem acesso a destinos e funcionalidades do aplicativo, como por exemplo, a mudança de usuário. Eles podem estar permanentemente na tela ou controlados por um ícone de menu de navegação.
+A navegação por drawers (ou "barras laterais") fornecem acesso a partes e funcionalidades do aplicativo, como trocar de conta. Eles podem estar permanentemente na tela ou controlados por um ícone de menu de navegação.
 
-[Folhas laterais](https://material.io/design/components/sheets-side.html) são superfícies complementares usadas principalmente em tablets e computadores.
+[Seções laterais](https://material.io/design/components/sheets-side.html) são áreas complementares usadas principalmente em tablets e computadores.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -43,11 +43,11 @@ const iOS =
 <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} />;
 ```
 
-### Manter montado
+### Borda deslizável
 
-Para garantir que um drawer temporário não seja desmontado, especifique a propriedade `ModalProps` como:
+Você pode configurar a propriedade `SwipeableDrawer` para visualizar uma borda quando o Drawer estiver fechado.
 
-If you are on a desktop, you can toggle the drawer with the "OPEN" button. If you are on mobile, you can open the demo in CodeSandbox ("edit" icon) and swipe.
+Se você estiver em uma área de trabalho, poderá alternar o drawer com o botão "OPEN". Se estiver pelo celular, abra a demonstração no CodeSandbox (ícone "editar") e deslizar.
 
 {{"demo": "pages/components/drawers/SwipeableEdgeDrawer.js", "iframe": true, "height": 400, "maxWidth": 300}}
 
@@ -68,7 +68,7 @@ Mais detalhes na [seção de desempenho Modal](/components/modal/#performance).
 
 ## Drawer responsivo
 
-O componente responsivo `Hidden` auxilia na exibição de diferentes tipos de drawer, dependendo da largura da tela. Um drawer `temporary` é exibido para telas pequenas enquanto um drawer `permanent` é exibido para telas maiores.
+You can use the `temporary` variant to display a drawer for small screens and `permanent` for a drawer for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 

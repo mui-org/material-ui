@@ -12,9 +12,6 @@ TrapFocus é um componente que gerencia o foco para seus descendentes. This is u
 
 When `open={true}` the trap is enabled, and pressing <kbd class="key">Tab</kbd> or <kbd><kbd  class="key">Shift</kbd>+<kbd class="key">Tab</kbd></kbd> will rotate focus within the inner focusable elements of the component.
 
-- 📦 [1.5 kB gzipped](https://material-ui.com/size-snapshot).
-- ⚛️ Suporte para portais
-
 [A paleta](/system/palette/) com funções de estilo.
 
 > ⚠️ O componente é experimental e instável.
@@ -23,9 +20,19 @@ When `open={true}` the trap is enabled, and pressing <kbd class="key">Tab</kbd> 
 
 {{"demo": "pages/components/trap-focus/BasicTrapFocus.js"}}
 
+## Unstyled
+
+- 📦 [2.0 kB gzipped](https://bundlephobia.com/result?p=@material-ui/unstyled@next)
+
+As the component does not have any styles, it also comes with the unstyled package.
+
+```js
+import TrapFocus from '@material-ui/unstyled/Unstable_TrapFocus';
+```
+
 ## Desabilitar o forçar foco
 
-Cliques dentro do capturar foco se comportam normalmente; mas cliques fora do capturar foco estão bloqueados.
+Clicks within the focus trap behave normally, but clicks outside the focus trap are blocked.
 
 Você pode desativar esse comportamento com a propriedade `disableEnforceFocus`.
 
@@ -41,6 +48,6 @@ Você pode desabilitar esse comportamento e deixá-lo de forma tardia com a prop
 
 ## Portal
 
-A demonstração a seguir usa o componente [`Portal`](/components/portal/)para renderizar um subconjunto de elementos filhos de captura de foco em uma nova "sub-árvore" fora da atual hierarquia do DOM, para que eles não façam mais parte do ciclo de foco.
+The following demo uses the [`Portal`](/components/portal/) component to render a subset of the trap focus children into a new "subtree" outside of the current DOM hierarchy; so that they no longer form part of the focus loop.
 
 {{"demo": "pages/components/trap-focus/PortalTrapFocus.js"}}

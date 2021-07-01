@@ -4,13 +4,11 @@
     "align": "Set the text-align on the component.",
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "display": "Controls the display type",
     "gutterBottom": "If <code>true</code>, the text will have a bottom margin.",
     "noWrap": "If <code>true</code>, the text will not wrap, but instead will truncate with a text overflow ellipsis.<br>Note that text overflow can only happen with block or inline-block level elements (the element needs to have a width in order to overflow).",
-    "paragraph": "If <code>true</code>, the text will have a bottom margin.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "paragraph": "If <code>true</code>, the element will be a paragraph element.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "variant": "Applies the theme typography styles.",
     "variantMapping": "The component maps the variant prop to a range of different HTML element types. For instance, subtitle1 to <code>&lt;h6&gt;</code>. If you wish to change that mapping, you can provide your own. Alternatively, you can use the <code>component</code> prop."
   },
@@ -122,46 +120,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>paragraph={true}</code>"
-    },
-    "colorInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"inherit\"</code>"
-    },
-    "colorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"primary\"</code>"
-    },
-    "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"secondary\"</code>"
-    },
-    "colorTextPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"textPrimary\"</code>"
-    },
-    "colorTextSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"textSecondary\"</code>"
-    },
-    "colorError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>color=\"error\"</code>"
-    },
-    "displayInline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>display=\"inline\"</code>"
-    },
-    "displayBlock": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>display=\"block\"</code>"
     }
   }
 }

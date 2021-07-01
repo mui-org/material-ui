@@ -1,23 +1,10 @@
 {
   "name": "@material-ui/icons",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-beta.0",
   "private": false,
   "author": "Material-UI Team",
   "description": "Material Design icons distributed as SVG React components.",
-  "exports": {
-    ".": "./lib/index.js",
-    "./*": "./lib/*.js",
-    "./utils/*": null
-  },
-  "publishConfig": {
-    "access": "public",
-    "exports": {
-      ".": "./index.js",
-      "./*": "./*.js",
-      "./utils/*": null
-    },
-    "type": "module"
-  },
+  "main": "./src/index.js",
   "keywords": [
     "react",
     "react-component",
@@ -37,12 +24,12 @@
   "homepage": "https://material-ui.com/components/icons",
   "scripts": {
     "build": "cp -r lib/ build/ && yarn build:typings && yarn build:copy-files",
-    "build:lib": "yarn build:stable",
+    "build:lib": "yarn build:node && yarn build:stable",
     "build:lib:clean": "rimraf lib/ && yarn build:lib",
     "build:legacy": "echo 'Skip legacy build'",
     "build:modern": "echo 'Skip modern build'",
-    "build:node": "echo 'Skip node build'",
-    "build:stable": "node ../../scripts/build stable --largeFiles --onlyESModules --outDir lib",
+    "build:node": "node ../../scripts/build node --largeFiles --outDir lib",
+    "build:stable": "node ../../scripts/build stable --largeFiles --outDir lib",
     "build:copy-files": "node ../../scripts/copy-files.js",
     "build:typings": "babel-node --config-file ../../babel.config.js ./scripts/create-typings.js",
     "prebuild": "rimraf build",
@@ -54,7 +41,7 @@
     "typescript": "tslint -p tsconfig.json \"src/**/*.{ts,tsx}\""
   },
   "peerDependencies": {
-    "@material-ui/core": "^5.0.0-alpha.15",
+    "@material-ui/core": "^5.0.0-alpha.36",
     "@types/react": "^16.8.6 || ^17.0.0",
     "react": "^17.0.0"
   },
@@ -73,6 +60,9 @@
     "yargs": "^17.0.1"
   },
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=12.0.0"
   }

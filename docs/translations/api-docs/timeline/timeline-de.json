@@ -1,28 +1,30 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "align": "The position where the timeline&#39;s content should appear.",
     "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details."
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "className": "className applied to the root element.",
+    "position": "The position where the TimelineContent should appear relative to the time axis.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {
       "description": "Styles applied to the root element."
     },
-    "alignLeft": {
+    "positionLeft": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>align=\"left\"</code>"
+      "conditions": "<code>position=\"left\"</code>"
     },
-    "alignRight": {
+    "positionRight": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>align=\"right\"</code>"
+      "conditions": "<code>position=\"right\"</code>"
     },
-    "alignAlternate": {
+    "positionAlternate": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>align=\"alternate\"</code>"
+      "conditions": "<code>position=\"alternate\"</code>"
     }
   }
 }

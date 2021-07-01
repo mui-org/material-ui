@@ -8,7 +8,7 @@
 
 ## 安装
 
-如果你还没有安装 `@material-ui/lab` 包的话，那么安装一下就可以了。 没有更多的依赖需求。
+You need to install the `@material-ui/lab` package if it's not already installed. ⚠️ Make sure you have installed the latest version, `"@material-ui/lab": ^5.0.0-alpha.30"` or above.
 
 ## 导入
 

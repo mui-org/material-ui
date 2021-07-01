@@ -12,6 +12,7 @@ import StylesProvider from '../StylesProvider';
 import ThemeProvider from '../ThemeProvider';
 
 describe('makeStyles', () => {
+  // StrictModeViolation: uses `useSynchronousEffect`
   const mount = createMount({ strict: null });
 
   /**

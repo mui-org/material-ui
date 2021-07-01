@@ -52,9 +52,9 @@ You should pass the nonce in the `<style>` tag on the server.
 
 JSS will then, by convention, look for a `<meta property="csp-nonce"` tag and use the `content` value as the nonce.
 
-The way that you do this is by passing a `<meta property="csp-nonce" content={nonce} />` tag in the `<head>` of your HTML. JSS will then, by convention, look for a `<meta property="csp-nonce"` tag and use the `content` value as the nonce.
+Die Art und Weise, wie Sie dies tun, besteht darin, ein `<meta property="csp-nonce" content={nonce} />`Tag im `<head>`ihren HTML-Codes zu Übergebe. JSS wird dann nach einem `<meta property="csp-nonce"`Tag und Suchen den`inhalt` wert als Nonce Verwenden.
 
-Here is an example of what a fictional header could look like:
+Hier ist ein Beispiel, wie ein fiktiver Header aussehen könnte:
 
 ```html
 <head>

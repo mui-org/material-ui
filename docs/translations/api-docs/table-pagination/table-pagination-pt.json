@@ -1,12 +1,12 @@
 {
-  "componentDescription": "A <code>TableCell</code> based component for placing inside <code>TableFooter</code> for pagination.",
+  "componentDescription": "A `TableCell` based component for placing inside `TableFooter` for pagination.",
   "propDescriptions": {
     "ActionsComponent": "The component used for displaying the actions. Either a string to use a HTML element or a component.",
     "backIconButtonProps": "Props applied to the back arrow <a href=\"/api/icon-button/\"><code>IconButton</code></a> component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "count": "The total number of rows.<br>To enable server side pagination for an unknown number of items, provide -1.",
-    "getItemAriaLabel": "Accepts a function which returns a string value that provides a user-friendly name for the current page.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.<br><br><strong>Signature:</strong><br><code>function(type: string) =&gt; string</code><br><em>type:</em> The link or button type to format (&#39;first&#39; | &#39;last&#39; | &#39;next&#39; | &#39;previous&#39;).",
+    "getItemAriaLabel": "Accepts a function which returns a string value that provides a user-friendly name for the current page. This is important for screen reader users.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.<br><br><strong>Signature:</strong><br><code>function(type: string) =&gt; string</code><br><em>type:</em> The link or button type to format (&#39;first&#39; | &#39;last&#39; | &#39;next&#39; | &#39;previous&#39;).",
     "labelDisplayedRows": "Customize the displayed rows label. Invoked with a <code>{ from, to, count, page }</code> object.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.",
     "labelRowsPerPage": "Customize the rows per page label.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.",
     "nextIconButtonProps": "Props applied to the next arrow <a href=\"/api/icon-button/\"><code>IconButton</code></a> element.",
@@ -14,50 +14,54 @@
     "onRowsPerPageChange": "Callback fired when the number of rows per page is changed.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",
     "page": "The zero-based index of the current page.",
     "rowsPerPage": "The number of rows per page.<br>Set -1 to display all the rows.",
-    "rowsPerPageOptions": "Customizes the options of the rows per page select field. If less than two options are available, no select field will be displayed.",
+    "rowsPerPageOptions": "Customizes the options of the rows per page select field. If less than two options are available, no select field will be displayed. Use -1 for the value with a custom label to show all the rows.",
     "SelectProps": "Props applied to the rows per page <a href=\"/api/select/\"><code>Select</code></a> element.",
     "showFirstButton": "If <code>true</code>, show the first-page button.",
-    "showLastButton": "If <code>true</code>, show the last-page button."
+    "showLastButton": "If <code>true</code>, show the last-page button.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "toolbar": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Toolbar component"
     },
     "spacer": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the spacer element"
     },
-    "caption": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the caption Typography component",
-      "conditions": "<code>variant=\"caption\"</code>"
+    "selectLabel": {
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the select label Typography element"
     },
     "selectRoot": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the Select component root element"
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the Select component `root` element"
     },
     "select": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Select component `select` class"
     },
     "selectIcon": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Select component `icon` class"
     },
     "input": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the InputBase component"
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the Select component `root` element"
     },
     "menuItem": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the MenuItem component"
     },
+    "displayedRows": {
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the displayed rows Typography element"
+    },
     "actions": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the internal `TablePaginationActions` component"
     }
   }

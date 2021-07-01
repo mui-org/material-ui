@@ -146,7 +146,9 @@ export interface TabsActions {
   updateScrollButtons(): void;
 }
 
-export type TabsProps<D extends React.ElementType = TabsTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<TabsTypeMap<P, D>, D>;
+export type TabsProps<
+  D extends React.ElementType = TabsTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<TabsTypeMap<P, D>, D>;
 
 export default Tabs;

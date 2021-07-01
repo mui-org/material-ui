@@ -103,6 +103,18 @@ deselected, such as adding or removing a star to an item.
 
 {{"demo": "pages/components/buttons/IconButtons.js"}}
 
+### Sizes
+
+For larger or smaller icon buttons, use the `size` prop.
+
+{{"demo": "pages/components/buttons/IconButtonSizes.js"}}
+
+### Colors
+
+Use `color` prop to apply theme color palette to component.
+
+{{"demo": "pages/components/buttons/IconButtonColors.js"}}
+
 ## Customized buttons
 
 Here are some examples of customizing the component. You can learn more about this in the
@@ -118,7 +130,7 @@ The loading buttons can show loading state and disable interactions.
 
 {{"demo": "pages/components/buttons/LoadingButtons.js"}}
 
-Toggle the switch to see the transition between the different states.
+Toggle the loading switch to see the transition between the different states.
 
 {{"demo": "pages/components/buttons/LoadingButtonsTransition.js"}}
 

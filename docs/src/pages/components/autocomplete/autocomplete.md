@@ -294,10 +294,10 @@ If you would like to prevent the default key handler behavior, you can set the e
 
 ### autocomplete/autofill
 
-The browsers have heuristics to help the users fill the form inputs.
-However, it can harm the UX of the component.
+Browsers have heuristics to help the user fill in form inputs.
+However, this can harm the UX of the component.
 
-By default, the component disables the **autocomplete** feature (remembering what the user has typed for a given field in a previous session) with the `autoComplete="off"` attribute.
+By default, the component disables the input **autocomplete** feature (remembering what the user has typed for a given field in a previous session) with the `autoComplete="off"` attribute.
 Google Chrome does not currently support this attribute setting ([Issue 587466](https://bugs.chromium.org/p/chromium/issues/detail?id=587466)).
 A possible workaround is to remove the `id` to have the component generate a random one.
 

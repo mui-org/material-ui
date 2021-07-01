@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import SvgIcon, { svgIconClasses as classes } from '@material-ui/core/SvgIcon';
 
 describe('<SvgIcon />', () => {
   const render = createClientRender();
-  const mount = createMount();
+
   let path;
 
   before(() => {
@@ -20,7 +20,6 @@ describe('<SvgIcon />', () => {
       classes,
       inheritComponent: 'svg',
       render,
-      mount,
       muiName: 'MuiSvgIcon',
       refInstanceof: window.SVGSVGElement,
       testComponentPropWith: (props) => (

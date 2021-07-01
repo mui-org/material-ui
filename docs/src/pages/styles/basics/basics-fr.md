@@ -2,7 +2,7 @@
 
 <p class="description">You can use Material-UI's styling solution in your app, whether or not you are using Material-UI components.</p>
 
-Material-UI aims to provide a strong foundation for building dynamic UIs. Material-UI aims to provide a strong foundation for building dynamic UIs. You can use it, but you don't have to, since Material-UI is also [interoperable with](/guides/interoperability/) all the other major styling solutions.
+Material-UI aims to provide a strong foundation for building dynamic UIs. To reduce the number of packages to install when using Material-UI, and to simplify the imports, `@material-ui/styles` modules are re-exported from `@material-ui/core/styles`. You can use it, but you don't have to, since Material-UI is also [interoperable with](/guides/interoperability/) all the other major styling solutions.
 
 ## Why use Material-UI's styling solution?
 
@@ -201,15 +201,9 @@ const useStyles = makeStyles(theme => ({
 
 ## @material-ui/core/styles vs @material-ui/styles
 
-Material-UI's styles are powered by the [@material-ui/styles](https://www.npmjs.com/package/@material-ui/styles) package, (built with JSS). This solution is [isolated](https://bundlephobia.com/result?p=@material-ui/styles). It doesn't have a default theme, and can be used to style React applications that are not using Material-UI components.
+Starting from v5, Material-UI no longer uses JSS as its default styling solution. To remove the need to systematically supply a theme, the default Material-UI theme is applied to the re-exported `makeStyles`, `styled`, `withTheme`, `useTheme`, and `withStyles` modules. For this, you can use the `ThemeProvider` component available in `@material-ui/styles`, or, if you are already using `@material-ui/core`, you should use the one exported from `@material-ui/core/styles` so that the same `theme` is available for components from '@material-ui/core'.
 
-To reduce the number of packages to install when using Material-UI, and to simplify the imports, `@material-ui/styles` modules are re-exported from `@material-ui/core/styles`.
-
-To remove the need to systematically supply a theme, the default Material-UI theme is applied to the re-exported `makeStyles`, `styled`, `withTheme`, `useTheme`, and `withStyles` modules.
-
-For example:
-
-```js
+```jsx
 // Re-export with a default theme
 import { makeStyles } from '@material-ui/core/styles';
 

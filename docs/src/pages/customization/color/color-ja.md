@@ -1,6 +1,6 @@
 # カラー
 
-<p class="description"><strong>Palette</strong>: A palette is a collection of colors, i.e. hues and their shades. Material-UIは、Material Designガイドラインのすべてのカラーを提供します。 <a href="#color-palette">このカラーパレット</a>は、互いに調和する色でデザインされています。</p>
+<p class="description"><strong>Palette</strong>: A palette is a collection of colors, i.e. hues and their shades. Out of the box you get access to all colors in the Material Design guidelines.</p>
 
 Material Design[color system](https://material.io/design/color/)を使用すると、自分のブランドやスタイルを反映した色のテーマを作成できます。
 
@@ -17,7 +17,7 @@ The Material Design team has also built an awesome palette configuration tool: [
 <br />
 <br />
 
-出力は、`createTheme()`関数に渡すことができます。
+The output can be fed into `createTheme()` function:
 
 ```js
 import { createTheme } from '@material-ui/core/styles';
@@ -64,9 +64,9 @@ const theme = createTheme({
 });
 ```
 
-他の色は [Theme customization](/customization/palette/)セクションで説明されているように`createTheme()`によって計算されるので、`main`シェーディングのみを提供する必要があります(`light`、`dark`、`contrastText`をさらにカスタマイズする場合を除きます)。
+Only the `main` shades need be provided (unless you wish to further customize `light`, `dark` or `contrastText`), as the other colors will be calculated by `createTheme()`, as described in the [Theme customization](/customization/palette/) section.
 
-デフォルトの一次または二次シェード、あるいはその両方を使用している場合にカラーオブジェクトを指定すると、`createTheme()`はメイン、ライト、およびダークにマテリアルカラーからの適切なシェードを使用します。
+If you are using the default primary and / or secondary shades then by providing the color object, `createTheme()` will use the appropriate shades from the material color for main, light and dark.
 
 ### コミュニティによるツール
 

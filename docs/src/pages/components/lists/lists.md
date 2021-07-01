@@ -1,6 +1,6 @@
 ---
 title: React List component
-components: Collapse, Divider, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
+components: Collapse, Divider, List, ListItem, ListItemButton, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
 githubLabel: 'component: List'
 materialDesign: https://material.io/components/lists
 ---
@@ -13,22 +13,16 @@ Lists are a continuous group of text or images. They are composed of items conta
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Simple List
+## Basic List
 
-{{"demo": "pages/components/lists/SimpleList.js", "bg": true}}
+{{"demo": "pages/components/lists/BasicList.js", "bg": true}}
 
 The last item of the previous demo shows how you can render a link:
 
 ```jsx
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
-//...
-
-<ListItemLink href="#simple-list">
+<ListItemButton component="a" href="#simple-list">
   <ListItemText primary="Spam" />
-</ListItemLink>;
+</ListItemButton>
 ```
 
 You can find a [demo with React Router following this section](/guides/routing/#list) of the documentation.
@@ -107,6 +101,13 @@ Virtualization helps with performance issues.
 
 The use of [react-window](https://github.com/bvaughn/react-window) when possible is encouraged.
 If this library doesn't cover your use case, you should consider using [react-virtualized](https://github.com/bvaughn/react-virtualized), then alternatives like [react-virtuoso](https://github.com/petyosi/react-virtuoso).
+
+## Customized List
+
+Here are some examples of customizing the component. You can learn more about this in the
+[overrides documentation page](/customization/how-to-customize/).
+
+{{"demo": "pages/components/lists/CustomizedList.js"}}
 
 ## Customization
 

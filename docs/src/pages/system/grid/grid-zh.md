@@ -1,16 +1,16 @@
-# Grid
+# CSS Grid
 
 <p class="description">Quickly manage the layout, alignment, and sizing of grid columns, navigation, components, and more with a full suite of responsive grid utilities.</p>
 
-If you are **new to or unfamiliar with grid**, you're encourage to read this [CSS-Tricks grid](https://css-tricks.com/snippets/css/complete-guide-grid/) guide.
+If you are **new to or unfamiliar with grid**, you're encouraged to read this [CSS-Tricks grid](https://css-tricks.com/snippets/css/complete-guide-grid/) guide.
 
-## 父元素的属性
+## Properties for the parent
 
 ### display
 
-In order to define a `grid` container you must specify the `display` CSS property to have one of the values: `grid` or `inline-grid`.
+To define a `grid` container, you must specify the `display` CSS property to have one of the values: `grid` or `inline-grid`.
 
-{{"demo": "pages/system/grid/Display.js", "defaultCodeOpen": false, "bg": true}}
+{{"demo": "pages/system/grid/Display.js", "defaultCodeOpen": false}}
 
 ```jsx
 <Box sx={{ display: 'grid' }}>…</Box>
@@ -21,156 +21,132 @@ In order to define a `grid` container you must specify the `display` CSS propert
 
 The `grid-template-rows` property defines the line names and track sizing functions of the grid rows.
 
-{{"demo": "pages/system/grid/GridTemplateRows.js", "defaultCodeOpen": false, "bg": true}}
-
-```jsx
-<Box sx={{ gridTemplateRows: 'repeat(3, 1fr)' }}>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-</Box>
-```
+{{"demo": "pages/system/grid/GridTemplateRows.js", "bg": true}}
 
 ### grid-template-columns
 
 The `grid-template-columns` property defines the line names and track sizing functions of the grid columns.
 
-{{"demo": "pages/system/grid/GridTemplateColumns.js", "defaultCodeOpen": false, "bg": true}}
-
-```jsx
-<Box sx={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-</Box>
-```
+{{"demo": "pages/system/grid/GridTemplateColumns.js", "bg": true}}
 
 ### gap
 
-The `gap: size` property specifies the gap between the different items inside the `grid`.
+The `gap: size` property specifies the gap between the different items inside the CSS grid.
 
-{{"demo": "pages/system/grid/Gap.js", "defaultCodeOpen": false, "bg": true}}
-
-```jsx
-<Box sx={{ gap: '8px', gridTemplateColumns: 'repeat(2, 0.5fr)' }}>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
-</Box>
-```
+{{"demo": "pages/system/grid/Gap.js", "bg": true}}
 
 ### row-gap & column-gap
 
-The `row-gap` and `column-gap` gives the possibility for specifying the row and column gaps independently.
+The `row-gap` and `column-gap` CSS properties allow for specifying the row and column gaps independently.
 
-{{"demo": "pages/system/grid/RowAndColumnGap.js", "defaultCodeOpen": false, "bg": true}}
-
-```jsx
-<Box
-  sx={{ columnGap: '8px', rowGap: '16px', gridTemplateColumns: 'repeat(2, 0.5fr)' }}
->
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
-</Box>
-```
+{{"demo": "pages/system/grid/RowAndColumnGap.js", "bg": true}}
 
 ### grid-template-areas
 
 The `grid-template-area` property defines a grid template by referencing the names of the grid areas which are specified with the `grid-area` property.
 
-{{"demo": "pages/system/grid/GridTemplateAreas.js", "defaultCodeOpen": false, "bg": true}}
-
-```jsx
-<Box
-  sx={{
-    gridTemplateAreas: `"header header header header"
-   "main main . sidebar"
-   "footer footer footer footer"`,
-  }}
->
-  <Box sx={{ gridArea: 'header' }} />
-  <Box sx={{ gridArea: 'main' }} />
-  <Box sx={{ gridArea: 'sidebar' }} />
-  <Box sx={{ gridArea: 'footer' }} />
-</Box>
-```
+{{"demo": "pages/system/grid/GridTemplateAreas.js", "bg": true}}
 
 ### grid-auto-columns
 
 The `grid-auto-column` property specifies the size of an implicitly-created grid column track or pattern of tracks.
 
-{{"demo": "pages/system/grid/GridAutoColumns.js", "defaultCodeOpen": false, "bg": true}}
+{{"demo": "pages/system/grid/GridAutoColumns.js", "bg": true}}
 
-```jsx
-<Box sx={{ gridAutoColumns: '0.2fr' }}>
-  <Box sx={{ gridRow: '1', gridColumn: '1 / 3' }}>1 / 3</GridItem>
-  <Box sx={{ gridRow: '1', gridColumn: '4 / 5' }}>4 / 5</GridItem>
-</Box>
-```
-
-You can see on the screenshot below that the third non-visible column have width of `0.2fr`, which is approximately `20%`.
-
-<div style="display: flex; justify-content: center;">
-  <img alt="grid-auto-column" src="/static/images/system/grid-auto-column.png" width="669" />
-</div>
+On the demo above, the second non-visible column has a width of `1fr`/4 which is approximately equal to `25%`.
 
 ### grid-auto-rows
 
 The `grid-auto-rows` property specifies the size of an implicitly-created grid row track or pattern of tracks.
 
-{{"demo": "pages/system/grid/GridAutoRows.js", "defaultCodeOpen": false, "bg": true}}
-
-```jsx
-<Box sx={{ gridAutoRows: '40px' }}>
-  {/* The third non-visible row has height of 40px */}
-  <Box sx={{ gridColumn: '1', gridRow: '1 / 3' }}>1 / 3</Box>
-  <Box sx={{ gridColumn: '1', gridRow: '4 / 5' }}>4 / 5</Box>
-</Box>
-```
+{{"demo": "pages/system/grid/GridAutoRows.js", "bg": true}}
 
 ### grid-auto-flow
 
 The `grid-auto-flow` property controls how the auto-placement algorithm works, specifying exactly how auto-placed items get flowed into the grid.
 
-{{"demo": "pages/system/grid/GridAutoFlow.js", "defaultCodeOpen": false, "bg": true}}
+{{"demo": "pages/system/grid/GridAutoFlow.js", "bg": true}}
 
-```jsx
-<Box sx={{ gridAutoFlow: 'row' }}>
-  <Box sx={{ gridColumn: '1', gridRow: '1 / 3' }}>1</Box>
-  <Box>2</Box>
-  <Box>3</Box>
-  <Box>4</Box>
-  <Box sx={{ gridColumn: '5', gridRow: '1 / 3' }}>5</Box>
-</Box>
-```
-
-## 子元素的属性
+## Properties for the children
 
 ### grid-column
 
-The `grid-column` property is a shorthand for `grid-column-start` + `grid-column-end`. You can see how it's used in the [grid-auto-columns example](/system/grid/#grid-auto-columns). You can see how it's used in the [grid-auto-columns example](/system/grid/#grid-auto-columns).
+The `grid-column` property is a shorthand for `grid-column-start` + `grid-column-end`. You can see how it's used in the [grid-auto-columns example](/system/grid/#grid-auto-columns). You can see how it's used in the [grid-auto-columns example](/system/grid/#grid-auto-columns). You can see how it's used in the [grid-auto-columns example](/system/grid/#grid-auto-columns).
+
+You can either set the start and end line:
 
 ```jsx
 <Box sx={{ gridColumn: '1 / 3' }}>…
+<Box border={0}>…
+<Box sx={{ borderTop: 1 }}>…
+<Box borderRight={0}>…
+<Box borderBottom={0}>…
+<Box borderLeft={0}>…
+<Box sx={{ borderRight: 1 }}>…
+<Box sx={{ borderBottom: 1 }}>…
+<Box sx={{ borderLeft: 1 }}>…
+```
+
+Or set the number of columns to span:
+
+```jsx
+<Box sx={{ gridColumn: 'span 2' }}>…
+<Box border={0}>…
+<Box sx={{ borderTop: 1 }}>…
+<Box borderRight={0}>…
+<Box borderBottom={0}>…
+<Box borderLeft={0}>…
+<Box sx={{ borderRight: 1 }}>…
+<Box sx={{ borderBottom: 1 }}>…
+<Box sx={{ borderLeft: 1 }}>…
 ```
 
 ### grid-row
 
-The `grid-row` property is a shorthand for `grid-row-start` + `grid-row-end`. You can see how it's used in the [grid-auto-rows example](/system/grid/#grid-auto-rows). You can see how it's used in the [grid-auto-rows example](/system/grid/#grid-auto-rows).
+The `grid-row` property is a shorthand for `grid-row-start` + `grid-row-end`. You can see how it's used in the [grid-auto-rows example](/system/grid/#grid-auto-rows). You can see how it's used in the [grid-auto-rows example](/system/grid/#grid-auto-rows). You can see how it's used in the [grid-auto-rows example](/system/grid/#grid-auto-rows).
+
+You can either set the start and end line:
 
 ```jsx
 <Box sx={{ gridRow: '1 / 3' }}>…
+<Box border={0}>…
+<Box sx={{ borderTop: 1 }}>…
+<Box borderRight={0}>…
+<Box borderBottom={0}>…
+<Box borderLeft={0}>…
+<Box sx={{ borderRight: 1 }}>…
+<Box sx={{ borderBottom: 1 }}>…
+<Box sx={{ borderLeft: 1 }}>…
+```
+
+Or set the number of rows to span:
+
+```jsx
+<Box sx={{ gridRow: 'span 2' }}>…
+<Box border={0}>…
+<Box sx={{ borderTop: 1 }}>…
+<Box borderRight={0}>…
+<Box borderBottom={0}>…
+<Box borderLeft={0}>…
+<Box sx={{ borderRight: 1 }}>…
+<Box sx={{ borderBottom: 1 }}>…
+<Box sx={{ borderLeft: 1 }}>…
 ```
 
 ### grid-area
 
-The `grid-area` property allows you to give an item a name so that it can be referenced by a template created with the `grid-template-areas` property. You can see how it's used in the [grid-template-area example](/system/grid/#grid-template-areas). You can see how it's used in the [grid-template-area example](/system/grid/#grid-template-areas).
+The `grid-area` property allows you to give an item a name so that it can be referenced by a template created with the `grid-template-areas` property. You can see how it's used in the [grid-template-area example](/system/grid/#grid-template-areas). You can see how it's used in the [grid-template-area example](/system/grid/#grid-template-areas). You can see how it's used in the [grid-template-area example](/system/grid/#grid-template-areas).
 
 ```jsx
 <Box sx={{ gridArea: 'header' }}>…
+<Box border={0}>…
+<Box sx={{ borderTop: 1 }}>…
+<Box borderRight={0}>…
+<Box borderBottom={0}>…
+<Box borderLeft={0}>…
+<Box sx={{ borderRight: 1 }}>…
+<Box sx={{ borderBottom: 1 }}>…
+<Box sx={{ borderLeft: 1 }}>…
 ```
 
 ## API

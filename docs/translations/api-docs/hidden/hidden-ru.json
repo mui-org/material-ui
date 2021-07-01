@@ -1,0 +1,20 @@
+{
+  "componentDescription": "Responsively hides children based on the selected implementation.",
+  "propDescriptions": {
+    "children": "The content of the component.",
+    "implementation": "Specify which implementation to use.  &#39;js&#39; is the default, &#39;css&#39; works better for server-side rendering.",
+    "initialWidth": "You can use this prop when choosing the <code>js</code> implementation with server-side rendering.<br>As <code>window.innerWidth</code> is unavailable on the server, we default to rendering an empty component during the first mount. You might want to use a heuristic to approximate the screen width of the client browser screen width.<br>For instance, you could be using the user-agent or the client-hints. <a href=\"https://caniuse.com/#search=client%20hint\">https://caniuse.com/#search=client%20hint</a>",
+    "lgDown": "If <code>true</code>, screens this size and down are hidden.",
+    "lgUp": "If <code>true</code>, screens this size and up are hidden.",
+    "mdDown": "If <code>true</code>, screens this size and down are hidden.",
+    "mdUp": "If <code>true</code>, screens this size and up are hidden.",
+    "only": "Hide the given breakpoint(s).",
+    "smDown": "If <code>true</code>, screens this size and down are hidden.",
+    "smUp": "If <code>true</code>, screens this size and up are hidden.",
+    "xlDown": "If <code>true</code>, screens this size and down are hidden.",
+    "xlUp": "If <code>true</code>, screens this size and up are hidden.",
+    "xsDown": "If <code>true</code>, screens this size and down are hidden.",
+    "xsUp": "If <code>true</code>, screens this size and up are hidden."
+  },
+  "classDescriptions": {}
+}

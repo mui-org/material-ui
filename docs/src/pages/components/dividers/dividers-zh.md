@@ -49,6 +49,12 @@ materialDesign: https://material.io/components/dividers
 
 > 请注意这其中使用了 `flexItem` 属性来适应 flex 容器。
 
+### Vertical with variant middle
+
+You can also render a vertical divider with `variant="middle"`.
+
+{{"demo": "pages/components/dividers/VerticalDividerMiddle.js", "bg": true}}
+
 ### 垂直的文本分隔线
 
 你也可以使用文本内容来渲染垂直的分隔线。

@@ -13,7 +13,7 @@
     "label": "The content of the component.",
     "onDelete": "Callback fired when the delete icon is clicked. If set, the delete icon will be shown.",
     "size": "The size of the component.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

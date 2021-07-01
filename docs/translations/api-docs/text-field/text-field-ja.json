@@ -1,12 +1,12 @@
 {
-  "componentDescription": "The <code>TextField</code> is a convenience wrapper for the most common cases (80%).\nIt cannot be all things to all people, otherwise the API would grow out of control.\n\n## Advanced Configuration\n\nIt&#39;s important to understand that the text field is a simple abstraction\non top of the following components:\n\n- <a href=\"/api/form-control/\">FormControl</a>\n- <a href=\"/api/input-label/\">InputLabel</a>\n- <a href=\"/api/filled-input/\">FilledInput</a>\n- <a href=\"/api/outlined-input/\">OutlinedInput</a>\n- <a href=\"/api/input/\">Input</a>\n- <a href=\"/api/form-helper-text/\">FormHelperText</a>\n\nIf you wish to alter the props applied to the <code>input</code> element, you can do so as follows:\n\n<code>jsx const inputProps = {   step: 300, };  return &lt;TextField id=&quot;time&quot; type=&quot;time&quot; inputProps={inputProps} /&gt;; </code>\n\nFor advanced cases, please look at the source of TextField by clicking on the\n&quot;Edit this page&quot; button above. Consider either:\n\n- using the upper case props for passing values directly to the components\n- using the underlying components directly as shown in the demos",
+  "componentDescription": "The `TextField` is a convenience wrapper for the most common cases (80%).\nIt cannot be all things to all people, otherwise the API would grow out of control.\n\n## Advanced Configuration\n\nIt's important to understand that the text field is a simple abstraction\non top of the following components:\n\n- [FormControl](/api/form-control/)\n- [InputLabel](/api/input-label/)\n- [FilledInput](/api/filled-input/)\n- [OutlinedInput](/api/outlined-input/)\n- [Input](/api/input/)\n- [FormHelperText](/api/form-helper-text/)\n\nIf you wish to alter the props applied to the `input` element, you can do so as follows:\n\n```jsx\nconst inputProps = {\n  step: 300,\n};\n\nreturn <TextField id=\"time\" type=\"time\" inputProps={inputProps} />;\n```\n\nFor advanced cases, please look at the source of TextField by clicking on the\n\"Edit this page\" button above. Consider either:\n\n- using the upper case props for passing values directly to the components\n- using the underlying components directly as shown in the demos",
   "propDescriptions": {
     "autoComplete": "This prop helps users to fill forms faster, especially on mobile devices. The name can be confusing, as it&#39;s more like an autofill. You can learn more about it <a href=\"https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill\">following the specification</a>.",
     "autoFocus": "If <code>true</code>, the <code>input</code> element is focused during the first mount.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
     "error": "If <code>true</code>, the label should be displayed in an error state.",
     "FormHelperTextProps": "Props applied to the <a href=\"/api/form-helper-text/\"><code>FormHelperText</code></a> element.",
     "fullWidth": "If <code>true</code>, the input will take up the full width of its container.",
@@ -29,6 +29,7 @@
     "select": "Render a <a href=\"/api/select/\"><code>Select</code></a> element while passing the Input element to <code>Select</code> as <code>input</code> parameter. If this option is set you must pass the options of the select as children.",
     "SelectProps": "Props applied to the <a href=\"/api/select/\"><code>Select</code></a> element.",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "type": "Type of the <code>input</code> element. It should be <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types\">a valid HTML5 input type</a>.",
     "value": "The value of the <code>input</code> element, required for a controlled component.",
     "variant": "The variant to use."

@@ -18,6 +18,7 @@
     "showLastButton": "If <code>true</code>, show the last-page button.",
     "siblingCount": "Number of always visible pages before and after the current page.",
     "size": "The size of the autocomplete.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

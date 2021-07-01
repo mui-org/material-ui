@@ -1,6 +1,6 @@
 ---
 title: React Date Picker（日期选择器）组件
-components: DatePicker, PickersDay
+components: CalendarPicker, CalendarPickerSkeleton, DatePicker, DesktopDatePicker, MobileDatePicker, MonthPicker, PickersDay, StaticDatePicker, YearPicker
 githubLabel: 'component: DatePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
@@ -37,20 +37,32 @@ function App() {
 
 ## 基本用法
 
-日期选择器在移动端将以模态对话框的形式呈现，在桌面端将以弹出式文本输入框的形式呈现。
+The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop.
 
 {{"demo": "pages/components/date-picker/BasicDatePicker.js"}}
+
+## 静态模式
+
+It's possible to render any date picker without the modal/popover and text field. 这样的话就可以帮助进一步定制弹出提示/模态框的容器。
+
+{{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
 
 ## 响应式
 
 日期选择器组件是为它所运行的设备而设计和优化的。
 
-- “手机（Mobile）”版本最适合触控设备和小型屏幕。
-- “桌面（Mobile）”版本最适合鼠标设备和大型屏幕。
+- The `MobileDatePicker` component works best for touch devices and small screens.
+- The `DesktopDatePicker` component works best for mouse devices and large screens.
 
-默认情况下，`DatePicker` 组件使用 `@media (pointer: fine)` 这个媒体查询规则来确定使用哪个版本。 你也可以使用 `desktopModeMediaQuery` 属性来自定义它。
+By default, the `DatePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. 你也可以使用 `desktopModeMediaQuery` 属性来自定义它。
 
 {{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
+
+## Form props 表单的属性
+
+The date picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-picker/FormPropsDatePickers.js"}}
 
 ## Localization 本地化
 
@@ -58,39 +70,39 @@ function App() {
 
 {{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
 
+## Jalali calendar system
+
+Install `date-fns-jalali` and use `@date-io/date-fns-jalali` adapter to support [Jalali calendar](https://en.wikipedia.org/wiki/Jalali_calendar).
+
+{{"demo": "pages/components/date-picker/JalaliDatePicker.js"}}
+
 ## 试玩例子
 
 你可以将 `year`，`month` 和 `date` 进行组合显示。 视图的显示顺序是由被包含在 `views` 数组的顺序来决定的。
 
 {{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
 
-## 静态模式
-
-它可以在没有模态框/弹出提示和文本输入框的情况下渲染选择器。 这样的话就可以帮助进一步定制弹出提示/模态框的容器。
-
-{{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
-
 ## 横竖方向
 
-为了方便使用，日期选择器将订阅 `window.orientation` 的改变，以便于自动在纵向和横向之间改变布局。 你可以使用 `orientation` 属性来强行指定布局。
+For ease of use, the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. 你可以使用 `orientation` 属性来强行指定布局。
 
 {{"demo": "pages/components/date-picker/StaticDatePickerLandscape.js", "bg": true}}
 
 ## 子组件
 
-一些低级的子组件（`DayPicker`，`MonthPicker` 和 `YearPicker`）也被一同导出。 这些都是在没有包装器或外部逻辑（屏蔽输入、日期值解析和验证等）的情况下渲染的。
+Some lower-level sub-components (`CalendarPicker`, `MonthPicker`, and `YearPicker`) are also exported. 这些都是在没有包装器或外部逻辑（屏蔽输入、日期值解析和验证等）的情况下渲染的。
 
-{{"demo": "pages/components/date-picker/InternalPickers.js"}}
+{{"demo": "pages/components/date-picker/SubComponentsPickers.js"}}
 
 ## 自定义输入组件
 
-你可以使用 `renderInput` 属性来定制输入组件的渲染。 请确保 `ref` 和 `inputProps` 都以正确的方式传入到所定制的输入组件。
+You can customize the rendering of the input with the `renderInput` prop. 请确保 `ref` 和 `inputProps` 都以正确的方式传入到所定制的输入组件。
 
 {{"demo": "pages/components/date-picker/CustomInput.js"}}
 
 ## 自定义日期渲染
 
-你可以通过 `renderDay` 函数属性来自定义所显示的日期。 你也可以利用内置的 [PickersDay](/api/pickers-day) 组件。
+你可以通过 `renderDay` 函数属性来自定义所显示的日期。 You can take advantage of the [PickersDay](/api/pickers-day/) component.
 
 {{"demo": "pages/components/date-picker/CustomDay.js"}}
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { chainPropTypes, integerPropType } from '@material-ui/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
-import { alpha } from '../styles/colorManipulator';
+import { alpha } from '@material-ui/system';
 import Popper from '../Popper';
 import ListSubheader from '../ListSubheader';
 import Paper from '../Paper';
@@ -64,21 +64,17 @@ const AutocompleteRoot = styled('div', {
     const { styleProps } = props;
     const { fullWidth, hasClearIcon, hasPopupIcon, inputFocused, size } = styleProps;
 
-    return {
-      [`& .${autocompleteClasses.tag}`]: {
-        ...styles.tag,
-        ...styles[`tagSize${capitalize(size)}`],
-      },
-      [`& .${autocompleteClasses.inputRoot}`]: styles.inputRoot,
-      [`& .${autocompleteClasses.input}`]: {
-        ...styles.input,
-        ...(inputFocused && styles.inputFocused),
-      },
-      ...styles.root,
-      ...(fullWidth && styles.fullWidth),
-      ...(hasPopupIcon && styles.hasPopupIcon),
-      ...(hasClearIcon && styles.hasClearIcon),
-    };
+    return [
+      { [`& .${autocompleteClasses.tag}`]: styles.tag },
+      { [`& .${autocompleteClasses.tag}`]: styles[`tagSize${capitalize(size)}`] },
+      { [`& .${autocompleteClasses.inputRoot}`]: styles.inputRoot },
+      { [`& .${autocompleteClasses.input}`]: styles.input },
+      { [`& .${autocompleteClasses.input}`]: inputFocused && styles.inputFocused },
+      styles.root,
+      fullWidth && styles.fullWidth,
+      hasPopupIcon && styles.hasPopupIcon,
+      hasClearIcon && styles.hasClearIcon,
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */
@@ -231,11 +227,11 @@ const AutocompletePopper = styled(Popper, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${autocompleteClasses.option}`]: styles.option,
-      ...styles.popper,
-      ...(styleProps.disablePortal && styles.popperDisablePortal),
-    };
+    return [
+      { [`& .${autocompleteClasses.option}`]: styles.option },
+      styles.popper,
+      styleProps.disablePortal && styles.popperDisablePortal,
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the popper element. */

@@ -22,7 +22,10 @@ export interface FormControlTypeMap<P = {}, D extends React.ElementType = 'div'>
      * The color of the component. It supports those theme colors that make sense for this component.
      * @default 'primary'
      */
-    color?: OverridableStringUnion<'primary' | 'secondary', FormControlPropsColorOverrides>;
+    color?: OverridableStringUnion<
+      'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+      FormControlPropsColorOverrides
+    >;
     /**
      * If `true`, the label, input and helper text should be displayed in a disabled state.
      * @default false

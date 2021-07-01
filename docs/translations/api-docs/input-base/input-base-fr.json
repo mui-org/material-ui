@@ -5,6 +5,8 @@
     "autoFocus": "If <code>true</code>, the <code>input</code> element is focused during the first mount.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component. The prop defaults to the value (<code>&#39;primary&#39;</code>) inherited from the parent FormControl component.",
+    "components": "The components used for each slot inside the InputBase. Either a string to use a HTML element or a component.",
+    "componentsProps": "The props used for each slot inside the Input.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
     "disabled": "If <code>true</code>, the <code>input</code> element is disabled. The prop defaults to the value (<code>false</code>) inherited from the parent FormControl component.",
     "endAdornment": "End <code>InputAdornment</code> for this component.",
@@ -27,6 +29,7 @@
     "rows": "Number of rows to display when multiline option is set to true.",
     "size": "The size of the autocomplete.",
     "startAdornment": "Start <code>InputAdornment</code> for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "type": "Type of the <code>input</code> element. It should be <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types\">a valid HTML5 input type</a>.",
     "value": "The value of the <code>input</code> element, required for a controlled component."
   },

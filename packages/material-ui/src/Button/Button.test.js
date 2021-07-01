@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import {
-  createMount,
   describeConformanceV5,
   act,
   createClientRender,
@@ -13,16 +12,14 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 describe('<Button />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
-  describeConformanceV5(<Button>Conformance?</Button>, () => ({
+  describeConformanceV5(<Button startIcon="icon">Conformance?</Button>, () => ({
     classes,
     inheritComponent: ButtonBase,
     render,
-    mount,
     refInstanceof: window.HTMLButtonElement,
     muiName: 'MuiButton',
-    testDeepOverrides: { slotName: 'label', slotClassName: classes.label },
+    testDeepOverrides: { slotName: 'startIcon', slotClassName: classes.startIcon },
     testVariantProps: { variant: 'contained', fullWidth: true },
     testStateOverrides: { prop: 'size', value: 'small', styleKey: 'sizeSmall' },
     skip: ['componentsProp'],
@@ -272,23 +269,21 @@ describe('<Button />', () => {
   it('should render a button with startIcon', () => {
     const { getByRole } = render(<Button startIcon={<span>icon</span>}>Hello World</Button>);
     const button = getByRole('button');
-    const label = button.querySelector(`.${classes.label}`);
+    const startIcon = button.querySelector(`.${classes.startIcon}`);
 
     expect(button).to.have.class(classes.root);
     expect(button).to.have.class(classes.text);
-    expect(label.firstChild).not.to.have.class(classes.endIcon);
-    expect(label.firstChild).to.have.class(classes.startIcon);
+    expect(startIcon).not.to.have.class(classes.endIcon);
   });
 
   it('should render a button with endIcon', () => {
     const { getByRole } = render(<Button endIcon={<span>icon</span>}>Hello World</Button>);
     const button = getByRole('button');
-    const label = button.querySelector(`.${classes.label}`);
+    const endIcon = button.querySelector(`.${classes.endIcon}`);
 
     expect(button).to.have.class(classes.root);
     expect(button).to.have.class(classes.text);
-    expect(label.lastChild).not.to.have.class(classes.startIcon);
-    expect(label.lastChild).to.have.class(classes.endIcon);
+    expect(endIcon).not.to.have.class(classes.startIcon);
   });
 
   it('should have a ripple by default', () => {
@@ -364,8 +359,8 @@ describe('<Button />', () => {
     });
 
     it('should server-side render', () => {
-      const markup = serverRender(<Button>Hello World</Button>);
-      expect(markup.text()).to.equal('Hello World');
+      const container = serverRender(<Button>Hello World</Button>);
+      expect(container.firstChild).to.have.text('Hello World');
     });
   });
 

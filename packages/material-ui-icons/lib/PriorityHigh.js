@@ -1,9 +1,22 @@
-import createSvgIcon from './utils/createSvgIcon.js';
-import { jsx as _jsx } from "react/jsx-runtime";
-export default createSvgIcon([/*#__PURE__*/_jsx("circle", {
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _jsxRuntime = require("react/jsx-runtime");
+
+var _default = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("circle", {
   cx: "12",
   cy: "19",
   r: "2"
-}, "0"), /*#__PURE__*/_jsx("path", {
+}, "0"), /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M10 3h4v12h-4z"
 }, "1")], 'PriorityHigh');
+
+exports.default = _default;

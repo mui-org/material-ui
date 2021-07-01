@@ -5,7 +5,7 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the link.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "TypographyClasses": "<code>classes</code> prop applied to the <a href=\"/api/typography/\"><code>Typography</code></a> element.",
     "underline": "Controls when the link should have an underline.",
     "variant": "Applies the theme typography styles."

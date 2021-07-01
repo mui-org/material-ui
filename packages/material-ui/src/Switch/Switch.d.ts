@@ -23,7 +23,10 @@ export interface SwitchProps
    * The color of the component. It supports those theme colors that make sense for this component.
    * @default 'primary'
    */
-  color?: OverridableStringUnion<'primary' | 'secondary' | 'default', SwitchPropsColorOverrides>;
+  color?: OverridableStringUnion<
+    'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'default',
+    SwitchPropsColorOverrides
+  >;
   /**
    * If `true`, the component is disabled.
    */

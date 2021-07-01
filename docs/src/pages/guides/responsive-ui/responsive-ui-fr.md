@@ -8,4 +8,3 @@ Les [layouts responsive](https://material.io/design/layout/responsive-layout-gri
 - [Container](/components/container/): The container centers your content horizontally. C'est l'élément de mise en page le plus basique.
 - [Breakpoints](/customization/breakpoints/): API that enables the use of breakpoints in a wide variety of contexts.
 - [useMediaQuery](/components/use-media-query/) : Ceci est un hook media query CSS pour React ; It listens for matches to a CSS media query. It listens for matches to a CSS media query.
-- [Hidden](/components/hidden/): Quickly and responsively toggle the visibility value of components and more with our hidden utilities.

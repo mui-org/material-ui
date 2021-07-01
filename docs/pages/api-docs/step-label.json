@@ -2,6 +2,7 @@
   "props": {
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" } },
+    "componentsProps": { "type": { "name": "object" }, "default": "{}" },
     "error": { "type": { "name": "bool" } },
     "icon": { "type": { "name": "node" } },
     "optional": { "type": { "name": "node" } },

@@ -5,13 +5,14 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "disableElevation": "If <code>true</code>, no elevation is used.",
-    "disableFocusRipple": "If <code>true</code>, the button keyboard focus ripple is disabled.",
-    "disableRipple": "If <code>true</code>, the button ripple effect is disabled.",
-    "fullWidth": "If <code>true</code>, the buttons will take up the full width of its container.",
-    "orientation": "The group orientation (layout flow direction).",
-    "size": "The size of the button. <code>small</code> is equivalent to the dense button styling.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "disableElevation": "<code>true</code>の場合、Elevationを使用しません。",
+    "disableFocusRipple": "<code>true</code>の場合、キーボードによるボタンの focus ripple effect は無効になります。",
+    "disableRipple": "<code>true</code>の場合、ボタンの focus ripple effect は無効になります。",
+    "fullWidth": "<code>true</code>の場合、ボタンはコンテナの横幅を占めます。",
+    "orientation": "コンポーネントの向き (レイアウトの並ぶ方向)。",
+    "size": "コンポーネントのサイズ。 <code>small</code> は、 高密度なボタンスタイルと同等です。",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {
@@ -40,7 +41,7 @@
     },
     "disabled": {
       "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the child elements",
+      "nodeName": "子要素",
       "conditions": "<code>disabled={true}</code>"
     },
     "fullWidth": {
@@ -55,92 +56,92 @@
     },
     "grouped": {
       "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the children"
+      "nodeName": "子要素"
     },
     "groupedHorizontal": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
+      "nodeName": "子要素",
       "conditions": "<code>orientation=\"horizontal\"</code>"
     },
     "groupedVertical": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
+      "nodeName": "子要素",
       "conditions": "<code>orientation=\"vertical\"</code>"
     },
     "groupedText": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
+      "nodeName": "子要素",
       "conditions": "<code>variant=\"text\"</code>"
     },
     "groupedTextHorizontal": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"text\"</code> and <code>orientation=\"horizontal\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"text\"</code> と <code>orientation=\"horizontal\"</code>"
     },
     "groupedTextVertical": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"text\"</code> and <code>orientation=\"vertical\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"text\"</code> と <code>orientation=\"vertical\"</code>"
     },
     "groupedTextPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"primary\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"text\"</code> と <code>color=\"primary\"</code>"
     },
     "groupedTextSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"secondary\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"text\"</code> と <code>color=\"secondary\"</code>"
     },
     "groupedOutlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
+      "nodeName": "子要素",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
     "groupedOutlinedHorizontal": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>orientation=\"horizontal\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"outlined\"</code> と <code>orientation=\"horizontal\"</code>"
     },
     "groupedOutlinedVertical": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>orientation=\"vertical\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"outlined\"</code> と <code>orientation=\"vertical\"</code>"
     },
     "groupedOutlinedPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"primary\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"outlined\"</code> と <code>color=\"primary\"</code>"
     },
     "groupedOutlinedSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"secondary\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"outlined\"</code> と <code>color=\"secondary\"</code>"
     },
     "groupedContained": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
+      "nodeName": "子要素",
       "conditions": "<code>variant=\"contained\"</code>"
     },
     "groupedContainedHorizontal": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"contained\"</code> and <code>orientation=\"horizontal\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"contained\"</code> と <code>orientation=\"horizontal\"</code>"
     },
     "groupedContainedVertical": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"contained\"</code> and <code>orientation=\"vertical\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"contained\"</code> と <code>orientation=\"vertical\"</code>"
     },
     "groupedContainedPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"primary\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"contained\"</code> と <code>color=\"primary\"</code>"
     },
     "groupedContainedSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"secondary\"</code>"
+      "nodeName": "子要素",
+      "conditions": "<code>variant=\"contained\"</code> と <code>color=\"secondary\"</code>"
     }
   }
 }

@@ -4,7 +4,8 @@
     "children": "Can be a <code>StepLabel</code> or a node to place inside <code>StepLabel</code> as children.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "icon": "The icon displayed by the step label.",
-    "optional": "The optional node to display."
+    "optional": "The optional node to display.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

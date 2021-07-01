@@ -101,15 +101,6 @@ let theme = createTheme({
       '"Segoe UI Symbol"',
     ].join(','),
   },
-  breakpoints: {
-    values: {
-      xs: 0, // phones
-      sm: 600, // tablets
-      md: 900, // small laptops
-      lg: 1200, // desktops
-      xl: 1500, // large screens
-    },
-  },
 });
 
 function getButtonColor(color: string) {

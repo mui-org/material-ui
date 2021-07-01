@@ -38,7 +38,7 @@ In the future, we will need to fill the following positions. If you don't want t
 
 ### Engineering
 
-- To be determined
+- No plans yet
 
 ### Product
 

@@ -45,7 +45,7 @@ The sizing style functions support different property input type:
 import { sizing } from '@material-ui/system';
 ```
 
-| Import name | Prop        | Propriété CSS | Clé du thème |
+| Nom importé | Propriété   | Propriété CSS | Clé du thème |
 |:----------- |:----------- |:------------- |:------------ |
 | `width`     | `width`     | `width`       | none         |
 | `maxWidth`  | `maxWidth`  | `max-width`   | none         |

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { parseISO } from 'date-fns';
-import { createClientRender, createMount, fireEvent, screen } from 'test/utils';
+import { createClientRender, fireEvent, screen } from 'test/utils';
 import { queryHelpers, Matcher, MatcherOptions } from '@testing-library/react/pure';
 import { TransitionProps } from '@material-ui/core/transitions';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
@@ -38,9 +38,7 @@ interface PickerRenderOptions {
   locale?: string | object;
 }
 
-export function createPickerMount(options: { strict?: boolean } = {}) {
-  const mount = createMount(options);
-
+export function wrapPickerMount(mount: (node: React.ReactNode) => import('enzyme').ReactWrapper) {
   return (node: React.ReactNode) =>
     mount(<LocalizationProvider dateAdapter={AdapterClassToUse}>{node}</LocalizationProvider>);
 }

@@ -38,12 +38,9 @@ export default function AlertDialogSlide() {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending anonymous

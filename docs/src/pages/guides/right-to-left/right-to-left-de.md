@@ -12,6 +12,20 @@ Stellen Sie sicher, dass das `dir` Attribut in body gesetzt wird, sonst werden n
 <body dir="rtl">
 ```
 
+As an alternative to the above, you can also wrap your application in an element with the `dir` attribute:
+
+```jsx
+function App() {
+  return (
+    <div dir="rtl">
+      <MyComponent />
+    </div>
+  );
+}
+```
+
+This can be helpful for creating components to toggle language settings in the live application.
+
 ### 2. Theme
 
 Legen Sie die Richtung in Ihrem benutzerdefinierten Theme fest:
@@ -51,17 +65,15 @@ Nachdem Sie eine neue JSS-Instanz mit dem Plugin erstellt haben, müssen Sie die
 ```jsx
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
 // Configure JSS
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+const jss = create({
+  plugins: [...jssPreset().plugins, rtl()],
+});
 
 function RTL(props) {
-  return (
-    <StylesProvider jss={jss}>
-      {props.children}
-    </StylesProvider>
-  );
+  return <StylesProvider jss={jss}>{props.children}</StylesProvider>;
 }
 ```
 

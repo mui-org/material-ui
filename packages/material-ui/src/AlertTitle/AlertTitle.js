@@ -37,9 +37,7 @@ const AlertTitle = React.forwardRef(function AlertTitle(inProps, ref) {
 
   const { className, ...other } = props;
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
-
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   return (

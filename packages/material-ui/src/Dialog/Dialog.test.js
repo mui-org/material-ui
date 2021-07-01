@@ -1,14 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
-import {
-  createMount,
-  describeConformanceV5,
-  act,
-  createClientRender,
-  fireEvent,
-  screen,
-} from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent, screen } from 'test/utils';
 import Modal from '@material-ui/core/Modal';
 import Dialog, { dialogClasses as classes } from '@material-ui/core/Dialog';
 
@@ -48,7 +41,6 @@ describe('<Dialog />', () => {
     clock.restore();
   });
 
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(
@@ -60,7 +52,6 @@ describe('<Dialog />', () => {
       inheritComponent: Modal,
       muiName: 'MuiDialog',
       render,
-      mount,
       testVariantProps: { variant: 'foo' },
       testDeepOverrides: { slotName: 'paper', slotClassName: classes.paper },
       refInstanceof: window.HTMLDivElement,

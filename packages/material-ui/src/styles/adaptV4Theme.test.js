@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import defaultTheme from '@material-ui/core/styles/defaultTheme';
 import adaptV4Theme from './adaptV4Theme';
 
 describe('adaptV4Theme', () => {
@@ -208,7 +209,7 @@ describe('adaptV4Theme', () => {
       expect(transformedTheme.mixins.gutters()).to.deep.equal({
         paddingLeft: defaultSpacing * 2,
         paddingRight: defaultSpacing * 2,
-        '@media (min-width:600px)': {
+        [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
           paddingLeft: defaultSpacing * 3,
           paddingRight: defaultSpacing * 3,
         },
@@ -228,7 +229,7 @@ describe('adaptV4Theme', () => {
       expect(transformedTheme.mixins.gutters()).to.deep.equal({
         paddingLeft: spacing * 2,
         paddingRight: spacing * 2,
-        '@media (min-width:600px)': {
+        [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
           paddingLeft: spacing * 3,
           paddingRight: spacing * 3,
         },
@@ -256,7 +257,7 @@ describe('adaptV4Theme', () => {
       expect(transformedTheme.mixins.gutters()).to.deep.equal({
         paddingLeft: defaultSpacing * 2,
         paddingRight: defaultSpacing * 2,
-        '@media (min-width:600px)': {
+        [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
           paddingLeft: defaultSpacing * 3,
           paddingRight: defaultSpacing * 3,
         },

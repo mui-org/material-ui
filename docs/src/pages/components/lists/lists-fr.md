@@ -1,5 +1,5 @@
 ---
-title: React List component
+title: Composant React List
 components: Collapse, Divider, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
 githubLabel: 'component: List'
 materialDesign: https://material.io/components/lists
@@ -20,17 +20,9 @@ materialDesign: https://material.io/components/lists
 Le dernier élément de la démonstration précédente montre comment vous pouvez créer un lien:
 
 ```jsx
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
-//...
-
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
-//...
+<ListItemButton component="a" href="#simple-list">
+  <ListItemText primary="Spam" />
+</ListItemButton>
 ```
 
 Vous pouvez trouver une [démonstration avec la bibliothèque React Router en suivant cette section](/guides/composition/#react-router) de la documentation.
@@ -81,19 +73,17 @@ Le commutateur (switch) est l'action secondaire et une cible distincte.
 
 ## Épingler les sous-entêtes
 
-Lors du défilement, les sous-en-têtes restent épinglés en haut de l'écran jusqu'à ce qu'ils soient déplacés en dehors de l'écran par le prochain en-tête.
-
-This feature relies on CSS sticky positioning. Unfortunately it's [not implemented](https://caniuse.com/#search=sticky) by all the supported browsers. It defaults to `disableSticky` when not supported.
+Lors du défilement, les sous-en-têtes restent épinglés en haut de l'écran jusqu'à ce qu'ils soient déplacés en dehors de l'écran par le prochain en-tête. This feature relies on CSS sticky positioning. (⚠️ no IE 11 support)
 
 {{"demo": "pages/components/lists/PinnedSubheaderList.js", "bg": true}}
 
-## Inset List Item
+## Élément de la liste d'entrée (inset)
 
 The `inset` prop enables a list item that does not have a leading icon or avatar to align correctly with items that do.
 
 {{"demo": "pages/components/lists/InsetList.js", "bg": true}}
 
-## Liste virtualisée
+## Liste sans gouttière
 
 When rendering a list within a component that defines its own gutters, `ListItem` gutters can be disabled with `disableGutters`.
 
@@ -106,6 +96,12 @@ Dans l'exemple suivant, nous montrons comment utiliser [react-virtualized](https
 {{"demo": "pages/components/lists/VirtualizedList.js", "bg": true}}
 
 If this library doesn't cover your use case, you should consider using [react-virtualized](https://github.com/bvaughn/react-virtualized), then alternatives like [react-virtuoso](https://github.com/petyosi/react-virtuoso). The use of [react-window](https://github.com/bvaughn/react-window) when possible is encouraged.
+
+## Personnalisation
+
+Here are some examples of customizing the component. Vous pouvez en savoir plus dans la [page de documentation des overrides](/customization/how-to-customize/).
+
+🎨 Si vous cherchez de l'inspiration, vous pouvez consulter les [exemples de personnalisation de MUI Treasury](https://mui-treasury.com/styles/list-item).
 
 ## Personnalisation
 

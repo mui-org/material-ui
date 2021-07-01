@@ -28,7 +28,10 @@ export interface CheckboxProps
    * The color of the component. It supports those theme colors that make sense for this component.
    * @default 'primary'
    */
-  color?: OverridableStringUnion<'primary' | 'secondary' | 'default', CheckboxPropsColorOverrides>;
+  color?: OverridableStringUnion<
+    'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'default',
+    CheckboxPropsColorOverrides
+  >;
   /**
    * If `true`, the component is disabled.
    */

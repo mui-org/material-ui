@@ -1,40 +1,29 @@
 import * as React from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import { Theme } from '@material-ui/core/styles';
-import { withStyles, WithStyles } from '@material-ui/styles';
 import Paper from '../components/Paper';
 
-const styles = (theme: Theme) => ({
-  root: {
-    display: 'flex',
-    backgroundImage: 'url(/static/onepirate/appCurvyLines.png)',
-    backgroundRepeat: 'no-repeat',
-  },
-  paper: {
-    padding: theme.spacing(4, 3),
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(8, 6),
-    },
-  },
-});
-
-function AppForm(
-  props: WithStyles<typeof styles> & React.HTMLAttributes<HTMLDivElement>,
-) {
-  const { children, classes } = props;
+export default function AppForm(props: React.HTMLAttributes<HTMLDivElement>) {
+  const { children } = props;
 
   return (
-    <div className={classes.root}>
+    <Box
+      sx={{
+        display: 'flex',
+        backgroundImage: 'url(/static/onepirate/appCurvyLines.png)',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <Container maxWidth="sm">
         <Box sx={{ mt: 7, mb: 12 }}>
-          <Paper className={classes.paper} background="light">
+          <Paper
+            background="light"
+            sx={{ py: { xs: 4, md: 8 }, px: { xs: 3, md: 6 } }}
+          >
             {children}
           </Paper>
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 }
-
-export default withStyles(styles)(AppForm);

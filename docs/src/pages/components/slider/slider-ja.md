@@ -10,9 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#slider'
 
 <p class="description">スライダーを使用すると、ユーザーは値の範囲から選択できます。</p>
 
-[Sliders](https://material.io/design/components/sliders.html) reflect a range of values along a bar, from which users may select a single value. ボリューム、輝度などの設定を調整したり、画像フィルターを適用したりするのに理想的です。
-
-- 📦 [22 kB gzipped](/size-snapshot) (but only +8 kB when used together with other Material-UI components).
+[Sliders](https://material.io/design/components/sliders.html) reflect a range of values along a bar, from which users may select a single value. 音量、明るさ、画像フィルタの適用などの設定を調整するのに最適です。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -22,11 +20,15 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#slider'
 
 {{"demo": "pages/components/slider/ContinuousSlider.js"}}
 
+## サイズ
+
+小さいスライダーの場合は、`size="small"` を設定してください。
+
+{{"demo": "pages/components/slider/SliderSizes.js"}}
+
 ## 個別のスライダー
 
-個別のスライダーは、値インジケーターを参照することで特定の値に調整できます。 デモ順：
-
-`marks={true}`で各ステップのマークを生成できます。
+個別のスライダーは、値インジケーターを参照することで特定の値に調整できます。 `marks={true}`で各ステップのマークを生成できます。
 
 {{"demo": "pages/components/slider/DiscreteSlider.js"}}
 
@@ -44,7 +46,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#slider'
 
 ### Restricted values
 
-選択可能な値を、 `marks` prop with `step ={null}`で、提供される値に制限できます。
+`step={null}` を追加すると、選択可能な値を `marks` プロパティで指定した値に制限できます。
 
 {{"demo": "pages/components/slider/DiscreteSliderValues.js"}}
 
@@ -56,27 +58,41 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#slider'
 
 ## Range slider
 
-The slider can be used to set the start and end of a range by supplying an array of values to the `value` prop.
+スライダーを使用して、 `value` プロパティに値の配列を供給することで、範囲の開始と終了を設定できます。
 
 {{"demo": "pages/components/slider/RangeSlider.js"}}
 
+### Minimum distance
+
+`onChange` イベントハンドラー内の値の範囲を最小にするように強制できます。 デフォルトでは、あるつまみをドラッグしている途中に、別のつまみにポインタを移動すると、アクティブなつまみとホバリングしたつまみが入れ替わります。 `disableTouchListener` プロパティでこの機能を無効にできます。 最小距離に達した場合でも範囲を移動させたい場合は、 `onChange` で `activeThumb` パラメータを使います。
+
+{{"demo": "pages/components/slider/MinimumDistanceSlider.js"}}
+
 ## Slider with input field
 
-In this example an input allows a discrete value to be set.
+この例では、入力によって離散値を設定することができます。
 
 {{"demo": "pages/components/slider/InputSlider.js"}}
 
+## カラー
+
+{{"demo": "pages/components/slider/ColorSlider.js"}}
+
 ## Customized sliders
 
-コンポーネントのカスタマイズの例を次に示します。 詳細については、 [オーバーライドドキュメントページ](/customization/how-to-customize/)ご覧ください。
+コンポーネントのカスタマイズの例を次に示します。 詳細については、 [オーバーライドについてのドキュメント](/customization/how-to-customize/) を参照してください。
 
 {{"demo": "pages/components/slider/CustomizedSlider.js"}}
+
+### 音楽プレーヤー
+
+{{"demo": "pages/components/slider/MusicPlayerSlider.js"}}
 
 ## 垂直スライダー
 
 {{"demo": "pages/components/slider/VerticalSlider.js"}}
 
-**WARNING**: Chrome, Safari and newer Edge versions i.e. any browser based on WebKit exposes `<Slider orientation="vertical" />` as horizontal ([chromium issue #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217)). By applying `-webkit-appearance: slider-vertical;` the slider is exposed as vertical.
+**警告**: Chrome, Safari、および新しいEdgeバージョンなど WebKitをベースにしたすべてのブラウザでは、** ** `<Slider orientation="vertical" />` 水平方向([chromium issue #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217) )に公開されます。 By applying `-webkit-appearance: slider-vertical;` the slider is exposed as vertical.
 
 However, by applying `-webkit-appearance: slider-vertical;` keyboard navigation for horizontal keys (<kbd class="key">Arrow Left</kbd>, <kbd class="key">Arrow Right</kbd>) is reversed ([chromium issue #1162640](https://bugs.chromium.org/p/chromium/issues/detail?id=1162640)). Usually, up and right should increase and left and down should decrease the value. If you apply `-webkit-appearance` you could prevent keyboard navigation for horizontal arrow keys for a truly vertical slider. This might be less confusing to users compared to a change in direction.
 
@@ -84,29 +100,39 @@ However, by applying `-webkit-appearance: slider-vertical;` keyboard navigation 
 
 ## Track
 
-The track shows the range available for user selection.
+Trackは、ユーザーが選択可能な範囲を表示します。
 
 ### Removed track
 
-The track can be turned off with `track={false}`.
+`track={false}` でTrackをオフにできます。
 
 {{"demo": "pages/components/slider/TrackFalseSlider.js"}}
 
 ### Inverted track
 
-The track can be inverted with `track="inverted"`.
+`track="inverted"` でTrackを反転できます。
 
 {{"demo": "pages/components/slider/TrackInvertedSlider.js"}}
 
 ## Non-linear scale
 
-You can use the `scale` prop to represent the `value` on a different scale.
+`scale` プロパティを使用して、異なるスケールの `value` を表すことができます。
 
 In the following demo, the value _x_ represents the value _2^x_. Increasing _x_ by one increases the represented value by factor _2_.
 
 {{"demo": "pages/components/slider/NonLinearSlider.js"}}
 
-## Unstyled slider
+## Unstyled
+
+<!-- #default-branch-switch -->
+
+- 📦 [5.6 kB gzipped](https://bundlephobia.com/result?p=@material-ui/unstyled@next)
+
+The slider also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import SliderUnstyled from '@material-ui/unstyled/SliderUnstyled';
+```
 
 {{"demo": "pages/components/slider/UnstyledSlider.js"}}
 
@@ -114,7 +140,19 @@ In the following demo, the value _x_ represents the value _2^x_. Increasing _x_ 
 
 (WAI-ARIA: https://www.w3.org/TR/wai-aria-practices/#slider)
 
-コンポーネントは、アクセス可能にするために必要なほとんどの作業を処理します。 ただし、次の点を確認する必要があります。 ただし、次の点を確認する必要があります。 ただし、次の点を確認する必要があります。
+コンポーネントは、アクセス可能にするために必要なほとんどの作業を処理します。 ただし、次の点を確認する必要があります。
 
-- Each thumb has a user-friendly label (`aria-label`, `aria-labelledby` or `getAriaLabel` prop).
-- Each thumb has a user-friendly text for its current value. 値がラベルのセマンティクスと一致する場合、これは必要ありません。 この名前は、 `getAriaValueText`または`aria-valuetext`プロパティを使用して変更できます。
+- それぞれのつまみがユーザーフレンドリーなラベル(`aria-label`, `aria-labelledby` または `getAriaLabel` プロパティ)を持っていること
+- それぞれのつまみが、現在の値をユーザーフレンドリーなテキストで示していること。 値がラベルのセマンティクスと一致する場合、これは必要ありません。 この名前は、 `getAriaValueText`または`aria-valuetext`プロパティを使用して変更できます。
+
+## 制限事項
+
+### IE 11
+
+The slider's value label is not centered in IE 11. The alignement is not handled to make customizations easier with the lastest browsers. You can solve the issue with:
+
+```css
+.MuiSlider-valueLabel {
+  left: calc(-50% - 4px);
+}
+```

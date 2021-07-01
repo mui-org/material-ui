@@ -3,6 +3,7 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "value": "The <code>value</code> of the corresponding <code>Tab</code>. Must use the index of the <code>Tab</code> when no <code>value</code> was passed to <code>Tab</code>."
   },
   "classDescriptions": {

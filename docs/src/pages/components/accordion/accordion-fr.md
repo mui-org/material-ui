@@ -1,5 +1,5 @@
 ---
-title: React Accordion component
+title: Composant React Accordéon
 components: Accordion, AccordionActions, AccordionDetails, AccordionSummary
 githubLabel: 'component: Accordion'
 materialDesign: https://material.io/archive/guidelines/components/expansion-panels.html
@@ -10,7 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 <p class="description">L'accordéon contient le flux de création et permet la modification légère de ses éléments.</p>
 
-[Un panneau d'extension](https://material.io/archive/guidelines/components/expansion-panels.html) est un conteneur léger pouvant être autonome ou connecté à une surface plus grande, telle qu'une carte.
+Un [panneau d'extension](https://material.io/archive/guidelines/components/expansion-panels.html) est un conteneur léger pouvant être autonome ou connecté à une surface plus grande, telle qu'une carte.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -26,7 +26,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 {{"demo": "pages/components/accordion/ControlledAccordions.js", "bg": true}}
 
-## Customized accordions
+## Accordéon personnalisé
 
 Voici un exemple de personnalisation du composant. Vous pouvez en savoir plus dans la [page de documentation des overrides](/customization/how-to-customize/).
 

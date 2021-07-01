@@ -52,7 +52,13 @@ export default function PlainCssSlider() {
 **Note:** Most CSS-in-JS solutions inject their styles at the bottom of the HTML `<head>`, which gives Material-UI precedence over your custom styles. To remove the need for **!important**, you need to change the CSS injection order. Here's a demo of how it can be done in Material-UI:
 
 ```jsx
-Now you can override Material-UI's styles. import * as React from 'react';
+import * as React from 'react';
+import { StyledEngineProvider } from '@material-ui/core/styles';
+
+export default function GlobalCssPriority() {
+  return (
+    <StyledEngineProvider injectFirst>
+      {/* Your component tree. import * as React from 'react';
 import { StylesProvider } from '@material-ui/core';
 
 export default function GlobalCssPriority() {
@@ -68,17 +74,11 @@ export default function GlobalCssPriority() {
 
 ```jsx
 import * as React from 'react';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
+import { StylesProvider } from '@material-ui/core';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
-
-export default function PlainCssPriority() {
+export default function GlobalCssPriority() {
   return (
-    <CacheProvider value={cache}>
+    <StylesProvider injectFirst>
       {/* Your component tree. import * as React from 'react';
 import { StylesProvider } from '@material-ui/core';
 
@@ -86,7 +86,7 @@ export default function GlobalCssPriority() {
   return (
     <StylesProvider injectFirst>
       {/* Your component tree. */}
-    </CacheProvider>
+    </StylesProvider>
   );
 }
 ```
@@ -208,7 +208,13 @@ export default function GlobalCssSlider() {
 **Note:** Most CSS-in-JS solutions inject their styles at the bottom of the HTML `<head>`, which gives Material-UI precedence over your custom styles. To remove the need for **!important**, you need to change the CSS injection order. Here's a demo of how it can be done in Material-UI:
 
 ```jsx
-Now you can override Material-UI's styles. import * as React from 'react';
+import * as React from 'react';
+import { StyledEngineProvider } from '@material-ui/core/styles';
+
+export default function GlobalCssPriority() {
+  return (
+    <StyledEngineProvider injectFirst>
+      {/* Your component tree. import * as React from 'react';
 import { StylesProvider } from '@material-ui/core';
 
 export default function GlobalCssPriority() {
@@ -242,7 +248,7 @@ export default function GlobalCssPriority() {
   return (
     <StylesProvider injectFirst>
       {/* Your component tree. */}
-    </CacheProvider>
+    </StylesProvider>
   );
 }
 ```
@@ -287,13 +293,13 @@ export default function GlobalCssSliderDeep() {
 
 ## Styled Components
 
-![estrellas](https://img.shields.io/github/stars/styled-components/styled-components.svg?style=social&label=Star) ![npm](https://img.shields.io/npm/dm/styled-components.svg?)
+![estrellas](https://img.shields.io/github/stars/styled-components/styled-components.svg?style=social&label=Star) ![npm](https://img.shields.io/npm/dm/styled-components.svg)
 
 ### Change the default styled engine
 
 By default, Material-UI components come with emotion as their style engine. If, however, you would like to use `styled-components`, you can configure your app by following this [example project](https://github.com/mui-org/material-ui/blob/next/examples/create-react-app-with-styled-components). Following this approach reduces the bundle size, and removes the need to configure the CSS injection order.
 
-After the style engine is configured properly, you can use the `styled()` utility from `@material-ui/core/styles` and have direct access to the theme.
+After the style engine is configured properly, you can use the [`styled()`](/customization/styled/) utility from `@material-ui/core/styles` and have direct access to the theme.
 
 {{"demo": "pages/guides/interoperability/StyledComponents.js", "hideToolbar": true}}
 
@@ -323,34 +329,7 @@ If you attempt to style the Slider, you will likely need to affect some of the S
 
 The following examples override the slider's `thumb` style in addition to the custom styles on the slider itself.
 
-{{"demo": "pages/guides/interoperability/StyledComponentsDeep.js", "defaultCodeOpen": false}}
-
-```jsx
-import * as React from 'react';
-import Slider from '@material-ui/core/Slider';
-import { styled } from '@material-ui/core/styles';
-
-const CustomizedSlider = styled(Slider)`
-  color: #20b2aa;
-
-  :hover {
-    color: #2e8b57;
-  }
-
-  & .MuiSlider-thumb {
-    border-radius: 1px;
-  }
-`;
-
-export default function StyledComponentsDeep1() {
-  return (
-    <div>
-      <Slider defaultValue={30} />
-      <CustomizedSlider defaultValue={30} />
-    </div>
-  );
-}
-```
+{{"demo": "pages/guides/interoperability/StyledComponentsDeep.js", "defaultCodeOpen": true}}
 
 The above demo relies on the [default `className` values](/styles/advanced/#with-material-ui-core), but you can provide your own class name with the `componentsProps` API.
 
@@ -407,7 +386,26 @@ const CustomizedSlider = styled(Slider)(
 
 ### Portals
 
-TODO: fill this section after the portal is implemented with the new styled engine.
+The [Portal](/components/portal/) provides a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component. Because of the way styled-components scopes its CSS, you may run into issues where styling is not applied.
+
+For example, if you attempt to style the `tooltip` generated by the [Tooltip](/components/tooltip/) component, you will need to pass along the `className` property to the element being rendered outside of it's DOM hierarchy. The following example shows a workaround:
+
+```jsx
+import * as React from 'react';
+import { styled } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+
+const StyledTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))`
+  & .MuiTooltip-tooltip {
+    background: navy;
+  }
+`;
+```
+
+{{"demo": "pages/guides/interoperability/StyledComponentsPortal.js"}}
 
 ## CSS Modules
 
@@ -454,7 +452,13 @@ export default function CssModulesSlider() {
 **Note:** Most CSS-in-JS solutions inject their styles at the bottom of the HTML `<head>`, which gives Material-UI precedence over your custom styles. To remove the need for **!important**, you need to change the CSS injection order. Here's a demo of how it can be done in Material-UI:
 
 ```jsx
-Now you can override Material-UI's styles. import * as React from 'react';
+import * as React from 'react';
+import { StyledEngineProvider } from '@material-ui/core/styles';
+
+export default function GlobalCssPriority() {
+  return (
+    <StyledEngineProvider injectFirst>
+      {/* Your component tree. import * as React from 'react';
 import { StylesProvider } from '@material-ui/core';
 
 export default function GlobalCssPriority() {
@@ -488,7 +492,7 @@ export default function GlobalCssPriority() {
   return (
     <StylesProvider injectFirst>
       {/* Your component tree. */}
-    </CacheProvider>
+    </StylesProvider>
   );
 }
 ```
@@ -579,39 +583,13 @@ export default function CssModulesSliderDeep2() {
 
 ## Emotion
 
-![estrellas](https://img.shields.io/github/stars/emotion-js/emotion.svg?style=social&label=Star) ![npm](https://img.shields.io/npm/dm/emotion.svg?)
+![estrellas](https://img.shields.io/github/stars/emotion-js/emotion.svg?style=social&label=Star) ![npm](https://img.shields.io/npm/dm/@emotion/react.svg)
 
 ### The `css` prop
 
 Emotion's **css()** method works seamlessly with Material-UI.
 
-{{"demo": "pages/guides/interoperability/EmotionCSS.js", "hideToolbar": true}}
-
-[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/emotion-interoperability-idymy)
-
-```jsx
-/** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import Slider from '@material-ui/core/Slider';
-
-export default function EmotionCSS() {
-  return (
-    <div>
-      <Slider defaultValue={30} />
-      <Slider
-        defaultValue={30}
-        css={css`
-          color: #20b2aa;
-
-          :hover {
-            color: #2e8b57;
-          }
-        `}
-      />
-    </div>
-  );
-}
-```
+{{"demo": "pages/guides/interoperability/EmotionCSS.js", "defaultCodeOpen": true}}
 
 ### Tema
 

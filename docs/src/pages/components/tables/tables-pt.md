@@ -28,7 +28,9 @@ Uma tabela de dados contém uma linha de cabeçalho no topo que lista os nomes d
 
 O componente `Table` tem um mapeamento próximo dos elementos nativos de `<table>`. Este requisito torna a construção de tabelas de dados ricas e desafiadora.
 
-O [componente `DataGrid`](/components/data-grid/) é projetado para situações de uso que focam em torno da manipulação de uma grande quantidade de dados tabulares. Enquanto vem com uma estrutura mais rígida, em troca, você ganha recursos poderosos.
+The [`DataGrid` component](/components/data-grid/) is designed for use-cases that are focused on handling large amounts of tabular data. Enquanto vem com uma estrutura mais rígida, em troca, você ganha recursos poderosos.
+
+{{"demo": "pages/components/tables/DataTable.js", "bg": "inline"}}
 
 ## Tabela Simples
 
@@ -72,9 +74,9 @@ A propriedade `Action` do componente `TablePagination` permite a implementação
 
 {{"demo": "pages/components/tables/CustomPaginationActionsTable.js", "bg": true}}
 
-## Cabeçalho fixo
+## Sticky header
 
-Um exemplo de uma tabela com linhas roláveis e cabeçalhos de coluna fixos. Ela se aproveita da propriedade `stickyHeader`.<br /> (⚠️ sem suporte no IE11)
+Here is an example of a table with scrollable rows and fixed column headers. It leverages the `stickyHeader` prop. (⚠️ no IE 11 support)
 
 {{"demo": "pages/components/tables/StickyHeadTable.js", "bg": true}}
 

@@ -1,5 +1,5 @@
 ---
-title: React ButtonGroup component
+title: React ButtonGroup コンポーネント
 components: Button, ButtonGroup
 githubLabel: 'component: ButtonGroup'
 ---
@@ -12,25 +12,31 @@ githubLabel: 'component: ButtonGroup'
 
 ## 基本的なbutton group
 
-The standard Button variants are supported.
+The buttons can be grouped by wrapping them with the `ButtonGroup` component. They need to be immediate children.
 
 {{"demo": "pages/components/button-group/BasicButtonGroup.js"}}
 
+## Button variants
+
+All the standard button variants are supported.
+
+{{"demo": "pages/components/button-group/VariantButtonGroup.js"}}
+
 ## サイズと色
 
-The `size` and `color` props can be used to control the appearance of the ButtonGroup.
+The `size` and `color` props can be used to control the appearance of the button group.
 
 {{"demo": "pages/components/button-group/GroupSizesColors.js"}}
 
 ## 縦のグループ
 
-The ButtonGroup can be displayed veritcally using the `orientation` prop.
+The button group can be displayed vertically using the `orientation` prop.
 
 {{"demo": "pages/components/button-group/GroupOrientation.js"}}
 
 ## Split button
 
-`ButtonGroup` で分割したボタンを作成することも可能です。 この例のようにドロップダウンでボタンの動作を変更することも、関連する動作をすぐに起動するために使用することもできます。 この例のようにドロップダウンでボタンの動作を変更することも、関連する動作をすぐに起動するために使用することもできます。
+`ButtonGroup` で分割したボタンを作成することも可能です。 この例のようにドロップダウンでボタンの動作を変更することも、関連する動作をすぐに起動するために使用することもできます。 The dropdown can change the button action (as in this example) or be used to immediately trigger a related action.
 
 {{"demo": "pages/components/button-group/SplitButton.js"}}
 

@@ -22,7 +22,7 @@ function createTheme(options = {}, ...args) {
       components: {}, // Inject component definitions.
       palette: { mode: 'light', ...paletteInput },
       spacing,
-      shape: { ...shape, shapeInput },
+      shape: { ...shape, ...shapeInput },
     },
     other,
   );

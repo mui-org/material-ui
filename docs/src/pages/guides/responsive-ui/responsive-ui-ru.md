@@ -8,4 +8,3 @@
 - [Container](/components/container/): Контейнер центрирует ваш контент по горизонтали. Это базовый элемент всех макетов.
 - [Breakpoints](/customization/breakpoints/): API, позволяющий использовать контрольные точки в широком диапазоне контекстов.
 - [useMediaQuery](/components/use-media-query/): Это хук медиа-запроса для React. Он ожидает(слушает) совпадения с медиа-запросом CSS.
-- [Hidden](/components/hidden/): Быстро и оперативно управляет видимостью компонентов.

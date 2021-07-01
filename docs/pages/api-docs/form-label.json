@@ -2,7 +2,12 @@
   "props": {
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" } },
-    "color": { "type": { "name": "enum", "description": "'primary'<br>&#124;&nbsp;'secondary'" } },
+    "color": {
+      "type": {
+        "name": "enum",
+        "description": "'error'<br>&#124;&nbsp;'info'<br>&#124;&nbsp;'primary'<br>&#124;&nbsp;'secondary'<br>&#124;&nbsp;'success'<br>&#124;&nbsp;'warning'"
+      }
+    },
     "component": { "type": { "name": "elementType" } },
     "disabled": { "type": { "name": "bool" } },
     "error": { "type": { "name": "bool" } },

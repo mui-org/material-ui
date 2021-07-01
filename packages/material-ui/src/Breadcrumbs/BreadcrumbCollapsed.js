@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { emphasize } from '@material-ui/system';
 import styled from '../styles/styled';
-import { emphasize } from '../styles/colorManipulator';
 import MoreHorizIcon from '../internal/svg-icons/MoreHoriz';
 import ButtonBase from '../ButtonBase';
 

@@ -6,6 +6,7 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "height": "Height of the skeleton. Useful when you don&#39;t want to adapt the skeleton to a text element but for instance a card.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "variant": "The type of content that will be rendered.",
     "width": "Width of the skeleton. Useful when the skeleton is inside an inline element with no width of its own."
   },

@@ -5,8 +5,10 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "collapsedSize": "The width (horizontal) or height (vertical) of the container when collapsed.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
+    "easing": "The transition timing function. You may specify a single easing or a object containing enter and exit values.",
     "in": "If <code>true</code>, the component will transition in.",
     "orientation": "The collapse transition orientation.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "timeout": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.<br>Set to &#39;auto&#39; to automatically calculate transition time based on height."
   },
   "classDescriptions": {

@@ -1,11 +1,78 @@
+import { promises as fs } from 'fs';
 import path from 'path';
+import zlib from 'zlib';
+import { promisify } from 'util';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import replace from '@rollup/plugin-replace';
 import nodeGlobals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+
+const gzip = promisify(zlib.gzip);
+
+/**
+ * @param {{snapshotPath: string}} options
+ * @returns {import('rollup').Plugin}
+ */
+function sizeSnapshot(options) {
+  const snapshotPath = path.resolve(options.snapshotPath);
+
+  /**
+   * @param {number} size
+   */
+  function formatSize(size) {
+    return size.toLocaleString(undefined, { style: 'unit', unit: 'byte', unitDisplay: 'short' });
+  }
+  async function computeGzipSize(string) {
+    const gzipped = await gzip(string);
+    return gzipped.length;
+  }
+
+  return {
+    name: 'size-snapshot',
+    async renderChunk(rawCode, chunk, outputOptions) {
+      const code = rawCode.replace(/\r/g, '');
+      const gzippedSize = await computeGzipSize(code);
+
+      const sizes = {
+        minified: code.length,
+        gzipped: gzippedSize,
+      };
+
+      const prettyMinified = formatSize(sizes.minified);
+      const prettyGzipped = formatSize(sizes.gzipped);
+      const infoString =
+        '\n' +
+        `Computed sizes of "${chunk.fileName}" with "${outputOptions.format}" format\n` +
+        `  browser parsing size: ${prettyMinified}\n` +
+        `  download size (gzipped): ${prettyGzipped}\n`;
+
+      // eslint-disable-next-line no-console -- purpose of this plugin
+      console.info(infoString);
+      // TODO: Should lock `snapshotPath` since something else might write to `snapshotPath` between read and write
+      const snapshotContent = await fs.readFile(snapshotPath, { encoding: 'utf-8' }).then(
+        (json) => {
+          return JSON.parse(json);
+        },
+        () => {
+          return {};
+        },
+      );
+      await fs.writeFile(
+        snapshotPath,
+        JSON.stringify(
+          {
+            ...snapshotContent,
+            [chunk.fileName]: sizes,
+          },
+          null,
+          2,
+        ),
+      );
+    },
+  };
+}
 
 // Resolve imports like:
 // import Portal from '@material-ui/unstyled/Portal';
@@ -154,8 +221,8 @@ export default [
       commonjs(commonjsOptions),
       nodeGlobals(), // Wait for https://github.com/cssinjs/jss/pull/893
       replace({ preventAssignment: true, 'process.env.NODE_ENV': JSON.stringify('production') }),
-      sizeSnapshot({ snapshotPath: 'size-snapshot.json' }),
       terser(),
+      sizeSnapshot({ snapshotPath: 'size-snapshot.json' }),
     ],
   },
 ];

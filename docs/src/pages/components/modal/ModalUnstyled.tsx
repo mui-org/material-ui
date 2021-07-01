@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { styled } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+import { styled, Box } from '@material-ui/system';
 import ModalUnstyled from '@material-ui/unstyled/ModalUnstyled';
 
 const StyledModal = styled(ModalUnstyled)`

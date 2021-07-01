@@ -15,9 +15,7 @@ materialDesign: https://material.io/components/text-fields
 
 ## TextField
 
-Le composant d'encapsulation `TextField` est un contrôle de formulaire complet comprenant une étiquette, une entrée et un texte d'aide.
-
-It supports standard, outlined and filled styling.
+Le composant d'encapsulation `TextField` est un contrôle de formulaire complet comprenant une étiquette, une entrée et un texte d'aide. It comes with three variants: outlined (default), filled, and standard.
 
 {{"demo": "pages/components/text-fields/BasicTextFields.js"}}
 
@@ -25,13 +23,13 @@ It supports standard, outlined and filled styling.
 
 ## Form props
 
-Standard form attributes are supported e.g. `required`, `disabled`, `type`, etc. as well as a `helperText` which is used to give context about a field's input, such as how the input will be used.
+**Note:** The standard variant of the `TextField` is no longer documented in the [Material Design guidelines](https://material.io/) ([here's why](https://medium.com/google-design/the-evolution-of-material-designs-text-fields-603688b3fe03)), but Material-UI will continue to support it.
 
 {{"demo": "pages/components/text-fields/FormPropsTextFields.js"}}
 
 ## Validation
 
-The `error` prop toggles the error state, the `helperText` prop can then be used to provide feedback to the user about the error.
+The `error` prop toggles the error state. The `error` prop toggles the error state, the `helperText` prop can then be used to provide feedback to the user about the error.
 
 {{"demo": "pages/components/text-fields/ValidationTextFields.js"}}
 
@@ -55,7 +53,7 @@ There are multiple ways to display an icon with a text field.
 
 ### Ornements d'input
 
-The main way is with an `InputAdornment`. Par exemple, vous pouvez utiliser un bouton icône pour masquer ou révéler le mot de passe. This can be used to add a prefix, a suffix or an action to an input.
+The main way is with an `InputAdornment`. This can be used to add a prefix, a suffix or an action to an input. This can be used to add a prefix, a suffix or an action to an input.
 
 {{"demo": "pages/components/text-fields/InputAdornments.js"}}
 
@@ -71,13 +69,17 @@ The `filled` variant input height can be further reduced by rendering the label 
 
 ## Disposition
 
-`dense` and `normal` alter other styles to meet the specification. `margin` prop can be used to alter the vertical spacing of inputs. Using `none` (default) will not apply margins to the `FormControl`, whereas `dense` and `normal` will.
-
-`fullWidth` can be used to make the input take up the full width of its container.
+`margin` prop can be used to alter the vertical spacing of inputs. Using `none` (default) will not apply margins to the `FormControl`, whereas `dense` and `normal` will.
 
 {{"demo": "pages/components/text-fields/LayoutTextFields.js"}}
 
-## Uncontrolled vs Controlled
+## Full width
+
+`fullWidth` can be used to make the input take up the full width of its container.
+
+{{"demo": "pages/components/text-fields/FullWidthTextField.js"}}
+
+## Composants
 
 The component can be controlled or uncontrolled.
 
@@ -87,7 +89,7 @@ The component can be controlled or uncontrolled.
 
 `TextField` est composé d'éléments plus petits ( [`FormControl`](/api/form-control/), [`Input`](/api/input/), [`FilledInput`](/api/filled-input/), [`InputLabel`](/api/input-label/), [`OutlinedInput`](/api/outlined-input/), et [`FormHelperText`](/api/form-helper-text/) ) que vous pouvez utiliser directement pour personnaliser de manière significative vos entrées de formulaire.
 
-Vous avez peut-être également remarqué que certaines propriétés d'entrée HTML natives sont absentes du composant `TextField`. C'est intentionnel. Le composant prend en charge les propriétés les plus utilisées, puis il appartient à l'utilisateur d'utiliser le composant sous-jacent présenté dans la démonstration suivante. Néanmoins, vous pouvez utiliser `inputProps` (et `InputProps`, `InputLabelProps` propriétés) pour aller plus vite.
+Vous avez peut-être également remarqué que certaines propriétés d'entrée HTML natives sont absentes du composant `TextField`. C'est intentionnel. The component takes care of the most used properties. Le composant prend en charge les propriétés les plus utilisées, puis il appartient à l'utilisateur d'utiliser le composant sous-jacent présenté dans la démonstration suivante. Néanmoins, vous pouvez utiliser `inputProps` (et `InputProps`, `InputLabelProps` propriétés) pour aller plus vite.
 
 {{"demo": "pages/components/text-fields/ComposedTextField.js"}}
 
@@ -107,11 +109,46 @@ Here are some examples of customizing the component. Vous pouvez en savoir plus 
 
 {{"demo": "pages/components/text-fields/CustomizedInputs.js"}}
 
-La personnalisation ne se limite pas aux CSS, vous pouvez utiliser la composition pour créer des composants personnalisés et donner à votre application une sensation unique. Voici un exemple utilisant le composant [`InputBase`](/api/input-base/), inspiré de Google Maps.
+Customization does not stop at CSS. La personnalisation ne se limite pas aux CSS, vous pouvez utiliser la composition pour créer des composants personnalisés et donner à votre application une sensation unique. Voici un exemple utilisant le composant [`InputBase`](/api/input-base/), inspiré de Google Maps.
 
 {{"demo": "pages/components/text-fields/CustomizedInputBase.js", "bg": true}}
 
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/styles/text-field).
+
+## `useFormControl`
+
+For advanced customization use cases, a `useFormControl()` hook is exposed. This hook returns the context value of the parent `FormControl` component.
+
+**API**
+
+```jsx
+import { useFormControl } from '@material-ui/core/FormControl';
+```
+
+**Valeur de retour**
+
+`value` (_Object_):
+
+- Allowing certain non-numeric characters ('e', '+', '-', '.') and silently discarding others and silently discarding others and silently discarding others
+- Si vous composez le composant:
+- `value.color` (_string_): The theme color is being used, inherited from `FormControl` `color` prop .
+- `value.disabled` (_bool_): Indicate whether the component is being displayed in a disabled state, inherited from `FormControl` `disabled` prop.
+- `value.error` (_bool_): Indicate whether the component is being displayed in an error state, inherited from `FormControl` `error` prop
+- `value.filled` (_bool_): Indicate whether input is filled
+- `value.focused` (_bool_): Indicate whether the component and its children are being displayed in a focused state
+- `value.fullWidth` (_bool_): Indicate whether the component is taking up the full width of its container, inherited from `FormControl` `fullWidth` prop
+- `value.hiddenLabel` (_bool_): Indicate whether the label is being hidden, inherited from `FormControl` `hiddenLabel` prop
+- `value.required` (_bool_): Indicate whether the label is indicating that the input is required input, inherited from the `FormControl` `required` prop
+- `value.size` (_string_): The size of the component, inherited from the `FormControl` `size` prop
+- `value.variant` (_string_): The variant is being used by the `FormControl` component and its children, inherited from `FormControl` `variant` prop
+- `value.onBlur` (_func_): Should be called when the input is blurred
+- `value.onFocus` (_func_): Should be called when the input is focused
+- `value.onEmpty` (_func_): Should be called when the input is emptied
+- `value.onFilled` (_func_): Should be called when the input is filled
+
+**Exemple**
+
+{{"demo": "pages/components/text-fields/UseFormControl.js"}}
 
 ## Limites
 
@@ -135,13 +172,13 @@ ou
 
 ### Floating label
 
-The floating label is absolutely positioned, it won't impact the layout of the page. You need to make sure that the input is larger than the label to display correctly.
+The floating label is absolutely positioned. The floating label is absolutely positioned, it won't impact the layout of the page. You need to make sure that the input is larger than the label to display correctly.
 
 ### type="number"
 
 Inputs of type="number" have potential usability issues:
 
-- Allowing certain non-numeric characters ('e', '+', '-', '.') and silently discarding others and silently discarding others and silently discarding others
+- Allowing certain non-numeric characters ('e', '+', '-', '.') and silently discarding others and silently discarding others and silently discarding others and silently discarding others
 - Si vous composez le composant:
 
 and more - see [this article](https://technology.blog.gov.uk/2020/02/24/why-the-gov-uk-design-system-team-changed-the-input-type-for-numbers/) by the GOV.UK Design System team for a more detailed explanation.

@@ -44,7 +44,7 @@
   - **[Inset（内凹分隔线）](https://material.io/design/components/dividers.html#types) ✓**
   - **[Middle（中段分隔线）](https://material.io/design/components/dividers.html#types) ✓**
   - **[Subheader（副标题分隔线）](https://material.io/design/components/dividers.html#types) ✓**
-- ****[Image lists](https://material.io/design/components/image-lists.html) ✓** (又名 Grid Lists)******
+- **[Image lists](https://material.io/design/components/image-lists.html) ✓** (又名 Grid Lists)********
 - **[Lists（列表）](https://material.io/design/components/lists.html) ✓**
   - [类型:](https://material.io/design/components/lists.html#types)
     - **Single line （单行）✓**

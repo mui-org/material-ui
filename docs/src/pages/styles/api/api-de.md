@@ -8,11 +8,11 @@ Eine Funktion, die eine [Klassennamengeneratorfunktion](https://cssinjs.org/jss-
 
 ### Parameter
 
-1. `options` (*Object* [optional]):
+1. `options` (_object_ [optional]):
 
-   - `options.disableGlobal` (*Boolean* [optional]): Standardeinstellung ist `false`. Deaktivieren Sie die Generierung deterministischer Klassennamen.
-   - `options.productionPrefix` (*String* [optional]): Standardeinstellung ist `'jss'`. Ein String, der den Klassennamen in der Produktion vorangestellt wird.
-   - `options.seed` (*String* [optional]): Standardeinstellung ist `''`. Der String, mit der der Generator eindeutig identifiziert wird. Dies kann verwendet werden, um Klassennamenskollisionen bei Verwendung mehrerer Generatoren in einem Dokument zu vermeiden.
+   - `options.disableGlobal` (_bool_ [optional]): Defaults to `false`. Deaktivieren Sie die Generierung deterministischer Klassennamen.
+   - `options.productionPrefix` (*string* [optional]): Standardeinstellung ist `'jss'`. Ein String, der den Klassennamen in der Produktion vorangestellt wird.
+   - `options.seed` (*string* [optional]): Standardeinstellung ist `''`. Der String, mit der der Generator eindeutig identifiziert wird. Dies kann verwendet werden, um Klassennamenskollisionen bei Verwendung mehrerer Generatoren in einem Dokument zu vermeiden.
 
 ### Rückgabewerte
 
@@ -22,7 +22,7 @@ Eine Funktion, die eine [Klassennamengeneratorfunktion](https://cssinjs.org/jss-
 
 ```jsx
 import * as React from 'react';
-import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
@@ -39,7 +39,7 @@ Diese Funktion "macht zur Laufzeit nicht wirklich etwas", es ist nur die Identit
 
 ### Parameter
 
-1. `styles` (*Object*): A styles object.
+1. `styles` (_object_): A styles object.
 
 ### Rückgabewerte
 
@@ -48,7 +48,8 @@ Diese Funktion "macht zur Laufzeit nicht wirklich etwas", es ist nur die Identit
 ### Beispiele
 
 ```jsx
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -56,9 +57,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
+const theme = createTheme();
+
 export default function MyComponent {
   const classes = useStyles();
-  return <div className={classes.root} />;
+  return <ThemeProvider theme={theme}><div className={classes.root} /></ThemeProvider>;
 }
 ```
 
@@ -69,11 +72,11 @@ Verknüpfen Sie ein Stylesheet mit einer Funktionskomponente mit dem **Hook** Mu
 ### Parameter
 
 1. `styles` (* Function | Object *): Eine Funktion, die die Stile oder ein Stilobjekt generiert. Es wird mit der Komponente verknüpft. Verwenden Sie die Funktionssignatur, wenn Sie Zugriff auf das Theme benötigen. Es ist das erste Argument.
-2. `options` (*Object* [optional]):
+2. `options` (_object_ [optional]):
 
-- `options.defaultTheme` (*Object* [optional]): Das Standarddesign, das verwendet werden soll, wenn ein Theme nicht über einen Theme Provider bereitgestellt wird.
-- `options.name` (*String* [optional]): Der Name des Stylesheets. Nützlich zum Debuggen.
-- `options.flip` (*Boolean* [optional]): Wenn auf `false` gestellt, wird die `Rechts-Nach-Links` Transformation deaktiviert. Wenn es `true` ist sind die Stile invertiert. Wenn es `null` ist, folgt es der `theme.direction` Einstellung.
+- `options.defaultTheme` (*object* [optional]): Das Standarddesign, das verwendet werden soll, wenn ein Theme nicht über einen Theme Provider bereitgestellt wird.
+- `options.name` (*string* [optional]): Der Name des Stylesheets. Nützlich zum Debuggen.
+- `options.flip` (_bool_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. Wenn es `true` ist sind die Stile invertiert. Wenn es `null` ist, folgt es der `theme.direction` Einstellung.
 - Die anderen Schlüssel werden an das Optionsargument [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet) weitergeleitet.
 
 ### Rückgabewerte
@@ -84,12 +87,12 @@ Verknüpfen Sie ein Stylesheet mit einer Funktionskomponente mit dem **Hook** Mu
 
 ```jsx
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   root: {
     backgroundColor: 'red',
-    color: props => props.color,
+    color: (props) => props.color,
   },
 });
 
@@ -105,7 +108,7 @@ Dies ist ein Klassenhelfer für das serverseitige Rendering. [You can follow thi
 
 ```jsx
 import ReactDOMServer from 'react-dom/server';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ServerStyleSheets } from '@material-ui/styles';
 
 const sheets = new ServerStyleSheets();
 const html = ReactDOMServer.renderToString(sheets.collect(<App />));
@@ -126,7 +129,7 @@ const response = `
 
 Die Instantiierung akzeptiert ein Optionsobjekt als erstes Argument.
 
-1. `options` (*Objekt * [optional]): Die Optionen werden als Eigenschaften an die [`StylesProvider`](#stylesprovider) Komponente verteilt.
+1. `options` (_object_ [optional]): The options are spread as props to the [`StylesProvider`](#stylesprovider) component.
 
 ### `sheets.collect(node) => React element`
 
@@ -152,12 +155,12 @@ Verknüpfen Sie ein Stylesheet mit einer Funktionskomponente mit dem **styled co
 
 1. `Component`: Die Komponente, die verpackt wird.
 2. `styles` (* Function | Object *): Eine Funktion, die die Stile oder ein Stilobjekt generiert. Es wird mit der Komponente verknüpft. Verwenden Sie die Funktionssignatur, wenn Sie Zugriff auf das Theme benötigen. Es wird als Eigenschaft des ersten Arguments bereitgestellt.
-3. `options` (*Object* [optional]):
+3. `options` (_object_ [optional]):
 
-- `options.defaultTheme` (*Object* [optional]): Das Standarddesign, das verwendet werden soll, wenn ein Theme nicht über einen Theme Provider bereitgestellt wird.
-- `options.withTheme` (*Boolean* [optional]): Standardeinstellung ist `false`. Übergeben Sie das `Theme` Objekt als Eigenschaft an die Komponente.
-- `options.name` (*String* [optional]): Der Name des Stylesheets. Nützlich zum Debuggen. Wenn der Wert nicht angegeben wird, wird versucht, auf den Namen der Komponente zurückzugreifen.
-- `options.flip` (*Boolean* [optional]): Wenn auf `false` gestellt, wird die `Rechts-Nach-Links` Transformation deaktiviert. Wenn es `true` ist sind die Stile invertiert. Wenn es `null` ist, folgt es der `theme.direction` Einstellung.
+- `options.defaultTheme` (*object* [optional]): Das Standarddesign, das verwendet werden soll, wenn ein Theme nicht über einen Theme Provider bereitgestellt wird.
+- `options.withTheme` (_bool_ [optional]): Defaults to `false`. Übergeben Sie das `Theme` Objekt als Eigenschaft an die Komponente.
+- `options.name` (*string* [optional]): Der Name des Stylesheets. Nützlich zum Debuggen. Wenn der Wert nicht angegeben wird, wird versucht, auf den Namen der Komponente zurückzugreifen.
+- `options.flip` (_bool_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. Wenn es `true` ist sind die Stile invertiert. Wenn es `null` ist, folgt es der `theme.direction` Einstellung.
 - Die anderen Schlüssel werden an das Optionsargument [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet) weitergeleitet.
 
 ### Rückgabewerte
@@ -168,23 +171,26 @@ Verknüpfen Sie ein Stylesheet mit einer Funktionskomponente mit dem **styled co
 
 ```jsx
 import * as React from 'react';
-import { styled } from '@material-ui/core/styles';
+import { styled, ThemeProvider } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles';
 
 const MyComponent = styled('div')({
   backgroundColor: 'red',
 });
 
-const MyThemeComponent = styled('div')(({
-  theme
-}) => ({
+const MyThemeComponent = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
+const theme = createTheme();
+
 export default function StyledComponents() {
   return (
-    <MyThemeComponent>
-      <MyComponent />
-    </MyThemeComponent>
+    <ThemeProvider theme={theme}>
+      <MyThemeComponent>
+        <MyComponent />
+      </MyThemeComponent>
+    <ThemeProvider>
   );
 }
 ```
@@ -210,12 +216,10 @@ Es sollte vorzugsweise an der **Wurzel Ihres Komponentenbaums** verwendet werden
 ```jsx
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { StylesProvider } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/styles';
 
 function App() {
-  return (
-    <StylesProvider jss={jss}>...</StylesProvider>
-  );
+  return <StylesProvider jss={jss}>...</StylesProvider>;
 }
 
 ReactDOM.render(<App />, document.querySelector('#app'));
@@ -279,18 +283,17 @@ Einige Implementierungsdetails, die interessant sein könnten:
 
 - Es fügt eine `classes` Eigenschaft hinzu, damit Sie die injizierten Klassennamen von außen überschreiben können.
 - Leitet die innere Komponente mit Ref weiter.
-- Die `innerRef` Eigenschaft ist veraltet. Verwenden Sie `ref` stattdessen.
-- Es wird **keine** Statik rüberkopiert. Es kann zum Beispiel verwendet werden, um eine `getInitialProps()` als statische Methode zu definieren (next.js).
+- It does **not** copy over statics. For instance, it can be used to define a `getInitialProps()` static method (next.js).
 
 ### Parameter
 
 1. `styles` (* Function | Object *): Eine Funktion, die die Stile oder ein Stilobjekt generiert. Es wird mit der Komponente verknüpft. Verwenden Sie die Funktionssignatur, wenn Sie Zugriff auf das Theme benötigen. Es ist das erste Argument.
-2. `options` (*Object* [optional]):
+2. `options` (_object_ [optional]):
 
-- `options.defaultTheme` (*Object* [optional]): Das Standarddesign, das verwendet werden soll, wenn ein Theme nicht über einen Theme Provider bereitgestellt wird.
-- `options.withTheme` (*Boolean* [optional]): Standardeinstellung ist `false`. Übergeben Sie das `Theme` Objekt als Eigenschaft an die Komponente.
-- `options.name` (*String* [optional]): Der Name des Stylesheets. Nützlich zum Debuggen. Wenn der Wert nicht angegeben wird, wird versucht, auf den Namen der Komponente zurückzugreifen.
-- `options.flip` (*Boolean* [optional]): Wenn auf `false` gestellt, wird die `Rechts-Nach-Links` Transformation deaktiviert. Wenn es `true` ist sind die Stile invertiert. Wenn es `null` ist, folgt es der `theme.direction` Einstellung.
+- `options.defaultTheme` (*object* [optional]): Das Standarddesign, das verwendet werden soll, wenn ein Theme nicht über einen Theme Provider bereitgestellt wird.
+- `options.withTheme` (_bool_ [optional]): Defaults to `false`. Übergeben Sie das `Theme` Objekt als Eigenschaft an die Komponente.
+- `options.name` (*string* [optional]): Der Name des Stylesheets. Nützlich zum Debuggen. Wenn der Wert nicht angegeben wird, wird versucht, auf den Namen der Komponente zurückzugreifen.
+- `options.flip` (_bool_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. Wenn es `true` ist sind die Stile invertiert. Wenn es `null` ist, folgt es der `theme.direction` Einstellung.
 - Die anderen Schlüssel werden an das Optionsargument [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet) weitergeleitet.
 
 ### Rückgabewerte
@@ -301,7 +304,7 @@ Einige Implementierungsdetails, die interessant sein könnten:
 
 ```jsx
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = {
   root: {
@@ -320,7 +323,7 @@ Sie können auch so als [Dekorateur](https://babeljs.io/docs/en/babel-plugin-pro
 
 ```jsx
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = {
   root: {
@@ -330,12 +333,12 @@ const styles = {
 
 @withStyles(styles)
 class MyComponent extends React.Component {
-  render () {
+  render() {
     return <div className={this.props.classes.root} />;
   }
 }
 
-export default MyComponent
+export default MyComponent;
 ```
 
 ## `withTheme(Component) => Component`

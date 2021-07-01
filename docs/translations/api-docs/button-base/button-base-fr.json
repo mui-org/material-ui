@@ -11,6 +11,7 @@
     "disableTouchRipple": "If <code>true</code>, the touch ripple effect is disabled.",
     "focusRipple": "If <code>true</code>, the base button will have a keyboard focus ripple.",
     "focusVisibleClassName": "This prop can help identify which element has keyboard focus. The class name will be applied when the element gains the focus through keyboard interaction. It&#39;s a polyfill for the <a href=\"https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo\">CSS :focus-visible selector</a>. The rationale for using this feature <a href=\"https://github.com/WICG/focus-visible/blob/master/explainer.md\">is explained here</a>. A <a href=\"https://github.com/WICG/focus-visible\">polyfill can be used</a> to apply a <code>focus-visible</code> class to other components if needed.",
+    "LinkComponent": "The component used to render a link when the <code>href</code> prop is provided.",
     "onFocusVisible": "Callback fired when the component is focused with a keyboard. We trigger a <code>onFocus</code> callback too.",
     "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "TouchRippleProps": "Props applied to the <code>TouchRipple</code> element."

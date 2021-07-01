@@ -1,5 +1,5 @@
 ---
-title: React Dialog component
+title: Composent React Dialog
 components: Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide
 githubLabel: 'component: Dialog'
 materialDesign: https://material.io/components/dialogs
@@ -41,7 +41,7 @@ N'utiliser les alertes de la barre de titre que pour les situations à haut risq
 Si un titre est requis:
 
 - Utilisez une question ou une déclaration claire avec une explication dans la zone de contenu, telle que "Effacer le stockage USB?".
-- Avoid apologies, ambiguity, or questions, such as "Warning!" or "Are you sure?"
+- Évitez l'utilisation de Dialog pour des questions telles que « Avertissement ! » ou "Êtes-vous sûr ?"
 
 {{"demo": "pages/components/dialogs/AlertDialog.js"}}
 
@@ -71,7 +71,7 @@ La boîte de dialogue a un bouton de fermeture ajouté pour faciliter l'utilisat
 
 ## Tailles en option
 
-Vous pouvez définir une largeur maximale dans la boîte de dialogue à l’aide de la valeur `maxWidth`, associée à la valeur `fullWidth`. Lorsque la propriété `fullWidth` est définie sur true, la boîte de dialogue s'adapte en fonction de la valeur `maxWidth`.
+Vous pouvez définir une largeur maximale dans la boîte de dialogue à l’aide de la valeur `maxWidth`, associée à la valeur `fullWidth`. Lorsque la propriété `fullWidth` est définie à `true`, le Dialog s'adapte en fonction de la valeur `maxWidth`.
 
 {{"demo": "pages/components/dialogs/MaxWidthDialog.js"}}
 
@@ -94,9 +94,9 @@ function MyComponent() {
 
 ## Dialogues de confirmation
 
-Les dialogues de confirmation demandent aux utilisateurs de confirmer explicitement leur choix avant la validation d'une option. For example, users can listen to multiple ringtones but only make a final selection upon touching "OK".
+Les dialogues de confirmation demandent aux utilisateurs de confirmer explicitement leur choix avant la validation d'une option. Par exemple dans le cas suivant, les utilisateurs peuvent écouter plusieurs sonneries, mais au final, ils peuvent seulement sélectionner une seule option en appuyant sur 'OK'.
 
-Touching "Cancel" in a confirmation dialog, or pressing Back, cancels the action, discards any changes, and closes the dialog.
+Appuyer sur “Annuler” dans un Dialog de confirmation, cela va annuler l'action, annuler les modifications et fermer le Dialog.
 
 {{"demo": "pages/components/dialogs/ConfirmationDialog.js"}}
 
@@ -108,7 +108,7 @@ Vous pouvez créer une boîte de dialogue déplaçable à l’aide de [react-dra
 
 ## Défiler de longues contenu
 
-When dialogs become too long for the user's viewport or device, they scroll.
+Lorsque les Dialogs deviennent trop longues pour la fenêtre ou l'écran d'utilisateur, ils peuvent être défilés.
 
 - `scroll=paper` le contenu de la boîte de dialogue défile dans l'élément de papier.
 - `scroll=body` le contenu de la boîte de dialogue défile dans l'élément body.
@@ -119,7 +119,7 @@ Essayez la démo ci-dessous pour voir ce que nous voulons dire:
 
 ## Performances
 
-Suivez la [section de performance de la Modal](/components/modal/#performance).
+Suivez la section de performance du [ Modal](/components/modal/#performance).
 
 ## Limites
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,8 +12,7 @@ import StarIcon from '@material-ui/icons/StarBorder';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/styles';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import GlobalStyles from '@material-ui/core/GlobalStyles';
 import Container from '@material-ui/core/Container';
 
 function Copyright(props) {
@@ -27,53 +27,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  '@global': {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-  },
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbar: {
-    flexWrap: 'wrap',
-  },
-  toolbarTitle: {
-    flexGrow: 1,
-  },
-  link: {
-    margin: theme.spacing(1, 1.5),
-  },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
-  cardHeader: {
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? theme.palette.grey[200]
-        : theme.palette.grey[700],
-  },
-  cardPricing: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing(2),
-  },
-  footer: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing(6),
-      paddingBottom: theme.spacing(6),
-    },
-  },
-}));
 
 const tiers = [
   {
@@ -140,27 +93,19 @@ const footers = [
   },
 ];
 
-const defaultTheme = createTheme();
-
 function PricingContent() {
-  const classes = useStyles();
-
   return (
     <React.Fragment>
+      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
       <AppBar
         position="static"
         color="default"
         elevation={0}
-        className={classes.appBar}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       >
-        <Toolbar className={classes.toolbar}>
-          <Typography
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.toolbarTitle}
-          >
+        <Toolbar sx={{ flexWrap: 'wrap' }}>
+          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Company name
           </Typography>
           <nav>
@@ -168,7 +113,7 @@ function PricingContent() {
               variant="button"
               color="text.primary"
               href="#"
-              className={classes.link}
+              sx={{ my: 1, mx: 1.5 }}
             >
               Features
             </Link>
@@ -176,7 +121,7 @@ function PricingContent() {
               variant="button"
               color="text.primary"
               href="#"
-              className={classes.link}
+              sx={{ my: 1, mx: 1.5 }}
             >
               Enterprise
             </Link>
@@ -184,18 +129,18 @@ function PricingContent() {
               variant="button"
               color="text.primary"
               href="#"
-              className={classes.link}
+              sx={{ my: 1, mx: 1.5 }}
             >
               Support
             </Link>
           </nav>
-          <Button href="#" variant="outlined" className={classes.link}>
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Login
           </Button>
         </Toolbar>
       </AppBar>
       {/* Hero unit */}
-      <Container maxWidth="sm" component="main" className={classes.heroContent}>
+      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
           component="h1"
           variant="h2"
@@ -228,21 +173,33 @@ function PricingContent() {
                   title={tier.title}
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
+                  action={tier.title === 'Pro' ? <StarIcon /> : null}
                   subheaderTypographyProps={{
                     align: 'center',
                   }}
-                  action={tier.title === 'Pro' ? <StarIcon /> : null}
-                  className={classes.cardHeader}
+                  sx={{
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? theme.palette.grey[200]
+                        : theme.palette.grey[700],
+                  }}
                 />
                 <CardContent>
-                  <div className={classes.cardPricing}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'baseline',
+                      mb: 2,
+                    }}
+                  >
                     <Typography component="h2" variant="h3" color="text.primary">
                       ${tier.price}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
                       /mo
                     </Typography>
-                  </div>
+                  </Box>
                   <ul>
                     {tier.description.map((line) => (
                       <Typography
@@ -267,7 +224,15 @@ function PricingContent() {
         </Grid>
       </Container>
       {/* Footer */}
-      <Container maxWidth="md" component="footer" className={classes.footer}>
+      <Container
+        maxWidth="md"
+        component="footer"
+        sx={{
+          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+          mt: 8,
+          py: [3, 6],
+        }}
+      >
         <Grid container spacing={4} justifyContent="space-evenly">
           {footers.map((footer) => (
             <Grid item xs={6} sm={3} key={footer.title}>
@@ -294,10 +259,5 @@ function PricingContent() {
 }
 
 export default function Pricing() {
-  return (
-    // TODO: Remove ThemeProvider once makeStyles is removed
-    <ThemeProvider theme={defaultTheme}>
-      <PricingContent />
-    </ThemeProvider>
-  );
+  return <PricingContent />;
 }

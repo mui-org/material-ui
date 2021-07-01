@@ -63,12 +63,28 @@ Os elementos `<html>` e `<body>` são atualizados para fornecer melhores padrõe
 
 ### Barras de rolagem
 
-No modo escuro, as cores das barras de rolagem são personalizadas para fornecer uma contraste melhor.
+The colors of the scrollbars can be customized to improve the contrast (especially on Windows). Add this code to your theme (for dark mode).
+
+```jsx
+import darkScrollbar from '@material-ui/core/darkScrollbar';
+
+const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: theme.palette.mode === 'dark' ? darkScrollbar() : null,
+      },
+    },
+  },
+});
+```
+
+This website uses `darkScrollbar` when dark mode is enabled. Be aware, however, that using this utility (and customizing `-webkit-scrollbar`) forces MacOS to always show the scrollbar.
 
 ### Tipografia
 
 - Nenhum tamanho de fonte base é declarado no `<html>`, mas 16px é assumido (o padrão do navegador). Você pode aprender mais sobre as implicações da mudança do padrão de tamanho da fonte do `<html>` na página de [documentação do tema](/customization/typography/#typography-html-font-size).
-- Define o estilo `theme.typography.body2` no elemento `<body>`.
+- Define o estilo `theme.typography.body1` no elemento `<body>`.
 - Define o font-weight para `theme.typography.fontWeightBold` em elementos `<b>` e `<strong>`.
 - Uma customização da suavização da fonte (font-smoothing) é ativada para melhor exibição da fonte Roboto.
 

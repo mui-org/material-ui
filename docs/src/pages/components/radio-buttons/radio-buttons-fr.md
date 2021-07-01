@@ -10,7 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#radiobutton'
 
 <p class="description">Les radios buttons permettent a l'utilisateur de sélectionner un choix parmi un ensemble de choix.</p>
 
-Ici [buttons radio](https://material.io/design/components/selection-controls.html#radio-buttons) toutes les options. Si les options disponibles peuvent être réduites, envisagez d'utiliser un menu déroulant, car il utilise moins d'espace disponibles.
+Utilisez les cases d’option lorsque l’utilisateur a besoin de voir toutes les options disponibles. Si les options disponibles peuvent être réduites, envisagez d'utiliser un menu déroulant, car il utilise moins d'espace disponibles.
 
 Généralement, les cases d'option doivent avoir l'option la plus utilisée sélectionnée par défaut.
 
@@ -22,13 +22,33 @@ Généralement, les cases d'option doivent avoir l'option la plus utilisée sél
 
 {{"demo": "pages/components/radio-buttons/RadioButtonsGroup.js"}}
 
+### Direction
+
 To lay out the buttons horizontally, set the `row` prop: `<RadioGroup row />`.
+
+{{"demo": "pages/components/radio-buttons/RowRadioButtonsGroup.js"}}
+
+### Checkbox personnalisée
+
+You can control the radio with the `value` and `onChange` props:
+
+{{"demo": "pages/components/radio-buttons/ControlledRadioButtonsGroup.js"}}
 
 ## Standalone radio buttons
 
 `Radio` can also be used standalone, without the RadioGroup wrapper.
 
 {{"demo": "pages/components/radio-buttons/RadioButtons.js"}}
+
+## Size
+
+Use the `size` prop or customize the font size of the svg icons to change the size of the radios.
+
+{{"demo": "pages/components/radio-buttons/SizeRadioButtons.js"}}
+
+## Couleur
+
+{{"demo": "pages/components/radio-buttons/ColorRadioButtons.js"}}
 
 ## Emplacement du label
 
@@ -50,7 +70,7 @@ Voici un exemple de personnalisation du composant. Vous pouvez en savoir plus da
 
 ## `useRadioGroup`
 
-For advanced customization use cases, a `useRadioGroup()` hook is exposed. It returns the context value of the parent radio group. The Radio component uses this hook internally.
+Pour les cas d'utilisation de personnalisation avancée, utilisez la fonction `useRadioGroup()`. Cela retourne la valeur de contexte du groupe radio parent. Le composant Radio utilise ce hook en interne.
 
 ### API
 

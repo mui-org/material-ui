@@ -28,11 +28,11 @@ const StepButtonRoot = styled(ButtonBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${stepButtonClasses.touchRipple}`]: styles.touchRipple,
-      ...styles.root,
-      ...styles[styleProps.orientation],
-    };
+    return [
+      { [`& .${stepButtonClasses.touchRipple}`]: styles.touchRipple },
+      styles.root,
+      styles[styleProps.orientation],
+    ];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */

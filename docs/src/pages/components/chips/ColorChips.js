@@ -4,9 +4,15 @@ import Stack from '@material-ui/core/Stack';
 
 export default function ColorChips() {
   return (
-    <Stack direction="row" spacing={1}>
-      <Chip label="Primary" color="primary" />
-      <Chip label="Primary" color="primary" variant="outlined" />
+    <Stack spacing={1} alignItems="center">
+      <Stack direction="row" spacing={1}>
+        <Chip label="primary" color="primary" />
+        <Chip label="success" color="success" />
+      </Stack>
+      <Stack direction="row" spacing={1}>
+        <Chip label="primary" color="primary" variant="outlined" />
+        <Chip label="success" color="success" variant="outlined" />
+      </Stack>
     </Stack>
   );
 }

@@ -23,10 +23,7 @@ const ListItemIconRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.alignItems === 'flex-start' && styles.alignItemsFlexStart),
-    };
+    return [styles.root, styleProps.alignItems === 'flex-start' && styles.alignItemsFlexStart];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */

@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5, screen } from 'test/utils';
+import { createClientRender, describeConformanceV5, screen } from 'test/utils';
 import AppBar, { appBarClasses as classes } from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
 
 describe('<AppBar />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<AppBar>Conformance?</AppBar>, () => ({
     classes,
     inheritComponent: Paper,
     render,
-    mount,
     muiName: 'MuiAppBar',
     refInstanceof: window.HTMLElement,
     testVariantProps: { position: 'relative' },

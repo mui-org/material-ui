@@ -1,24 +1,14 @@
 // @ts-check
 import * as React from 'react';
 import { expect } from 'chai';
-import { createClientRender, createMount, describeConformance } from 'test/utils';
+import { createClientRender, describeConformance } from 'test/utils';
 import Tab from '@material-ui/core/Tab';
 import Tabs, { tabsClasses as classes } from '@material-ui/core/Tabs';
 import TabList from './TabList';
 import TabContext from '../TabContext';
 
 describe('<TabList />', () => {
-  const mount = createMount();
   const render = createClientRender();
-
-  /**
-   *
-   * @param {React.ReactNode} node
-   */
-  function mountInContext(node) {
-    const wrapper = mount(<TabContext value="0">{node}</TabContext>);
-    return wrapper.childAt(0);
-  }
 
   describeConformance(<TabList />, () => ({
     // @ts-expect-error https://github.com/microsoft/TypeScript/issues/15300
@@ -28,7 +18,10 @@ describe('<TabList />', () => {
      * @param {React.ReactNode} node
      */
     render: (node) => render(<TabContext value="0">{node}</TabContext>),
-    mount: mountInContext,
+    wrapMount: (mount) => (node) => {
+      const wrapper = mount(<TabContext value="0">{node}</TabContext>);
+      return wrapper.childAt(0);
+    },
     refInstanceof: window.HTMLDivElement,
     // TODO: no idea why reactTestRenderer fails
     skip: ['reactTestRenderer'],

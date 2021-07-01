@@ -2,62 +2,63 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "In most cases will simply be a string containing a title for the label.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "error": "Mark the step as failed.",
     "icon": "Override the default label of the step icon.",
     "optional": "The optional node to display.",
     "StepIconComponent": "The component to render in place of the <a href=\"/api/step-icon/\"><code>StepIcon</code></a>.",
-    "StepIconProps": "Props applied to the <a href=\"/api/step-icon/\"><code>StepIcon</code></a> element."
+    "StepIconProps": "Props applied to the <a href=\"/api/step-icon/\"><code>StepIcon</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "horizontal": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>orientation=\"horizontal\"</code>"
     },
     "vertical": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>orientation=\"vertical\"</code>"
     },
     "label": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Typography component that wraps `children`"
     },
     "active": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the `Typography` component",
       "conditions": "<code>active={true}</code>"
     },
     "completed": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the `Typography` component",
       "conditions": "<code>completed={true}</code>"
     },
     "error": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the root element and `Typography` component",
       "conditions": "<code>error={true}</code>"
     },
     "disabled": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the root element and `Typography` component",
       "conditions": "<code>disabled={true}</code>"
     },
     "iconContainer": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the `icon` container element"
     },
     "alternativeLabel": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
       "nodeName": "the root and icon container and `Typography`",
       "conditions": "<code>alternativeLabel={true}</code>"
     },
     "labelContainer": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the container element which wraps `Typography` and `optional`"
     }
   }

@@ -23,10 +23,7 @@ const StepContentRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.last && styles.last),
-    };
+    return [styles.root, styleProps.last && styles.last];
   },
 })(({ styleProps, theme }) => ({
   /* Styles applied to the root element. */

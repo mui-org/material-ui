@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import Divider, { dividerClasses as classes } from '@material-ui/core/Divider';
 
 describe('<Divider />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Divider />, () => ({
     classes,
     inheritComponent: 'hr',
     render,
-    mount,
     muiName: 'MuiDivider',
     refInstanceof: window.HTMLHRElement,
     testComponentPropWith: 'div',

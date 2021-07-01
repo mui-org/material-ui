@@ -1,56 +1,12 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
-import {
-  act,
-  createMount,
-  fireEvent,
-  createClientRender,
-  describeConformance,
-  screen,
-} from 'test/utils';
+import { spy, useFakeTimers } from 'sinon';
+import { fireEvent, createClientRender, describeConformance, screen } from 'test/utils';
 import PropTypes, { checkPropTypes } from 'prop-types';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Drawer, { drawerClasses } from '@material-ui/core/Drawer';
 import { backdropClasses } from '@material-ui/core/Backdrop';
-import SwipeArea from './SwipeArea';
 import useForkRef from '../utils/useForkRef';
-
-function fireMouseEvent(name, element, properties = {}) {
-  act(() => {
-    const event = document.createEvent('MouseEvents');
-    event.initEvent(name, true, true);
-    Object.keys(properties).forEach((key) => {
-      event[key] = properties[key];
-    });
-    if (element.dispatchEvent) {
-      element.dispatchEvent(event);
-    } else {
-      element.getDOMNode().dispatchEvent(event);
-    }
-  });
-}
-
-function fireBodyMouseEvent(name, properties = {}) {
-  fireMouseEvent(name, document.body, properties);
-}
-
-function fireSwipeAreaMouseEvent(wrapper, name, properties = {}) {
-  let event;
-  act(() => {
-    event = document.createEvent('MouseEvents');
-    event.initEvent(name, true, true);
-    Object.keys(properties).forEach((key) => {
-      event[key] = properties[key];
-    });
-    const swipeArea = wrapper.find(SwipeArea);
-    if (swipeArea.length >= 1) {
-      // if no SwipeArea is mounted, the body event wouldn't propagate to it anyway
-      swipeArea.getDOMNode().dispatchEvent(event);
-    }
-  });
-  return event;
-}
 
 const FakePaper = React.forwardRef(function FakeWidthPaper(props, ref) {
   const { style, ...other } = props;
@@ -102,14 +58,22 @@ const NullPaper = React.forwardRef(function NullPaper(props, ref) {
 });
 
 describe('<SwipeableDrawer />', () => {
-  // test are mostly asserting on implementation details
-  const mount = createMount({ strict: null });
-  const render = createClientRender({ strict: false });
+  /**
+   * @type {ReturnType<typeof useFakeTimers>}
+   */
+  let clock;
+  beforeEach(() => {
+    clock = useFakeTimers();
+  });
+  afterEach(() => {
+    clock.restore();
+  });
+
+  const render = createClientRender();
 
   describeConformance(<SwipeableDrawer onOpen={() => {}} onClose={() => {}} open />, () => ({
     classes: {},
     inheritComponent: Drawer,
-    mount,
     refInstanceof: window.HTMLDivElement,
     skip: [
       'componentProp',
@@ -474,8 +438,9 @@ describe('<SwipeableDrawer />', () => {
   describe('disableSwipeToOpen', () => {
     it('should not support swipe to open if disableSwipeToOpen is set', () => {
       const handleOpen = spy();
-      const wrapper = mount(
+      render(
         <SwipeableDrawer
+          disableSwipeToOpen
           onOpen={handleOpen}
           onClose={() => {}}
           open={false}
@@ -485,53 +450,63 @@ describe('<SwipeableDrawer />', () => {
         </SwipeableDrawer>,
       );
 
-      // simulate open swipe
-      wrapper.setProps({ disableSwipeToOpen: true });
-      expect(wrapper.find('[role="presentation"]').exists()).to.equal(false);
-      fireBodyMouseEvent('touchstart', { touches: [{ pageX: 10, clientY: 0 }] });
-      fireBodyMouseEvent('touchmove', { touches: [{ pageX: 150, clientY: 0 }] });
-      fireBodyMouseEvent('touchend', { changedTouches: [{ pageX: 250, clientY: 0 }] });
+      fireEvent.touchStart(document.body, {
+        touches: [new Touch({ identifier: 0, target: document.body, pageX: 10, clientY: 0 })],
+      });
+      fireEvent.touchMove(document.body, {
+        touches: [new Touch({ identifier: 0, target: document.body, pageX: 150, clientY: 0 })],
+      });
+      fireEvent.touchEnd(document.body, {
+        changedTouches: [
+          new Touch({ identifier: 0, target: document.body, pageX: 250, clientY: 0 }),
+        ],
+      });
+
       expect(handleOpen.callCount).to.equal(0);
-      expect(wrapper.find('[role="presentation"]').exists()).to.equal(false);
-      wrapper.unmount();
     });
 
     it('should support swipe to close if disableSwipeToOpen is set', () => {
       const handleClose = spy();
-      const wrapper = mount(
+      render(
         <SwipeableDrawer
+          disableSwipeToOpen
           onOpen={() => {}}
           onClose={handleClose}
           open
-          PaperProps={{ component: FakePaper }}
+          PaperProps={{ component: FakePaper, 'data-testid': 'paper' }}
         >
           <div>SwipeableDrawer</div>
         </SwipeableDrawer>,
       );
 
-      // simulate close swipe
-      wrapper.setProps({ disableSwipeToOpen: true });
-      expect(wrapper.find('[role="presentation"]').exists()).to.equal(true);
-      fireMouseEvent('touchstart', wrapper.find(FakePaper), {
-        touches: [{ pageX: 250, clientY: 0 }],
+      const paper = screen.getByTestId('paper');
+      fireEvent.touchStart(paper, {
+        touches: [new Touch({ identifier: 0, target: paper, pageX: 250, clientY: 0 })],
       });
-      fireBodyMouseEvent('touchmove', { touches: [{ pageX: 150, clientY: 0 }] });
-      fireBodyMouseEvent('touchend', { changedTouches: [{ pageX: 10, clientY: 0 }] });
+      fireEvent.touchMove(document.body, {
+        touches: [new Touch({ identifier: 0, target: document.body, pageX: 150, clientY: 0 })],
+      });
+      fireEvent.touchEnd(document.body, {
+        changedTouches: [
+          new Touch({ identifier: 0, target: document.body, pageX: 10, clientY: 0 }),
+        ],
+      });
+
       expect(handleClose.callCount).to.equal(1);
-      wrapper.unmount();
     });
   });
 
   describe('lock', () => {
     it('should handle a single swipe at the time', () => {
       const handleOpen = spy();
-      const wrapper = mount(
+      render(
         <div>
           <SwipeableDrawer
             onOpen={handleOpen}
             onClose={() => {}}
             open={false}
             PaperProps={{ component: FakePaper }}
+            SwipeAreaProps={{ 'data-testid': 'swipearea' }}
           >
             <div>Drawer1</div>
           </SwipeableDrawer>
@@ -540,47 +515,55 @@ describe('<SwipeableDrawer />', () => {
             onClose={() => {}}
             open={false}
             PaperProps={{ component: FakePaper }}
+            SwipeAreaProps={{ 'data-testid': 'swipearea' }}
           >
             <div>Drawer2</div>
           </SwipeableDrawer>
         </div>,
       );
 
-      // use the same event object for both touch start events, one would propagate to the other swipe area in the browser
-      const touchStartEvent = fireSwipeAreaMouseEvent(
-        wrapper.find(SwipeableDrawer).at(0),
-        'touchstart',
-        {
-          touches: [{ pageX: 0, clientY: 0 }],
-        },
-      );
-      wrapper
-        .find(SwipeableDrawer)
-        .at(1)
-        .find(SwipeArea)
-        .getDOMNode()
-        .dispatchEvent(touchStartEvent);
-      fireBodyMouseEvent('touchmove', { touches: [{ pageX: 20, clientY: 0 }] });
-      fireBodyMouseEvent('touchmove', { touches: [{ pageX: 180, clientY: 0 }] });
-      fireBodyMouseEvent('touchend', { changedTouches: [{ pageX: 180, clientY: 0 }] });
+      // Event order recorded with https://codesandbox.io/s/single-swipearea-lock-ksyss
+      const topMostSwipeArea = screen.getAllByTestId('swipearea').slice(-1)[0];
+      fireEvent.touchStart(topMostSwipeArea, {
+        touches: [new Touch({ identifier: 0, target: topMostSwipeArea, pageX: 0, clientY: 0 })],
+      });
+      fireEvent.touchMove(topMostSwipeArea, {
+        touches: [new Touch({ identifier: 0, target: topMostSwipeArea, pageX: 20, clientY: 0 })],
+      });
+      fireEvent.touchMove(topMostSwipeArea, {
+        touches: [new Touch({ identifier: 0, target: topMostSwipeArea, pageX: 180, clientY: 0 })],
+      });
+      fireEvent.touchEnd(topMostSwipeArea, {
+        changedTouches: [
+          new Touch({ identifier: 0, target: topMostSwipeArea, pageX: 180, clientY: 0 }),
+        ],
+      });
+
       expect(handleOpen.callCount).to.equal(1);
     });
   });
 
   it('does not crash when updating the parent component while swiping', () => {
-    const wrapper = mount(
+    render(
       <SwipeableDrawer
         onOpen={() => {}}
         onClose={() => {}}
         open={false}
         PaperProps={{ component: NullPaper }}
+        SwipeAreaProps={{ 'data-testid': 'swipearea' }}
       >
         <div>SwipeableDrawer</div>
       </SwipeableDrawer>,
     );
-    fireSwipeAreaMouseEvent(wrapper, 'touchstart', { touches: [{ pageX: 0, clientY: 0 }] });
+
+    const swipeArea = screen.getByTestId('swipearea');
+    fireEvent.touchStart(swipeArea, {
+      touches: [new Touch({ identifier: 0, target: swipeArea, pageX: 0, clientY: 0 })],
+    });
     // simulate paper ref being null because of the drawer being updated
-    fireBodyMouseEvent('touchmove', { touches: [{ pageX: 20, clientY: 0 }] });
+    fireEvent.touchMove(document.body, {
+      touches: [new Touch({ identifier: 0, target: document.body, pageX: 20, clientY: 0 })],
+    });
   });
 
   describe('no backdrop', () => {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme, alpha, darken } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
   root: {
@@ -36,7 +36,9 @@ const styles = (theme) => ({
       padding: '0 3px',
       color: theme.palette.text.primary,
       backgroundColor:
-        theme.palette.mode === 'light' ? 'rgba(255, 229, 100, 0.2)' : 'rgba(255, 229, 100, 0.2)',
+        theme.palette.mode === 'light'
+          ? 'rgba(255, 229, 100, 0.2)'
+          : alpha(theme.palette.primary.main, 0.08),
       fontSize: '.85em',
       borderRadius: 2,
     },
@@ -133,6 +135,9 @@ const styles = (theme) => ({
       '& .required': {
         color: theme.palette.mode === 'light' ? '#006500' : '#a5ffa5',
       },
+      '& .optional': {
+        color: theme.palette.type === 'light' ? '#080065' : '#a5b3ff',
+      },
       '& .prop-type': {
         fontFamily: 'Consolas, "Liberation Mono", Menlo, monospace',
         color: theme.palette.mode === 'light' ? '#932981' : '#ffb6ec',
@@ -171,10 +176,17 @@ const styles = (theme) => ({
     '& a, & a code': {
       // Style taken from the Link component
       color: theme.palette.primary.main,
-      textDecoration: 'none',
+      textDecoration: 'underline',
+      textDecorationColor: alpha(theme.palette.primary.main, 0.4),
       '&:hover': {
-        textDecoration: 'underline',
+        textDecorationColor: 'inherit',
       },
+    },
+    '& a code': {
+      color:
+        theme.palette.mode === 'dark'
+          ? theme.palette.primary.main
+          : darken(theme.palette.primary.main, 0.04),
     },
     '& img, video': {
       maxWidth: '100%',

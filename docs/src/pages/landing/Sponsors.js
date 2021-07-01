@@ -5,7 +5,7 @@ import NoSsr from '@material-ui/core/NoSsr';
 import MarkdownElement from 'docs/src/modules/components/MarkdownElement';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import { prepareMarkdown } from 'docs/src/modules/utils/parseMarkdown';
+import { prepareMarkdown } from '@material-ui/markdown/parseMarkdown';
 import { useUserLanguage } from 'docs/src/modules/utils/i18n';
 
 const useStyles = makeStyles(

@@ -1,63 +1,65 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
-    "position": "The positioning type. The behavior of the different options is described <a href=\"https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning\">in the MDN web docs</a>. Note: <code>sticky</code> is not universally supported and will fall back to <code>static</code> when unavailable."
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "color": "A cor do componente. Ela da suporte para as cores do tema que fazem sentido para este componente.",
+    "enableColorOnDark": "If true, the <code>color</code> prop is applied in dark mode.",
+    "position": "O tipo de posicionamento. O comportamento das diferentes opções é descrito <a href=\"https://developer.mozilla.org/pt-BR/docs/Learn/CSS/CSS_layout/Positioning\">na documentação MDN web docs</a>. Nota: <code>sticky</code> não é universalmente suportado e será modificado para <code>static</code> quando indisponível.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "positionFixed": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"fixed\"</code>"
     },
     "positionAbsolute": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"absolute\"</code>"
     },
     "positionSticky": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"sticky\"</code>"
     },
     "positionStatic": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"static\"</code>"
     },
     "positionRelative": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"relative\"</code>"
     },
     "colorDefault": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"default\"</code>"
     },
     "colorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"primary\"</code>"
     },
     "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"secondary\"</code>"
     },
     "colorInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"inherit\"</code>"
     },
     "colorTransparent": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>color=\"transparent\"</code>"
     }
   }

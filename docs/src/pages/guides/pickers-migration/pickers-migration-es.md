@@ -8,7 +8,7 @@ This guide is an overview of the core concepts that were changed from pickers v3
 
 ## Instalación
 
-You simply need to install the `@material-ui/lab` package if it's not already installed. Nothing more is required.
+You need to install the `@material-ui/lab` package if it's not already installed. ⚠️ Make sure you have installed the latest version, `"@material-ui/lab": ^5.0.0-alpha.30"` or above.
 
 ## Importaciones
 

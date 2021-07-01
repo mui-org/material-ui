@@ -158,6 +158,9 @@ export * from './Grid';
 export { default as Grow } from './Grow';
 export * from './Grow';
 
+export { default as Hidden } from './Hidden';
+export * from './Hidden';
+
 export { default as Icon } from './Icon';
 export * from './Icon';
 
@@ -199,6 +202,9 @@ export * from './ListItem';
 
 export { default as ListItemAvatar } from './ListItemAvatar';
 export * from './ListItemAvatar';
+
+export { default as ListItemButton } from './ListItemButton';
+export * from './ListItemButton';
 
 export { default as ListItemIcon } from './ListItemIcon';
 export * from './ListItemIcon';

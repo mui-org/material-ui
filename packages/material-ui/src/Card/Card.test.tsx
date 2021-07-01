@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import Card, { cardClasses as classes } from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 
 describe('<Card />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Card />, () => ({
     classes,
     inheritComponent: Paper,
     render,
-    mount,
     muiName: 'MuiCard',
     refInstanceof: window.HTMLDivElement,
     testVariantProps: { raised: true },

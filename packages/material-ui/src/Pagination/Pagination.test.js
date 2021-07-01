@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Pagination, { paginationClasses as classes } from '@material-ui/core/Pagination';
 
 describe('<Pagination />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Pagination />, () => ({
     classes,
     inheritComponent: 'nav',
     render,
-    mount,
     muiName: 'MuiPagination',
     refInstanceof: window.HTMLElement,
     testDeepOverrides: { slotName: 'ul', slotClassName: classes.ul },

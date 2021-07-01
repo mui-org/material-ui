@@ -16,25 +16,35 @@ As [abas](https://material.io/design/components/tabs.html) organizam e permitem 
 
 ## Abas simples
 
-{{"demo": "pages/components/tabs/SimpleTabs.js", "bg": true}}
+A basic example with tab panels.
 
-{{"demo": "pages/components/tabs/BasicTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/BasicTabs.js"}}
 
-### Rótulos com quebras
+## API experimental
 
-Os rótulos longos serão quebrados automaticamente nas abas. Se o rótulo for muito longo para a aba, ele irá exceder e o texto não ficará visível.
+O `@material-ui/lab` oferece componentes auxiliares que injetam propriedades para implementar abas acessíveis seguindo as [práticas de autoria da WAI-ARIA](https://www.w3.org/TR/wai-aria-practices/#tabpanel).
 
-{{"demo": "pages/components/tabs/TabsWrappedLabel.js", "bg": true}}
+{{"demo": "pages/components/tabs/LabTabs.js"}}
 
-### Aba desativada
+## Rótulos com quebras
 
-Uma aba pode ser desabilitada definindo a propriedade `disabled`.
+Os rótulos longos serão quebrados automaticamente nas abas. If the label is too long for the tab, it will overflow, and the text will not be visible.
 
-{{"demo": "pages/components/tabs/DisabledTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/TabsWrappedLabel.js"}}
+
+## Colored tab
+
+{{"demo": "pages/components/tabs/ColorTabs.js"}}
+
+## Aba desativada
+
+A tab can be disabled by setting the `disabled` prop.
+
+{{"demo": "pages/components/tabs/DisabledTabs.js"}}
 
 ## Abas fixas
 
-As abas fixas devem ser usadas com um número limitado de abas e quando o posicionamento consistente ajudar na memorização.
+Fixed tabs should be used with a limited number of tabs, and when a consistent placement will aid muscle memory.
 
 ### Largura total
 
@@ -74,7 +84,7 @@ Se você quiser certificar-se de que os botões são sempre visíveis, você dev
 
 ### Impedir botões de rolagem
 
-Botões de rolagem da esquerda e direita nunca serão apresentados com `scrollButtons={false}`. Toda rolagem deve ser iniciada por meio de mecanismos de rolagem do agente do usuário (por exemplo, deslizar para a esquerda/direita, rolar scroll do mouse, etc.)
+Botões de rolagem da esquerda e direita nunca serão apresentados com `scrollButtons={false}`. All scrolling must be initiated through user agent scrolling mechanisms (e.g. left/right swipe, shift mouse wheel, etc.)
 
 {{"demo": "pages/components/tabs/ScrollableTabsButtonPrevent.js", "bg": true}}
 
@@ -82,7 +92,7 @@ Botões de rolagem da esquerda e direita nunca serão apresentados com `scrollBu
 
 Aqui está um exemplo de customização do componente. Você pode aprender mais sobre isso na [página de documentação de sobrescritas](/customization/how-to-customize/).
 
-{{"demo": "pages/components/tabs/CustomizedTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/CustomizedTabs.js"}}
 
 🎨 Se você está procurando inspiração, você pode verificar [os exemplos de customização de MUI Treasury](https://mui-treasury.com/styles/tabs/).
 
@@ -94,19 +104,23 @@ O rótulo das abas podem ser compostos apenas por ícones ou apenas por texto.
 
 Note que você pode restaurar a barra de rolagem com `visibleScrollbar`.
 
-## Abas de navegação
+## Nav tabs
 
-Por padrão, as abas usam um elemento `button`, mas você pode fornecer sua própria tag customizada ou componente. Veja um exemplo de implementação da navegação por abas:
+By default, tabs use a `button` element, but you can provide your custom tag or component. Veja um exemplo de implementação da navegação por abas:
 
-{{"demo": "pages/components/tabs/NavTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/NavTabs.js"}}
 
-## Abas com ícones
+## Icon tabs
 
 O rótulo das abas podem ser compostos apenas por ícones ou apenas por texto.
 
-{{"demo": "pages/components/tabs/IconTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/IconTabs.js"}}
 
-{{"demo": "pages/components/tabs/IconLabelTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/IconLabelTabs.js"}}
+
+## Biblioteca de roteamento de terceiros
+
+One frequent use case is to perform navigation on the client only, without an HTTP round-trip to the server. The `Tab` component provides the `component` prop to handle this use case. Here is a [more detailed guide](/guides/routing/#tabs).
 
 ## Acessibilidade
 
@@ -121,23 +135,22 @@ Um exemplo para a implementação atual pode ser encontrado nas demonstrações 
 
 ### Navegação por teclado
 
-Os componentes implementam a navegação do teclado usando o comportamento de "ativação manual". Se você quiser mudar para o comportamento "seleção segue automaticamente o foco" você deve definir `selectionFollowsFocus` no componente `Tabs`. As práticas de autoria da WAI-ARIA têm um guia detalhado sobre [how to decide when to make selection automatically follow focus](https://www.w3.org/TR/wai-aria-practices/#kbd_selection_follows_focus).
+Os componentes implementam a navegação do teclado usando o comportamento de "ativação manual". Se você quiser mudar para o comportamento "seleção segue automaticamente o foco" você deve definir `selectionFollowsFocus` no componente `Tabs`. As práticas de autoria da WAI-ARIA têm um guia detalhado sobre [como decidir quando fazer a seleção seguir automaticamente o foco](https://www.w3.org/TR/wai-aria-practices/#kbd_selection_follows_focus).
 
 #### Demonstração
 
-As duas demonstrações seguintes diferem apenas no seu comportamento de navegação por teclado. Foque em uma aba e navegue com as teclas de seta para notar a diferença.
+As duas demonstrações seguintes diferem apenas no seu comportamento de navegação por teclado. Focus a tab and navigate with arrow keys to notice the difference, e.g. <kbd class="key">Arrow Left</kbd>.
 
 ```jsx
-/* Abas onde a seleção segue o foco */
+/* Tabs where selection follows focus */
 <Tabs selectionFollowsFocus />
-/* Abas onde cada aba precisa ser selecionada manualmente */
+```
+
+{{"demo": "pages/components/tabs/AccessibleTabs1.js", "defaultCodeOpen": false}}
+
+```jsx
+/* Tabs where each tab needs to be selected manually */
 <Tabs />
 ```
 
-{{"demo": "pages/components/tabs/AccessibleTabs.js", "bg": true}}
-
-## API experimental
-
-O `@material-ui/lab` oferece componentes auxiliares que injetam propriedades para implementar abas acessíveis seguindo as [práticas de autoria da WAI-ARIA](https://www.w3.org/TR/wai-aria-practices/#tabpanel).
-
-{{"demo": "pages/components/tabs/LabTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/AccessibleTabs2.js", "defaultCodeOpen": false}}

@@ -57,6 +57,7 @@ export default function SearchAppBar() {
       <AppBar position="static">
         <Toolbar>
           <IconButton
+            size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"

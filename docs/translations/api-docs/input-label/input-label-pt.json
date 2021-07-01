@@ -1,40 +1,41 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "color": "A cor do componente. Ela da suporte para as cores do tema que fazem sentido para este componente.",
     "disableAnimation": "If <code>true</code>, the transition animation is disabled.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "Se <code>true</code>, o componente está desabilitado.",
     "error": "If <code>true</code>, the label should be displayed in an error state.",
     "focused": "If <code>true</code>, the <code>input</code> of this label is focused.",
     "margin": "If <code>dense</code>, will adjust vertical spacing. This is normally obtained via context from FormControl.",
     "required": "if <code>true</code>, the label will indicate that the <code>input</code> is required.",
     "shrink": "If <code>true</code>, the label is shrunk.",
-    "variant": "The variant to use."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "variant": "A variante a usar."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "focused": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>focused={true}</code>"
     },
     "disabled": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>disabled={true}</code>"
     },
     "error": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>error={true}</code>"
     },
     "required": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>required={true}</code>"
     },
     "asterisk": {
@@ -42,34 +43,39 @@
       "nodeName": "the asterisk element"
     },
     "formControl": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "the component is a descendant of <code>FormControl</code>"
     },
     "sizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>size=\"small\"</code>"
     },
     "shrink": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>shrink={true}</code>"
     },
     "animated": {
-      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "description": "Estilos aplicados em {{nodeName}} a menos que {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>disableAnimation={true}</code>"
     },
     "filled": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"filled\"</code>"
     },
     "outlined": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"outlined\"</code>"
+    },
+    "standard": {
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"standard\"</code>"
     }
   }
 }

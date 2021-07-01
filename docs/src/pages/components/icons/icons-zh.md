@@ -17,7 +17,7 @@ Material-UI 通过以下三种方式来支持图标的使用：
 
 ## Material Icons
 
-Google 已经创建了 1300 多个官方的 Material icons，每个图标都有5种不同的“主题”（见下文）。 对于每个 SVG 图标，我们从 `@material-ui/icons` 包中导出相应的 React 组件。 您可以 [搜索完整的图标列表](/components/material-icons/)。
+Google has created over 1,700 official Material icons, each in five different "themes" (see below). 对于每个 SVG 图标，我们从 `@material-ui/icons` 包中导出相应的 React 组件。 您可以 [搜索完整的图标列表](/components/material-icons/)。
 
 ### 安装
 
@@ -70,7 +70,7 @@ yarn add @material-ui/core@next
 - 导出为 Twotone 主题：`@material-ui/icons/DeleteTwoTone `，
 - 导出为 Sharp 主题：`@material-ui/icons/DeleteSharp `，
 
-> 友情提示：Material Design 在命名图标的时候遵循了 “snake_case” 变量命名法（例如，`delete_forever` 和 `add_a_photo`），而 `@material-ui/icons` 则使用 “PascalCase” 来命名导出的相应图标（例如，`DeleteForever` 以及 `AddAPhoto`）。 并且此命名规则有三个特例：`3d_rotation` 导出为 `ThreeDRotation`，`4k` 导出为 `FourK`，以及 `360` 导出为 `ThreeSixty`。
+> Note: The Material Design guidelines name the icons using "snake_case" naming (for example `delete_forever`, `add_a_photo`), while `@material-ui/icons` exports the respective icons using "PascalCase" naming (for example `DeleteForever`, `AddAPhoto`). 并且此命名规则有三个特例：`3d_rotation` 导出为 `ThreeDRotation`，`4k` 导出为 `FourK`，以及 `360` 导出为 `ThreeSixty`。
 
 {{"demo": "pages/components/icons/SvgMaterialIcons.js"}}
 
@@ -224,7 +224,7 @@ const theme = createTheme({
   components: {
     MuiIcon: {
       defaultProps: {
-        // 替换 `material-icons` 的默认值。
+        // Replace the `material-icons` default value.
         baseClassName: 'material-icons-two-tone',
       },
     },
@@ -252,7 +252,7 @@ const theme = createTheme({
     MuiIcon: {
       styleOverrides: {
         root: {
-          // 匹配 24px = 3 * 2 + 1.125 * 16
+          // Match 24px = 3 * 2 + 1.125 * 16
           boxSizing: 'content-box',
           padding: 3,
           fontSize: '1.125rem',
@@ -273,14 +273,14 @@ const theme = createTheme({
 
 ## 无障碍设计
 
-Icons can convey all sorts of meaningful information, so it's important to ensure they are accessible where appropriate. There are two use cases you'll want to consider: There are two use cases you'll want to consider:
+图标可以传达各种有意义的信息，所以确保它们在适当的地方可以被无障碍访问是很重要的。 下面是两个你需要考虑到的用例：
 
-- **装饰性图标** 仅用于增强视觉或强调品牌。 即使将它们从页面中移除，用户仍然可以理解并能够使用整个界面。
-- **Semantic icons** are ones that you're using to convey meaning, rather than just pure decoration. 这包含了没有文字辅助说明的图标，这些图标一般被用作在交互式控件中 — 按钮、表单元素、切换按钮等。 这包含了没有文字辅助说明的图标，这些图标一般被用作在交互式控件中 — 按钮、表单元素、切换按钮等。
+- **装饰性图标**仅用于增强视觉或强调品牌。 即使将它们从页面中移除，用户仍然可以理解并能够使用整个界面。
+- **语义图标**指你用来传达意义的图标，而不仅仅是纯粹的装饰。 这包含了没有文字辅助说明的图标，这些图标一般被用作在交互式控件中 — 按钮、表单元素、切换按钮等。
 
 ### 装饰性图标
 
-If your icons are purely decorative, you're already done! 而添加 `aria-hidden=true` 属性可以让你的图标变成正确的且可访问的（隐形的）。
+如果你的图标纯粹是装饰性的，那么已经大功告成了！ 而添加 `aria-hidden=true` 属性可以让你的图标变成正确的且可访问的（隐形的）。
 
 ### 语义图标
 
@@ -308,16 +308,14 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 你需要提供一个只有辅助技术才能看到的文本替代方案：
 
 ```jsx
+import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import { visuallyHidden } from '@material-ui/utils';
-import { makeStyles } from '@material-ui/core/styles';
-
-const classes = makeStyles({ visuallyHidden })();
 
 // ...
 
 <Icon>add_circle</Icon>
-<span className={classes.visuallyHidden}>创建一个用户</span>
+<Box component="span" sx={visuallyHidden}>Create a user</Box>
 ```
 
 #### 参考

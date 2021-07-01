@@ -1,6 +1,6 @@
 {
   "name": "framer",
-  "version": "1.0.17",
+  "version": "1.0.21",
   "description": "Builds Material-UI for Framer X",
   "repository": "https://github.com/mui-org/material-ui",
   "author": "Material-UI Team",
@@ -11,7 +11,7 @@
     "@types/react": "^17.0.0",
     "case": "1.6.3",
     "deepmerge": "^4.0.0",
-    "docs": "5.0.0-alpha.35",
+    "docs": "5.0.0-beta.0",
     "framer": "^1.2.5",
     "framer-motion": "^4.0.0",
     "mustache": "^4.0.0",
@@ -21,7 +21,7 @@
     "build": "yarn build:core && yarn build:styles && yarn prettier",
     "build:core": "cross-env BABEL_ENV=development babel-node --config-file ../babel.config.js ./scripts/buildFramer.js ../packages/material-ui/src ./Material-UI.framerfx/code",
     "build:styles": "cross-env BABEL_ENV=development babel-node --config-file ../babel.config.js ./scripts/buildFramer.js ../packages/material-ui-styles/src ./Material-UI.framerfx/code",
-    "prettier": "prettier --write --config ../prettier.config.js './**/*.{js,tsx}'",
+    "prettier": "prettier --write --config ../prettier.config.js ./**/*.{js,tsx}",
     "typescript": "tsc -p tsconfig.json"
   }
 }

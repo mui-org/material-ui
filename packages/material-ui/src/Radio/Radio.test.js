@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, createClientRender } from 'test/utils';
+import { describeConformanceV5, createClientRender } from 'test/utils';
 import Radio, { radioClasses as classes } from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 describe('<Radio />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Radio />, () => ({
     classes,
     inheritComponent: ButtonBase,
     render,
-    mount,
     muiName: 'MuiRadio',
     testVariantProps: { color: 'secondary' },
     refInstanceof: window.HTMLSpanElement,

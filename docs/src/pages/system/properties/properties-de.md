@@ -2,119 +2,129 @@
 
 <p class="description">This page lists all of the custom system properties, how are they linked with the theme, and which CSS properties they compute. All other regular CSS properties and selectors are supported too.</p>
 
+## Properties reference table
+
+Note that this table only lists custom properties, all other regular CSS properties and selectors are supported. You can check out the [legend](/system/properties/#legend) below.
+
+| System key(s)         | CSS property/properties                                                                      | System style function                                        | Theme mapping                                                                           |
+|:--------------------- |:-------------------------------------------------------------------------------------------- |:------------------------------------------------------------ |:--------------------------------------------------------------------------------------- |
+| `border`              | `border`                                                                                     | [`border`](/system/borders/#border)                          | `${value}px solid`                                                                      |
+| `borderBottom`        | `border-bottom`                                                                              | [`borderBottom`](/system/borders/#border)                    | `${value}px solid`                                                                      |
+| `borderColor`         | `border-color`                                                                               | [`borderColor`](/system/borders/#border-color)               | [`theme.palette[value]`](/customization/default-theme/?expand-path=$.palette)           |
+| `borderLeft`          | `border-left`                                                                                | [`borderLeft`](/system/borders/#border)                      | `${value}px solid`                                                                      |
+| `borderRadius`        | `border-radius`                                                                              | [`borderRadius`](/system/borders/#border-radius)             | [`theme.shape.borderRadius * value`](/customization/default-theme/?expand-path=$.shape) |
+| `borderRight`         | `border-right`                                                                               | [`borderRight`](/system/borders/#border)                     | `${value}px solid`                                                                      |
+| `borderTop`           | `border-top`                                                                                 | [`borderTop`](/system/borders/#border)                       | `${value}px solid`                                                                      |
+| `boxShadow`           | `box-shadow`                                                                                 | [`boxShadow`](/system/shadows/)                              | `theme.shadows[value]`                                                                  |
+| `displayPrint`        | `display`                                                                                    | [`displayPrint`](/system/display/#display-in-print)          | none                                                                                    |
+| `display`             | `display`                                                                                    | [`displayRaw`](/system/display/)                             | none                                                                                    |
+| `alignContent`        | `align-content`                                                                              | [`alignContent`](/system/flexbox/#align-content)             | none                                                                                    |
+| `alignItems`          | `align-items`                                                                                | [`alignItems`](/system/flexbox/#align-items)                 | none                                                                                    |
+| `alignSelf`           | `align-self`                                                                                 | [`alignSelf`](/system/flexbox/#align-self)                   | none                                                                                    |
+| `flex`                | `flex`                                                                                       | [`flex`](/system/flexbox/)                                   | none                                                                                    |
+| `flexDirection`       | `flex-direction`                                                                             | [`flexDirection`](/system/flexbox/#flex-direction)           | none                                                                                    |
+| `flexGrow`            | `flex-grow`                                                                                  | [`flexGrow`](/system/flexbox/#flex-grow)                     | none                                                                                    |
+| `flexShrink`          | `flex-shrink`                                                                                | [`flexShrink`](/system/flexbox/#flex-shrink)                 | none                                                                                    |
+| `flexWrap`            | `flex-wrap`                                                                                  | [`flexWrap`](/system/flexbox/#flex-wrap)                     | none                                                                                    |
+| `justifyContent`      | `justify-content`                                                                            | [`justifyContent`](/system/flexbox/#justify-content)         | none                                                                                    |
+| `order`               | `order`                                                                                      | [`order`](/system/flexbox/#order)                            | none                                                                                    |
+| `gap`                 | `gap`                                                                                        | [`gap`](/system/grid/#gap)                                   | none                                                                                    |
+| `columnGap`           | `column-gap`                                                                                 | [`columnGap`](/system/grid/#row-gap-amp-column-gap)          | none                                                                                    |
+| `rowGap`              | `row-gap`                                                                                    | [`rowGap`](/system/grid/#row-gap-amp-column-gap)             | none                                                                                    |
+| `gridColumn`          | `grid-column`                                                                                | [`gridColumn`](/system/grid/#grid-column)                    | none                                                                                    |
+| `gridRow`             | `grid-row`                                                                                   | [`gridRow`](/system/grid/#grid-row)                          | none                                                                                    |
+| `gridAutoFlow`        | `grid-auto-flow`                                                                             | [`gridAutoFlow`](/system/grid/#grid-auto-flow)               | none                                                                                    |
+| `gridAutoColumns`     | `grid-auto-columns`                                                                          | [`gridAutoColumns`](/system/grid/#grid-auto-columns)         | none                                                                                    |
+| `gridAutoRows`        | `grid-auto-rows`                                                                             | [`gridAutoRows`](/system/grid/#grid-auto-rows)               | none                                                                                    |
+| `gridTemplateColumns` | `grid-template-columns`                                                                      | [`gridTemplateColumns`](/system/grid/#grid-template-columns) | none                                                                                    |
+| `gridTemplateRows`    | `grid-template-rows`                                                                         | [`gridTemplateRows`](/system/grid/#grid-template-rows)       | none                                                                                    |
+| `gridTemplateAreas`   | `grid-template-areas`                                                                        | [`gridTemplateAreas`](/system/grid/#grid-template-areas)     | none                                                                                    |
+| `gridArea`            | `grid-area`                                                                                  | [`gridArea`](/system/grid/#grid-area)                        | none                                                                                    |
+| `bgcolor`             | `backgroundColor`                                                                            | [`bgcolor`](/system/palette/#background-color)               | [`theme.palette[value]`](/customization/default-theme/?expand-path=$.palette)           |
+| `color`               | `color`                                                                                      | [`color`](/system/palette/#color)                            | [`theme.palette[value]`](/customization/default-theme/?expand-path=$.palette)           |
+| `bottom`              | `bottom`                                                                                     | [`bottom`](/system/positions/)                               | none                                                                                    |
+| `left`                | `left`                                                                                       | [`left`](/system/positions/)                                 | none                                                                                    |
+| `position`            | `position`                                                                                   | [`position`](/system/positions/)                             | none                                                                                    |
+| `right`               | `right`                                                                                      | [`right`](/system/positions/)                                | none                                                                                    |
+| `top`                 | `top`                                                                                        | [`top`](/system/positions/)                                  | none                                                                                    |
+| `zIndex`              | `z-index`                                                                                    | [`zIndex`](/system/positions/#z-index)                       | [`theme.zIndex[value]`](/customization/default-theme/?expand-path=$.zIndex)             |
+| `height`              | `height`                                                                                     | [`height`](/system/sizing/#height)                           | none                                                                                    |
+| `maxHeight`           | `max-height`                                                                                 | [`maxHeight`](/system/sizing/)                               | none                                                                                    |
+| `maxWidth`            | `max-width`                                                                                  | [`maxWidth`](/system/sizing/)                                | none                                                                                    |
+| `minHeight`           | `min-height`                                                                                 | [`minHeight`](/system/sizing/)                               | none                                                                                    |
+| `minWidth`            | `min-width`                                                                                  | [`minWidth`](/system/sizing/)                                | none                                                                                    |
+| `width`               | `width`                                                                                      | [`width`](/system/sizing/#width)                             | none                                                                                    |
+| `boxSizing`           | `box-sizing`                                                                                 | [`boxSizing`](/system/sizing/)                               | none                                                                                    |
+| `m`, `margin`         | `margin`                                                                                     | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `mb`, `marginBottom`  | `margin-bottom`                                                                              | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `ml`, `marginLeft`    | `margin-left`                                                                                | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `mr`, `marginRight`   | `margin-right`                                                                               | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `mt`, `marginTop`     | `margin-top`                                                                                 | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `mx`, `marginX`       | `margin-left`, `margin-right`                                                                | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `my`, `marginY`       | `margin-top`, `margin-bottom`                                                                | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `p`, `padding`        | `padding`                                                                                    | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `pb`, `paddingBottom` | `padding-bottom`                                                                             | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `pl`, `paddingLeft`   | `padding-left`                                                                               | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `pr`, `paddingRight`  | `padding-right`                                                                              | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `pt`, `paddingTop`    | `padding-top`                                                                                | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `px`, `paddingX`      | `padding-left`, `padding-right`                                                              | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `py`, `paddingY`      | `padding-top`, `padding-bottom`                                                              | [`spacing`](/system/spacing/)                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
+| `typography`          | `font-family`, `font-weight`, `font-size`, `line-height`, `letter-spacing`, `text-transform` | [`typography`](/system/typography/#variant)                  | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `fontFamily`          | `font-family`                                                                                | [`fontFamily`](/system/typography/#font-family)              | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `fontSize`            | `font-size`                                                                                  | [`fontSize`](/system/typography/#font-size)                  | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `fontStyle`           | `font-style`                                                                                 | [`fontStyle`](/system/typography/#font-style)                | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `fontWeight`          | `font-weight`                                                                                | [`fontWeight`](/system/typography/#font-weight)              | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `letterSpacing`       | `letter-spacing`                                                                             | [`letterSpacing`](/system/typography/#letter-spacing)        | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `lineHeight`          | `line-height`                                                                                | [`lineHeight`](/system/typography/#line-height)              | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
+| `textAlign`           | `text-align`                                                                                 | [`textAlign`](/system/typography/#text-alignment)            | none                                                                                    |
+
 ## Legend
 
-Let's take the following row from [the table below](#properties-reference-table), for example:
+Let's take one row from [the table above](#properties-reference-table), for example:
 
-| System style function         | System key(s)        | CSS property/properties | Theme mapping                                                                 |
-|:----------------------------- |:-------------------- |:----------------------- |:----------------------------------------------------------------------------- |
-| [`spacing`](/system/spacing/) | `mb`, `marginBottom` | `margin-bottom`         | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing) |
+| System key(s)        | CSS property/properties | System style function         | Theme mapping                                                                 |
+|:-------------------- |:----------------------- |:----------------------------- |:----------------------------------------------------------------------------- |
+| `mb`, `marginBottom` | `margin-bottom`         | [`spacing`](/system/spacing/) | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing) |
 
-### System style function
+<br />
 
-The <b>System style function</b> column lists the function which generates the properties shown in the other columns, as a reference in case you want to add this functionality to your custom components. The functions can be imported from `@material-ui/system`. You can see an example of using the style functions on the [advanced page](/system/advanced/#using-standalone-system-utilities). The content links to the documentation page where this properties are described; in this example, the [spacing](/system/spacing/) page.
+and detail each column:
 
-### System keys
+- **System keys**. The column lists the key(s) by which you can use this property with the `sx` prop (or as a system function).
 
-The <b>System keys</b> column lists the key(s) by which you can use this property with the `sx` prop (or as a system function).
+  ```jsx
+  <Button sx={{ mb: 3 }}>
+  // or
+  <Box mb={3}>
+  // or
+  <Box marginBottom={3}>
+  ```
 
-### CSS properties
+- **CSS properties**. The column describes which CSS property will be generated when this system property is used.
 
-The <b>CSS property</b> column describes which CSS property will be generated when this system property is used.
+  ```css
+  .my-class {
+    margin-bottom: Xpx;
+  }
+  ```
 
-### Theme mapping
+- **System style function**. The column lists the function which generates the properties shown in the other columns, as a reference in case you want to add this functionality to your custom components. The functions can be imported from `@material-ui/system`. You can see an example of using the style functions on the [advanced page](/system/advanced/#using-standalone-system-utilities). The content links to the documentation page where this properties are described; in this example, the [spacing](/system/spacing/) page.
 
-Lastly, the <b>Theme key</b> column tells you how this property is wired with the theme – with this example, whatever value you provide will be used as input to the `theme.spacing` helper.
+- **Theme mapping**. Lastly, the column tells you how this property is wired with the theme – with this example, whatever value you provide will be used as input to the `theme.spacing` helper.
 
 Let's take a look at an example:
 
 ```jsx
-<Box sx={{ mb: 3 }} />
+<Button sx={{ mb: 3 }} />
 
 // is equivalent to
-<Box sx={{ marginBottom: theme => theme.spacing(3)}} />
+<Button sx={{ marginBottom: theme => theme.spacing(3)}} />
 ```
 
 As the default theme spacing is 8px, this will result in the following CSS class:
 
 ```css
-.hash-MuiBox {
+.my-class {
   margin-bottom: 24px;
 }
 ```
-
-## Properties reference table
-
-Note that this table only lists custom properties, all other regular CSS properties and selectors are supported.
-
-| System style function                                        | System key(s)         | CSS property/properties                                                                      | Theme mapping                                                                           |
-|:------------------------------------------------------------ |:--------------------- |:-------------------------------------------------------------------------------------------- |:--------------------------------------------------------------------------------------- |
-| [`border`](/system/borders/#border)                          | `border`              | `border`                                                                                     | `${value}px solid`                                                                      |
-| [`borderBottom`](/system/borders/#border)                    | `borderBottom`        | `border-bottom`                                                                              | `${value}px solid`                                                                      |
-| [`borderColor`](/system/borders/#border-color)               | `borderColor`         | `border-color`                                                                               | [`theme.palette[value]`](/customization/default-theme/?expand-path=$.palette)           |
-| [`borderLeft`](/system/borders/#border)                      | `borderLeft`          | `border-left`                                                                                | `${value}px solid`                                                                      |
-| [`borderRadius`](system/borders/#border-radius)              | `borderRadius`        | `border-radius`                                                                              | [`theme.shape.borderRadius * value`](/customization/default-theme/?expand-path=$.shape) |
-| [`borderRight`](/system/borders/#border)                     | `borderRight`         | `border-right`                                                                               | `${value}px solid`                                                                      |
-| [`borderTop`]((/system/borders/#border)                      | `borderTop`           | `border-top`                                                                                 | `${value}px solid`                                                                      |
-| [`boxShadow`](/system/shadows/)                              | `boxShadow`           | `box-shadow`                                                                                 | `theme.shadows[value]`                                                                  |
-| [`displayPrint`](/system/display/#display-in-print)          | `displayPrint`        | `display`                                                                                    | none                                                                                    |
-| [`displayRaw`](/system/display/)                             | `display`             | `display`                                                                                    | none                                                                                    |
-| [`alignContent`](/system/flexbox/#align-content)             | `alignContent`        | `align-content`                                                                              | none                                                                                    |
-| [`alignItems`](/system/flexbox/#align-items)                 | `alignItems`          | `align-items`                                                                                | none                                                                                    |
-| [`alignSelf`](/system/flexbox/#align-self)                   | `alignSelf`           | `align-self`                                                                                 | none                                                                                    |
-| [`flex`](/system/flexbox/)                                   | `flex`                | `flex`                                                                                       | none                                                                                    |
-| [`flexDirection`](/system/flexbox/#flex-direction)           | `flexDirection`       | `flex-direction`                                                                             | none                                                                                    |
-| [`flexGrow`](/system/flexbox/#flex-grow)                     | `flexGrow`            | `flex-grow`                                                                                  | none                                                                                    |
-| [`flexShrink`](/system/flexbox/#flex-shrink)                 | `flexShrink`          | `flex-shrink`                                                                                | none                                                                                    |
-| [`flexWrap`](/system/flexbox/#flex-wrap)                     | `flexWrap`            | `flex-wrap`                                                                                  | none                                                                                    |
-| [`justifyContent`](/system/flexbox/#justify-content)         | `justifyContent`      | `justify-content`                                                                            | none                                                                                    |
-| [`order`](/system/flexbox/#order)                            | `order`               | `order`                                                                                      | none                                                                                    |
-| [`gap`](/system/grid/#gap)                                   | `gap`                 | `gap`                                                                                        | none                                                                                    |
-| [`columnGap`](/system/grid/#row-gap-amp-column-gap)          | `columnGap`           | `column-gap`                                                                                 | none                                                                                    |
-| [`rowGap`](/system/grid/#row-gap-amp-column-gap)             | `rowGap`              | `row-gap`                                                                                    | none                                                                                    |
-| [`gridColumn`](/system/grid/#grid-column)                    | `gridColumn`          | `grid-column`                                                                                | none                                                                                    |
-| [`gridRow`](/system/grid/#grid-row)                          | `gridRow`             | `grid-row`                                                                                   | none                                                                                    |
-| [`gridAutoFlow`](/system/grid/#grid-auto-flow)               | `gridAutoFlow`        | `grid-auto-flow`                                                                             | none                                                                                    |
-| [`gridAutoColumns`](/system/grid/#grid-auto-columns)         | `gridAutoColumns`     | `grid-auto-columns`                                                                          | none                                                                                    |
-| [`gridAutoRows`](/system/grid/#grid-auto-rows)               | `gridAutoRows`        | `grid-auto-rows`                                                                             | none                                                                                    |
-| [`gridTemplateColumns`](/system/grid/#grid-template-columns) | `gridTemplateColumns` | `grid-template-columns`                                                                      | none                                                                                    |
-| [`gridTemplateRows`](/system/grid/#grid-template-rows)       | `gridTemplateRows`    | `grid-template-rows`                                                                         | none                                                                                    |
-| [`gridTemplateAreas`](/system/grid/#grid-template-areas)     | `gridTemplateAreas`   | `grid-template-areas`                                                                        | none                                                                                    |
-| [`gridArea`](/system/grid/#grid-area)                        | `gridArea`            | `grid-area`                                                                                  | none                                                                                    |
-| [`bgcolor`](/system/palette/#background-color)               | `bgcolor`             | `backgroundColor`                                                                            | [`theme.palette[value]`](/customization/default-theme/?expand-path=$.palette)           |
-| [`color`](/system/palette/#color)                            | `color`               | `color`                                                                                      | [`theme.palette[value]`](/customization/default-theme/?expand-path=$.palette)           |
-| [`bottom`](/system/positions/)                               | `bottom`              | `bottom`                                                                                     | none                                                                                    |
-| [`left`](/system/positions/)                                 | `left`                | `left`                                                                                       | none                                                                                    |
-| [`position`](/system/positions/)                             | `position`            | `position`                                                                                   | none                                                                                    |
-| [`right`](/system/positions/)                                | `right`               | `right`                                                                                      | none                                                                                    |
-| [`top`](/system/positions/)                                  | `top`                 | `top`                                                                                        | none                                                                                    |
-| [`zIndex`](/system/positions/#z-index)                       | `zIndex`              | `z-index`                                                                                    | [`theme.zIndex[value]`](/customization/default-theme/?expand-path=$.zIndex)             |
-| [`height`](/system/sizing/#height)                           | `height`              | `height`                                                                                     | none                                                                                    |
-| [`maxHeight`](/system/sizing/)                               | `maxHeight`           | `max-height`                                                                                 | none                                                                                    |
-| [`maxWidth`](/system/sizing/)                                | `maxWidth`            | `max-width`                                                                                  | none                                                                                    |
-| [`minHeight`](/system/sizing/)                               | `minHeight`           | `min-height`                                                                                 | none                                                                                    |
-| [`minWidth`](/system/sizing/)                                | `minWidth`            | `min-width`                                                                                  | none                                                                                    |
-| [`width`](/system/sizing/#width)                             | `width`               | `width`                                                                                      | none                                                                                    |
-| [`boxSizing`](/system/sizing/)                               | `boxSizing`           | `box-sizing`                                                                                 | none                                                                                    |
-| [`spacing`](/system/spacing/)                                | `m`, `margin`         | `margin`                                                                                     | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `mb`, `marginBottom`  | `margin-bottom`                                                                              | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `ml`, `marginLeft`    | `margin-left`                                                                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `mr`, `marginRight`   | `margin-right`                                                                               | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `mt`, `marginTop`     | `margin-top`                                                                                 | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `mx`, `marginX`       | `margin-left`, `margin-right`                                                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `my`, `marginY`       | `margin-top`, `margin-bottom`                                                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `p`, `padding`        | `padding`                                                                                    | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `pb`, `paddingBottom` | `padding-bottom`                                                                             | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `pl`, `paddingLeft`   | `padding-left`                                                                               | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `pr`, `paddingRight`  | `padding-right`                                                                              | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `pt`, `paddingTop`    | `padding-top`                                                                                | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `px`, `paddingX`      | `padding-left`, `padding-right`                                                              | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`spacing`](/system/spacing/)                                | `py`, `paddingY`      | `padding-top`, `padding-bottom`                                                              | [`theme.spacing(value)`](/customization/default-theme/?expand-path=$.spacing)           |
-| [`typography`](/system/typography/#variant)                  | `typography`          | `font-family`, `font-weight`, `font-size`, `line-height`, `letter-spacing`, `text-transform` | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`fontFamily`](/system/typography/#font-family)              | `fontFamily`          | `font-family`                                                                                | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`fontSize`](/system/typography/#font-size)                  | `fontSize`            | `font-size`                                                                                  | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`fontStyle`](/system/typography/#font-style)                | `fontStyle`           | `font-style`                                                                                 | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`fontWeight`](/system/typography/#font-weight)              | `fontWeight`          | `font-weight`                                                                                | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`letterSpacing`](/system/typography/#letter-spacing)        | `letterSpacing`       | `letter-spacing`                                                                             | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`lineHeight`](/system/typography/#line-height)              | `lineHeight`          | `line-height`                                                                                | [`theme.typography[value]`](/customization/default-theme/?expand-path=$.typography)     |
-| [`textAlign`](/system/typography/#text-alignment)            | `textAlign`           | `text-align`                                                                                 | none                                                                                    |

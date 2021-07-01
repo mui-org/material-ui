@@ -24,6 +24,10 @@ materialDesign: https://material.io/components/progress-indicators
 
 {{"demo": "pages/components/progress/CircularIndeterminate.js"}}
 
+### Circular color
+
+{{"demo": "pages/components/progress/CircularColor.js"}}
+
 ### Circular determinate
 
 {{"demo": "pages/components/progress/CircularDeterminate.js"}}
@@ -41,6 +45,10 @@ materialDesign: https://material.io/components/progress-indicators
 ### Linear indeterminate
 
 {{"demo": "pages/components/progress/LinearIndeterminate.js"}}
+
+### Linear color
+
+{{"demo": "pages/components/progress/LinearColor.js"}}
 
 ### Linear determinate
 
@@ -77,7 +85,7 @@ function Progress(props) {
 
 ## Customized progress
 
-Ниже находятся примеры кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находятся примеры кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/progress/CustomizedProgressBars.js", "defaultCodeOpen": false}}
 
@@ -111,9 +119,9 @@ If you need to perform 30 re-renders per second or more, we recommend disabling 
 }
 ```
 
-### IE11
+### IE 11
 
-С анимацией компонента circular progress в IE11 возникают проблемы. Анимация пунктирным контуром не работает (соответсвует `disableShrink`) и круговая анимация идет рывками. Последняя проблема может быть решена:
+С анимацией компонента circular progress на IE 11 возникают проблемы. Анимация пунктирным контуром не работает (соответсвует `disableShrink`) и круговая анимация идет рывками. Последняя проблема может быть решена:
 
 ```css
 .MuiCircularProgress-indeterminate {

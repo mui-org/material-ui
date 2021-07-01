@@ -8,14 +8,14 @@ Quando o servidor recebe a solicitação, ele renderiza o(s) componente(s) reque
 
 O Material-UI foi projetado em base com garantias de renderização no servidor, mas cabe a você certificar-se de que ele será integrado corretamente. É importante fornecer a página com o CSS necessário, caso contrário a página irá renderizar somente o HTML até o CSS ser injetado pelo cliente, causando uma tremulação (FOUC). Para injetar o estilo no cliente, precisamos:
 
-1. Crie uma instância nova do [`ServerStyleSheets`](/styles/api/#serverstylesheets) em cada requisição.
+1. Create a fresh, new [`emotion cache`](https://emotion.sh/docs/@emotion/cache) instance on every request.
 2. Renderize a árvore React com o coletor do lado do servidor.
 3. Capture o CSS.
 4. Passe o CSS junto ao cliente.
 
-No lado do cliente, o CSS será injetado uma segunda vez antes de remover o CSS injetado no lado do servidor.
+On the client-side, the CSS will be injected a second time before removing the server-side injected CSS.
 
-## Configurando
+## Setting up
 
 No passo a passo a seguir, vamos ver como configurar a renderização do lado do servidor.
 
@@ -41,9 +41,6 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
-    background: {
-      default: '#fff',
-    },
   },
 });
 
@@ -52,7 +49,7 @@ export default theme;
 
 ### O lado do servidor
 
-A seguir um esboço para o aspecto do que o servidor deve lidar. Vamos montar um [middleware Express](https://expressjs.com/en/guide/using-middleware.html) usando [app.use](https://expressjs.com/en/api.html) para lidar com todas as requisições que chegam ao servidor. Se você não estiver familiarizado com o Express ou middleware, saiba apenas, que a função handleRender será chamada toda vez que o servidor receber uma requisição.
+A seguir um esboço para o aspecto do que o servidor deve lidar. We are going to set up an [Express middleware](https://expressjs.com/en/guide/using-middleware.html) using [app.use](https://expressjs.com/en/api.html) to handle all requests that come into the server. If you're unfamiliar with Express or middleware, know that the `handleRender` function will be called every time the server receives a request.
 
 `server.js`
 
@@ -77,80 +74,81 @@ const port = 3000;
 app.listen(port);
 ```
 
-### Manipulando a requisição
+### Handling the request
 
-A primeira coisa que precisamos fazer em cada solicitação é criar um novo `ServerStyleSheets`.
+The first thing that we need to do on every request is to create a new `emotion cache`.
 
-Quando renderizando, vamos encapsular `App`, o componente raiz, dentro de um [`StylesProvider`](/styles/api/#stylesprovider) e [`ThemeProvider`](/styles/api/#themeprovider) para tornar a configuração de estilo e o `theme` disponíveis para todos os componentes na árvore de componentes.
+When rendering, we will wrap `App`, the root component, inside a [`CacheProvider`](https://emotion.sh/docs/cache-provider) and [`ThemeProvider`](/styles/api/#themeprovider) to make the style configuration and the `theme` available to all components in the component tree.
 
-A etapa principal na renderização do lado do servidor, é renderizar o HTML inicial do componente **antes** de enviarmos para o lado do cliente. Para fazer isso, usamos [ReactDOMServer.renderToString()](https://reactjs.org/docs/react-dom-server.html).
+The key step in server-side rendering is to render the initial HTML of the component **before** we send it to the client-side. Para fazer isso, usamos [ReactDOMServer.renderToString()](https://reactjs.org/docs/react-dom-server.html).
 
-Em seguida, obtemos o CSS das `folhas` usando `sheets.toString()`. Uma vez que também estamos usando emotion como nosso motor padrão de estilos, precisamos extrair os estilos também da instância do emotion. Para isso, precisamos compartilhar a mesma definição de cache tanto para o cliente quanto para o servidor:
+Material-UI is using emotion as its default styled engine. We need to extract the styles from the emotion instance. For this, we need to share the same cache configuration for both the client and server:
 
-`cache.js`
+`getCache.js`
 
 ```js
 import createCache from '@emotion/cache';
 
-const cache = createCache({ key: 'css' });
-
-export default cache;
+export default function getCache() {
+  const cache = createCache({ key: 'css' });
+  cache.compat = true;
+  return cache;
+}
 ```
 
-Com isto estamos criando uma nova instância do servidor Emotion e usando isto para extrair os estilos críticos para o html também.
+With this we are creating new emotion cache instance and using this to extract the critical styles for the html as well.
 
 Vamos ver como isso é passado na função `renderFullPage`.
 
 ```jsx
-res.send(renderFullPage(html, `${css} ${styles.css}`));
+import express from 'express';
+import * as React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+import createEmotionServer from '@emotion/server/create-instance';
+import App from './App';
+import theme from './theme';
+import getCache from './getCache';
+
+function handleRender(req, res) {
+  const cache = getCache();
+  const { extractCriticalToChunks, constructStyleTagsFromChunks } =
+    createEmotionServer(cache);
+
+  // Render the component to a string.
+  const html = ReactDOMServer.renderToString(
+    <CacheProvider value={cache}>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </CacheProvider>,
+  );
+
+  // Grab the CSS from emotion
+  const emotionChunks = extractCriticalToChunks(html);
+  const emotionCss = constructStyleTagsFromChunks(emotionChunks);
+
+  // Send the rendered page back to the client.
+  res.send(renderFullPage(html, emotionCss));
 }
 
 const app = express();
 
 app.use('/build', express.static('build'));
 
-// Isso é acionado toda vez que o servidor recebe uma requisição.
-  import express from 'express';
-import * as React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
-import createEmotionServer from '@emotion/server/create-instance';
-import App from './App';
-import theme from './theme';
-import cache from './cache';
-
-const { extractCritical } = createEmotionServer(cache);
-
-function handleRender(req, res) {
-  const sheets = new ServerStyleSheets();
-
-  // Renderiza o componente para uma string.
-  const html = ReactDOMServer.renderToString(
-    sheets.collect(
-      <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </CacheProvider>,
-    ),
-  );
-
-  // Pegue o CSS das folhas.
-  const css = sheets.toString();
-
-  // Pegue o CSS do emotion
-  const styles = extractCritical(html);
-
-  // Envie a página renderizada de volta para o cliente.
+// This is fired every time the server-side receives a request.
 app.use(handleRender);
 
 const port = 3000;
 app.listen(port);
 ```
 
-### Injetar Componente Inicial HTML e CSS
+### Inject initial component HTML and CSS
 
-A etapa final no lado do servidor é injetar o componente HTML e CSS inicial em um modelo a ser renderizado no lado do cliente.
+The final step on the server-side is to inject the initial component HTML and CSS into a template to be rendered on the client-side.
 
 ```js
 function renderFullPage(html, css) {
@@ -158,8 +156,10 @@ function renderFullPage(html, css) {
     <!DOCTYPE html>
     <html>
       <head>
-        <title>Minha página</title>
-        <style id="jss-server-side">${css}</style>
+        <title>My page</title>
+        ${css}
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       </head>
       <body>
         <div id="root">${html}</div>
@@ -169,32 +169,28 @@ function renderFullPage(html, css) {
 }
 ```
 
-### O lado do cliente
+### The client-side
 
-O lado do cliente é simples. Tudo o que precisamos fazer é remover o CSS gerado no lado do servidor. Vamos dar uma olhada no arquivo do cliente:
+The client-side is straightforward. All we need to do is use the same cache configuration as the server-side. Vamos dar uma olhada no arquivo do cliente:
 
 `client.js`
 
 ```jsx
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CacheProvider } from '@emotion/react';
 import App from './App';
 import theme from './theme';
-import cache from './cache';
+import getCache from './getCache';
 
 function Main() {
-  React.useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
-
   return (
-    <CacheProvider value={cache}>
+    <CacheProvider value={getCache}>
       <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
         <App />
       </ThemeProvider>
     </CacheProvider>
@@ -206,11 +202,11 @@ ReactDOM.hydrate(<Main />, document.querySelector('#root'));
 
 ## Implementações de referência
 
-Nós hospedamos diferentes implementações de referência que você pode encontrar no [repositório GitHub](https://github.com/mui-org/material-ui) sob a pasta o [`/examples`](https://github.com/mui-org/material-ui/tree/master/examples):
+We host different reference implementations which you can find in the [GitHub repository](https://github.com/mui-org/material-ui) under the [`/examples`](https://github.com/mui-org/material-ui/tree/HEAD/examples) folder:
 
-- [A implementação de referência deste tutorial](https://github.com/mui-org/material-ui/tree/next/examples/ssr)
-- [Gatsby](https://github.com/mui-org/material-ui/tree/next/examples/gatsby)
-- [Next.js](https://github.com/mui-org/material-ui/tree/next/examples/nextjs) ([Versão TypeScript](https://github.com/mui-org/material-ui/tree/next/examples/nextjs-with-typescript))
+- [A implementação de referência deste tutorial](https://github.com/mui-org/material-ui/tree/HEAD/examples/ssr)
+- [Gatsby](https://github.com/mui-org/material-ui/tree/HEAD/examples/gatsby)
+- [Next.js](https://github.com/mui-org/material-ui/tree/HEAD/examples/nextjs) ([TypeScript version](https://github.com/mui-org/material-ui/tree/HEAD/examples/nextjs-with-typescript))
 
 ## Resolução de problemas
 

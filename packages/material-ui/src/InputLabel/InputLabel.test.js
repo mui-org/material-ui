@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, act, createClientRender } from 'test/utils';
+import { describeConformanceV5, act, createClientRender } from 'test/utils';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -9,13 +9,11 @@ import InputLabel, { inputLabelClasses as classes } from '@material-ui/core/Inpu
 
 describe('<InputLabel />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<InputLabel>Foo</InputLabel>, () => ({
     classes,
     inheritComponent: FormLabel,
     render,
-    mount,
     refInstanceof: window.HTMLLabelElement,
     muiName: 'MuiInputLabel',
     testVariantProps: { size: 'small' },

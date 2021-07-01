@@ -288,7 +288,7 @@ function BrandingVision() {
                 We focus on providing all the low-level tools needed to build a rich user-interface
                 with React.
               </b>{' '}
-              We implement the Material Design specification, which is a bar set quite high. You are
+              We implement the Material Design guidelines, which is a bar set quite high. You are
               able to take advantage of it for your own business with any style customization
               needed.
             </Typography>

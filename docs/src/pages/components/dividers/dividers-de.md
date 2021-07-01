@@ -49,6 +49,12 @@ Sie können einen Trenner auch vertikal mit der `orientation` prop rendern.
 
 > Note the use of the `flexItem` prop to accommodate for the flex container.
 
+### Vertical with variant middle
+
+You can also render a vertical divider with `variant="middle"`.
+
+{{"demo": "pages/components/dividers/VerticalDividerMiddle.js", "bg": true}}
+
 ### Vertical with text
 
 You can also render a vertical divider with content.

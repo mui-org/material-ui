@@ -490,7 +490,8 @@ const communityData = [
 const Slider = styled('div')(({ theme }) => ({
   scrollSnapType: 'x mandatory',
   display: 'flex',
-  WebkitOverflowScrolling: 'touch', // Add iOS momentum scrolling.
+  // Add iOS momentum scrolling for iOS < 13.0
+  WebkitOverflowScrolling: 'touch',
   overflowX: 'scroll',
   margin: '0 -15px',
   '& > div': {

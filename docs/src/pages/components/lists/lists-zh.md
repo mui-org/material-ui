@@ -1,6 +1,6 @@
 ---
 title: React List（列表）组件
-components: Collapse, Divider, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
+components: Collapse, Divider, List, ListItem, ListItemButton, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
 githubLabel: 'component: List'
 materialDesign: https://material.io/components/lists
 ---
@@ -13,25 +13,19 @@ materialDesign: https://material.io/components/lists
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## 简易列表
+## Basic List
 
-{{"demo": "pages/components/lists/SimpleList.js", "bg": true}}
+{{"demo": "pages/components/lists/BasicList.js", "bg": true}}
 
 上一个样例的最后一个子集展示了如何渲染一个链接：
 
 ```jsx
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
-//...
-
-<ListItemLink href="#simple-list">
+<ListItemButton component="a" href="#simple-list">
   <ListItemText primary="Spam" />
-</ListItemLink>;
+</ListItemButton>
 ```
 
-你可以从这里查看 [React Router与文档此部分结合使用的相关样例](/guides/composition/#react-router)。
+You can find a [demo with React Router following this section](/guides/routing/#list) of the documentation.
 
 ## 嵌套列表
 
@@ -77,23 +71,21 @@ function ListItemLink(props) {
 
 {{"demo": "pages/components/lists/SwitchListSecondary.js", "bg": true}}
 
-## 固定的副标题列表
+## Sticky subheader
 
-在滚动列表时，子标题保持固定在屏幕的顶端，直到被下一个子标题推离屏幕。
-
-此性能由 CSS sticky 位置实现。 可惜的是，这一功能并未在我们支持的所有浏览器中 [实现](https://caniuse.com/#search=sticky) 。 若浏览器不支持，则默认使用 `disableSticky`。
+在滚动列表时，子标题保持固定在屏幕的顶端，直到被下一个子标题推离屏幕。 此性能由 CSS sticky 位置实现。 (⚠️ no IE 11 support)
 
 {{"demo": "pages/components/lists/PinnedSubheaderList.js", "bg": true}}
 
 ## 对齐列表项
 
-`inset` 属性可以让没有前导（leading）图标或头像的列表项与有前导图标或头像的项正确对齐。
+The `inset` prop enables a list item that does not have a leading icon or avatar to align correctly with items that do.
 
 {{"demo": "pages/components/lists/InsetList.js", "bg": true}}
 
 ## 没有边距的列表
 
-当在一个定义了边距（gutters）的组件中渲染列表时，可以通过 `disableGutters` 来禁用 `ListItem` 的边距。
+When rendering a list within a component that defines its own gutters, `ListItem` gutters can be disabled with `disableGutters`.
 
 {{"demo": "pages/components/lists/GutterlessList.js", "bg": true}}
 
@@ -104,6 +96,12 @@ function ListItemLink(props) {
 {{"demo": "pages/components/lists/VirtualizedList.js", "bg": true}}
 
 我们鼓励尽可能使用 [react-window](https://github.com/bvaughn/react-window)。 如果这个库不包括你的用例，你应该考虑使用 [react-virtualized](https://github.com/bvaughn/react-virtualized)，然后使用 [react-virtuoso](https://github.com/petyosi/react-virtuoso)等替代品。
+
+## Customized List
+
+你可以参考以下一些例子来自定义组件。 您可以在 [重写文档页面](/customization/how-to-customize/) 中了解更多有关此内容的信息。
+
+{{"demo": "pages/components/lists/CustomizedList.js"}}
 
 ## Customization 个性化
 

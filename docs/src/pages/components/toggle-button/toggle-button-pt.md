@@ -17,7 +17,7 @@ Para enfatizar grupos de [botões de alternância](https://material.io/component
 
 Com seleção exclusiva, selecionar uma opção desseleciona qualquer outra.
 
-Neste exemplo de justificativa de texto, temos opções de alternar os botões para a esquerda, centralizada, direita e texto totalmente justificado (desativado), com apenas um item disponível para seleção de cada vez.
+In this example, text justification toggle buttons present options for left, center, right, and fully justified text (disabled), with only one item available for selection at a time.
 
 {{"demo": "pages/components/toggle-button/ToggleButtons.js"}}
 
@@ -27,11 +27,15 @@ Múltipla seleção permite que opções logicamente agrupadas, como negrito, it
 
 {{"demo": "pages/components/toggle-button/ToggleButtonsMultiple.js"}}
 
-## Tamanhos
+## Tamanho
 
-Gosta de botões maiores ou menores? Use a propriedade `size`.
+For larger or smaller buttons, use the `size` prop.
 
 {{"demo": "pages/components/toggle-button/ToggleButtonSizes.js"}}
+
+## Cor
+
+{{"demo": "pages/components/toggle-button/ColorToggleButton.js"}}
 
 ## Botões verticais
 

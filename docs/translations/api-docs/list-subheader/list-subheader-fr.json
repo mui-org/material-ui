@@ -7,7 +7,8 @@
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "disableGutters": "If <code>true</code>, the List Subheader will not have gutters.",
     "disableSticky": "If <code>true</code>, the List Subheader will not stick to the top during scroll.",
-    "inset": "If <code>true</code>, the List Subheader is indented."
+    "inset": "If <code>true</code>, the List Subheader is indented.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

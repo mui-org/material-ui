@@ -61,7 +61,7 @@ import '@fontsource/roboto/700.css';
 
 ## 改变语义元素
 
-文字铸排组件通过 `variantMapping` 属性关联了一种 UI 变体和某一种语义元素。 It's important to realize that the style of a typography component is independent from the semantic underlying element.
+文字铸排组件通过 `variantMapping` 属性关联了一种 UI 变体和某一种语义元素。 重要的是要意识到排版组件的风格是独立于语义基础元素的。
 
 - 使用 `component` 属性，您可以一次性改变底层元素的样式：
 
@@ -99,9 +99,17 @@ const theme = createTheme({
 });
 ```
 
-## Adding & disabling variants
+## 添加 & 禁用变体
 
-In addition to using the default typography variants, you can add custom ones, or disable any you don't need. In addition to using the default typography variants, you can add custom ones, or disable any you don't need. See the [Adding & disabling variants](/customization/typography/#adding-amp-disabling-variants) example for more info.
+除了使用默认的排版变体外，你还可以添加自定义的排版，或者禁用任何你不需要的排版。 更多信息请参见 [添加 & 禁用变体](/customization/typography/#adding-amp-disabling-variants) 示例。
+
+## System props
+
+As a CSS utility component, the `Typography` supports all [`system`](/system/properties/) properties. You can use them as prop directly on the component. For instance, a margin-top:
+
+```jsx
+<Typography mt={2}>
+```
 
 ## 无障碍设计
 

@@ -1,6 +1,6 @@
 ---
 title: React Date Picker component
-components: DatePicker, PickersDay
+components: CalendarPicker, CalendarPickerSkeleton, DatePicker, DesktopDatePicker, MobileDatePicker, MonthPicker, PickersDay, StaticDatePicker, YearPicker
 githubLabel: 'component: DatePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
@@ -8,9 +8,9 @@ materialDesign: https://material.io/components/date-pickers
 
 # Date Picker
 
-<p class="description">Date pickers let the user select a date.</p>
+<p class="description">Date pickers позволяют пользователю выбирать дату.</p>
 
-Date pickers let the user select a date. Date pickers let the user select a date.
+Date pickers позволяют пользователю выбирать дату. Date pickers отображаются с:
 
 - Dialogs on mobile
 - Text field dropdowns on desktop
@@ -19,9 +19,9 @@ Date pickers let the user select a date. Date pickers let the user select a date
 
 ## Requirements
 
-This component relies on the date management library of your choice. It supports [date-fns](https://date-fns.org/), [luxon](https://moment.github.io/luxon/), [dayjs](https://github.com/iamkun/dayjs), [moment](https://momentjs.com/) and any other library via a public `dateAdapter` interface.
+Этот компонент опирается на выбранную Вами библиотеку управления датами. Поддерживает [date-fns](https://date-fns.org/), [luxon](https://moment.github.io/luxon/), [dayjs](https://github.com/iamkun/dayjs), [moment](https://momentjs.com/) и любую другую библиотеку с помощью публичного `dateAdapter` интерфейса.
 
-Please install any of these libraries and set up the right date engine by wrapping your root (or the highest level you wish the pickers to be available) with `LocalizationProvider`:
+Пожалуйста, установите любую из этих библиотек и настройте правильно механизм даты, обернув root (или самый высокий уровень, на котором вы хотели бы иметь доступ к pickers) с `LocalizationProvider`:
 
 ```jsx
 // or @material-ui/lab/Adapter{DayJS,Luxon,Moment} or any valid date-io adapter
@@ -35,67 +35,79 @@ function App() {
 }
 ```
 
-## Basic usage
+## Basic Usage (Основное использование)
 
-The date picker will be rendered as a modal dialog on mobile, and a textfield with a popover on desktop.
+The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop.
 
 {{"demo": "pages/components/date-picker/BasicDatePicker.js"}}
 
-## Responsiveness
+## Static mode (Статический режим)
 
-The date picker component is designed and optimized for the device it runs on.
-
-- The "Mobile" version works best for touch devices and small screens.
-- The "Desktop" version works best for mouse devices and large screens.
-
-By default, the `DatePicker` component uses a `@media (pointer: fine)` media query to determine which version to use. This can be customized with the `desktopModeMediaQuery` prop.
-
-{{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
-
-## Локализация
-
-Use `LocalizationProvider` to change the date-engine locale that is used to render the date picker. Here is an example of changing the locale for the `date-fns` adapter:
-
-{{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
-
-## Views playground
-
-It's possible to combine `year`, `month`, and `date` selection views. Views will appear in the order they're included in the `views` array.
-
-{{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
-
-## Static mode
-
-It's possible to render any picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers.
+It's possible to render any date picker without the modal/popover and text field. Это может быть полезно при создании пользовательских popover/modal контейнеров.
 
 {{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
 
-## Landscape orientation
+## Responsiveness
 
-For ease of use the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. You can force a specific layout using the `orientation` prop.
+Компонент выбора даты разработан и оптимизирован под устройство, на котором он работает.
+
+- The `MobileDatePicker` component works best for touch devices and small screens.
+- The `DesktopDatePicker` component works best for mouse devices and large screens.
+
+By default, the `DatePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. Его можно настроить с помощью `DesktopModeMediaQuery`.
+
+{{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
+
+## Form props
+
+The date picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-picker/FormPropsDatePickers.js"}}
+
+## Локализация
+
+Используйте `LocalizationProvider` для изменения локали движка дат, используемой для рендеринга date picker. Вот пример изменения локали для адаптера `date-fns`:
+
+{{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
+
+## Jalali calendar system
+
+Install `date-fns-jalali` and use `@date-io/date-fns-jalali` adapter to support [Jalali calendar](https://en.wikipedia.org/wiki/Jalali_calendar).
+
+{{"demo": "pages/components/date-picker/JalaliDatePicker.js"}}
+
+## Views playground
+
+Можно комбинировать вид выбора `year`, `month`, и `date` . Этот вид будет отображаться в том порядке, в котором они указаны в массиве `views`.
+
+{{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
+
+## Landscape orientation (Альбомная ориентация)
+
+For ease of use, the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. Вы можете принудительно установить определенный вид с помощью свойства `orientation`.
 
 {{"demo": "pages/components/date-picker/StaticDatePickerLandscape.js", "bg": true}}
 
-## Sub-components
+## Sub-components (Подкомпоненты)
 
-Some lower level sub-components (`DayPicker`, `MonthPicker` and `YearPicker`) are also exported. These are rendered without a wrapper or outer logic (masked input, date values parsing and validation, etc.).
+Some lower-level sub-components (`CalendarPicker`, `MonthPicker`, and `YearPicker`) are also exported. Они рендерятся без обёртки или внешней логики (masked input, date values parsing, validation, и т.д.).
 
-{{"demo": "pages/components/date-picker/InternalPickers.js"}}
+{{"demo": "pages/components/date-picker/SubComponentsPickers.js"}}
 
-## Custom input component
+## Custom input component (Кастомный компонент input)
 
-You can customize rendering of the input with the `renderInput` prop. Make sure to spread `ref` and `inputProps` correctly to the custom input component.
+You can customize the rendering of the input with the `renderInput` prop. Убедитесь в корректности указания  `ref` и `inputProps` в кастомном компоненте input.
 
 {{"demo": "pages/components/date-picker/CustomInput.js"}}
 
-## Customized day rendering
+## Customized day rendering (Кастомизированный рендеринг дня)
 
-The displayed days are customizable with the `renderDay` function prop. You can take advantage of the internal [PickersDay](/api/pickers-day) component.
+Отображаемые дни настраиваются с помощью функции-свойства `renderDay`. You can take advantage of the [PickersDay](/api/pickers-day/) component.
 
 {{"demo": "pages/components/date-picker/CustomDay.js"}}
 
-## Dynamic data
+## Dynamic data (Динамические данные)
 
-Sometimes it may be necessary to display additional info right in the calendar. Here's an example of prefetching and displaying server-side data using the `onMonthChange`, `loading`, and `renderDay` props.
+Иногда в календаре может потребоваться отображение дополнительной информации. Вот пример предварительной выборки и отображения серверных данных с помощью свойств `onMonthChange`, `loading`и `renderDay`.
 
 {{"demo": "pages/components/date-picker/ServerRequestDatePicker.js"}}

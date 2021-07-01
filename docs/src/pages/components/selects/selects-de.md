@@ -24,9 +24,9 @@ If you are looking for more advanced features, like combobox, multiselect, autoc
 
 ## Eigenschaften
 
-The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [Input](/api/input/), [FilledInput](/api/filled-input/), or [OutlinedInput](/api/outlined-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
+The Select component is implemented as a custom `<input>` element of the [InputBase](/api/input-base/). It extends the [text field components](/components/text-fields) sub-components, either the [OutlinedInput](/api/outlined-input/), [Input](/api/input/), or [FilledInput](/api/filled-input/), depending on the variant selected. It shares the same styles and many of the same props. Refer to the respective component's API page for details.
 
-### Filled and outlined variants
+### Filled and standard variants
 
 {{"demo": "pages/components/selects/NativeSelects.js"}}
 
@@ -56,7 +56,7 @@ Die `TextField` Wrapper-Komponente ist ein vollständiges Formularsteuerelement,
 
 Hier einige Beispiele zum Anpassen der Komponente. Mehr dazu erfahren Sie auf der [Überschreibungsdokumentationsseite](/customization/how-to-customize/).
 
-Der erste Schritt besteht darin, die `InputBase` Komponente zu formatieren. Anschließend können Sie es entweder direkt als Textfeld verwenden oder der Eigenschaft select `input` zuweisen, um ein Feld `select` zu erhalten.
+Der erste Schritt besteht darin, die `InputBase` Komponente zu formatieren. Anschließend können Sie es entweder direkt als Textfeld verwenden oder der Eigenschaft select `input` zuweisen, um ein Feld `select` zu erhalten. Notice that the `"standard"` variant is easier to customize, since it does not wrap the contents in a `fieldset`/`legend` markup.
 
 {{"demo": "pages/components/selects/CustomizedSelects.js"}}
 
@@ -94,7 +94,7 @@ Alternatively a `TextField` with an `id` and `label` creates the proper markup a
 
 ## Gruppierung
 
-Während es von der Material Design-Spezifikation nicht empfohlen wird, können Sie eine Auswahl innerhalb eines Dialogfelds verwenden.
+While it's discouraged by the Material Design guidelines, you can use a select inside a dialog.
 
 {{"demo": "pages/components/selects/DialogSelect.js"}}
 

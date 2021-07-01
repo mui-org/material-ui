@@ -35,34 +35,29 @@ Para fontes auto-hospedadas, baixe os arquivos de fonte em formatos `ttf`, `woff
 
 ```js
 import RalewayWoff2 from './fonts/Raleway-Regular.woff2';
-
-const raleway = {
-  fontFamily: 'Raleway',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 400,
-  src: `
-    local('Raleway'),
-    local('Raleway-Regular'),
-    url(${RalewayWoff2}) format('woff2')
-  `,
-  unicodeRange:
-    'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
-};
 ```
 
 Em seguida, você precisa alterar o tema para usar essa nova fonte. Para definir globalmente Raleway como uma fonte, o componente [`CssBaseline`](/components/css-baseline/) pode ser usado (ou qualquer outra solução CSS de sua escolha).
 
 ```jsx
+import RalewayWoff2 from './fonts/Raleway-Regular.woff2';
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Raleway, Arial',
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides: {
-        '@font-face': [raleway],
-      },
+      styleOverrides: `
+        @font-face {
+          font-family: 'Raleway';
+          font-style: normal;
+          font-display: swap;
+          font-weight: 400;
+          src: "local('Raleway'), local('Raleway-Regular'), url(${RalewayWoff2}) format('woff2')";
+          unicodeRange: 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
+        }
+      `,
     },
   },
 });
@@ -71,10 +66,18 @@ const theme = createTheme({
 return (
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    {children}
+    <Box
+      sx={{
+        fontFamily: 'Raleway',
+      }}
+    >
+      Raleway
+    </Box>
   </ThemeProvider>
 );
 ```
+
+Note that if you want to add additional `@font-face` declarations, you need to use the string CSS template syntax for adding style overrides, so that the previosly defined `@font-face` declarations won't be replaced.
 
 ## Tamanho da fonte
 
@@ -85,8 +88,8 @@ Para alterar o tamanho da fonte do Material-UI, você pode definir a propriedade
 ```js
 const theme = createTheme({
   typography: {
-    // Em chinês e japonês os caracteres são geralmente maiores,
-    // então um tamanho de letra menor pode ser apropriado.
+    // In Chinese and Japanese the characters are usually larger,
+    // so a smaller fontsize may be appropriate.
     fontSize: 12,
   },
 });
@@ -122,7 +125,7 @@ Para automatizar estas configurações, você pode usar a função auxiliar [`re
 
 {{"demo": "pages/customization/typography/ResponsiveFontSizesChart.js", "hideToolbar": true}}
 
-Você pode ver isso em ação no exemplo abaixo. Ajuste o tamanho da janela do navegador e observe como o tamanho da fonte muda à medida que a largura cruza os diferentes [pontos de quebra](/customization/breakpoints/):
+Você pode ver isso em ação no exemplo abaixo. Adjust your browser's window size, and notice how the font size changes as the width crosses the different [breakpoints](/customization/breakpoints/):
 
 ```js
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
@@ -148,7 +151,7 @@ Uma propriedade de tema `htmlFontSize` é fornecida para este caso de uso, que i
 ```js
 const theme = createTheme({
   typography: {
-    // Diz ao Material-UI qual é o font-size no elemento html.
+    // Tell Material-UI what's the font-size on the html element is.
     htmlFontSize: 10,
   },
 });
@@ -224,24 +227,24 @@ const theme = createTheme({
 
 > If you aren't using TypeScript you should skip this step.
 
-You need to make sure that the typings for the theme's `typography` variants and the `Typogrpahy`'s `variant` prop reflects the new set of variants.
+You need to make sure that the typings for the theme's `typography` variants and the `Typography`'s `variant` prop reflects the new set of variants.
 
 <!-- Tested with packages/material-ui/test/typescript/augmentation/typographyVariants.spec.ts -->
 
 ```ts
-declare module '@material-ui/core/styles/createTypography' {
-  interface Typography {
+declare module '@material-ui/core/styles' {
+  interface TypographyVariants {
     poster: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
-  interface TypographyOptions {
+  interface TypographyVariantsOptions {
     poster?: React.CSSProperties;
   }
 }
 
 // Update the Typography's variant prop options
-declare module '@material-ui/core/Typography/Typography' {
+declare module '@material-ui/core/Typography' {
   interface TypographyPropsVariantOverrides {
     poster: true;
     h3: false;

@@ -35,34 +35,29 @@ const theme = createTheme({
 
 ```js
 import RalewayWoff2 from './fonts/Raleway-Regular.woff2';
-
-const raleway = {
-  fontFamily: 'Raleway',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 400,
-  src: `
-    local('Raleway'),
-    local('Raleway-Regular'),
-    url(${RalewayWoff2}) format('woff2')
-  `,
-  unicodeRange:
-    'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
-};
 ```
 
 Next, you need to change the theme to use this new font. In order to globally define Raleway as a font face, the [`CssBaseline`](/components/css-baseline/) component can be used (or any other CSS solution of your choice).
 
 ```jsx
+import RalewayWoff2 from './fonts/Raleway-Regular.woff2';
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Raleway, Arial',
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides: {
-        '@font-face': [raleway],
-      },
+      styleOverrides: `
+        @font-face {
+          font-family: 'Raleway';
+          font-style: normal;
+          font-display: swap;
+          font-weight: 400;
+          src: "local('Raleway'), local('Raleway-Regular'), url(${RalewayWoff2}) format('woff2')";
+          unicodeRange: 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
+        }
+      `,
     },
   },
 });
@@ -71,16 +66,24 @@ const theme = createTheme({
 return (
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    {children}
+    <Box
+      sx={{
+        fontFamily: 'Raleway',
+      }}
+    >
+      Raleway
+    </Box>
   </ThemeProvider>
 );
 ```
 
+Note that if you want to add additional `@font-face` declarations, you need to use the string CSS template syntax for adding style overrides, so that the previosly defined `@font-face` declarations won't be replaced.
+
 ## フォントサイズ
 
-An `htmlFontSize` theme property is provided for this use case, which tells Material-UI what the font-size on the `<html>` element is. An `htmlFontSize` theme property is provided for this use case, which tells Material-UI what the font-size on the `<html>` element is. ⚠️ Changing the font size can harm accessibility ♿️. Most browsers agreed on the default size of 16 pixels, but the user can change it. For instance, someone with an impaired vision could have set their browser’s default font size to something larger.
+Material-UIでは、フォントサイズに`rem`単位を使用します。 ブラウザの`<html>`要素のデフォルトのフォントサイズは`16px`ですが、ブラウザにはこの値を変更するオプションがあります。そのため、`rem`単位を使用すると、ユーザーの設定に対応できるため、アクセシビリティのサポートが向上します。 ユーザーは、視力の低下から最適な設定の選択まで、さまざまな理由でフォントサイズの設定を変更できます。サイズや表示距離が大幅に異なるデバイスにも対応できます。
 
-An `htmlFontSize` theme property is provided for this use case, which tells Material-UI what the font-size on the `<html>` element is. This is used to adjust the `rem` value so the calculated font-size always match the specification.
+Material-UIのフォントサイズを変更するには、`fontSize`プロパティを指定します。 デフォルト値は `14px` です。
 
 ```js
 const theme = createTheme({
@@ -100,7 +103,7 @@ const theme = createTheme({
 
 ### レスポンシブフォントサイズ
 
-[media queries](/customization/breakpoints/#api) を使用できます： Typographyバリアント型プロパティは、生成されたCSSに直接マップされます。 Typographyバリアント型プロパティは、生成されたCSSに直接マップされます。 [media queries](/customization/breakpoints/#api) を使用できます： Typographyバリアント型プロパティは、生成されたCSSに直接マップされます。 [media queries](/customization/breakpoints/#api) を使用できます：
+[media queries](/customization/breakpoints/#api) を使用できます： Typographyバリアント型プロパティは、生成されたCSSに直接マップされます。 [media queries](/customization/breakpoints/#api) を使用できます：
 
 ```js
 const theme = createTheme();
@@ -122,7 +125,7 @@ theme.typography.h3 = {
 
 {{"demo": "pages/customization/typography/ResponsiveFontSizesChart.js", "hideToolbar": true}}
 
-以下の例で実際にこれを見ることができます。 ブラウザのウィンドウサイズを調整し、幅が異なる[ブレークポイント](/customization/breakpoints/)を横切るときにフォントサイズがどのように変化するかを確認します。
+以下の例で実際にこれを見ることができます。 Adjust your browser's window size, and notice how the font size changes as the width crosses the different [breakpoints](/customization/breakpoints/):
 
 ```js
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
@@ -139,11 +142,11 @@ theme = responsiveFontSizes(theme);
 
 ### HTMLフォントサイズ
 
-An `htmlFontSize` theme property is provided for this use case, which tells Material-UI what the font-size on the `<html>` element is. This is used to adjust the `rem` value so the calculated font-size always match the specification.
+`<html>`要素のデフォルトのフォントサイズを変更することもできます。 たとえば、[ 10pxの単純化を使用する場合](https://www.sitepoint.com/understanding-and-using-rem-units-in-css/) 。
 
-> ⚠️ Changing the font size can harm accessibility ♿️. Most browsers agreed on the default size of 16 pixels, but the user can change it. For instance, someone with an impaired vision could have set their browser's default font size to something larger.
+> ⚠️ フォントサイズを変えるとアクセシビリティに悪影響を及ぼす可能性があります ♿️ Most browsers agreed on the default size of 16 pixels, but the user can change it. For instance, someone with an impaired vision could have set their browser's default font size to something larger.
 
-An `htmlFontSize` theme property is provided for this use case, which tells Material-UI what the font-size on the `<html>` element is. This is used to adjust the `rem` value so the calculated font-size always match the specification.
+An `htmlFontSize` theme property is provided for this use case, which tells Material-UI what the font-size on the `<html>` element is. これは、計算されたフォントサイズが常に仕様と一致するように、`rem`の値を調整するために使用されます。
 
 ```js
 const theme = createTheme({
@@ -166,7 +169,7 @@ _以下のデモを正しく表示するには、このページのhtml要素に
 
 ## バリアント
 
-The typography object comes with [13 variants](/components/typography/#component) by default:
+タイポグラフィオブジェクトは、デフォルトでは[13のバリアント](/components/typography/#component)を持っています。
 
 - h1
 - h2
@@ -224,24 +227,24 @@ const theme = createTheme({
 
 > If you aren't using TypeScript you should skip this step.
 
-You need to make sure that the typings for the theme's `typography` variants and the `Typogrpahy`'s `variant` prop reflects the new set of variants.
+You need to make sure that the typings for the theme's `typography` variants and the `Typography`'s `variant` prop reflects the new set of variants.
 
 <!-- Tested with packages/material-ui/test/typescript/augmentation/typographyVariants.spec.ts -->
 
 ```ts
-declare module '@material-ui/core/styles/createTypography' {
-  interface Typography {
+declare module '@material-ui/core/styles' {
+  interface TypographyVariants {
     poster: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
-  interface TypographyOptions {
+  interface TypographyVariantsOptions {
     poster?: React.CSSProperties;
   }
 }
 
 // Update the Typography's variant prop options
-declare module '@material-ui/core/Typography/Typography' {
+declare module '@material-ui/core/Typography' {
   interface TypographyPropsVariantOverrides {
     poster: true;
     h3: false;
@@ -262,4 +265,4 @@ declare module '@material-ui/core/Typography/Typography' {
 
 ## デフォルト値
 
-You can explore the default values of the typography using [the theme explorer](/customization/default-theme/?expand-path=$.typography) or by opening the dev tools console on this page (`window.theme.typography`).
+タイポグラフィのデフォルト値を調べるには、[テーマエクスプローラ](/customization/default-theme/?expand-path=$.typography)を使うか、このページの開発ツールコンソール（`window.theme.typography`）を開くことで調べることができます。

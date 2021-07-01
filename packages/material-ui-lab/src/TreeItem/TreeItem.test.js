@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { spy } from 'sinon';
 import {
-  createMount,
   describeConformanceV5,
   act,
   createEvent,
@@ -15,13 +14,11 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem, { treeItemClasses as classes } from '@material-ui/lab/TreeItem';
 
 describe('<TreeItem />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<TreeItem nodeId="one" label="one" />, () => ({
     classes,
     inheritComponent: 'li',
-    mount,
     render,
     muiName: 'MuiTreeItem',
     refInstanceof: window.HTMLLIElement,

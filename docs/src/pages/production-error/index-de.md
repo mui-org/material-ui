@@ -1,7 +1,7 @@
-# Production Error
+# Produktionsfehler
 
-<p class="description">In the production build of Material-UI error messages are minified to reduce the size of your application.</p>
+<p class="description">Bei der Erstellung von Material-UI-Fehlern werden Fehlermeldungen minimiert, um die Größe Ihrer Anwendung zu verringern. </p>
 
-We recommend using the development build when debugging this error. It will include additional warnings about potential problems. If you encounter an exception while using the production build, this page will reassemble the orrigianl text of the error.
+Wir empfehlen, beim Debuggen dieses Fehlers den Entwicklungsbuild zu verwenden. Sie wird zusätzliche Warnungen vor möglichen Problemen enthalten. If you encounter an exception while using the production build, this page will reassemble the orrigianl text of the error.
 
 {{"demo": "pages/production-error/ErrorDecoder.js", "hideToolbar": true, "bg": "inline"}}

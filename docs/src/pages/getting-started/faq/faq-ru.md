@@ -47,11 +47,12 @@ The ripple effect is exclusively coming from the `BaseButton` component. You can
 import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
-  props: {
+  components: {
     // Name of the component ⚛️
     MuiButtonBase: {
-      // The properties to apply
-      disableRipple: true, // No more ripple, on the whole application 💣!
+      defaultProps: {
+        // The props to apply
+        disableRipple: true, // No more ripple, on the whole application 💣!
       },
   },
 });
@@ -66,7 +67,7 @@ import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
   transitions: {
-    // Então temos `transition: none;` everywhere
+    // So we have `transition: none;` everywhere
     create: () => 'none',
   },
 });
@@ -109,7 +110,7 @@ No, it's not required. But this dependency comes built in, so carries no additio
 
 You can use `npm ls @material-ui/styles`, `yarn list @material-ui/styles` or `find -L ./node_modules | grep /@material-ui/styles/package.json` commands in your application folder. If you think that the issue may be in the duplication of the @material-ui/styles module somewhere in your dependencies, there are several ways to check this.
 
-## When should I use inline-style vs CSS?
+## When should I use inline-style vs. CSS?
 
 As a rule of thumb, only use inline-style for dynamic style properties. The CSS alternative provides more advantages, such as:
 
@@ -120,7 +121,7 @@ As a rule of thumb, only use inline-style for dynamic style properties. The CSS 
 
 ## Как мне использовать react-router?
 
-We detail the [integration with third-party routing libraries](/guides/composition/#routing-libraries) like react-router, Gatsby or Next.js in our guide.
+We detail the [integration with third-party routing libraries](/guides/routing/) like react-router, Gatsby or Next.js in our guide.
 
 ## Как я могу получить доступ к элементу DOM?
 
@@ -368,7 +369,10 @@ This is why we require a prop with the actual DOM node so that React can take ca
 ```jsx
 function App() {
   const [container, setContainer] = React.useState(null);
-  const handleRef = React.useCallback(instance => setContainer(instance), [setContainer])
+  const handleRef = React.useCallback(
+    (instance) => setContainer(instance),
+    [setContainer],
+  );
 
   return (
     <div className="App">

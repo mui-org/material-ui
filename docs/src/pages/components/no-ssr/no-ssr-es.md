@@ -17,7 +17,7 @@ Este componente puede ser útil en una variedad de situaciones:
 
 [La función de estilo de la paleta](/system/palette/).
 
-## Aplazamiento del lado del cliente
+## Client-side deferring
 
 {{"demo": "pages/components/no-ssr/SimpleNoSsr.js"}}
 

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
@@ -29,37 +28,6 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  main: {
-    marginBottom: theme.spacing(4),
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-}));
-
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
@@ -75,10 +43,7 @@ function getStepContent(step) {
   }
 }
 
-const defaultTheme = createTheme();
-
 function CheckoutContent() {
-  const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -96,7 +61,10 @@ function CheckoutContent() {
         position="absolute"
         color="default"
         elevation={0}
-        className={classes.appBar}
+        sx={{
+          position: 'relative',
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
       >
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
@@ -104,12 +72,12 @@ function CheckoutContent() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container component="main" className={classes.main} maxWidth="sm">
-        <Paper className={classes.paper} variant="outlined">
+      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -131,9 +99,9 @@ function CheckoutContent() {
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
-                <div className={classes.buttons}>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
+                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                       Back
                     </Button>
                   )}
@@ -141,11 +109,11 @@ function CheckoutContent() {
                   <Button
                     variant="contained"
                     onClick={handleNext}
-                    className={classes.button}
+                    sx={{ mt: 3, ml: 1 }}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                   </Button>
-                </div>
+                </Box>
               </React.Fragment>
             )}
           </React.Fragment>
@@ -157,10 +125,5 @@ function CheckoutContent() {
 }
 
 export default function Checkout() {
-  return (
-    // TODO: Remove ThemeProvider once makeStyles is removed
-    <ThemeProvider theme={defaultTheme}>
-      <CheckoutContent />
-    </ThemeProvider>
-  );
+  return <CheckoutContent />;
 }

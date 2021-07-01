@@ -5,7 +5,7 @@ import { Theme } from '../styles/createTheme';
 
 export interface StackTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P &
-    SystemProps & {
+    SystemProps<Theme> & {
       ref?: React.Ref<unknown>;
       /**
        * The content of the component.
@@ -45,7 +45,9 @@ export interface StackTypeMap<P = {}, D extends React.ElementType = 'div'> {
  */
 declare const Stack: OverridableComponent<StackTypeMap>;
 
-export type StackProps<D extends React.ElementType = StackTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<StackTypeMap<P, D>, D>;
+export type StackProps<
+  D extends React.ElementType = StackTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<StackTypeMap<P, D>, D>;
 
 export default Stack;

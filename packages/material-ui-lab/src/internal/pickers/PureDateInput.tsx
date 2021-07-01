@@ -17,6 +17,14 @@ export interface DateInputProps<TInputValue = ParseableDate<unknown>, TDateValue
    * @default /\dap/gi
    */
   acceptRegex?: RegExp;
+  /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   */
+  components?: {
+    // Icon displaying for open picker button.
+    OpenPickerIcon?: React.ElementType;
+  };
   disabled?: boolean;
   /**
    * Disable mask on the keyboard, this should be used rarely. Consider passing proper mask for your format.
@@ -62,10 +70,6 @@ export interface DateInputProps<TInputValue = ParseableDate<unknown>, TDateValue
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps?: Partial<IconButtonProps>;
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon?: React.ReactNode;
   rawValue: TInputValue;
   readOnly?: boolean;
   /**

@@ -1,5 +1,5 @@
 ---
-title: Date picker, Time picker React components
+title: Datumsauswahl, Zeit Auswahl Reagieren Sie auf React Komponenten
 components: TextField
 githubLabel: 'component: DatePicker'
 materialDesign: https://material.io/components/date-pickers

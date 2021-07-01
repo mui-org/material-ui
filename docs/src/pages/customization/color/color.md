@@ -1,6 +1,6 @@
 # Color
 
-<p class="description">Convey meaning through color. Out of the box you get access to all colors in the Material Design spec.</p>
+<p class="description">Convey meaning through color. Out of the box you get access to all colors in the Material Design guidelines.</p>
 
 The Material Design [color system](https://material.io/design/color/) can be used to create a color theme that reflects your brand or style.
 

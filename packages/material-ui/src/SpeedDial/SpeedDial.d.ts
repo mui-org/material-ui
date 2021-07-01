@@ -3,17 +3,14 @@ import { SxProps } from '@material-ui/system';
 import { Theme } from '../styles';
 import { InternalStandardProps as StandardProps } from '..';
 import { FabProps } from '../Fab';
-import { TransitionHandlerProps, TransitionProps } from '../transitions';
+import { TransitionProps } from '../transitions';
 import { SpeedDialClasses } from './speedDialClasses';
 
 export type CloseReason = 'toggle' | 'blur' | 'mouseLeave' | 'escapeKeyDown';
 export type OpenReason = 'toggle' | 'focus' | 'mouseEnter';
 
 export interface SpeedDialProps
-  extends StandardProps<
-    React.HTMLAttributes<HTMLDivElement> & Partial<TransitionHandlerProps>,
-    'children'
-  > {
+  extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /**
    * SpeedDialActions to display when the SpeedDial is `open`.
    */

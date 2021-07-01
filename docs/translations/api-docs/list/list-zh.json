@@ -6,7 +6,8 @@
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "dense": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used for the list and list items. The prop is available to descendant components as the <code>dense</code> context.",
     "disablePadding": "If <code>true</code>, vertical padding is removed from the list.",
-    "subheader": "The content of the subheader, normally <code>ListSubheader</code>."
+    "subheader": "The content of the subheader, normally <code>ListSubheader</code>.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

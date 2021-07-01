@@ -3,49 +3,50 @@
   "propDescriptions": {
     "activeStep": "Set the active step (zero based index). Defines which dot is highlighted when the variant is &#39;dots&#39;.",
     "backButton": "A back button element. For instance, it can be a <code>Button</code> or an <code>IconButton</code>.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "LinearProgressProps": "Props applied to the <code>LinearProgress</code> element.",
     "nextButton": "A next button element. For instance, it can be a <code>Button</code> or an <code>IconButton</code>.",
     "position": "Set the positioning type.",
     "steps": "The total steps.",
-    "variant": "The variant to use."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "variant": "A variante a usar."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "positionBottom": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"bottom\"</code>"
     },
     "positionTop": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"top\"</code>"
     },
     "positionStatic": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>position=\"static\"</code>"
     },
     "dots": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the dots container",
       "conditions": "<code>variant=\"dots\"</code>"
     },
     "dot": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "each dot",
       "conditions": "<code>variant=\"dots\"</code>"
     },
     "dotActive": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "a dot",
       "conditions": "<code>variant=\"dots\"</code> and this is the active step"
     },
     "progress": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Linear Progress component",
       "conditions": "<code>variant=\"progress\"</code>"
     }

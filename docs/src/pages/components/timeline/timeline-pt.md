@@ -19,11 +19,11 @@ Uma linha do tempo básica mostrando a lista de eventos.
 
 {{"demo": "pages/components/timeline/BasicTimeline.js"}}
 
-## Linha do tempo alinhada à direita
+## Left-positioned timeline
 
-A linha do tempo pode ser posicionada no lado direito dos eventos.
+The main content of the timeline can be positioned on the left side relative to the time axis.
 
-{{"demo": "pages/components/timeline/RightAlignedTimeline.js"}}
+{{"demo": "pages/components/timeline/LeftPositionedTimeline.js"}}
 
 ## Linha do tempo alternada
 

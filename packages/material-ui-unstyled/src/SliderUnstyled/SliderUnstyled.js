@@ -214,8 +214,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
     isRtl = false,
     components = {},
     componentsProps = {},
-    /* eslint-disable-next-line react/prop-types */
-    theme,
     ...other
   } = props;
 
@@ -642,7 +640,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
       {...(!isHostComponent(Root) && {
         as: component,
         styleProps: { ...styleProps, ...rootProps.styleProps },
-        theme,
       })}
       {...other}
       className={clsx(classes.root, rootProps.className, className)}
@@ -651,7 +648,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
         {...railProps}
         {...(!isHostComponent(Rail) && {
           styleProps: { ...styleProps, ...railProps.styleProps },
-          theme,
         })}
         className={clsx(classes.rail, railProps.className)}
       />
@@ -659,7 +655,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
         {...trackProps}
         {...(!isHostComponent(Track) && {
           styleProps: { ...styleProps, ...trackProps.styleProps },
-          theme,
         })}
         className={clsx(classes.track, trackProps.className)}
         style={{ ...trackStyle, ...trackProps.style }}
@@ -690,7 +685,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
               {...markProps}
               {...(!isHostComponent(Mark) && {
                 styleProps: { ...styleProps, ...markProps.styleProps, markActive },
-                theme,
               })}
               style={{ ...style, ...markProps.style }}
               className={clsx(classes.mark, markProps.className, {
@@ -708,7 +702,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
                     ...markLabelProps.styleProps,
                     markLabelActive: markActive,
                   },
-                  theme,
                 })}
                 style={{ ...style, ...markLabelProps.style }}
                 className={clsx(classes.markLabel, markLabelProps.className, {
@@ -744,7 +737,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
               className={clsx(classes.valueLabel, valueLabelProps.className)}
               {...(!isHostComponent(ValueLabel) && {
                 styleProps: { ...styleProps, ...valueLabelProps.styleProps },
-                theme,
               })}
             >
               <Thumb
@@ -758,7 +750,6 @@ const SliderUnstyled = React.forwardRef(function SliderUnstyled(props, ref) {
                 })}
                 {...(!isHostComponent(Thumb) && {
                   styleProps: { ...styleProps, ...thumbProps.styleProps },
-                  theme,
                 })}
                 style={{
                   ...style,

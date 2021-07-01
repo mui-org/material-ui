@@ -13,7 +13,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#breadcrumb'
 
 ## Einfache Breadcrumbs
 
-{{"demo": "pages/components/breadcrumbs/SimpleBreadcrumbs.js"}}
+{{"demo": "pages/components/breadcrumbs/BasicBreadcrumbs.js"}}
 
 ## Active last breadcrumb
 
@@ -23,7 +23,7 @@ Keep the last breadcrumb interactive.
 
 ## Benutzerdefiniertes Trennzeichen
 
-In den folgenden Beispielen werden zwei textbasierte Trennzeichen und ein SVG-Icon verwendet.
+In the following examples, we are using two string separators and an SVG icon.
 
 {{"demo": "pages/components/breadcrumbs/CustomSeparator.js"}}
 

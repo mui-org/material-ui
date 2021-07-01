@@ -22,11 +22,11 @@ A basic menu opens over the anchor element by default (this option can be [chang
 
 **Неточности:** В отличии от простых меню, простые диалоги могут содержать дополнительную информацию относительно опций, доступных для элемента списка или предоставлять навигационные или ортогональные действия, относящиеся к главной задаче. Although they can display the same content, simple menus are preferred over simple dialogs because simple menus are less disruptive to the user's current context.
 
-{{"demo": "pages/components/menus/SimpleMenu.js"}}
+{{"demo": "pages/components/menus/BasicMenu.js"}}
 
 ## Selected menu
 
-If used for item selection, when opened, simple menus attempt to vertically align the currently selected menu item with the anchor element, and the initial focus will be placed on the selected menu item. The currently selected menu item is set using the `selected` property (from [ListItem](/api/list-item/)). To use a selected menu item without impacting the initial focus or the vertical positioning of the menu, set the `variant` property to `menu`.
+If used for item selection, when opened, simple menus places the initial focus on the selected menu item. The currently selected menu item is set using the `selected` property (from [ListItem](/api/list-item/)). To use a selected menu item without impacting the initial focus, set the `variant` prop to "menu".
 
 {{"demo": "pages/components/menus/SimpleListMenu.js"}}
 
@@ -46,7 +46,7 @@ The primary responsibility of the `MenuList` component is to handle the focus.
 
 ## Customized menu
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/menus/CustomizedMenus.js"}}
 

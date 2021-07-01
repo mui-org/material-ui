@@ -10,7 +10,7 @@
   },
   "name": "BottomNavigationAction",
   "styles": {
-    "classes": ["root", "selected", "iconOnly", "wrapper", "label"],
+    "classes": ["root", "selected", "iconOnly", "label"],
     "globalClasses": { "selected": "Mui-selected" },
     "name": "MuiBottomNavigationAction"
   },

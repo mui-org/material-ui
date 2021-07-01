@@ -18,7 +18,7 @@ githubLabel: 'hook: useMediaQuery'
 
 ## 単純なメディアクエリ
 
-Finally, you need to provide an implementation of [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) to the `useMediaQuery` with the previously guessed characteristics. Using [css-mediaquery](https://github.com/ericf/css-mediaquery) to emulate matchMedia is recommended.
+フックの最初の引数にメディアクエリを提供する必要があります。 The media query string can be any valid CSS media query, e.g. [`'(prefers-color-scheme: dark)'`](/customization/palette/#user-preference).
 
 {{"demo": "pages/components/use-media-query/SimpleMediaQuery.js", "defaultCodeOpen": true}}
 
@@ -116,7 +116,7 @@ Try relying on client-side CSS media queries first. たとえば、
 
 - [`<Box display>`](/system/display/#hiding-elements)
 - [`themes.breakpoints.up(x)`](/customization/breakpoints/#css-media-queries)
-- or [`<Hidden implementation="css">`](/components/hidden/#css)
+- or [`sx prop`](/system/basics/#heading-the-sx-prop)
 
 If none of the above alternatives are an option, you can proceed reading this section of the documentation.
 
@@ -159,7 +159,7 @@ Make sure you provide the same custom match media implementation to the client-s
 
 ## `withWidth（）`からの移行
 
-`withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます：
+`withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： `withWidth()`上位コンポーネントは、ページの画面幅を挿入します。 `useWidth` フックで同じ動作を再現できます： You can reproduce the same behavior with a `useWidth` hook:
 
 {{"demo": "pages/components/use-media-query/UseWidth.js"}}
 
@@ -169,13 +169,13 @@ Make sure you provide the same custom match media implementation to the client-s
 
 #### 引数
 
-1. `query` （*String* | *Function*）：処理するメディアクエリを表す文字列、または文字列を返す（コンテキスト内の）テーマを受け入れるコールバック関数。
-2. `オプション` (*オプジェクト* [任意]):
+1. `query` (_string_ | _func_): A string representing the media query to handle or a callback function accepting the theme (in the context) that returns a string.
+2. `options` (_object_ [optional]):
 
-- `options.defaultMatches` （*Boolean* [optional]）： `window.matchMedia（）` はサーバーで使用できないため、 最初のマウント時にデフォルトの一致を返します。 `options.noSsr` (*ブール値* [任意]): デフォルト値 `false`.
-- `options.matchMedia` (*Function* [optional]) You can provide your own implementation of *matchMedia*. This can be used for handling an iframe content window.
-- `options.noSsr` (*ブール値* [任意]): デフォルト値 `false`. To perform the server-side hydration, the hook needs to render twice. A first time with `false`, the value of the server, and a second time with the resolved value. このダブルパスレンダリングサイクルには欠点があります。 遅いです。 You can set this option to `true` if you are doing **client-side only** rendering.
-- `options.ssrMatchMedia` (*Function* [optional]) You can provide your own implementation of *matchMedia* in a [server-side rendering context](#server-side-rendering).
+- `options.defaultMatches` (_bool_ [optional]): As `window.matchMedia()` is unavailable on the server, we return a default matches during the first mount. `options.noSsr` (*ブール値* [任意]): デフォルト値 `false`.
+- `options.matchMedia` (_func_ [optional]): You can provide your own implementation of _matchMedia_. This can be used for handling an iframe content window.
+- `options.noSsr` (_bool_ [optional]): Defaults to `false`. To perform the server-side hydration, the hook needs to render twice. A first time with `false`, the value of the server, and a second time with the resolved value. このダブルパスレンダリングサイクルには欠点があります。 遅いです。 You can set this option to `true` if you are doing **client-side only** rendering.
+- `options.ssrMatchMedia` (_func_ [optional]): You can provide your own implementation of _matchMedia_ in a [server-side rendering context](#server-side-rendering).
 
 Note: You can change the default options using the [`default props`](/customization/theme-components/#default-props) feature of the theme with the `MuiUseMediaQuery` key.
 

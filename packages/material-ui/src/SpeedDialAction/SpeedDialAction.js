@@ -4,9 +4,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { emphasize } from '@material-ui/system';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { emphasize } from '../styles/colorManipulator';
 import Fab from '../Fab';
 import Tooltip from '../Tooltip';
 import capitalize from '../utils/capitalize';
@@ -35,10 +35,7 @@ const SpeedDialActionFab = styled(Fab, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.fab,
-      ...(!styleProps.open && styles.fabClosed),
-    };
+    return [styles.fab, !styleProps.open && styles.fabClosed];
   },
 })(({ theme, styleProps }) => ({
   margin: 8,
@@ -63,11 +60,11 @@ const SpeedDialActionStaticTooltip = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.staticTooltip,
-      ...(!styleProps.open && styles.staticTooltipClosed),
-      ...styles[`tooltipPlacement${capitalize(styleProps.tooltipPlacement)}`],
-    };
+    return [
+      styles.staticTooltip,
+      !styleProps.open && styles.staticTooltipClosed,
+      styles[`tooltipPlacement${capitalize(styleProps.tooltipPlacement)}`],
+    ];
   },
 })(({ theme, styleProps }) => ({
   position: 'relative',

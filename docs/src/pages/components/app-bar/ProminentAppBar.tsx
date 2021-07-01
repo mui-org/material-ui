@@ -25,6 +25,7 @@ export default function ProminentAppBar() {
       <AppBar position="static">
         <StyledToolbar>
           <IconButton
+            size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -40,10 +41,15 @@ export default function ProminentAppBar() {
           >
             Material-UI
           </Typography>
-          <IconButton aria-label="search" color="inherit">
+          <IconButton size="large" aria-label="search" color="inherit">
             <SearchIcon />
           </IconButton>
-          <IconButton aria-label="display more actions" edge="end" color="inherit">
+          <IconButton
+            size="large"
+            aria-label="display more actions"
+            edge="end"
+            color="inherit"
+          >
             <MoreIcon />
           </IconButton>
         </StyledToolbar>

@@ -68,7 +68,7 @@ More details in the [Modal performance section](/components/modal/#performance).
 
 ## Приспосабливающаяся панель
 
-Адапивный дизайн может быть достигнут использованием компонента `Hidden`. `cкрытая` панель может быть показана для экранов с небольшим разрешением, тогда как `вполне видимая` панель будет показана на широких экранах.
+You can use the `temporary` variant to display a drawer for small screens and `permanent` for a drawer for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 

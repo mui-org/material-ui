@@ -125,7 +125,7 @@ For instance, you could use:
 
 - [`<Box display>`](/system/display/#hiding-elements)
 - [`themes.breakpoints.up(x)`](/customization/breakpoints/#css-media-queries)
-- or [`xs prop`](/system/basics/#heading-the-sx-prop)
+- or [`sx prop`](/system/basics/#heading-the-sx-prop)
 
 If none of the above alternatives are an option, you can proceed reading this section of the documentation.
 

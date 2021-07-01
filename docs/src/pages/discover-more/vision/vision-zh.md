@@ -6,7 +6,7 @@ Material-UI 起航于 Material Design 指导下的设计原则，但一款软件
 
 正因此，Material-UI 绝不只是应用、实现 Material Design 所列述的原则，它更像一个面对广大用户提出的设计问题，提供优良设计组件甚或设计方案的 UI 库。 这个一般化的做法并没有遵循任何已有的设计原则。 此处我们还有想要表达的另一层意思，那就是 Material-UI 的一些组件或组合可能提供了一些 Material Design 还未能给出的设计思路。
 
-Material-Ui 致力于提供各类底层的、基础型的工具。有了它，用户可以开发出丰富的用户界面。 一旦我们实施了 Material Design 规范（这是一个很高的标准），您就能够针对自己的业务定制任何所需要的样式。 我们很想看到的是，公司会根据自己的品牌有了自己的一套 Material-UI 使用方法，却无关乎或者不是百分之百有着 material 的设计哲学和内涵。 我们不想要看到 Material-UI 只是 Google 产品的另一个复制品。
+Material-Ui 致力于提供各类底层的、基础型的工具。有了它，用户可以开发出丰富的用户界面。 Once we implement the Material Design guidelines (which is a bar set quite high), you should be able to take advantage of it for your own business with any style customization needed. 我们很想看到的是，公司会根据自己的品牌有了自己的一套 Material-UI 使用方法，却无关乎或者不是百分之百有着 material 的设计哲学和内涵。 我们不想要看到 Material-UI 只是 Google 产品的另一个复制品。
 
 作为开发者，我们眼中 Material-UI 的未来应该是：
 

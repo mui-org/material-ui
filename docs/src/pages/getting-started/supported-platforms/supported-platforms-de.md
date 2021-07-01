@@ -8,21 +8,35 @@ Die Material-UI unterstützt die neuesten, stabilen Versionen aller gängigen Br
 
 <!-- #stable-snapshot -->
 
-| Edge  | Firefox | Chrome | Safari (macOS) | Safari (iOS) |
-|:----- |:------- |:------ |:-------------- |:------------ |
-| >= 85 | >= 78   | >= 84  | >= 13          | >= 12.1      |
+| Edge  | Firefox | Chrome | Safari (macOS) | Safari (iOS) | IE                   |
+|:----- |:------- |:------ |:-------------- |:------------ |:-------------------- |
+| >= 85 | >= 78   | >= 84  | >= 13          | >= 12.1      | 11 (partial support) |
 
 <!-- #default-branch-switch -->
 
-An extensive list can be found in our [.browserlistrc](https://github.com/mui-org/material-ui/blob/next/.browserslistrc#L12-L27) (check the `stable` entry). If you need to support IE 11, check out our [legacy bundle](/guides/minimizing-bundle-size/#legacy-bundle).
+An extensive list can be found in our [.browserlistrc](https://github.com/mui-org/material-ui/blob/next/.browserslistrc#L12-L27) (check the `stable` entry).
 
 Da Googlebot einen Web-Rendering-Service (WRS) zum Indizieren des Seiteninhalts verwendet, ist es entscheidend, dass Material-UI dies unterstützt. [WRS aktualisiert regelmäßig die verwendete Rendering-Engine](https://webmasters.googleblog.com/2019/05/the-new-evergreen-googlebot.html). Sie können erwarten, dass die Komponenten von Material-UI ohne größere Probleme gerendert werden.
+
+### IE 11
+
+Material-UI provides **partial** supports for IE 11. Be aware of the following:
+
+- Some of the components have no support. For instance, the new components, the data grid, the date picker.
+- Some of the components have degraded support. For instance, the outlined input border radius is missing, the combobox doesn't remove diacritics, the circular progress animation is wobbling.
+- The documentaton itself might crash.
+- You need install the [legacy bundle](/guides/minimizing-bundle-size/#legacy-bundle).
+- You might need to install polyfills. For instance for the [popper.js transitive dependency](https://popper.js.org/docs/v2/browser-support/#ie11).
+
+Overall, the library doesn't prioritize the support of IE 11 if it harms the most common use cases. For instance, we will close new issues opened about IE 11 and might not merge pull requests that improve IE 11 support.
+
+v6 will completely remove the support of IE 11.
 
 ## Server
 
 <!-- #stable-snapshot -->
 
-We support [Node.js](https://github.com/nodejs/node) starting with version 10 for server-side rendering. Where possible, the [LTS versions that are in maintenance](https://github.com/nodejs/Release#release-schedule) are supported.
+Material-UI supports [Node.js](https://github.com/nodejs/node) starting with version 12.17 (or 12.0 with `--experimental-modules` enabled) for server-side rendering. Where possible, the [LTS versions that are in maintenance](https://github.com/nodejs/Release#release-schedule) are supported.
 
 ### CSS-Präfix
 
@@ -32,8 +46,10 @@ Das in dieser Dokumentation bereitgestellte CSS wird mit dem [`Autoprefixer`](ht
 
 ## React
 
-Material-UI supports the most recent versions of React, starting with ^16.8.0 (the one with the hooks). Have a look at the older [versions](https://material-ui.com/versions/) for backward compatibility.
+<!-- #react-peer-version -->
+
+Material-UI supports the most recent versions of React, starting with ^17.0.0 (the one with event delegation at the React root). Have a look at the older [versions](https://material-ui.com/versions/) for backward compatibility.
 
 ## TypeScript
 
-Material-UI requires a minimum version of TypeScript 3.2.
+Material-UI requires a minimum version of TypeScript 3.5.

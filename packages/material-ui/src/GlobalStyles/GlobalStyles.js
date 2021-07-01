@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { GlobalStyles as StyledEngineGlobalStyles } from '@material-ui/styled-engine';
+import { GlobalStyles as SystemGlobalStyles } from '@material-ui/system';
 import defaultTheme from '../styles/defaultTheme';
 
 function GlobalStyles(props) {
-  return <StyledEngineGlobalStyles {...props} defaultTheme={defaultTheme} />;
+  return <SystemGlobalStyles {...props} defaultTheme={defaultTheme} />;
 }
 
 GlobalStyles.propTypes /* remove-proptypes */ = {

@@ -3,53 +3,219 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "pending": "If <code>true</code>, the pending indicator is shown.",
-    "pendingIndicator": "Element placed before the children if the button is in pending state.",
-    "pendingPosition": "The pending indicator can be positioned on the start, end, or the center of the button."
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "loading": "If <code>true</code>, the loading indicator is shown.",
+    "loadingIndicator": "Element placed before the children if the button is in loading state.",
+    "loadingPosition": "The loading indicator can be positioned on the start, end, or the center of the button.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
       "description": "Styles applied to the root element."
     },
-    "pending": {
+    "text": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>pending={true}</code>"
+      "conditions": "<code>variant=\"text\"</code>"
     },
-    "pendingIndicator": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the pendingIndicator element"
-    },
-    "pendingIndicatorCenter": {
+    "textInherit": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the pendingIndicator element",
-      "conditions": "<code>pendingPosition=\"center\"</code>"
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"text\"</code> and <code>color=\"inherit\"</code>"
     },
-    "pendingIndicatorStart": {
+    "textPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the pendingIndicator element",
-      "conditions": "<code>pendingPosition=\"start\"</code>"
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"text\"</code> と <code>color=\"primary\"</code>"
     },
-    "pendingIndicatorEnd": {
+    "textSecondary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the pendingIndicator element",
-      "conditions": "<code>pendingPosition=\"end\"</code>"
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"text\"</code> と <code>color=\"secondary\"</code>"
     },
-    "endIconPendingEnd": {
+    "outlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the endIcon element",
-      "conditions": "<code>pending={true}</code> and <code>pendingPosition=\"end\"</code>"
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"outlined\"</code>"
     },
-    "startIconPendingStart": {
+    "outlinedInherit": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"inherit\"</code>"
+    },
+    "outlinedPrimary": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"outlined\"</code> と <code>color=\"primary\"</code>"
+    },
+    "outlinedSecondary": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"outlined\"</code> と <code>color=\"secondary\"</code>"
+    },
+    "contained": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"contained\"</code>"
+    },
+    "containedInherit": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"inherit\"</code>"
+    },
+    "containedPrimary": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"contained\"</code> と <code>color=\"primary\"</code>"
+    },
+    "containedSecondary": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"contained\"</code> と <code>color=\"secondary\"</code>"
+    },
+    "disableElevation": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disableElevation={true}</code>"
+    },
+    "focusVisible": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the ButtonBase root element",
+      "conditions": "the button is keyboard focused"
+    },
+    "disabled": {
+      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disabled={true}</code>"
+    },
+    "colorInherit": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>color=\"inherit\"</code>"
+    },
+    "textSizeSmall": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"small\"</code> and <code>variant=\"text\"</code>"
+    },
+    "textSizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code> and <code>variant=\"text\"</code>"
+    },
+    "textSizeLarge": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"large\"</code> and <code>variant=\"text\"</code>"
+    },
+    "outlinedSizeSmall": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"small\"</code> and <code>variant=\"outlined\"</code>"
+    },
+    "outlinedSizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code> and <code>variant=\"outlined\"</code>"
+    },
+    "outlinedSizeLarge": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"large\"</code> and <code>variant=\"outlined\"</code>"
+    },
+    "containedSizeSmall": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"small\"</code> and <code>variant=\"contained\"</code>"
+    },
+    "containedSizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"small\"</code> and <code>variant=\"contained\"</code>"
+    },
+    "containedSizeLarge": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"large\"</code> and <code>variant=\"contained\"</code>"
+    },
+    "sizeSmall": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"small\"</code>"
+    },
+    "sizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code>"
+    },
+    "sizeLarge": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"large\"</code>"
+    },
+    "fullWidth": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>fullWidth={true}</code>"
+    },
+    "startIcon": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the startIcon element",
-      "conditions": "<code>pending={true}</code> and <code>pendingPosition=\"start\"</code>"
+      "conditions": "supplied"
     },
-    "labelPendingCenter": {
+    "endIcon": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the label element",
-      "conditions": "<code>pending={true}</code> and <code>pendingPosition=\"center\"</code>"
+      "nodeName": "the endIcon element",
+      "conditions": "supplied"
+    },
+    "iconSizeSmall": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the icon element",
+      "conditions": "supplied and <code>size=\"small\"</code>"
+    },
+    "iconSizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the icon element",
+      "conditions": "supplied and <code>size=\"medium\"</code>"
+    },
+    "iconSizeLarge": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the icon element",
+      "conditions": "supplied and <code>size=\"large\"</code>"
+    },
+    "loading": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>loading={true}</code>"
+    },
+    "loadingIndicator": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the loadingIndicator element"
+    },
+    "loadingIndicatorCenter": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the loadingIndicator element",
+      "conditions": "<code>loadingPosition=\"center\"</code>"
+    },
+    "loadingIndicatorStart": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the loadingIndicator element",
+      "conditions": "<code>loadingPosition=\"start\"</code>"
+    },
+    "loadingIndicatorEnd": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the loadingIndicator element",
+      "conditions": "<code>loadingPosition=\"end\"</code>"
+    },
+    "endIconLoadingEnd": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the endIcon element",
+      "conditions": "<code>loading={true}</code> and <code>loadingPosition=\"end\"</code>"
+    },
+    "startIconLoadingStart": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the startIcon element",
+      "conditions": "<code>loading={true}</code> and <code>loadingPosition=\"start\"</code>"
     }
   }
 }

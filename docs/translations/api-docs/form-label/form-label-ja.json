@@ -9,7 +9,8 @@
     "error": "If <code>true</code>, the label should be displayed in an error state.",
     "filled": "If <code>true</code>, the label should use filled classes key.",
     "focused": "If <code>true</code>, the input of this label is focused (used by <code>FormGroup</code> components).",
-    "required": "If <code>true</code>, the label will indicate that the <code>input</code> is required."
+    "required": "If <code>true</code>, the label will indicate that the <code>input</code> is required.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

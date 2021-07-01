@@ -17,7 +17,7 @@ components: NoSsr
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
-## Отсрочка на стороне клиента
+## Client-side deferring
 
 {{"demo": "pages/components/no-ssr/SimpleNoSsr.js"}}
 

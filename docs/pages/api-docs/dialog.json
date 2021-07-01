@@ -3,7 +3,10 @@
     "open": { "type": { "name": "bool" }, "required": true },
     "aria-describedby": { "type": { "name": "string" } },
     "aria-labelledby": { "type": { "name": "string" } },
-    "BackdropComponent": { "type": { "name": "elementType" } },
+    "BackdropComponent": {
+      "type": { "name": "elementType" },
+      "default": "styled(Backdrop, {\n  name: 'MuiModal',\n  slot: 'Backdrop',\n  overridesResolver: (props, styles) => {\n    return styles.backdrop;\n  },\n})({\n  zIndex: -1,\n})"
+    },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" } },
     "disableEscapeKeyDown": { "type": { "name": "bool" } },

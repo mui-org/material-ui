@@ -26,6 +26,7 @@
     "required": "If <code>true</code>, the <code>input</code> element is required. The prop defaults to the value (<code>false</code>) inherited from the parent FormControl component.",
     "rows": "Number of rows to display when multiline option is set to true.",
     "startAdornment": "Start <code>InputAdornment</code> for this component.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "type": "Type of the <code>input</code> element. It should be <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types\">a valid HTML5 input type</a>.",
     "value": "The value of the <code>input</code> element, required for a controlled component."
   },

@@ -3,7 +3,7 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "disableTypography": "If <code>true</code>, the children won&#39;t be wrapped by a typography component. For instance, this can be useful to render an h4 instead of the default h2."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

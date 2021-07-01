@@ -8,9 +8,9 @@
 
 对于那些准备放到核心库里的组件，需要考虑以下几点：
 
-- 它需要**被使用过**。 Material-UI 团队使用谷歌分析的数据（Google Analytics stats）去评估每个组件的使用情况。 如果一个 lab 的组件使用数据比较低，意味着它并不能全部正常工作，或者需求量比较小。
-- 它的**代码质量**要和核心组件保持一致。 作为核心代码的一部分，它不需要很完美，但是这个组件应该要很可靠，这样其他开发者可以依赖它。
-  - 每个组件都需要**类型定义**。 就目前来说，一个实验室组件不需要定义类型，但是当搬到核心代码之后就需要定义好类型了。
+- 它需要**被使用过**。 The Material-UI team uses Google Analytics in the documentation (among other metrics) to evaluate the usage of each component. A lab component with low usage either means that it isn't fully working yet, or that there is low demand for it.
+- 它的**代码质量**要和核心组件保持一致。 It doesn't have to be perfect to be part of the core, but the component should be reliable enough that developers can depend on it.
+  - 每个组件需要**类型定义**。 就目前来说，一个实验室组件不需要定义类型，但是当搬到核心代码之后就需要定义好类型了。
   - 需要较高的**测试覆盖率**。 有一些实验室组件目前不带有一些综合的测试。
 - 该组件是否可以作为**杠杆**来激励用户升级到最新的主要版本？ 一个社区的分裂程度越低越好。
 - 它需要尽量避免在中短期内发生**破坏性更改**。 例如，如果它需要一个新的功能并因此将有可能引入重大更改，那么最好推迟将其纳入核心库的进程。

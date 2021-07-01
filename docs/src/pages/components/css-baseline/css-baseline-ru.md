@@ -63,12 +63,28 @@ The `<html>` and `<body>` elements are updated to provide better page-wide defau
 
 ### Scrollbars
 
-In dark mode, the colors of the scrollbars are customized to provide a better contrast.
+The colors of the scrollbars can be customized to improve the contrast (especially on Windows). Add this code to your theme (for dark mode).
+
+```jsx
+import darkScrollbar from '@material-ui/core/darkScrollbar';
+
+const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: theme.palette.mode === 'dark' ? darkScrollbar() : null,
+      },
+    },
+  },
+});
+```
+
+This website uses `darkScrollbar` when dark mode is enabled. Be aware, however, that using this utility (and customizing `-webkit-scrollbar`) forces MacOS to always show the scrollbar.
 
 ### Typography
 
 - No base font-size is declared on the `<html>`, but 16px is assumed (the browser default). You can learn more about the implications of changing the `<html>` default font size in [the theme documentation](/customization/typography/#typography-html-font-size) page.
-- Set the `theme.typography.body2` style on the `<body>` element.
+- Set the `theme.typography.body1` style on the `<body>` element.
 - Set the font-weight to `theme.typography.fontWeightBold` for the `<b>` and `<strong>` elements.
 - Custom font-smoothing is enabled for better display of the Roboto font.
 

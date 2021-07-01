@@ -14,7 +14,7 @@
     "onClose": "Callback fired when the component requests to be closed. The <code>reason</code> parameter can optionally be used to control the response to <code>onClose</code>.",
     "open": "If <code>true</code>, the component is shown.",
     "PaperProps": "Props applied to the <a href=\"/api/paper/\"><code>Paper</code></a> element.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "transformOrigin": "This is the point on the popover which will attach to the anchor&#39;s origin.<br>Options: vertical: [top, center, bottom, x(px)]; horizontal: [left, center, right, x(px)].",
     "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
     "transitionDuration": "Set to &#39;auto&#39; to automatically calculate transition time based on height.",

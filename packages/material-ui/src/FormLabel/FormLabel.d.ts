@@ -18,7 +18,7 @@ export interface FormLabelTypeMap<P = {}, D extends React.ElementType = 'label'>
       /**
        * The color of the component. It supports those theme colors that make sense for this component.
        */
-      color?: 'primary' | 'secondary';
+      color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
       /**
        * If `true`, the label should be displayed in a disabled state.
        */

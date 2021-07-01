@@ -9,7 +9,7 @@
     "sizes": "The <code>sizes</code> attribute for the <code>img</code> element.",
     "src": "The <code>src</code> attribute for the <code>img</code> element.",
     "srcSet": "The <code>srcSet</code> attribute for the <code>img</code> element. Use this attribute for responsive image display.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "variant": "The shape of the avatar."
   },
   "classDescriptions": {

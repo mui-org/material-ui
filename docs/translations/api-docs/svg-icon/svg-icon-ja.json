@@ -8,6 +8,7 @@
     "fontSize": "The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.",
     "htmlColor": "Applies a color attribute to the SVG element.",
     "shapeRendering": "The shape-rendering attribute. The behavior of the different options is described on the <a href=\"https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering\">MDN Web Docs</a>. If you are having issues with blurry icons you should investigate this prop.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "titleAccess": "Provides a human-readable title for the element that contains it. <a href=\"https://www.w3.org/TR/SVG-access/#Equivalent\">https://www.w3.org/TR/SVG-access/#Equivalent</a>",
     "viewBox": "Allows you to redefine what the coordinates without units mean inside an SVG element. For example, if the SVG element is 500 (width) by 200 (height), and you pass viewBox=&quot;0 0 50 20&quot;, this means that the coordinates inside the SVG will go from the top left corner (0,0) to bottom right (50,20) and each unit will be worth 10px."
   },

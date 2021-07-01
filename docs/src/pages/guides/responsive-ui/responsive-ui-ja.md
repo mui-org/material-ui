@@ -1,11 +1,10 @@
 # レスポンシブUI
 
-<p class="description">Material Design layouts encourage consistency across platforms, environments, and screen sizes by using uniform elements and spacing.</p>
+<p class="description">Material Designレイアウトは、統一された要素と間隔を使用することで、プラットフォーム、環境、および画面サイズ間の一貫性を促進します。</p>
 
-[Responsive layouts](https://material.io/design/layout/responsive-layout-grid.html) in Material Design adapt to any possible screen size. We provide the following helpers to make the UI responsive:
+Material Designの[レスポンシブレイアウト](https://material.io/design/layout/responsive-layout-grid.html) は、あらゆる画面サイズに適応します。 UIをレスポンシブにするために以下のヘルパーを提供しています:
 
-- [Grid](/components/grid/): The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.
-- [Container](/components/container/): The container centers your content horizontally. それが最も基本的なレイアウト要素です。
-- [Breakpoints](/customization/breakpoints/): API that enables the use of breakpoints in a wide variety of contexts.
-- [useMediaQuery](/components/use-media-query/): This is a CSS media query hook for React. CSSメディアクエリへの一致をリッスンします。
-- [Hidden](/components/hidden/): Quickly and responsively toggle the visibility value of components and more with our hidden utilities.
+- [Grid](/components/grid/): Material Designのレスポンシブ・レイアウト・グリッドは、画面サイズと向きに適応し、レイアウト間の一貫性を保証します。
+- [Container](/components/container/):  コンテナは、コンテンツを水平方向に中央に配置します。 それが最も基本的なレイアウト要素です。
+- [Breakpoints](/customization/breakpoints/): さまざまなコンテキストでブレークポイントを使用できるようにするAPI。
+- [useMediaQuery](/components/use-media-query/): React用のCSSメディアクエリフックです。 CSSメディアクエリへの一致をリッスンします。

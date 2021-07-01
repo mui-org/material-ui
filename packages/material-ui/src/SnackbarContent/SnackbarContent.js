@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { emphasize } from '@material-ui/system';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { emphasize } from '../styles/colorManipulator';
 import Paper from '../Paper';
 import { getSnackbarContentUtilityClass } from './snackbarContentClasses';
 
@@ -68,8 +68,7 @@ const SnackbarContentAction = styled('div', {
 const SnackbarContent = React.forwardRef(function SnackbarContent(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiSnackbarContent' });
   const { action, className, message, role = 'alert', ...other } = props;
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   return (
@@ -119,7 +118,7 @@ SnackbarContent.propTypes /* remove-proptypes */ = {
    * The ARIA role attribute of the element.
    * @default 'alert'
    */
-  role: PropTypes.string,
+  role: PropTypes /* @typescript-to-proptypes-ignore */.string,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

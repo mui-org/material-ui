@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createClientRender, createMount, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import CircularProgress, {
   circularProgressClasses as classes,
 } from '@material-ui/core/CircularProgress';
 
 describe('<CircularProgress />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<CircularProgress />, () => ({
     classes,
     inheritComponent: 'span',
     render,
-    mount,
     muiName: 'MuiCircularProgress',
     testDeepOverrides: { slotName: 'circle', slotClassName: classes.circle },
     testVariantProps: { variant: 'determinate' },

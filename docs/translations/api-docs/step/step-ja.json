@@ -8,7 +8,8 @@
     "disabled": "Mark the step as disabled, will also disable the button if <code>StepButton</code> is a child of <code>Step</code>. Is passed to child components.",
     "expanded": "Expand the step.",
     "index": "The position of the step. The prop defaults to the value inherited from the parent Stepper component.",
-    "last": "If <code>true</code>, the Step is displayed as rendered last. The prop defaults to the value inherited from the parent Stepper component."
+    "last": "If <code>true</code>, the Step is displayed as rendered last. The prop defaults to the value inherited from the parent Stepper component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

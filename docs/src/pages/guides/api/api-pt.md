@@ -38,7 +38,7 @@ Evitamos documentar propriedades nativas suportadas pelo DOM como [`className`](
 
 ### Classes CSS
 
-Todos os componentes aceitam uma propriedade [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) para customizar os estilos. O design de classes responde a duas restrições: para tornar a estrutura das classes o mais simples possível, enquanto que faz a implementação da especificação do Material Design.
+Todos os componentes aceitam uma propriedade [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) para customizar os estilos. The classes design answers two constraints: to make the classes structure as simple as possible, while sufficient to implement the Material Design guidelines.
 
 - A classe aplicada ao elemento raiz é sempre chamada de `root`.
 - Todos os estilos padrão são agrupados em uma única classe.
@@ -82,7 +82,7 @@ O nome de uma propriedade booleana deve ser escolhido com base no **valor padrã
 
 A maior parte de componentes controlados, é controlado pelas propriedades `value` e `onChange`, no entanto, o `open` / `onClose` / `onOpen` é uma combinação usada para o estado relacionado à exibição. Nos casos em que há mais eventos, colocamos o substantivo em primeiro lugar e depois o verbo, por exemplo: `onPageChange`, `onRowsChange`.
 
-### booleano vs enumerador
+### boolean vs. enum
 
 Existem duas opções para projetar a API para as variações de um componente: com um *boolean*; ou com um *enum*. Por exemplo, vamos pegar um botão que tenha tipos diferentes. Cada opção tem seus prós e contras:
 
@@ -107,7 +107,7 @@ Existem duas opções para projetar a API para as variações de um componente: 
 
   Esta API é mais verbosa: `<Button>`, `<Button variant="contained">`, `<Button variant="fab">`.
 
-  No entanto, isso impede que uma combinação inválida seja usada, limita o número de propriedades expostas, e pode facilmente suportar novos valores no futuro.
+  However, it prevents an invalid combination from being used, bounds the number of props exposed, and can easily support new values in the future.
 
 Os componentes do Material-UI usam uma combinação das duas abordagens de acordo com as seguintes regras:
 

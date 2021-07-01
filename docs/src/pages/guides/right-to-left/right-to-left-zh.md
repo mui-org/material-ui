@@ -12,6 +12,20 @@
 <body dir="rtl">
 ```
 
+As an alternative to the above, you can also wrap your application in an element with the `dir` attribute:
+
+```jsx
+function App() {
+  return (
+    <div dir="rtl">
+      <MyComponent />
+    </div>
+  );
+}
+```
+
+This can be helpful for creating components to toggle language settings in the live application.
+
 ### 2. 主题
 
 在您自定义的主题中设置方向：
@@ -36,7 +50,7 @@ npm install jss-rtl
 npm install stylis-plugin-rtl
 ```
 
-**Note**: Only `emotion` is compatible with version 2 of the plugin. `styled-components` requires version 1. If you are using `styled-components` as styled engine, make sure to install the correct version.
+**Note**: Only `emotion` is compatible with version 2 of the plugin. `styled-components` requires version 1. If you are using `styled-components` as styled engine, make sure to install the correct version. `styled-components` requires version 1. If you are using `styled-components` as styled engine, make sure to install the correct version.
 
 在你的项目中安装了该插件后，Material-UI 组件仍然需要通过你使用的样式引擎实例来加载它。 下面的指南讲述了如何进行加载。
 
@@ -51,9 +65,9 @@ npm install stylis-plugin-rtl
 ```jsx
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
 
-// 配置 JSS
+// Configure JSS
 const jss = create({
   plugins: [...jssPreset().plugins, rtl()],
 });

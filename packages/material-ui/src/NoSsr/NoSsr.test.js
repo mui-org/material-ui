@@ -5,22 +5,17 @@ import NoSsr from '@material-ui/core/NoSsr';
 
 describe('<NoSsr />', () => {
   const render = createClientRender();
-  const serverRender = createServerRender();
+  const serverRender = createServerRender({ expectUseLayoutEffectWarning: true });
 
   describe('server-side rendering', () => {
     it('should not render the children as the width is unknown', () => {
-      let wrapper;
-      expect(() => {
-        wrapper = serverRender(
-          <NoSsr>
-            <span>Hello</span>
-          </NoSsr>,
-        );
-      }).toErrorDev(
-        // Known issue due to using SSR APIs in a browser environment.
-        ['Warning: useLayoutEffect does nothing on the server'],
+      const container = serverRender(
+        <NoSsr>
+          <span>Hello</span>
+        </NoSsr>,
       );
-      expect(wrapper.text()).to.equal('');
+
+      expect(container.firstChild).to.equal(null);
     });
   });
 
@@ -37,20 +32,15 @@ describe('<NoSsr />', () => {
 
   describe('prop: fallback', () => {
     it('should render the fallback', () => {
-      let wrapper;
-      expect(() => {
-        wrapper = serverRender(
-          <div>
-            <NoSsr fallback="fallback">
-              <span>Hello</span>
-            </NoSsr>
-          </div>,
-        );
-      }).toErrorDev(
-        // Known issue due to using SSR APIs in a browser environment.
-        ['Warning: useLayoutEffect does nothing on the server'],
+      const container = serverRender(
+        <div>
+          <NoSsr fallback="fallback">
+            <span>Hello</span>
+          </NoSsr>
+        </div>,
       );
-      expect(wrapper.text()).to.equal('fallback');
+
+      expect(container.firstChild).to.have.text('fallback');
     });
   });
 

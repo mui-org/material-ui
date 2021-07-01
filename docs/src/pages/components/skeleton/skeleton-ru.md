@@ -68,6 +68,12 @@ loading
 
 {{"demo": "pages/components/skeleton/SkeletonChildren.js", "defaultCodeOpen": false}}
 
+## Цвет
+
+The color of the component can be customized by changing its `background-color` CSS property. This is especially useful when on a black background (as the skeleton will otherwise be invisible).
+
+{{"demo": "pages/components/skeleton/SkeletonColor.js", "bg": "inline"}}
+
 ## Доступность
 
 Skeleton screens provide an alternative to the traditional spinner method. Rather than showing an abstract widget, skeleton screens create anticipation of what is to come and reduce cognitive load.

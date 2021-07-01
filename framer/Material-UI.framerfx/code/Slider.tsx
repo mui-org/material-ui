@@ -8,6 +8,7 @@ interface Props {
   max?: number;
   min?: number;
   orientation?: 'horizontal' | 'vertical';
+  size: 'medium' | 'small';
   step?: number;
   tabIndex?: number;
   track?: 'inverted' | 'normal' | false;
@@ -22,6 +23,7 @@ export function Slider(props: Props): JSX.Element {
 }
 
 Slider.defaultProps = {
+  size: 'medium' as 'medium',
   width: 160,
   height: 24,
 };
@@ -47,6 +49,11 @@ addPropertyControls(Slider, {
     type: ControlType.Enum,
     title: 'Orientation',
     options: ['horizontal', 'vertical'],
+  },
+  size: {
+    type: ControlType.Enum,
+    title: 'Size',
+    options: ['medium', 'small'],
   },
   step: {
     type: ControlType.Number,

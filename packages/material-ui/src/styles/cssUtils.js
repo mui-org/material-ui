@@ -102,7 +102,7 @@ export function responsiveProperty({
   min,
   max,
   unit = 'rem',
-  breakpoints = [600, 960, 1280],
+  breakpoints = [600, 900, 1200],
   transform = null,
 }) {
   const output = {

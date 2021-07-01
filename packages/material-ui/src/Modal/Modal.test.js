@@ -8,17 +8,16 @@ import {
   createClientRender,
   fireEvent,
   within,
-  createMount,
   describeConformanceV5,
+  screen,
 } from 'test/utils';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import Backdrop from '@material-ui/core/Backdrop';
 import Modal, { modalClasses as classes } from '@material-ui/core/Modal';
 
 describe('<Modal />', () => {
   const render = createClientRender();
-  const mount = createMount();
+
   let savedBodyStyle;
 
   before(() => {
@@ -37,7 +36,6 @@ describe('<Modal />', () => {
       classes,
       inheritComponent: 'div',
       render,
-      mount,
       muiName: 'MuiModal',
       refInstanceof: window.HTMLDivElement,
       testVariantProps: { hideBackdrop: true },
@@ -111,18 +109,23 @@ describe('<Modal />', () => {
   });
 
   describe('backdrop', () => {
-    it('should render a backdrop with a fade transition', () => {
-      const wrapper = mount(
-        <Modal open BackdropComponent={Backdrop}>
+    it('can render a custom backdrop component', () => {
+      function TestBackdrop(props) {
+        const { open } = props;
+        if (!open) {
+          return null;
+        }
+
+        return <div data-testid="backdrop" />;
+      }
+
+      render(
+        <Modal open BackdropComponent={TestBackdrop}>
           <div />
         </Modal>,
       );
 
-      const backdrop = wrapper.find(Backdrop);
-      expect(backdrop.exists()).to.equal(true);
-
-      const transition = backdrop.find(Fade);
-      expect(transition.props()).to.have.property('in', true);
+      expect(screen.getByTestId('backdrop')).not.to.equal(null);
     });
 
     it('should render a backdrop component into the portal before the modal content', () => {
@@ -141,14 +144,21 @@ describe('<Modal />', () => {
     });
 
     it('should pass prop to the transition component', () => {
-      const wrapper = mount(
-        <Modal open BackdropComponent={Backdrop} BackdropProps={{ transitionDuration: 200 }}>
+      function TestBackdrop(props) {
+        const { open, transitionDuration } = props;
+        if (!open) {
+          return null;
+        }
+
+        return <div data-testid="backdrop" data-timeout={transitionDuration} />;
+      }
+      render(
+        <Modal open BackdropComponent={TestBackdrop} BackdropProps={{ transitionDuration: 200 }}>
           <div />
         </Modal>,
       );
 
-      const transition = wrapper.find(Fade);
-      expect(transition.props()).to.have.property('timeout', 200);
+      expect(screen.getByTestId('backdrop')).to.have.attribute('data-timeout', '200');
     });
 
     it('should attach a handler to the backdrop that fires onClose', () => {

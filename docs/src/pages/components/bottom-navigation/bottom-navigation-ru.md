@@ -25,8 +25,12 @@ materialDesign: https://material.io/components/bottom-navigation
 
 {{"demo": "pages/components/bottom-navigation/LabelBottomNavigation.js", "bg": true}}
 
-## Fixed positioning
+## Fixed positioning (фиксированное позиционирование)
 
-This demo keeps bottom navigation fixed to the bottom, no matter the amount of content on-screen.
+В этом примере нижняя панель навигации остаётся зафиксированной снизу вне зависимости от количества контента на экране.
 
 {{"demo": "pages/components/bottom-navigation/FixedBottomNavigation.js", "bg": true, "iframe": true, "maxWidth": 600}}
+
+## Сторонняя библиотека маршрутизации
+
+One frequent use case is to perform navigation on the client only, without an HTTP round-trip to the server. The `BottomNavigationAction` component provides the `component` prop to handle this use case. Here is a [more detailed guide](/guides/routing).

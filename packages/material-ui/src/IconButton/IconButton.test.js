@@ -1,41 +1,23 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import IconButton, { iconButtonClasses as classes } from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 describe('<IconButton />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<IconButton>book</IconButton>, () => ({
     classes,
     inheritComponent: ButtonBase,
     render,
-    mount,
     refInstanceof: window.HTMLButtonElement,
     muiName: 'MuiIconButton',
     testVariantProps: { edge: 'end', disabled: true },
-    testDeepOverrides: { slotName: 'label', slotClassName: classes.label },
     skip: ['componentProp', 'componentsProp'],
   }));
-
-  it('should render an inner label span (bloody safari)', () => {
-    const { getByText } = render(<IconButton>book</IconButton>);
-    const label = getByText('book');
-    expect(label).to.have.class(classes.label);
-    expect(label).to.have.property('nodeName', 'SPAN');
-  });
-
-  it('should render the child normally inside the label span', () => {
-    const child = <p id="child">H</p>;
-    const { container } = render(<IconButton>{child}</IconButton>);
-    const label = container.querySelector(`.${classes.label}`);
-    const icon = label.firstChild;
-    expect(icon).to.equal(container.querySelector('#child'));
-  });
 
   it('should render Icon children with right classes', () => {
     const childClassName = 'child-woof';
@@ -70,8 +52,12 @@ describe('<IconButton />', () => {
       root = render(<IconButton size="medium">book</IconButton>).container.firstChild;
       expect(root).not.to.have.class(classes.sizeSmall);
 
+      root = render(<IconButton size="large">book</IconButton>).container.firstChild;
+      expect(root).to.have.class(classes.sizeLarge);
+
       root = render(<IconButton>book</IconButton>).container.firstChild;
       expect(root).not.to.have.class(classes.sizeSmall);
+      expect(root).not.to.have.class(classes.sizeLarge);
     });
   });
 

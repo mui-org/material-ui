@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
 import { useFakeTimers } from 'sinon';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -19,7 +19,6 @@ describe('<SpeedDialAction />', () => {
     clock.restore();
   });
 
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(
@@ -27,7 +26,6 @@ describe('<SpeedDialAction />', () => {
     () => ({
       classes,
       inheritComponent: Tooltip,
-      mount,
       render,
       refInstanceof: window.HTMLButtonElement,
       muiName: 'MuiSpeedDialAction',

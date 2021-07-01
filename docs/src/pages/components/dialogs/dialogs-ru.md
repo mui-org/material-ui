@@ -59,7 +59,7 @@ Use title bar alerts only for high-risk situations, such as the potential loss o
 
 ## Индивидуальные диалоги
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 Данный диалог имеет кнопку закрытия, добавленную для удобства использования.
 
@@ -96,7 +96,7 @@ function MyComponent() {
 
 Диалоги подтверждения требуют, чтобы пользователи явно подтвердили свой выбор, прежде чем их выбор будет сохранен. For example, users can listen to multiple ringtones but only make a final selection upon touching "OK".
 
-Touching "Cancel" in a confirmation dialog, or pressing Back, cancels the action, discards any changes, and closes the dialog.
+Нажатие кнопки «Отмена» в диалоговом окне подтверждения или нажатие кнопки «Назад» отменяет действие и отменяет любые изменения, закрывая диалоговое окно.
 
 {{"demo": "pages/components/dialogs/ConfirmationDialog.js"}}
 

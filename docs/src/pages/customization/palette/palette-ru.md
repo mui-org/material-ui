@@ -6,12 +6,12 @@
 
 The theme exposes the following palette colors (accessible under `theme.palette.`):
 
-- *primary* - used to represent primary interface elements for a user. It's the color displayed most frequently across your app's screens and components.
-- *secondary* - used to represent secondary interface elements for a user. It provides more ways to accent and distinguish your product. Having it is optional.
-- *error* - used to represent interface elements that the user should be made aware of.
-- *warning* - used to represent potentially dangerous actions or important messages.
-- *info* - used to present information to the user that is neutral and not necessarily important.
-- *success* - used to indicate the successful completion of an action that user triggered.
+- *primary* - Основной. Используется для отображения основных элементов интерфейса It's the color displayed most frequently across your app's screens and components.
+- *secondary* - Второстепенный. Используется для отображения второстепенных элементов интерфейса. It provides more ways to accent and distinguish your product. Having it is optional.
+- *error* - Цвет ошибки. Используется для отображения элементов, на которые нужно обратить внимание.
+- *Предупреждение. Используется для отображения потенциально опасных действия или важных сообщений.</li>
+- *info* - Информация. Используется для отображения нейтральной, не представляющей особой важности информации.
+- *success* - Успешно. Используется для оповещения об успешном завершении вызванного пользователем действия.</ul>
 
 Для более подробного изучения цветовых настроек можно посетить [секцию про цвета](/customization/color/).
 
@@ -21,20 +21,20 @@ You can explore the default values of the palette using [the theme explorer](/cu
 
 {{"demo": "pages/customization/palette/Intentions.js", "bg": "inline", "hideToolbar": true}}
 
-Стандартная палитра использует оттенки с префиксом `A` (`A200`, и т. д.) для вторичного оттенка, и без префикса для остальных.
+Стандартная палитра использует оттенки с префиксом `A` (`A200`, и т. д.) - для вторичного оттенка, и без префикса - для всех остальных.
 
 ## Кастомизация
 
 You may override the default palette values by including a palette object as part of your theme. If any of the:
 
-- [`palette.primary`](/customization/default-theme/?expand-path=$.palette.primary)
-- [`palette.secondary`](/customization/default-theme/?expand-path=$.palette.secondary)
-- [`palette.error`](/customization/default-theme/?expand-path=$.palette.error)
-- [`palette.warning`](/customization/default-theme/?expand-path=$.palette.warning)
-- [`palette.info`](/customization/default-theme/?expand-path=$.palette.info)
-- [`palette.success`](/customization/default-theme/?expand-path=$.palette.success)
+- [`.palette.primary`](/customization/default-theme/?expand-path=$.palette.primary)
+- [`.palette.secondary`](/customization/default-theme/?expand-path=$.palette.secondary)
+- [`.palette.error`](/customization/default-theme/?expand-path=$.palette.error)
+- [`.palette.warning`](/customization/default-theme/?expand-path=$.palette.warning)
+- [`.palette.info`](/customization/default-theme/?expand-path=$.palette.info)
+- [`.palette.success`](/customization/default-theme/?expand-path=$.palette.success)
 
-palette color objects are provided, they will replace the defaults.
+переопределенные цвета палитры заменят стандартные.
 
 The palette color value can either be a [color](/customization/color/#2014-material-design-color-palettes) object, or an object with one or more of the keys specified by the following TypeScript interface:
 
@@ -49,7 +49,7 @@ interface PaletteColor {
 
 ### Using a color object
 
-The simplest way to customize an intention is to import one or more of the provided colors and apply them to a palette intention:
+Простейший способ переопределить цветовую палитру - импортировать один или несколько существующих цветов и применить их.
 
 ```js
 import { createTheme } from '@material-ui/core/styles';
@@ -64,7 +64,7 @@ const theme = createTheme({
 
 ### Providing the colors directly
 
-If you wish to provide more customized colors, you can either create your own color object, or directly supply colors to some or all of the intention's keys:
+Для создания палитры с большим количеством цветов вы можете либо создать свой собственный цвет, либо записать цвета напрямую в один или все ключи `тематической палитры`
 
 ```js
 import { createTheme } from '@material-ui/core/styles';
@@ -100,7 +100,7 @@ const theme = createTheme({
     // E.g., shift from Red 500 to Red 300 or Red 700.
 ```
 
-As in the example above, if the intention object contains custom colors using any of the "main", "light", "dark" or "contrastText" keys, these map as follows:
+В примере выше, если палитра содержит пользовательские цвета с одним из следующих ключей: "main", "light", "dark" или"contrastText", они используются следующим образом:
 
 - If the "dark" and / or "light" keys are omitted, their value(s) will be calculated from "main", according to the "tonalOffset" value.
 - If "contrastText" is omitted, its value will be calculated to contrast with "main", according to the "contrastThreshold" value.
@@ -134,8 +134,13 @@ const theme = createTheme({
     danger: '#e53e3e',
   },
   palette: {
+    primary: {
+      main: '#0971f1',
+      darker: '#053e85',
+    },
     neutral: {
-      main: '#5c6ac4',
+      main: '#64748B',
+      contrastText: '#fff',
     },
   },
 });
@@ -146,7 +151,7 @@ If you are using TypeScript, you would also need to use [module augmentation](/g
 <!-- tested with packages/material-ui/test/typescript/augmentation/paletteColors.spec.ts -->
 
 ```ts
-declare module '@material-ui/core/styles/createTheme' {
+declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     status: {
       danger: React.CSSProperties['color'],
@@ -169,13 +174,15 @@ declare module "@material-ui/core/styles/createPalette" {
 }
 ```
 
+{{"demo": "pages/customization/palette/CustomColor.js"}}
+
 ## Picking colors
 
 Ищите вдохновение? The Material Design team has built an [palette configuration tool](/customization/color/#picking-colors) to help you.
 
 ## Темный режим
 
-Material-UI comes with two palette types, light (the default) and dark. Вы можете сделать тему темной, установив режим `mode: 'dark'`. While it's only a single property value change, internally it modifies several palette values.
+Material-UI comes with two palette modes: light (the default) and dark. Вы можете сделать тему темной, установив режим `mode: 'dark'`.
 
 ```js
 const darkTheme = createTheme({
@@ -185,11 +192,17 @@ const darkTheme = createTheme({
 });
 ```
 
-The colors modified by the palette type are the following:
+While it's only a single value change, the `createTheme` helper modifies several palette values. The colors modified by the palette mode are the following:
 
 {{"demo": "pages/customization/palette/DarkTheme.js", "bg": "inline", "hideToolbar": true}}
 
-### User preference
+### Toggling color mode
+
+You can use the React context to toggle the mode with a button inside your page.
+
+{{"demo": "pages/customization/palette/ToggleColorMode.js", "defaultCodeOpen": false}}
+
+### System preference
 
 Пользователи могли указать предпочтение светлой или темной теме. The method by which the user expresses their preference can vary. It might be a system-wide setting exposed by the Operating System, or a setting controlled by the User Agent.
 

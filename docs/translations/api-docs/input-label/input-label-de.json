@@ -11,6 +11,7 @@
     "margin": "If <code>dense</code>, will adjust vertical spacing. This is normally obtained via context from FormControl.",
     "required": "if <code>true</code>, the label will indicate that the <code>input</code> is required.",
     "shrink": "If <code>true</code>, the label is shrunk.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "variant": "The variant to use."
   },
   "classDescriptions": {
@@ -70,6 +71,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"outlined\"</code>"
+    },
+    "standard": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"standard\"</code>"
     }
   }
 }

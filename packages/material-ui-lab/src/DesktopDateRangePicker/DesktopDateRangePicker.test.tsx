@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { SinonFakeTimers, spy, useFakeTimers } from 'sinon';
 import { act, describeConformance, screen, fireEvent, userEvent } from 'test/utils';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import { DateRange } from '@material-ui/lab/DateRangePicker';
 import DesktopDateRangePicker from '@material-ui/lab/DesktopDateRangePicker';
 import {
-  createPickerMount,
+  wrapPickerMount,
   createPickerRender,
   FakeTransitionComponent,
   adapterToUse,
@@ -23,15 +23,15 @@ const defaultRangeRenderInput = (startProps: TextFieldProps, endProps: TextField
 );
 
 describe('<DesktopDateRangePicker />', () => {
-  const render = createPickerRender({ strict: false });
-  const mount = createPickerMount();
-
-  before(function beforeHook() {
-    if (!/jsdom/.test(window.navigator.userAgent)) {
-      // FIXME This test suite is extremely flaky in test:karma
-      this.skip();
-    }
+  let clock: SinonFakeTimers;
+  beforeEach(() => {
+    clock = useFakeTimers();
   });
+  afterEach(() => {
+    clock.restore();
+  });
+  // StrictModeViolation: Uses CalendarPicker
+  const render = createPickerRender({ strict: false });
 
   describeConformance(
     <DesktopDateRangePicker
@@ -41,7 +41,7 @@ describe('<DesktopDateRangePicker />', () => {
     />,
     () => ({
       classes: {},
-      mount,
+      wrapMount: wrapPickerMount,
       refInstanceof: window.HTMLDivElement,
       skip: ['componentProp', 'mergeClassName', 'propsSpread', 'rootClass', 'reactTestRenderer'],
     }),

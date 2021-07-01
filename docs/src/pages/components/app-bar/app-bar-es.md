@@ -139,3 +139,27 @@ function HideOnScroll(props) {
   );
 }
 ```
+
+## Enable Color on Dark
+
+Following the [Material Design guidelines](https://material.io/design/color/dark-theme.html), the `color` prop has no effect on the appearance of the AppBar in dark mode. You can override this behavior by setting the `enableColorOnDark` prop to `true`.
+
+```jsx
+// Specific element via prop
+<AppBar enableColorOnDark />
+
+// Affect all AppBars via theme
+<ThemeProvider
+  theme={createTheme({
+    components: {
+      MuiAppBar: {
+        defaultProps: {
+          enableColorOnDark: true,
+        },
+      },
+    },
+  })}
+>
+  <AppBar />
+</ThemeProvider>
+```

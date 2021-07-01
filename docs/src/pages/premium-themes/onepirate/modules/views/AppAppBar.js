@@ -1,89 +1,54 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-
-import { withStyles } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import AppBar from '../components/AppBar';
-import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
+import Toolbar from '../components/Toolbar';
 
-const styles = (theme) => ({
-  title: {
-    fontSize: 24,
-  },
-  placeholder: toolbarStyles(theme).root,
-  toolbar: {
-    justifyContent: 'space-between',
-  },
-  left: {
-    flex: 1,
-  },
-  leftLinkActive: {
-    color: theme.palette.common.white,
-  },
-  right: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  rightLink: {
-    fontSize: 16,
-    color: theme.palette.common.white,
-    marginLeft: theme.spacing(3),
-  },
-  linkSecondary: {
-    color: theme.palette.secondary.main,
-  },
-});
+const rightLink = {
+  fontSize: 16,
+  color: 'common.white',
+  ml: 3,
+};
 
-function AppAppBar(props) {
-  const { classes } = props;
-
+function AppAppBar() {
   return (
     <div>
       <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.left} />
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Box sx={{ flex: 1 }} />
           <Link
             variant="h6"
             underline="none"
             color="inherit"
-            className={classes.title}
             href="/premium-themes/onepirate/"
+            sx={{ fontSize: 24 }}
           >
             {'onepirate'}
           </Link>
-          <div className={classes.right}>
+          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
             <Link
               color="inherit"
               variant="h6"
               underline="none"
-              className={classes.rightLink}
               href="/premium-themes/onepirate/sign-in/"
+              sx={rightLink}
             >
               {'Sign In'}
             </Link>
             <Link
               variant="h6"
               underline="none"
-              className={clsx(classes.rightLink, classes.linkSecondary)}
               href="/premium-themes/onepirate/sign-up/"
+              sx={{ ...rightLink, color: 'secondary.main' }}
             >
               {'Sign Up'}
             </Link>
-          </div>
+          </Box>
         </Toolbar>
       </AppBar>
-      <div className={classes.placeholder} />
+      <Toolbar />
     </div>
   );
 }
 
-AppAppBar.propTypes = {
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AppAppBar);
+export default AppAppBar;

@@ -50,13 +50,13 @@ const MobileDatePicker = React.forwardRef(function MobileDatePicker<TDate>(
   // Note that we are passing down all the value without spread.
   // It saves us >1kb gzip and make any prop available automatically on any level down.
   const { ToolbarComponent = DatePickerToolbar, value, onChange, ...other } = props;
-  const AllDateInputProps = { ...inputProps, ...other, ref, validationError };
+  const DateInputProps = { ...inputProps, ...other, ref, validationError };
 
   return (
     <MobileWrapper
       {...other}
       {...wrapperProps}
-      DateInputProps={AllDateInputProps}
+      DateInputProps={DateInputProps}
       PureDateInputComponent={PureDateInput}
     >
       <Picker
@@ -64,7 +64,7 @@ const MobileDatePicker = React.forwardRef(function MobileDatePicker<TDate>(
         autoFocus
         toolbarTitle={props.label || props.toolbarTitle}
         ToolbarComponent={ToolbarComponent}
-        DateInputProps={AllDateInputProps}
+        DateInputProps={DateInputProps}
         {...other}
       />
     </MobileWrapper>
@@ -121,6 +121,7 @@ MobileDatePicker.propTypes /* remove-proptypes */ = {
   components: PropTypes.shape({
     LeftArrowButton: PropTypes.elementType,
     LeftArrowIcon: PropTypes.elementType,
+    OpenPickerIcon: PropTypes.elementType,
     RightArrowButton: PropTypes.elementType,
     RightArrowIcon: PropTypes.elementType,
     SwitchViewButton: PropTypes.elementType,
@@ -297,10 +298,6 @@ MobileDatePicker.propTypes /* remove-proptypes */ = {
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps: PropTypes.object,
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon: PropTypes.node,
   /**
    * First view to show.
    */

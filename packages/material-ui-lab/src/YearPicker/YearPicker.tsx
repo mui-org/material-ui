@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme, styled, unstable_useThemeProps as useThemProps } from '@material-ui/core/styles';
+import { useTheme, styled, useThemeProps as useThemProps } from '@material-ui/core/styles';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
 import clsx from 'clsx';
 import PickersYear from './PickersYear';
@@ -86,7 +86,7 @@ const YearPicker = React.forwardRef(function YearPicker<TDate>(
     shouldDisableYear,
   } = props;
 
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   const now = useNow<TDate>();

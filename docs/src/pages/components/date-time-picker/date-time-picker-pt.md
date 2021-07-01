@@ -1,6 +1,6 @@
 ---
 title: Componente React Seletor de data e hora
-components: DateTimePicker
+components: DateTimePicker,DesktopDateTimePicker,MobileDateTimePicker,StaticDateTimePicker
 githubLabel: 'component: DateTimePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
@@ -44,12 +44,18 @@ Permite escolher a data e hora. Existem 4 etapas disponíveis (ano, data, hora e
 
 O componente `DateTimePicker` é projetado e otimizado para o dispositivo em que ele é executado.
 
-- A versão "móvel" funciona melhor para dispositivos de toque e telas pequenas.
-- A versão "desktop" funciona melhor para dispositivos com mouse e telas grandes.
+- The `MobileDateTimePicker` component works best for touch devices and small screens.
+- The `DesktopDateTimePicker` component works best for mouse devices and large screens.
 
-Por padrão, o componente `DateTimePicker` usa uma consulta de mídia `@media (pointer: fine)` para determinar qual versão usar. Isto pode ser customizado com a propriedade `desktopModeMediaQuery`.
+By default, the `DateTimePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. Isto pode ser customizado com a propriedade `desktopModeMediaQuery`.
 
 {{"demo": "pages/components/date-time-picker/ResponsiveDateTimePickers.js"}}
+
+## Propriedades de formulário
+
+The date time picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-time-picker/FormPropsDateTimePickers.js"}}
 
 ## Validação de data e hora
 
@@ -59,6 +65,12 @@ Por padrão, o componente `DateTimePicker` usa uma consulta de mídia `@media (p
 - usando `minTime`/`maxTime`, você pode desabilitar selecionar horas antes ou depois de um certo tempo a cada dia, respectivamente
 
 {{"demo": "pages/components/date-time-picker/DateTimeValidation.js"}}
+
+## Modo estático
+
+It's possible to render any date & time picker inline. Isto permitirá construir contêineres customizados de popover/modal.
+
+{{"demo": "pages/components/date-time-picker/StaticDateTimePickerDemo.js", "bg": true}}
 
 ## Customização
 

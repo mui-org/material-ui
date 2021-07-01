@@ -7,7 +7,7 @@
     "padding": "Allows TableCells to inherit padding of the Table.",
     "size": "Allows TableCells to inherit size of the Table.",
     "stickyHeader": "Set the header sticky.<br>⚠️ It doesn&#39;t work with IE11.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": { "description": "Styles applied to the root element." },

@@ -112,7 +112,7 @@ export default function BottomAppBar() {
       </Paper>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
+          <IconButton color="inherit" aria-label="open drawer">
             <MenuIcon />
           </IconButton>
           <StyledFab color="secondary" aria-label="add">
@@ -122,7 +122,7 @@ export default function BottomAppBar() {
           <IconButton color="inherit">
             <SearchIcon />
           </IconButton>
-          <IconButton edge="end" color="inherit">
+          <IconButton color="inherit">
             <MoreIcon />
           </IconButton>
         </Toolbar>

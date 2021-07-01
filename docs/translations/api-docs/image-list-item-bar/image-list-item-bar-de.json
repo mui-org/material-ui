@@ -6,6 +6,7 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "position": "Position of the title bar.",
     "subtitle": "String or element serving as subtitle (support text).",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "title": "Title to be displayed."
   },
   "classDescriptions": {

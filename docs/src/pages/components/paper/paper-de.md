@@ -21,3 +21,9 @@ The background of an application resembles the flat, opaque texture of a sheet o
 If you need an outlined surface, use the `variant` prop.
 
 {{"demo": "pages/components/paper/Variants.js", "bg": "inline"}}
+
+## Elevation
+
+The elevation can be used to establish a hierachy between other content. In practical terms, the elevation controls the size of the shadow applied to the surface. In dark mode, raising the elevation also makes the surface lighter.
+
+{{"demo": "pages/components/paper/Elevation.js", "bg": "inline"}}

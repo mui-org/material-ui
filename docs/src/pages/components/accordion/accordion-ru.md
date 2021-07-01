@@ -10,15 +10,15 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 <p class="description">Аккордеоны содержат потоки создания и позволяют осуществить легковесное редактирование элемента.</p>
 
-[Accordion](https://material.io/archive/guidelines/components/expansion-panels.html) это простой контейнер, который может использоваться отдельно, либо как часть более крупного компонента, такого как Card (карточка).
+Аккордеон это простой контейнер, который может использоваться как самостоятельно, так и внутри более крупного компонента, такого как Card (карточка).
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 > **На заметку:** Аккордеоны больше не задокументированы в [руководствах Material Design](https://material.io/), но Material-UI будет продолжать поддерживать их. Ранее они были известны как "expansion panels".
 
-## Простая Accordion
+## Простой аккордеон
 
-{{"demo": "pages/components/accordion/SimpleAccordion.js", "bg": true}}
+{{"demo": "pages/components/accordion/BasicAccordion.js", "bg": true}}
 
 ## Контролируемый аккордеон
 
@@ -26,9 +26,9 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 {{"demo": "pages/components/accordion/ControlledAccordions.js", "bg": true}}
 
-## Customized accordions
+## Кастомизированные аккордеоны
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/accordion/CustomizedAccordions.js"}}
 

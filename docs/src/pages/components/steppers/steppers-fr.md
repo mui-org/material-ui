@@ -1,5 +1,5 @@
 ---
-title: React Stepper component
+title: Composant React Stepper
 components: MobileStepper, Step, StepButton, StepConnector, StepContent, StepIcon, StepLabel, Stepper
 githubLabel: 'component: Stepper'
 materialDesign: https://material.io/archive/guidelines/components/steppers.html
@@ -9,92 +9,92 @@ materialDesign: https://material.io/archive/guidelines/components/steppers.html
 
 <p class="description">Steppers convey progress through numbered steps. It provides a wizard-like workflow.</p>
 
-[Steppers](https://material.io/archive/guidelines/components/steppers.html) display progress through a sequence of logical and numbered steps. They may also be used for navigation. Steppers may display a transient feedback message after a step is saved.
+Les Steppers affichent la progression à travers une séquence d'étapes logiques et numérotées. They may also be used for navigation. Steppers may display a transient feedback message after a step is saved.
 
-- **Types of Steps**: Editable, Non-editable, Mobile, Optional
-- **Types of Steppers**: Horizontal, Vertical, Linear, Non-linear
+- **Types d’étapes**: Modifiable, Non éditable, Mobile, Optionnel
+- **Types d'etapes**: Horizontal, vertical, linéaire, non linéaire
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-> **Note:** Steppers are no longer documented in the [Material Design guidelines](https://material.io/), but Material-UI will continue to support them.
+> **Note:** les Steppers ne seront plus documenté dans le [Material Design guidelines](https://material.io/), mais Material-UI continue le support.
 
-## Horizontal Stepper
+## Stepper horizontale
 
-Horizontal steppers are ideal when the contents of one step depend on an earlier step.
+Les Steppers horizontales sont idéelles lorsque le contenu d'une étape dépend d'une étape antérieure.
 
-{{"demo": "pages/components/steppers/HorizontalLinearStepper.js", "bg": true}}
+Évitez d'utiliser des noms d'étapes longues dans les étapes horizontales.
 
-### Linear
+### Barre de progression linéaire
 
-A linear stepper allows the user to complete the steps in sequence.
+Un Steper linéaire permet à l'utilisateur de compléter les étapes en séquence.
 
-The `Stepper` can be controlled by passing the current step index (zero-based) as the `activeStep` property. `Stepper` orientation is set using the `orientation` property.
+La `Stepper` peut être contrôlée en passant l'indice d'étape actuel (basé sur zéro) en tant que propriété `activeStep`. L'orientation de `Stepper` est définie à l'aide de la prop `orientation`.
 
-This example also shows the use of an optional step by placing the `optional` property on the second `Step` component. Note that it's up to you to manage when an optional step is skipped. Once you've determined this for a particular step you must set `completed={false}` to signify that even though the active step index has gone beyond the optional step, it's not actually complete.
+Cet exemple montre également l'utilisation d'une Stepper facultative en plaçant la prop `optional` sur le deuxième composant `Step`. Note that it's up to you to manage when an optional step is skipped. Once you've determined this for a particular step you must set `completed={false}` to signify that even though the active step index has gone beyond the optional step, it's not actually complete.
 
 {{"demo": "pages/components/steppers/HorizontalLinearStepper.js"}}
 
 ### Non-linear
 
-Non-linear steppers allow users to enter a multi-step flow at any point.
+Les steppers non linéaires permettent à l'utilisateur d'entrer un flux multi-étapes à n'importe quel moment.
 
-This example is similar to the regular horizontal stepper, except steps are no longer automatically set to `disabled={true}` based on the `activeStep` property.
+Cet exemple est similaire à la stepper horizontale normale, excepté les étapes ne sont plus automatiquement définies à `disabled={true}` en se basant sur la prop `activeStep`.
 
 The use of the `StepButton` here demonstrates clickable step labels, as well as setting the `completed` flag. However because steps can be accessed in a non-linear fashion, it's up to your own implementation to determine when all steps are completed (or even if they need to be completed).
 
 {{"demo": "pages/components/steppers/HorizontalNonLinearStepper.js"}}
 
-### Customized Stepper
+### Libellé alternatif
 
 Labels can be placed below the step icon by setting the `alternativeLabel` prop on the `Stepper` component.
 
 {{"demo": "pages/components/steppers/HorizontalLinearAlternativeLabelStepper.js"}}
 
-### Non-linear - Error Step
+### Étape d'erreur
 
 {{"demo": "pages/components/steppers/HorizontalStepperWithError.js"}}
 
-### Non-linear - Alternative Label
+### Étape horizontale personnalisée
 
 Voici un exemple de personnalisation du composant. Vous pouvez en savoir plus dans la [page de documentation des overrides](/customization/how-to-customize/).
 
 {{"demo": "pages/components/steppers/CustomizedSteppers.js"}}
 
-## Vertical Stepper
+## Stepper verticale
 
-Vertical steppers are designed for narrow screen sizes. They are ideal for mobile. All the features of the horizontal stepper can be implemented.
+Les Steppers verticaux sont conçus pour les tailles d’écran étroites. Elles sont idéales pour les mobiles. Toutes les fonctionnalités de Stepper horizontale peuvent être implémentées.
 
 {{"demo": "pages/components/steppers/VerticalLinearStepper.js"}}
 
 ### Perfomance
 
-The content of a step is unmounted when closed. If you need to make the content available to search engines or render expensive component trees inside your modal while optimizing for interaction responsiveness it might be a good idea to keep the step mounted with:
+Le contenu d'un Stepper est démonté lorsqu'il est fermé. Si vous devez rendre le contenu disponible pour les moteurs de recherche ou afficher des arborescences de composants longs dans votre modal tout en optimisant la réactivité des interactions il peut être judicieux de modifier ce comportement par défaut en passant la propriété `keepMounted` :
 
 ```jsx
 <StepContent TransitionProps={{ unmountOnExit: false }} />
 ```
 
-## Mobile Stepper
+## Stepper de mobile
 
-This component implements a compact stepper suitable for a mobile device. It has more limited functionality than the vertical stepper. See [mobile steps](https://material.io/archive/guidelines/components/steppers.html#steppers-types-of-steps) for its inspiration.
+This component implements a compact stepper suitable for a mobile device. Il a plus de fonctionnalités limitées que le Stepper vertical. See [mobile steps](https://material.io/archive/guidelines/components/steppers.html#steppers-types-of-steps) for its inspiration.
 
-The mobile stepper supports three variants to display progress through the available steps: text, dots, and progress.
+Le Stepper mobile prend en charge trois variantes pour afficher la progression à travers les étapes disponibles : text, dots, et progress.
 
 ### Text
 
-Use dots when the number of steps isn’t large.
+L'étape actuelle et le nombre total d'étapes sont affichés sous forme de texte.
 
 {{"demo": "pages/components/steppers/TextMobileStepper.js", "bg": true}}
 
-### Text with Carousel effect
+### Texte avec effet de carrousel
 
-This demo is very similar to the previous, the difference is the usage of [react-swipeable-views](https://github.com/oliviertassinari/react-swipeable-views) to make the transition of steps.
+Cette démo utilise [react-swipeable-views](https://github.com/oliviertassinari/react-swipeable-views) pour créer un carrousel.
 
 {{"demo": "pages/components/steppers/SwipeableTextMobileStepper.js", "bg": true}}
 
 ### Dots
 
-Use dots when the number of steps is small.
+Utilisez des points lorsque le nombre d'étape est petit.
 
 {{"demo": "pages/components/steppers/DotsMobileStepper.js", "bg": true}}
 

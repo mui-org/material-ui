@@ -12,12 +12,12 @@
     "IconContainerComponent": "The component containing the icon.",
     "max": "Maximum rating.",
     "name": "The name attribute of the radio <code>input</code> elements. This input <code>name</code> should be unique within the page. Being unique within a form is insufficient since the <code>name</code> is used to generated IDs.",
-    "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number \\| null) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value.",
+    "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number | null) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value.",
     "onChangeActive": "Callback function that is fired when the hover state changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: number) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>value:</em> The new value.",
     "precision": "The minimum increment value change allowed.",
     "readOnly": "Removes all hover effects and pointer events.",
     "size": "The size of the component.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "value": "The rating value."
   },
   "classDescriptions": {

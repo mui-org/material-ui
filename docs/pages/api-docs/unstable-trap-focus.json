@@ -5,10 +5,6 @@
     "disableAutoFocus": { "type": { "name": "bool" } },
     "disableEnforceFocus": { "type": { "name": "bool" } },
     "disableRestoreFocus": { "type": { "name": "bool" } },
-    "getDoc": {
-      "type": { "name": "func" },
-      "default": "function defaultGetDoc() {\n  return document;\n}"
-    },
     "getTabbable": { "type": { "name": "func" } },
     "isEnabled": {
       "type": { "name": "func" },

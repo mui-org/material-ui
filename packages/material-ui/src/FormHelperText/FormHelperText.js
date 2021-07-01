@@ -33,12 +33,12 @@ const FormHelperTextRoot = styled('p', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.size && styles[`size${capitalize(styleProps.size)}`]),
-      ...(styleProps.contained && styles.contained),
-      ...(styleProps.filled && styles.filled),
-    };
+    return [
+      styles.root,
+      styleProps.size && styles[`size${capitalize(styleProps.size)}`],
+      styleProps.contained && styles.contained,
+      styleProps.filled && styles.filled,
+    ];
   },
 })(({ theme, styleProps }) => ({
   color: theme.palette.text.secondary,

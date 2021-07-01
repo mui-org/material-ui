@@ -2,7 +2,7 @@
 
 <p class="description">借助 TypeScript，你可以为 JavaScript 添加静态类型，从而提高代码质量及开发者的工作效率。</p>
 
-Material-UI 需要的最低 TypeScript 的版本为 3.2。
+Material-UI requires a minimum version of TypeScript 3.5.
 
 请查看 [Create React App with TypeScript](https://github.com/mui-org/material-ui/tree/next/examples/create-react-app-with-typescript) 的例子。
 
@@ -176,7 +176,8 @@ interface Props {
 然而，这是不是很 [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) ，因为它需要你在两个不同的地方保持类名（如 `“root”`， `“paper”`， `“button”`，...）。 我们提供了一个类型操作符 `WithStyles` 来帮助解决这个问题，因此您可以直接写入：:
 
 ```ts
-import { WithStyles, createStyles } from '@material-ui/core';
+import { createStyles } from '@material-ui/styles';
+import { WithStyles } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -231,22 +232,21 @@ const DecoratedClass = withStyles(styles)(
 以下示例添加了一个 `appDrawer` 属性，并将其合并到由 `material-ui` 提供的属性中：
 
 ```ts
-import { Theme } from '@material-ui/core/styles/createTheme';
-import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import { Breakpoint, Theme } from '@material-ui/core/styles';
 
-declare module '@material-ui/core/styles/createTheme' {
+declare module '@material-ui/core/styles' {
   interface Theme {
     appDrawer: {
-      width: React.CSSProperties['width']
-      breakpoint: Breakpoint
-    }
+      width: React.CSSProperties['width'];
+      breakpoint: Breakpoint;
+    };
   }
-  // 使用 `createTheme` 来配置
+  // allow configuration using `createTheme`
   interface ThemeOptions {
     appDrawer?: {
-      width?: React.CSSProperties['width']
-      breakpoint?: Breakpoint
-    }
+      width?: React.CSSProperties['width'];
+      breakpoint?: Breakpoint;
+    };
   }
 }
 ```
@@ -281,7 +281,7 @@ const theme = createMyTheme({
 
 ## `component` 属性的用法
 
-你可以通过 `component` 属性替换许多 Material-UI 的许多组件的根节点，我们在组件的 API 文档中做了详细的说明。 例如，一个按钮（Button）的根节点可以被替换成一个 React Router 的链接（Link），并且，任何传入按钮（Button）的额外的属性，例如 `to` ，都会被传递到链接（Link）组件中。 关于按钮组件和 react-router-dom 的代码示例查看 [这些示例](/guides/composition/#routing-libraries)。
+你可以通过 `component` 属性替换许多 Material-UI 的许多组件的根节点，我们在组件的 API 文档中做了详细的说明。 例如，一个按钮（Button）的根节点可以被替换成一个 React Router 的链接（Link），并且，任何传入按钮（Button）的额外的属性，例如 `to` ，都会被传递到链接（Link）组件中。 关于按钮和 react-router-dom 的代码示例查看[这些示例](/guides/routing/#component-prop)。
 
 为了能够单独使用 Material-UI 组件的属性，该属性应该与类型参数一起使用。 否则，`component` 属性将不会出现在 Material-UI 组件的属性中。
 

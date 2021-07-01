@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
-import { green } from '@material-ui/core/colors';
+import { pink } from '@material-ui/core/colors';
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 
 function HomeIcon(props: SvgIconProps) {
@@ -23,9 +23,10 @@ export default function SvgIconsColor() {
       <HomeIcon />
       <HomeIcon color="primary" />
       <HomeIcon color="secondary" />
+      <HomeIcon color="success" />
       <HomeIcon color="action" />
       <HomeIcon color="disabled" />
-      <HomeIcon sx={{ color: green[500] }} />
+      <HomeIcon sx={{ color: pink[500] }} />
     </Box>
   );
 }

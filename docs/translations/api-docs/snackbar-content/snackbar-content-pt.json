@@ -2,22 +2,23 @@
   "componentDescription": "",
   "propDescriptions": {
     "action": "The action to display. It renders after the message, at the end of the snackbar.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "message": "The message to display.",
-    "role": "The ARIA role attribute of the element."
+    "role": "O atributo de regra ARIA do elemento.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "message": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the message wrapper element"
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "o elemento encapsulador da mensagem"
     },
     "action": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the action wrapper element",
-      "conditions": "<code>action</code> is provided"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento encapsulador da ação",
+      "conditions": "<code>action</code> é fornecida"
     }
   }
 }

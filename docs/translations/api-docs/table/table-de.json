@@ -6,7 +6,8 @@
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "padding": "Allows TableCells to inherit padding of the Table.",
     "size": "Allows TableCells to inherit size of the Table.",
-    "stickyHeader": "Set the header sticky.<br>⚠️ It doesn&#39;t work with IE11."
+    "stickyHeader": "Set the header sticky.<br>⚠️ It doesn&#39;t work with IE11.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

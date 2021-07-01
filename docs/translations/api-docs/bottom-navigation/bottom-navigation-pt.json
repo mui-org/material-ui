@@ -1,16 +1,17 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "onChange": "Callback fired when the value changes.<br><br><strong>Signature:</strong><br><code>function(event: object, value: any) =&gt; void</code><br><em>event:</em> The event source of the callback. <strong>Warning</strong>: This is a generic event not a change event.<br><em>value:</em> We default to the index of the child.",
     "showLabels": "If <code>true</code>, all <code>BottomNavigationAction</code>s will show their labels. By default, only the selected <code>BottomNavigationAction</code> will show its label.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The value of the currently selected <code>BottomNavigationAction</code>."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     }
   }
 }

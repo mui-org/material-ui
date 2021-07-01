@@ -2,9 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
-import { keyframes, css } from '@material-ui/styled-engine';
+import { keyframes, css, darken, lighten } from '@material-ui/system';
 import capitalize from '../utils/capitalize';
-import { darken, lighten } from '../styles/colorManipulator';
 import useTheme from '../styles/useTheme';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
@@ -102,11 +101,11 @@ const LinearProgressRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`color${capitalize(styleProps.color)}`],
-      ...styles[styleProps.variant],
-    };
+    return [
+      styles.root,
+      styles[`color${capitalize(styleProps.color)}`],
+      styles[styleProps.variant],
+    ];
   },
 })(({ styleProps, theme }) => ({
   /* Styles applied to the root element. */
@@ -145,10 +144,7 @@ const LinearProgressDashed = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.dashed,
-      ...styles[`dashedColor${capitalize(styleProps.color)}`],
-    };
+    return [styles.dashed, styles[`dashedColor${capitalize(styleProps.color)}`]];
   },
 })(
   ({ styleProps, theme }) => {
@@ -179,14 +175,14 @@ const LinearProgressBar1 = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.bar,
-      ...styles[`barColor${capitalize(styleProps.color)}`],
-      ...((styleProps.variant === 'indeterminate' || styleProps.variant === 'query') &&
-        styles.bar1Indeterminate),
-      ...(styleProps.variant === 'determinate' && styles.bar1Determinate),
-      ...(styleProps.variant === 'buffer' && styles.bar1Buffer),
-    };
+    return [
+      styles.bar,
+      styles[`barColor${capitalize(styleProps.color)}`],
+      (styleProps.variant === 'indeterminate' || styleProps.variant === 'query') &&
+        styles.bar1Indeterminate,
+      styleProps.variant === 'determinate' && styles.bar1Determinate,
+      styleProps.variant === 'buffer' && styles.bar1Buffer,
+    ];
   },
 })(
   ({ styleProps, theme }) => ({
@@ -225,13 +221,13 @@ const LinearProgressBar2 = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.bar,
-      ...styles[`barColor${capitalize(styleProps.color)}`],
-      ...((styleProps.variant === 'indeterminate' || styleProps.variant === 'query') &&
-        styles.bar2Indeterminate),
-      ...(styleProps.variant === 'buffer' && styles.bar2Buffer),
-    };
+    return [
+      styles.bar,
+      styles[`barColor${capitalize(styleProps.color)}`],
+      (styleProps.variant === 'indeterminate' || styleProps.variant === 'query') &&
+        styles.bar2Indeterminate,
+      styleProps.variant === 'buffer' && styles.bar2Buffer,
+    ];
   },
 })(
   ({ styleProps, theme }) => ({

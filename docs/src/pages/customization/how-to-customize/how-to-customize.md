@@ -108,12 +108,13 @@ You can rely on the following [global class names](/styles/advanced/#with-materi
 | :------------ | :------------------ |
 | active        | `.Mui-active`       |
 | checked       | `.Mui-checked`      |
+| completed     | `.Mui-completed`    |
 | disabled      | `.Mui-disabled`     |
 | error         | `.Mui-error`        |
-| focused       | `.Mui-focused`      |
-| focus visible | `.Mui-focusVisible` |
-| required      | `.Mui-required`     |
 | expanded      | `.Mui-expanded`     |
+| focus visible | `.Mui-focusVisible` |
+| focused       | `.Mui-focused`      |
+| required      | `.Mui-required`     |
 | selected      | `.Mui-selected`     |
 
 > ⚠️ Never style these pseudo-class class names directly:

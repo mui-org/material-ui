@@ -19,7 +19,7 @@ function ListItemLink(props) {
   const renderLink = React.useMemo(
     () =>
       React.forwardRef(function Link(itemProps, ref) {
-        return <RouterLink to={to} ref={ref} {...itemProps} />;
+        return <RouterLink to={to} ref={ref} {...itemProps} role={undefined} />;
       }),
     [to],
   );

@@ -20,21 +20,43 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#checkbox'
 
 {{"demo": "pages/components/checkboxes/Checkboxes.js"}}
 
-## 不确定的状态
-
-多选框在表单中只能存在两种状态：已选中或未选中。 在其状态下提交的值只有存在和空两种形式。 从视觉上看的话，一个多选框其实有三种状态：选中、未选中、不确定。
-
-{{"demo": "pages/components/checkboxes/IndeterminateCheckbox.js"}}
-
 ## 标签
 
-借助 `FormControlLabel` 组件，`多选框组件`可以和标签一起使用。
+You can provide a label to the `Checkbox` thanks to the `FormControlLabel` component.
 
 {{"demo": "pages/components/checkboxes/CheckboxLabels.js"}}
 
+## Size 大小
+
+Use the `size` prop or customize the font size of the svg icons to change the size of the checkboxes.
+
+{{"demo": "pages/components/checkboxes/SizeCheckboxes.js"}}
+
+## Color 颜色
+
+{{"demo": "pages/components/checkboxes/ColorCheckboxes.js"}}
+
+## Icon
+
+{{"demo": "pages/components/checkboxes/IconCheckboxes.js"}}
+
+## Controlled
+
+You can control the checkbox with the `checked` and `onChange` props:
+
+{{"demo": "pages/components/checkboxes/ControlledCheckbox.js"}}
+
+## 不确定的状态
+
+多选框在表单中只能存在两种状态：已选中或未选中。 在其状态下提交的值只有存在和空两种形式。 Visually, there are **three** states a checkbox can be in: checked, unchecked, or indeterminate.
+
+{{"demo": "pages/components/checkboxes/IndeterminateCheckbox.js"}}
+
+> ⚠️ When indeterminate is set, the value of the `checked` prop only impacts the form submitted values. It has no accessibility or UX implications.
+
 ## 表单组
 
-`FormGroup` 会提供相对简单的 API 对选择控件进行分组。
+`FormGroup` is a helpful wrapper used to group selection control components.
 
 {{"demo": "pages/components/checkboxes/CheckboxesGroup.js"}}
 
@@ -48,7 +70,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#checkbox'
 
 以下是自定义组件的一个示例。 您可以在 [重写文档页面](/customization/how-to-customize/) 中了解更多有关此内容的信息。
 
-{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js", "defaultCodeOpen": false}}
+{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js"}}
 
 🎨 如果您还在寻找灵感，您可以看看 [MUI Treasury 特别定制的一些例子](https://mui-treasury.com/styles/checkbox)。
 

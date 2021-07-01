@@ -8,6 +8,7 @@
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
     "icon": "The icon element.",
     "label": "The label element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "You can provide your own value. Otherwise, we fallback to the child position index.",
     "wrapped": "Tab labels appear in a single row. They can use a second line if needed."
   },

@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { SxProps } from '@material-ui/system';
-import { styled, unstable_useThemeProps as useThemeProps, Theme } from '@material-ui/core/styles';
+import { styled, useThemeProps, Theme } from '@material-ui/core/styles';
 import {
   unstable_composeClasses as composeClasses,
   generateUtilityClass,
@@ -95,8 +95,7 @@ const MonthPicker = React.forwardRef(function MonthPicker<TDate>(
     onMonthChange,
     ...other
   } = props;
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   const utils = useUtils<TDate>();

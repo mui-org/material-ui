@@ -55,10 +55,7 @@ const SpeedDialRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[`direction${capitalize(styleProps.direction)}`],
-    };
+    return [styles.root, styles[`direction${capitalize(styleProps.direction)}`]];
   },
 })(({ theme, styleProps }) => ({
   zIndex: theme.zIndex.speedDial,
@@ -113,10 +110,7 @@ const SpeedDialActions = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.actions,
-      ...(!styleProps.open && styles.actionsClosed),
-    };
+    return [styles.actions, !styleProps.open && styles.actionsClosed];
   },
 })(({ styleProps }) => ({
   display: 'flex',

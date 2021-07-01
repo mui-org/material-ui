@@ -7,6 +7,7 @@
     "icon": "The Icon to display in the SpeedDial Fab.",
     "id": "This prop is used to help implement the accessibility logic. If you don&#39;t provide this prop. It falls back to a randomly generated id.",
     "open": "Control the popup` open state.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "TooltipClasses": "<code>classes</code> prop applied to the <a href=\"/api/tooltip/\"><code>Tooltip</code></a> element.",
     "tooltipOpen": "Make the tooltip always visible when the SpeedDial is open.",
     "tooltipPlacement": "Placement of the tooltip.",

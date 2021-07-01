@@ -24,4 +24,4 @@ We will cross the 10 person milestone in the coming weeks.
 We have opened these positions as our revenue growth allows.
 These new roles will help accelerate our mission, strengthen our existing offering, and initiate a new vertical.
 
-We couldn’t be more excited to have Jun on the team!
+We couldn't be more excited to have Jun on the team!

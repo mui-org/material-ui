@@ -1,33 +1,34 @@
 {
-  "componentDescription": "<code>ButtonBase</code> contains as few styles as possible.\nIt aims to be a simple building block for creating a button.\nIt contains a load of style reset and some focus/ripple logic.",
+  "componentDescription": "`ButtonBase` contains as few styles as possible.\nIt aims to be a simple building block for creating a button.\nIt contains a load of style reset and some focus/ripple logic.",
   "propDescriptions": {
     "action": "A ref for imperative actions. It currently only supports <code>focusVisible()</code> action.",
     "centerRipple": "If <code>true</code>, the ripples are centered. They won&#39;t start at the cursor interaction position.",
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.<br>⚠️ <a href=\"/guides/composition/#caveat-with-refs\">Needs to be able to hold a ref</a>.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "Se <code>true</code>, o componente está desabilitado.",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
     "disableTouchRipple": "If <code>true</code>, the touch ripple effect is disabled.",
     "focusRipple": "If <code>true</code>, the base button will have a keyboard focus ripple.",
-    "focusVisibleClassName": "This prop can help identify which element has keyboard focus. The class name will be applied when the element gains the focus through keyboard interaction. It&#39;s a polyfill for the <a href=\"https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo\">CSS :focus-visible selector</a>. The rationale for using this feature <a href=\"https://github.com/WICG/focus-visible/blob/master/explainer.md\">is explained here</a>. A <a href=\"https://github.com/WICG/focus-visible\">polyfill can be used</a> to apply a <code>focus-visible</code> class to other components if needed.",
+    "focusVisibleClassName": "Esta propriedade pode ajudar a identificar qual elemento tem o foco do teclado. O nome da classe será aplicado quando o elemento receber o foco através da interação do teclado. Ela é um polyfill para o <a href=\"https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo\">seletor CSS :focus-visible</a>. A razão para o uso deste recurso <a href=\"https://github.com/WICG/focus-visiblob/master/explainer.md\">é explicada aqui</a>. Um <a href=\"https://github.com/WICG/focus-visible\">polyfill pode ser usado</a> para aplicar uma classe <code>focus-visible</code> para outros componentes, se necessário.",
+    "LinkComponent": "The component used to render a link when the <code>href</code> prop is provided.",
     "onFocusVisible": "Callback fired when the component is focused with a keyboard. We trigger a <code>onFocus</code> callback too.",
     "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "TouchRippleProps": "Props applied to the <code>TouchRipple</code> element."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "disabled": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>disabled={true}</code>"
     },
     "focusVisible": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "keyboard focused"
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "teclado focado"
     }
   }
 }

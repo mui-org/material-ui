@@ -8,7 +8,7 @@
     "disableGutters": "If <code>true</code>, the List Subheader will not have gutters.",
     "disableSticky": "If <code>true</code>, the List Subheader will not stick to the top during scroll.",
     "inset": "If <code>true</code>, the List Subheader is indented.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": { "description": "Styles applied to the root element." },

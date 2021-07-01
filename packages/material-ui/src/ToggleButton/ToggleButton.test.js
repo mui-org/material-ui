@@ -1,24 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import {
-  createClientRender,
-  createMount,
-  describeConformanceV5,
-  createServerRender,
-} from 'test/utils';
+import { createClientRender, describeConformanceV5, createServerRender } from 'test/utils';
 import ToggleButton, { toggleButtonClasses as classes } from '@material-ui/core/ToggleButton';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 describe('<ToggleButton />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<ToggleButton value="X">Hello, World!</ToggleButton>, () => ({
     classes,
     inheritComponent: ButtonBase,
     render,
-    mount,
     muiName: 'MuiToggleButton',
     testVariantProps: { variant: 'foo' },
     testDeepOverrides: { slotName: 'label', slotClassName: classes.label },
@@ -143,8 +136,8 @@ describe('<ToggleButton />', () => {
     const serverRender = createServerRender({ expectUseLayoutEffectWarning: true });
 
     it('should server-side render', () => {
-      const markup = serverRender(<ToggleButton value="hello">Hello World</ToggleButton>);
-      expect(markup.text()).to.equal('Hello World');
+      const container = serverRender(<ToggleButton value="hello">Hello World</ToggleButton>);
+      expect(container.firstChild).to.have.text('Hello World');
     });
   });
 });

@@ -63,9 +63,7 @@ const CardActionArea = React.forwardRef(function CardActionArea(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiCardActionArea' });
   const { children, className, focusVisibleClassName, ...other } = props;
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
-
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   return (

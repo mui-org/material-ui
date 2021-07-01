@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import FormControl from '@material-ui/core/FormControl';
 import { inputBaseClasses } from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,14 +8,12 @@ import { outlinedInputClasses } from '@material-ui/core/OutlinedInput';
 import TextField, { textFieldClasses as classes } from '@material-ui/core/TextField';
 
 describe('<TextField />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<TextField variant="standard" />, () => ({
     classes,
     inheritComponent: FormControl,
     render,
-    mount,
     muiName: 'MuiTextField',
     refInstanceof: window.HTMLDivElement,
     testVariantProps: { variant: 'outlined' },

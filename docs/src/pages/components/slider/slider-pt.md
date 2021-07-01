@@ -12,8 +12,6 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#slider'
 
 [Sliders](https://material.io/design/components/sliders.html) refletem um intervalo de valores ao longo de uma barra, a partir do qual os usuários podem selecionar um único valor. Eles são ideais para ajustar configurações como volume, brilho ou aplicação de filtros de imagem.
 
-- 📦 [22 kB gzipped](/size-snapshot) (mas apenas +8 kB quando usado junto com outros componentes de Material-UI).
-
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Sliders contínuos
@@ -22,11 +20,15 @@ Os sliders contínuos permitem que os usuários selecionem um valor ao longo de 
 
 {{"demo": "pages/components/slider/ContinuousSlider.js"}}
 
+## Tamanhos
+
+For smaller slider, use the prop `size="small"`.
+
+{{"demo": "pages/components/slider/SliderSizes.js"}}
+
 ## Sliders discretos
 
-Os sliders discretos podem ser ajustados para um valor específico, fazendo referência ao seu indicador de valor. Por ordem de demonstrações:
-
-Você pode gerar uma marca para cada etapa com `marks={true}`.
+Os sliders discretos podem ser ajustados para um valor específico, fazendo referência ao seu indicador de valor. Você pode gerar uma marca para cada etapa com `marks={true}`.
 
 {{"demo": "pages/components/slider/DiscreteSlider.js"}}
 
@@ -60,11 +62,21 @@ O slider pode ser usado para definir o início e o fim de um intervalo, fornecen
 
 {{"demo": "pages/components/slider/RangeSlider.js"}}
 
+### Minimum distance
+
+You can enforce a minimum distance between values in the `onChange` event handler. By default, when you move the pointer over a thumb while dragging another thumb, the active thumb will swap to the hovered thumb. You can disable this behavior with the `disableSwap` prop. If you want the range to shift when reaching minimum distance, you can utilize the `activeThumb` parameter in `onChange`.
+
+{{"demo": "pages/components/slider/MinimumDistanceSlider.js"}}
+
 ## Slider com campo de entrada
 
-Neste exemplo, um campo de entrada permite que um valor seja definido.
+In this example, an input allows a discrete value to be set.
 
 {{"demo": "pages/components/slider/InputSlider.js"}}
+
+## Cor
+
+{{"demo": "pages/components/slider/ColorSlider.js"}}
 
 ## Sliders customizados
 
@@ -72,11 +84,15 @@ Aqui estão alguns exemplos de customização do componente. Você pode aprender
 
 {{"demo": "pages/components/slider/CustomizedSlider.js"}}
 
+### Music player
+
+{{"demo": "pages/components/slider/MusicPlayerSlider.js"}}
+
 ## Sliders verticais
 
 {{"demo": "pages/components/slider/VerticalSlider.js"}}
 
-**WARNING**: Chrome, Safari and newer Edge versions i.e. any browser based on WebKit exposes `<Slider orientation="vertical" />` as horizontal ([chromium issue #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217)). By applying `-webkit-appearance: slider-vertical;` the slider is exposed as vertical.
+**AVISO**: versões do Chrome, Safari e do Edge mais recente, ou seja, qualquer navegador baseado no WebKit exibe `<Slider orientation="vertical" />` horizontal ([de chromium issue #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217)). Aplicando-se `-webkit-appearance: slider-vertical;` o slider é exibido vertical.
 
 However, by applying `-webkit-appearance: slider-vertical;` keyboard navigation for horizontal keys (<kbd class="key">Arrow Left</kbd>, <kbd class="key">Arrow Right</kbd>) is reversed ([chromium issue #1162640](https://bugs.chromium.org/p/chromium/issues/detail?id=1162640)). Usually, up and right should increase and left and down should decrease the value. If you apply `-webkit-appearance` you could prevent keyboard navigation for horizontal arrow keys for a truly vertical slider. This might be less confusing to users compared to a change in direction.
 
@@ -106,7 +122,17 @@ Na seguinte demonstração, o valor _x_ representa o valor _2^x_. Acrescentar em
 
 {{"demo": "pages/components/slider/NonLinearSlider.js"}}
 
-## Slider sem estilo
+## Unstyled
+
+<!-- #default-branch-switch -->
+
+- 📦 [5.6 kB gzipped](https://bundlephobia.com/result?p=@material-ui/unstyled@next)
+
+The slider also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import SliderUnstyled from '@material-ui/unstyled/SliderUnstyled';
+```
 
 {{"demo": "pages/components/slider/UnstyledSlider.js"}}
 
@@ -118,3 +144,15 @@ O componente lida com a maior parte do trabalho necessário para torná-lo acess
 
 - Cada marcador possua propriedades de rótulo amigável para o usuário (`aria-label`, `aria-labelledby` ou `getAriaLabel`).
 - Cada marcador tenha um texto amigável para o seu valor atual. Isso não é necessário se o valor corresponder ao rótulo exibido no slider. Você pode alterar o nome com as propriedades `getAriaValueText` ou `aria-valuetext`.
+
+## Limitações
+
+### IE 11
+
+The slider's value label is not centered in IE 11. The alignement is not handled to make customizations easier with the lastest browsers. You can solve the issue with:
+
+```css
+.MuiSlider-valueLabel {
+  left: calc(-50% - 4px);
+}
+```

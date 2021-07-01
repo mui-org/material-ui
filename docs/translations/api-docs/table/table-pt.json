@@ -2,19 +2,20 @@
   "componentDescription": "",
   "propDescriptions": {
     "children": "The content of the table, normally <code>TableHead</code> and <code>TableBody</code>.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "padding": "Allows TableCells to inherit padding of the Table.",
     "size": "Allows TableCells to inherit size of the Table.",
-    "stickyHeader": "Set the header sticky.<br>⚠️ It doesn&#39;t work with IE11."
+    "stickyHeader": "Set the header sticky.<br>⚠️ It doesn&#39;t work with IE11.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "stickyHeader": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>stickyHeader={true}</code>"
     }
   }

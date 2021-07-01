@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { useTheme } from '@material-ui/private-theming';
-import getThemeProps from '../styles/getThemeProps';
+import { getThemeProps, useThemeWithoutDefault as useTheme } from '@material-ui/system';
 import useEnhancedEffect from '../utils/useEnhancedEffect';
 
 export default function useMediaQuery(queryInput, options = {}) {
   const theme = useTheme();
-  const props = getThemeProps({
-    theme,
-    name: 'MuiUseMediaQuery',
-    props: {},
-  });
+  const props = getThemeProps({ name: 'MuiUseMediaQuery', props: {}, theme });
 
   if (process.env.NODE_ENV !== 'production') {
     if (typeof queryInput === 'function' && theme === null) {

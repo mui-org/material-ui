@@ -86,14 +86,8 @@ async function typescriptCopy({ from, to }) {
 
 async function createPackageFile() {
   const packageData = await fse.readFile(path.resolve(packagePath, './package.json'), 'utf8');
-  const {
-    nyc,
-    scripts,
-    devDependencies,
-    workspaces,
-    publishConfig: { exports: publishedExports, type: publishedType, ...publishConfig },
-    ...packageDataOther
-  } = JSON.parse(packageData);
+  const { nyc, scripts, devDependencies, workspaces, ...packageDataOther } =
+    JSON.parse(packageData);
 
   const newPackageData = {
     ...packageDataOther,
@@ -109,9 +103,6 @@ async function createPackageFile() {
         }
       : {}),
     types: './index.d.ts',
-    type: publishedType,
-    exports: publishedExports,
-    publishConfig,
   };
 
   const targetPath = path.resolve(buildPath, './package.json');

@@ -29,14 +29,17 @@ const theme = createTheme({
 
 ### Supported locales
 
-| Locale                  | BCP 47 language tag | Import name |
+| Locale                  | BCP 47 language tag | Nom importé |
 |:----------------------- |:------------------- |:----------- |
 | Arabe (Égypte)          | ar-EG               | `arEG`      |
 | Armenian                | hy-AM               | `hyAM`      |
 | Azerbaijani             | az-AZ               | `azAZ`      |
+| Bangla                  | bn-BD               | `bnBD`      |
 | Bulgarian               | bg-BG               | `bgBG`      |
 | Catalan                 | ca-ES               | `caES`      |
+| Chinese (Hong Kong)     | zh-HK               | `zhHK`      |
 | Chinese (Simplified)    | zh-CN               | `zhCN`      |
+| Chinese (Taiwan)        | zh-TW               | `zhTW`      |
 | Czech                   | cs-CZ               | `csCZ`      |
 | Dutch                   | nl-NL               | `nlNL`      |
 | English (United States) | en-US               | `enUS`      |

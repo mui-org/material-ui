@@ -6,7 +6,8 @@
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "dense": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used. The prop defaults to the value inherited from the parent List component.",
     "disableGutters": "If <code>true</code>, the left and right padding is removed.",
-    "ListItemClasses": "<code>classes</code> prop applied to the <a href=\"/api/list-item/\"><code>ListItem</code></a> element."
+    "ListItemClasses": "<code>classes</code> prop applied to the <a href=\"/api/list-item/\"><code>ListItem</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

@@ -16,25 +16,35 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#tabpanel'
 
 ## 基础选项卡
 
-A basic example with no frills.
+A basic example with tab panels.
 
-{{"demo": "pages/components/tabs/BasicTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/BasicTabs.js"}}
 
-### 包装的标签
+## 实验性的 API
 
-对于那些比较长的标签，它们会被自动包装成选项卡。 如果标签超出了选项卡的长度，它则会溢出，并且文本会隐藏。
+遵循 [WAI-ARIA 项目实践](https://www.w3.org/TR/wai-aria-practices/#tabpanel)，`@material-ui/lab` 提供了工具集组件，该组件通过注入属性的方式来实现无障碍设计的选项卡。
 
-{{"demo": "pages/components/tabs/TabsWrappedLabel.js", "bg": true}}
+{{"demo": "pages/components/tabs/LabTabs.js"}}
 
-### 禁用选项卡
+## 包装的标签
 
-选项卡的 `disabled` 属性能将其设置为禁用状态。
+对于那些比较长的标签，它们会被自动包装成选项卡。 If the label is too long for the tab, it will overflow, and the text will not be visible.
 
-{{"demo": "pages/components/tabs/DisabledTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/TabsWrappedLabel.js"}}
+
+## Colored tab
+
+{{"demo": "pages/components/tabs/ColorTabs.js"}}
+
+## 禁用选项卡
+
+A tab can be disabled by setting the `disabled` prop.
+
+{{"demo": "pages/components/tabs/DisabledTabs.js"}}
 
 ## 固定的选项卡
 
-固定的选项卡应与定量的选项卡一起使用，而将它们整齐放置则会有助于用户的肌肉记忆。
+Fixed tabs should be used with a limited number of tabs, and when a consistent placement will aid muscle memory.
 
 ### 全宽
 
@@ -74,7 +84,7 @@ A basic example with no frills.
 
 ### 永久隐藏滚动按钮
 
-你可以使用 `scrollButtons={false}` 属性来永远隐藏左右的滚动按钮。 所有的滚动比如通过用户代理的滚动机制来发起（例如，左右滑动，移动鼠标滑轮等等）。
+你可以使用 `scrollButtons={false}` 属性来永远隐藏左右的滚动按钮。 All scrolling must be initiated through user agent scrolling mechanisms (e.g. left/right swipe, shift mouse wheel, etc.)
 
 {{"demo": "pages/components/tabs/ScrollableTabsButtonPrevent.js", "bg": true}}
 
@@ -82,7 +92,7 @@ A basic example with no frills.
 
 以下是自定义组件的一个示例。 您可以在 [重写文档页面](/customization/how-to-customize/) 中了解更多有关此内容的信息。
 
-{{"demo": "pages/components/tabs/CustomizedTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/CustomizedTabs.js"}}
 
 🎨 如果您还在寻找灵感，您可以看看 [MUI Treasury 特别定制的一些例子](https://mui-treasury.com/styles/tabs/)。
 
@@ -94,19 +104,23 @@ A basic example with no frills.
 
 请注意，你可以使用 `visibleScrollbar` 来恢复显示滚动条。
 
-## 导航选项卡
+## Nav tabs
 
-默认情况下，选项卡会使用 `按钮` 组件，但您也可以提供自定义的标签或组件。 下面是一个实现导航选项卡的例子：
+By default, tabs use a `button` element, but you can provide your custom tag or component. 下面是一个实现导航选项卡的例子：
 
-{{"demo": "pages/components/tabs/NavTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/NavTabs.js"}}
 
-## 图标选项卡
+## Icon tabs
 
 选项卡的标签可以是所有的图标或者所有的文本。
 
-{{"demo": "pages/components/tabs/IconTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/IconTabs.js"}}
 
-{{"demo": "pages/components/tabs/IconLabelTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/IconLabelTabs.js"}}
+
+## Third-party routing library（第三方路由库）
+
+One frequent use case is to perform navigation on the client only, without an HTTP round-trip to the server. The `Tab` component provides the `component` prop to handle this use case. Here is a [more detailed guide](/guides/routing/#tabs).
 
 ## 无障碍设计
 
@@ -121,23 +135,22 @@ A basic example with no frills.
 
 ### 键盘导航
 
-该组件使用“手动激活”的行为来实现键盘导航。 如果你想切换到“选择自动跟随焦点”（selection automatically follows focus）的行为，你必须将 `selectionFollowsFocus` 传递给 `Tabs` 组件。 WAI-ARIA 项目实践中对 [如何决定什么时候选择自动跟随焦点](https://www.w3.org/TR/wai-aria-practices/#kbd_selection_follows_focus) 进行了详细的指导。
+该组件使用“手动激活”的行为来实现键盘导航。 如果你想切换到“选择自动跟随焦点”（selection automatically follows focus）的行为，你必须将 `selectionFollowsFocus` 传递给 `Tabs` 组件。 WAI-ARIA 项目实践中有一个详细的指南关于  [how to decide when to make selection automatically follow focus](https://www.w3.org/TR/wai-aria-practices/#kbd_selection_follows_focus)。
 
 #### 演示
 
-下面的两个演示只是在键盘导航行为上有所区别。 聚焦到其中一个选项卡，然后用方向键导航你就可以注意到其中的差异。
+下面的两个演示只是在键盘导航行为上有所区别。 Focus a tab and navigate with arrow keys to notice the difference, e.g. <kbd class="key">Arrow Left</kbd>.
 
 ```jsx
-/* 那个跟随焦点的选项卡 */
+/* Tabs where selection follows focus */
 <Tabs selectionFollowsFocus />
-/* 需要手动选择选项卡中的每一个选项 */
+```
+
+{{"demo": "pages/components/tabs/AccessibleTabs1.js", "defaultCodeOpen": false}}
+
+```jsx
+/* Tabs where each tab needs to be selected manually */
 <Tabs />
 ```
 
-{{"demo": "pages/components/tabs/AccessibleTabs.js", "bg": true}}
-
-## 实验性的 API
-
-遵循 [WAI-ARIA 项目实践](https://www.w3.org/TR/wai-aria-practices/#tabpanel)，`@material-ui/lab` 提供了工具集组件，该组件通过注入属性的方式来实现无障碍设计的选项卡。
-
-{{"demo": "pages/components/tabs/LabTabs.js", "bg": true}}
+{{"demo": "pages/components/tabs/AccessibleTabs2.js", "defaultCodeOpen": false}}

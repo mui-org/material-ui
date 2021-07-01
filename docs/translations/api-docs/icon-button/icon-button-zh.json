@@ -1,5 +1,5 @@
 {
-  "componentDescription": "Refer to the <a href=\"/components/icons/\">Icons</a> section of the documentation\nregarding the available icon options.",
+  "componentDescription": "Refer to the [Icons](/components/icons/) section of the documentation\nregarding the available icon options.",
   "propDescriptions": {
     "children": "The icon element.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
@@ -8,7 +8,8 @@
     "disableFocusRipple": "If <code>true</code>, the  keyboard focus ripple is disabled.",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
     "edge": "If given, uses a negative margin to counteract the padding on one side (this is often helpful for aligning the left or right side of the icon with content above or below, without ruining the border size and shape).",
-    "size": "The size of the button. <code>small</code> is equivalent to the dense button styling."
+    "size": "The size of the button. <code>small</code> is equivalent to the dense button styling.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
@@ -49,9 +50,15 @@
       "nodeName": "the root element",
       "conditions": "<code>size=\"small\"</code>"
     },
-    "label": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the children container element"
+    "sizeMedium": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"medium\"</code>"
+    },
+    "sizeLarge": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>size=\"large\"</code>"
     }
   }
 }

@@ -8,12 +8,12 @@
 
 #### Argumentos
 
-1. `props` (_String_ | _String[]_): Defaults to `['all']`. Provides a CSS property, or a list of CSS properties that should be transitioned.
+1. `props` (_string_ | _string[]_): Defaults to `['all']`. Provides a CSS property, or a list of CSS properties that should be transitioned.
 2. `options` (*Object* [optional]):
 
-- `options.duration` (_String_ | _Number_ [optional]): Defaults to `theme.transitions.duration.standard`. Provides the duration of the transition.
-- `options.easing` (_String_ [optional]): Defaults to `theme.transitions.easing.easeInOut`. Provides the easing for the transition.
-- `options.delay` (_String_ | _Number_ [optional]): Defaults to `0`. Provides the delay for the transition.
+- `options.duration` (_string_ | _number_ [optional]): Defaults to `theme.transitions.duration.standard`. Provides the duration of the transition.
+- `options.easing` (_string_ [optional]): Defaults to `theme.transitions.easing.easeInOut`. Provides the easing for the transition.
+- `options.delay` (_string_ | _number_ [optional]): Defaults to `0`. Provides the delay for the transition.
 
 #### Regresa
 
@@ -33,7 +33,7 @@ theme.transitions.create(['background-color', 'transform']);
 
 #### Argumentos
 
-1. `height` (_Number_): The height of the component.
+1. `height` (_number_): The height of the component.
 
 #### Regresa
 

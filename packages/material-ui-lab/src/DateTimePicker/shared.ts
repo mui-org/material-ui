@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { useThemeProps } from '@material-ui/core/styles';
 import { useUtils } from '../internal/pickers/hooks/useUtils';
 import { ExportedClockPickerProps } from '../ClockPicker/ClockPicker';
 import { pick12hOr24hFormat } from '../internal/pickers/text-field-helper';
@@ -29,6 +29,17 @@ export interface BaseDateTimePickerProps<TDate>
     ValidationProps<DateTimeValidationError, ParseableDate<TDate>>,
     ExportedDateInputProps<ParseableDate<TDate>, TDate | null> {
   /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   * @default {}
+   */
+  components?: OverrideParseableDateProps<
+    TDate,
+    ExportedClockPickerProps<TDate> & ExportedCalendarPickerProps<TDate>,
+    'minDate' | 'maxDate' | 'minTime' | 'maxTime'
+  >['components'] &
+    ExportedDateInputProps<ParseableDate<TDate>, TDate | null>['components'];
+  /**
    * To show tabs.
    */
   hideTabs?: boolean;
@@ -56,7 +67,7 @@ export interface BaseDateTimePickerProps<TDate>
    * Component that will replace default toolbar renderer.
    * @default DateTimePickerToolbar
    */
-  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps>;
+  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps<TDate | null>>;
   /**
    * Date format, that is displaying in toolbar.
    */

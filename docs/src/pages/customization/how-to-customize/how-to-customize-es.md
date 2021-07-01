@@ -1,3 +1,7 @@
+- - -
+components: GlobalStyles
+- - -
+
 # How to customize
 
 <p class="description">Los componentes Material-UI pueden ser personalizados de forma sencilla. </p>
@@ -16,7 +20,7 @@ Tal vez necesitara cambiar el estilo de un componente para una implementación e
 
 ### Use the `sx` prop
 
-The easiest way to add style overrides for a one-off situation is to use the `sx` prop available on all Material-UI components. Here is an example:
+The easiest way to add style overrides for a one-off situation is to use the [`sx` prop](/system/basics/#the-sx-prop) available on all Material-UI components. Here is an example:
 
 {{"demo": "pages/customization/how-to-customize/SxProp.js"}}
 
@@ -118,7 +122,7 @@ You can rely on the following [global class names](/styles/advanced/#with-materi
 
 ## 2. Reusable style overrides
 
-If you find that you need the same overrides in multiple places across your application, you can use the `styled()` utility for creating a reusable component:
+If you find that you need the same overrides in multiple places across your application, you can use the [`styled()`](/customization/styled/) utility to create a reusable component:
 
 {{"demo": "pages/customization/how-to-customize/StyledCustomization.js", "defaultCodeOpen": true}}
 
@@ -130,11 +134,30 @@ In the previous section, we learned how to override the style of a Material-UI c
 
 ### Dynamic CSS
 
+Using the `styled()` utility offers a simple way for adding dynamic styles based on props.
+
 {{"demo": "pages/customization/how-to-customize/DynamicCSS.js", "defaultCodeOpen": false}}
 
-### Class name branch
+> ⚠️ Note that if you are using TypeScript you will need to update the prop's types of the new component.
 
-{{"demo": "pages/customization/how-to-customize/DynamicClassName.js"}}
+```tsx
+import * as React from 'react';
+import { styled } from '@material-ui/core/styles';
+import Slider, { SliderProps } from '@material-ui/core/Slider';
+
+interface StyledSliderProps extends SliderProps {
+  success?: boolean;
+}
+
+const StyledSlider = styled(Slider, {
+  shouldForwardProp: (prop) => prop !== 'success',
+})<StyledSliderProps>(({ success, theme }) => ({
+  ...(success &&
+    {
+      // the overrides added when the new prop is used
+    }),
+}));
+```
 
 ### CSS variables
 
@@ -156,7 +179,7 @@ Components expose [global class names](/styles/advanced/#with-material-ui-core) 
 
 ```css
 .MuiButton-root {
-  fontsize: '1rem';
+  font-size: 1rem;
 }
 ```
 

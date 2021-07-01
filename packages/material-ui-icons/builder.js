@@ -36,6 +36,15 @@ const blacklistedIcons = [
 }, []);
 
 /**
+ * Converts directory separators to slashes, so the path can be used in fast-glob.
+ * @param {string} pathToNormalize
+ * @returns
+ */
+function normalizePath(pathToNormalize) {
+  return pathToNormalize.replace(/\\/g, '/');
+}
+
+/**
  * Return Pascal-Cased component name.
  * @param {string} destPath
  * @returns {string} class name
@@ -52,7 +61,7 @@ export function getComponentName(destPath) {
 }
 
 async function generateIndex(options) {
-  const files = await globAsync(path.join(options.outputDir, '*.js'));
+  const files = await globAsync(normalizePath(path.join(options.outputDir, '*.js')));
   const index = files
     .map((file) => {
       const typename = path.basename(file).replace('.js', '');
@@ -267,7 +276,7 @@ export async function handler(options) {
   await fse.ensureDir(options.outputDir);
 
   const [svgPaths, template] = await Promise.all([
-    globAsync(path.join(options.svgDir, options.glob)),
+    globAsync(normalizePath(path.join(options.svgDir, options.glob))),
     fse.readFile(path.join(__dirname, 'templateSvgIcon.js'), {
       encoding: 'utf8',
     }),
@@ -288,9 +297,9 @@ export async function handler(options) {
   queue.push(svgPaths);
   await queue.wait({ empty: true });
 
-  let legacyFiles = await globAsync(path.join(__dirname, '/legacy', '*.js'));
+  let legacyFiles = await globAsync(normalizePath(path.join(__dirname, '/legacy', '*.js')));
   legacyFiles = legacyFiles.map((file) => path.basename(file));
-  let generatedFiles = await globAsync(path.join(options.outputDir, '*.js'));
+  let generatedFiles = await globAsync(normalizePath(path.join(options.outputDir, '*.js')));
   generatedFiles = generatedFiles.map((file) => path.basename(file));
 
   const duplicatedIconsLegacy = intersection(legacyFiles, generatedFiles);

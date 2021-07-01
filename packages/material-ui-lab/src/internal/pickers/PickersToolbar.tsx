@@ -75,7 +75,7 @@ const PickersToolbar = React.forwardRef<
     viewType = 'calendar',
   } = props;
 
-  const styleProps = { ...props };
+  const styleProps = props;
 
   return (
     <PickersToolbarRoot

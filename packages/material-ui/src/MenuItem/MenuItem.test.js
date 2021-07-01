@@ -1,31 +1,22 @@
-// @ts-check
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import {
-  createMount,
-  describeConformanceV5,
-  createClientRender,
-  fireEvent,
-  screen,
-} from 'test/utils';
+import { describeConformanceV5, createClientRender, fireEvent, screen } from 'test/utils';
 import MenuItem, { menuItemClasses as classes } from '@material-ui/core/MenuItem';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import ListContext from '../List/ListContext';
 
 describe('<MenuItem />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<MenuItem />, () => ({
     classes,
-    inheritComponent: ListItem,
+    inheritComponent: ButtonBase,
     render,
-    mount,
     refInstanceof: window.HTMLLIElement,
     testComponentPropWith: 'a',
     muiName: 'MuiMenuItem',
-    testVariantProps: { disableGutters: true },
+    testVariantProps: { dense: true },
     skip: ['componentsProp'],
   }));
 
@@ -127,31 +118,6 @@ describe('<MenuItem />', () => {
     });
   });
 
-  // Regression test for #10452.
-  // Kept for backwards compatibility.
-  // In the future we should have a better pattern for this UI.
-  it('should not fail with a li > li error message', () => {
-    const { rerender } = render(
-      <MenuItem>
-        <ListItemSecondaryAction>
-          <div />
-        </ListItemSecondaryAction>
-      </MenuItem>,
-    );
-
-    expect(document.querySelectorAll('li')).to.have.length(1);
-
-    rerender(
-      <MenuItem button={false}>
-        <ListItemSecondaryAction>
-          <div />
-        </ListItemSecondaryAction>
-      </MenuItem>,
-    );
-
-    expect(document.querySelectorAll('li')).to.have.length(1);
-  });
-
   it('can be disabled', () => {
     render(<MenuItem disabled />);
     const menuitem = screen.getByRole('menuitem');
@@ -159,22 +125,39 @@ describe('<MenuItem />', () => {
     expect(menuitem).to.have.attribute('aria-disabled', 'true');
   });
 
-  describe('prop: ListItemClasses', () => {
-    it('should be able to change the style of ListItem', () => {
-      render(
-        <MenuItem
-          classes={{
-            // @ts-expect-error unknown class that's also ignored at runtime
-            disabled: 'foo',
-          }}
-          ListItemClasses={{ disabled: 'bar' }}
-          disabled
-        />,
-      );
-      const menuitem = screen.getByRole('menuitem');
+  it('can be selected', () => {
+    render(<MenuItem selected />);
+    const menuitem = screen.getByRole('menuitem');
 
-      expect(menuitem).not.to.have.class('foo');
-      expect(menuitem).to.have.class('bar');
+    expect(menuitem).to.have.class(classes.selected);
+  });
+
+  it('prop: disableGutters', () => {
+    const { rerender } = render(<MenuItem />);
+    const menuitem = screen.getByRole('menuitem');
+
+    expect(menuitem).to.have.class(classes.gutters);
+
+    rerender(<MenuItem disableGutters />);
+
+    expect(menuitem).not.to.have.class(classes.gutters);
+  });
+
+  describe('context: dense', () => {
+    it('should forward the context', () => {
+      let context = null;
+      const { setProps } = render(
+        <MenuItem>
+          <ListContext.Consumer>
+            {(options) => {
+              context = options;
+            }}
+          </ListContext.Consumer>
+        </MenuItem>,
+      );
+      expect(context).to.have.property('dense', false);
+      setProps({ dense: true });
+      expect(context).to.have.property('dense', true);
     });
   });
 });

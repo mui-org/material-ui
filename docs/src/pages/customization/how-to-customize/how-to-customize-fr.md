@@ -1,3 +1,7 @@
+- - -
+Vous pouvez facilement personnaliser l'apparence d'un composant Material-UI.
+- - -
+
 # How to customize
 
 <p class="description">Vous pouvez facilement personnaliser l'apparence d'un composant Material-UI.</p>
@@ -130,11 +134,17 @@ In the previous section, we learned how to override the style of a Material-UI c
 
 ### Dynamic CSS
 
+{{"demo": "pages/customization/how-to-customize/DynamicClassName.js"}}
+
 {{"demo": "pages/customization/how-to-customize/DynamicCSS.js", "defaultCodeOpen": false}}
 
-### Class name branch
+> ⚠️ Note that if you are using TypeScript you will need to update the prop's types of the new component.
 
-{{"demo": "pages/customization/how-to-customize/DynamicClassName.js"}}
+```tsx
+.MuiButton-root {
+  fontsize: '1rem';
+}
+```
 
 ### CSS variables
 
@@ -156,7 +166,7 @@ Components expose [global class names](/styles/advanced/#with-material-ui-core) 
 
 ```css
 .MuiButton-root {
-  fontsize: '1rem';
+  font-size: 1rem;
 }
 ```
 

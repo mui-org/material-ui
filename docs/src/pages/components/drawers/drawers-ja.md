@@ -9,7 +9,7 @@ materialDesign: https://material.io/components/navigation-drawer
 
 <p class="description">ナビゲーションドロワー(Drawer) を使用すると、App内の目的地にアクセスできます。 サイドシートは、画面の左端または右端にアンカーされた補足コンテンツを含むサーフェスです。</p>
 
-[ナビゲーション・ドロワー](https://material.io/design/components/navigation-drawer.html)(または「サイドバー」)は、目的地へのアクセスとアカウントの切り替えなどのアプリケーション機能を提供します。 これらは、画面上で永続的に表示することも、ナビゲーション・メニュー・アイコンで制御することもできます。
+ナビゲーション・ドロワー(または「サイドバー」)は、目的地へのアクセスとアカウントの切り替えなどのアプリケーション機能を提供します。 これらは、画面上で永続的に表示することも、ナビゲーション・メニュー・アイコンで制御することもできます。
 
 [サイドシート](https://material.io/design/components/sheets-side.html) は、主にタブレットやデスクトップで使用される補助サーフェスです。
 
@@ -33,8 +33,8 @@ materialDesign: https://material.io/components/navigation-drawer
 
 このドキュメントのWebサイトでは、コンポーネントの操作性を最適化するために、次のプロパティが使用されています。
 
-- iOSはハイエンドデバイスでホストされています。 iOSはハイエンドデバイスでホストされています。 The backdrop transition can be enabled without dropping frames. 性能は十分良いでしょう。
-- iOS has a "swipe to go back" feature that interferes with the discovery feature, so discovery has to be disabled.
+- iOSはハイエンドデバイスでホストされています。 背景トランジションはフレームが落ちることなしに有効にできます。 性能は十分良いでしょう。
+- iOSには、ディスカバリー機能を妨害する「スワイプして戻る」機能があるため、ディスカバリーを無効にする必要があります。
 
 ```jsx
 const iOS =
@@ -43,17 +43,17 @@ const iOS =
 <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} />;
 ```
 
-### Swipeable edge
+### スワイプ可能なエッジ
 
-You can configure the `SwipeableDrawer` to have a visible edge when closed.
+`SwipeableDrawer` を閉じたときにエッジが表示されるように設定することができます。
 
-If you are on a desktop, you can toggle the drawer with the "OPEN" button. If you are on mobile, you can open the demo in CodeSandbox ("edit" icon) and swipe.
+デスクトップでは、「OPEN」ボタンでドロワーを切り替えることができます。 モバイルでは、CodeSandbox(編集アイコン)でデモを開き、スワイプできます。
 
 {{"demo": "pages/components/drawers/SwipeableEdgeDrawer.js", "iframe": true, "height": 400, "maxWidth": 300}}
 
-### Keep mounted
+### マウントしたままにする
 
-To ensure a temporary drawer is not unmounted, specify the `ModalProps` prop like:
+一時的な引き出しがアンマウントされないようにするには、 `ModalProps` のプロパティを次のように指定します。
 
 ```jsx
 <Drawer
@@ -64,11 +64,11 @@ To ensure a temporary drawer is not unmounted, specify the `ModalProps` prop lik
 />
 ```
 
-More details in the [Modal performance section](/components/modal/#performance).
+詳細については、 [Modal performance section](/components/modal/#performance) を参照してください。
 
 ## レスポンシブなドロワー
 
-`Hidden`対応ヘルパーコンポーネントを使用すると、画面の幅に応じてさまざまな種類のドロワーを表示できます。 小さな画面では `temporary` ドロワーが表示され、大きな画面では `permanent` ドロワーが表示されます。
+You can use the `temporary` variant to display a drawer for small screens and `permanent` for a drawer for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 
@@ -96,7 +96,7 @@ More details in the [Modal performance section](/components/modal/#performance).
 
 固定ナビゲーションdrawersは常に表示され、コンテンツまたは背景と同じ高さの左端に固定されます。 それらを閉じることはできません。
 
-アプリケーションは、左から右への階層を使用する情報消費に重点を置いていました。
+固定ドロワーは、**デスクトップ**で推奨されるデフォルトです。
 
 ### Full-height navigation（フルハイトナビゲーション）
 

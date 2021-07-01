@@ -1,22 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import styled, { ThemeContext } from '@material-ui/styled-engine';
+import styled from '@material-ui/styled-engine';
 import styleFunctionSx, { extendSxProp } from './styleFunctionSx';
-import createTheme from './createTheme';
+import useTheme from './useTheme';
 
-function isObjectEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-
-const useTheme = (defaultTheme) => {
-  const contextTheme = React.useContext(ThemeContext);
-  return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme : contextTheme;
-};
-
-export const systemDefaultTheme = createTheme();
-
-export default function createBox(defaultTheme = systemDefaultTheme) {
+export default function createBox(options = {}) {
+  const { defaultTheme } = options;
   const BoxRoot = styled('div')(styleFunctionSx);
 
   const Box = React.forwardRef(function Box(inProps, ref) {

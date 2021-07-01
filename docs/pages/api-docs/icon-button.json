@@ -5,7 +5,7 @@
     "color": {
       "type": {
         "name": "union",
-        "description": "'inherit'<br>&#124;&nbsp;'default'<br>&#124;&nbsp;'primary'<br>&#124;&nbsp;'secondary'<br>&#124;&nbsp;string"
+        "description": "'inherit'<br>&#124;&nbsp;'default'<br>&#124;&nbsp;'primary'<br>&#124;&nbsp;'secondary'<br>&#124;&nbsp;'error'<br>&#124;&nbsp;'info'<br>&#124;&nbsp;'success'<br>&#124;&nbsp;'warning'<br>&#124;&nbsp;string"
       },
       "default": "'default'"
     },
@@ -22,7 +22,7 @@
     "size": {
       "type": {
         "name": "union",
-        "description": "'medium'<br>&#124;&nbsp;'small'<br>&#124;&nbsp;string"
+        "description": "'small'<br>&#124;&nbsp;'medium'<br>&#124;&nbsp;'large'<br>&#124;&nbsp;string"
       },
       "default": "'medium'"
     },
@@ -39,7 +39,8 @@
       "colorSecondary",
       "disabled",
       "sizeSmall",
-      "label"
+      "sizeMedium",
+      "sizeLarge"
     ],
     "globalClasses": { "disabled": "Mui-disabled" },
     "name": "MuiIconButton"

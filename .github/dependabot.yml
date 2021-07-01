@@ -20,13 +20,13 @@ updates:
       - dependency-name: core-js
         versions:
           - '>= 0'
+      # These should be grouped once a PR for `jss` is opened
+      - dependency-name: jss-*
+        versions:
+          - '>= 0'
       # These should be grouped. Maintainer advise: Watch https://github.com/dmtrKovalenko/date-io
       # for new releases and file a PR if you got time.
       - dependency-name: '@date-io/*'
-        versions:
-          - '>= 0'
-      # These should be grouped once a PR for `jss` is opened
-      - dependency-name: jss-*
         versions:
           - '>= 0'
       # 2.0 started using ES modules instead of CommonJS modules

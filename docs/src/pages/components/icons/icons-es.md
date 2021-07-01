@@ -17,7 +17,7 @@ Material-UI da soporte para iconos de tres maneras:
 
 ## Material Icons
 
-Material Design has standardized over 1,100 official icons, each in five different "themes" (see below). For each SVG icon, we export the respective React component from the @material-ui/icons package. Puedes [buscar la lista completa de estos iconos](/components/material-icons/).
+Google has created over 1,700 official Material icons, each in five different "themes" (see below). For each SVG icon, we export the respective React component from the @material-ui/icons package. Puedes [buscar la lista completa de estos iconos](/components/material-icons/).
 
 ### Instalación
 
@@ -70,7 +70,7 @@ Each Material icon also has a "theme": Filled (default), Outlined, Rounded, Two-
 - El tema Twotone se exporta como `@material-ui/icons/DeleteTwoTone`,
 - El tema Sharp se exporta como `@material-ui/icons/DeleteSharp`.
 
-> Nota: La especificación de Material Design nombra los iconos usando el nombre "snake_case" (por ejemplo `delete_forever`, `add_a_photo`), mientras `@material-ui/icons` exporta los iconos respectivos usando el nombre "PascalCase" (por ejemplo `DeleteForever`, `AddAPhoto`). Hay tres excepciones a esta regla de nomenclatura: `3d_rotation` exportada como `ThreeDRotation`, `4k` exportado como `FourK`, y `360` exportado como `ThreeSixty`.
+> Note: The Material Design guidelines name the icons using "snake_case" naming (for example `delete_forever`, `add_a_photo`), while `@material-ui/icons` exports the respective icons using "PascalCase" naming (for example `DeleteForever`, `AddAPhoto`). Hay tres excepciones a esta regla de nomenclatura: `3d_rotation` exportada como `ThreeDRotation`, `4k` exportado como `FourK`, y `360` exportado como `ThreeSixty`.
 
 {{"demo": "pages/components/icons/SvgMaterialIcons.js"}}
 
@@ -308,16 +308,14 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 You need to provide a text alternative that is only visible to assistive technologies.
 
 ```jsx
+import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import { visuallyHidden } from '@material-ui/utils';
-import { makeStyles } from '@material-ui/core/styles';
-
-const classes = makeStyles({ visuallyHidden })();
 
 // ...
 
 <Icon>add_circle</Icon>
-<Typography variant="srOnly">Crear ususario</Typography>
+<Box component="span" sx={visuallyHidden}>Create a user</Box>
 ```
 
 #### Referencia

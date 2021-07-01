@@ -4,11 +4,9 @@ import {
   ThemeProvider as MuiThemeProvider,
   createTheme as createLegacyModeTheme,
   unstable_createMuiStrictModeTheme as createStrictModeTheme,
-  darken,
 } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { enUS, zhCN, faIR, ruRU, ptBR, esES, frFR, deDE, jaJP } from '@material-ui/core/locale';
-import { blue, pink } from '@material-ui/core/colors';
 import darkScrollbar from '@material-ui/core/darkScrollbar';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@material-ui/core/utils';
 import { getCookie } from 'docs/src/modules/utils/helpers';
@@ -26,8 +24,6 @@ const languageMap = {
   de: deDE,
   ja: jaJP,
 };
-
-export const themeColor = blue[700];
 
 const themeInitialOptions = {
   dense: false,
@@ -123,10 +119,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 let createTheme;
-if (process.env.REACT_MODE === 'legacy') {
-  createTheme = createLegacyModeTheme;
-} else {
+if (process.env.REACT_STRICT_MODE) {
   createTheme = createStrictModeTheme;
+} else {
+  createTheme = createLegacyModeTheme;
 }
 
 export function ThemeProvider(props) {
@@ -210,12 +206,6 @@ export function ThemeProvider(props) {
           color: paletteMode === 'light' ? '#000' : '#fff',
         },
         palette: {
-          primary: {
-            main: paletteMode === 'light' ? blue[700] : blue[200],
-          },
-          secondary: {
-            main: paletteMode === 'light' ? darken(pink.A400, 0.1) : pink[200],
-          },
           mode: paletteMode,
           ...paletteColors,
         },
@@ -233,12 +223,6 @@ export function ThemeProvider(props) {
       },
       languageMap[userLanguage],
     );
-
-    nextTheme.palette.background.level2 =
-      paletteMode === 'light' ? nextTheme.palette.grey[100] : '#333';
-
-    nextTheme.palette.background.level1 =
-      paletteMode === 'light' ? '#fff' : nextTheme.palette.grey[900];
 
     return nextTheme;
   }, [dense, direction, paletteColors, paletteMode, spacing, userLanguage]);

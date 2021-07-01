@@ -3,7 +3,7 @@
   "propDescriptions": {
     "ariaLabel": "The aria-label of the button element. Also used to provide the <code>id</code> for the <code>SpeedDial</code> element and its children.",
     "children": "SpeedDialActions to display when the SpeedDial is <code>open</code>.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "direction": "The direction the actions open relative to the floating action button.",
     "FabProps": "Props applied to the <a href=\"/api/fab/\"><code>Fab</code></a> element.",
     "hidden": "If <code>true</code>, the SpeedDial is hidden.",
@@ -12,16 +12,17 @@
     "onOpen": "Callback fired when the component requests to be open.<br><br><strong>Signature:</strong><br><code>function(event: object, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>reason:</em> Can be: <code>&quot;toggle&quot;</code>, <code>&quot;focus&quot;</code>, <code>&quot;mouseEnter&quot;</code>.",
     "open": "Control the popup` open state.",
     "openIcon": "The icon to display in the SpeedDial Fab when the SpeedDial is open.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "TransitionComponent": "O componente usado para a transição. <a href=\"/components/transitions/#transitioncomponent-prop\">Siga este guia</a> para saber mais sobre os requisitos para este componente.",
     "transitionDuration": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
+    "TransitionProps": "Propriedades aplicadas ao elemento de transição. Por padrão, o elemento é baseado neste componente <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "fab": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Fab component"
     },
     "directionUp": {
@@ -37,11 +38,11 @@
       "description": "Styles applied to the root element if direction=\"right\""
     },
     "actions": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the actions (`children` wrapper) element"
     },
     "actionsClosed": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the actions (`children` wrapper) element",
       "conditions": "<code>open={false}</code>"
     }

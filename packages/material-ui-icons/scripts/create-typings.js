@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import glob from 'fast-glob';
 
-const SRC_DIR = path.resolve(__dirname, '../lib');
+const SRC_DIR = path.resolve(__dirname, '../lib/esm');
 const TARGET_DIR = path.resolve(__dirname, '../build');
 
 function normalizeFileName(file) {

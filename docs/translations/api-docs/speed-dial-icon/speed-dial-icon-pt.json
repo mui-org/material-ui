@@ -1,20 +1,21 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "icon": "The icon element.",
-    "openIcon": "The icon to display in the SpeedDial Floating Action Button when the SpeedDial is open."
+    "openIcon": "The icon to display in the SpeedDial Floating Action Button when the SpeedDial is open.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "icon": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the icon component"
     },
     "iconOpen": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the icon component",
       "conditions": "<code>open={true}</code>"
     },
@@ -24,12 +25,12 @@
       "conditions": "an <code>openIcon</code> is provided and if <code>open={true}</code>"
     },
     "openIcon": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the `openIcon`",
       "conditions": "fornecido"
     },
     "openIconOpen": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the `openIcon`",
       "conditions": "provided and if <code>open={true}</code>"
     }

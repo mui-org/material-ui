@@ -12,16 +12,17 @@ const RadioGroup = React.forwardRef(function RadioGroup(props, ref) {
     // eslint-disable-next-line react/prop-types
     actions,
     children,
+    defaultValue,
     name: nameProp,
-    value: valueProp,
     onChange,
+    value: valueProp,
     ...other
   } = props;
   const rootRef = React.useRef(null);
 
   const [value, setValueState] = useControlled({
     controlled: valueProp,
-    default: props.defaultValue,
+    default: defaultValue,
     name: 'RadioGroup',
   });
 
@@ -76,11 +77,7 @@ RadioGroup.propTypes /* remove-proptypes */ = {
   /**
    * The default value. Use when the component is not controlled.
    */
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  defaultValue: PropTypes.any,
   /**
    * The name used to reference the value of the control.
    * If you don't provide this prop, it falls back to a randomly generated name.

@@ -1,0 +1,17 @@
+{
+  "name": "@material-ui/markdown",
+  "version": "0.1.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./parseMarkdown.js",
+  "exports": {
+    ".": "./parseMarkdown.js",
+    "./loader": "./loader.js",
+    "./prism": "./prism.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "marked": "^2.0.0",
+    "prismjs": "^1.17.1"
+  }
+}

@@ -6,11 +6,7 @@ import { act, describeConformance, fireEvent, screen, userEvent } from 'test/uti
 import { TransitionProps } from '@material-ui/core/transitions';
 import { TimePickerProps } from '@material-ui/lab/TimePicker';
 import DesktopTimePicker from '@material-ui/lab/DesktopTimePicker';
-import {
-  createPickerMount,
-  createPickerRender,
-  adapterToUse,
-} from '../internal/pickers/test-utils';
+import { wrapPickerMount, createPickerRender, adapterToUse } from '../internal/pickers/test-utils';
 
 describe('<DesktopTimePicker />', () => {
   let clock: ReturnType<typeof useFakeTimers>;
@@ -23,7 +19,6 @@ describe('<DesktopTimePicker />', () => {
   });
 
   const render = createPickerRender();
-  const mount = createPickerMount();
 
   describeConformance(
     <DesktopTimePicker
@@ -33,7 +28,7 @@ describe('<DesktopTimePicker />', () => {
     />,
     () => ({
       classes: {},
-      mount,
+      wrapMount: wrapPickerMount,
       refInstanceof: window.HTMLDivElement,
       skip: ['componentProp', 'mergeClassName', 'propsSpread', 'rootClass', 'reactTestRenderer'],
     }),

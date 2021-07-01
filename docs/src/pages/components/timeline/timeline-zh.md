@@ -19,11 +19,11 @@ packageName: '@material-ui/lab'
 
 {{"demo": "pages/components/timeline/BasicTimeline.js"}}
 
-## 向右对齐的时间线
+## Left-positioned timeline
 
-您也可以将时间轴放置在事件的右侧。
+The main content of the timeline can be positioned on the left side relative to the time axis.
 
-{{"demo": "pages/components/timeline/RightAlignedTimeline.js"}}
+{{"demo": "pages/components/timeline/LeftPositionedTimeline.js"}}
 
 ## 交替的时间轴
 

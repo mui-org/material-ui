@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import TabPanel, { tabPanelClasses as classes } from '@material-ui/lab/TabPanel';
 import TabContext from '../TabContext';
 
 describe('<TabPanel />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<TabPanel value="0" />, () => ({
     classes,
     inheritComponent: 'div',
-    render: (node: any) => render(<TabContext value="0">{node}</TabContext>),
-    mount: (node: any) => mount(<TabContext value="0">{node}</TabContext>),
+    render: (node) => render(<TabContext value="0">{node}</TabContext>),
+    wrapMount: (mount) => (node) => mount(<TabContext value="0">{node}</TabContext>),
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiTabPanel',
     skip: [

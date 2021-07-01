@@ -9,7 +9,7 @@ materialDesign: https://material.io/design/layout/understanding-layout.html
 
 <p class="description">Material Designのレスポンシブレイアウトグリッドは、画面サイズと向きに適応し、レイアウト間の一貫性を保証します。</p>
 
-[grid](https://material.io/design/layout/responsive-layout-grid.html) は、レイアウト間の視覚的な一貫性を実現しながら、さまざまなデザインでの柔軟性を可能にします。 Material Design's responsive UI is based on a 12-column grid layout.
+[Grid](https://material.io/design/layout/responsive-layout-grid.html) は、レイアウト間の視覚的な一貫性を実現しながら、さまざまなデザインでの柔軟性を可能にします。 Material DesignのレスポンシブUIは、12列のグリッドレイアウトに基づいています。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
@@ -19,22 +19,14 @@ materialDesign: https://material.io/design/layout/understanding-layout.html
 
 グリッドシステムは `Grid` コンポーネントで実装されています。
 
-- It uses [CSS's Flexible Box module](https://www.w3.org/TR/css-flexbox-1/) for high flexibility.
-- レイアウトには* containers * と * items*の2種類あります 。
-- Item widths are set in percentages, so they're always fluid and sized relative to their parent element.
+- 高い柔軟性のために [CSSのFlexible Boxモジュール](https://www.w3.org/TR/css-flexbox-1/) を使用します。
+- _containers_ と _items_ の2種類のレイアウトがあります 。
+- アイテムの幅はパーセンテージで設定されているので、それらは常に親要素に対して流動的になり、相対的に大きさが決まります。
 - アイテムには、個々のアイテム間の間隔を空けるための余白があります。
 - xs、sm、md、lg、およびxlの5つのグリッドブレークポイントがあります。
-- Integer values can be given to each breakpoint, indicating how many of the 12 available columns are occupied by the component when the viewport width satisfies the [breakpoint contraints](/customization/breakpoints/#default-breakpoints).
+- 各ブレークポイントに整数の値を与えることができます。 ビューポートの幅が[ブレークポイントの制約](/customization/breakpoints/#default-breakpoints)を満たしたときに、利用可能な12列のうちどれだけの列がコンポーネントによって占められるかを示します。
 
 **flexboxに不慣れ**な場合、 [CSS-Tricks flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) を読むことをおすすめします。
-
-## Spacing
-
-レスポンシブグリッドは、列幅ではなく、一貫した間隔幅に焦点を当てています。 材料設計の余白と列は **8px** の四角いベースライングリッドに従います。 The `spacing` prop value is an integer between 0 and 10 inclusive. デフォルトでは、2つの格子項目間の間隔が線形関数に従う： `output(spacing) = spacing * 8px`、例えば `spacing={2}`では16pxに広いギャップを作成します。
-
-この出力変換関数は、[テーマを使う](/customization/spacing/)ことでカスタマイズできます。
-
-{{"demo": "pages/components/grid/SpacingGrid.js", "bg": true}}
 
 ## Fluid grids
 
@@ -46,15 +38,50 @@ Column widths are integer values between 1 and 12; they apply at any breakpoint 
 
 A value given to a breakpoint applies to all the other breakpoints wider than it (unless overridden, as you can read later in this page). For example, `xs={12}` sizes a component to occupy the whole viewport width regardless of its size.
 
-{{"demo": "pages/components/grid/CenteredGrid.js", "bg": true}}
+{{"demo": "pages/components/grid/BasicGrid.js", "bg": true}}
 
 ### ブレークポイント付きGrid
 
-一部の列では複数の幅が定義されているため、定義されたブレークポイントでレイアウトが変更されます。 Width values given to larger breakpoints override those given to smaller breakpoints.
+Components may have multiple widths defined, causing the layout to change at the defined breakpoint. Width values given to larger breakpoints override those given to smaller breakpoints.
 
 For example, `xs={12} sm={6}` sizes a component to occupy half of the viewport width (6 columns) when viewport width is [600 or more pixels](/customization/breakpoints/#default-breakpoints). For smaller viewports, the component fills all 12 available columns.
 
 {{"demo": "pages/components/grid/FullWidthGrid.js", "bg": true}}
+
+## Spacing
+
+To control space between children, use the `spacing` prop. The spacing value can be any positive number, including decimals and any string. The prop is converted into a CSS property using the [`theme.spacing()`](/customization/spacing/) helper.
+
+{{"demo": "pages/components/grid/SpacingGrid.js", "bg": true}}
+
+## Responsive values
+
+You can switch the props' value based on the active breakpoint. For instance, we can implement the ["recommended"](https://material.io/design/layout/responsive-layout-grid.html) responsive layout grid of Material Design.
+
+{{"demo": "pages/components/grid/ResponsiveGrid.js", "bg": true}}
+
+Responsive values is supported by:
+
+- `columns`
+- `columnSpacing`
+- `direction`
+- `rowSpacing`
+- `spacing`
+- all the [other props](#system-props) of the system
+
+> ⚠️ When using a responsive `columns` prop, each grid item needs its corresponding breakpoint. For instance, this is not working. The grid item misses the value for `md`:
+> 
+> ```jsx
+> <Grid container columns={{ xs: 4, md: 12 }}>
+>    <Grid item xs={2} />
+> > </Grid>
+> ```
+
+### Row & column spacing
+
+The `rowSpacing` and `columnSpacing` props allow for specifying the row and column gaps independently. It's similar to the `row-gap` and `column-gap` properties of [CSS Grid](/system/grid/#row-gap-amp-column-gap).
+
+{{"demo": "pages/components/grid/RowAndColumnSpacing.js", "bg": true}}
 
 ## インタラクティブ
 
@@ -64,21 +91,21 @@ For example, `xs={12} sm={6}` sizes a component to occupy half of the viewport w
 
 ## 自動レイアウト
 
-自動レイアウトにより、 *items* が使用可能なスペースを均等に共有します。 それはまた、あなたが1つの *item* 幅を設定することができ、他のものはそれの周りに自動的にサイズ変更されることを意味します。
+The Auto-layout makes the _items_ equitably share the available space. That also means you can set the width of one _item_ and the others will automatically resize around it.
 
 {{"demo": "pages/components/grid/AutoGrid.js", "bg": true}}
 
 ## 複雑なグリッド
 
-以下のデモは、Material Designには従っていませんが、グリッドを使用して複雑なレイアウトを構築する方法を示しています。
+The following demo doesn't follow the Material Design guidelines, but illustrates how the grid can be used to build complex layouts.
 
 {{"demo": "pages/components/grid/ComplexGrid.js", "bg": true}}
 
 ## Nested Grid
 
-`container`プロパティと`item`プロパティは、それぞれ独立したブール値です。 それらは組み合わせることができます。
+The `container` and `item` props are two independent booleans; they can be combined to allow a Grid component to be both a flex container and child.
 
-> Flex ** container ** は、 `flex` または `inline-flex`を持つ要素によって生成されたボックスです。 フレックスコンテナのインフローの子は、flex ** items ** と呼ばれ、flexレイアウトモデルを使用してレイアウトされます。
+> A flex **container** is the box generated by an element with a computed display of `flex` or `inline-flex`. In-flow children of a flex container are called flex **items** and are laid out using the flex layout model.
 
 https://www.w3.org/TR/css-flexbox-1/#box-model
 
@@ -92,26 +119,17 @@ https://www.w3.org/TR/css-flexbox-1/#box-model
 
 If you need to do such, remove one of the props.
 
+## Columns
+
+You can change the default number of columns (12) with the `columns` prop.
+
+{{"demo": "pages/components/grid/ColumnsGrid.js", "bg": true}}
+
 ## 制限事項
 
 ### Negative margin
 
-項目間の間隔を実装するために使用する負のマージンには1つ制限があります。 項目間の間隔を実装するために使用する負のマージンには1つ制限があります。 負のマージンが `<body>`を超えると水平スクロールが表示されます。 回避策は3つあります。 回避策は3つあります。
-
-1. スペーシング機能を使用し、ユーザ空間でそれを実装していない `spacing ={0}` （デフォルト）。
-2. 子に適用された間隔値の少なくとも半分を使用して、親にパディングを適用します。
-
-   ```jsx
-   <body>
-    <div style={{ padding: 20 }}>
-      <Grid container spacing={5}>
-        //...
-       </Grid>
-    </div>
-  </body>
-   ```
-
-3. `overflow-x: hidden;`を親に追加する
+The spacing between items is implemented with a negative margin. This might lead to unexpected behaviors. For instance, to apply a background color, you need to apply `display: flex;` to the parent.
 
 ### white-space: nowrap;
 
@@ -122,7 +140,7 @@ If you need to do such, remove one of the props.
   <Typography noWrap>
 ```
 
-アイテムがコンテナ内に収まるようにするには、 `min-width：0`を設定する必要があります。 アイテムがコンテナ内に収まるようにするには、 `min-width：0`を設定する必要があります。
+アイテムがコンテナ内に収まるようにするには、 `min-width：0`を設定する必要があります。 In practice, you can set the `zeroMinWidth` prop:
 
 ```jsx
 <Grid item xs zeroMinWidth>
@@ -139,6 +157,14 @@ They define the number of grids the component will use for a given breakpoint. T
 
 ## CSS Grid Layout
 
-Material-UI自体はCSSグリッド機能自体を提供しませんが、以下に示すように、CSSグリッドを使用してページをレイアウトすることは簡単にできます。
+The `Grid` component is using CSS flexbox internally. But as seen below, you can easily use [the system](/system/grid/) and CSS Grid to layout your pages.
 
 {{"demo": "pages/components/grid/CSSGrid.js", "bg": true}}
+
+## System props
+
+As a CSS utility component, the `Grid` supports all [`system`](/system/properties/) properties. You can use them as props directly on the component. For instance, a padding:
+
+```jsx
+<Grid item p={2}>
+```

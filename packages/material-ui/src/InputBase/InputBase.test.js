@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
 import FormControl, { useFormControl } from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
@@ -11,13 +11,11 @@ import InputBase, { inputBaseClasses as classes } from '@material-ui/core/InputB
 
 describe('<InputBase />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<InputBase />, () => ({
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiInputBase',
     testVariantProps: { size: 'small' },

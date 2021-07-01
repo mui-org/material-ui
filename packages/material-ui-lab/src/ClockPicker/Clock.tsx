@@ -132,8 +132,7 @@ function Clock<TDate>(props: ClockProps<TDate>) {
     value,
   } = props;
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
 
   const utils = useUtils<TDate>();
   const wrapperVariant = React.useContext(WrapperVariantContext);

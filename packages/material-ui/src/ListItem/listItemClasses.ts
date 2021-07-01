@@ -17,6 +17,8 @@ export interface ListItemClasses {
   divider: string;
   /** Styles applied to the inner `component` element unless `disableGutters={true}`. */
   gutters: string;
+  /** Styles applied to the root element unless `disablePadding={true}`. */
+  padding: string;
   /** Styles applied to the inner `component` element if `button={true}`. */
   button: string;
   /** Styles applied to the component element if `children` includes `ListItemSecondaryAction`. */
@@ -40,6 +42,7 @@ const listItemClasses: ListItemClasses = generateUtilityClasses('MuiListItem', [
   'disabled',
   'divider',
   'gutters',
+  'padding',
   'button',
   'secondaryAction',
   'selected',

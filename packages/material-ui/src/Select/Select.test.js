@@ -2,7 +2,6 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { spy, stub, useFakeTimers } from 'sinon';
 import {
-  createMount,
   describeConformanceV5,
   ErrorBoundary,
   act,
@@ -20,15 +19,23 @@ import Divider from '@material-ui/core/Divider';
 import classes from './selectClasses';
 
 describe('<Select />', () => {
-  const mount = createMount();
-  // StrictModeViolation: triggers "not wrapped in act()" warnings from timers.
-  const render = createClientRender({ strict: false });
+  /**
+   * @type {ReturnType<typeof useFakeTimers>}
+   */
+  let clock;
+  beforeEach(() => {
+    clock = useFakeTimers();
+  });
+  afterEach(() => {
+    clock.restore();
+  });
+
+  const render = createClientRender();
 
   describeConformanceV5(<Select value="" />, () => ({
     classes,
     inheritComponent: OutlinedInput,
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiSelect',
     skip: ['componentProp', 'componentsProp', 'themeVariants', 'themeStyleOverrides'],
@@ -150,7 +157,9 @@ describe('<Select />', () => {
         </Select>,
       );
       const trigger = screen.getByRole('button');
-      trigger.focus();
+      act(() => {
+        trigger.focus();
+      });
 
       fireEvent.keyDown(trigger, { key });
       expect(screen.getByRole('listbox', { hidden: false })).not.to.equal(null);
@@ -168,9 +177,13 @@ describe('<Select />', () => {
       </Select>,
     );
     const button = getByRole('button');
-    button.focus();
+    act(() => {
+      button.focus();
+    });
 
-    button.blur();
+    act(() => {
+      button.blur();
+    });
 
     expect(handleBlur.callCount).to.equal(1);
     expect(handleBlur.firstCall.returnValue).to.equal('blur-testing');
@@ -245,7 +258,9 @@ describe('<Select />', () => {
         </Select>,
       );
       fireEvent.mouseDown(getByRole('button'));
-      getAllByRole('option')[1].click();
+      act(() => {
+        getAllByRole('option')[1].click();
+      });
 
       expect(onChangeHandler.calledOnce).to.equal(true);
       const selected = onChangeHandler.args[0][1];
@@ -264,7 +279,9 @@ describe('<Select />', () => {
       );
 
       fireEvent.mouseDown(getByRole('button'));
-      getAllByRole('option')[1].click();
+      act(() => {
+        getAllByRole('option')[1].click();
+      });
 
       expect(eventLog).to.deep.equal(['CHANGE_EVENT', 'CLOSE_EVENT']);
     });
@@ -279,7 +296,9 @@ describe('<Select />', () => {
         </Select>,
       );
       fireEvent.mouseDown(getByRole('button'));
-      getAllByRole('option')[1].click();
+      act(() => {
+        getAllByRole('option')[1].click();
+      });
 
       expect(onChangeHandler.callCount).to.equal(0);
     });
@@ -562,7 +581,9 @@ describe('<Select />', () => {
         { baseElement: document.body },
       );
       const trigger = screen.getByRole('button');
-      trigger.focus();
+      act(() => {
+        trigger.focus();
+      });
 
       fireEvent.keyDown(trigger, { key: 'ArrowDown' });
       expect(screen.queryByRole('listbox')).to.equal(null);
@@ -573,16 +594,6 @@ describe('<Select />', () => {
   });
 
   describe('prop: MenuProps', () => {
-    let clock;
-
-    beforeEach(() => {
-      clock = useFakeTimers();
-    });
-
-    afterEach(() => {
-      clock.restore();
-    });
-
     it('should apply additional props to the Menu component', () => {
       const onEntered = spy();
       const { getByRole } = render(
@@ -661,16 +672,6 @@ describe('<Select />', () => {
   });
 
   describe('prop: open (controlled)', () => {
-    let clock;
-
-    beforeEach(() => {
-      clock = useFakeTimers();
-    });
-
-    afterEach(() => {
-      clock.restore();
-    });
-
     it('should not focus on close controlled select', () => {
       function ControlledWrapper() {
         const [open, setOpen] = React.useState(false);

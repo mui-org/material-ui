@@ -17,7 +17,7 @@ Material-UI provides icons support in three ways:
 
 ## Material Icons
 
-Material Design has standardized over 1,100 official icons, each in five different "themes" (see below). For each SVG icon, we export the respective React component from the @material-ui/icons package. You can [search the full list of these icons](/components/material-icons/).
+Google has created over 1,700 official Material icons, each in five different "themes" (see below). For each SVG icon, we export the respective React component from the @material-ui/icons package. You can [search the full list of these icons](/components/material-icons/).
 
 ### Installation
 
@@ -70,7 +70,7 @@ Each Material icon also has a "theme": Filled (default), Outlined, Rounded, Two-
 - Twotone theme is exported as `@material-ui/icons/DeleteTwoTone`,
 - Sharp theme is exported as `@material-ui/icons/DeleteSharp`.
 
-> Note: The Material Design specification names the icons using "snake_case" naming (for example `delete_forever`, `add_a_photo`), while `@material-ui/icons` exports the respective icons using "PascalCase" naming (for example `DeleteForever`, `AddAPhoto`). There are three exceptions to this naming rule: `3d_rotation` exported as `ThreeDRotation`, `4k` exported as `FourK`, and `360` exported as `ThreeSixty`.
+> Note: The Material Design guidelines name the icons using "snake_case" naming (for example `delete_forever`, `add_a_photo`), while `@material-ui/icons` exports the respective icons using "PascalCase" naming (for example `DeleteForever`, `AddAPhoto`). There are three exceptions to this naming rule: `3d_rotation` exported as `ThreeDRotation`, `4k` exported as `FourK`, and `360` exported as `ThreeSixty`.
 
 {{"demo": "pages/components/icons/SvgMaterialIcons.js"}}
 
@@ -247,16 +247,20 @@ Then, you can use the two-tone font directly:
 Note that the Font Awesome icons weren't designed like the Material Design icons (compare the two previous demos). The fa icons are cropped to use all the space available. You can adjust for this with a global override:
 
 ```js
-import IconButton from '@material-ui/core/IconButton';
-import SvgIcon from '@material-ui/core/SvgIcon';
-
-// ...
-
-<IconButton aria-label="delete">
-  <SvgIcon>
-    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" />
-  </SvgIcon>
-</IconButton>
+const theme = createTheme({
+  components: {
+    MuiIcon: {
+      styleOverrides: {
+        root: {
+          // Match 24px = 3 * 2 + 1.125 * 16
+          boxSizing: 'content-box',
+          padding: 3,
+          fontSize: '1.125rem',
+        },
+      },
+    },
+  },
+});
 ```
 
 {{"demo": "pages/components/icons/FontAwesomeIconSize.js"}}
@@ -304,24 +308,14 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 You need to provide a text alternative that is only visible to assistive technologies.
 
 ```jsx
+import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import { visuallyHidden } from '@material-ui/utils';
-import { makeStyles } from '@material-ui/core/styles';
-
-const classes = makeStyles({ visuallyHidden })();
-
-// ...
-
-import Icon from '@material-ui/core/Icon';
-import Typography from '@material-ui/core/Typography';
 
 // ...
 
 <Icon>add_circle</Icon>
-<Typography variant="srOnly">Erstellen Sie einen Benutzer</Typography>
-
-<Icon>add_circle</Icon>
-<span className={classes.visuallyHidden}>Erstellen Sie einen Benutzer</span>
+<Box component="span" sx={visuallyHidden}>Create a user</Box>
 ```
 
 #### Referenz

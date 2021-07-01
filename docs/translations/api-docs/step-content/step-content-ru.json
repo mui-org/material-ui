@@ -3,9 +3,10 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "TransitionComponent": "Компонент, используемый в анимации сворачивания. <a href=\"/components/transitions/#transitioncomponent-prop\">Прочтите это руководство</a>, чтобы узнать больше о требованиях к этому компоненту.",
     "transitionDuration": "Adjust the duration of the content expand transition. Passed as a prop to the transition component.<br>Set to &#39;auto&#39; to automatically calculate transition time based on height.",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
+    "TransitionProps": "Свойства, передаваемые в анимируемый компонент. По умолчанию элемент основывается на компоненте <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>."
   },
   "classDescriptions": {
     "root": {

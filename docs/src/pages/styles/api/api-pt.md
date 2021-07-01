@@ -8,11 +8,11 @@ Uma função que retorna [uma função geradora de nome de classe](https://cssin
 
 ### Argumentos
 
-1. `options` (_Object_ [opcional]):
+1. `options` (_object_ [optional]):
 
-   - `options.disableGlobal` (*Boolean* [opcional]): Padrão `false`. Desabilita a geração de nomes de classes determinísticas.
-   - `options.productionPrefix` (*String* [opcional]): Padrão `'jss'`. A string usada para prefixar os nomes de classes em produção.
-   - `options.seed` (*String* [opcional]): Padrão `''`. A string usada unicamente para identificar o gerador. Ela pode ser usada para evitar colisões de nomes de classes ao usar vários geradores no mesmo documento.
+   - `options.disableGlobal` (_bool_ [optional]): Defaults to `false`. Desabilita a geração de nomes de classes determinísticas.
+   - `options.productionPrefix` (*string* [opcional]): Padrão `'jss'`. A string usada para prefixar os nomes de classes em produção.
+   - `options.seed` (*string* [opcional]): Padrão `''`. A string usada unicamente para identificar o gerador. Ela pode ser usada para evitar colisões de nomes de classes ao usar vários geradores no mesmo documento.
 
 ### Retornos
 
@@ -22,7 +22,7 @@ Uma função que retorna [uma função geradora de nome de classe](https://cssin
 
 ```jsx
 import * as React from 'react';
-import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
@@ -39,7 +39,7 @@ Esta função realmente não "faz nada" em tempo de execução, é apenas uma fu
 
 ### Argumentos
 
-1. `styles` (*Object*): Um objeto de estilos.
+1. `styles` (_object_): A styles object.
 
 ### Retornos
 
@@ -48,7 +48,8 @@ Esta função realmente não "faz nada" em tempo de execução, é apenas uma fu
 ### Exemplos
 
 ```jsx
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -56,9 +57,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
+const theme = createTheme();
+
 export default function MyComponent {
   const classes = useStyles();
-  return <div className={classes.root} />;
+  return <ThemeProvider theme={theme}><div className={classes.root} /></ThemeProvider>;
 }
 ```
 
@@ -69,11 +72,11 @@ Vincula uma folha de estilo a um componente de função usando o padrão **hook*
 ### Argumentos
 
 1. `styles` (*Function | Object*): Uma função que gera os estilos ou um objeto de estilos. Ela será vinculada ao componente. Use a assinatura da função se você precisar ter acesso ao tema. É fornecido como o primeiro argumento.
-2. `options` (_Object_ [opcional]):
+2. `options` (_object_ [optional]):
 
-- `options.defaultTheme` (*Object* [opcional]): O tema padrão a ser usado se um tema não for fornecido por meio de um provedor de temas.
-- `options.name` (*String* [opcional]): O nome da folha de estilo. Útil para depuração.
-- `options.flip` (*Boolean* [opcional]): Quando definido como `false`, está folha irá cancelar a transformação `rtl`. Quando definido para `true`, os estilos são invertidos. Quando definido para `null`, segue `theme.direction`.
+- `options.defaultTheme` (*object* [opcional]): O tema padrão a ser usado se um tema não for fornecido por meio de um provedor de temas.
+- `options.name` (*string* [opcional]): O nome da folha de estilo. Útil para depuração.
+- `options.flip` (_bool_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. Quando definido para `true`, os estilos são invertidos. Quando definido para `null`, segue `theme.direction`.
 - As outras chaves são encaminhadas para o argumento de opções do [jss.createStyleSheet ([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).
 
 ### Retornos
@@ -84,7 +87,7 @@ Vincula uma folha de estilo a um componente de função usando o padrão **hook*
 
 ```jsx
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   root: {
@@ -105,7 +108,7 @@ Esta é uma classe utilitária para manipular a renderização do lado do servid
 
 ```jsx
 import ReactDOMServer from 'react-dom/server';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ServerStyleSheets } from '@material-ui/styles';
 
 const sheets = new ServerStyleSheets();
 const html = ReactDOMServer.renderToString(sheets.collect(<App />));
@@ -126,7 +129,7 @@ const response = `
 
 A instanciação aceita um objeto de opções como primeiro argumento.
 
-1. `options` (*Object* [opcional]): As opções são distribuídas como propriedades para o componente [`StylesProvider`](#stylesprovider).
+1. `options` (_object_ [optional]): The options are spread as props to the [`StylesProvider`](#stylesprovider) component.
 
 ### `sheets.collect(node) => Elemento React`
 
@@ -152,12 +155,12 @@ Vincula uma folha de estilos, com uma função de componente, usando o padrão d
 
 1. `Component`: O componente que será manipulado.
 2. `styles` (*Function | Object*): Uma função que gera os estilos ou um objeto de estilos. Ela será vinculada ao componente. Use a assinatura da função se você precisar ter acesso ao tema. É fornecido como propriedade do primeiro argumento.
-3. `options` (_Object_ [opcional]):
+3. `options` (_object_ [optional]):
 
-- `options.defaultTheme` (*Object* [opcional]): O tema padrão a ser usado se um tema não for fornecido por meio de um provedor de temas.
-- `options.withTheme` (*Boolean* [opcional]): Padrão `false`. Fornecer o objeto `theme` para o componente como uma propriedade.
-- `options.name` (*String* [opcional]): O nome da folha de estilo. Útil para depuração. Se o valor não for fornecido, ele tentará usar o nome do componente.
-- `options.flip` (*Boolean* [opcional]): Quando definido como `false`, está folha irá cancelar a transformação `rtl`. Quando definido para `true`, os estilos são invertidos. Quando definido para `null`, segue `theme.direction`.
+- `options.defaultTheme` (*object* [opcional]): O tema padrão a ser usado se um tema não for fornecido por meio de um provedor de temas.
+- `options.withTheme` (_bool_ [optional]): Defaults to `false`. Fornecer o objeto `theme` para o componente como uma propriedade.
+- `options.name` (*string* [opcional]): O nome da folha de estilo. Útil para depuração. Se o valor não for fornecido, ele tentará usar o nome do componente.
+- `options.flip` (_bool_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. Quando definido para `true`, os estilos são invertidos. Quando definido para `null`, segue `theme.direction`.
 - As outras chaves são encaminhadas para o argumento de opções do [jss.createStyleSheet ([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).
 
 ### Retornos
@@ -168,7 +171,8 @@ Vincula uma folha de estilos, com uma função de componente, usando o padrão d
 
 ```jsx
 import * as React from 'react';
-import { styled } from '@material-ui/core/styles';
+import { styled, ThemeProvider } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles';
 
 const MyComponent = styled('div')({
   backgroundColor: 'red',
@@ -178,11 +182,15 @@ const MyThemeComponent = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
+const theme = createTheme();
+
 export default function StyledComponents() {
   return (
-    <MyThemeComponent>
-      <MyComponent />
-    </MyThemeComponent>
+    <ThemeProvider theme={theme}>
+      <MyThemeComponent>
+        <MyComponent />
+      </MyThemeComponent>
+    <ThemeProvider>
   );
 }
 ```
@@ -208,7 +216,7 @@ Deve preferencialmente ser usado na **raiz da sua árvore de componentes**.
 ```jsx
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { StylesProvider } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/styles';
 
 function App() {
   return <StylesProvider jss={jss}>...</StylesProvider>;
@@ -273,18 +281,17 @@ Alguns detalhes de implementação que podem ser interessantes para estar ciente
 
 - Adiciona uma propriedade `classes`, assim você pode substituir, a partir do exterior, os nomes de classe previamente injectados.
 - Ela encaminha refs para o componente interno.
-- A propriedade `innerRef` está descontinuada. Em vez disso, use `ref`.
-- Ele **não** faz copia sobre estáticos. Por exemplo, pode ser usado para definir um método estático (next.js) `getInitialProps()`.
+- Ele **não** faz copia sobre estáticos. For instance, it can be used to define a `getInitialProps()` static method (next.js).
 
 ### Argumentos
 
 1. `styles` (*Function | Object*): Uma função que gera os estilos ou um objeto de estilos. Ela será vinculada ao componente. Use a assinatura da função se você precisar ter acesso ao tema. É fornecido como o primeiro argumento.
-2. `options` (_Object_ [opcional]):
+2. `options` (_object_ [optional]):
 
-- `options.defaultTheme` (*Object* [opcional]): O tema padrão a ser usado se um tema não for fornecido por meio de um provedor de temas.
-- `options.withTheme` (*Boolean* [opcional]): Padrão `false`. Fornecer o objeto `theme` para o componente como uma propriedade.
-- `options.name` (*String* [opcional]): O nome da folha de estilo. Útil para depuração. Se o valor não for fornecido, ele tentará usar o nome do componente.
-- `options.flip` (*Boolean* [opcional]): Quando definido como `false`, está folha irá cancelar a transformação `rtl`. Quando definido para `true`, os estilos são invertidos. Quando definido para `null`, segue `theme.direction`.
+- `options.defaultTheme` (*object* [opcional]): O tema padrão a ser usado se um tema não for fornecido por meio de um provedor de temas.
+- `options.withTheme` (_bool_ [optional]): Defaults to `false`. Fornecer o objeto `theme` para o componente como uma propriedade.
+- `options.name` (*string* [opcional]): O nome da folha de estilo. Útil para depuração. Se o valor não for fornecido, ele tentará usar o nome do componente.
+- `options.flip` (_bool_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. Quando definido para `true`, os estilos são invertidos. Quando definido para `null`, segue `theme.direction`.
 - As outras chaves são encaminhadas para o argumento de opções do [jss.createStyleSheet ([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).
 
 ### Retornos
@@ -295,7 +302,7 @@ Alguns detalhes de implementação que podem ser interessantes para estar ciente
 
 ```jsx
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = {
   root: {
@@ -314,7 +321,7 @@ Além disso, você pode usar com [decoradores](https://babeljs.io/docs/en/babel-
 
 ```jsx
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = {
   root: {

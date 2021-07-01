@@ -31,14 +31,14 @@ const SnackbarRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...styles[
+    return [
+      styles.root,
+      styles[
         `anchorOrigin${capitalize(styleProps.anchorOrigin.vertical)}${capitalize(
           styleProps.anchorOrigin.horizontal,
         )}`
       ],
-    };
+    ];
   },
 })(({ theme, styleProps }) => {
   const center = {

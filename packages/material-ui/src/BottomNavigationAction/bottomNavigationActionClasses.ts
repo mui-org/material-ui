@@ -7,8 +7,6 @@ export interface BottomNavigationActionClasses {
   selected: string;
   /** Pseudo-class applied to the root element if `showLabel={false}` and not selected. */
   iconOnly: string;
-  /** Styles applied to the span element that wraps the icon and label. */
-  wrapper: string;
   /** Styles applied to the label's span element. */
   label: string;
 }
@@ -21,7 +19,7 @@ export function getBottomNavigationActionUtilityClass(slot: string): string {
 
 const bottomNavigationActionClasses: BottomNavigationActionClasses = generateUtilityClasses(
   'MuiBottomNavigationAction',
-  ['root', 'iconOnly', 'selected', 'wrapper', 'label'],
+  ['root', 'iconOnly', 'selected', 'label'],
 );
 
 export default bottomNavigationActionClasses;

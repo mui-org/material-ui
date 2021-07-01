@@ -21,7 +21,7 @@
     "open": "If <code>true</code>, the component is shown. You can only use it when the <code>native</code> prop is <code>false</code> (default).",
     "renderValue": "Render the selected value. You can only use it when the <code>native</code> prop is <code>false</code> (default).<br><br><strong>Signature:</strong><br><code>function(value: any) =&gt; ReactNode</code><br><em>value:</em> The <code>value</code> provided to the component.",
     "SelectDisplayProps": "Props applied to the clickable div element.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "value": "The <code>input</code> value. Providing an empty string will select no options. Set to an empty string <code>&#39;&#39;</code> if you don&#39;t want any of the available options to be selected.<br>If the value is an object it must have reference equality with the option in order to be selected. If the value is not an object, the string representation must match with the string representation of the option in order to be selected.",
     "variant": "The variant to use."
   },

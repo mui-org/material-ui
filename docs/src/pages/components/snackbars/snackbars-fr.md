@@ -1,5 +1,5 @@
 ---
-title: React Snackbar component
+title: Composant React Snackbar
 components: Snackbar, SnackbarContent
 githubLabel: 'component: Snackbar'
 materialDesign: https://material.io/components/snackbars
@@ -8,9 +8,9 @@ waiAria: 'https://www.w3.org/TR/wai-aria-1.1/#alert'
 
 # Snackbar
 
-<p class="description">Snackbars provide brief messages about app processes. The component is also known as a toast.</p>
+<p class="description">Les snackbars fournissent de brèves notifications. The component is also known as a toast.</p>
 
-[Snackbars](https://material.io/design/components/snackbars.html) inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn't interrupt the user experience, and they don't require user input to disappear.
+Snackbars informe les utilisateurs d'une information qu'une application a effectué ou va effectuer. They appear temporarily, towards the bottom of the screen. Ils ne devraient pas interrompre l'expérience de l'utilisateur, et ne nécessitent pas de saisie de l'utilisateur pour disparaître.
 
 Snackbars contain a single line of text directly related to the operation performed. They may contain a text action, but no icons. You can use them to display notifications.
 
@@ -78,7 +78,7 @@ Pour des cas d'utilisation plus avancés, vous pourrez peut-être tirer parti de
 
 ![stars](https://img.shields.io/github/stars/iamhosseindhv/notistack.svg?style=social&label=Stars) ![npm downloads](https://img.shields.io/npm/dm/notistack.svg)
 
-This example demonstrates how to use [notistack](https://github.com/iamhosseindhv/notistack). notistack has an **imperative API** that makes it easy to display snackbars, without having to handle their open/close state. It also enables you to **stack** them on top of one another (although this is discouraged by the Material Design specification).
+This example demonstrates how to use [notistack](https://github.com/iamhosseindhv/notistack). notistack a une API **impérative** qui facilite l'affichage de snackbars, sans avoir à gérer leur état d'ouverture/fermeture. It also enables you to **stack** them on top of one another (although this is discouraged by the Material Design specification).
 
 {{"demo": "pages/components/snackbars/IntegrationNotistack.js", "defaultCodeOpen": false}}
 

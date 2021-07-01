@@ -27,11 +27,11 @@ const ImageListItemRoot = styled('li', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${imageListItemClasses.img}`]: styles.img,
-      ...styles.root,
-      ...styles[styleProps.variant],
-    };
+    return [
+      { [`& .${imageListItemClasses.img}`]: styles.img },
+      styles.root,
+      styles[styleProps.variant],
+    ];
   },
 })(({ styleProps }) => ({
   display: 'inline-block',

@@ -1,26 +1,26 @@
 ---
 title: React Date Range Picker component
-components: DateRangePicker
+components: DateRangePicker, DateRangePickerDay, DesktopDateRangePicker, MobileDateRangePicker, StaticDateRangePicker
 githubLabel: 'component: DateRangePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
 ---
 
-# Date Range Picker [<span role="img" title="Enterprise">⚡️</span>](https://material-ui.com/store/items/material-ui-x/)
+# Date Range Picker [<span role="img" title="Enterprise">⚡️</span>](https://material-ui.com/store/items/material-ui-pro/) (Выбор диапазона дат)
 
-<p class="description">Date pickers let the user select a range of dates.</p>
+<p class="description">Date pickers позволяют пользователю выбрать диапазон дат.</p>
 
-> ⚠️ Premium component <br /><br /> The date range picker is intended for Material-UI X, a commercial set of advanced components built on top of the community edition (MIT license) of Material-UI. <br /><br /> This paid extension will include more advanced components (rich data grid, date range picker, tree view drag & drop, etc.). [Early access](https://material-ui.com/store/items/material-ui-x/) starts at an affordable price.
+> ⚠️ Pro component <br /><br /> The date range picker is intended for Material-UI X Pro, a commercial set of advanced components built on top of the community edition (MIT license). <br /><br /> Это платное расширение будет включать более продвинутые компоненты (rich data grid, date range picker, tree view drag & drop, и т.д.). [Ранний доступ](https://material-ui.com/store/items/material-ui-pro/) начинается по доступной цене.
 
-The date range pickers let the user select a range of dates.
+Выбор диапазона дат (date range pickers) позволяет пользователю выбрать диапазон дат.
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Requirements
 
-This component relies on the date management library of your choice. It supports [date-fns](https://date-fns.org/), [luxon](https://moment.github.io/luxon/), [dayjs](https://github.com/iamkun/dayjs), [moment](https://momentjs.com/) and any other library via a public `dateAdapter` interface.
+Этот компонент опирается на выбранную Вами библиотеку управления датами. Поддерживает [date-fns](https://date-fns.org/), [luxon](https://moment.github.io/luxon/), [dayjs](https://github.com/iamkun/dayjs), [moment](https://momentjs.com/) и любую другую библиотеку с помощью публичного `dateAdapter` интерфейса.
 
-Please install any of these libraries and set up the right date engine by wrapping your root (or the highest level you wish the pickers to be available) with `LocalizationProvider`:
+Пожалуйста, установите любую из этих библиотек и настройте правильно механизм даты, обернув root (или самый высокий уровень, на котором вы хотели бы иметь доступ к pickers) с `LocalizationProvider`:
 
 ```jsx
 // or @material-ui/lab/dateAdapter/{dayjs,luxon,moment} or any valid date-io adapter
@@ -34,43 +34,55 @@ function App() {
 }
 ```
 
-## Basic usage
+## Basic Usage (Основное использование)
 
-Note that you can pass almost any prop from [DatePicker]('/api/date-picker/').
+Обратите внимание, что вы можете передать почти любой prop (свойство) от [DatePicker](/api/date-picker/).
 
 {{"demo": "pages/components/date-range-picker/BasicDateRangePicker.js"}}
 
+## Static mode (Статический режим)
+
+It's possible to render any picker inline. This will enable building custom popover/modal containers.
+
+{{"demo": "pages/components/date-range-picker/StaticDateRangePickerDemo.js", "bg": true}}
+
 ## Responsiveness
 
-The date range picker component is designed to be optimized for the device it runs on.
+Компонент выбора диапазона дат предназначен для оптимизации устройства на котором он работает.
 
-- The "Mobile" version works best for touch devices and small screens.
-- The "Desktop" version works best for mouse devices and large screens.
+- The `MobileDateRangePicker` component works best for touch devices and small screens.
+- The `DesktopDateRangePicker` component works best for mouse devices and large screens.
 
-By default, the `DateRangePicker` component uses a `@media (pointer: fine)` media query to determine which version to use. This can be customized with the `desktopModeMediaQuery` prop.
+By default, the `DateRangePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. Его можно настроить с помощью `DesktopModeMediaQuery`. Его можно настроить с помощью `DesktopModeMediaQuery`.
 
 {{"demo": "pages/components/date-range-picker/ResponsiveDateRangePicker.js"}}
 
-## Different number of months
+## Form props
 
-Note that the `calendars` prop only works in desktop mode.
+The date range picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-range-picker/FormPropsDateRangePickers.js"}}
+
+## Different number of months (Разное количество месяцев)
+
+Обратите внимание, что свойства `calender` работает только в режиме desktop.
 
 {{"demo": "pages/components/date-range-picker/CalendarsDateRangePicker.js"}}
 
-## Disabling dates
+## Disabling dates (Отключение дат)
 
-Disabling dates behaves the same as the simple `DatePicker`.
+Отключение дат ведет себя так же, как и простой `DatePicker`.
 
 {{"demo": "pages/components/date-range-picker/MinMaxDateRangePicker.js"}}
 
-## Custom input component
+## Custom input component (Кастомный компонент input)
 
-You can customize the rendered input with the `renderInput` prop. For `DateRangePicker` it takes **2** parameters – for start and end input respectively. If you need to render custom inputs make sure to spread `ref` and `inputProps` correctly to the input components.
+Вы можете кастомизировать (настроить) рендеринг input с помощью свойства `renderInput`. `DateRangePicker` принимает **2** параметра – для начала и конца ввода соответственно. Если вам нужно отобразить кастомные входные данные, убедитесь, что `ref` и `inputProps` правильно установлены на компоненте input.
 
 {{"demo": "pages/components/date-range-picker/CustomDateRangeInputs.js"}}
 
-## Static mode
+## Customized day rendering (Кастомизированный рендеринг дня)
 
-It is possible to render any picker without a modal or popper. For this use `StaticDateRangePicker`.
+Отображаемые дни настраиваются с помощью функции-свойства `renderDay`. You can take advantage of the internal [DateRangePickerDay](/api/date-range-picker-day/) component.
 
-{{"demo": "pages/components/date-range-picker/StaticDateRangePicker.js"}}
+{{"demo": "pages/components/date-range-picker/CustomDateRangePickerDay.js"}}

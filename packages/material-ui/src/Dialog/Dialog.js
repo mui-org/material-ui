@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { unstable_useId as useId } from '@material-ui/utils';
 import capitalize from '../utils/capitalize';
 import Modal from '../Modal';
 import Fade from '../Fade';
@@ -10,6 +11,7 @@ import Paper from '../Paper';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
 import dialogClasses, { getDialogUtilityClass } from './dialogClasses';
+import DialogContext from './DialogContext';
 import Backdrop from '../Backdrop';
 
 const DialogBackdrop = styled(Backdrop, {
@@ -57,10 +59,7 @@ const DialogContainer = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.container,
-      ...styles[`scroll${capitalize(styleProps.scroll)}`],
-    };
+    return [styles.container, styles[`scroll${capitalize(styleProps.scroll)}`]];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the container element. */
@@ -97,13 +96,13 @@ const DialogPaper = styled(Paper, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.paper,
-      ...styles[`scrollPaper${capitalize(styleProps.scroll)}`],
-      ...styles[`paperWidth${capitalize(String(styleProps.maxWidth))})`],
-      ...(styleProps.fullWidth && styles.paperFullWidth),
-      ...(styleProps.fullScreen && styles.paperFullScreen),
-    };
+    return [
+      styles.paper,
+      styles[`scrollPaper${capitalize(styleProps.scroll)}`],
+      styles[`paperWidth${capitalize(String(styleProps.maxWidth))})`],
+      styleProps.fullWidth && styles.paperFullWidth,
+      styleProps.fullScreen && styles.paperFullScreen,
+    ];
   },
 })(({ theme, styleProps }) => ({
   margin: 32,
@@ -170,7 +169,7 @@ const Dialog = React.forwardRef(function Dialog(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiDialog' });
   const {
     'aria-describedby': ariaDescribedby,
-    'aria-labelledby': ariaLabelledby,
+    'aria-labelledby': ariaLabelledbyProp,
     BackdropComponent,
     BackdropProps,
     children,
@@ -225,6 +224,11 @@ const Dialog = React.forwardRef(function Dialog(inProps, ref) {
     }
   };
 
+  const ariaLabelledby = useId(ariaLabelledbyProp);
+  const dialogContextValue = React.useMemo(() => {
+    return { titleId: ariaLabelledby };
+  }, [ariaLabelledby]);
+
   return (
     <DialogRoot
       className={clsx(classes.root, className)}
@@ -267,7 +271,7 @@ const Dialog = React.forwardRef(function Dialog(inProps, ref) {
             className={clsx(classes.paper, PaperProps.className)}
             styleProps={styleProps}
           >
-            {children}
+            <DialogContext.Provider value={dialogContextValue}>{children}</DialogContext.Provider>
           </DialogPaper>
         </DialogContainer>
       </TransitionComponent>
@@ -290,6 +294,15 @@ Dialog.propTypes /* remove-proptypes */ = {
   'aria-labelledby': PropTypes.string,
   /**
    * A backdrop component. This prop enables custom backdrop rendering.
+   * @default styled(Backdrop, {
+   *   name: 'MuiModal',
+   *   slot: 'Backdrop',
+   *   overridesResolver: (props, styles) => {
+   *     return styles.backdrop;
+   *   },
+   * })({
+   *   zIndex: -1,
+   * })
    */
   BackdropComponent: PropTypes.elementType,
   /**

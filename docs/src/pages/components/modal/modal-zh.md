@@ -1,6 +1,6 @@
 ---
 title: React Modal（模态框）组件
-components: Modal
+components: Modal, ModalUnstyled
 githubLabel: 'component: Modal'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 ---
@@ -16,7 +16,6 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 - 🔐 在模态框打开时禁用页面内容的滚动。
 - ♿️ 它妥善管理焦点；移动到模态内容，并保持内容一直存在直到模态框关闭。
 - ♿️ 自动添加适当的 ARIA 角色。
-- 📦 [5kB 的压缩包](/size-snapshot)。
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
@@ -29,13 +28,29 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 - [Menu](/components/menus/)
 - [Popover](/components/popover/)
 
-## 简单的模态框
+## Basic modal
 
-这个演示可以堆叠模态框，但强烈不建议在实际操作中这样做。
-
-{{"demo": "pages/components/modal/SimpleModal.js"}}
+{{"demo": "pages/components/modal/BasicModal.js"}}
 
 请注意，您可以通过 `outline: 0` 属性来禁用模态框的边缘（通常为蓝色或金色）。
+
+## Unstyled
+
+- 📦 [4.7kB 已压缩的包](https://bundlephobia.com/result?p=@material-ui/unstyled@next)
+
+The modal also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import ModalUnstyled from '@material-ui/unstyled/ModalUnstyled';
+```
+
+{{"demo": "pages/components/modal/ModalUnstyled.js"}}
+
+## Nested modal
+
+Modals can be nested, for example a select within a dialog, but stacking of more than two modals, or any two modals with a backdrop is discouraged.
+
+{{"demo": "pages/components/modal/NestedModal.js"}}
 
 ## 过渡动画
 
@@ -64,7 +79,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 
 {{"demo": "pages/components/modal/KeepMountedModal.js", "defaultCodeOpen": false}}
 
-不过对所有情况下的性能优化，这并不是灵丹妙药。 请您务必先确定性能的瓶颈所在，再考虑这些优化策略。
+As with any performance optimization, this is not a silver bullet. Be sure to identify bottlenecks first, and then try out these optimization strategies.
 
 ## 服务端渲染的模态框
 
@@ -78,7 +93,7 @@ React [不支持](https://github.com/facebook/react/issues/13097)服务端渲染
 
 如果用户试图将焦点离开模态框，模态框会将丢失的焦点移回到组件的主体。
 
-这样做的目的是为了无障碍设计，但是可能会造成问题。 如果用户需要与页面的其他部分进行交互，例如当您需要使用聊天窗口时，那么就可以禁用该行为：
+This is done for accessibility purposes. However, it might create issues. 如果用户需要与页面的其他部分进行交互，例如当您需要使用聊天窗口时，那么就可以禁用该行为：
 
 ```jsx
 <Modal disableEnforceFocus />
@@ -97,5 +112,5 @@ React [不支持](https://github.com/facebook/react/issues/13097)服务端渲染
   </Modal>
   ```
 
-- 这篇 [WAI-ARIA authoring practices](https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/dialog.html) 里的方法可以根据你的模态窗口里的内容, 为最合适的元素设置初始焦点.
+- 这篇 [WAI-ARIA authoring practices](https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/dialog.html) 里的方法帮助你通过模态窗口里的内容，为最相关的元素设置初始焦点。
 - 请记住，“模态窗口” 覆盖在主窗口或者另一个模态窗口上。 一个模态框下的窗口都是 **（惰性的）inert** 。 也就是说，用户不能与当前处于活跃状态下的模态框之外的内容进行交互。 因为这可能会造成[冲突行为](#focus-trap)。

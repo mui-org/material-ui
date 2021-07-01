@@ -1,97 +1,98 @@
 {
-  "componentDescription": "## ARIA\n\nIf the progress bar is describing the loading progress of a particular region of a page,\nyou should use <code>aria-describedby</code> to point to the progress bar, and set the <code>aria-busy</code>\nattribute to <code>true</code> on that region until it has finished loading.",
+  "componentDescription": "## ARIA\n\nIf the progress bar is describing the loading progress of a particular region of a page,\nyou should use `aria-describedby` to point to the progress bar, and set the `aria-busy`\nattribute to `true` on that region until it has finished loading.",
   "propDescriptions": {
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "color": "The color of the component. It supports those theme colors that make sense for this component.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "color": "A cor do componente. Ela da suporte para as cores do tema que fazem sentido para este componente.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The value of the progress indicator for the determinate and buffer variants. Value between 0 and 100.",
     "valueBuffer": "The value for the buffer variant. Value between 0 and 100.",
     "variant": "The variant to use. Use indeterminate or query when there is no progress value."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "colorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the root and bar2 element",
       "conditions": "<code>color=\"primary\"</code>; bar2 if <code>variant=\"buffer\"</code>"
     },
     "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the root and bar2 elements",
       "conditions": "<code>color=\"secondary\"</code>; bar2 if <code>variant=\"buffer\"</code>"
     },
     "determinate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"determinate\"</code>"
     },
     "indeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"indeterminate\"</code>"
     },
     "buffer": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"buffer\"</code>"
     },
     "query": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"query\"</code>"
     },
     "dashed": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the additional bar element",
       "conditions": "<code>variant=\"buffer\"</code>"
     },
     "dashedColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the additional bar element",
       "conditions": "<code>variant=\"buffer\"</code> and <code>color=\"primary\"</code>"
     },
     "dashedColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the additional bar element",
       "conditions": "<code>variant=\"buffer\"</code> and <code>color=\"secondary\"</code>"
     },
     "bar": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the layered bar1 and bar2 elements"
     },
     "barColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar elements",
       "conditions": "<code>color=\"primary\"</code>; bar2 if <code>variant</code> not \"buffer\""
     },
     "barColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar elements",
       "conditions": "<code>color=\"secondary\"</code>; bar2 if <code>variant</code> not \"buffer\""
     },
     "bar1Indeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar1 element",
       "conditions": "<code>variant=\"indeterminate or query\"</code>"
     },
     "bar1Determinate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar1 element",
       "conditions": "<code>variant=\"determinate\"</code>"
     },
     "bar1Buffer": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar1 element",
       "conditions": "<code>variant=\"buffer\"</code>"
     },
     "bar2Indeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar2 element",
       "conditions": "<code>variant=\"indeterminate or query\"</code>"
     },
     "bar2Buffer": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the bar2 element",
       "conditions": "<code>variant=\"buffer\"</code>"
     }

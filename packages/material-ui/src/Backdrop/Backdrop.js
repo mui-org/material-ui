@@ -19,10 +19,7 @@ const BackdropRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.invisible && styles.invisible),
-    };
+    return [styles.root, styleProps.invisible && styles.invisible];
   },
 })(({ styleProps }) => ({
   position: 'fixed',

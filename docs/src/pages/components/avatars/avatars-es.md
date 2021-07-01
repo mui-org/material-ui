@@ -1,5 +1,5 @@
 ---
-title: React Avatar component
+title: Componente de Avatar de React
 components: Avatar, AvatarGroup, Badge
 githubLabel: 'component: Avatar'
 ---
@@ -21,6 +21,10 @@ Las imágenes de avatar pueden ser creadas pasándoles las propiedades estándar
 Los avatares que contengan carácteres simples pueden ser creados pasándoles un string como `children`.
 
 {{"demo": "pages/components/avatars/LetterAvatars.js"}}
+
+You can use different background colors for the avatar. The following demo generates the color based on the name of the person.
+
+{{"demo": "pages/components/avatars/BackgroundLetterAvatars.js"}}
 
 ## Tamaños
 

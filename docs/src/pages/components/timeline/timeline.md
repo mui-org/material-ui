@@ -33,7 +33,7 @@ The timeline can display the events on alternating sides.
 
 ## Color
 
-The `TimelineDot` can appear in different colors.
+The `TimelineDot` can appear in different colors from theme palette.
 
 {{"demo": "pages/components/timeline/ColorsTimeline.js"}}
 

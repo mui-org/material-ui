@@ -20,7 +20,7 @@ export interface TimelineDotProps extends StandardProps<React.HTMLAttributes<HTM
    * The dot can have a different colors.
    * @default 'grey'
    */
-  color?: 'inherit' | 'primary' | 'secondary' | 'grey';
+  color?: 'inherit' | 'grey' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

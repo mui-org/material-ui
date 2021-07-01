@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
-import { Theme } from '@material-ui/core/styles';
 import { Field, Form, FormSpy } from 'react-final-form';
 import Typography from './modules/components/Typography';
 import AppFooter from './modules/views/AppFooter';
@@ -14,21 +13,7 @@ import FormButton from './modules/form/FormButton';
 import FormFeedback from './modules/form/FormFeedback';
 import withRoot from './modules/withRoot';
 
-const useStyles = makeStyles<Theme>((theme) => ({
-  form: {
-    marginTop: theme.spacing(6),
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-  },
-  feedback: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 function SignUp() {
-  const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
   const validate = (values: { [index: string]: string }) => {
@@ -68,7 +53,7 @@ function SignUp() {
           validate={validate}
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+            <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Field
@@ -118,21 +103,21 @@ function SignUp() {
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (
-                    <FormFeedback className={classes.feedback} error>
+                    <FormFeedback error sx={{ mt: 2 }}>
                       {submitError}
                     </FormFeedback>
                   ) : null
                 }
               </FormSpy>
               <FormButton
-                className={classes.button}
+                sx={{ mt: 3, mb: 2 }}
                 disabled={submitting || sent}
                 color="secondary"
                 fullWidth
               >
                 {submitting || sent ? 'In progress…' : 'Sign Up'}
               </FormButton>
-            </form>
+            </Box>
           )}
         </Form>
       </AppForm>

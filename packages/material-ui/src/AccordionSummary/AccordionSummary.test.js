@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createMount, describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
 import AccordionSummary, {
   accordionSummaryClasses as classes,
 } from '@material-ui/core/AccordionSummary';
@@ -10,13 +10,11 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 describe('<AccordionSummary />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<AccordionSummary />, () => ({
     classes,
     inheritComponent: ButtonBase,
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiAccordionSummary',
     testVariantProps: { disabled: true },

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import {
-  createMount,
   describeConformanceV5,
   act,
   createClientRender,
@@ -17,13 +16,11 @@ import CheckBox from '../internal/svg-icons/CheckBox';
 
 describe('<Chip />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Chip />, () => ({
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     muiName: 'MuiChip',
     testDeepOverrides: { slotName: 'label', slotClassName: classes.label },
     testVariantProps: { variant: 'outlined' },

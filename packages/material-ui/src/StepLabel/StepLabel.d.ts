@@ -15,6 +15,17 @@ export interface StepLabelProps extends StandardProps<React.HTMLAttributes<HTMLD
    */
   classes?: Partial<StepLabelClasses>;
   /**
+   * The props used for each slot inside.
+   * @default {}
+   */
+  componentsProps?: {
+    /**
+     * Props applied to the label element.
+     * @default {}
+     */
+    label?: React.HTMLProps<HTMLSpanElement>;
+  };
+  /**
    * If `true`, the step is marked as failed.
    * @default false
    */

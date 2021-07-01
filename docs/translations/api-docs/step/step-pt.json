@@ -3,35 +3,36 @@
   "propDescriptions": {
     "active": "Sets the step as active. Is passed to child components.",
     "children": "Should be <code>Step</code> sub-components such as <code>StepLabel</code>, <code>StepContent</code>.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "completed": "Mark the step as completed. Is passed to child components.",
     "disabled": "Mark the step as disabled, will also disable the button if <code>StepButton</code> is a child of <code>Step</code>. Is passed to child components.",
     "expanded": "Expand the step.",
     "index": "The position of the step. The prop defaults to the value inherited from the parent Stepper component.",
-    "last": "If <code>true</code>, the Step is displayed as rendered last. The prop defaults to the value inherited from the parent Stepper component."
+    "last": "If <code>true</code>, the Step is displayed as rendered last. The prop defaults to the value inherited from the parent Stepper component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "horizontal": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>orientation=\"horizontal\"</code>"
     },
     "vertical": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>orientation=\"vertical\"</code>"
     },
     "alternativeLabel": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>alternativeLabel={true}</code>"
     },
     "completed": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>completed={true}</code>"
     }
   }

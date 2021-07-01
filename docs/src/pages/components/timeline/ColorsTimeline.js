@@ -11,30 +11,16 @@ export default function ColorsTimeline() {
     <Timeline position="alternate">
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Eat</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot color="primary" />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Code</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
           <TimelineDot color="secondary" />
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent>Sleep</TimelineContent>
+        <TimelineContent>Secondary</TimelineContent>
       </TimelineItem>
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineDot />
+          <TimelineDot color="success" />
         </TimelineSeparator>
-        <TimelineContent>Repeat</TimelineContent>
+        <TimelineContent>Success</TimelineContent>
       </TimelineItem>
     </Timeline>
   );

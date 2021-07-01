@@ -53,7 +53,7 @@ const variantsResolver = (props, styles, theme, name) => {
 };
 
 export const shouldForwardProp = (prop) =>
-  prop !== 'styleProps' && prop !== 'theme' && prop !== 'isRtl' && prop !== 'sx' && prop !== 'as';
+  prop !== 'styleProps' && prop !== 'theme' && prop !== 'sx' && prop !== 'as';
 
 export const systemDefaultTheme = createTheme();
 
@@ -67,7 +67,6 @@ export default function createStyled(input = {}) {
     rootShouldForwardProp = shouldForwardProp,
     slotShouldForwardProp = shouldForwardProp,
   } = input;
-
   return (tag, inputOptions = {}) => {
     const {
       name: componentName,

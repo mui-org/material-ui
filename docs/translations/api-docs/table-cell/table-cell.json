@@ -9,7 +9,7 @@
     "scope": "Set scope attribute.",
     "size": "Specify the size of the cell. The prop defaults to the value (<code>&#39;medium&#39;</code>) inherited from the parent Table component.",
     "sortDirection": "Set aria-sort direction.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "variant": "Specify the cell type. The prop defaults to the value inherited from the parent TableHead, TableBody, or TableFooter components."
   },
   "classDescriptions": {

@@ -47,7 +47,7 @@ const iOS =
 
 你可以使用 `ModalProps` 属性来确保临时抽屉不会被卸载，就像这样：
 
-If you are on a desktop, you can toggle the drawer with the "OPEN" button. If you are on mobile, you can open the demo in CodeSandbox ("edit" icon) and swipe.
+如果你使用的是桌面设备，那么可以点击 "OPEN" 按钮来切换抽屉的显示。 如果你使用的设备是手机，那么可以在 CodeSandbox（“编辑”图标）中打开该演示，并尝试滑动抽屉。
 
 {{"demo": "pages/components/drawers/SwipeableEdgeDrawer.js", "iframe": true, "height": 400, "maxWidth": 300}}
 
@@ -68,7 +68,7 @@ If you are on a desktop, you can toggle the drawer with the "OPEN" button. If yo
 
 ## 响应式的抽屉
 
-利用` Hidden `这个响应式的辅助组件，可以根据屏幕宽度显示不同类型的抽屉。 屏幕尺寸较小的时候会显示 `temporary` 抽屉，而更宽的屏幕则显示 `permanent` 抽屉。
+You can use the `temporary` variant to display a drawer for small screens and `permanent` for a drawer for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 
@@ -96,7 +96,7 @@ If you are on a desktop, you can toggle the drawer with the "OPEN" button. If yo
 
 永久抽屉始终可见并固定在左侧，与内容或背景位于同一高度。 他们无法被关闭。
 
-推荐在 **桌面环境上默认** 使用永久抽屉。
+推荐在**桌面环境上默认**使用永久抽屉。
 
 ### 全高导航栏
 

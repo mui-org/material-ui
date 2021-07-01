@@ -3,7 +3,7 @@
   "propDescriptions": {
     "autoComplete": "This prop helps users to fill forms faster, especially on mobile devices. The name can be confusing, as it&#39;s more like an autofill. You can learn more about it <a href=\"https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill\">following the specification</a>.",
     "autoFocus": "If <code>true</code>, the <code>input</code> element is focused during the first mount.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "color": "The color of the component. It supports those theme colors that make sense for this component. The prop defaults to the value (<code>&#39;primary&#39;</code>) inherited from the parent FormControl component.",
     "defaultValue": "The default input value. Use when the component is not controlled.",
     "disabled": "If <code>true</code>, the <code>input</code> element is disabled. The prop defaults to the value (<code>false</code>) inherited from the parent FormControl component.",
@@ -14,8 +14,7 @@
     "inputComponent": "The component used for the <code>input</code> element. Either a string to use a HTML element or a component.",
     "inputProps": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes\">Attributes</a> applied to the <code>input</code> element.",
     "inputRef": "Pass a ref to the <code>input</code> element.",
-    "label": "The label of the <code>input</code>. It is only used for layout. The actual labelling is handled by <code>InputLabel</code>. If specified <code>labelWidth</code> is ignored.",
-    "labelWidth": "The width of the label. Is ignored if <code>label</code> is provided. Prefer <code>label</code> if the <code>input</code> label appears with a strike through.",
+    "label": "The label of the <code>input</code>. It is only used for layout. The actual labelling is handled by <code>InputLabel</code>.",
     "margin": "If <code>dense</code>, will adjust vertical spacing. This is normally obtained via context from FormControl. The prop defaults to the value (<code>&#39;none&#39;</code>) inherited from the parent FormControl component.",
     "maxRows": "Maximum number of rows to display when multiline option is set to true.",
     "minRows": "Minimum number of rows to display when multiline option is set to true.",
@@ -28,78 +27,79 @@
     "required": "If <code>true</code>, the <code>input</code> element is required. The prop defaults to the value (<code>false</code>) inherited from the parent FormControl component.",
     "rows": "Number of rows to display when multiline option is set to true.",
     "startAdornment": "Start <code>InputAdornment</code> for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "type": "Type of the <code>input</code> element. It should be <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types\">a valid HTML5 input type</a>.",
     "value": "The value of the <code>input</code> element, required for a controlled component."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "colorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "the color is secondary"
     },
     "focused": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "the component is focused"
     },
     "disabled": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>disabled={true}</code>"
     },
     "adornedStart": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>startAdornment</code> is provided"
     },
     "adornedEnd": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>endAdornment</code> is provided"
     },
     "error": {
-      "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Pseudo-class aplicada a {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>error={true}</code>"
     },
     "sizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>size=\"small\"</code>"
     },
     "multiline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>multiline={true}</code>"
     },
     "notchedOutline": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the NotchedOutline element"
     },
     "input": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the input element"
     },
     "inputSizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>size=\"small\"</code>"
     },
     "inputMultiline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>multiline={true}</code>"
     },
     "inputAdornedStart": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>startAdornment</code> is provided"
     },
     "inputAdornedEnd": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the input element",
       "conditions": "<code>endAdornment</code> is provided"
     }

@@ -4,16 +4,16 @@
 
 Der Hauptunterschied zwischen dem Labor und dem Kern besteht darin, wie die Komponenten versioniert werden. Ein separates Labor-Paket erlaubt es uns, wenn es notwendig ist, nicht rückwärtskompatible Änderungen zu veröffentlichen, ohne die [langsamere Veröffentlichungsfrequenz](https://material-ui.com/versions/#release-frequency) des Kernpakets einzuschränken.
 
-As developers use and test the components and report issues, the maintainers learn more about shortcomings of the components: missing features, accessibility issues, bugs, API design, etc. The older and more used a component is, the less likely it is that new issues will be found and subsequently need to introduce breaking changes.
+Während Entwickler die Komponenten verwenden, testen und Probleme melden, erfahren die Betreuer (Maintainer) mehr über Mängel der Komponenten: fehlende Features, Barrierefreiheit, Fehler, API-Design usw. Je älter und mehr verwendet eine Komponente ist, desto weniger wahrscheinlich ist es, dass neue Probleme gefunden werden und in der Folge, große Änderungen eingeführt werden müssen.
 
-For a component to be ready to move to the core, the following criteria are considered:
+Damit eine Komponente zum Kern (Core) übergehen kann, werden folgende Kriterien berücksichtigt:
 
-- Folgendes sollte **verwendet werden**. Das Material-UI-Team verwendet neben anderen Metriken Google Analytics Statistiken, um die Nutzung der einzelnen Komponenten zu bewerten. Eine Laborkomponente mit geringem Verbrauch bedeutet entweder, dass sie noch nicht vollständig funktioniert oder dass eine geringe Nachfrage besteht.
-- Sie muss der **Codequalität** der Kernkomponenten entsprechen. It doesn't have to be perfect to be a part of the core, but the component should be reliable enough that developers can depend on it.
-  - Jede Komponente benötigt **Typdefinitionen**. It is not currently required that a lab component is typed, but it would need to be typed to move to the core.
-  - Erfordert eine gute **Testabdeckung**. Some of the lab components don't currently have comprehensive tests.
-- Kann es ein **ausschlaggebender Punkt** sein, um Benutzer zu einem Upgrade auf die neueste Hauptversion zu bewegen? The less fragmented the community is, the better.
-- Es muss eine geringe Wahrscheinlichkeit für eine **einschneidende Änderung** in der kurzen/mittleren Zukunft bestehen. For instance, if it needs a new feature that will likely require a breaking change, it may be preferable to delay its promotion to the core.
+- Folgendes sollte **verwendet werden**. The Material-UI team uses Google Analytics in the documentation (among other metrics) to evaluate the usage of each component. A lab component with low usage either means that it isn't fully working yet, or that there is low demand for it.
+- Sie muss der **Codequalität** der Kernkomponenten entsprechen. It doesn't have to be perfect to be part of the core, but the component should be reliable enough that developers can depend on it.
+  - Jede Komponente benötigt **Typdefinitionen**. Es ist derzeit nicht erforderlich, dass eine Test-Kompontente angegeben wird, aber sie muss angegeben werden, um in den Kern (Core) zu wechseln.
+  - Erfordert eine gute **Testabdeckung**. Einige der Test-Komponenten haben derzeit keine umfassenden Tests.
+- Kann es ein **ausschlaggebender Punkt** sein, um Benutzer zu einem Upgrade auf die neueste Hauptversion zu bewegen? Je weniger zersplittert die Gemeinschaft ist, desto besser.
+- Es muss eine geringe Wahrscheinlichkeit für eine **einschneidende Änderung** in der kurzen/mittleren Zukunft bestehen. Zum Beispiel, wenn es eine neue Funktion benötigt, die wahrscheinlich eine einschneidende Änderung erfordert, ist es vielleicht besser, seine Aufnahme in den Kern zu verschieben.
 
 ## Installation
 

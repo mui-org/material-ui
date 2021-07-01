@@ -20,7 +20,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#tooltip'
 
 ## 文字提示的位置
 
-`Tooltip` 有 12 个**位置** 选项。 They don't have directional arrows; instead, they rely on motion emanating from the source to convey direction.
+`Tooltip` 有 12 个**位置** 选项。 它们没有方向箭头，而是依靠源头发出的运动来传递方向。
 
 {{"demo": "pages/components/tooltips/PositionedTooltips.js"}}
 

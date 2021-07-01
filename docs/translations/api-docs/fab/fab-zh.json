@@ -10,6 +10,7 @@
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.",
     "href": "The URL to link to when the button is clicked. If defined, an <code>a</code> element will be used as the root node.",
     "size": "The size of the button. <code>small</code> is equivalent to the dense button styling.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "variant": "The variant to use."
   },
   "classDescriptions": {

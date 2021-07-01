@@ -36,10 +36,10 @@ const InputRoot = styled(InputBaseRoot, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
+    return [
       ...inputBaseRootOverridesResolver(props, styles),
-      ...(!styleProps.disableUnderline && styles.underline),
-    };
+      !styleProps.disableUnderline && styles.underline,
+    ];
   },
 })(({ theme, styleProps }) => {
   const light = theme.palette.mode === 'light';

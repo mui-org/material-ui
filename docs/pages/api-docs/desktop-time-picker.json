@@ -9,6 +9,9 @@
     "ampm": { "type": { "name": "bool" } },
     "ampmInClock": { "type": { "name": "bool" } },
     "className": { "type": { "name": "string" } },
+    "components": {
+      "type": { "name": "shape", "description": "{ OpenPickerIcon?: elementType }" }
+    },
     "disableCloseOnSelect": {
       "type": { "name": "bool" },
       "default": "`true` for Desktop, `false` for Mobile (based on the chosen wrapper and `desktopModeMediaQuery` prop)."
@@ -38,7 +41,6 @@
     "onOpen": { "type": { "name": "func" } },
     "open": { "type": { "name": "bool" } },
     "OpenPickerButtonProps": { "type": { "name": "object" } },
-    "openPickerIcon": { "type": { "name": "node" } },
     "openTo": {
       "type": {
         "name": "enum",

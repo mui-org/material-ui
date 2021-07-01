@@ -18,7 +18,7 @@ describe('createBreakpoints', () => {
     });
 
     it('should work for md', () => {
-      expect(breakpoints.up('md')).to.equal('@media (min-width:960px)');
+      expect(breakpoints.up('md')).to.equal('@media (min-width:900px)');
     });
 
     it('should work for custom breakpoints', () => {
@@ -32,7 +32,7 @@ describe('createBreakpoints', () => {
     });
 
     it('should work for md', () => {
-      expect(breakpoints.down('md')).to.equal('@media (max-width:959.95px)');
+      expect(breakpoints.down('md')).to.equal('@media (max-width:899.95px)');
     });
 
     it('should work for xs', () => {
@@ -44,7 +44,7 @@ describe('createBreakpoints', () => {
     });
 
     it('should work for xl', () => {
-      expect(breakpoints.down('xl')).to.equal('@media (max-width:1919.95px)');
+      expect(breakpoints.down('xl')).to.equal('@media (max-width:1535.95px)');
     });
 
     it('should work for custom breakpoints', () => {
@@ -59,7 +59,7 @@ describe('createBreakpoints', () => {
   describe('between', () => {
     it('should work', () => {
       expect(breakpoints.between('sm', 'md')).to.equal(
-        '@media (min-width:600px) and (max-width:959.95px)',
+        '@media (min-width:600px) and (max-width:899.95px)',
       );
     });
 
@@ -71,7 +71,7 @@ describe('createBreakpoints', () => {
 
     it('should work on largest breakpoints', () => {
       expect(breakpoints.between('lg', 'xl')).to.equal(
-        '@media (min-width:1280px) and (max-width:1919.95px)',
+        '@media (min-width:1200px) and (max-width:1535.95px)',
       );
     });
 
@@ -84,11 +84,11 @@ describe('createBreakpoints', () => {
 
   describe('only', () => {
     it('should work', () => {
-      expect(breakpoints.only('md')).to.equal('@media (min-width:960px) and (max-width:1279.95px)');
+      expect(breakpoints.only('md')).to.equal('@media (min-width:900px) and (max-width:1199.95px)');
     });
 
     it('on xl should call up', () => {
-      expect(breakpoints.only('xl')).to.equal('@media (min-width:1920px)');
+      expect(breakpoints.only('xl')).to.equal('@media (min-width:1536px)');
     });
 
     it('should work for custom breakpoints', () => {

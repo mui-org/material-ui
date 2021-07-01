@@ -17,8 +17,6 @@ export interface LoadingButtonClasses {
   endIconLoadingEnd: string;
   /** Styles applied to the startIcon element if `loading={true}` and `loadingPosition="start"`. */
   startIconLoadingStart: string;
-  /** Styles applied to the label element if `loading={true}` and `loadingPosition="center"`. */
-  labelLoadingCenter: string;
 }
 
 export type LoadingButtonClassKey = keyof LoadingButtonClasses;
@@ -36,7 +34,6 @@ const loadingButtonClasses: LoadingButtonClasses = generateUtilityClasses('MuiLo
   'loadingIndicatorEnd',
   'endIconLoadingEnd',
   'startIconLoadingStart',
-  'labelLoadingCenter',
 ]);
 
 export default loadingButtonClasses;

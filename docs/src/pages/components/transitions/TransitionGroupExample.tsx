@@ -5,7 +5,6 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { TransitionGroup } from 'react-transition-group';
@@ -25,9 +24,8 @@ interface RenderItemOptions {
 
 function renderItem({ item, handleRemoveFruit }: RenderItemOptions) {
   return (
-    <ListItem>
-      <ListItemText primary={item} />
-      <ListItemSecondaryAction>
+    <ListItem
+      secondaryAction={
         <IconButton
           edge="end"
           aria-label="delete"
@@ -36,7 +34,9 @@ function renderItem({ item, handleRemoveFruit }: RenderItemOptions) {
         >
           <DeleteIcon />
         </IconButton>
-      </ListItemSecondaryAction>
+      }
+    >
+      <ListItemText primary={item} />
     </ListItem>
   );
 }

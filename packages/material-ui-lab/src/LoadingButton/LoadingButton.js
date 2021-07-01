@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { chainPropTypes } from '@material-ui/utils';
 import { capitalize } from '@material-ui/core/utils';
 import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
-import { styled, unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { styled, useThemeProps } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import loadingButtonClasses, { getLoadingButtonUtilityClass } from './loadingButtonClasses';
@@ -15,7 +15,6 @@ const useUtilityClasses = (styleProps) => {
     root: ['root', loading && 'loading'],
     startIcon: [loading && `startIconLoading${capitalize(loadingPosition)}`],
     endIcon: [loading && `endIconLoading${capitalize(loadingPosition)}`],
-    label: [loading && `labelLoading${capitalize(loadingPosition)}`],
     loadingIndicator: [
       'loadingIndicator',
       loading && `loadingIndicator${capitalize(loadingPosition)}`,
@@ -32,53 +31,51 @@ const useUtilityClasses = (styleProps) => {
 
 // TODO use `import { rootShouldForwardProp } from '../styles/styled';` once move to core
 const rootShouldForwardProp = (prop) =>
-  prop !== 'styleProps' &&
-  prop !== 'theme' &&
-  prop !== 'isRtl' &&
-  prop !== 'sx' &&
-  prop !== 'as' &&
-  prop !== 'classes';
+  prop !== 'styleProps' && prop !== 'theme' && prop !== 'sx' && prop !== 'as' && prop !== 'classes';
 const LoadingButtonRoot = styled(Button, {
   shouldForwardProp: (prop) => rootShouldForwardProp(prop) || prop === 'classes',
   name: 'MuiLoadingButton',
   slot: 'Root',
   overridesResolver: (props, styles) => {
-    return {
-      ...styles.root,
-      ...(styles.startIconLoadingStart && {
+    return [
+      styles.root,
+      styles.startIconLoadingStart && {
         [`& .${loadingButtonClasses.startIconLoadingStart}`]: styles.startIconLoadingStart,
-      }),
-      ...(styles.endIconLoadingEnd && {
+      },
+      styles.endIconLoadingEnd && {
         [`& .${loadingButtonClasses.endIconLoadingEnd}`]: styles.endIconLoadingEnd,
+      },
+    ];
+  },
+})(({ styleProps, theme }) => ({
+  [`& .${loadingButtonClasses.startIconLoadingStart}, & .${loadingButtonClasses.endIconLoadingEnd}`]:
+    {
+      transition: theme.transitions.create(['opacity'], {
+        duration: theme.transitions.duration.short,
       }),
-      ...(styles.labelLoadingCenter && {
-        [`& .${loadingButtonClasses.labelLoadingCenter}`]: styles.labelLoadingCenter,
-      }),
-    };
-  },
-})({
-  [`& .${loadingButtonClasses.startIconLoadingStart}`]: {
-    visibility: 'hidden',
-  },
-  [`& .${loadingButtonClasses.endIconLoadingEnd}`]: {
-    visibility: 'hidden',
-  },
-  [`& .${loadingButtonClasses.labelLoadingCenter}`]: {
-    visibility: 'hidden',
-  },
-});
+      opacity: 0,
+    },
+  ...(styleProps.loadingPosition === 'center' && {
+    transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color'], {
+      duration: theme.transitions.duration.short,
+    }),
+    [`&.${loadingButtonClasses.loading}`]: {
+      color: 'transparent',
+    },
+  }),
+}));
 
 const LoadingButtonLoadingIndicator = styled('div', {
   name: 'MuiLoadingButton',
   slot: 'LoadingIndicator',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
-      ...styles.loadingIndicator,
-      ...styles[`loadingIndicator${capitalize(styleProps.loadingPosition)}`],
-    };
+    return [
+      styles.loadingIndicator,
+      styles[`loadingIndicator${capitalize(styleProps.loadingPosition)}`],
+    ];
   },
-})(({ styleProps }) => ({
+})(({ theme, styleProps }) => ({
   position: 'absolute',
   visibility: 'visible',
   display: 'flex',
@@ -88,6 +85,7 @@ const LoadingButtonLoadingIndicator = styled('div', {
   ...(styleProps.loadingPosition === 'center' && {
     left: '50%',
     transform: 'translate(-50%)',
+    color: theme.palette.action.disabled,
   }),
   ...(styleProps.loadingPosition === 'end' && {
     right: 14,

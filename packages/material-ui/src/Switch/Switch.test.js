@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
+import { describeConformanceV5, act, createClientRender, fireEvent } from 'test/utils';
 import Switch, { switchClasses as classes } from '@material-ui/core/Switch';
 import FormControl from '@material-ui/core/FormControl';
 
 describe('<Switch />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Switch />, () => ({
     classes,
     render,
-    mount,
     muiName: 'MuiSwitch',
     testDeepOverrides: { slotName: 'track', slotClassName: classes.track },
     refInstanceof: window.HTMLSpanElement,

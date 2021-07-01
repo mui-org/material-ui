@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import Icon from '@material-ui/core/Icon';
 import SpeedDialIcon, { speedDialIconClasses as classes } from '@material-ui/core/SpeedDialIcon';
 
 describe('<SpeedDialIcon />', () => {
-  const mount = createMount();
   const render = createClientRender();
   const icon = <Icon>font_icon</Icon>;
 
   describeConformanceV5(<SpeedDialIcon />, () => ({
     classes,
     inheritComponent: 'span',
-    mount,
     render,
     refInstanceof: window.HTMLSpanElement,
     muiName: 'MuiSpeedDialIcon',

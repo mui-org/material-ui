@@ -7,7 +7,8 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "connector": "An element to be placed between each step.",
     "nonLinear": "If set the <code>Stepper</code> will not assist in controlling steps for linear flow.",
-    "orientation": "The group orientation (layout flow direction)."
+    "orientation": "The group orientation (layout flow direction).",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {

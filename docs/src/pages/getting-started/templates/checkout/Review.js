@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -38,21 +37,7 @@ const payments = [
   { name: 'Expiry date', detail: '04/2024' },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  listItem: {
-    padding: theme.spacing(1, 0),
-  },
-  total: {
-    fontWeight: 700,
-  },
-  title: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 export default function Review() {
-  const classes = useStyles();
-
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -60,29 +45,29 @@ export default function Review() {
       </Typography>
       <List disablePadding>
         {products.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
+          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
 
-        <ListItem className={classes.listItem}>
+        <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
             $34.06
           </Typography>
         </ListItem>
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
+          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
           <Typography gutterBottom>John Smith</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
+          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Payment details
           </Typography>
           <Grid container>

@@ -4,7 +4,7 @@ import { InternalStandardProps as StandardProps } from '..';
 import { PaperProps } from '../Paper';
 import { ModalProps } from '../Modal';
 import { Theme } from '../styles';
-import { TransitionHandlerProps, TransitionProps } from '../transitions/transition';
+import { TransitionProps } from '../transitions/transition';
 import { PopoverClasses } from './popoverClasses';
 
 export interface PopoverOrigin {
@@ -19,8 +19,7 @@ export interface PopoverPosition {
 
 export type PopoverReference = 'anchorEl' | 'anchorPosition' | 'none';
 
-export interface PopoverProps
-  extends StandardProps<ModalProps & Partial<TransitionHandlerProps>, 'children'> {
+export interface PopoverProps extends StandardProps<ModalProps, 'children'> {
   /**
    * A ref for imperative actions.
    * It currently only supports updatePosition() action.

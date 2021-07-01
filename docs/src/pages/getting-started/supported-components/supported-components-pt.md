@@ -44,7 +44,7 @@ Se você deseja adicionar suporte a um componente ou recurso não destacado aqui
   - **[Inset](https://material.io/design/components/dividers.html#types) ✓**
   - **[Middle](https://material.io/design/components/dividers.html#types) ✓**
   - **[Subheader](https://material.io/design/components/dividers.html#types) ✓**
-- ****[Listas de Imagem](https://material.io/design/components/image-lists.html) ✓** (também conhecido como Grade Lista)******
+- **[Listas de Imagem](https://material.io/design/components/image-lists.html) ✓** (também conhecido como Grade Lista)********
 - **[Listas](https://material.io/design/components/lists.html) ✓**
   - [Tipos:](https://material.io/design/components/lists.html#types)
     - **Linha única ✓**

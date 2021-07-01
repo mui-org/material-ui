@@ -1,19 +1,12 @@
 import * as React from 'react';
 import { spy } from 'sinon';
 import { expect } from 'chai';
-import { createMount, fireEvent, screen, describeConformanceV5 } from 'test/utils';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import { fireEvent, screen, describeConformanceV5 } from 'test/utils';
 import MonthPicker, { monthPickerClasses as classes } from '@material-ui/lab/MonthPicker';
-import { adapterToUse, createPickerRender } from '../internal/pickers/test-utils';
+import { adapterToUse, wrapPickerMount, createPickerRender } from '../internal/pickers/test-utils';
 
 describe('<MonthPicker />', () => {
-  const mount = createMount();
   const render = createPickerRender();
-
-  const localizedMount = (node: React.ReactNode) => {
-    return mount(<LocalizationProvider dateAdapter={AdapterDateFns}>{node}</LocalizationProvider>);
-  };
 
   describeConformanceV5(
     <MonthPicker
@@ -26,7 +19,7 @@ describe('<MonthPicker />', () => {
       classes,
       inheritComponent: 'div',
       render,
-      mount: localizedMount,
+      wrapMount: wrapPickerMount,
       muiName: 'MuiMonthPicker',
       refInstanceof: window.HTMLDivElement,
       // cannot test reactTestRenderer because of required context

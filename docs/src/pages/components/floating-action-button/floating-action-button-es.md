@@ -21,9 +21,11 @@ Sólo usa un FAB si es la forma más adecuada de presentar la acción principal 
 
 ## Tamaño
 
-Usa el `tamaño` para botones de acción flotante más grandes o más pequeños.
+By default, the size is `large`. Use the `size` prop for smaller floating action buttons.
 
 {{"demo": "pages/components/floating-action-button/FloatingActionButtonSize.js"}}
+
+{{"demo": "pages/components/floating-action-button/FloatingActionButtonExtendedSize.js"}}
 
 ## Animación
 

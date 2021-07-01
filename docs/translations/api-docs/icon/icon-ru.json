@@ -6,7 +6,8 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "fontSize": "The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size."
+    "fontSize": "The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

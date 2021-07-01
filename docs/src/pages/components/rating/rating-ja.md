@@ -1,5 +1,5 @@
 ---
-title: React Rating component
+title: Reactレーティングコンポーネント
 components: レート
 githubLabel: 'component: Rating'
 waiAria: 'https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating'
@@ -7,11 +7,11 @@ waiAria: 'https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating'
 
 # レート
 
-<p class="description">Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.</p>
+<p class="description">レーティングコンポーネントは、ユーザーの意見や評価を反映するためのコンポーネントです。</p>
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Basic rating
+## 基本のレーティングコンポーネント
 
 {{"demo": "pages/components/rating/BasicRating.js"}}
 
@@ -35,9 +35,15 @@ For larger or smaller ratings use the `size` prop.
 
 ## Customized rating
 
-コンポーネントのカスタマイズの例を次に示します。 詳細については、 [overrides documentation page](/customization/how-to-customize/)を参照してください。
+コンポーネントのカスタマイズの例を次に示します。 詳細については、 [こちら](/customization/how-to-customize/)を参照してください。
 
 {{"demo": "pages/components/rating/CustomizedRating.js"}}
+
+## Radio group
+
+The rating is implemented with a radio group, set `highlightSelectedOnly` to restore the natural behavior.
+
+{{"demo": "pages/components/rating/RadioGroupRating.js"}}
 
 ## アクセシビリティ
 

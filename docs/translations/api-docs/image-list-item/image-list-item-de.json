@@ -5,7 +5,8 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "cols": "Width of the item in number of grid columns.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "rows": "Height of the item in number of grid rows."
+    "rows": "Height of the item in number of grid rows.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>."
   },
   "classDescriptions": {
     "root": {
@@ -24,6 +25,16 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"woven\"</code>"
+    },
+    "masonry": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"masonry\"</code>"
+    },
+    "quilted": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>variant=\"quilted\"</code>"
     }
   }
 }

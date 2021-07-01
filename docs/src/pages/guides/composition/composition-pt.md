@@ -4,7 +4,7 @@
 
 ## Encapsulando componentes
 
-Para fornecer o máximo de flexibilidade e desempenho, precisamos de uma maneira de conhecer a natureza dos elementos filhos que um componente recebe. Para resolver esse problema, quando necessário, identificamos alguns dos componentes com uma propriedade estática `muiName`.
+Para fornecer o máximo de flexibilidade e desempenho, precisamos de uma maneira de conhecer a natureza dos elementos filhos que um componente recebe. To solve this problem, we tag some of the components with a `muiName` static property when needed.
 
 Você pode, no entanto, precisar encapsular um componente para melhorá-lo, o que pode entrar em conflito com a solução `muiName`. Se você encapsular um componente, verifique se ele tem esta propriedade estática definida.
 
@@ -73,16 +73,19 @@ function ListItemLink(props) {
 A solução é simples: **evite funções em linha e passe um componente estático para a propriedade `component`**. Vamos mudar o componente `ListItemLink` para que `CustomLink` sempre referencie o mesmo componente:
 
 ```tsx
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
 function ListItemLink(props) {
   const { icon, primary, to } = props;
 
   const CustomLink = React.useMemo(
     () =>
-      React.forwardRef((linkProps, ref) => (
-        <Link ref={ref} to={to} {...linkProps} />
-      )),
+      React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(function Link(
+        linkProps,
+        ref,
+      ) {
+        return <Link ref={ref} to={to} {...linkProps} />;
+      }),
     [to],
   );
 
@@ -112,22 +115,6 @@ import { Link } from 'react-router-dom';
 ### Usando TypeScript
 
 Você pode encontrar os detalhes no [guia TypeScript](/guides/typescript/#usage-of-component-prop).
-
-## Bibliotecas de roteamento
-
-A integração com bibliotecas de roteamento de terceiros é resolvida com a propriedade `component`. O comportamento é idêntico à descrição da propriedade acima. Aqui estão algumas demonstrações com [react-router-dom](https://github.com/ReactTraining/react-router). Elas cobrem os componentes Button, Link e List. Você pode aplicar a mesma estratégia com todos os componentes (BottomNavigation, Card, etc.).
-
-### Button
-
-{{"demo": "pages/guides/composition/ButtonRouter.js"}}
-
-### Link
-
-{{"demo": "pages/guides/composition/LinkRouter.js"}}
-
-### Lista
-
-{{"demo": "pages/guides/composition/ListRouter.js"}}
 
 ## Advertência com refs
 

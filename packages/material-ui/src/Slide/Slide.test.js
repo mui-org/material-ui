@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy, stub, useFakeTimers } from 'sinon';
-import { createClientRender, createMount, describeConformance } from 'test/utils';
+import { createClientRender, describeConformance } from 'test/utils';
 import { createTheme } from '@material-ui/core/styles';
 import { Transition } from 'react-transition-group';
 import Slide from '@material-ui/core/Slide';
@@ -10,7 +10,7 @@ import { useForkRef } from '../utils';
 
 describe('<Slide />', () => {
   const render = createClientRender();
-  const mount = createMount();
+
   const defaultProps = {
     in: true,
     children: <div id="testChild" />,
@@ -24,7 +24,6 @@ describe('<Slide />', () => {
     () => ({
       classes: {},
       inheritComponent: Transition,
-      mount,
       refInstanceof: window.HTMLDivElement,
       skip: [
         'componentProp',

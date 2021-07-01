@@ -1,6 +1,6 @@
 {
   "name": "@material-ui/core",
-  "version": "5.0.0-alpha.35",
+  "version": "5.0.0-beta.0",
   "private": false,
   "author": "Material-UI Team",
   "description": "Quickly build beautiful React apps. Material-UI is a simple and customizable component library to build faster, beautiful, and more accessible React applications. Follow your own design system, or start with Material Design.",
@@ -60,12 +60,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@material-ui/private-theming": "5.0.0-alpha.35",
-    "@material-ui/styled-engine": "5.0.0-alpha.34",
-    "@material-ui/system": "5.0.0-alpha.35",
+    "@material-ui/system": "5.0.0-beta.0",
     "@material-ui/types": "6.0.1",
-    "@material-ui/unstyled": "5.0.0-alpha.35",
-    "@material-ui/utils": "5.0.0-alpha.35",
+    "@material-ui/unstyled": "5.0.0-alpha.39",
+    "@material-ui/utils": "5.0.0-beta.0",
     "@popperjs/core": "^2.4.4",
     "@types/react-transition-group": "^4.2.0",
     "clsx": "^1.0.4",

@@ -16,19 +16,39 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#radiobutton'
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## RadioGroup 单选框组
+## Radio group
 
 `RadioGroup` 适用于一组 `Radio`，它提供相对简单的 API 并且能够使用键盘对该 RadioGroup 进行控制。
 
 {{"demo": "pages/components/radio-buttons/RadioButtonsGroup.js"}}
 
-要横向布置按钮，请将 `row` 属性设置为：`<RadioGroup row />`。
+### 方向
+
+To lay out the buttons horizontally, set the `row` prop:
+
+{{"demo": "pages/components/radio-buttons/RowRadioButtonsGroup.js"}}
+
+### Controlled
+
+You can control the radio with the `value` and `onChange` props:
+
+{{"demo": "pages/components/radio-buttons/ControlledRadioButtonsGroup.js"}}
 
 ## Standalone radio buttons 独立的单选框按钮
 
 `Radio` 也可以单独使用，无需额外的 RadioGroup wrapper。
 
 {{"demo": "pages/components/radio-buttons/RadioButtons.js"}}
+
+## Size 大小
+
+Use the `size` prop or customize the font size of the svg icons to change the size of the radios.
+
+{{"demo": "pages/components/radio-buttons/SizeRadioButtons.js"}}
+
+## Color 颜色
+
+{{"demo": "pages/components/radio-buttons/ColorRadioButtons.js"}}
 
 ## 标签放置
 
@@ -60,11 +80,11 @@ import { useRadioGroup } from '@material-ui/core/RadioGroup';
 
 #### 返回结果
 
-`value` (_Object_):
+`value` (_object_):
 
-- `value.name` (_String_ [optional])：用于引用控件值的名称。
-- `value.onChange` (_Void_ [optional])：当单选框被选中时会触发的回调。
-- `value.value` (_Any_ [optional])：所被选定的单选框的值。
+- `value.name` (_string_ [optional])：用于引用控件值的名称。
+- `value.onChange` (_func_ [optional]): Callback fired when a radio button is selected.
+- `value.value` (_any_ [optional])：所被选定的单选框的值。
 
 #### 示例
 
@@ -82,7 +102,7 @@ import { useRadioGroup } from '@material-ui/core/RadioGroup';
 - 如果无法使用标签，您则必须在输入组件中直接添加属性。 在这种情况下，您可以经由 `inputProps` 属性，来附着一些额外的属性（例如 `arial-label`，`aria-labelledby`，`title`）。
 
 ```jsx
-<RadioButton
+<Radio
   value="radioA"
   inputProps={{
     'aria-label': 'Radio A',

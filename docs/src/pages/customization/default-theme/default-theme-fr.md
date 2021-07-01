@@ -8,7 +8,7 @@ Explore the default theme object:
 
 {{"demo": "pages/customization/default-theme/DefaultTheme.js", "hideToolbar": true, "bg": "inline"}}
 
-> Tip: you can play with the documentation theme object in your browser console, as the `theme` variable is exposed on all the documentation pages. Please note that **the documentation site is using a custom theme**.
+> Tip: you can play with the documentation theme object in your browser console, as the `theme` variable is exposed on all the documentation pages. Veuillez noter que **la documentation du site utilise un thème personnalisé**.
 
 <!-- #default-branch-switch -->
 

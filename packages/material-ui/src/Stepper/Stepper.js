@@ -23,11 +23,11 @@ const StepperRoot = styled('div', {
   slot: 'Root',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
-      ...styles.root,
-      ...styles[styleProps.orientation],
-      ...(styleProps.alternativeLabel && styles.alternativeLabel),
-    };
+    return [
+      styles.root,
+      styles[styleProps.orientation],
+      styleProps.alternativeLabel && styles.alternativeLabel,
+    ];
   },
 })(({ styleProps }) => ({
   display: 'flex',

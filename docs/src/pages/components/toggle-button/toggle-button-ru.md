@@ -17,7 +17,7 @@ To emphasize groups of related [Toggle buttons](https://material.io/components/b
 
 С исключительным выделением выбор одной опции снимает выделение с остальных.
 
-В этом примере кнопки переключения представляют варианты выравнивания текста left, center, right и fully justified text (отключено), с возможностью выбора лишь одного элемента.
+In this example, text justification toggle buttons present options for left, center, right, and fully justified text (disabled), with only one item available for selection at a time.
 
 {{"demo": "pages/components/toggle-button/ToggleButtons.js"}}
 
@@ -27,11 +27,15 @@ To emphasize groups of related [Toggle buttons](https://material.io/components/b
 
 {{"demo": "pages/components/toggle-button/ToggleButtonsMultiple.js"}}
 
-## Размеры
+## Size
 
-Fancy larger or smaller buttons? Use the `size` property.
+For larger or smaller buttons, use the `size` prop.
 
 {{"demo": "pages/components/toggle-button/ToggleButtonSizes.js"}}
+
+## Цвет
+
+{{"demo": "pages/components/toggle-button/ColorToggleButton.js"}}
 
 ## Vertical buttons
 
@@ -65,7 +69,7 @@ const handleAlignment = (event, newAlignment) => {
 
 ## Customized toggle button
 
-Ниже находится пример кастомизации компонента. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Ниже находится пример кастомизации компонента. Вы можете узнать об этом больше [в документации по переопределению свойств](/customization/how-to-customize/).
 
 {{"demo": "pages/components/toggle-button/CustomizedDividers.js", "bg": true}}
 

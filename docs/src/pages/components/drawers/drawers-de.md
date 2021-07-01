@@ -68,7 +68,7 @@ More details in the [Modal performance section](/components/modal/#performance).
 
 ## Responsive Navigationsleiste
 
-Die `Hidden` Responsive-Hilfskomponente ermöglicht die Anzeige verschiedener Leistentypen in Abhängigkeit von der Bildschirmbreite. Eine `temporäre` Leiste wird für kleine Bildschirme angezeigt, während eine `permanente` Leiste für breitere Bildschirme angezeigt wird.
+You can use the `temporary` variant to display a drawer for small screens and `permanent` for a drawer for wider screens.
 
 {{"demo": "pages/components/drawers/ResponsiveDrawer.js", "iframe": true}}
 

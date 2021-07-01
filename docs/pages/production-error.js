@@ -1,20 +1,11 @@
 import * as React from 'react';
 import MarkdownDocs from 'docs/src/modules/components/MarkdownDocs';
-import { prepareMarkdown } from 'docs/src/modules/utils/parseMarkdown';
+import {
+  docs,
+  demos,
+  requireDemo,
+} from '!@material-ui/markdown/loader!docs/src/pages/production-error/index.md';
 
-const pageFilename = 'production-error';
-const requireDemo = require.context('docs/src/pages/production-error', false, /\.js$/);
-const requireRaw = require.context(
-  '!raw-loader!../src/pages/production-error',
-  false,
-  /\.(js|md)$/,
-);
-
-export default function Page({ demos, docs }) {
+export default function Page() {
   return <MarkdownDocs demos={demos} disableAd docs={docs} requireDemo={requireDemo} />;
 }
-
-Page.getInitialProps = () => {
-  const { demos, docs } = prepareMarkdown({ pageFilename, requireRaw });
-  return { demos, docs };
-};

@@ -1,4 +1,4 @@
-import createSvgIcon from './utils/createSvgIcon.js';
+import createSvgIcon from './utils/createSvgIcon';
 
 export default createSvgIcon(
   {{{paths}}}

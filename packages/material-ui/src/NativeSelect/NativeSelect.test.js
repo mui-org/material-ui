@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { createTheme, ThemeProvider, styled } from '@material-ui/core/styles';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import NativeSelect, { nativeSelectClasses as classes } from '@material-ui/core/NativeSelect';
 import Input, { inputClasses } from '@material-ui/core/Input';
 
 describe('<NativeSelect />', () => {
-  const mount = createMount();
   const render = createClientRender();
   const defaultProps = {
     input: <Input />,
@@ -23,7 +22,6 @@ describe('<NativeSelect />', () => {
   describeConformanceV5(<NativeSelect {...defaultProps} />, () => ({
     classes,
     inheritComponent: Input,
-    mount,
     render,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiNativeSelect',

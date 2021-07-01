@@ -22,11 +22,7 @@ const ToolbarRoot = styled('div', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(!styleProps.disableGutters && styles.gutters),
-      ...styles[styleProps.variant],
-    };
+    return [styles.root, !styleProps.disableGutters && styles.gutters, styles[styleProps.variant]];
   },
 })(
   ({ theme, styleProps }) => ({

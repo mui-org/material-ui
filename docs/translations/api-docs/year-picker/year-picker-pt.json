@@ -4,5 +4,9 @@
     "onYearChange": "Callback firing on year change @DateIOType.",
     "shouldDisableYear": "Disable specific years dynamically. Works like <code>shouldDisableDate</code> but for year selection view @DateIOType."
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "root": {
+      "description": "Estilos aplicados ao elemento raiz."
+    }
+  }
 }

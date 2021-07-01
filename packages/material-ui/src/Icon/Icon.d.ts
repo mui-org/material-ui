@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { SxProps } from '@material-ui/system';
 import { OverridableStringUnion } from '@material-ui/types';
-import { PropTypes } from '..';
 import { Theme } from '../styles';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { IconClasses } from './iconClasses';
@@ -31,7 +30,15 @@ export interface IconTypeMap<P = {}, D extends React.ElementType = 'span'> {
      * @default 'inherit'
      */
     color?: OverridableStringUnion<
-      Exclude<PropTypes.Color, 'default'> | 'action' | 'disabled' | 'error',
+      | 'inherit'
+      | 'action'
+      | 'disabled'
+      | 'primary'
+      | 'secondary'
+      | 'error'
+      | 'info'
+      | 'success'
+      | 'warning',
       IconPropsColorOverrides
     >;
     /**
@@ -62,7 +69,9 @@ export interface IconTypeMap<P = {}, D extends React.ElementType = 'span'> {
  */
 declare const Icon: OverridableComponent<IconTypeMap> & { muiName: string };
 
-export type IconProps<D extends React.ElementType = IconTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<IconTypeMap<P, D>, D>;
+export type IconProps<
+  D extends React.ElementType = IconTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<IconTypeMap<P, D>, D>;
 
 export default Icon;

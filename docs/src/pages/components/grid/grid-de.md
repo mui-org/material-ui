@@ -28,14 +28,6 @@ Das Rastersystem wird mit der `Grid-` Komponente implementiert:
 
 Wenn Sie **neu sind oder Flexbox nicht gut kennen**, empfehlen wir Ihnen, dies zu lesen: [CSS-Tricks Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/).
 
-## Abstände
-
-Das responsive Raster konzentriert sich auf konsistente Abstandsbreiten und nicht auf die Spaltenbreite. Die Ränder und Spalten des Materialdesigns folgen einem Grundraster aus **8px** Quadraten. The `spacing` prop value is an integer between 0 and 10 inclusive. Standardmäßig folgt der Abstand zwischen zwei Rasterelementen einer linearen Funktion: `output(spacing) = spacing * 8px`, z. B. `spacing={2}` erzeugt eine Lücke von 16px.
-
-Diese Ausgabetransformationsfunktion kann durch [Verwendung des Themes](/customization/spacing/) angepasst werden.
-
-{{"demo": "pages/components/grid/SpacingGrid.js", "bg": true}}
-
 ## Fluides Raster
 
 Flüssige Raster verwenden Spalten, die den Inhalt skalieren und verkleinern. A fluid grid's layout can use breakpoints to determine if the layout needs to change dramatically.
@@ -46,15 +38,50 @@ Column widths are integer values between 1 and 12; they apply at any breakpoint 
 
 A value given to a breakpoint applies to all the other breakpoints wider than it (unless overridden, as you can read later in this page). For example, `xs={12}` sizes a component to occupy the whole viewport width regardless of its size.
 
-{{"demo": "pages/components/grid/CenteredGrid.js", "bg": true}}
+{{"demo": "pages/components/grid/BasicGrid.js", "bg": true}}
 
 ### Raster mit Rasterpunkten
 
-Für einige Spalten sind mehrere Breiten definiert, wodurch sich das Layout am definierten Rasterpunkten ändert. Width values given to larger breakpoints override those given to smaller breakpoints.
+Components may have multiple widths defined, causing the layout to change at the defined breakpoint. Width values given to larger breakpoints override those given to smaller breakpoints.
 
 For example, `xs={12} sm={6}` sizes a component to occupy half of the viewport width (6 columns) when viewport width is [600 or more pixels](/customization/breakpoints/#default-breakpoints). For smaller viewports, the component fills all 12 available columns.
 
 {{"demo": "pages/components/grid/FullWidthGrid.js", "bg": true}}
+
+## Abstände
+
+To control space between children, use the `spacing` prop. The spacing value can be any positive number, including decimals and any string. The prop is converted into a CSS property using the [`theme.spacing()`](/customization/spacing/) helper.
+
+{{"demo": "pages/components/grid/SpacingGrid.js", "bg": true}}
+
+## Responsive values
+
+You can switch the props' value based on the active breakpoint. For instance, we can implement the ["recommended"](https://material.io/design/layout/responsive-layout-grid.html) responsive layout grid of Material Design.
+
+{{"demo": "pages/components/grid/ResponsiveGrid.js", "bg": true}}
+
+Responsive values is supported by:
+
+- `columns`
+- `columnSpacing`
+- `direction`
+- `rowSpacing`
+- `spacing`
+- all the [other props](#system-props) of the system
+
+> ⚠️ When using a responsive `columns` prop, each grid item needs its corresponding breakpoint. For instance, this is not working. The grid item misses the value for `md`:
+> 
+> ```jsx
+> <Grid container columns={{ xs: 4, md: 12 }}>
+>    <Grid item xs={2} />
+> > </Grid>
+> ```
+
+### Row & column spacing
+
+The `rowSpacing` and `columnSpacing` props allow for specifying the row and column gaps independently. It's similar to the `row-gap` and `column-gap` properties of [CSS Grid](/system/grid/#row-gap-amp-column-gap).
+
+{{"demo": "pages/components/grid/RowAndColumnSpacing.js", "bg": true}}
 
 ## Interaktive Liste
 
@@ -64,21 +91,21 @@ Nachfolgend finden Sie eine interaktive Demo, mit der Sie die visuellen Ergebnis
 
 ## Automatisches Layout
 
-The Auto-layout makes the *items* equitably share the available space. That also means you can set the width of one *item* and the others will automatically resize around it.
+The Auto-layout makes the _items_ equitably share the available space. That also means you can set the width of one _item_ and the others will automatically resize around it.
 
 {{"demo": "pages/components/grid/AutoGrid.js", "bg": true}}
 
 ## Komplexes Raster
 
-Die folgende Demo folgt nicht der Material Design-Spezifikation, sondern zeigt, wie das Raster zum Erstellen komplexer Layouts verwendet werden kann.
+The following demo doesn't follow the Material Design guidelines, but illustrates how the grid can be used to build complex layouts.
 
 {{"demo": "pages/components/grid/ComplexGrid.js", "bg": true}}
 
 ## Verschachteltes Raster
 
-The `container` and `item` properties are two independent booleans. Sie können kombiniert werden.
+The `container` and `item` props are two independent booleans; they can be combined to allow a Grid component to be both a flex container and child.
 
-> Ein Flex **container** ist die Box, die von einem Element mit einer berechneten Anzeige von `flex` oder `Iinline-flex`. In-Flow-Kinder eines Flex-Containers heißen Flex **Elemente** und werden mit dem Flex-Layout-Modell angeordnet.
+> A flex **container** is the box generated by an element with a computed display of `flex` or `inline-flex`. In-flow children of a flex container are called flex **items** and are laid out using the flex layout model.
 
 https://www.w3.org/TR/css-flexbox-1/#box-model
 
@@ -92,26 +119,17 @@ https://www.w3.org/TR/css-flexbox-1/#box-model
 
 If you need to do such, remove one of the props.
 
+## Columns
+
+You can change the default number of columns (12) with the `columns` prop.
+
+{{"demo": "pages/components/grid/ColumnsGrid.js", "bg": true}}
+
 ## Einschränkungen
 
 ### Negative Abstände
 
-Es gibt eine Einschränkung beim negativen Rand, den wir verwenden, um den Abstand zwischen den Elementen zu implementieren. Ein horizontaler Bildlauf wird angezeigt, wenn ein negativer Rand weiter als `<body>` geht. Es gibt 3 verfügbare Problemumgehungen:
-
-1. Nicht die Abstands-Funktion benutzen und den Abstand in Anzeigeraum `spacing={0}` (Standard) setzen.
-2. Anwenden von Paddings auf das übergeordnete Element, wobei mindestens der halbe Abstand auf das untergeordnete Element angewendet wird:
-
-   ```jsx
-   <body>
-    <div style={{ padding: 20 }}>
-      <Grid container spacing={5}>
-        //...
-       </Grid>
-    </div>
-  </body>
-   ```
-
-3. Hinzufügen von `overflow-x: hidden;` zum Elternteil.
+The spacing between items is implemented with a negative margin. This might lead to unexpected behaviors. For instance, to apply a background color, you need to apply `display: flex;` to the parent.
 
 ### white-space: nowrap;
 
@@ -122,7 +140,7 @@ The initial setting on flex items is `min-width: auto`. It's causing a positioni
   <Typography noWrap>
 ```
 
-In order for the item to stay within the container you need to set `min-width: 0`. In order for the item to stay within the container you need to set `min-width: 0`.
+In order for the item to stay within the container you need to set `min-width: 0`. In practice, you can set the `zeroMinWidth` prop:
 
 ```jsx
 <Grid item xs zeroMinWidth>
@@ -139,6 +157,14 @@ They define the number of grids the component will use for a given breakpoint. T
 
 ## CSS-Raster Layout
 
-Die Material-UI bietet selbst keine CSS-Grid-Funktionalität. Wie Sie jedoch unten sehen, können Sie CSS-Grid einfach zum Layout Ihrer Seiten hinzufügen.
+The `Grid` component is using CSS flexbox internally. But as seen below, you can easily use [the system](/system/grid/) and CSS Grid to layout your pages.
 
 {{"demo": "pages/components/grid/CSSGrid.js", "bg": true}}
+
+## System props
+
+As a CSS utility component, the `Grid` supports all [`system`](/system/properties/) properties. You can use them as props directly on the component. For instance, a padding:
+
+```jsx
+<Grid item p={2}>
+```

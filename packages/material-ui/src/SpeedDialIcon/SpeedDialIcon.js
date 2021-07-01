@@ -25,18 +25,17 @@ const SpeedDialIconRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      [`& .${speedDialIconClasses.icon}`]: {
-        ...styles.icon,
-        ...(styleProps.open && styles.iconOpen),
-        ...(styleProps.open && styleProps.openIcon && styles.iconWithOpenIconOpen),
+    return [
+      { [`& .${speedDialIconClasses.icon}`]: styles.icon },
+      { [`& .${speedDialIconClasses.icon}`]: styleProps.open && styles.iconOpen },
+      {
+        [`& .${speedDialIconClasses.icon}`]:
+          styleProps.open && styleProps.openIcon && styles.iconWithOpenIconOpen,
       },
-      [`& .${speedDialIconClasses.openIcon}`]: {
-        ...styles.openIcon,
-        ...(styleProps.open && styles.openIconOpen),
-      },
-      ...styles.root,
-    };
+      { [`& .${speedDialIconClasses.openIcon}`]: styles.openIcon },
+      { [`& .${speedDialIconClasses.openIcon}`]: styleProps.open && styles.openIconOpen },
+      styles.root,
+    ];
   },
 })(({ theme, styleProps }) => ({
   height: 24,
@@ -69,7 +68,7 @@ const SpeedDialIcon = React.forwardRef(function SpeedDialIcon(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiSpeedDialIcon' });
   const { className, icon: iconProp, open, openIcon: openIconProp, ...other } = props;
 
-  const styleProps = { ...props };
+  const styleProps = props;
   const classes = useUtilityClasses(styleProps);
 
   function formatIcon(icon, newClassName) {

@@ -7,7 +7,8 @@
     "icon": "Override the default label of the step icon.",
     "optional": "The optional node to display.",
     "StepIconComponent": "The component to render in place of the <a href=\"/api/step-icon/\"><code>StepIcon</code></a>.",
-    "StepIconProps": "Props applied to the <a href=\"/api/step-icon/\"><code>StepIcon</code></a> element."
+    "StepIconProps": "Props applied to the <a href=\"/api/step-icon/\"><code>StepIcon</code></a> element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {

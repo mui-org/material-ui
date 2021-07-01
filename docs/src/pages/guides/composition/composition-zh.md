@@ -4,7 +4,7 @@
 
 ## 封装组件
 
-我们需要一种了解组件接收的子元素的本质的方式，这样可以尽可能提供最大的灵活性和最好的性能。 我们会用 `muiName` 静态属性来标记一些我们的组件，这样能够解决这个问题。
+我们需要一种了解组件接收的子元素的本质的方式，这样可以尽可能提供最大的灵活性和最好的性能。 To solve this problem, we tag some of the components with a `muiName` static property when needed.
 
 但是，您仍可能需要封装一个组件以增强它的功能，而这可能与 `muiName` 的解决方案相冲突。 若你要封装一个组件，那么得验证该组件是否具有此静态属性的集合。
 
@@ -74,16 +74,19 @@ function ListItemLink(props) {
 解决方案很简单： **避免内联函数，取而代之的是将一个静态组件传递给 `component` 属性**。 我们可以改变 `ListItemLink` 组件，这样一来 `CustomLink` 总是引用相同的组件：
 
 ```tsx
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
 function ListItemLink(props) {
   const { icon, primary, to } = props;
 
   const CustomLink = React.useMemo(
     () =>
-      React.forwardRef((linkProps, ref) => (
-        <Link ref={ref} to={to} {...linkProps} />
-      )),
+      React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(function Link(
+        linkProps,
+        ref,
+      ) {
+        return <Link ref={ref} to={to} {...linkProps} />;
+      }),
     [to],
   );
 
@@ -113,22 +116,6 @@ import { Link } from 'react-router-dom';
 ### 使用 TypeScript
 
 您可以在 [TypeScript 指南](/guides/typescript/#usage-of-component-prop) 中找到详细信息 。
-
-## 路由库
-
-通过 `component` 属性实现了与第三方路由库的整合。 该行为与上面的属性描述完全相同。 以下是一些 [react-router-dom](https://github.com/ReactTraining/react-router) 的示例： 这几个示例涵盖了按钮，链接和列表组件。 你可以对所有的组件（BottomNavigation，Card 等）使用同样的方式来整合它。
-
-### Button
-
-{{"demo": "pages/guides/composition/ButtonRouter.js"}}
-
-### Link
-
-{{"demo": "pages/guides/composition/LinkRouter.js"}}
-
-### Lists（列表）
-
-{{"demo": "pages/guides/composition/ListRouter.js"}}
 
 ## 使用 refs 时的一些注意事项
 
@@ -167,7 +154,7 @@ import { Link } from 'react-router-dom';
 <Tooltip title="Hello, again."><SomeContent /></Tooltip>;
 ```
 
-要确定你使用的 Material-UI 组件是否具有此要求，请查阅该组件的 props API 文档。 如果您需要转递 refs，描述会关联到此章节。
+要确定您使用的Material-UI组件是否具有此需求，请查阅该组件的props API文档。 如果您需要转递 refs，描述会关联到此章节。
 
 ### 使用 StrictMode 的注意事项
 

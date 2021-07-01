@@ -12,7 +12,6 @@
     "inputProps": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes\">Attributes</a> applied to the <code>input</code> element. When <code>native</code> is <code>true</code>, the attributes are applied on the <code>select</code> element.",
     "label": "See <a href=\"/api/outlined-input/#props\">OutlinedInput#label</a>",
     "labelId": "The ID of an element that acts as an additional label. The Select will be labelled by the additional label and the selected value.",
-    "labelWidth": "See <a href=\"/api/outlined-input/#props\">OutlinedInput#label</a>",
     "MenuProps": "Props applied to the <a href=\"/api/menu/\"><code>Menu</code></a> element.",
     "multiple": "If <code>true</code>, <code>value</code> must be an array and the menu will support multiple selections.",
     "native": "If <code>true</code>, the component uses a native <code>select</code> element.",
@@ -22,13 +21,13 @@
     "open": "Control <code>select</code> open state. You can only use it when the <code>native</code> prop is <code>false</code> (default).",
     "renderValue": "Render the selected value. You can only use it when the <code>native</code> prop is <code>false</code> (default).<br><br><strong>Signature:</strong><br><code>function(value: any) =&gt; ReactNode</code><br><em>value:</em> The <code>value</code> provided to the component.",
     "SelectDisplayProps": "Props applied to the clickable div element.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The <code>input</code> value. Providing an empty string will select no options. This prop is required when the <code>native</code> prop is <code>false</code> (default). Set to an empty string <code>&#39;&#39;</code> if you don&#39;t want any of the available options to be selected.<br>If the value is an object it must have reference equality with the option in order to be selected. If the value is not an object, the string representation must match with the string representation of the option in order to be selected.",
     "variant": "The variant to use."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the select component `root` class"
+      "description": "Styles applied to the root element."
     },
     "select": {
       "description": "Styles applied to {{nodeName}}.",
@@ -44,9 +43,10 @@
       "nodeName": "the select component",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
-    "selectMenu": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the select component `selectMenu` class"
+    "standard": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the select component",
+      "conditions": "<code>variant=\"standard\"</code>"
     },
     "disabled": {
       "description": "Pseudo-class applied to {{nodeName}}.",
@@ -70,6 +70,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the icon component",
       "conditions": "<code>variant=\"outlined\"</code>"
+    },
+    "iconStandard": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the icon component",
+      "conditions": "<code>variant=\"standard\"</code>"
     },
     "nativeInput": {
       "description": "Styles applied to {{nodeName}}.",

@@ -14,6 +14,8 @@ _(Resize the window to see the responsive breakpoints)_
 
 ## Installation
 
+<!-- #default-branch-switch -->
+
 ```jsx
 // usando npm
 npm install @material-ui/system
@@ -21,6 +23,18 @@ npm install @material-ui/system
 // usando yarn
 yarn add @material-ui/system
 ```
+
+Or if you want to use `styled-components` as a styling engine:
+
+```sh
+// with npm
+npm install @material-ui/system@next @material-ui/styled-engine-sc@next styled-components
+
+// with yarn
+yarn add @material-ui/system@next @material-ui/styled-engine-sc@next styled-components
+```
+
+Take a look at the [Styled Engine guide](/guides/styled-engine/) for more information about how to configure `styled-components` as the style engine.
 
 ## Why use the system?
 
@@ -97,35 +111,15 @@ return (
 ```jsx
 <Box
   sx={{
-    bgcolor: 'background.paper',
-    boxShadow: 1,
-    borderRadius: 1,
-    p: 2,
-    minWidth: 300,
+    boxShadow: 1, // theme.shadows[1]
+    color: 'primary.main', // theme.palette.primary.main
+    m: 1, // margin: theme.spacing(1)
+    p: {
+      xs: 1, // [theme.breakpoints.up('xs')]: : { padding: theme.spacing(1) }
+    },
+    zIndex: 'tooltip', // theme.zIndex.tooltip
   }}
 >
-  <Box sx={{ color: 'text.secondary' }}>Sessions</Box>
-  <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-    98.3 K
-  </Box>
-  <Box
-    component={TrendingUpIcon}
-    sx={{ color: 'success.dark', fontSize: 16, verticalAlign: 'sub' }}
-  />
-  <Box
-    sx={{
-      color: 'success.dark',
-      display: 'inline',
-      fontWeight: 'medium',
-      mx: 0.5,
-    }}
-  >
-    18.77%
-  </Box>
-  <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 12 }}>
-    vs last week
-  </Box>
-</Box>
 ```
 
 ### Problem solved
@@ -183,9 +177,9 @@ Cons:
 
 ### API tradeoff
 
-In previous versions, the system properties were supported as props on the `Box` component. From v5, however, the system provides a superset of CSS (supports all CSS properties/selectors in addition to custom ones), and is available in all components, so selectors cannot be efficiently mapped to props without potential naming conflicts. Instead, all system properties are available under one prop `sx`.
+Additionally, having the system under one prop helps to easily differentiate props defined for the sole purpose of CSS utilities, vs. those for component business logic. It's important for the **separation of concerns**. For instance, a `color` prop on a button impacts multiple states (hover, focus, etc.), not to be confused with the color CSS property.
 
-Additionally, having the system under one prop helps to easily differentiate props defined for the sole purpose of CSS utilities, vs. those for component business logic.
+Only the `Box`, `Stack`, `Typography`, and `Grid` components accept the system properties as _props_ for the above reason. These components are designed to solve CSS problems, they are CSS component utilities.
 
 ## Utilisation
 
@@ -200,15 +194,35 @@ There are lots of shorthands available for the CSS properties. These are documen
 ```jsx
 <Box
   sx={{
-    boxShadow: 1, // theme.shadows[1]
-    color: 'primary.main', // theme.palette.primary.main
-    m: 1, // margin: theme.spacing(1)
-    p: {
-      xs: 1, // [theme.breakpoints.up('xs')]: : { padding: theme.spacing(1) }
-    },
-    zIndex: 'tooltip', // theme.zIndex.tooltip
+    bgcolor: 'background.paper',
+    boxShadow: 1,
+    borderRadius: 1,
+    p: 2,
+    minWidth: 300,
   }}
 >
+  <Box sx={{ color: 'text.secondary' }}>Sessions</Box>
+  <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
+    98.3 K
+  </Box>
+  <Box
+    component={TrendingUpIcon}
+    sx={{ color: 'success.dark', fontSize: 16, verticalAlign: 'sub' }}
+  />
+  <Box
+    sx={{
+      color: 'success.dark',
+      display: 'inline',
+      fontWeight: 'medium',
+      mx: 0.5,
+    }}
+  >
+    18.77%
+  </Box>
+  <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 12 }}>
+    vs last week
+  </Box>
+</Box>
 ```
 
 These shorthands are **optional**, they are great to save time when writing styles but it can be overwhelming to learn new custom APIs. You might want to skip this part and bet on CSS, it has been standardized for decades, head to the [next section](#superset-of-css).
@@ -262,7 +276,7 @@ If you would like to have responsive values for a CSS property, you can use the 
 
 #### 1. Breakpoints as an object
 
-The first option for defining breakpoints is to define them as an object, using the breakpoints as keys. Here is the previous example again, using the object syntax.
+The first option for defining breakpoints is to define them as an object, using the breakpoints as keys. Note that each breakpoint property matches the breakpoint and every larger breakpoint. For example, `width: { lg: 100 }` is equivalent to `theme.breakpoints.up('lg')`. Here is the previous example again, using the object syntax.
 
 {{"demo": "pages/system/basics/BreakpointsAsObject.js"}}
 
@@ -285,6 +299,23 @@ You can skip breakpoints with the `null` value:
 You can also specify your own custom breakpoints, and use them as keys when defining the breakpoints object. Here is an example of how to do that.
 
 ```jsx
+declare module "@material-ui/core/styles/createBreakpoints" {
+  interface BreakpointOverrides {
+    xs: false; // removes the `xs` breakpoint
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    tablet: true; // adds the `tablet` breakpoint
+    laptop: true;
+    desktop: true;
+  }
+}
+```
+
+If you are using TypeScript, you will also need to use [module augmentation](/guides/typescript/#customization-of-theme) for the theme to accept the above values.
+
+```ts
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -318,30 +349,13 @@ export default function CustomBreakpoints() {
 }
 ```
 
-If you are using TypeScript, you will also need to use [module augmentation](/guides/typescript/#customization-of-theme) for the theme to accept the above values.
-
-```ts
-declare module "@material-ui/core/styles/createBreakpoints" {
-  interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
-    sm: false;
-    md: false;
-    lg: false;
-    xl: false;
-    tablet: true; // adds the `tablet` breakpoint
-    laptop: true;
-    desktop: true;
-  }
-}
-```
-
 ### Theme getter
 
 If you wish to use the theme for a CSS property that is not supported natively by the system, you can use a function as the value, in which you can access the theme object.
 
 {{"demo": "pages/system/basics/ValueAsFunction.js"}}
 
-## Implementations
+## Implémentations
 
 The `sx` prop can be used in four different locations:
 

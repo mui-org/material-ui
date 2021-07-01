@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformance } from 'test/utils';
+import { createClientRender, describeConformance } from 'test/utils';
 import BackdropUnstyled, {
   backdropUnstyledClasses as classes,
 } from '@material-ui/unstyled/BackdropUnstyled';
 
 describe('<BackdropUnstyled />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformance(
@@ -17,7 +16,6 @@ describe('<BackdropUnstyled />', () => {
       classes,
       inheritComponent: 'div',
       render,
-      mount,
       refInstanceof: window.HTMLDivElement,
       testComponentPropWith: 'div',
     }),

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
-import { createMount, describeConformanceV5, fireEvent, createClientRender } from 'test/utils';
+import { describeConformanceV5, fireEvent, createClientRender } from 'test/utils';
 import TableFooter from '@material-ui/core/TableFooter';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -12,7 +12,6 @@ import TablePagination, {
 
 describe('<TablePagination />', () => {
   const noop = () => {};
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(
@@ -30,7 +29,7 @@ describe('<TablePagination />', () => {
         );
         return { container: container.firstChild.firstChild.firstChild, ...other };
       },
-      mount: (node) => {
+      wrapMount: (mount) => (node) => {
         const wrapper = mount(
           <table>
             <tbody>

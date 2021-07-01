@@ -1,58 +1,39 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-
-import { withStyles } from '@material-ui/styles';
 import Typography from '../components/Typography';
 
-const styles = (theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: theme.spacing(9),
-    marginBottom: theme.spacing(9),
-  },
-  button: {
-    border: '4px solid currentColor',
-    borderRadius: 0,
-    height: 'auto',
-    padding: theme.spacing(2, 5),
-  },
-  link: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-  buoy: {
-    width: 60,
-  },
-});
-
-function ProductSmokingHero(props) {
-  const { classes } = props;
-
+function ProductSmokingHero() {
   return (
-    <Container className={classes.root} component="section">
-      <Button className={classes.button}>
+    <Container
+      component="section"
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 9 }}
+    >
+      <Button
+        sx={{
+          border: '4px solid currentColor',
+          borderRadius: 0,
+          height: 'auto',
+          py: 2,
+          px: 5,
+        }}
+      >
         <Typography variant="h4" component="span">
           Got any questions? Need help?
         </Typography>
       </Button>
-      <Typography variant="subtitle1" className={classes.link}>
+      <Typography variant="subtitle1" sx={{ my: 3 }}>
         We are here to help. Get in touch!
       </Typography>
-      <img
+      <Box
+        component="img"
         src="/static/themes/onepirate/producBuoy.svg"
-        className={classes.buoy}
         alt="buoy"
+        sx={{ width: 60 }}
       />
     </Container>
   );
 }
 
-ProductSmokingHero.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ProductSmokingHero);
+export default ProductSmokingHero;

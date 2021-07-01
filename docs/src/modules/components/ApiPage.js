@@ -3,11 +3,15 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { exactProp } from '@material-ui/utils';
+import { styled } from '@material-ui/core/styles';
+import Alert from '@material-ui/core/Alert';
 import Typography from '@material-ui/core/Typography';
 import { useTranslate, useUserLanguage } from 'docs/src/modules/utils/i18n';
 import HighlightedCode from 'docs/src/modules/components/HighlightedCode';
 import MarkdownElement from 'docs/src/modules/components/MarkdownElement';
 import AppLayoutDocs from 'docs/src/modules/components/AppLayoutDocs';
+
+const Asterisk = styled('abbr')(({ theme }) => ({ color: theme.palette.error.main }));
 
 function PropsTable(props) {
   const { componentProps, propDescriptions } = props;
@@ -33,11 +37,11 @@ function PropsTable(props) {
                 <td align="left">
                   <span className={clsx('prop-name', propData.required ? 'required' : null)}>
                     {propName}
-                    {propData.required ? (
+                    {propData.required && (
                       <sup>
-                        <abbr title="required">*</abbr>
+                        <Asterisk title="required">*</Asterisk>
                       </sup>
-                    ) : null}
+                    )}
                   </span>
                 </td>
                 <td align="left">
@@ -49,12 +53,26 @@ function PropsTable(props) {
                 <td align="left">
                   {propDefault && <span className="prop-default">{propDefault}</span>}
                 </td>
-                <td
-                  align="left"
-                  dangerouslySetInnerHTML={{
-                    __html: propDescriptions[propName] || '',
-                  }}
-                />
+                <td align="left">
+                  {propData.deprecated && (
+                    <Alert severity="warning" sx={{ mb: 1, py: 0 }}>
+                      <strong>Deprecated</strong>
+                      {propData.deprecationInfo && ' - '}
+                      {propData.deprecationInfo && (
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: propData.deprecationInfo,
+                          }}
+                        />
+                      )}
+                    </Alert>
+                  )}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: propDescriptions[propName] || '',
+                    }}
+                  />
+                </td>
               </tr>
             )
           );
@@ -284,6 +302,7 @@ import { ${componentName} } from '${source}';`}
           </React.Fragment>
         )}
         <Heading hash="props" />
+        <p dangerouslySetInnerHTML={{ __html: spreadHint }} />
         <PropsTable componentProps={componentProps} propDescriptions={propDescriptions} />
         <br />
         {cssComponent && (
@@ -298,8 +317,6 @@ import { ${componentName} } from '${source}';`}
           </React.Fragment>
         )}
         <span dangerouslySetInnerHTML={{ __html: refHint }} />
-        <br />
-        <span dangerouslySetInnerHTML={{ __html: spreadHint }} />
         {inheritance && (
           <React.Fragment>
             <Heading hash="inheritance" level="h3" />

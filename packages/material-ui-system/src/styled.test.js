@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { createClientRender, screen } from 'test/utils';
-import { styled, createTheme } from '@material-ui/system';
-import { ThemeContext } from '@material-ui/styled-engine';
-
-const ThemeProvider = ThemeContext.Provider;
+import { styled, createTheme, ThemeProvider } from '@material-ui/system';
 
 describe('styled', () => {
   const render = createClientRender();
@@ -67,7 +64,7 @@ describe('styled', () => {
     });
 
     const { container } = render(
-      <ThemeProvider value={theme}>
+      <ThemeProvider theme={theme}>
         <Div>Test</Div>
       </ThemeProvider>,
     );
@@ -87,7 +84,7 @@ describe('styled', () => {
     });
 
     const { container } = render(
-      <ThemeProvider value={theme}>
+      <ThemeProvider theme={theme}>
         <Div>Test</Div>
       </ThemeProvider>,
     );
@@ -205,7 +202,7 @@ describe('styled', () => {
       });
 
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <CustomTest>Test</CustomTest>
         </ThemeProvider>,
       );
@@ -236,7 +233,7 @@ describe('styled', () => {
 
     it('overrides should be respected', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <Test>Test</Test>
         </ThemeProvider>,
       );
@@ -249,7 +246,7 @@ describe('styled', () => {
 
     it('overrides should be respected when styles are object', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestObj>Test</TestObj>
         </ThemeProvider>,
       );
@@ -262,7 +259,7 @@ describe('styled', () => {
 
     it('overrides should be respected when prop is specified', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <Test variant="rect">Test</Test>
         </ThemeProvider>,
       );
@@ -275,7 +272,7 @@ describe('styled', () => {
 
     it('overrides should be respected when prop is specified when styles are object', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestObj variant="rect">Test</TestObj>
         </ThemeProvider>,
       );
@@ -298,7 +295,7 @@ describe('styled', () => {
       `;
 
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestSlot variant="rect" size="large">
             Test
           </TestSlot>
@@ -324,7 +321,7 @@ describe('styled', () => {
       `;
 
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestSlot variant="rect" size="large">
             Test
           </TestSlot>
@@ -339,7 +336,7 @@ describe('styled', () => {
 
     it('variants should win over overrides', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <Test variant="rect" size="large">
             Test
           </Test>
@@ -354,7 +351,7 @@ describe('styled', () => {
 
     it('variants should win over overrides when styles are object', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestObj variant="rect" size="large">
             Test
           </TestObj>
@@ -373,7 +370,7 @@ describe('styled', () => {
       `;
 
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <CustomTest variant="rect" size="large">
             Test
           </CustomTest>
@@ -392,7 +389,7 @@ describe('styled', () => {
       });
 
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <CustomTest variant="rect" size="large">
             Test
           </CustomTest>
@@ -407,7 +404,7 @@ describe('styled', () => {
 
     it('should resolve the sx prop', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <Test sx={{ color: 'primary.main' }}>Test</Test>
         </ThemeProvider>,
       );
@@ -419,7 +416,7 @@ describe('styled', () => {
 
     it('should resolve the sx prop when styles are object', () => {
       const { container } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestObj sx={{ color: 'primary.main' }}>Test</TestObj>
         </ThemeProvider>,
       );
@@ -446,7 +443,7 @@ describe('styled', () => {
       }));
 
       const { container: containerNoSx } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestNoSx sx={{ mt: 1 }}>Test</TestNoSx>
         </ThemeProvider>,
       );
@@ -466,7 +463,7 @@ describe('styled', () => {
       }));
 
       const { container: containerSxProp } = render(
-        <ThemeProvider value={theme}>
+        <ThemeProvider theme={theme}>
           <TestWithSx sx={{ mt: 1 }}>Test</TestWithSx>
         </ThemeProvider>,
       );

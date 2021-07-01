@@ -1,5 +1,5 @@
 ---
-title: React Card component
+title: Composant React Card
 components: Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Collapse, Paper
 githubLabel: 'component: Card'
 materialDesign: https://material.io/components/cards
@@ -9,7 +9,7 @@ materialDesign: https://material.io/components/cards
 
 <p class="description">Les cartes contiennent du contenu et des actions sur un seul sujet.</p>
 
-[cartes](https://material.io/design/components/cards.html) sont des surfaces qui affichent du contenu et des actions sur un seul sujet.
+Les cartes sont des surfaces qui affichent le contenu et des actions sur un seul sujet.
 
 Ils devraient être faciles à analyser pour trouver des informations pertinentes et réalisables. Les éléments, comme le texte et les images, doivent être placés sur eux d'une manière qui indique clairement la hiérarchie.
 
@@ -29,7 +29,7 @@ Définissez `variant="outlined"` pour afficher une carte encadrée.
 
 ## Interaction complexe
 
-Sur grand écran, le contenu de la carte peut s’étendre. (Click the downward chevron to view the recipe.)
+Sur le bureau, le contenu de la carte peut s’étendre. (Cliquez sur le chevron vers le bas pour voir la recette.)
 
 {{"demo": "pages/components/cards/RecipeReviewCard.js", "bg": true}}
 
@@ -43,15 +43,15 @@ Par défaut, nous utilisons la combinaison d'un élément `<div>` et *background
 
 {{"demo": "pages/components/cards/ImgMediaCard.js", "bg": true}}
 
-> ⚠ Quand `component="img"`, CardMedia s'appuie sur `objet-fit` pour centrer l'image. It's not supported by IE11.
+> ⚠ Quand `component="img"`, CardMedia s'appuie sur `objet-fit` pour centrer l'image. Ce n'est pas supporté par IE11.
 
-## Primary action
+## Action principale
 
-Often a card allow users to interact with the entirety of its surface to trigger its main action, be it an expansion, a link to another screen or some other behavior. The action area of the card can be specified by wrapping its contents in a `CardActionArea` component.
+Une carte  permet souvent  aux utilisateurs d'interagir avec l'intégralité de sa surface pour déclencher son action principale, que ce soit une extension, un lien vers un autre écran ou un autre comportement. La zone d'action de la carte peut être spécifiée en enveloppant son contenu dans un composant `CardActionArea`.
 
 {{"demo": "pages/components/cards/ActionAreaCard.js", "bg": true}}
 
-A card can also offer supplemental actions which should stand detached from the main action area in order to avoid event overlap.
+Une carte peut également offrir des actions supplémentaires qui devraient être détachées du domaine d'action principal afin d'éviter les chevauchements d'événements.
 
 {{"demo": "pages/components/cards/MultiActionAreaCard.js", "bg": true}}
 

@@ -6,6 +6,7 @@ import Typography from '../Typography';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { getDialogTitleUtilityClass } from './dialogTitleClasses';
+import DialogContext from '../Dialog/DialogContext';
 
 const useUtilityClasses = (styleProps) => {
   const { classes } = styleProps;
@@ -32,9 +33,11 @@ const DialogTitle = React.forwardRef(function DialogTitle(inProps, ref) {
     name: 'MuiDialogTitle',
   });
 
-  const { className, ...other } = props;
+  const { className, id: idProp, ...other } = props;
   const styleProps = props;
   const classes = useUtilityClasses(styleProps);
+
+  const { titleId: id = idProp } = React.useContext(DialogContext);
 
   return (
     <DialogTitleRoot
@@ -43,6 +46,7 @@ const DialogTitle = React.forwardRef(function DialogTitle(inProps, ref) {
       styleProps={styleProps}
       ref={ref}
       variant="h6"
+      id={id}
       {...other}
     />
   );
@@ -65,6 +69,10 @@ DialogTitle.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * @ignore
+   */
+  id: PropTypes.string,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

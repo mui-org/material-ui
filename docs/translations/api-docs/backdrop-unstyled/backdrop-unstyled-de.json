@@ -9,7 +9,9 @@
     "invisible": "If <code>true</code>, the backdrop is invisible. It can be used when rendering a popover or a custom select component."
   },
   "classDescriptions": {
-    "root": { "description": "Styles applied to the root element." },
+    "root": {
+      "description": "Styles applied to the root element."
+    },
     "invisible": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",

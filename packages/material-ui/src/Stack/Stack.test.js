@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { expect } from 'chai';
-import { createMount, createClientRender, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import Stack from '@material-ui/core/Stack';
 import { createTheme } from '@material-ui/core/styles';
+import defaultTheme from '@material-ui/core/styles/defaultTheme';
 import { style } from './Stack';
 
 describe('<Stack />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<Stack />, () => ({
     render,
     inheritComponent: 'div',
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiStack',
     skip: ['componentProp', 'componentsProp', 'rootClass', 'themeVariants', 'themeStyleOverrides'],
@@ -37,14 +36,14 @@ describe('<Stack />', () => {
         },
         flexDirection: 'column',
       },
-      '@media (min-width:600px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginLeft: '16px',
         },
         flexDirection: 'row',
       },
-      '@media (min-width:960px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.md}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginLeft: '32px',
@@ -64,14 +63,14 @@ describe('<Stack />', () => {
         theme,
       }),
     ).to.deep.equal({
-      '@media (min-width:600px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '16px',
         },
         flexDirection: 'column',
       },
-      '@media (min-width:960px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.md}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginLeft: '16px',
@@ -92,13 +91,13 @@ describe('<Stack />', () => {
         theme,
       }),
     ).to.deep.equal({
-      '@media (min-width:600px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '16px',
         },
       },
-      '@media (min-width:960px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.md}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '32px',
@@ -119,19 +118,19 @@ describe('<Stack />', () => {
         theme,
       }),
     ).to.deep.equal({
-      '@media (min-width:600px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '16px',
         },
       },
-      '@media (min-width:960px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.md}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '0px',
         },
       },
-      '@media (min-width:1280px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.lg}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '32px',
@@ -178,7 +177,7 @@ describe('<Stack />', () => {
         },
         flexDirection: 'column',
       },
-      '@media (min-width:1280px)': {
+      [`@media (min-width:${defaultTheme.breakpoints.values.lg}px)`]: {
         '& > :not(style) + :not(style)': {
           margin: 0,
           marginTop: '16px',

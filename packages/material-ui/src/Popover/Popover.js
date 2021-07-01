@@ -14,6 +14,7 @@ import useThemeProps from '../styles/useThemeProps';
 import debounce from '../utils/debounce';
 import ownerDocument from '../utils/ownerDocument';
 import ownerWindow from '../utils/ownerWindow';
+import useForkRef from '../utils/useForkRef';
 import Grow from '../Grow';
 import Modal from '../Modal';
 import Paper from '../Paper';
@@ -120,6 +121,7 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
     ...other
   } = props;
   const paperRef = React.useRef();
+  const handlePaperRef = useForkRef(paperRef, PaperProps.ref);
 
   const styleProps = {
     ...props,
@@ -369,8 +371,8 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
       >
         <PopoverPaper
           elevation={elevation}
-          ref={paperRef}
           {...PaperProps}
+          ref={handlePaperRef}
           className={clsx(classes.paper, PaperProps.className)}
         >
           {children}

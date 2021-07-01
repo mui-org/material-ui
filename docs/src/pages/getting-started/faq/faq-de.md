@@ -47,11 +47,12 @@ Der Ripple-Effekt kommt ausschließlich von der `BaseButton` Komponente. Sie kö
 import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
-  props: {
+  components: {
     // Name of the component ⚛️
     MuiButtonBase: {
-      // The properties to apply
-      disableRipple: true, // No more ripple, on the whole application 💣!
+      defaultProps: {
+        // The props to apply
+        disableRipple: true, // No more ripple, on the whole application 💣!
       },
   },
 });
@@ -66,7 +67,7 @@ import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
   transitions: {
-    // Jetzt haven wir überall `transition: none;`
+    // So we have `transition: none;` everywhere
     create: () => 'none',
   },
 });
@@ -109,7 +110,7 @@ No, it's not required. But this dependency comes built in, so carries no additio
 
 Perhaps, however, you're adding some Material-UI components to an app that already uses another styling solution, or are already familiar with a different API, and don't want to learn a new one? In diesem Fall gehen Sie zum [Zusammenführen von Style Libraries](/guides/interoperability/) Abschnitt in dem wir zeigen, wie einfach es ist, Material-UI-Komponenten mit alternativen Stilbibliotheken umzustrukturieren.
 
-## Wann verwende ich inline-style vs CSS?
+## When should I use inline-style vs. CSS?
 
 Verwenden Sie als Faustregel Inline-Style nur für dynamische Stileigenschaften. Die CSS-Alternative bietet weitere Vorteile, z.B.:
 
@@ -120,7 +121,7 @@ Verwenden Sie als Faustregel Inline-Style nur für dynamische Stileigenschaften.
 
 ## Wie verwende ich den react-router?
 
-We detail the [integration with third-party routing libraries](/guides/composition/#routing-libraries) like react-router, Gatsby or Next.js in our guide.
+We detail the [integration with third-party routing libraries](/guides/routing/) like react-router, Gatsby or Next.js in our guide.
 
 ## Wie kann ich auf das DOM-Element zugreifen?
 
@@ -370,7 +371,10 @@ Aus diesem Grund benötigen wir eine Eigenschaft mit dem eigentlichen DOM-Knoten
 ```jsx
 function App() {
   const [container, setContainer] = React.useState(null);
-  const handleRef = React.useCallback(instance => setContainer(instance), [setContainer])
+  const handleRef = React.useCallback(
+    (instance) => setContainer(instance),
+    [setContainer],
+  );
 
   return (
     <div className="App">

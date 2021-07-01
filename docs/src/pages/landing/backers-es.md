@@ -23,6 +23,7 @@ _2/3 slots available_
 <p style="display: flex; justify-content: center; flex-wrap: wrap;">
   <a data-ga-event-category="sponsor" data-ga-event-action="logo" data-ga-event-label="textemall" href="https://www.text-em-all.com" rel="noopener sponsored" target="_blank" style="margin-right: 16px;"><img src="https://images.opencollective.com/callemall/a6946da/logo/96.png" srcset="https://images.opencollective.com/callemall/a6946da/logo/192.png 2x" alt="call-em-all" title="La forma fácil de enviar mensajes a tu grupo" height="96" width="96" loading="lazy"></a>
   <a data-ga-event-category="sponsor" data-ga-event-action="logo" data-ga-event-label="canadacasino" href="https://www.canadacasino.ca/" rel="noopener sponsored" target="_blank" style="margin-right: 16px;"><img height="96" width="96" src="https://images.opencollective.com/canadacasino/5b19004/logo/96.png" srcset="https://images.opencollective.com/canadacasino/5b19004/logo/192.png 2x" alt="canadacasino" loading="lazy" /></a>
+  <a data-ga-event-category="sponsor" data-ga-event-action="logo" data-ga-event-label="hoodiebees" href="https://hoodiebees.com/" rel="noopener sponsored" target="_blank" style="margin-right: 16px;"><img height="96" width="96" src="https://images.opencollective.com/hoodiebees1/617b451/logo/96.png" srcset="https://images.opencollective.com/hoodiebees1/617b451/logo/192.png 2x" alt="hoodiebees" loading="lazy" /></a>
 </p>
 
 ### ¡Y aún hay más!

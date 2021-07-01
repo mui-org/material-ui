@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 
-const GridItem = (props) => {
+function Item(props) {
   const { sx, ...other } = props;
   return (
     <Box
@@ -12,16 +12,16 @@ const GridItem = (props) => {
         p: 1,
         borderRadius: 1,
         textAlign: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 19,
+        fontWeight: '700',
         ...sx,
       }}
       {...other}
     />
   );
-};
+}
 
-GridItem.propTypes = {
+Item.propTypes = {
   sx: PropTypes.object,
 };
 
@@ -31,14 +31,13 @@ export default function GridAutoColumns() {
       <Box
         sx={{
           display: 'grid',
-          p: 1,
-          height: '60px',
-          gridAutoColumns: '0.2fr',
+          gridAutoColumns: '1fr',
           gap: 1,
         }}
       >
-        <GridItem sx={{ gridRow: '1', gridColumn: '1 / 3' }}>1 / 3</GridItem>
-        <GridItem sx={{ gridRow: '1', gridColumn: '4 / 5' }}>4 / 5</GridItem>
+        <Item sx={{ gridRow: '1', gridColumn: 'span 2' }}>span 2</Item>
+        {/* The second non-visible column has width of 1/4 */}
+        <Item sx={{ gridRow: '1', gridColumn: '4 / 5' }}>4 / 5</Item>
       </Box>
     </div>
   );

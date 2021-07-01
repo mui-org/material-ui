@@ -3,6 +3,7 @@
   "propDescriptions": {
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The value of the progress indicator for the determinate and buffer variants. Value between 0 and 100.",
     "valueBuffer": "The value for the buffer variant. Value between 0 and 100.",
     "variant": "The variant to use. Use indeterminate or query when there is no progress value."

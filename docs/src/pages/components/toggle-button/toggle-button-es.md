@@ -17,7 +17,7 @@ To emphasize groups of related [Toggle buttons](https://material.io/components/b
 
 With exclusive selection, selecting one option deselects any other.
 
-In this example text justification toggle buttons present options for left, center, right, and fully justified text (disabled), with only one item available for selection at a time.
+In this example, text justification toggle buttons present options for left, center, right, and fully justified text (disabled), with only one item available for selection at a time.
 
 {{"demo": "pages/components/toggle-button/ToggleButtons.js"}}
 
@@ -27,11 +27,15 @@ Multiple selection allows for logically-grouped options, like bold, italic, and 
 
 {{"demo": "pages/components/toggle-button/ToggleButtonsMultiple.js"}}
 
-## Tamaños
+## Tamaño
 
-Botones más grandes o más pequeños? Usa la propiedad `size`.
+For larger or smaller buttons, use the `size` prop.
 
 {{"demo": "pages/components/toggle-button/ToggleButtonSizes.js"}}
+
+## Color
+
+{{"demo": "pages/components/toggle-button/ColorToggleButton.js"}}
 
 ## Vertical buttons
 

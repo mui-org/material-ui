@@ -5,9 +5,11 @@ import { InternalStandardProps as StandardProps, Theme } from '..';
 import { PaperProps } from '../Paper';
 import { AlertClasses } from './alertClasses';
 
-export type Color = 'success' | 'info' | 'warning' | 'error';
+export type AlertColor = 'success' | 'info' | 'warning' | 'error';
 
 export interface AlertPropsVariantOverrides {}
+
+export interface AlertPropsColorOverrides {}
 
 export interface AlertProps extends StandardProps<PaperProps, 'variant'> {
   /**
@@ -28,12 +30,12 @@ export interface AlertProps extends StandardProps<PaperProps, 'variant'> {
   /**
    * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
    */
-  color?: Color;
+  color?: OverridableStringUnion<AlertColor, AlertPropsColorOverrides>;
   /**
    * The severity of the alert. This defines the color and icon used.
    * @default 'success'
    */
-  severity?: Color;
+  severity?: AlertColor;
   /**
    * Override the icon displayed before the children.
    * Unless provided, the icon is mapped to the value of the `severity` prop.
@@ -50,11 +52,10 @@ export interface AlertProps extends StandardProps<PaperProps, 'variant'> {
    * If you wish to change this mapping, you can provide your own.
    * Alternatively, you can use the `icon` prop to override the icon displayed.
    */
-  iconMapping?: Partial<Record<Color, React.ReactNode>>;
+  iconMapping?: Partial<Record<AlertColor, React.ReactNode>>;
   /**
    * Callback fired when the component requests to be closed.
    * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
-   *
    * @param {object} event The event source of the callback.
    */
   onClose?: (event: React.SyntheticEvent) => void;

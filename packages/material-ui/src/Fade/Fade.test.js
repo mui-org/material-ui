@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
-import { createClientRender, createMount, describeConformance } from 'test/utils';
+import { createClientRender, describeConformance } from 'test/utils';
 import { Transition } from 'react-transition-group';
 import Fade from '@material-ui/core/Fade';
 
 describe('<Fade />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   const defaultProps = {
     in: true,
@@ -17,7 +16,6 @@ describe('<Fade />', () => {
   describeConformance(<Fade {...defaultProps} />, () => ({
     classes: {},
     inheritComponent: Transition,
-    mount,
     refInstanceof: window.HTMLDivElement,
     skip: [
       'componentProp',

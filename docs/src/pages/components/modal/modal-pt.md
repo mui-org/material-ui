@@ -1,6 +1,6 @@
 ---
 title: Componente React Modal
-components: Modal
+components: Modal, ModalUnstyled
 githubLabel: 'component: Modal'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 ---
@@ -16,7 +16,6 @@ O componente renderiza o conteúdo de seu `children` sobre um componente backdro
 - 🔐 Desativa a rolagem do conteúdo da página enquanto estiver aberto.
 - ♿️ Gerencia adequadamente o foco; movendo para o conteúdo modal, e mantendo-o lá até que o modal seja fechado.
 - ♿️ Adiciona as funções ARIA apropriadas automaticamente.
-- 📦 [5 kB gzipped](/size-snapshot).
 
 [A paleta](/system/palette/) com funções de estilo.
 
@@ -29,13 +28,29 @@ Se você está criando um diálogo modal, você provavelmente quer usar o compon
 - [Menu](/components/menus/)
 - [Popover](/components/popover/)
 
-## Modal simples
+## Basic modal
 
-Esta demonstração acumula modais, mas é fortemente desencorajado a fazer isso na prática.
-
-{{"demo": "pages/components/modal/SimpleModal.js"}}
+{{"demo": "pages/components/modal/BasicModal.js"}}
 
 Você pode desativar o contorno (muitas vezes azul ou ouro) com a propriedade CSS `outline: 0`.
+
+## Unstyled
+
+- 📦 [4.7 kB gzipped](https://bundlephobia.com/result?p=@material-ui/unstyled@next)
+
+The modal also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import ModalUnstyled from '@material-ui/unstyled/ModalUnstyled';
+```
+
+{{"demo": "pages/components/modal/ModalUnstyled.js"}}
+
+## Nested modal
+
+Modals can be nested, for example a select within a dialog, but stacking of more than two modals, or any two modals with a backdrop is discouraged.
+
+{{"demo": "pages/components/modal/NestedModal.js"}}
 
 ## Transições
 
@@ -64,7 +79,7 @@ O conteúdo do modal é desmontado quando fechado. Se você precisa disponibiliz
 
 {{"demo": "pages/components/modal/KeepMountedModal.js", "defaultCodeOpen": false}}
 
-Como acontece com qualquer otimização de desempenho, isso não é uma bala de prata. Certifique-se de identificar gargalos primeiro e, em seguida, experimente essas estratégias de otimização.
+As with any performance optimization, this is not a silver bullet. Be sure to identify bottlenecks first, and then try out these optimization strategies.
 
 ## Modal do lado do servidor
 
@@ -78,7 +93,7 @@ React [não suporta](https://github.com/facebook/react/issues/13097) a API [`cre
 
 O modal move o foco de volta para o corpo do componente se o foco tentar escapar dele.
 
-No entanto, isso é feito para fins de acessibilidade, e pode criar problemas. No caso de os usuários precisarem interagir com outra parte da página, por exemplo, com uma janela de chatbot, você pode desabilitar o comportamento:
+This is done for accessibility purposes. However, it might create issues. No caso de os usuários precisarem interagir com outra parte da página, por exemplo, com uma janela de chatbot, você pode desabilitar o comportamento:
 
 ```jsx
 <Modal disableEnforceFocus />

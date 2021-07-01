@@ -6,7 +6,7 @@ materialDesign: https://material.io/archive/guidelines/components/expansion-pane
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 ---
 
-# Akkordeon (Accordion)
+# Accordion (Akkordeon)
 
 <p class="description">Erweiterungspanels (Tafeln) enthalten Erstellungsabläufe und ermöglichen die einfache Bearbeitung eines Elements.</p>
 
@@ -14,11 +14,11 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-> **Hinweis:** Diese Komponente ist zwar nicht mehr in den [Material-Design-Richtlinien](https://material.io/) dokumentiert, wird aber weiterhin von Material-UI unterstützt. It was formerly known as the "expansion panel".
+> **Hinweis:** Diese Komponente ist zwar nicht mehr in den [Material-Design-Richtlinien](https://material.io/) dokumentiert, wird aber weiterhin von Material-UI unterstützt. Es war früher als  "Erweiterungspanel" bekannt.
 
 ## Einfaches Erweiterungspanel
 
-{{"demo": "pages/components/accordion/SimpleAccordion.js", "bg": true}}
+{{"demo": "pages/components/accordion/BasicAccordion.js", "bg": true}}
 
 ## Kontrolliertes Akkordeon
 

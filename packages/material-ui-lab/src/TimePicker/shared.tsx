@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { useThemeProps } from '@material-ui/core/styles';
 import ClockIcon from '../internal/svg-icons/Clock';
 import { ParseableDate } from '../internal/pickers/constants/prop-types';
 import { ExportedClockPickerProps } from '../ClockPicker/ClockPicker';
@@ -28,7 +28,7 @@ export interface BaseTimePickerProps<TDate>
    * Component that will replace default toolbar renderer.
    * @default TimePickerToolbar
    */
-  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps>;
+  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps<TDate | null>>;
   /**
    * Array of views to show.
    */
@@ -45,9 +45,10 @@ type DefaultizedProps<Props> = Props & { inputFormat: string };
 export function useTimePickerDefaultizedProps<Props extends BaseTimePickerProps<unknown>>(
   {
     ampm,
+    components,
     inputFormat,
-    maxTime: __maxTime,
-    minTime: __minTime,
+    maxTime,
+    minTime,
     openTo = 'hours',
     views = ['hours', 'minutes'],
     ...other
@@ -55,23 +56,23 @@ export function useTimePickerDefaultizedProps<Props extends BaseTimePickerProps<
   name: string,
 ): DefaultizedProps<Props> {
   const utils = useUtils();
-
-  const minTime = useParsedDate(__minTime);
-  const maxTime = useParsedDate(__maxTime);
   const willUseAmPm = ampm ?? utils.is12HourCycleInCurrentLocale();
 
   return useThemeProps({
     props: {
       views,
       openTo,
-      minTime,
-      maxTime,
+      minTime: useParsedDate(minTime),
+      maxTime: useParsedDate(maxTime),
       ampm: willUseAmPm,
       acceptRegex: willUseAmPm ? /[\dapAP]/gi : /\d/gi,
       mask: '__:__',
       disableMaskedInput: willUseAmPm,
       getOpenDialogAriaText: getTextFieldAriaText,
-      openPickerIcon: <ClockIcon />,
+      components: {
+        OpenPickerIcon: ClockIcon,
+        ...components,
+      },
       inputFormat: pick12hOr24hFormat(inputFormat, willUseAmPm, {
         localized: utils.formats.fullTime,
         '12h': utils.formats.fullTime12h,

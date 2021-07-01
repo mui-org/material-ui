@@ -23,13 +23,11 @@ const SelectSelect = styled('div', {
   slot: 'Select',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
+    return [
       // Win specificity over the input base
-      [`&.${selectClasses.select}`]: {
-        ...styles.select,
-        ...styles[styleProps.variant],
-      },
-    };
+      { [`&.${selectClasses.select}`]: styles.select },
+      { [`&.${selectClasses.select}`]: styles[styleProps.variant] },
+    ];
   },
 })(nativeSelectSelectStyles, {
   // Win specificity over the input base
@@ -47,11 +45,11 @@ const SelectIcon = styled('svg', {
   slot: 'Icon',
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
-    return {
-      ...styles.icon,
-      ...(styleProps.variant && styles[`icon${capitalize(styleProps.variant)}`]),
-      ...(styleProps.open && styles.iconOpen),
-    };
+    return [
+      styles.icon,
+      styleProps.variant && styles[`icon${capitalize(styleProps.variant)}`],
+      styleProps.open && styles.iconOpen,
+    ];
   },
 })(nativeSelectIconStyles);
 

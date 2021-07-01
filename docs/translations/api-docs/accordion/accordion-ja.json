@@ -3,12 +3,14 @@
   "propDescriptions": {
     "children": "The content of the component.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "defaultExpanded": "If <code>true</code>, expands the accordion by default.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
-    "expanded": "If <code>true</code>, expands the accordion, otherwise collapse it. Setting this prop enables control over the accordion.",
+    "defaultExpanded": "<code>true</code>の場合、アコーディオンはデフォルトで展開します。",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
+    "disableGutters": "If <code>true</code>, it removes the margin between two expanded accordion items and the increase of height.",
+    "expanded": "<code>true</code>の場合、アコーディオンを展開し、それ以外の場合は折りたたみます。このプロパティを設定すると、アコーディオンを制御することができます。",
     "onChange": "Callback fired when the expand/collapse state is changed.<br><br><strong>Signature:</strong><br><code>function(event: object, expanded: boolean) =&gt; void</code><br><em>event:</em> The event source of the callback. <strong>Warning</strong>: This is a generic event not a change event.<br><em>expanded:</em> The <code>expanded</code> state of the accordion.",
     "square": "If <code>true</code>, rounded corners are disabled.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "TransitionComponent": "トランジションに使用されるコンポーネント。 <a href=\"/components/transitions/#transitioncomponent-prop\">このガイド</a> に従って、このコンポーネントの要件の詳細を確認してください。",
     "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
   },
   "classDescriptions": {
@@ -29,6 +31,11 @@
       "description": "Pseudo-class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>disabled={true}</code>"
+    },
+    "gutters": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disableGutters={true}</code>"
     },
     "region": {
       "description": "Styles applied to {{nodeName}}, {{conditions}}.",

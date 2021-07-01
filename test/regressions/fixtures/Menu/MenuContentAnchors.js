@@ -46,13 +46,13 @@ function SimpleMenu({ selectedItem, ...props }) {
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} transitionDuration={0} {...props}>
         {null}
-        <MenuItem ListItemClasses={listItemClasses} selected={selectedItem === 1}>
+        <MenuItem classes={listItemClasses} selected={selectedItem === 1}>
           Item 1
         </MenuItem>
-        <MenuItem ListItemClasses={listItemClasses} selected={selectedItem === 2}>
+        <MenuItem classes={listItemClasses} selected={selectedItem === 2}>
           Item 2
         </MenuItem>
-        <MenuItem ListItemClasses={listItemClasses}>Item 3</MenuItem>
+        <MenuItem classes={listItemClasses}>Item 3</MenuItem>
       </Menu>
     </Grid>
   );

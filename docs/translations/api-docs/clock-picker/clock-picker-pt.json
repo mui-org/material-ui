@@ -1,9 +1,10 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "allowKeyboardControl": "Enables keyboard listener for moving between days in calendar. Defaults to <code>true</code> unless the <code>ClockPicker</code> is used inside a <code>Static*</code> picker component.",
     "ampm": "12h/24h view for hour selection clock.",
     "ampmInClock": "Display ampm controls under the clock (instead of in the toolbar).",
+    "autoFocus": "Set to <code>true</code> if focus should be moved to clock picker.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "components": "The components used for each slot. Either a string to use a HTML element or a component.",
     "componentsProps": "The props used for each slot inside.",
     "date": "Selected date @DateIOType.",
@@ -20,5 +21,10 @@
     "rightArrowButtonText": "Right arrow icon aria-label text.",
     "shouldDisableTime": "Dynamically check if time is disabled or not. If returns <code>false</code> appropriate time point will ot be acceptable."
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "arrowSwitcher": {
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "the arrowSwticher element"
+    }
+  }
 }

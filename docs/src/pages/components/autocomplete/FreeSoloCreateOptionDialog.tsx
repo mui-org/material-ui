@@ -93,9 +93,9 @@ export default function FreeSoloCreateOptionDialog() {
         freeSolo
         renderInput={(params) => <TextField {...params} label="Free solo dialog" />}
       />
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle id="form-dialog-title">Add a new film</DialogTitle>
+          <DialogTitle>Add a new film</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Did you miss any film in our list? Please, add it!

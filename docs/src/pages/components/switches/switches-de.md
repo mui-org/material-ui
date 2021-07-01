@@ -15,13 +15,29 @@ materialDesign: 'https://material.io/components/selection-controls#switches'
 
 ## Basic switches
 
-{{"demo": "pages/components/switches/Switches.js"}}
+{{"demo": "pages/components/switches/BasicSwitches.js"}}
 
-## Switch with FormControlLabel
+## Kontrollkästchen mit FormGroup
 
-`Switch` can be provided with a description thanks to the `FormControlLabel` component.
+You can provide a label to the `Switch` thanks to the `FormControlLabel` component.
 
 {{"demo": "pages/components/switches/SwitchLabels.js"}}
+
+## Size
+
+Use the `size` prop to change the size of the switch.
+
+{{"demo": "pages/components/switches/SwitchesSize.js"}}
+
+## Farbe (Color)
+
+{{"demo": "pages/components/switches/ColorSwitches.js"}}
+
+## Controlled
+
+You can control the switch with the `checked` and `onChange` props:
+
+{{"demo": "pages/components/switches/ControlledSwitches.js"}}
 
 ## Schalter mit FormGroup
 
@@ -36,12 +52,6 @@ Hier einige Beispiele zum Anpassen der Komponente. Mehr dazu erfahren Sie auf de
 {{"demo": "pages/components/switches/CustomizedSwitches.js"}}
 
 🎨 Wenn Sie nach Inspiration suchen, sehen sie sich [MUI Treasury's Anpassungs-Beispiele](https://mui-treasury.com/styles/switch) an.
-
-## Größen
-
-Fancy smaller switches? Verwenden Sie die `size` Prop.
-
-{{"demo": "pages/components/switches/SwitchesSize.js"}}
 
 ## Etikettenplatzierung
 

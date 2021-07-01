@@ -7,21 +7,21 @@ export interface StepLabelClasses {
   horizontal: string;
   /** Styles applied to the root element if `orientation="vertical"`. */
   vertical: string;
-  /** Styles applied to the Typography component that wraps `children`. */
+  /** Styles applied to the label element that wraps `children`. */
   label: string;
-  /** Pseudo-class applied to the `Typography` component if `active={true}`. */
+  /** Pseudo-class applied to the label element if `active={true}`. */
   active: string;
-  /** Pseudo-class applied to the `Typography` component if `completed={true}`. */
+  /** Pseudo-class applied to the label element if `completed={true}`. */
   completed: string;
-  /** Pseudo-class applied to the root element and `Typography` component if `error={true}`. */
+  /** Pseudo-class applied to the root and label elements if `error={true}`. */
   error: string;
-  /** Pseudo-class applied to the root element and `Typography` component if `disabled={true}`. */
+  /** Pseudo-class applied to the root and label elements if `disabled={true}`. */
   disabled: string;
   /** Styles applied to the `icon` container element. */
   iconContainer: string;
-  /** Pseudo-class applied to the root and icon container and `Typography` if `alternativeLabel={true}`. */
+  /** Pseudo-class applied to the root and icon container and label if `alternativeLabel={true}`. */
   alternativeLabel: string;
-  /** Styles applied to the container element which wraps `Typography` and `optional`. */
+  /** Styles applied to the container element which wraps label and `optional`. */
   labelContainer: string;
 }
 

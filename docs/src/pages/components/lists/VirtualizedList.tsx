@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemButton from '@material-ui/core/ListItemButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 
@@ -8,8 +9,10 @@ function renderRow(props: ListChildComponentProps) {
   const { index, style } = props;
 
   return (
-    <ListItem button style={style} key={index}>
-      <ListItemText primary={`Item ${index + 1}`} />
+    <ListItem style={style} key={index} component="div" disablePadding>
+      <ListItemButton>
+        <ListItemText primary={`Item ${index + 1}`} />
+      </ListItemButton>
     </ListItem>
   );
 }

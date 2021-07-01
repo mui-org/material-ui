@@ -6,18 +6,36 @@
 [![npm downloads](https://img.shields.io/npm/dm/@material-ui/codemod.svg?style=flat-square)](https://www.npmjs.com/package/@material-ui/codemod)
 
 This repository contains a collection of codemod scripts based for use with
-[JSCodeshift](https://github.com/facebook/jscodeshift) that help update Material-UI
-APIs.
+[jscodeshift](https://github.com/facebook/jscodeshift) that help update Material-UI APIs.
 
-## Setup & Run
+## Setup & run
 
-- `npm install -D @material-ui/codemod@next` <!-- #default-branch-switch -->
-- `npx jscodeshift -t <path-to-codemod-script> <path>`
-  - Applies the transform script specified in `<path-to-codemod-script>` recursively to `<path>`.
-  - Use the `-d` option for a dry-run and use `-p` to print the output for comparison.
-  - Use the `--extensions tsx --parser tsx` options to convert TypeScript source code.
+<!-- #default-branch-switch -->
 
-## Included Scripts
+```bash
+npx @material-ui/codemod@next <codemod> <paths...>
+
+Applies a `@material-ui/codemod` to the specified paths
+
+Positionals:
+  codemod  The name of the codemod                                [string]
+  paths    Paths forwarded to `jscodeshift`                       [string]
+
+Options:
+  --version  Show version number                                 [boolean]
+  --help     Show help                                           [boolean]
+  --dry      dry run (no changes are made to files)
+                                                [boolean] [default: false]
+  --print    print transformed files to stdout, useful for development
+                                                [boolean] [default: false]
+
+Examples:
+  npx @material-ui/codemod@next v4.0.0/theme-spacing-api src
+  npx @material-ui/codemod@next v5.0.0/component-rename-prop src --
+  --component=Grid --from=prop --to=newProp
+```
+
+## Included scripts
 
 ### v5.0.0
 
@@ -32,8 +50,10 @@ A generic codemod to rename any component prop.
 +<Component newProp />
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/component-rename-prop.js --component=Grid --from=prop --to=newProp <path>
+npx @material-ui/codemod@next v5.0.0/component-rename-prop <path> -- --component=Grid --from=prop --to=newProp
 ```
 
 #### `autocomplete-rename-closeicon`
@@ -41,13 +61,17 @@ npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@materia
 Renames `fade` style utility import and calls from `fade` to `alpha`.
 
 ```diff
--<Grid justify="left">Item</Grid>
-+<Grid item justifyContent="left">Item</Grid>
+-<Autocomplete closeIcon={defaultClearIcon} />
++<Autocomplete clearIcon={defaultClearIcon} />
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/autocomplete-rename-closeicon.js  <path>
+npx @material-ui/codemod@next v5.0.0/autocomplete-rename-closeicon  <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#autocomplete).
 
 #### `avatar-circle-circular`
 
@@ -60,28 +84,17 @@ Updates the Avatar `variant` value and classes key from 'circle' to 'circular'.
 +<Avatar classes={{ circular: 'className' }} />
 ```
 
-```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/avatar-circle-circular.js <path>
-```
-
-#### `box-borderradius-values`
-
-Updates the Box API from separate system props to `sx`.
-
-```diff
--<Box borderRadius="borderRadius">
--<Box borderRadius={16}>
--<Box borderRadius={1}>
--<Box borderRadius="16px">
-```
+<!-- #default-branch-switch -->
 
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/box-borderradius-values.js <path>
+npx @material-ui/codemod@next v5.0.0/avatar-circle-circular <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#avatar).
 
 #### `button-color-prop`
 
-Removes the Chip `variant` prop if the value is `"default"`.
+Removes the outdated `color` prop values.
 
 ```diff
 -<Button color="primary">
@@ -90,9 +103,32 @@ Removes the Chip `variant` prop if the value is `"default"`.
 +<Button>
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/box-sx-prop.js <path>
+npx @material-ui/codemod@next v5.0.0/box-borderradius-values <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#button).
+
+#### `box-borderradius-values`
+
+Updates the Box API from separate system props to `sx`.
+
+```diff
+-<Box borderRadius="borderRadius">
+-<Box borderRadius={16}>
++<Box borderRadius={1}>
++<Box borderRadius="16px">
+```
+
+<!-- #default-branch-switch -->
+
+```sh
+npx @material-ui/codemod@next v5.0.0/box-sx-prop <path>
+```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#box).
 
 #### `box-rename-gap`
 
@@ -107,13 +143,17 @@ Renames the Box `grid*Gap` props.
 +<Box rowGap={4}>Item 5</Box>
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/box-rename-gap.js <path>
+npx @material-ui/codemod@next v5.0.0/box-rename-gap <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#box).
 
 #### `badge-overlap-value`
 
-Renames the Box `grid*Gap` props.
+Renames the badge's props.
 
 ```diff
 -<Badge overlap="circle">
@@ -138,9 +178,13 @@ Renames the Box `grid*Gap` props.
 }}>
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/box-rename-gap.js <path>
+npx @material-ui/codemod@next v5.0.0/box-rename-gap <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#badge).
 
 #### `chip-variant-prop`
 
@@ -151,9 +195,13 @@ Removes the Chip `variant` prop if the value is `"default"`.
 +<Chip>
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/chip-variant-prop.js <path>
+npx @material-ui/codemod@next v5.0.0/chip-variant-prop <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#chip).
 
 #### `circularprogress-variant`
 
@@ -164,9 +212,13 @@ Rename the CircularPress `static` variant to `determinate`.
 +<CircularProgress variant="determinate" classes={{ determinate: 'className' }} />
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/circularprogress-variant.js <path>
+npx @material-ui/codemod@next v5.0.0/circularprogress-variant <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#circularprogress).
 
 #### `collapse-rename-collapsedheight`
 
@@ -179,9 +231,13 @@ Rename the CircularPress `static` variant to `determinate`.
 +<Collapse classes={{ root: 'collapse' }} />
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/collapse-rename-collapsedheight.js <path>
+npx @material-ui/codemod@next v5.0.0/collapse-rename-collapsedheight <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#collapse).
 
 #### `fade-rename-alpha`
 
@@ -195,9 +251,13 @@ Renames `fade` style utility import and calls frpm `fade` to `alpha`.
 +const foo = alpha('#aaa');
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/fade-rename-alpha.js <path>
+npx @material-ui/codemod@next v5.0.0/fade-rename-alpha <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#styles).
 
 #### `grid-justify-justifycontent`
 
@@ -208,9 +268,13 @@ Renames `fade` style utility import and calls frpm `fade` to `alpha`.
 +<Grid item justifyContent="left">Item</Grid>
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/grid-justify-justifycontent.js <path>
+npx @material-ui/codemod@next v5.0.0/grid-justify-justifycontent <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#grid).
 
 #### `moved-lab-modules`
 
@@ -228,9 +292,13 @@ or
 +import { SpeedDial } from '@material-ui/core';
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/moved-lab-modules.js <path>
+npx @material-ui/codemod@next v5.0.0/moved-lab-modules <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#skeleton).
 
 #### `variant-prop`
 
@@ -240,42 +308,35 @@ The diff should look like this:
 ```diff
 -<TextField value="Standard" />
 -<TextField value="Outlined" variant="outlined" />
--<Select value="Standard" />
--<Select value="Outlined" variant="outlined" />
--<FormControl value="Standard" />
--<FormControl value="Outlined" variant="outlined" />
 +<TextField value="Standard" variant="standard" />
 +<TextField value="Outlined" />
+```
+
+```diff
+-<Select value="Standard" />
+-<Select value="Outlined" variant="outlined" />
 +<Select value="Standard" variant="standard" />
 +<Select value="Outlined" />
+```
+
+```diff
+-<FormControl value="Standard" />
+-<FormControl value="Outlined" variant="outlined" />
 +<FormControl value="Standard" variant="standard" />
 +<FormControl value="Outlined" />
 ```
 
-This codemod is **non-idempotent** (`variant="standard"` would be added on a subsequent run, where `variant="outlined"` was removed), so should only be run once against any particular codebase.
+This codemod is **non-idempotent** (`variant="standard"` would be added on a subsequent run, where `variant="outlined"` was removed), so it should only be run once against any particular codebase.
+
+<!-- #default-branch-switch -->
 
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/variant-prop.js <path>
-```
-
-#### `theme-breakpoints`
-
-Updates breakpoint values to match new logic.
-
-```diff
--theme.breakpoints.down('sm')
--theme.breakpoints.between('sm', 'md')
-+theme.breakpoints.down('md')
-+theme.breakpoints.between('sm', 'lg')
-```
-
-```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/theme-breakpoints.js <path>
+npx @material-ui/codemod@next v5.0.0/variant-prop <path>
 ```
 
 #### `use-transitionprops`
 
-Updates Dialog, Menu, Popover and Snackbar to use the `TransitionProps` prop to replace the `onEnter*` and `onExit*` props.
+Updates Dialog, Menu, Popover, and Snackbar to use the `TransitionProps` prop to replace the `onEnter*` and `onExit*` props.
 
 ```diff
 <Dialog
@@ -296,32 +357,58 @@ Updates Dialog, Menu, Popover and Snackbar to use the `TransitionProps` prop to 
 />
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/use-transitionprops.js <path>
+npx @material-ui/codemod@next v5.0.0/use-transitionprops <path>
 ```
+
+You can find more details about this breaking change in [the migration guide](/guides/migration-v4/#dialog).
+
+#### `theme-breakpoints`
+
+Updates breakpoint values to match new logic.
+
+```diff
+-theme.breakpoints.down('sm')
+-theme.breakpoints.between('sm', 'md')
++theme.breakpoints.down('md')
++theme.breakpoints.between('sm', 'lg')
+```
+
+<!-- #default-branch-switch -->
+
+```sh
+npx @material-ui/codemod@next v5.0.0/theme-breakpoints.js <path>
+```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#theme).
 
 #### `theme-spacing`
 
 Removes the 'px' suffix from some template strings.
 
 ```diff
-`${theme.spacing(2)}px`
-`${theme.spacing(2)}px ${theme.spacing(4)}px`
-`${theme.spacing(2)}`
-`${theme.spacing(2)} ${theme.spacing(4)}`
-
+-`${theme.spacing(2)}px`
+-`${theme.spacing(2)}px ${theme.spacing(4)}px`
++`${theme.spacing(2)}`
++`${theme.spacing(2)} ${theme.spacing(4)}`
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v5.0.0/theme-spacing.js <path>
+npx @material-ui/codemod@next v5.0.0/theme-spacing <path>
 ```
 
 Note that if there are calculations using `theme.spacing()`, these will need to be resolved manually. Consider using CSS calc:
 
+```diff
+-width: `${theme.spacing(2) - 1}px`,
++widith: `calc(${theme.spacing(2)} - 1px)`,
 ```
--`${theme.spacing(2) - 1}px`
-+`calc(${theme.spacing(2)} - 1px)`
-```
+
+You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#theme).
 
 ### v4.0.0
 
@@ -335,8 +422,10 @@ The diff should look like this:
 +const spacing = theme.spacing(1);
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v4.0.0/theme-spacing-api.js <path>
+npx @material-ui/codemod@next v4.0.0/theme-spacing-api <path>
 ```
 
 This codemod tries to perform a basic expression simplification which can be improved for expressions that use more than one operation.
@@ -360,8 +449,10 @@ Converts all `@material-ui/core` imports more than 1 level deep to the optimal f
 +import { withStyles, createTheme } from '@material-ui/core/styles';
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v4.0.0/optimal-imports.js <path>
+npx @material-ui/codemod@next v4.0.0/optimal-imports <path>
 ```
 
 Head to https://material-ui.com/guides/minimizing-bundle-size/ to understand when it's useful.
@@ -376,8 +467,10 @@ Converts all `@material-ui/core` submodule imports to the root module:
 +import { List, withStyles } from '@material-ui/core';
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v4.0.0/top-level-imports.js <path>
+npx @material-ui/codemod@next v4.0.0/top-level-imports <path>
 ```
 
 Head to https://material-ui.com/guides/minimizing-bundle-size/ to understand when it's useful.
@@ -395,8 +488,10 @@ The diff should look like this:
 +import MenuItem from '@material-ui/core/MenuItem';
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v1.0.0/import-path.js <path>
+npx @material-ui/codemod@next v1.0.0/import-path <path>
 ```
 
 **Notice**: if you are migrating from pre-v1.0, and your imports use `material-ui`, you will need to manually find and replace all references to `material-ui` in your code to `@material-ui/core`. E.g.:
@@ -420,14 +515,18 @@ The diff should look like this:
 +const teal500 = teal['500'];
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v1.0.0/color-imports.js <path>
+npx @material-ui/codemod@next v1.0.0/color-imports <path>
 ```
 
 **additional options**
 
+<!-- #default-branch-switch -->
+
 ```
-npx jscodeshift -t <color-imports.js> <path> --importPath='mui/styles/colors' --targetPath='mui/colors'
+npx @material-ui/codemod@next v1.0.0/color-imports <path> -- --importPath='mui/styles/colors' --targetPath='mui/colors'
 ```
 
 #### `svg-icon-imports`
@@ -442,8 +541,10 @@ The diff should look like this:
 +import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
 ```
 
+<!-- #default-branch-switch -->
+
 ```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v1.0.0/svg-icon-imports.js <path>
+npx @material-ui/codemod@next v1.0.0/svg-icon-imports <path>
 ```
 
 ### v0.15.0
@@ -464,15 +565,8 @@ The diff should look like this:
 +import RaisedButton from 'material-ui/RaisedButton';
 ```
 
-```sh
-npx jscodeshift --extensions js,ts,jsx,tsx --parser tsx -t node_modules/@material-ui/codemod/lib/v0.15.0/import-path.js <path>
-```
-
-### Recast Options
-
-Options to [recast](https://github.com/benjamn/recast)'s printer can be provided
-through the `printOptions` command line argument:
+<!-- #default-branch-switch -->
 
 ```sh
-npx jscodeshift -t transform.js <path> --printOptions='{"quote": "double", "trailingComma": false}'
+npx @material-ui/codemod@next v0.15.0/import-path <path>
 ```

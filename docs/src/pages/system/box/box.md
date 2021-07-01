@@ -74,3 +74,19 @@ For instance, a margin-top:
 ```jsx
 <Box mt={2}>
 ```
+
+## Create your own `Box` component
+
+If you want to have a different default theme for the `Box` component, you can create your own version of it, using the `createBox()` utility.
+
+```js
+import { createBox, createTheme } from '@material-ui/system';
+
+const defaultTheme = createTheme({
+  // your custom theme values
+});
+
+const Box = createBox({ defaultTheme });
+
+export default styled;
+```

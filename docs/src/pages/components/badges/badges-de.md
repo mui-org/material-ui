@@ -10,7 +10,7 @@ githubLabel: 'component: Badge'
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Basic badges
+## Einfaches Abzeichen
 
 Beispiele für Text Badges in Primär- und Sekundärfarben. The badge is applied to its children.
 
@@ -18,7 +18,7 @@ Beispiele für Text Badges in Primär- und Sekundärfarben. The badge is applied
 
 ## Benutzerdefinierte Badges
 
-Hier ist ein Beispiel zum Anpassen der Komponente. You can learn more about this in the [overrides documentation page](/customization/how-to-customize/).
+Hier ist ein Beispiel zum Anpassen der Komponente. Weitere Informationen hierzu finden Sie auf der [Dokumentationsseite zu Overrides](/customization/how-to-customize/).
 
 {{"demo": "pages/components/badges/CustomizedBadges.js"}}
 
@@ -28,7 +28,7 @@ Die Sichtbarkeit von Badges kann über die Eigenschaft `invisible` gesteuert wer
 
 {{"demo": "pages/components/badges/BadgeVisibility.js"}}
 
-The badge auto hides with badgeContent is zero. You can override this with the `showZero` property.
+The badge auto hides with badgeContent is zero. Sie können dies mit der Eigenschaft `showZero` überschreiben.
 
 {{"demo": "pages/components/badges/ShowZeroBadge.js"}}
 
@@ -40,13 +40,13 @@ Sie können die Eigenschaft `max` verwenden, um den Wert des Badge-Inhalts zu be
 
 ## Dot badge
 
-The `dot` property changes a badge into a small dot. This can be used as a notification that something has changed without giving a count.
+Die Eigenschaft `dot` verwandelt ein Badge in einen kleinen Punkt. This can be used as a notification that something has changed without giving a count.
 
 {{"demo": "pages/components/badges/DotBadge.js"}}
 
 ## Badge overlap
 
-You can use the `overlap` property to place the badge relative to the corner of the wrapped element.
+Du kannst dieser `overlap`, um das Badge relativ zur Ecke des umschlossenen Elements zu platzieren.
 
 {{"demo": "pages/components/badges/BadgeOverlap.js"}}
 
@@ -56,6 +56,18 @@ You can use the `anchorOrigin` prop to move the badge to any corner of the wrapp
 
 {{"demo": "pages/components/badges/BadgeAlignment.js", "hideToolbar": true}}
 
-## Unstyled badge
+## Unstyled
+
+The badge also comes with an unstyled version. It's ideal for doing heavy customizations and minimizing bundle size.
+
+```js
+import BadgeUnstyled from '@material-ui/unstyled/BadgeUnstyled';
+```
 
 {{"demo": "pages/components/badges/UnstyledBadge.js"}}
+
+## Barrierefreiheit
+
+You can't rely on the content of the badge to be announced correctly. You should provide a full description, for instance, with `aria-label`:
+
+{{"demo": "pages/components/badges/AccessibleBadges.js"}}

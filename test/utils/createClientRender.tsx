@@ -232,7 +232,7 @@ interface RenderConfiguration {
 
 export type RenderOptions = Omit<RenderConfiguration, 'emotionCache' | 'profiler'>;
 
-interface MuiRenderResult extends RenderResult<typeof queries & typeof customQueries> {
+export interface MuiRenderResult extends RenderResult<typeof queries & typeof customQueries> {
   forceUpdate(): void;
   /**
    * convenience helper. Better than repeating all props.

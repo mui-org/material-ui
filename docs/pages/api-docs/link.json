@@ -11,7 +11,7 @@
         "name": "enum",
         "description": "'always'<br>&#124;&nbsp;'hover'<br>&#124;&nbsp;'none'"
       },
-      "default": "'hover'"
+      "default": "'always'"
     },
     "variant": {
       "type": {

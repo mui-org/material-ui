@@ -1,5 +1,5 @@
 ---
-title: React Menu component
+title: Reactメニューコンポーネント
 components: Menu, MenuItem, MenuList, ClickAwayListener, Popover, Popper
 githubLabel: 'component: Menu'
 materialDesign: https://material.io/components/menus
@@ -10,59 +10,59 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#menubutton'
 
 <p class="description">メニューには、一時的なサーフェスの選択肢のリストが表示されます。</p>
 
-A menu displays a list of choices on a temporary surface. ユーザーがボタンやその他のコントロールを操作すると表示されます。
+メニューコンポーネントは、画面に一時的に表示されるリストのコンポーネントです。 ユーザーがボタンやその他のコントロールを操作すると表示されます。
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Basic menu
+## 基本のメニューコンポーネント
 
-A basic menu opens over the anchor element by default (this option can be [changed](#menu-positioning) via props). When close to a screen edge, a basic menu vertically realigns to make sure that all menu items are completely visible.
+シンプルなメニューはデフォルトでアンカー要素の上に表示されます。 (プロパティによって設定を[変える](#menu-positioning)ことができます。) 画面の端に表示される場合、すべてのメニュー項目が表示されるよう、デフォルトのメニューは垂直方向に表示されます。
 
 オプションを選択したら、そのオプションをすぐにコミットしてメニューを閉じるのが理想的です。
 
-**曖昧さ回避**: 単純なメニューとは対照的に、単純なダイアログでは、リスト項目で使用可能なオプションに関連する追加の詳細を表示したり、主要なタスクに関連するナビゲーションまたは直交アクションを提供することができます。 Although they can display the same content, simple menus are preferred over simple dialogs because simple menus are less disruptive to the user's current context.
+**曖昧さ回避**: メニューとは違い、ダイアログでは、リスト項目で使用可能なオプションに関連する追加の詳細を表示したり、主要なタスクに関連するナビゲーションまたは直交アクションを提供することができます。 同じコンテンツを表示することはできますが、シンプルなダイアログよりもシンプルなメニューが好まれます。シンプルなメニューはユーザーの現在のコンテキストにとって破壊的ではないためです。
 
-{{"demo": "pages/components/menus/SimpleMenu.js"}}
+{{"demo": "pages/components/menus/BasicMenu.js"}}
 
-## Selected menu
+## 選択されているメニュー
 
-項目の選択に使用した場合、シンプルメニューを開くと、現在選択されているメニュー項目がアンカー要素に垂直に配置されます。 選択したメニュー項目に初期フォーカスが移ります。 The `MenuItem` is a wrapper around `ListItem` with some additional styles. 現在選択されているメニュー項目は、 `selected` プロパティ（[ListItem](/api/list-item/)）を使用して設定されます。 選択したメニュー項目を、初期フォーカスやメニューの縦位置に影響を与えずに使用するには、`variant`プロパティを `menu`に設定します。
+If used for item selection, when opened, simple menus places the initial focus on the selected menu item. 現在選択されているメニュー項目は、 `selected` プロパティ（[ListItem](/api/list-item/)）を使用して設定されます。 To use a selected menu item without impacting the initial focus, set the `variant` prop to "menu".
 
 {{"demo": "pages/components/menus/SimpleListMenu.js"}}
 
-## Positioned menu
+## 位置を決めたメニュー
 
-Because the `Menu` component uses the `Popover` component to position itself, you can use the same [positioning props](/components/popover/#anchor-playground) to position it. For instance, you can display the menu below the anchor:
+`Menu`コンポーネントは自信を配置するのに`Popover`コンポーネントを使用するため、配置のために同じ[配置プロパティ](/components/popover/#anchor-playground)を使うことができます。 たとえば、アンカーの下にメニューを表示できます。
 
 {{"demo": "pages/components/menus/PositionedMenu.js"}}
 
 ## メニューリストの構成
 
-The `Menu` component uses the `Popover` component internally. However, you might want to use a different positioning strategy, or not blocking the scroll. For answering those needs, we expose a `MenuList` component that you can compose, with `Popper` in this example.
+`Menu` コンポーネントは内部的に `Popover` コンポーネントを使用します。 しかし、別の配置方法を使ったり、スクロールをブロックしないようにしたいかもしれません。 そのようなニーズに応えるために、自身で構成できる `MenuList` コンポーネントを公開しています。次の例では`Popper`を使用しています。
 
-The primary responsibility of the `MenuList` component is to handle the focus.
+`MenuList` コンポーネントの主な役割は、フォーカスを処理することです。
 
 {{"demo": "pages/components/menus/MenuListComposition.js", "bg": true}}
 
-## Customized menu
+## カスタムメニュー
 
-コンポーネントのカスタマイズ例を次に示します。 詳細については、 [overrides documentation page](/customization/how-to-customize/)を参照してください。
+コンポーネントのカスタマイズ例を次に示します。 詳細については、 [こちら](/customization/how-to-customize/)を参照してください。
 
 {{"demo": "pages/components/menus/CustomizedMenus.js"}}
 
-The `MenuItem` is a wrapper around `ListItem` with some additional styles. You can use the same list composition features with the `MenuItem` component:
+`MenuItem` はいくつかの追加のスタイルを備えた `ListItem` のラッパーです。 `MenuItem` コンポーネントで同じリスト構成機能を使用できます:
 
 🎨 インスピレーションを求めている場合は、 [MUI Treasury's customization examples](https://mui-treasury.com/styles/menu) を確認すると良いでしょう。
 
-## Max height menu
+## 高さの最大値を決めたメニュー
 
-If the height of a menu prevents all menu items from being displayed, the menu can scroll internally.
+すべてのメニュー項目を表示しないようにメニューの高さを設定すると、メニューは内部でスクロールできるようになります。
 
 {{"demo": "pages/components/menus/LongMenu.js"}}
 
 ## 制限事項
 
-There is [a flexbox bug](https://bugs.chromium.org/p/chromium/issues/detail?id=327437) that prevents `text-overflow: ellipsis` from working in a flexbox layout. You can use the `Typography` component with `noWrap` to workaround this issue:
+`text-overflow: ellipsis`がflexbox layoutで動作しなくなる[fexboxのバグ](https://bugs.chromium.org/p/chromium/issues/detail?id=327437) があります。 `Typography` コンポーネントの `noWrap` を利用してこの問題を回避できます。
 
 {{"demo": "pages/components/menus/TypographyMenu.js", "bg": true}}
 
@@ -72,9 +72,9 @@ There is [a flexbox bug](https://bugs.chromium.org/p/chromium/issues/detail?id=3
 
 {{"demo": "pages/components/menus/FadeMenu.js"}}
 
-## Context menu
+## コンテキストメニュー
 
-Here is an example of a context menu. (Right click to open.)
+コンテキストメニューの例を次に示します。 (右クリックで開きます。)
 
 {{"demo": "pages/components/menus/ContextMenu.js"}}
 

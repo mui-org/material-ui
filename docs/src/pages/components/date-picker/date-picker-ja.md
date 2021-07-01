@@ -1,6 +1,6 @@
 ---
-title: React Date Picker component
-components: DatePicker, PickersDay
+title: React Date Picker コンポーネント
+components: CalendarPicker, CalendarPickerSkeleton, DatePicker, DesktopDatePicker, MobileDatePicker, MonthPicker, PickersDay, StaticDatePicker, YearPicker
 githubLabel: 'component: DatePicker'
 packageName: '@material-ui/lab'
 materialDesign: https://material.io/components/date-pickers
@@ -8,23 +8,23 @@ materialDesign: https://material.io/components/date-pickers
 
 # Date Picker
 
-<p class="description">Date pickers let the user select a date.</p>
+<p class="description">Date pickers を使用すると、ユーザーが日付を選択できるようになります。</p>
 
-Date pickers let the user select a date. Date pickers let the user select a date.
+Date pickers を使用すると、ユーザーが日付を選択できるようになります。 DatePickerは次のように表示されます:
 
-- Dialogs on mobile
-- Text field dropdowns on desktop
+- モバイル端末ではダイアログ
+- デスクトップではテキストフィールドでのドロップダウン
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
 ## Requirements
 
-This component relies on the date management library of your choice. It supports [date-fns](https://date-fns.org/), [luxon](https://moment.github.io/luxon/), [dayjs](https://github.com/iamkun/dayjs), [moment](https://momentjs.com/) and any other library via a public `dateAdapter` interface.
+このコンポーネントはあなたが選択した日付管理ライブラリに依存します。 [date-fns](https://date-fns.org/)、 [luxon](https://moment.github.io/luxon/)、 [dayjs](https://github.com/iamkun/dayjs)、 [moment](https://momentjs.com/) とパブリックな `dateAdapter` インターフェイスを持っている他のライブラリをサポートしています。
 
-Please install any of these libraries and set up the right date engine by wrapping your root (or the highest level you wish the pickers to be available) with `LocalizationProvider`:
+これらのライブラリのうちいずれかをインストールし、ルート（またはピッカーを使用できるようにする最高レベル）を`LocalizationProvider`でラップして、適切な日付エンジンを設定してください。
 
 ```jsx
-// or @material-ui/lab/Adapter{DayJS,Luxon,Moment} or any valid date-io adapter
+// または @material-ui/lab/Adapter{DayJS,Luxon,Moment} や任意の有効な date-io アダプター
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 
@@ -35,67 +35,79 @@ function App() {
 }
 ```
 
-## Basic usage
+## 基本的な用法
 
-The date picker will be rendered as a modal dialog on mobile, and a textfield with a popover on desktop.
+The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop.
 
 {{"demo": "pages/components/date-picker/BasicDatePicker.js"}}
 
-## Responsiveness
+## static モード
 
-The date picker component is designed and optimized for the device it runs on.
-
-- The "Mobile" version works best for touch devices and small screens.
-- The "Desktop" version works best for mouse devices and large screens.
-
-By default, the `DatePicker` component uses a `@media (pointer: fine)` media query to determine which version to use. This can be customized with the `desktopModeMediaQuery` prop.
-
-{{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
-
-## Localization
-
-Use `LocalizationProvider` to change the date-engine locale that is used to render the date picker. Here is an example of changing the locale for the `date-fns` adapter:
-
-{{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
-
-## Views playground
-
-It's possible to combine `year`, `month`, and `date` selection views. Views will appear in the order they're included in the `views` array.
-
-{{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
-
-## Static mode
-
-It's possible to render any picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers.
+It's possible to render any date picker without the modal/popover and text field. これは、カスタム popover/modal コンテナを構築するときに役立ちます。
 
 {{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
 
-## Landscape orientation
+## レスポンシブ対応
 
-For ease of use the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. You can force a specific layout using the `orientation` prop.
+DatePickerコンポーネントは実行されるデバイス用に設計および最適化されています。
+
+- The `MobileDatePicker` component works best for touch devices and small screens.
+- The `DesktopDatePicker` component works best for mouse devices and large screens.
+
+By default, the `DatePicker` component renders the desktop version if the media query [`@media (pointer: fine)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer) matches. これは  `desktopModeMediaQuery` プロパティでカスタマイズできます。
+
+{{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
+
+## Form props
+
+The date picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-picker/FormPropsDatePickers.js"}}
+
+## Localization
+
+DatePickerのレンダリングに使用される日付エンジンのロケールを変更するには `LocalizationProvider` を使用します。 `date-fns` アダプターのロケールを変更した例を以下に示します。
+
+{{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
+
+## Jalali calendar system
+
+Install `date-fns-jalali` and use `@date-io/date-fns-jalali` adapter to support [Jalali calendar](https://en.wikipedia.org/wiki/Jalali_calendar).
+
+{{"demo": "pages/components/date-picker/JalaliDatePicker.js"}}
+
+## playground を表示する
+
+`年`、 `月`、および `日付` 選択ビューを組み合わせることができます。 ビューは配列 `views` に含まれる順序で表示されます。
+
+{{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
+
+## 横向き
+
+For ease of use, the date picker will automatically change the layout between portrait and landscape by subscription to the `window.orientation` change. `orientation` プロパティを使用して特定のレイアウトを強制することができます。
 
 {{"demo": "pages/components/date-picker/StaticDatePickerLandscape.js", "bg": true}}
 
-## Sub-components
+## サブコンポーネント
 
-Some lower level sub-components (`DayPicker`, `MonthPicker` and `YearPicker`) are also exported. These are rendered without a wrapper or outer logic (masked input, date values parsing and validation, etc.).
+Some lower-level sub-components (`CalendarPicker`, `MonthPicker`, and `YearPicker`) are also exported. これらはラッパーまたは外側ロジック(マスクされた入力、日付値の解析や検証など)なしでレンダリングされます。
 
-{{"demo": "pages/components/date-picker/InternalPickers.js"}}
+{{"demo": "pages/components/date-picker/SubComponentsPickers.js"}}
 
-## Custom input component
+## 入力コンポーネントのカスタマイズ
 
-You can customize rendering of the input with the `renderInput` prop. Make sure to spread `ref` and `inputProps` correctly to the custom input component.
+You can customize the rendering of the input with the `renderInput` prop. カスタム入力コンポーネントに `ref` と `inputProps` を正しく伝播させてください。
 
 {{"demo": "pages/components/date-picker/CustomInput.js"}}
 
-## Customized day rendering
+## 日付表示のカスタマイズ
 
-The displayed days are customizable with the `renderDay` function prop. You can take advantage of the internal [PickersDay](/api/pickers-day) component.
+表示される日付は `renderDay` プロパティに関数を与えることでカスタマイズできます。 You can take advantage of the [PickersDay](/api/pickers-day/) component.
 
 {{"demo": "pages/components/date-picker/CustomDay.js"}}
 
-## Dynamic data
+## 動的なデータ
 
-Sometimes it may be necessary to display additional info right in the calendar. Here's an example of prefetching and displaying server-side data using the `onMonthChange`, `loading`, and `renderDay` props.
+時々カレンダーに追加情報を表示しなければならない場合があります。 `onMonthChange`, `loading`, および `renderDay` プロパティを使用して、サーバー側のデータをプリフェッチして表示する例を示します。
 
 {{"demo": "pages/components/date-picker/ServerRequestDatePicker.js"}}

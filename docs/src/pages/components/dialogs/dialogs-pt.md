@@ -1,5 +1,5 @@
 ---
-title: Componente React para Diálogos
+title: Componente Diálogo para React
 components: Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide
 githubLabel: 'component: Dialog'
 materialDesign: https://material.io/components/dialogs
@@ -10,7 +10,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#dialog_modal'
 
 <p class="description">Diálogos informam aos usuários sobre uma tarefa e podem conter informações críticas, exigir decisões ou envolver várias tarefas.</p>
 
-Uma caixa de [Diálogo](https://material.io/design/components/dialogs.html) é um tipo de janela [modal](/components/modal/) que aparece na frente do conteúdo do aplicativo para fornecer informações críticas ou solicitar uma decisão. As caixas de diálogo desativam toda a funcionalidade do aplicativo quando elas são exibidas e permanecem na tela até que sejam confirmadas, rejeitadas ou que uma ação necessária tenha sido executada.
+Um Diálogo é um tipo de janela [modal](/components/modal/) que aparece na frente do conteúdo do aplicativo para fornecer informações críticas ou solicitar uma decisão. As caixas de diálogo desativam toda a funcionalidade do aplicativo quando elas são exibidas e permanecem na tela até que sejam confirmadas, rejeitadas ou que uma ação necessária tenha sido executada.
 
 Os diálogos são intencionalmente interruptivos, então eles devem ser usados com moderação.
 
@@ -108,7 +108,7 @@ Você pode criar um diálogo arrastável usando [react-draggable](https://github
 
 ## Rolagem de conteúdo longo
 
-When dialogs become too long for the user's viewport or device, they scroll.
+Quando diálogos ficam muito grandes para a tela do usuário ou dispositivo, a rolagem é habilitada.
 
 - `scroll=paper` o conteúdo do diálogo rola dentro do elemento.
 - `scroll=body` o conteúdo do diálogo rola dentro do corpo da página.
@@ -119,7 +119,7 @@ Experimente a demonstração abaixo para ver o que queremos dizer:
 
 ## Performance
 
-Siga a seção [Performance Modal](/components/modal/#performance).
+Veja a seção [Performance Modal](/components/modal/#performance).
 
 ## Limitações
 

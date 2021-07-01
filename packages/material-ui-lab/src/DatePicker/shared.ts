@@ -1,4 +1,4 @@
-import { unstable_useThemeProps as useThemeProps } from '@material-ui/core/styles';
+import { useThemeProps } from '@material-ui/core/styles';
 import {
   ParseableDate,
   defaultMinDate,
@@ -26,6 +26,17 @@ export interface BaseDatePickerProps<TDate>
     ValidationProps<DateValidationError, ParseableDate<TDate>>,
     ExportedDateInputProps<ParseableDate<TDate>, TDate | null> {
   /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   * @default {}
+   */
+  components?: OverrideParseableDateProps<
+    TDate,
+    ExportedCalendarPickerProps<TDate>,
+    'minDate' | 'maxDate'
+  >['components'] &
+    ExportedDateInputProps<ParseableDate<TDate>, TDate | null>['components'];
+  /**
    * First view to show.
    */
   openTo?: DatePickerView;
@@ -33,7 +44,7 @@ export interface BaseDatePickerProps<TDate>
    * Component that will replace default toolbar renderer.
    * @default DatePickerToolbar
    */
-  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps>;
+  ToolbarComponent?: React.JSXElementConstructor<ToolbarComponentProps<TDate | null>>;
   /**
    * Array of views to show.
    */

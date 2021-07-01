@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { styled, alpha } from '@material-ui/core/styles';
+import { styled, alpha, Box } from '@material-ui/system';
 import SliderUnstyled from '@material-ui/unstyled/SliderUnstyled';
-import Box from '@material-ui/core/Box';
 
 const StyledSlider = styled(SliderUnstyled)(
   ({ theme }) => `
-  color: ${theme.palette.primary.main};
+  color: ${theme.palette.mode === 'light' ? '#1976d2' : '#90caf9'};
   height: 4px;
   width: 100%;
   padding: 13px 0;
@@ -47,15 +46,21 @@ const StyledSlider = styled(SliderUnstyled)(
     border-radius: 50%;
     outline: 0;
     border: 2px solid currentColor;
-    background-color: ${theme.palette.getContrastText(theme.palette.primary.main)};
+    background-color: #fff;
 
     :hover,
     &.Mui-focusVisible {
-      box-shadow: 0 0 0 0.25rem ${alpha(theme.palette.primary.main, 0.15)};
+      box-shadow: 0 0 0 0.25rem ${alpha(
+        theme.palette.mode === 'light' ? '#1976d2' : '#90caf9',
+        0.15,
+      )};
     }
 
     &.Mui-active {
-      box-shadow: 0 0 0 0.25rem ${alpha(theme.palette.primary.main, 0.3)};
+      box-shadow: 0 0 0 0.25rem ${alpha(
+        theme.palette.mode === 'light' ? '#1976d2' : '#90caf9',
+        0.3,
+      )};
     }
   }
 `,

@@ -1,5 +1,5 @@
 ---
-title: React Autocomplete component
+title: Composant React Autocomplétion
 components: TextField, Popper, Autocomplete
 githubLabel: 'component: Autocomplete'
 waiAria: 'https://www.w3.org/TR/wai-aria-practices/#combobox'
@@ -24,9 +24,9 @@ La valeur doit être choisie à partir d'un ensemble prédéfini de valeurs auto
 
 {{"demo": "pages/components/autocomplete/ComboBox.js"}}
 
-### Options structure
+### Structure des options
 
-By default, the component accepts the following options structures:
+Par défaut, le composant accepte les structures d'options suivantes :
 
 ```ts
 const filterOptions = createFilterOptions({
@@ -37,7 +37,7 @@ const filterOptions = createFilterOptions({
 <Autocomplete filterOptions={filterOptions} />
 ```
 
-par exemple:
+Par exemple :
 
 ```js
 const options = [
@@ -48,7 +48,7 @@ const options = [
 const options = ['The Godfather', 'Pulp Fiction'];
 ```
 
-However, you can use different structures by providing a `getOptionLabel` prop.
+Cependant, vous pouvez utiliser différentes structures en fournissant une propriété `getOptionLabel`.
 
 ### Playground
 
@@ -79,7 +79,7 @@ Définissez `freeSolo` à true pour que le textbox puisse contenir n'importe que
 
 ### Search input
 
-La prop est conçue pour couvrir le cas d'utilisation principal d'une **search input** avec des suggestions, par exemple la recherche Google ou le react-autowhatever.
+La propriété est conçue pour couvrir le cas d'utilisation principal d'une **entrée de recherche** avec des suggestions, par exemple la recherche Google ou le react-autowhatever.
 
 {{"demo": "pages/components/autocomplete/FreeSolo.js"}}
 
@@ -100,7 +100,7 @@ Vous pouvez également afficher une boîte de dialogue lorsque l'utilisateur sou
 
 ## Groupé
 
-You can group the options with the `groupBy` prop. If you do so, make sure that the options are also sorted with the same dimension that they are grouped by, otherwise you will notice duplicate headers.
+Vous pouvez regrouper les options avec la propriété `groupBy`. Si vous le faites, assurez-vous que les options sont également triées avec la même dimension que celle par laquelle elles sont regroupées. Sinon vous remarquerez des en-têtes en double.
 
 {{"demo": "pages/components/autocomplete/Grouped.js"}}
 
@@ -124,26 +124,26 @@ import useAutocomplete from '@material-ui/core/useAutocomplete';
 
 {{"demo": "pages/components/autocomplete/CustomizedHook.js"}}
 
-Head to the [Customized Autocomplete](#customized-autocomplete) section for a customization example with the `Autocomplete` component instead of the hook.
+Rendez-vous à la [section de personnalisation](#customization) pour un exemple avec le composant `Auto-complétion` au lieu du crochet.
 
 ## Demandes asynchrones
 
-The component supports two different asynchronous use-cases:
+Le composant supporte deux cas d'utilisation asynchrones différents :
 
-- [Load on open](#load-on-open): it waits for the component to be interacted with to load the options.
-- [Search as you type](#search-as-you-type): a new request is made for each keystroke.
+- [Charge à l'ouverture](#load-on-open) : cela attend le composant avec lequel il doit interagir pour charger les options.
+- [Recherche au fur et à mesure](#search-as-you-type) : une nouvelle requête est faite pour chaque changement.
 
-### Load on open
+### Charger à l'ouverture
 
-It displays a progress state as long as the network request is pending.
+Cela affiche un état de progression tant que la requête réseau est en attente.
 
 {{"demo": "pages/components/autocomplete/Asynchronous.js"}}
 
-### Search as you type
+### Rechercher au fur et à mesure
 
-If your logic is fetching new options on each keystroke and using the current value of the textbox to filter on the server, you may want to consider throttling requests.
+Si votre logique consiste à récupérer de nouvelles options à chaque frappe et à utiliser la valeur actuelle de la zone de texte pour filtrer sur le serveur, vous pouvez envisager de limiter les requêtes.
 
-Additionally, you will need to disable the built-in filtering of the `Autocomplete` component by overriding the `filterOptions` prop:
+De plus, vous devrez désactiver le filtrage intégré du composant `Auto-complétion` en écrasant les propriétés `filterOptions` :
 
 ```jsx
 import matchSorter from 'match-sorter';
@@ -231,7 +231,7 @@ import { createFilterOptions } from '@material-ui/core/Autocomplete';
 - `config.ignoreAccents` (*Boolean* [optional]): Defaults to `true`. Supprimer les diacritiques.
 - `config.ignoreCase` (*Boolean* [optional]): Defaults to `true`. Tout en minuscule.
 - `config.limit` (*Number* [optional]): Default to null. Limiter le nombre d'options suggérées à afficher. Par exemple, si `config.limite` est `100`, seule les premières `100` options correspondantes sont affichées. Cela peut être utile si beaucoup d'options de correspondance et de virtualisation n'ont pas été mises en place.
-- `config.matchFrom` (*'any' | 'start'* [optional]): Defaults to `'any'`.
+- `config.matchFrom` (_'any' | 'start'_ [optionnel]) : Valeur par défaut à `'any'`.
 - `config.stringify` (*Func* [optional]): Controls how an option is converted into a string so that it can be matched against the input text fragment.
 - `config.trim` (*Boolean* [optional]): Valeur par défaut `false`. Supprimer les espaces suivants.
 
@@ -270,15 +270,15 @@ Recherchez dans 10 000 options générées aléatoirement. La liste est virtuali
 
 {{"demo": "pages/components/autocomplete/Virtualize.js"}}
 
-## Events
+## Évènements
 
-If you would like to prevent the default key handler behavior, you can set the event's `defaultMuiPrevented` property to `true`:
+Si vous souhaitez empêcher le comportement du gestionnaire de clés par défaut, vous pouvez définir la propriété `defaultMuiPrevented` de l'événement à `true` :
 
 ```jsx
 <Autocomplete
   onKeyDown={(event) => {
     if (event.key === 'Enter') {
-      // Prevent's default 'Enter' behavior.
+      // Empêche le comportement par défaut 'Enter'.
       event.defaultMuiPrevented = false;
       // your handler code
     }
@@ -290,14 +290,14 @@ If you would like to prevent the default key handler behavior, you can set the e
 
 ### autocomplete/autofill
 
-Les navigateurs ont des heuristiques pour aider les utilisateurs à remplir les entrées de formulaire. Cependant, cela peut nuire à l'UX du composant.
+Browsers have heuristics to help the user fill in form inputs. However, this can harm the UX of the component.
 
-By default, the component disables the **autocomplete** feature (remembering what the user has typed for a given field in a previous session) with the `autoComplete="off"` attribute. Google Chrome does not currently support this attribute setting ([Issue 587466](https://bugs.chromium.org/p/chromium/issues/detail?id=587466)). A possible workaround is to remove the `id` to have the component generate a random one.
+By default, the component disables the input **autocomplete** feature (remembering what the user has typed for a given field in a previous session) with the `autoComplete="off"` attribute. Google Chrome ne prend actuellement pas en charge ce paramètre d'attribut ([Problème 587466](https://bugs.chromium.org/p/chromium/issues/detail?id=587466)). Une solution possible consiste à supprimer l'`id` pour que le composant génère un code aléatoire.
 
-In addition to remembering past entered values, the browser might also propose **autofill** suggestions (saved login, address, or payment details). Dans le cas où vous voulez le remplissage automatique, vous pouvez essayer ce qui suit :
+En plus de se souvenir des valeurs entrées précédemment, le navigateur peut également proposer des suggestions de **saisie automatique** (connexion, adresse ou détails de paiement enregistrés). Dans le cas où vous voulez le remplissage automatique, vous pouvez essayer ce qui suit :
 
 - Nommez l'input sans fuir les informations que le navigateur peut utiliser. par exemple `id="field1"` au lieu de `id="country"`. Si vous laissez l'id vide, le composant utilise un id aléatoire.
-- Set `autoComplete="new-password"` (some browsers will suggest a strong password for inputs with this attribute setting):
+- Définissez `autoComplete="new-password"` (certains navigateurs suggèrent un mot de passe fort pour les entrées avec ce paramètre d'attribut) :
 
   ```jsx
   <TextField
@@ -309,7 +309,7 @@ In addition to remembering past entered values, the browser might also propose *
   />
   ```
 
-Read [the guide on MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion) for more details.
+Lisez le [guide sur MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion) pour plus de détails.
 
 ### voiceOver iOS
 

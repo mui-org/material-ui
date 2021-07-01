@@ -3,11 +3,21 @@ import Box from '@material-ui/core/Box';
 
 export default function GridTemplateAreas() {
   return (
-    <div style={{ width: '100%', height: '140px' }}>
+    <Box
+      sx={{
+        width: '100%',
+        height: '140px',
+        color: '#fff',
+        '& > .MuiBox-root > .MuiBox-root': {
+          p: 1,
+          borderRadius: 1,
+        },
+      }}
+    >
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 80px)',
+          gridTemplateColumns: 'repeat(4, 1fr)',
           gap: 1,
           gridTemplateRows: 'auto',
           gridTemplateAreas: `"header header header header"
@@ -15,27 +25,11 @@ export default function GridTemplateAreas() {
         "footer footer footer footer"`,
         }}
       >
-        <Box
-          sx={{ bgcolor: 'primary.main', color: 'white', p: 1, gridArea: 'header' }}
-        >
-          Header
-        </Box>
-        <Box
-          sx={{ bgcolor: 'secondary.main', color: 'white', p: 1, gridArea: 'main' }}
-        >
-          Main
-        </Box>
-        <Box
-          sx={{ bgcolor: 'info.main', p: 1, color: 'white', gridArea: 'sidebar' }}
-        >
-          Sidebar
-        </Box>
-        <Box
-          sx={{ bgcolor: 'warning.main', color: 'white', p: 1, gridArea: 'footer' }}
-        >
-          Footer
-        </Box>
+        <Box sx={{ gridArea: 'header', bgcolor: 'primary.main' }}>Header</Box>
+        <Box sx={{ gridArea: 'main', bgcolor: 'secondary.main' }}>Main</Box>
+        <Box sx={{ gridArea: 'sidebar', bgcolor: 'info.main' }}>Sidebar</Box>
+        <Box sx={{ gridArea: 'footer', bgcolor: 'warning.main' }}>Footer</Box>
       </Box>
-    </div>
+    </Box>
   );
 }

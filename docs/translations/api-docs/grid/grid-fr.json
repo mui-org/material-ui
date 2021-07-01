@@ -1,19 +1,20 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "alignContent": "Defines the <code>align-content</code> style property. It&#39;s applied for all screen sizes.",
-    "alignItems": "Defines the <code>align-items</code> style property. It&#39;s applied for all screen sizes.",
     "children": "Le contenu du composant.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "columns": "The number of columns.",
+    "columnSpacing": "Defines the horizontal space between the type <code>item</code> components. It overrides the value of the <code>spacing</code> prop.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
     "container": "If <code>true</code>, the component will have the flex <em>container</em> behavior. You should be wrapping <em>items</em> with a <em>container</em>.",
     "direction": "Defines the <code>flex-direction</code> style property. It is applied for all screen sizes.",
     "item": "If <code>true</code>, the component will have the flex <em>item</em> behavior. You should be wrapping <em>items</em> with a <em>container</em>.",
-    "justifyContent": "Defines the <code>justify-content</code> style property. It is applied for all screen sizes.",
     "lg": "Defines the number of grids the component is going to use. It&#39;s applied for the <code>lg</code> breakpoint and wider screens if not overridden.",
     "md": "Defines the number of grids the component is going to use. It&#39;s applied for the <code>md</code> breakpoint and wider screens if not overridden.",
+    "rowSpacing": "Defines the vertical space between the type <code>item</code> components. It overrides the value of the <code>spacing</code> prop.",
     "sm": "Defines the number of grids the component is going to use. It&#39;s applied for the <code>sm</code> breakpoint and wider screens if not overridden.",
     "spacing": "Defines the space between the type <code>item</code> component. It can only be used on a type <code>container</code> component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "wrap": "Defines the <code>flex-wrap</code> style property. It&#39;s applied for all screen sizes.",
     "xl": "Defines the number of grids the component is going to use. It&#39;s applied for the <code>xl</code> breakpoint and wider screens.",
     "xs": "Defines the number of grids the component is going to use. It&#39;s applied for all the screen sizes with the lowest priority.",
@@ -62,76 +63,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>wrap=\"reverse\"</code>"
-    },
-    "align-items-xs-center": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignItems=\"center\"</code>"
-    },
-    "align-items-xs-flex-start": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignItems=\"flex-start\"</code>"
-    },
-    "align-items-xs-flex-end": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignItems=\"flex-end\"</code>"
-    },
-    "align-items-xs-baseline": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignItems=\"baseline\"</code>"
-    },
-    "align-content-xs-center": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignContent=\"center\"</code>"
-    },
-    "align-content-xs-flex-start": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignContent=\"flex-start\"</code>"
-    },
-    "align-content-xs-flex-end": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignContent=\"flex-end\"</code>"
-    },
-    "align-content-xs-space-between": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignContent=\"space-between\"</code>"
-    },
-    "align-content-xs-space-around": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>alignContent=\"space-around\"</code>"
-    },
-    "justify-content-xs-center": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>justifyContent=\"center\"</code>"
-    },
-    "justify-content-xs-flex-end": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>justifyContent=\"flex-end\"</code>"
-    },
-    "justify-content-xs-space-between": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>justifyContent=\"space-between\"</code>"
-    },
-    "justify-content-xs-space-around": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>justifyContent=\"space-around\"</code>"
-    },
-    "justify-content-xs-space-evenly": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>justifyContent=\"space-evenly\"</code>"
     }
   }
 }

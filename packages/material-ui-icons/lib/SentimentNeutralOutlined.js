@@ -1,15 +1,28 @@
-import createSvgIcon from './utils/createSvgIcon.js';
-import { jsx as _jsx } from "react/jsx-runtime";
-export default createSvgIcon([/*#__PURE__*/_jsx("path", {
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _jsxRuntime = require("react/jsx-runtime");
+
+var _default = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M9 14h6v1.5H9z"
-}, "0"), /*#__PURE__*/_jsx("circle", {
+}, "0"), /*#__PURE__*/(0, _jsxRuntime.jsx)("circle", {
   cx: "15.5",
   cy: "9.5",
   r: "1.5"
-}, "1"), /*#__PURE__*/_jsx("circle", {
+}, "1"), /*#__PURE__*/(0, _jsxRuntime.jsx)("circle", {
   cx: "8.5",
   cy: "9.5",
   r: "1.5"
-}, "2"), /*#__PURE__*/_jsx("path", {
+}, "2"), /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
 }, "3")], 'SentimentNeutralOutlined');
+
+exports.default = _default;

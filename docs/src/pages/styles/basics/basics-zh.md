@@ -41,7 +41,7 @@ yarn add @material-ui/styles
 
 ```jsx
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
@@ -70,7 +70,7 @@ export default function Hook() {
 
 ```jsx
 import * as React from 'react';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
 const MyButton = styled(Button)({
@@ -95,7 +95,7 @@ export default function StyledComponents() {
 ```jsx
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
 const styles = {
@@ -202,20 +202,24 @@ const useStyles = makeStyles((theme) => ({
 
 {{"demo": "pages/styles/basics/StressTest.js"}}
 
-## @material-ui/core/styles 与 @material-ui/styles
+## Using the theme context
 
-Material-UI 的样式是由 [@material-ui/styles](https://www.npmjs.com/package/@material-ui/styles) 包加载的，（由 JSS 构建）。 这个解决方案是[独立](https://bundlephobia.com/result?p=@material-ui/styles)的。 它没有一个默认的主题，而对那些不使用 Material-UI 组件的 React 应用，你也可以用于设置它们的样式。
+Starting from v5, Material-UI no longer uses JSS as its default styling solution. If you still want to use the utilities exported by `@material-ui/styles`, you will need to provide the `theme` as part of the context. For this, you can use the `ThemeProvider` component available in `@material-ui/styles`, or, if you are already using `@material-ui/core`, you should use the one exported from `@material-ui/core/styles` so that the same `theme` is available for components from '@material-ui/core'.
 
-为了减少在使用 Material-UI 时要安装的包的数量，并且简化导入的步骤，我们将 `@material-ui/styles` 模块从 `@material-ui/core/styles` 中重新导出。
-
-这样一来，无需系统性的提供一个主题，默认的 Material-UI 主题被应用到重新导出的 `makeStyles`，`styled`，`withTheme`，`useTheme`，和 `withStyles` 模块当中。
-
-例如:
-
-```js
-// 重新与默认的主题导出
-import { makeStyles } from '@material-ui/core/styles';
-
-// 原有的不带主题的模块
+```jsx
 import { makeStyles } from '@material-ui/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.primary.main,
+  }
+}));
+
+const App = (props) => {
+  const classes = useStyles();
+  return <ThemeProvider theme={theme}><div {...props} className={classes.root}></ThemeProvider>;
+}
 ```

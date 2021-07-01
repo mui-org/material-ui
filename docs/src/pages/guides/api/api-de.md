@@ -38,7 +38,7 @@ Wir vermeiden, die vom DOM unterstützten nativen Eigenschaften wie [`className`
 
 ### CSS-Klassen
 
-All components accept a [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) prop to customize the styles. Das Design der classes beantwortet zwei Bedingungen: Die Klassenstruktur so einfach wie möglich zu gestalten, aber trotzdem ausreichend, um die Material Design-Spezifikation zu implementieren.
+All components accept a [`classes`](/customization/how-to-customize/#overriding-styles-with-classes) prop to customize the styles. The classes design answers two constraints: to make the classes structure as simple as possible, while sufficient to implement the Material Design guidelines.
 
 - Die auf das Wurzelelement angewendete Klasse wird immer als `root` bezeichnet.
 - Alle Standardstile sind in einer einzigen Klasse zusammengefasst.
@@ -82,7 +82,7 @@ Der Name einer booleschen Eigenschaft sollte basierend auf dem **Standardwert** 
 
 Der überwiegende Teil der kontrollierten Komponente wird über die `value` und `onChange` Eigenschaften gesteuert, jedoch werden die `open` / `onClose` / `onOpen` Kombination wird für den Anzeigezustand verwendet. In the cases where there are more events, we put the noun first, and then the verb, for example: `onPageChange`, `onRowsChange`.
 
-### boolean vs enum
+### boolean vs. enum
 
 Es gibt zwei Möglichkeiten, die API für die Variationen einer Komponente zu entwerfen: mit einem * Booleschen Wert*; oder mit einer *Aufzählung (enum)*. Nehmen wir zum Beispiel einen Button, die verschiedene Typen hat. Jede Option hat ihre Vor- und Nachteile:
 
@@ -107,7 +107,7 @@ Es gibt zwei Möglichkeiten, die API für die Variationen einer Komponente zu en
 
   Diese API ist ausführlicher: `<Button>`, `<Button variant="contained">`, `<Button variant="fab">`.
 
-  However it prevents an invalid combination from being used, bounds the number of properties exposed, and can easily support new values in the future.
+  However, it prevents an invalid combination from being used, bounds the number of props exposed, and can easily support new values in the future.
 
 Die Komponenten der Material-UI verwenden eine Kombination der beiden Ansätze gemäß den folgenden Regeln:
 

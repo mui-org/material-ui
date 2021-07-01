@@ -6,6 +6,7 @@ import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled
 import KeyboardArrowLeft from '../internal/svg-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '../internal/svg-icons/KeyboardArrowRight';
 import ButtonBase from '../ButtonBase';
+import useTheme from '../styles/useTheme';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
 import tabScrollButtonClasses, { getTabScrollButtonUtilityClass } from './tabScrollButtonClasses';
@@ -26,10 +27,7 @@ const TabScrollButtonRoot = styled(ButtonBase, {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.orientation && styles[styleProps.orientation]),
-    };
+    return [styles.root, styleProps.orientation && styles[styleProps.orientation]];
   },
 })(({ styleProps }) => ({
   /* Styles applied to the root element. */
@@ -53,8 +51,10 @@ const TabScrollButton = React.forwardRef(function TabScrollButton(inProps, ref) 
   const props = useThemeProps({ props: inProps, name: 'MuiTabScrollButton' });
   const { className, direction, orientation, disabled, ...other } = props;
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const theme = useTheme();
+  const isRtl = theme.direction === 'rtl';
+
+  const styleProps = { isRtl, ...props };
 
   const classes = useUtilityClasses(styleProps);
 

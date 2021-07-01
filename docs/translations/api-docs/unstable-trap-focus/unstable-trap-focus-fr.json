@@ -5,7 +5,6 @@
     "disableAutoFocus": "If <code>true</code>, the trap focus will not automatically shift focus to itself when it opens, and replace it to the last focused element when it closes. This also works correctly with any trap focus children that have the <code>disableAutoFocus</code> prop.<br>Generally this should never be set to <code>true</code> as it makes the trap focus less accessible to assistive technologies, like screen readers.",
     "disableEnforceFocus": "If <code>true</code>, the trap focus will not prevent focus from leaving the trap focus while open.<br>Generally this should never be set to <code>true</code> as it makes the trap focus less accessible to assistive technologies, like screen readers.",
     "disableRestoreFocus": "If <code>true</code>, the trap focus will not restore focus to previously focused element once trap focus is hidden.",
-    "getDoc": "Return the document to consider. We use it to implement the restore focus between different browser documents.",
     "getTabbable": "Returns an array of ordered tabbable nodes (i.e. in tab order) within the root. For instance, you can provide the &quot;tabbable&quot; npm dependency.<br><br><strong>Signature:</strong><br><code>function(root: HTMLElement) =&gt; void</code><br>",
     "isEnabled": "Do we still want to enforce the focus? This prop helps nesting TrapFocus elements.",
     "open": "If <code>true</code>, focus is locked."

@@ -15,40 +15,72 @@ materialDesign: https://material.io/components/chips
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## Chip
+## Basic chip
 
-以下是纸片组件的一个例子，它使用了图片，SVG 图标，“字母” 和（带有字符串的）头像。
+The `Chip` component supports outlined and filled styling.
 
-- 定义了 `onClick` 属性的纸片组件会在聚焦时会有外观的变化。
-- 定义了 `onDelete` 属性的纸片组件将显示一个删除图标，并在鼠标悬浮时有外观的变化。
+{{"demo": "pages/components/chips/BasicChips.js"}}
 
-{{"demo": "pages/components/chips/Chips.js"}}
+## Chip actions
 
-### 描边纸片
+You can use the following actions.
 
-描边纸片展示了另一种风格。
+- Chips with the `onClick` prop defined change appearance on focus, hover, and click.
+- Chips with the `onDelete` prop defined will display a delete icon which changes appearance on hover.
 
-{{"demo": "pages/components/chips/OutlinedChips.js"}}
+### Clickeable
 
-## 纸片阵列
+{{"demo": "pages/components/chips/ClickeableChips.js"}}
 
-下面是一个通过数组呈现多个纸片的示例。 删除一个纸片元素，则会将其从纸片组的数组中删除。 请注意，由于没有定义 `onClick` 属性，所以这些纸片在被点击或触碰时可以被聚焦，但不会在立体和阴影上有所变化。
+### Deleteable
 
-{{"demo": "pages/components/chips/ChipsArray.js", "bg": true}}
+{{"demo": "pages/components/chips/DeleteableChips.js"}}
 
-## 小型纸片组件
+### Clickeable and deleteable
+
+{{"demo": "pages/components/chips/ClickeableAndDeleteableChips.js"}}
+
+### Clickeable link
+
+{{"demo": "pages/components/chips/ClickeableLinkChips.js"}}
+
+### Custom delete icon
+
+{{"demo": "pages/components/chips/CustomDeleteIconChips.js"}}
+
+## Chip adornments
+
+You can add ornaments to the beginning of the component.
+
+Use the `avatar` prop to added a avatar or use the `icon` prop to added a icon.
+
+### Avatar chip
+
+{{"demo": "pages/components/chips/AvatarChips.js"}}
+
+### Icon chip
+
+{{"demo": "pages/components/chips/IconChips.js"}}
+
+## Color chip
+
+You can use the `color` prop to define a primary or secondary color.
+
+{{"demo": "pages/components/chips/ColorChips.js"}}
+
+## Sizes chip
 
 您可以借助 `size` 属性来定义一个小型纸片组件。
 
-### 填充的变量
+{{"demo": "pages/components/chips/SizesChips.js"}}
 
-{{"demo": "pages/components/chips/SmallChips.js"}}
+## 纸片阵列
 
-### 描边的变量
+An example of rendering multiple chips from an array of values. 删除一个纸片元素，则会将其从纸片组的数组中删除。 Note that since no `onClick` prop is defined, the `Chip` can be focused, but does not gain depth while clicked or touched.
 
-{{"demo": "pages/components/chips/SmallOutlinedChips.js"}}
+{{"demo": "pages/components/chips/ChipsArray.js", "bg": true}}
 
-## 在线编译纸片组件
+## Chip playground
 
 {{"demo": "pages/components/chips/ChipsPlayground.js", "hideToolbar": true}}
 

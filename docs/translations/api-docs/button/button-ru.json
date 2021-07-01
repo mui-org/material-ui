@@ -5,7 +5,7 @@
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "Если <code>true</code>, компонент отключен.",
     "disableElevation": "If <code>true</code>, no elevation is used.",
     "disableFocusRipple": "If <code>true</code>, the  keyboard focus ripple is disabled.",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.<br>⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure to highlight the element by applying separate styles with the <code>focusVisibleClassName</code>.",
@@ -20,10 +20,6 @@
   "classDescriptions": {
     "root": {
       "description": "Styles applied to the root element."
-    },
-    "label": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the span element that wraps the children"
     },
     "text": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

@@ -17,7 +17,8 @@
     "rowsPerPageOptions": "Customizes the options of the rows per page select field. If less than two options are available, no select field will be displayed.",
     "SelectProps": "Props applied to the rows per page <a href=\"/api/select/\"><code>Select</code></a> element.",
     "showFirstButton": "If <code>true</code>, show the first-page button.",
-    "showLastButton": "If <code>true</code>, show the last-page button."
+    "showLastButton": "If <code>true</code>, show the last-page button.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details."
   },
   "classDescriptions": {
     "root": {
@@ -31,10 +32,9 @@
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the spacer element"
     },
-    "caption": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the caption Typography component",
-      "conditions": "<code>variant=\"caption\"</code>"
+    "selectLabel": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the select label Typography element"
     },
     "selectRoot": {
       "description": "Styles applied to {{nodeName}}.",
@@ -50,11 +50,15 @@
     },
     "input": {
       "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the InputBase component"
+      "nodeName": "the Select component root element"
     },
     "menuItem": {
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the MenuItem component"
+    },
+    "displayedRows": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "the displayed rows Typography element"
     },
     "actions": {
       "description": "Styles applied to {{nodeName}}.",

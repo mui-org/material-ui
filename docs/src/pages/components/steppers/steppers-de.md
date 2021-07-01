@@ -1,5 +1,5 @@
 ---
-title: React Stepper component
+title: React Stepper Komponente
 components: MobileStepper, Step, StepButton, StepConnector, StepContent, StepIcon, StepLabel, Stepper
 githubLabel: 'component: Stepper'
 materialDesign: https://material.io/archive/guidelines/components/steppers.html
@@ -11,7 +11,7 @@ materialDesign: https://material.io/archive/guidelines/components/steppers.html
 
 [Stepper](https://material.io/archive/guidelines/components/steppers.html) zeigen den Fortschritt durch eine Folge logischer und nummerierter Schritte an. Sie können auch zur Navigation verwendet werden. Steppers können eine vorübergehende Rückmeldung anzeigen, nachdem ein Schritt gespeichert wurde.
 
-- **Types of Steps**: Editable, Non-editable, Mobile, Optional
+- **Arten von Schritten**: Bearbeitbar, Nicht editierbar, Mobil, Optional
 - **Types of Steppers**: Horizontal, Vertical, Linear, Non-linear
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
@@ -28,7 +28,7 @@ Horizontal steppers are ideal when the contents of one step depend on an earlier
 
 A linear stepper allows the user to complete the steps in sequence.
 
-Der `Stepper` kann gesteuert werden, indem der aktuelle Schrittindex (auf Null basierend) als `activeStep` Eigenschaft übergeben wird. Die `Stepper-` Ausrichtung wird mithilfe der Eigenschaft `orientation` gesetzt.
+Der `Stepper` kann gesteuert werden, indem der aktuelle Schrittindex (auf Null basierend) als `activeStep` Eigenschaft übergeben wird. Die `Stepper` Ausrichtung wird mithilfe der Eigenschaft `orientation` gesetzt.
 
 Dieses Beispiel zeigt auch die Verwendung eines optionalen Schritt durch setzten der `optional` Eigenschaft auf der zweiten `Step` Komponente. Beachten Sie, dass Sie selbst entscheiden müssen, wann ein optionaler Schritt übersprungen wird. Wenn Sie dies für einen bestimmten Schritt festgelegt haben, müssen Sie `complete={false}` setzten, um anzuzeigen, dass der Index des aktiven Schritts den optionalen Schritt überschritten hat, jedoch nicht wirklich abgeschlossen ist.
 
@@ -38,7 +38,7 @@ Dieses Beispiel zeigt auch die Verwendung eines optionalen Schritt durch setzten
 
 Mit nichtlinearen Steppern können Benutzer an jedem Punkt einen mehrstufigen Fluss einsteigen.
 
-Dieses Beispiel ähnelt dem regulären horizontalen Stepper, mit der Ausnahme, dass Schritte nicht mehr automatisch auf `=disabled={true}` basierend auf der Eigenschaft `activeStep` gesetzt werden.
+Dieses Beispiel ähnelt dem regulären horizontalen Stepper, mit der Ausnahme, dass Schritte nicht mehr automatisch auf `disabled={true}` basierend auf der Eigenschaft `activeStep` gesetzt werden.
 
 The use of the `StepButton` here demonstrates clickable step labels, as well as setting the `completed` flag. However because steps can be accessed in a non-linear fashion, it's up to your own implementation to determine when all steps are completed (or even if they need to be completed).
 

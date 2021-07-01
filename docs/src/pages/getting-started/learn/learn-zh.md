@@ -52,5 +52,5 @@
 
 [![参考手册](/static/blog/material-ui-v4-is-out/cookbook.png)](https://www.amazon.com/gp/product/1789615224/)
 
-- **Builder Book**：学习如何使用 Modern JavaScript 堆栈和 Material-UI 来从头开始创建一个全栈 JavaScript Web 应用程序。
-  - 📘 [The book](https://builderbook.org/book)
+- **Builder Book**: Learn how to build a full-stack JavaScript and SaaS web application from scratch, using a Modern JavaScript stack and Material-UI.
+  - 📘 [书](https://builderbook.org/)

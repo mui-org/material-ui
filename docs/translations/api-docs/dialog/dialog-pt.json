@@ -3,8 +3,9 @@
   "propDescriptions": {
     "aria-describedby": "The id(s) of the element(s) that describe the dialog.",
     "aria-labelledby": "The id(s) of the element(s) that label the dialog.",
+    "BackdropComponent": "A backdrop component. This prop enables custom backdrop rendering.",
     "children": "Dialog children, usually the included sub-components.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "disableEscapeKeyDown": "If <code>true</code>, hitting escape will not fire the <code>onClose</code> callback.",
     "fullScreen": "If <code>true</code>, the dialog is full-screen.",
     "fullWidth": "If <code>true</code>, the dialog stretches to <code>maxWidth</code>.<br>Notice that the dialog width grow is limited by the default margin.",
@@ -15,79 +16,80 @@
     "PaperComponent": "The component used to render the body of the dialog.",
     "PaperProps": "Props applied to the <a href=\"/api/paper/\"><code>Paper</code></a> element.",
     "scroll": "Determine the container for scrolling the dialog.",
-    "TransitionComponent": "The component used for the transition. <a href=\"/components/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "TransitionComponent": "O componente usado para a transição. <a href=\"/components/transitions/#transitioncomponent-prop\">Siga este guia</a> para saber mais sobre os requisitos para este componente.",
     "transitionDuration": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object.",
-    "TransitionProps": "Props applied to the transition element. By default, the element is based on this <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a> component."
+    "TransitionProps": "Propriedades aplicadas ao elemento de transição. Por padrão, o elemento é baseado neste componente <a href=\"http://reactcommunity.org/react-transition-group/transition\"><code>Transition</code></a>."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "scrollPaper": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the container element",
       "conditions": "<code>scroll=\"paper\"</code>"
     },
     "scrollBody": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the container element",
       "conditions": "<code>scroll=\"body\"</code>"
     },
     "container": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the container element"
     },
     "paper": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Paper component"
     },
     "paperScrollPaper": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>scroll=\"paper\"</code>"
     },
     "paperScrollBody": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>scroll=\"body\"</code>"
     },
     "paperWidthFalse": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>maxWidth=false</code>"
     },
     "paperWidthXs": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>maxWidth=\"xs\"</code>"
     },
     "paperWidthSm": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>maxWidth=\"sm\"</code>"
     },
     "paperWidthMd": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>maxWidth=\"md\"</code>"
     },
     "paperWidthLg": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>maxWidth=\"lg\"</code>"
     },
     "paperWidthXl": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>maxWidth=\"xl\"</code>"
     },
     "paperFullWidth": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>fullWidth={true}</code>"
     },
     "paperFullScreen": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>fullScreen={true}</code>"
     }

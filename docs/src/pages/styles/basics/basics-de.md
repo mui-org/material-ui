@@ -41,7 +41,7 @@ Es gibt 3 mögliche APIs, die Sie verwenden können, um Stile zu generieren und 
 
 ```jsx
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
@@ -70,7 +70,7 @@ Hinweis: Dies gilt nur für aufrufende Syntax-Stil-Definitionen, die noch ein JS
 
 ```jsx
 import * as React from 'react';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
 const MyButton = styled(Button)({
@@ -95,7 +95,7 @@ export default function StyledComponents() {
 ```jsx
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
 const styles = {
@@ -199,20 +199,24 @@ const useStyles = makeStyles(theme => ({
 
 {{"demo": "pages/styles/basics/StressTest.js"}}
 
-## @material-ui/core/styles vs @material-ui/styles
+## Using the theme context
 
-Material-UI's styles are powered by the [@material-ui/styles](https://www.npmjs.com/package/@material-ui/styles) package, (built with JSS). This solution is [isolated](https://bundlephobia.com/result?p=@material-ui/styles). Es hat kein Standard-Theme und kann verwendet werden, um React-Anwendungen zu entwerfen, die keine Material-UI-Komponenten verwenden.
+Starting from v5, Material-UI no longer uses JSS as its default styling solution. If you still want to use the utilities exported by `@material-ui/styles`, you will need to provide the `theme` as part of the context. For this, you can use the `ThemeProvider` component available in `@material-ui/styles`, or, if you are already using `@material-ui/core`, you should use the one exported from `@material-ui/core/styles` so that the same `theme` is available for components from '@material-ui/core'.
 
-Um die Anzahl der zu installierenden Pakete zu reduzieren und um die Importe zu vereinfachen, werden `@material-ui/styles` Module von `@material-ui/core/styles` erneut exportiert.
-
-Um die Notwendigkeit einer systematischen Bereitstellung eines Themes zu entfernen, wird das Standard-Material-UI-Theme auf die neu exportierten `makeStyles`, `styled`, `withTheme`, `useTheme`, und `withStyles` Module angewendet.
-
-Zum Beispiel:
-
-```js
-// Re-export with a default theme
-import { makeStyles } from '@material-ui/core/styles';
-
-// Original module with no default theme
+```jsx
 import { makeStyles } from '@material-ui/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.primary.main,
+  }
+}));
+
+const App = (props) => {
+  const classes = useStyles();
+  return <ThemeProvider theme={theme}><div {...props} className={classes.root}></ThemeProvider>;
+}
 ```

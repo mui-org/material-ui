@@ -20,7 +20,7 @@
     "onBackdropClick": "Callback fired when the backdrop is clicked.",
     "onClose": "Callback fired when the component requests to be closed. The <code>reason</code> parameter can optionally be used to control the response to <code>onClose</code>.<br><br><strong>Signature:</strong><br><code>function(event: object, reason: string) =&gt; void</code><br><em>event:</em> The event source of the callback.<br><em>reason:</em> Can be: <code>&quot;escapeKeyDown&quot;</code>, <code>&quot;backdropClick&quot;</code>.",
     "open": "If <code>true</code>, the component is shown.",
-    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details.",
     "component": "The component used for the root node. Either a string to use a HTML element or a component."
   },
   "classDescriptions": {

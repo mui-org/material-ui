@@ -23,10 +23,7 @@ const TableRoot = styled('table', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.stickyHeader && styles.stickyHeader),
-    };
+    return [styles.root, styleProps.stickyHeader && styles.stickyHeader];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */

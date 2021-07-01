@@ -5,18 +5,11 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { CacheProvider } from '@emotion/react';
 import App from './App';
 import theme from './theme';
-import cache from './cache';
+import getCache from './getCache';
 
 function Main() {
-  React.useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
-
   return (
-    <CacheProvider value={cache}>
+    <CacheProvider value={getCache()}>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />

@@ -15,6 +15,7 @@ interface ListItemBaseProps {
    * If `true`, the list item is focused during the first mount.
    * Focus will also be triggered if the value changes from false to true.
    * @default false
+   * @deprecated checkout [ListItemButton](/api/list-item-button/) instead
    */
   autoFocus?: boolean;
   /**
@@ -29,11 +30,13 @@ interface ListItemBaseProps {
   /**
    * The container component used when a `ListItemSecondaryAction` is the last child.
    * @default 'li'
+   * @deprecated
    */
   ContainerComponent?: React.ElementType<React.HTMLAttributes<HTMLDivElement>>;
   /**
    * Props applied to the container component if used.
    * @default {}
+   * @deprecated
    */
   ContainerProps?: React.HTMLAttributes<HTMLDivElement>;
   /**
@@ -45,6 +48,7 @@ interface ListItemBaseProps {
   /**
    * If `true`, the component is disabled.
    * @default false
+   * @deprecated checkout [ListItemButton](/api/list-item-button/) instead
    */
   disabled?: boolean;
   /**
@@ -53,13 +57,23 @@ interface ListItemBaseProps {
    */
   disableGutters?: boolean;
   /**
+   * If `true`, all padding is removed.
+   * @default false
+   */
+  disablePadding?: boolean;
+  /**
    * If `true`, a 1px light border is added to the bottom of the list item.
    * @default false
    */
   divider?: boolean;
   /**
+   * The element to display at the end of ListItem.
+   */
+  secondaryAction?: React.ReactNode;
+  /**
    * Use to apply selected styling.
    * @default false
+   * @deprecated checkout [ListItemButton](/api/list-item-button/) instead
    */
   selected?: boolean;
   /**
@@ -107,30 +121,33 @@ export interface ListItemTypeMap<P, D extends React.ElementType> {
  *
  * - [ListItem API](https://material-ui.com/api/list-item/)
  */
-declare const ListItem: OverridableComponent<
+declare const ListItem: ExtendButtonBase<
   ListItemTypeMap<
     {
       /**
        * If `true`, the list item is a button (using `ButtonBase`). Props intended
        * for `ButtonBase` can then be applied to `ListItem`.
        * @default false
+       * @deprecated checkout [ListItemButton](/api/list-item-button/) instead
+       *
        */
-      button?: false;
+      button: true;
     },
-    'li'
+    'div'
   >
 > &
-  ExtendButtonBase<
+  OverridableComponent<
     ListItemTypeMap<
       {
         /**
          * If `true`, the list item is a button (using `ButtonBase`). Props intended
          * for `ButtonBase` can then be applied to `ListItem`.
          * @default false
+         * @deprecated checkout [ListItemButton](/api/list-item-button/) instead
          */
-        button: true;
+        button?: false;
       },
-      'div'
+      'li'
     >
   >;
 

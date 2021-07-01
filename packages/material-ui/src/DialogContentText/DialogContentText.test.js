@@ -1,19 +1,17 @@
 import * as React from 'react';
-import { createClientRender, describeConformanceV5, createMount } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import Typography from '@material-ui/core/Typography';
 import DialogContentText, {
   dialogContentTextClasses as classes,
 } from '@material-ui/core/DialogContentText';
 
 describe('<DialogContentText />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<DialogContentText>foo</DialogContentText>, () => ({
     classes,
     inheritComponent: Typography,
     render,
-    mount,
     muiName: 'MuiDialogContentText',
     refInstanceof: window.HTMLParagraphElement,
     skip: ['componentsProp', 'themeVariants'],

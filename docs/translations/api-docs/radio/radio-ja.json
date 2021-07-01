@@ -5,7 +5,7 @@
     "checkedIcon": "The icon to display when the component is checked.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
     "color": "The color of the component. It supports those theme colors that make sense for this component.",
-    "disabled": "If <code>true</code>, the accordion is displayed in a disabled state.",
+    "disabled": "<code>true</code>の場合、コンポーネントは無効になります。",
     "disableRipple": "If <code>true</code>, the ripple effect is disabled.",
     "icon": "The icon to display when the component is unchecked.",
     "id": "The id of the <code>input</code> element.",
@@ -15,6 +15,7 @@
     "onChange": "Callback fired when the state is changed.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (string). You can pull out the new checked state by accessing <code>event.target.checked</code> (boolean).",
     "required": "If <code>true</code>, the <code>input</code> element is required.",
     "size": "The size of the radio. <code>small</code> is equivalent to the dense radio styling.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "value": "The value of the component. The DOM API casts this to a string."
   },
   "classDescriptions": {

@@ -41,6 +41,12 @@ The date picker will be rendered as a modal dialog on mobile, and a textfield wi
 
 {{"demo": "pages/components/date-picker/BasicDatePicker.js"}}
 
+## Static mode
+
+It's possible to render any picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers.
+
+{{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
+
 ## Responsiveness
 
 The date picker component is designed and optimized for the device it runs on.
@@ -52,23 +58,29 @@ By default, the `DatePicker` component uses a `@media (pointer: fine)` media que
 
 {{"demo": "pages/components/date-picker/ResponsiveDatePickers.js"}}
 
+## Propiedades del Form
+
+The date picker component can be disabled or read-only.
+
+{{"demo": "pages/components/date-picker/InternalPickers.js"}}
+
 ## Localización
 
 Use `LocalizationProvider` to change the date-engine locale that is used to render the date picker. Here is an example of changing the locale for the `date-fns` adapter:
 
 {{"demo": "pages/components/date-picker/LocalizedDatePicker.js"}}
 
+## Jalali calendar system
+
+Install `date-fns-jalali` and use `@date-io/date-fns-jalali` adapter to support [Jalali calendar](https://en.wikipedia.org/wiki/Jalali_calendar).
+
+{{"demo": "pages/components/date-picker/JalaliDatePicker.js"}}
+
 ## Views playground
 
 It's possible to combine `year`, `month`, and `date` selection views. Views will appear in the order they're included in the `views` array.
 
 {{"demo": "pages/components/date-picker/ViewsDatePicker.js"}}
-
-## Static mode
-
-It's possible to render any picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers.
-
-{{"demo": "pages/components/date-picker/StaticDatePickerDemo.js", "bg": true}}
 
 ## Landscape orientation
 
@@ -80,7 +92,7 @@ For ease of use the date picker will automatically change the layout between por
 
 Some lower level sub-components (`DayPicker`, `MonthPicker` and `YearPicker`) are also exported. These are rendered without a wrapper or outer logic (masked input, date values parsing and validation, etc.).
 
-{{"demo": "pages/components/date-picker/InternalPickers.js"}}
+{{"demo": "pages/components/date-picker/SubComponentsPickers.js"}}
 
 ## Custom input component
 

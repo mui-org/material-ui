@@ -12,4 +12,4 @@
 
 <!-- #default-branch-switch -->
 
-如果你想了解更多有关主题是如何组合的信息，请看看 [`material-ui/style/createTheme.js`](https://github.com/mui-org/material-ui/blob/next/packages/material-ui/src/styles/createTheme.js) 和 如何用`createTheme` 导入主题
+If you want to learn more about how the theme is assembled, take a look at [`material-ui/style/createTheme.js`](https://github.com/mui-org/material-ui/blob/next/packages/material-ui/src/styles/createTheme.js), and the related imports which `createTheme` uses.

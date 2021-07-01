@@ -1,12 +1,13 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
     "delay": "Adds a transition delay, to allow a series of SpeedDialActions to be animated.",
     "FabProps": "Props applied to the <a href=\"/api/fab/\"><code>Fab</code></a> component.",
     "icon": "The Icon to display in the SpeedDial Fab.",
     "id": "This prop is used to help implement the accessibility logic. If you don&#39;t provide this prop. It falls back to a randomly generated id.",
     "open": "Control the popup` open state.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
     "TooltipClasses": "<code>classes</code> prop applied to the <a href=\"/api/tooltip/\"><code>Tooltip</code></a> element.",
     "tooltipOpen": "Make the tooltip always visible when the SpeedDial is open.",
     "tooltipPlacement": "Placement of the tooltip.",
@@ -14,26 +15,26 @@
   },
   "classDescriptions": {
     "fab": {
-      "description": "Styles applied to {{nodeName}}.",
+      "description": "Estilos aplicados a {{nodeName}}.",
       "nodeName": "the Fab component"
     },
     "fabClosed": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the Fab component",
       "conditions": "<code>open={false}</code>"
     },
     "staticTooltip": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>tooltipOpen={true}</code>"
     },
     "staticTooltipClosed": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>tooltipOpen={true}</code> and <code>open={false}</code>"
     },
     "staticTooltipLabel": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
       "nodeName": "the static tooltip label",
       "conditions": "<code>tooltipOpen={true}</code>"
     },

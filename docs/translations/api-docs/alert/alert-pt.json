@@ -1,109 +1,110 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "action": "The action to display. It renders after the message, at the end of the alert.",
-    "children": "The content of the component.",
-    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "closeText": "Override the default label for the <em>close popup</em> icon button.<br>For localization purposes, you can use the provided <a href=\"/guides/localization/\">translations</a>.",
-    "color": "The main color for the alert. Unless provided, the value is taken from the <code>severity</code> prop.",
-    "icon": "Override the icon displayed before the children. Unless provided, the icon is mapped to the value of the <code>severity</code> prop.",
-    "iconMapping": "The component maps the <code>severity</code> prop to a range of different icons, for instance success to <code>&lt;SuccessOutlined&gt;</code>. If you wish to change this mapping, you can provide your own. Alternatively, you can use the <code>icon</code> prop to override the icon displayed.",
-    "onClose": "Callback fired when the component requests to be closed. When provided and no <code>action</code> prop is set, a close icon button is displayed that triggers the callback when clicked.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback.",
-    "role": "The ARIA role attribute of the element.",
-    "severity": "The severity of the alert. This defines the color and icon used.",
-    "variant": "The variant to use."
+    "action": "A ação a exibir. Ela renderiza após a mensagem, no final do alerta.",
+    "children": "O conteúdo do componente.",
+    "classes": "Sobrescreve ou extende os estilos aplicados para o componente. Veja a <a href=\"#css\">API CSS</a> abaixo para maiores detalhes.",
+    "closeText": "Sobrescreve o rótulo padrão do <em>popup de fechamento</em> do botão de ícone.<br>Para fins de localização, você pode usar as <a href=\"/guides/localization/\">localizações</a> fornecidas.",
+    "color": "A cor principal do alerta. Caso não seja fornecida, o valor é determinado com base na propriedade <code>severity</code>.",
+    "icon": "Sobrescreve o ícone exibido antes do elemento filho. Caso não seja fornecida, o ícone é determinado com base na propriedade <code>severity</code>.",
+    "iconMapping": "O componente mapeia a propriedade <code>severity</code> para um intervalo de diferentes ícones, por exemplo, sucesso é mapeado para <code>&lt;SuccessOutlined&gt;</code>. Se você deseja alterar este mapeamento, você pode fornecer o seu próprio. Alternativamente, você pode usar a propriedade <code>icon</code> para sobrescrever o ícone exibido.",
+    "onClose": "Callback disparado quando o componente e requisitado a ser fechado. Quando fornecido e a propriedade <code>action</code> nao é definida, um botão de ícone fechar é exibido para acionar o callback quando clicado.<br><br><strong>Assinatura:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> A fonte do evento de callback.",
+    "role": "O atributo de regra ARIA do elemento.",
+    "severity": "A severidade do alerta. Isso define a cor e o ícone usado.",
+    "sx": "The system prop that allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/basics/#the-sx-prop\">`sx` page</a> for more details.",
+    "variant": "A variante a usar."
   },
   "classDescriptions": {
     "root": {
-      "description": "Styles applied to the root element."
+      "description": "Estilos aplicados ao elemento raiz."
     },
     "filled": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"filled\"</code>"
     },
     "outlined": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
     "standard": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
       "conditions": "<code>variant=\"standard\"</code>"
     },
     "standardSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"success\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"standard\"</code> e <code>color=\"success\"</code>"
     },
     "standardInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"info\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"standard\"</code> e <code>color=\"info\"</code>"
     },
     "standardWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"warning\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"standard\"</code> e <code>color=\"warning\"</code>"
     },
     "standardError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"error\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"standard\"</code> e <code>color=\"error\"</code>"
     },
     "outlinedSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"success\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"outlined\"</code> e <code>color=\"success\"</code>"
     },
     "outlinedInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"info\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"outlined\"</code> e <code>color=\"info\"</code>"
     },
     "outlinedWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"warning\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"outlined\"</code> e <code>color=\"warning\"</code>"
     },
     "outlinedError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"error\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"outlined\"</code> e <code>color=\"error\"</code>"
     },
     "filledSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"success\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"filled\"</code> e <code>color=\"success\"</code>"
     },
     "filledInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"info\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"filled\"</code> e <code>color=\"info\"</code>"
     },
     "filledWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"warning\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"filled\"</code> e <code>color=\"warning\"</code>"
     },
     "filledError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"error\"</code>"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento raiz",
+      "conditions": "<code>variant=\"filled\"</code> e <code>color=\"error\"</code>"
     },
     "icon": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the icon wrapper element"
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "o elemento encapsulador do ícone"
     },
     "message": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the message wrapper element"
+      "description": "Estilos aplicados a {{nodeName}}.",
+      "nodeName": "o elemento encapsulador da mensagem"
     },
     "action": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the action wrapper element",
-      "conditions": "<code>action</code> is provided"
+      "description": "Estilos aplicados para {{nodeName}} se {{conditions}}.",
+      "nodeName": "o elemento encapsulador da ação",
+      "conditions": "<code>action</code> é fornecida"
     }
   }
 }

@@ -1,19 +1,17 @@
 import { expect } from 'chai';
 import * as React from 'react';
-import { createClientRender, createMount, describeConformanceV5 } from 'test/utils';
+import { createClientRender, describeConformanceV5 } from 'test/utils';
 import ImageListItemBar, {
   imageListItemBarClasses as classes,
 } from '@material-ui/core/ImageListItemBar';
 
 describe('<ImageListItemBar />', () => {
   const render = createClientRender();
-  const mount = createMount();
 
   describeConformanceV5(<ImageListItemBar title="conform?" />, () => ({
     classes,
     inheritComponent: 'div',
     render,
-    mount,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiImageListItemBar',
     testDeepOverrides: { slotName: 'titleWrap', slotClassName: classes.titleWrap },

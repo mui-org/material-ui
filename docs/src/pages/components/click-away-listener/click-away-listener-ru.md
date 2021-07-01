@@ -4,12 +4,12 @@ components: ClickAwayListener
 githubLabel: 'component: ClickAwayListener'
 ---
 
-# Прослушиватель завершающего щелчка
+# Событие клика вне компонента
 
-<p class="description">Detect if a click event happened outside of an element. It listens for clicks that occur somewhere in the document.</p>
+<p class="description">Отлавливает щелчок за пределами компонента Слушает только щелчки внутри браузерного документа</p>
 
-- 1.5 [1 кБ в сжатом виде](/size-snapshot).
-- ⚛️ Support portals
+- 📦 [1 кБ в сжатом виде](/size-snapshot).
+- ⚛️ Поддерживает порталы
 
 {{"component": "modules/components/ComponentLinkHeader.js", "design": false}}
 
@@ -19,18 +19,18 @@ githubLabel: 'component: ClickAwayListener'
 
 {{"demo": "pages/components/click-away-listener/ClickAway.js"}}
 
-Notice that the component only accepts one child element. You can find a more advanced demo on the [Menu documentation section](/components/menus/#menulist-composition).
+Обратите внимание, что компонент принимает только один дочерний элемент. Более подробный пример вы можете найти в разделе документации [меню](/components/menus/#menulist-composition).
 
 ## Portal
 
-The following demo uses [`Portal`](/components/portal/) to render the dropdown into a new "subtree" outside of current DOM hierarchy.
+Следующее демо использует [`Портал`](/components/portal/) для рендеринга раскрывающегося меню в новое поддерево вне текущей иерархии DOM.
 
 {{"demo": "pages/components/click-away-listener/PortalClickAway.js"}}
 
-## Leading edge
+## Ведущие события
 
-By default, the component responds to the trailing events (click + touch end). However, you can configure it to respond to the leading events (mouse down + touch start).
+По умолчанию компонент отвечает на конечные события (клик (click) + окончание касания (touchend)). Однако, вы можете настроить его таким образом, чтобы он отвечал и на ведущие событие (нажатие кнопки мыши (mousedown) + начало касания (touch start)).
 
 {{"demo": "pages/components/click-away-listener/LeadingClickAway.js"}}
 
-> ⚠️ In this mode, only interactions on the scrollbar of the document is ignored.
+> ⚠️ В этом режиме только взаимодействие на полосе прокрутки документа игнорируется.

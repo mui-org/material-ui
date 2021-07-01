@@ -11,6 +11,24 @@ import {
   testReactTestRenderer,
   testRootClass,
 } from './describeConformance';
+import createMount from './createMount';
+
+/**
+ * @typedef {Object} ConformanceOptions
+ * @property {() => void} [after]
+ * @property {object} classes - `classes` of the component provided by `@material-ui/styled-engine`
+ * @property {import('react').ElementType} [inheritComponent] - The element type that receives spread props or `undefined` if props are not spread.
+ * @property {string} muiName
+ * @property {(node: React.ReactElement) => import('./createClientRender').MuiRenderResult} [render] - Should be a return value from createClientRender
+ * @property {Array<keyof typeof fullSuite>} [only] - If specified only run the tests listed
+ * @property {any} refInstanceof - `ref` will be an instanceof this constructor.
+ * @property {Array<keyof typeof fullSuite>} [skip] - Skip the specified tests
+ * @property {string} [testComponentsRootPropWith] - The host component that should be rendered instead.
+ * @property {{ slotName: string, slotClassName: string }} [testDeepOverrides]
+ * @property {{ prop?: string, value?: any, styleKey: string }} [testStateOverrides]
+ * @property {object} [testVariantProps]
+ * @property {(mount: (node: React.ReactNode) => import('enzyme').ReactWrapper) => (node: React.ReactNode) => import('enzyme').ReactWrapper} [wrapMount] - You can use this option to mount the component with enzyme in a WrapperComponent. Make sure the returned node corresponds to the input node and not the wrapper component.
+ */
 
 function throwMissingPropError(field) {
   throw new Error(`missing "${field}" in options
@@ -201,6 +219,63 @@ function testThemeStyleOverrides(element, getOptions) {
         ).to.toHaveComputedStyle(testStyle);
       }
     });
+
+    it('overrideStyles does not replace each other in slots', function test() {
+      if (/jsdom/.test(window.navigator.userAgent)) {
+        this.skip();
+      }
+
+      const { muiName, classes, testStateOverrides, render } = getOptions();
+
+      const classKeys = Object.keys(classes);
+
+      // only test the component that has `root` and other classKey
+      if (!testStateOverrides || !classKeys.includes('root') || classKeys.length === 1) {
+        return;
+      }
+
+      // `styleKey` in some tests is `foo` or `bar`, so need to check if it is a valid classKey.
+      const isStyleKeyExists = classKeys.indexOf(testStateOverrides.styleKey) !== -1;
+
+      if (!isStyleKeyExists) {
+        return;
+      }
+
+      const theme = createTheme({
+        components: {
+          [muiName]: {
+            styleOverrides: {
+              root: {
+                [`&.${classes.root}`]: {
+                  filter: 'blur(1px)',
+                  mixBlendMode: 'darken',
+                },
+              },
+              ...(testStateOverrides && {
+                [testStateOverrides.styleKey]: {
+                  [`&.${classes.root}`]: {
+                    mixBlendMode: 'color',
+                  },
+                },
+              }),
+            },
+          },
+        },
+      });
+
+      render(
+        <ThemeProvider theme={theme}>
+          {React.cloneElement(element, {
+            [testStateOverrides.prop]: testStateOverrides.value,
+          })}
+        </ThemeProvider>,
+      );
+
+      expect(document.querySelector(`.${classes.root}`)).toHaveComputedStyle({
+        filter: 'blur(1px)', // still valid in root
+        mixBlendMode: 'color', // overridden by `styleKey`
+      });
+    });
   });
 }
 
@@ -281,18 +356,33 @@ const fullSuite = {
  * @param {() => ConformanceOptions} getOptions
  */
 export default function describeConformanceV5(minimalElement, getOptions) {
-  const { after: runAfterHook = () => {}, only = Object.keys(fullSuite), skip = [] } = getOptions();
-
-  const filteredTests = Object.keys(fullSuite).filter(
-    (testKey) => only.indexOf(testKey) !== -1 && skip.indexOf(testKey) === -1,
-  );
-
   describe('Material-UI component API', () => {
+    const {
+      after: runAfterHook = () => {},
+      only = Object.keys(fullSuite),
+      skip = [],
+      wrapMount,
+    } = getOptions();
+
+    const filteredTests = Object.keys(fullSuite).filter(
+      (testKey) => only.indexOf(testKey) !== -1 && skip.indexOf(testKey) === -1,
+    );
+
+    const baseMount = createMount();
+    const mount = wrapMount !== undefined ? wrapMount(baseMount) : baseMount;
+
     after(runAfterHook);
+
+    function getTestOptions() {
+      return {
+        ...getOptions(),
+        mount,
+      };
+    }
 
     filteredTests.forEach((testKey) => {
       const test = fullSuite[testKey];
-      test(minimalElement, getOptions);
+      test(minimalElement, getTestOptions);
     });
   });
 }

@@ -250,6 +250,10 @@ export interface Components {
     defaultProps?: ComponentsProps['MuiListItem'];
     styleOverrides?: ComponentsOverrides['MuiListItem'];
   };
+  MuiListItemButton?: {
+    defaultProps?: ComponentsProps['MuiListItemButton'];
+    styleOverrides?: ComponentsOverrides['MuiListItemButton'];
+  };
   MuiListItemAvatar?: {
     defaultProps?: ComponentsProps['MuiListItemAvatar'];
     styleOverrides?: ComponentsOverrides['MuiListItemAvatar'];

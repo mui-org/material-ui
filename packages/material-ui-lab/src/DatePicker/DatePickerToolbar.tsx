@@ -69,7 +69,7 @@ const DatePickerToolbar = React.forwardRef<HTMLDivElement, ToolbarComponentProps
         : utils.format(date, 'normalDate');
     }, [date, toolbarFormat, toolbarPlaceholder, utils, views]);
 
-    const styleProps = { ...props };
+    const styleProps = props;
 
     return (
       <DatePickerToolbarRoot

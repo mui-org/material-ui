@@ -97,8 +97,7 @@ const PickersModalDialog = (props: React.PropsWithChildren<PickersModalDialogPro
     todayText = 'Today',
   } = props;
 
-  // TODO: convert to simple assignment after the type error in defaultPropsHandler.js:60:6 is fixed
-  const styleProps = { ...props };
+  const styleProps = props;
 
   return (
     <PickersModalDialogRoot open={open} onClose={onDismiss} {...DialogProps}>

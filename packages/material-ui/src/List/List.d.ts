@@ -51,7 +51,9 @@ export interface ListTypeMap<P = {}, D extends React.ElementType = 'ul'> {
  */
 declare const List: OverridableComponent<ListTypeMap>;
 
-export type ListProps<D extends React.ElementType = ListTypeMap['defaultComponent'], P = {}> =
-  OverrideProps<ListTypeMap<P, D>, D>;
+export type ListProps<
+  D extends React.ElementType = ListTypeMap['defaultComponent'],
+  P = {},
+> = OverrideProps<ListTypeMap<P, D>, D>;
 
 export default List;

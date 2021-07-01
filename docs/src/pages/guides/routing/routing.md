@@ -5,7 +5,7 @@
 ## Navigation components
 
 There are two main components available to perform navigations.
-The most common one is the [`Link`](/components/link/) as its name might suggest.
+The most common one is the [`Link`](/components/links/) as its name might suggest.
 It renders a native `<a>` element and applies the `href` as an attribute.
 
 {{"demo": "pages/guides/routing/LinkDemo.js"}}
@@ -58,22 +58,33 @@ const theme = createTheme({
 ## `component` prop
 
 You can achieve the integration with third-party routing libraries with the `component` prop.
-You can learn more about this prop in the [composition guide](/guides/composition/#component-prop).
+You can learn more about this prop in the [**composition guide**](/guides/composition/#component-prop).
+
+### Link
 
 Here are a few demos with [react-router](https://github.com/ReactTraining/react-router).
 You can apply the same strategy with all the components: BottomNavigation, Card, etc.
 
-### Link
-
 {{"demo": "pages/guides/routing/LinkRouter.js"}}
-
-### Tabs
-
-{{"demo": "pages/guides/routing/TabsRouter.js", "defaultCodeOpen": false}}
 
 ### Button
 
 {{"demo": "pages/guides/routing/ButtonRouter.js"}}
+
+**Note**: The button base component adds the `role="button"` attribute when it identifies the intent to render a button without a native `<button>` element.
+This can create issues when rendering a link.
+If you are not using one of the `href`, `to`, or `component="a"` props, you need to override the `role` attribute.
+The above demo achieves this by setting `role={undefined}` **after** the spread props.
+
+```jsx
+const LinkBehavior = React.forwardRef((props, ref) => (
+  <RouterLink ref={ref} to="/" {...props} role={undefined} />
+));
+```
+
+### Tabs
+
+{{"demo": "pages/guides/routing/TabsRouter.js", "defaultCodeOpen": false}}
 
 ### List
 

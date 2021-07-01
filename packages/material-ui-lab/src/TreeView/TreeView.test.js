@@ -8,21 +8,18 @@ import {
   fireEvent,
   screen,
   describeConformanceV5,
-  createMount,
 } from 'test/utils';
 import Portal from '@material-ui/core/Portal';
 import TreeView, { treeViewClasses as classes } from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 
 describe('<TreeView />', () => {
-  const mount = createMount();
   const render = createClientRender();
 
   describeConformanceV5(<TreeView />, () => ({
     classes,
     inheritComponent: 'ul',
     render,
-    mount,
     refInstanceof: window.HTMLUListElement,
     muiName: 'MuiTreeView',
     skip: ['componentProp', 'componentsProp', 'themeVariants'],

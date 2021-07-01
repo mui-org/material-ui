@@ -15,6 +15,7 @@
     "onChange": "Callback fired when the state is changed.<br><br><strong>Signature:</strong><br><code>function(event: object) =&gt; void</code><br><em>event:</em> The event source of the callback. You can pull out the new value by accessing <code>event.target.value</code> (string). You can pull out the new checked state by accessing <code>event.target.checked</code> (boolean).",
     "required": "If <code>true</code>, the <code>input</code> element is required.",
     "size": "The size of the radio. <code>small</code> is equivalent to the dense radio styling.",
+    "sx": "Die Einstellung, die das Definieren von Überschreibungen, sowie zusätzlichen CSS-Styles erlaubt. Weitere Details finden Sie auf der <a href=\"/system/basics/#the-sx-prop\">`sx` Seite</a>.",
     "value": "The value of the component. The DOM API casts this to a string."
   },
   "classDescriptions": {

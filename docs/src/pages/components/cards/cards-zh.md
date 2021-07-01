@@ -15,11 +15,11 @@ materialDesign: https://material.io/components/cards
 
 {{"component": "modules/components/ComponentLinkHeader.js"}}
 
-## 简单的卡片
+## Basic card
 
 尽管卡片支持多操作、多个 UI 控件和一个加长的菜单，但请不要滥用它，切记，卡片只能作为那些复杂且详细信息的一个入口。
 
-{{"demo": "pages/components/cards/SimpleCard.js", "bg": true}}
+{{"demo": "pages/components/cards/BasicCard.js", "bg": true}}
 
 ### 描边卡片
 
@@ -45,7 +45,7 @@ materialDesign: https://material.io/components/cards
 
 > ⚠️ 当 `component="img"` 时，CardMedia 通过 `object-fit` 来居中图像。 这个用法不兼容 IE11。
 
-## 主要（primary）操作
+## 主要（Primary）操作
 
 通常情况下，卡片允许用户与它的整个表面进行交互，以触发它的主要动作，无论是扩展，链接到另一个屏幕或使用其他行为。 卡片的操作区域可以通过将其内容包裹在 `CardActionArea` 组件中来指定。
 

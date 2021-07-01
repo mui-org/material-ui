@@ -237,7 +237,6 @@ export interface AliasesCSSProperties {
    * @see https://developer.mozilla.org/docs/Web/CSS/padding-bottom
    */
   paddingY?: StandardCSSProperties['paddingTop'];
-
   /**
    * The **`typography`** property  is shorthand for the CSS properties **`font-family`**, **`font-weight`**, **`font-size`**, **`line-height`**, **`letter-spacing`** and **`text-transform``**.
    * It takes the values defined under `theme.typography` and spreads them on the element.

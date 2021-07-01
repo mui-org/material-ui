@@ -44,7 +44,8 @@ export default function DensityTool() {
   };
 
   const theme = useTheme();
-  const spacingUnit = theme.spacing(1);
+  // Use unstable_toUnitless in the future if need to handle custom themes
+  const spacingUnit = parseFloat(theme.spacing(1));
 
   const t = useTranslate();
 

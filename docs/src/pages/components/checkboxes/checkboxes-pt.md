@@ -20,21 +20,43 @@ Se você tem várias opções aparecendo em uma lista, você pode economizar esp
 
 {{"demo": "pages/components/checkboxes/Checkboxes.js"}}
 
-## Caixa de seleção com FormControlLabel
-
-Uma caixa de seleção só pode ter dois estados em um formulário: marcado ou desmarcado. Ou submete o seu valor ou não. Visualmente, existem na verdade três estados em que a caixa de seleção pode estar em: marcada, desmarcada ou indeterminada.
-
-{{"demo": "pages/components/checkboxes/IndeterminateCheckbox.js"}}
-
 ## Caixas de seleção com FormGroup
 
-O componente `Checkbox` pode ser exibido com um rótulo graças ao componente `FormControlLabel`.
+You can provide a label to the `Checkbox` thanks to the `FormControlLabel` component.
 
 {{"demo": "pages/components/checkboxes/CheckboxLabels.js"}}
 
+## Tamanho
+
+Use the `size` prop or customize the font size of the svg icons to change the size of the checkboxes.
+
+{{"demo": "pages/components/checkboxes/SizeCheckboxes.js"}}
+
+## Cor
+
+{{"demo": "pages/components/checkboxes/ColorCheckboxes.js"}}
+
+## Icon
+
+{{"demo": "pages/components/checkboxes/IconCheckboxes.js"}}
+
+## Controlled
+
+You can control the checkbox with the `checked` and `onChange` props:
+
+{{"demo": "pages/components/checkboxes/ControlledCheckbox.js"}}
+
+## Caixa de seleção com FormControlLabel
+
+Uma caixa de seleção só pode ter dois estados em um formulário: marcado ou desmarcado. Ou submete o seu valor ou não. Visually, there are **three** states a checkbox can be in: checked, unchecked, or indeterminate.
+
+{{"demo": "pages/components/checkboxes/IndeterminateCheckbox.js"}}
+
+> ⚠️ When indeterminate is set, the value of the `checked` prop only impacts the form submitted values. It has no accessibility or UX implications.
+
 ## Posicionamento do rótulo
 
-`FormGroup` é usado para agrupar componentes de seleção para facilitar o uso da API.
+`FormGroup` is a helpful wrapper used to group selection control components.
 
 {{"demo": "pages/components/checkboxes/CheckboxesGroup.js"}}
 
@@ -48,7 +70,7 @@ Você pode alterar o posicionamento do rótulo:
 
 Aqui está um exemplo de customização do componente. Você pode aprender mais sobre isso na [página de documentação de sobrescritas](/customization/how-to-customize/).
 
-{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js", "defaultCodeOpen": false}}
+{{"demo": "pages/components/checkboxes/CustomizedCheckbox.js"}}
 
 🎨 Se você está procurando inspiração, você pode verificar [os exemplos de customização de MUI Treasury](https://mui-treasury.com/styles/checkbox).
 

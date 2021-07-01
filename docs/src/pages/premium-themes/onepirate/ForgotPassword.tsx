@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
-import { makeStyles } from '@material-ui/styles';
-import { Theme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Typography from './modules/components/Typography';
 import AppFooter from './modules/views/AppFooter';
 import AppAppBar from './modules/views/AppAppBar';
@@ -12,21 +11,7 @@ import FormButton from './modules/form/FormButton';
 import FormFeedback from './modules/form/FormFeedback';
 import withRoot from './modules/withRoot';
 
-const useStyles = makeStyles<Theme>((theme) => ({
-  form: {
-    marginTop: theme.spacing(6),
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-  },
-  feedback: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 function ForgotPassword() {
-  const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
   const validate = (values: { [index: string]: string }) => {
@@ -65,7 +50,7 @@ function ForgotPassword() {
           validate={validate}
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+            <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
               <Field
                 autoFocus
                 autoComplete="email"
@@ -81,14 +66,14 @@ function ForgotPassword() {
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (
-                    <FormFeedback className={classes.feedback} error>
+                    <FormFeedback error sx={{ mt: 2 }}>
                       {submitError}
                     </FormFeedback>
                   ) : null
                 }
               </FormSpy>
               <FormButton
-                className={classes.button}
+                sx={{ mt: 3, mb: 2 }}
                 disabled={submitting || sent}
                 size="large"
                 color="secondary"
@@ -96,7 +81,7 @@ function ForgotPassword() {
               >
                 {submitting || sent ? 'In progress…' : 'Send reset link'}
               </FormButton>
-            </form>
+            </Box>
           )}
         </Form>
       </AppForm>

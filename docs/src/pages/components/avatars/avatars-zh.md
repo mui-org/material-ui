@@ -22,6 +22,10 @@ githubLabel: 'component: Avatar'
 
 {{"demo": "pages/components/avatars/LetterAvatars.js"}}
 
+You can use different background colors for the avatar. The following demo generates the color based on the name of the person.
+
+{{"demo": "pages/components/avatars/BackgroundLetterAvatars.js"}}
+
 ## 尺寸
 
 你可以通过改变 `height` 以及 `width` 这两个 CSS 属性来改变头像组件的尺寸。

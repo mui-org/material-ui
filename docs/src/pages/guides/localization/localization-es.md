@@ -12,15 +12,18 @@ Utilice el tema para configurar el texto regional globalmente:
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { zhCN } from '@material-ui/core/locale';
 
-const theme = createTheme({
-  palette: {
-    primary: { main: '#1976d2' },
+const theme = createTheme(
+  {
+    palette: {
+      primary: { main: '#1976d2' },
+    },
   },
-}, zhCN);
+  zhCN,
+);
 
 <ThemeProvider theme={theme}>
   <App />
-</ThemeProvider>
+</ThemeProvider>;
 ```
 
 ### Ejemplo
@@ -34,9 +37,12 @@ const theme = createTheme({
 | Arabic (Egypt)          | ar-EG                     | `arEG`            |
 | Armenio                 | hy-AM                     | `hyAM`            |
 | Azerbaiyano             | az-AZ                     | `azAZ`            |
+| Bangla                  | bn-BD                     | `bnBD`            |
 | Búlgaro                 | bg-BG                     | `bgBG`            |
 | Catalán                 | ca-ES                     | `caES`            |
+| Chinese (Hong Kong)     | zh-HK                     | `zhHK`            |
 | Chino (simplificado)    | zh-CN                     | `zhCN`            |
+| Chinese (Taiwan)        | zh-TW                     | `zhTW`            |
 | Checo                   | cs-CZ                     | `csCZ`            |
 | Holandés                | nl-NL                     | `nlNL`            |
 | Inglés (Estados Unidos) | en-US                     | `enUS`            |

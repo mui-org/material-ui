@@ -35,7 +35,6 @@
     "onViewChange": "Callback fired on view change.",
     "open": "Control the popup or dialog open state.",
     "OpenPickerButtonProps": "Props to pass to keyboard adornment button.",
-    "openPickerIcon": "Icon displaying for open picker button.",
     "orientation": "Force rendering in particular orientation.",
     "readOnly": "Make picker read only.",
     "reduceAnimations": "Disable heavy animations.",

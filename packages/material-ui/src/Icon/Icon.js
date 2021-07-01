@@ -27,11 +27,11 @@ const IconRoot = styled('span', {
   overridesResolver: (props, styles) => {
     const { styleProps } = props;
 
-    return {
-      ...styles.root,
-      ...(styleProps.color !== 'inherit' && styles[`color${capitalize(styleProps.color)}`]),
-      ...styles[`fontSize${capitalize(styleProps.fontSize)}`],
-    };
+    return [
+      styles.root,
+      styleProps.color !== 'inherit' && styles[`color${capitalize(styleProps.color)}`],
+      styles[`fontSize${capitalize(styleProps.fontSize)}`],
+    ];
   },
 })(({ theme, styleProps }) => ({
   /* Styles applied to the root element. */
@@ -54,6 +54,9 @@ const IconRoot = styled('span', {
   color: {
     primary: theme.palette.primary.main,
     secondary: theme.palette.secondary.main,
+    info: theme.palette.info.main,
+    success: theme.palette.success.main,
+    warning: theme.palette.warning.main,
     action: theme.palette.action.active,
     error: theme.palette.error.main,
     disabled: theme.palette.action.disabled,
@@ -129,7 +132,17 @@ Icon.propTypes /* remove-proptypes */ = {
    * @default 'inherit'
    */
   color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-    PropTypes.oneOf(['action', 'disabled', 'error', 'inherit', 'primary', 'secondary']),
+    PropTypes.oneOf([
+      'inherit',
+      'action',
+      'disabled',
+      'primary',
+      'secondary',
+      'error',
+      'info',
+      'success',
+      'warning',
+    ]),
     PropTypes.string,
   ]),
   /**

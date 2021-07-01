@@ -51,21 +51,22 @@ const StaticTimePicker = React.forwardRef(function StaticTimePicker<TDate>(
   const { pickerProps, inputProps } = usePickerState(props, valueManager);
 
   const {
+    displayStaticWrapperAs = 'mobile',
+    onChange,
     ToolbarComponent = TimePickerToolbar,
     value,
-    onChange,
-    displayStaticWrapperAs = 'mobile',
     ...other
   } = props;
-  const AllDateInputProps = { ...inputProps, ...other, ref, validationError };
+  const DateInputProps = { ...inputProps, ...other, ref, validationError };
 
   return (
     <StaticWrapper displayStaticWrapperAs={displayStaticWrapperAs}>
+      {/* @ts-ignore time picker has no component slot for the calendar header */}
       <Picker
         {...pickerProps}
         toolbarTitle={props.label || props.toolbarTitle}
         ToolbarComponent={ToolbarComponent}
-        DateInputProps={AllDateInputProps}
+        DateInputProps={DateInputProps}
         {...other}
       />
     </StaticWrapper>
@@ -96,6 +97,13 @@ StaticTimePicker.propTypes /* remove-proptypes */ = {
    * className applied to the root component.
    */
   className: PropTypes.string,
+  /**
+   * The components used for each slot.
+   * Either a string to use a HTML element or a component.
+   */
+  components: PropTypes.shape({
+    OpenPickerIcon: PropTypes.elementType,
+  }),
   /**
    * If `true` the popup or dialog will immediately close after submitting full date.
    * @default `true` for Desktop, `false` for Mobile (based on the chosen wrapper and `desktopModeMediaQuery` prop).
@@ -237,10 +245,6 @@ StaticTimePicker.propTypes /* remove-proptypes */ = {
    * Props to pass to keyboard adornment button.
    */
   OpenPickerButtonProps: PropTypes.object,
-  /**
-   * Icon displaying for open picker button.
-   */
-  openPickerIcon: PropTypes.node,
   /**
    * First view to show.
    */

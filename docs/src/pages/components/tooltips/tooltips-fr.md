@@ -109,9 +109,9 @@ You can enable the tooltip to follow the cursor by setting `followCursor={true}`
 
 {{"demo": "pages/components/tooltips/FollowCursorTooltips.js"}}
 
-## Virtual element
+## Élément virtuel
 
-In the event you need to implement a custom placement, you can use the `anchorEl` prop: The value of the `anchorEl` prop can be a reference to a fake DOM element. You need to create an object shaped like the [`VirtualElement`](https://popper.js.org/docs/v2/virtual-elements/).
+In the event you need to implement a custom placement, you can use the `anchorEl` prop: The value of the `anchorEl` prop can be a reference to a fake DOM element. Vous devez créer un objet formé comme le [`VirtualElement`](https://popper.js.org/docs/v2/virtual-elements/).
 
 {{"demo": "pages/components/tooltips/AnchorElTooltips.js"}}
 

@@ -68,6 +68,12 @@ loading
 
 {{"demo": "pages/components/skeleton/SkeletonChildren.js", "defaultCodeOpen": false}}
 
+## Cor
+
+The color of the component can be customized by changing its `background-color` CSS property. This is especially useful when on a black background (as the skeleton will otherwise be invisible).
+
+{{"demo": "pages/components/skeleton/SkeletonColor.js", "bg": "inline"}}
+
 ## Acessibilidade
 
 Telas com skeleton fornecem uma alternativa aos métodos tradicionais de feedback. Em vez de mostrar um resumo abstrato na tela, telas com skeleton criam uma expectativa do que está por vir, reduzindo a sensação cognitiva do processo de carregamento.

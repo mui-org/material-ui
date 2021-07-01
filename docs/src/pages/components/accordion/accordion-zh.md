@@ -18,7 +18,7 @@ waiAria: 'https://www.w3.org/TR/wai-aria-practices/#accordion'
 
 ## 简单的扩展面板
 
-{{"demo": "pages/components/accordion/SimpleAccordion.js", "bg": true}}
+{{"demo": "pages/components/accordion/BasicAccordion.js", "bg": true}}
 
 ## 可控制的折叠面板
 

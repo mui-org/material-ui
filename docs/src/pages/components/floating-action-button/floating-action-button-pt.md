@@ -21,9 +21,11 @@ Use um BAF apenas se for a maneira mais adequada para apresentar a ação princi
 
 ## Tamanho
 
-Use a propriedade `size` para aumentar ou diminuir botões de ação flutuante.
+By default, the size is `large`. Use the `size` prop for smaller floating action buttons.
 
 {{"demo": "pages/components/floating-action-button/FloatingActionButtonSize.js"}}
+
+{{"demo": "pages/components/floating-action-button/FloatingActionButtonExtendedSize.js"}}
 
 ## Animação
 
