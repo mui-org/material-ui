@@ -314,13 +314,7 @@ jobs:
 
       - run:
           name: Log defect declaration files
-          command: |
-            # ignore build failures
-            # Fixing these takes some effort that isn't viable to merge in a single PR.
-            # We'll simply monitor them for now.
-            set +e
-            node scripts/testBuiltTypes.js
-            exit 0
+          command: node scripts/testBuiltTypes.js
   test_browser:
     <<: *defaults
     docker:

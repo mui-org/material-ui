@@ -33,7 +33,7 @@
     "build:stable": "node ../../scripts/build stable",
     "build:umd": "cross-env BABEL_ENV=stable rollup -c scripts/rollup.config.js",
     "build:copy-files": "node ../../scripts/copy-files.js",
-    "build:types": "node ../../scripts/buildTypes",
+    "build:types": "tsc -p tsconfig.build.json",
     "prebuild": "rimraf build tsconfig.build.tsbuildinfo",
     "release": "yarn build && npm publish build --tag next",
     "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/material-ui/**/*.test.{js,ts,tsx}'",

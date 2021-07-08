@@ -500,7 +500,7 @@ export function parseFromProgram(
       return;
     }
 
-    const type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
+    const type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!);
     type.getCallSignatures().forEach((signature) => {
       if (!isTypeJSXElementLike(signature.getReturnType())) {
         return;
@@ -509,7 +509,7 @@ export function parseFromProgram(
       parsePropsSymbol(
         componentName,
         signature.parameters[0],
-        signature.parameters[0].valueDeclaration,
+        signature.parameters[0].valueDeclaration!,
         node.getSourceFile(),
       );
     });
@@ -649,7 +649,7 @@ export function parseFromProgram(
                 parsePropsSymbol(
                   variableNode.name.getText(),
                   symbol,
-                  symbol.valueDeclaration,
+                  symbol.valueDeclaration!,
                   node.getSourceFile(),
                 );
               }
