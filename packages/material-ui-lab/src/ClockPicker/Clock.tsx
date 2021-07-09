@@ -1,16 +1,16 @@
 import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import { styled } from '@material-ui/core/styles';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@material-ui/utils';
 import ClockPointer from './ClockPointer';
 import { useUtils, MuiPickersAdapter } from '../internal/pickers/hooks/useUtils';
 import { WrapperVariantContext } from '../internal/pickers/wrappers/WrapperVariantContext';
+import { PickerOnChangeFn } from '../internal/pickers/hooks/useViews';
 import { PickerSelectionState } from '../internal/pickers/hooks/usePickerState';
-import { useMeridiemMode } from '../internal/pickers/hooks/date-helpers-hooks';
+import { Meridiem, convertToMeridiem } from '../internal/pickers/time-utils';
 import { ClockView, getHours, getMinutes } from './shared';
 
-export interface ClockProps<TDate> extends ReturnType<typeof useMeridiemMode> {
+export interface ClockProps<TDate> {
   ampm: boolean;
   ampmInClock: boolean;
   autoFocus?: boolean;
@@ -23,6 +23,7 @@ export interface ClockProps<TDate> extends ReturnType<typeof useMeridiemMode> {
   ) => string;
   isTimeDisabled: (timeValue: number, type: ClockView) => boolean;
   minutesStep?: number;
+  onValueChange: PickerOnChangeFn<TDate>;
   onChange: (value: number, isFinish?: PickerSelectionState) => void;
   /**
    * DOM id that the selected option should have
@@ -31,6 +32,7 @@ export interface ClockProps<TDate> extends ReturnType<typeof useMeridiemMode> {
   selectedId: string | undefined;
   type: ClockView;
   value: number;
+  meridiemMode: Meridiem | null;
 }
 
 const ClockRoot = styled('div', { skipSx: true })(({ theme }) => ({
@@ -82,8 +84,12 @@ const ClockPin = styled('div', { skipSx: true })(({ theme }) => ({
 const ClockAmButton = styled(IconButton, { skipSx: true })<{ styleProps: ClockProps<any> }>(
   ({ theme, styleProps }) => ({
     zIndex: 1,
+    ...theme.typography.caption,
     position: 'absolute',
     bottom: 8,
+    padding: 4,
+    width: 42,
+    height: 42,
     left: 8,
     ...(styleProps.meridiemMode === 'am' && {
       backgroundColor: theme.palette.primary.main,
@@ -98,8 +104,12 @@ const ClockAmButton = styled(IconButton, { skipSx: true })<{ styleProps: ClockPr
 const ClockPmButton = styled(IconButton, { skipSx: true })<{ styleProps: ClockProps<any> }>(
   ({ theme, styleProps }) => ({
     zIndex: 1,
+    ...theme.typography.caption,
     position: 'absolute',
     bottom: 8,
+    padding: 4,
+    width: 42,
+    height: 42,
     right: 8,
     ...(styleProps.meridiemMode === 'pm' && {
       backgroundColor: theme.palette.primary.main,
@@ -122,11 +132,11 @@ function Clock<TDate>(props: ClockProps<TDate>) {
     children,
     date,
     getClockLabelText,
-    handleMeridiemChange,
     isTimeDisabled,
     meridiemMode,
     minutesStep = 1,
     onChange,
+    onValueChange,
     selectedId,
     type,
     value,
@@ -140,6 +150,15 @@ function Clock<TDate>(props: ClockProps<TDate>) {
 
   const isSelectedTimeDisabled = isTimeDisabled(value, type);
   const isPointerInner = !ampm && type === 'hours' && (value < 1 || value > 12);
+
+  const handleMeridiemChange = (mode: Meridiem) => () => {
+    if (mode === meridiemMode) {
+      return;
+    }
+
+    const timeWithMeridiem = convertToMeridiem(date, mode, Boolean(ampm), utils);
+    onValueChange(timeWithMeridiem, 'partial');
+  };
 
   const handleValueChange = (newValue: number, isFinish: PickerSelectionState) => {
     if (isTimeDisabled(newValue, type)) {
@@ -281,19 +300,19 @@ function Clock<TDate>(props: ClockProps<TDate>) {
         <React.Fragment>
           <ClockAmButton
             data-mui-test="in-clock-am-btn"
-            onClick={() => handleMeridiemChange('am')}
+            onClick={handleMeridiemChange('am')}
             disabled={meridiemMode === null}
             styleProps={styleProps}
           >
-            <Typography variant="caption">AM</Typography>
+            AM
           </ClockAmButton>
           <ClockPmButton
             disabled={meridiemMode === null}
             data-mui-test="in-clock-pm-btn"
-            onClick={() => handleMeridiemChange('pm')}
+            onClick={handleMeridiemChange('pm')}
             styleProps={styleProps}
           >
-            <Typography variant="caption">PM</Typography>
+            PM
           </ClockPmButton>
         </React.Fragment>
       )}

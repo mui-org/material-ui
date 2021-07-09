@@ -1,9 +1,9 @@
 import { ParseableDate } from './constants/prop-types';
 import { MuiPickersAdapter } from './hooks/useUtils';
 
-type Meridiem = 'am' | 'pm' | null;
+export type Meridiem = 'am' | 'pm';
 
-export const getMeridiem = (date: unknown, utils: MuiPickersAdapter): Meridiem => {
+export const getMeridiem = (date: unknown, utils: MuiPickersAdapter): Meridiem | null => {
   if (!date) {
     return null;
   }
@@ -11,7 +11,7 @@ export const getMeridiem = (date: unknown, utils: MuiPickersAdapter): Meridiem =
   return utils.getHours(date) >= 12 ? 'pm' : 'am';
 };
 
-export const convertValueToMeridiem = (value: number, meridiem: Meridiem, ampm: boolean) => {
+export const convertValueToMeridiem = (value: number, meridiem: Meridiem | null, ampm: boolean) => {
   if (ampm) {
     const currentMeridiem = value >= 12 ? 'pm' : 'am';
     if (currentMeridiem !== meridiem) {

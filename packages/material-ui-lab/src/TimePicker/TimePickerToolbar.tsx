@@ -11,7 +11,7 @@ import PickersToolbarButton from '../internal/pickers/PickersToolbarButton';
 import PickersToolbar from '../internal/pickers/PickersToolbar';
 import { arrayIncludes } from '../internal/pickers/utils';
 import { useUtils } from '../internal/pickers/hooks/useUtils';
-import { useMeridiemMode } from '../internal/pickers/hooks/date-helpers-hooks';
+import { getMeridiem, convertToMeridiem } from '../internal/pickers/time-utils';
 import { ToolbarComponentProps } from '../internal/pickers/typings/BasePicker';
 
 export interface TimePickerToolbarClasses {
@@ -134,7 +134,16 @@ const TimePickerToolbar: React.FC<ToolbarComponentProps> = (props) => {
   const utils = useUtils();
   const theme = useTheme();
   const showAmPmControl = Boolean(ampm && !ampmInClock);
-  const { meridiemMode, handleMeridiemChange } = useMeridiemMode(date, ampm, onChange);
+
+  const meridiemMode = getMeridiem(date, utils);
+  const handleMeridiemChange = (mode: 'am' | 'pm') => () => {
+    if (mode === meridiemMode) {
+      return;
+    }
+
+    const timeWithMeridiem = convertToMeridiem(date, mode, Boolean(ampm), utils);
+    onChange(timeWithMeridiem, 'partial');
+  };
 
   const formatHours = (time: unknown) =>
     ampm ? utils.format(time, 'hours12h') : utils.format(time, 'hours24h');
@@ -206,7 +215,7 @@ const TimePickerToolbar: React.FC<ToolbarComponentProps> = (props) => {
             selected={meridiemMode === 'am'}
             typographyClassName={classes.ampmLabel}
             value={utils.getMeridiemText('am')}
-            onClick={() => handleMeridiemChange('am')}
+            onClick={handleMeridiemChange('am')}
           />
           <PickersToolbarButton
             disableRipple
@@ -215,7 +224,7 @@ const TimePickerToolbar: React.FC<ToolbarComponentProps> = (props) => {
             selected={meridiemMode === 'pm'}
             typographyClassName={classes.ampmLabel}
             value={utils.getMeridiemText('pm')}
-            onClick={() => handleMeridiemChange('pm')}
+            onClick={handleMeridiemChange('pm')}
           />
         </TimePickerToolbarAmPmSelection>
       )}

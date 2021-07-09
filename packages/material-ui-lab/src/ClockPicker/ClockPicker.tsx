@@ -13,13 +13,13 @@ import { useUtils, useNow, MuiPickersAdapter } from '../internal/pickers/hooks/u
 import { getHourNumbers, getMinutesNumbers } from './ClockNumbers';
 import PickersArrowSwitcher from '../internal/pickers/PickersArrowSwitcher';
 import {
+  getMeridiem,
   convertValueToMeridiem,
   createIsAfterIgnoreDatePart,
   TimeValidationProps,
 } from '../internal/pickers/time-utils';
 import { PickerOnChangeFn } from '../internal/pickers/hooks/useViews';
 import { PickerSelectionState } from '../internal/pickers/hooks/usePickerState';
-import { useMeridiemMode } from '../internal/pickers/hooks/date-helpers-hooks';
 import { ClockView } from './shared';
 
 export interface ClockPickerClasses {
@@ -217,7 +217,7 @@ function ClockPicker<TDate>(inProps: ClockPickerProps<TDate>) {
   const utils = useUtils<TDate>();
   const dateOrNow = date || now;
 
-  const { meridiemMode, handleMeridiemChange } = useMeridiemMode<TDate>(dateOrNow, ampm, onChange);
+  const meridiemMode = getMeridiem(date, utils);
 
   const isTimeDisabled = React.useCallback(
     (rawValue: number, viewType: ClockView) => {
@@ -386,11 +386,11 @@ function ClockPicker<TDate>(inProps: ClockPickerProps<TDate>) {
         ampmInClock={ampmInClock}
         type={view}
         ampm={ampm}
+        onValueChange={onChange}
         getClockLabelText={getClockLabelText}
         minutesStep={minutesStep}
         isTimeDisabled={isTimeDisabled}
         meridiemMode={meridiemMode}
-        handleMeridiemChange={handleMeridiemChange}
         selectedId={selectedId}
         {...viewProps}
       />
