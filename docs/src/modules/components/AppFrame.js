@@ -55,11 +55,6 @@ function NextNProgressBar() {
 
 const AppSearch = React.lazy(() => import('docs/src/modules/components/AppSearch'));
 function DeferredAppSearch() {
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <React.Fragment>
       <link
@@ -67,12 +62,9 @@ function DeferredAppSearch() {
         href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"
         as="style"
       />
-      {/* Suspense isn't supported for SSR yet */}
-      {mounted ? (
-        <React.Suspense fallback={null}>
-          <AppSearch />
-        </React.Suspense>
-      ) : null}
+      <React.Suspense fallback={null}>
+        <AppSearch />
+      </React.Suspense>
     </React.Fragment>
   );
 }
@@ -303,7 +295,7 @@ function AppFrame(props) {
         onOpen={handleNavDrawerOpen}
         mobileOpen={mobileOpen}
       />
-      {children}
+      <React.Suspense fallback={null}>{children}</React.Suspense>
       <AppSettingsDrawer onClose={handleSettingsDrawerClose} open={settingsOpen} />
     </div>
   );

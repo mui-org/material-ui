@@ -1339,20 +1339,19 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@eps1lon/enzyme-adapter-react-17@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@eps1lon/enzyme-adapter-react-17/-/enzyme-adapter-react-17-0.1.0.tgz#68e8db7fe231d29f86ce3c4b0331b6d04ee14dd3"
-  integrity sha512-NiiEG6rfeE7NuZc1oNr8CBb6zNpDO4gpVt4JiVCYnaLOEMEE9Kj3I+vFjawEYLxnMfptTdawHgYVvSeTenZSVw==
+"@eps1lon/enzyme-adapter-react-17@npm:@eps1lon/enzyme-adapter-react-next":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@eps1lon/enzyme-adapter-react-next/-/enzyme-adapter-react-next-0.0.1.tgz#e44d436323a00d8065788e3ab4493efed216edce"
+  integrity sha512-oGecpGf84lE3jpsI48HZhT4TtuVeHpKDXYvrsGVYBvLJS7LT3mCB1R4Etrcg5SnCVwxrNLRKiquHo5hXBsKJjg==
   dependencies:
-    enzyme-adapter-utils "^1.13.1"
-    enzyme-shallow-equal "^1.0.4"
+    enzyme-adapter-utils "^1.13.0"
+    enzyme-shallow-equal "^1.0.1"
     has "^1.0.3"
     object.assign "^4.1.0"
     object.values "^1.1.1"
     prop-types "^15.7.2"
-    react-is "^17.0.0"
-    react-reconciler "^0.26.1"
-    react-test-renderer "^17.0.0"
+    react-is "^16.12.0"
+    react-test-renderer "^16.0.0-0"
     semver "^5.7.0"
 
 "@eslint/eslintrc@^0.4.2":
@@ -2630,10 +2629,9 @@
     lz-string "^1.4.4"
     pretty-format "^27.0.2"
 
-"@testing-library/react@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-12.0.0.tgz#9aeb2264521522ab9b68f519eaf15136148f164a"
-  integrity sha512-sh3jhFgEshFyJ/0IxGltRhwZv2kFKfJ3fN1vTZ6hhMXzz9ZbbcTgmDYM4e+zJv+oiVKKEWZPyqPAh4MQBI65gA==
+"@testing-library/react@https://pkg.csb.dev/testing-library/react-testing-library/commit/0e2cf7da/@testing-library/react":
+  version "0.0.0-semantically-released"
+  resolved "https://pkg.csb.dev/testing-library/react-testing-library/commit/0e2cf7da/@testing-library/react#2718ecc616877594e5f3dab6fa24334b2dfc4493"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^8.0.0"
@@ -7056,7 +7054,7 @@ envinfo@^7.7.3, envinfo@^7.7.4:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.8.1.tgz#06377e3e5f4d379fea7ac592d5ad8927e0c4d475"
   integrity sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==
 
-enzyme-adapter-utils@^1.13.1:
+enzyme-adapter-utils@^1.13.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.14.0.tgz#afbb0485e8033aa50c744efb5f5711e64fbf1ad0"
   integrity sha512-F/z/7SeLt+reKFcb7597IThpDp0bmzcH1E9Oabqv+o01cID2/YInlqHbFl7HzWBl4h3OdZYedtwNDOmSKkk0bg==
@@ -7069,7 +7067,7 @@ enzyme-adapter-utils@^1.13.1:
     prop-types "^15.7.2"
     semver "^5.7.1"
 
-enzyme-shallow-equal@^1.0.1, enzyme-shallow-equal@^1.0.4:
+enzyme-shallow-equal@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/enzyme-shallow-equal/-/enzyme-shallow-equal-1.0.4.tgz#b9256cb25a5f430f9bfe073a84808c1d74fced2e"
   integrity sha512-MttIwB8kKxypwHvRynuC3ahyNc+cFbR8mjVIltnmzQ0uKGqmsfO4bfBuLxb0beLNPhjblUEYvEbsg+VSygvF1Q==
@@ -13365,14 +13363,14 @@ react-docgen@^5.0.0-beta.1:
     node-dir "^0.1.10"
     strip-indent "^3.0.0"
 
-react-dom@^17.0.1:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
-  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
+react-dom@18.0.0-alpha-ed6c091fe-20210701, react-dom@^17.0.1:
+  version "18.0.0-alpha-ed6c091fe-20210701"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.0.0-alpha-ed6c091fe-20210701.tgz#f07510c6b0a5fa38ce2ab48d39caf39e8cc320d8"
+  integrity sha512-AdtHYY5PRP8KNe7ijIwTSG5ckip0+h6kksvy+8K/mV+VHYEYUIrfaerrZzFOuV/oeJxnM2zXh9/93cheAjJ2UQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    scheduler "^0.20.2"
+    scheduler "0.21.0-alpha-ed6c091fe-20210701"
 
 react-draggable@^4.0.3:
   version "4.4.3"
@@ -13403,7 +13401,7 @@ react-final-form@^6.3.0:
   dependencies:
     "@babel/runtime" "^7.12.1"
 
-react-is@16.10.2, react-is@17.0.2, "react-is@^16.12.0 || ^17.0.0", react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^17.0.0, react-is@^17.0.1, react-is@^17.0.2:
+react-is@16.10.2, react-is@17.0.2, react-is@18.0.0-alpha-ed6c091fe-20210701, react-is@^16.12.0, "react-is@^16.12.0 || ^17.0.0", react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^17.0.0, react-is@^17.0.1, react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
@@ -13436,15 +13434,6 @@ react-number-format@^4.0.8:
   integrity sha512-AZJwR/2mnl1cTRxQRjIITKp+Rg+4bYgjNylw7it7+x9UyIUAEpEK3fETKCqC5F2mVW8S41Xc6gpeH3VcJbPRsg==
   dependencies:
     prop-types "^15.7.2"
-
-react-reconciler@^0.26.1:
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.26.1.tgz#860952dd359fd870f94895c254271e3a9de3b2d6"
-  integrity sha512-6E/CvH9zcDmHjhiNJlP0qJ8+3ufnY2b5RWs774Uy8XKWN0l6qfnlkz0XnDacxqj2rbJdq76w9dlFXjPPOQrmqA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    scheduler "^0.20.1"
 
 react-redux@^7.1.1:
   version "7.2.4"
@@ -13558,15 +13547,15 @@ react-swipeable-views@^0.14.0-alpha.0:
     react-swipeable-views-utils "^0.14.0"
     warning "^4.0.1"
 
-react-test-renderer@^17.0.0, react-test-renderer@^17.0.1:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-17.0.2.tgz#4cd4ae5ef1ad5670fc0ef776e8cc7e1231d9866c"
-  integrity sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==
+react-test-renderer@18.0.0-alpha-ed6c091fe-20210701, react-test-renderer@^16.0.0-0, react-test-renderer@^17.0.1:
+  version "18.0.0-alpha-ed6c091fe-20210701"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-18.0.0-alpha-ed6c091fe-20210701.tgz#0e4fcec5c57c7b3b7496390d9dd331377e277aa1"
+  integrity sha512-9WCZ8vFpOWUTqn5fwTyksbutT7/pJ2AkBqBuFRAZxAX4SR1bYO+iANJ3GDgjAWwajmfrEcs3cn2mCwEFz6egxw==
   dependencies:
     object-assign "^4.1.1"
-    react-is "^17.0.2"
+    react-is "18.0.0-alpha-ed6c091fe-20210701"
     react-shallow-renderer "^16.13.1"
-    scheduler "^0.20.2"
+    scheduler "0.21.0-alpha-ed6c091fe-20210701"
 
 react-text-mask@^5.0.2:
   version "5.4.3"
@@ -13615,10 +13604,10 @@ react-window@^1.8.5:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
-react@^17.0.1:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
-  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+react@18.0.0-alpha-ed6c091fe-20210701, react@^17.0.1:
+  version "18.0.0-alpha-ed6c091fe-20210701"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.0.0-alpha-ed6c091fe-20210701.tgz#238c16a3262b0d30f5c9483335b42a28656c1e81"
+  integrity sha512-zfb1gZyRC0AxtNLb48jM1zPhP60OS79Jekj28Qve/HaogOp9a/hjoC6THx4YXtEdP4bq6Z/OS+ecAeJ8I4JSug==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -14380,10 +14369,10 @@ saxes@^5.0.1:
   dependencies:
     xmlchars "^2.2.0"
 
-scheduler@^0.20.1, scheduler@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
-  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
+scheduler@0.21.0-alpha-ed6c091fe-20210701, scheduler@^0.20.2:
+  version "0.21.0-alpha-ed6c091fe-20210701"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.21.0-alpha-ed6c091fe-20210701.tgz#281f04c3d2b0276b528c1c04c3e51f68db4241f6"
+  integrity sha512-DBDJeyzJXEWV1AvQr8Jw/66q9RNyMjCeVVRrOtGZb6iqHeI5Up9aWK08K5KZlbemkr8dVlD9fIDDTzxTZZpd2Q==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

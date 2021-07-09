@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { exactProp } from '@material-ui/utils';
-import NoSsr from '@material-ui/core/NoSsr';
 import Head from 'docs/src/modules/components/Head';
 import AppFrame from 'docs/src/modules/components/AppFrame';
 import EditPage from 'docs/src/modules/components/EditPage';
@@ -12,7 +11,10 @@ import AppTableOfContents from 'docs/src/modules/components/AppTableOfContents';
 import Ad from 'docs/src/modules/components/Ad';
 import AdManager from 'docs/src/modules/components/AdManager';
 import AdGuest from 'docs/src/modules/components/AdGuest';
-import AppLayoutDocsFooter from 'docs/src/modules/components/AppLayoutDocsFooter';
+
+const DeferredAppLayoutDocsFooter = React.lazy(() =>
+  import('docs/src/modules/components/AppLayoutDocsFooter'),
+);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,12 +90,14 @@ function AppLayoutDocs(props) {
               {location && <EditPage markdownLocation={location} />}
             </div>
             {children}
-            <NoSsr>
-              <AppLayoutDocsFooter />
-            </NoSsr>
+            <React.Suspense fallback={null}>
+              <DeferredAppLayoutDocsFooter />
+            </React.Suspense>
           </AppContainer>
         </div>
-        {disableToc ? null : <AppTableOfContents items={toc} />}
+        <React.Suspense fallback={null}>
+          {disableToc ? null : <AppTableOfContents items={toc} />}
+        </React.Suspense>
       </AdManager>
     </AppFrame>
   );
