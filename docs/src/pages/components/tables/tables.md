@@ -31,7 +31,7 @@ This constraint makes building rich data tables challenging.
 The [`DataGrid` component](/components/data-grid/) is designed for use-cases that are focused around handling a large amounts of tabular data.
 While it comes with a more rigid structure, in exchange, you gain more powerful features.
 
-{{"demo": "pages/components/tables/DataTable.js", "bg": "inline"}}
+{{"demo": "pages/components/tables/DataTable.js", "bg": true}}
 
 ## Dense table
 
