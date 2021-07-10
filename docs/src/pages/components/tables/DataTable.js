@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Paper from '@material-ui/core/Paper';
 import { DataGrid } from '@material-ui/data-grid';
 
 const columns = [
@@ -50,15 +49,14 @@ const rows = [
 
 export default function DataTable() {
   return (
-    <Paper style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        style={{ border: 0 }}
         rows={rows}
         columns={columns}
         pageSize={5}
         checkboxSelection
         disableSelectionOnClick
       />
-    </Paper>
+    </div>
   );
 }
