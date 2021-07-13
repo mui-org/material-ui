@@ -8,7 +8,7 @@
     "noEmit": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "types": ["react"]
   }
