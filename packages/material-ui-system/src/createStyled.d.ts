@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as CSS from 'csstype';
 import { SxProps } from './styleFunctionSx';
 import { Theme as DefaultTheme } from './createTheme';
+import { SystemProps } from './Box';
 
 export interface SerializedStyles {
   name: string;
@@ -75,18 +76,18 @@ export type PropsOf<C extends keyof JSX.IntrinsicElements | React.JSXElementCons
 
 export type Overwrapped<T, U> = Pick<T, Extract<keyof T, keyof U>>;
 
-export interface StyledComponent<InnerProps, StyleProps, Theme extends object>
-  extends React.FunctionComponent<InnerProps & StyleProps & { theme?: Theme }>,
+export interface StyledComponent<InnerProps, StyleProps, JSXProps>
+  extends React.FunctionComponent<InnerProps & StyleProps & JSXProps>,
     ComponentSelector {
   /**
    * @desc this method is type-unsafe
    */
   withComponent<NewTag extends keyof JSX.IntrinsicElements>(
     tag: NewTag,
-  ): StyledComponent<JSX.IntrinsicElements[NewTag], StyleProps, Theme>;
+  ): StyledComponent<JSX.IntrinsicElements[NewTag], StyleProps, JSXProps>;
   withComponent<Tag extends React.JSXElementConstructor<any>>(
     tag: Tag,
-  ): StyledComponent<PropsOf<Tag>, StyleProps, Theme>;
+  ): StyledComponent<PropsOf<Tag>, StyleProps, JSXProps>;
 }
 
 export interface StyledOptions {
@@ -236,6 +237,26 @@ export interface CreateMUIStyled<Theme extends object = DefaultTheme> {
     JSX.IntrinsicElements[Tag]
   >;
 }
+
+export type StyledPrimitive<
+  Tag extends keyof JSX.IntrinsicElements,
+  Theme extends object = DefaultTheme,
+> = React.FunctionComponent<
+  SystemProps<Theme> & {
+    theme?: Theme;
+    as?: React.ElementType;
+    sx?: SxProps<Theme>;
+  } & JSX.IntrinsicElements[Tag]
+>;
+
+export interface CreatePrimitiveStyled<Theme extends object = DefaultTheme> {
+  <Tag extends keyof JSX.IntrinsicElements>(tag: Tag): () => StyledPrimitive<Tag, Theme>;
+  htmlTags: Array<keyof JSX.IntrinsicElements>;
+}
+
+export function createPrimitiveStyled<T extends object = DefaultTheme>(
+  defaultTheme?: T,
+): CreatePrimitiveStyled<T>;
 
 export default function createStyled<T extends object = DefaultTheme>(options?: {
   defaultTheme?: T;

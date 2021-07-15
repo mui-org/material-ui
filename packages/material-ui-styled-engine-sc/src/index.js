@@ -34,6 +34,10 @@ export default function styled(tag, options) {
   return stylesFactory;
 }
 
+Object.keys(scStyled).forEach((tag) => {
+  styled[tag] = scStyled[tag];
+});
+
 export { ThemeContext, keyframes, css } from 'styled-components';
 export { default as StyledEngineProvider } from './StyledEngineProvider';
 export { default as GlobalStyles } from './GlobalStyles';

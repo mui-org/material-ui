@@ -1,7 +1,8 @@
 import styledEngineStyled from '@material-ui/styled-engine';
 import createTheme from './createTheme';
-import styleFunctionSx from './styleFunctionSx';
+import styleFunctionSx, { extendSxProp } from './styleFunctionSx';
 import propsToClassKey from './propsToClassKey';
+import { propToStyleFunction } from './getThemeValue';
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
@@ -61,6 +62,26 @@ export const systemDefaultTheme = createTheme();
 const lowercaseFirstLetter = (string) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
 };
+
+export function createPrimitiveStyled(defaultTheme = systemDefaultTheme) {
+  function shouldPrimitiveForwardProp(prop) {
+    return prop !== 'theme' && prop !== 'sx' && prop !== 'as' && !propToStyleFunction[prop];
+  }
+  function styled(tag) {
+    return () =>
+      styledEngineStyled(tag, {
+        shouldForwardProp: shouldPrimitiveForwardProp,
+      })((props) => {
+        const theme = isEmpty(props.theme) ? defaultTheme : props.theme;
+        const { sx } = extendSxProp(props);
+        return styleFunctionSx({ ...props, sx, theme });
+      });
+  }
+
+  styled.htmlTags = Object.keys(styledEngineStyled);
+
+  return styled;
+}
 
 export default function createStyled(input = {}) {
   const {

@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import emStyled from '@emotion/styled';
 import styled from './index';
 
 describe('styled', () => {
@@ -14,5 +15,9 @@ describe('styled', () => {
     }).toErrorDev(
       'Material-UI: the styled("span")(...args) API requires all its args to be defined',
     );
+  });
+
+  it('has primitive', () => {
+    expect(styled.div).to.equal(emStyled.div);
   });
 });

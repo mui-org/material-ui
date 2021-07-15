@@ -25,17 +25,19 @@ declare global {
        * @example expect(element).toHaveInlineStyle({ width: '200px' })
        */
       toHaveInlineStyle(
-        expectedStyle: Record<
-          Exclude<
-            keyof CSSStyleDeclaration,
-            | 'getPropertyPriority'
-            | 'getPropertyValue'
-            | 'item'
-            | 'removeProperty'
-            | 'setProperty'
-            | number
-          >,
-          string
+        expectedStyle: Partial<
+          Record<
+            Exclude<
+              keyof CSSStyleDeclaration,
+              | 'getPropertyPriority'
+              | 'getPropertyValue'
+              | 'item'
+              | 'removeProperty'
+              | 'setProperty'
+              | number
+            >,
+            string
+          >
         >,
       ): void;
       /**
@@ -43,17 +45,19 @@ declare global {
        * @example expect(element).toHaveComputedStyle({ width: '200px' })
        */
       toHaveComputedStyle(
-        expectedStyle: Record<
-          Exclude<
-            keyof CSSStyleDeclaration,
-            | 'getPropertyPriority'
-            | 'getPropertyValue'
-            | 'item'
-            | 'removeProperty'
-            | 'setProperty'
-            | number
-          >,
-          string
+        expectedStyle: Partial<
+          Record<
+            Exclude<
+              keyof CSSStyleDeclaration,
+              | 'getPropertyPriority'
+              | 'getPropertyValue'
+              | 'item'
+              | 'removeProperty'
+              | 'setProperty'
+              | number
+            >,
+            string
+          >
         >,
       ): void;
       /**

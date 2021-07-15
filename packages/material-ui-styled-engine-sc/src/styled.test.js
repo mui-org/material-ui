@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { createClientRender } from 'test/utils';
+import scStyled from 'styled-components';
 import styled from '@material-ui/styled-engine-sc';
 
 describe('styled', () => {
@@ -37,5 +38,9 @@ describe('styled', () => {
     const { container } = render(<StyledComponent color="blue" />);
     expect(container.firstChild).not.to.have.attribute('color');
     expect(container.querySelector('[class^=TestComponent]')).not.to.equal(null);
+  });
+
+  it('has primitive', () => {
+    expect(styled.div).to.equal(scStyled.div);
   });
 });
