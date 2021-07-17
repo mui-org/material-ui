@@ -583,7 +583,7 @@ const Slider = React.forwardRef(function Slider(props, ref) {
   const handleTouchEnd = useEventCallback((event) => {
     const finger = trackFinger(event, touchId);
 
-    if (!finger) {
+    if (!finger || !event.isTrusted) {
       return;
     }
 
