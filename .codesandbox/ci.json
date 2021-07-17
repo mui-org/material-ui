@@ -1,5 +1,6 @@
 {
   "buildCommand": "build:codesandbox",
+  "installCommand": "install:codesandbox",
   "packages": [
     "packages/material-ui",
     "packages/material-ui-icons",

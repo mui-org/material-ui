@@ -5,6 +5,7 @@
     "proptypes": "ts-node --skip-project ./scripts/generateProptypes.ts",
     "deduplicate": "node scripts/deduplicate.js",
     "argos": "argos upload test/regressions/screenshots/chrome --token $ARGOS_TOKEN",
+    "install:codesandbox": "yarn install --ignore-engines",
     "build:codesandbox": "lerna run --parallel --scope \"@material-ui/*\" build",
     "docs:api": "rimraf ./docs/pages/api-docs && cross-env BABEL_ENV=test __NEXT_EXPORT_TRAILING_SLASH=true babel-node ./docs/scripts/buildApi.js ./packages/material-ui/src ./docs/pages/api-docs && cross-env BABEL_ENV=test __NEXT_EXPORT_TRAILING_SLASH=true babel-node ./docs/scripts/buildApi.js ./packages/material-ui-lab/src ./docs/pages/api-docs",
     "docs:build": "yarn workspace docs build",
