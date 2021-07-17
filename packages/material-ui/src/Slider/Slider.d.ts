@@ -33,6 +33,7 @@ export interface SliderTypeMap<P = {}, D extends React.ElementType = 'span'> {
     scale?: (value: number) => number;
     ThumbComponent?: React.ElementType<React.HTMLAttributes<HTMLSpanElement>>;
     track?: 'normal' | false | 'inverted';
+    useCapture?: boolean;
     value?: number | number[];
     ValueLabelComponent?: React.ElementType<ValueLabelProps>;
     valueLabelDisplay?: 'on' | 'auto' | 'off';

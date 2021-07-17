@@ -364,6 +364,7 @@ const Slider = React.forwardRef(function Slider(props, ref) {
     step = 1,
     ThumbComponent = 'span',
     track = 'normal',
+    useCapture,
     value: valueProp,
     ValueLabelComponent = ValueLabel,
     valueLabelDisplay = 'off',
@@ -601,10 +602,10 @@ const Slider = React.forwardRef(function Slider(props, ref) {
     touchId.current = undefined;
 
     const doc = ownerDocument(sliderRef.current);
-    doc.removeEventListener('mousemove', handleTouchMove);
-    doc.removeEventListener('mouseup', handleTouchEnd);
-    doc.removeEventListener('touchmove', handleTouchMove);
-    doc.removeEventListener('touchend', handleTouchEnd);
+    doc.removeEventListener('mousemove', handleTouchMove, useCapture);
+    doc.removeEventListener('mouseup', handleTouchEnd, useCapture);
+    doc.removeEventListener('touchmove', handleTouchMove, useCapture);
+    doc.removeEventListener('touchend', handleTouchEnd, useCapture);
   });
 
   const handleTouchStart = useEventCallback((event) => {
@@ -626,23 +627,23 @@ const Slider = React.forwardRef(function Slider(props, ref) {
     }
 
     const doc = ownerDocument(sliderRef.current);
-    doc.addEventListener('touchmove', handleTouchMove);
-    doc.addEventListener('touchend', handleTouchEnd);
+    doc.addEventListener('touchmove', handleTouchMove, useCapture);
+    doc.addEventListener('touchend', handleTouchEnd, useCapture);
   });
 
   React.useEffect(() => {
     const { current: slider } = sliderRef;
-    slider.addEventListener('touchstart', handleTouchStart);
+    slider.addEventListener('touchstart', handleTouchStart, useCapture);
     const doc = ownerDocument(slider);
 
     return () => {
-      slider.removeEventListener('touchstart', handleTouchStart);
-      doc.removeEventListener('mousemove', handleTouchMove);
-      doc.removeEventListener('mouseup', handleTouchEnd);
-      doc.removeEventListener('touchmove', handleTouchMove);
-      doc.removeEventListener('touchend', handleTouchEnd);
+      slider.removeEventListener('touchstart', handleTouchStart, useCapture);
+      doc.removeEventListener('mousemove', handleTouchMove, useCapture);
+      doc.removeEventListener('mouseup', handleTouchEnd, useCapture);
+      doc.removeEventListener('touchmove', handleTouchMove, useCapture);
+      doc.removeEventListener('touchend', handleTouchEnd, useCapture);
     };
-  }, [handleTouchEnd, handleTouchMove, handleTouchStart]);
+  }, [handleTouchEnd, handleTouchMove, handleTouchStart, useCapture]);
 
   const handleMouseDown = useEventCallback((event) => {
     if (onMouseDown) {
@@ -661,8 +662,8 @@ const Slider = React.forwardRef(function Slider(props, ref) {
     }
 
     const doc = ownerDocument(sliderRef.current);
-    doc.addEventListener('mousemove', handleTouchMove);
-    doc.addEventListener('mouseup', handleTouchEnd);
+    doc.addEventListener('mousemove', handleTouchMove, useCapture);
+    doc.addEventListener('mouseup', handleTouchEnd, useCapture);
   });
 
   const trackOffset = valueToPercent(range ? values[0] : min, min, max);
@@ -927,6 +928,10 @@ Slider.propTypes = {
    * - `false` the track will render without a bar.
    */
   track: PropTypes.oneOf(['normal', false, 'inverted']),
+  /**
+   * If `true`, the event capture phase will be used for event listeners.
+   */
+  useCapture: PropTypes.bool,
   /**
    * The value of the slider.
    * For ranged sliders, provide an array with two values.
