@@ -1,9 +1,6 @@
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete, {
-  AutocompleteRenderGroupParams,
-  autocompleteClasses,
-} from '@material-ui/core/Autocomplete';
+import Autocomplete, { autocompleteClasses } from '@material-ui/core/Autocomplete';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Popper from '@material-ui/core/Popper';
@@ -15,12 +12,27 @@ const LISTBOX_PADDING = 8; // px
 
 function renderRow(props: ListChildComponentProps) {
   const { data, index, style } = props;
-  return React.cloneElement(data[index], {
-    style: {
-      ...style,
-      top: (style.top as number) + LISTBOX_PADDING,
-    },
-  });
+  const dataSet = data[index];
+
+  if (dataSet.hasOwnProperty('group')) {
+    return (
+      <ListSubheader key={dataSet.key} component="div">
+        {dataSet.group}
+      </ListSubheader>
+    );
+  }
+
+  return (
+    <li
+      {...dataSet[0]}
+      style={{
+        ...style,
+        top: (style.top as number) + LISTBOX_PADDING,
+      }}
+    >
+      <Typography noWrap>{dataSet[1]}</Typography>
+    </li>
+  );
 }
 
 const OuterElementContext = React.createContext({});
@@ -46,7 +58,10 @@ const ListboxComponent = React.forwardRef<HTMLDivElement>(function ListboxCompon
   ref,
 ) {
   const { children, ...other } = props;
-  const itemData = React.Children.toArray(children);
+  const itemData = (children as React.ReactChild[]).reduce((acc: any, item: any) => {
+    acc.push(item);
+    return acc.concat(item.children);
+  }, []);
   const theme = useTheme();
   const smUp = useMediaQuery(theme.breakpoints.up('sm'), {
     noSsr: true,
@@ -54,8 +69,8 @@ const ListboxComponent = React.forwardRef<HTMLDivElement>(function ListboxCompon
   const itemCount = itemData.length;
   const itemSize = smUp ? 36 : 48;
 
-  const getChildSize = (child: React.ReactNode) => {
-    if (React.isValidElement(child) && child.type === ListSubheader) {
+  const getChildSize = (child: React.ReactChild) => {
+    if (child.hasOwnProperty('group')) {
       return 48;
     }
 
@@ -66,7 +81,7 @@ const ListboxComponent = React.forwardRef<HTMLDivElement>(function ListboxCompon
     if (itemCount > 8) {
       return 8 * itemSize;
     }
-    return itemData.map(getChildSize).reduce((a, b) => a + b, 0);
+    return itemData.map(getChildSize).reduce((a: number, b: number) => a + b, 0);
   };
 
   const gridRef = useResetCache(itemCount);
@@ -118,13 +133,6 @@ const OPTIONS = Array.from(new Array(10000))
   .map(() => random(10 + Math.ceil(Math.random() * 20)))
   .sort((a: string, b: string) => a.toUpperCase().localeCompare(b.toUpperCase()));
 
-const renderGroup = (params: AutocompleteRenderGroupParams) => [
-  <ListSubheader key={params.key} component="div">
-    {params.group}
-  </ListSubheader>,
-  params.children,
-];
-
 export default function Virtualize() {
   return (
     <Autocomplete
@@ -135,15 +143,11 @@ export default function Virtualize() {
       ListboxComponent={
         ListboxComponent as React.ComponentType<React.HTMLAttributes<HTMLElement>>
       }
-      renderGroup={renderGroup}
       options={OPTIONS}
       groupBy={(option) => option[0].toUpperCase()}
       renderInput={(params) => <TextField {...params} label="10,000 options" />}
-      renderOption={(props, option) => (
-        <li {...props}>
-          <Typography noWrap>{option}</Typography>
-        </li>
-      )}
+      renderOption={(props, option) => [props, option]}
+      renderGroup={(params) => params}
     />
   );
 }
