@@ -145,31 +145,43 @@ export default function useAutocomplete(props) {
 
   const [focused, setFocused] = React.useState(false);
 
-  const resetInputValue = useEventCallback((event, newValue) => {
-    let newInputValue;
-    if (multiple) {
-      newInputValue = '';
-    } else if (newValue == null) {
-      newInputValue = '';
-    } else {
-      const optionLabel = getOptionLabel(newValue);
-      newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
-    }
+  const resetInputValue = React.useCallback(
+    (event, newValue) => {
+      let newInputValue;
+      if (multiple) {
+        newInputValue = '';
+      } else if (newValue == null) {
+        newInputValue = '';
+      } else {
+        const optionLabel = getOptionLabel(newValue);
+        newInputValue = typeof optionLabel === 'string' ? optionLabel : '';
+      }
 
-    if (inputValue === newInputValue) {
+      if (inputValue === newInputValue) {
+        return;
+      }
+
+      setInputValueState(newInputValue);
+
+      if (onInputChange) {
+        onInputChange(event, newInputValue, 'reset');
+      }
+    },
+    [getOptionLabel, inputValue, multiple, onInputChange, setInputValueState],
+  );
+
+  const prevValue = React.useRef();
+
+  React.useEffect(() => {
+    const valueChange = value !== prevValue.current;
+    prevValue.current = value;
+
+    if (focused && !valueChange) {
       return;
     }
 
-    setInputValueState(newInputValue);
-
-    if (onInputChange) {
-      onInputChange(event, newInputValue, 'reset');
-    }
-  });
-
-  React.useEffect(() => {
     resetInputValue(null, value);
-  }, [value, resetInputValue]);
+  }, [value, resetInputValue, focused, prevValue]);
 
   const [open, setOpenState] = useControlled({
     controlled: openProp,

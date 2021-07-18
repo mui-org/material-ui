@@ -2036,6 +2036,43 @@ describe('<Autocomplete />', () => {
       const options = getAllByRole('option');
       expect(options).to.have.length(3);
     });
+
+    it('should update the input value when getOptionLabel changes', () => {
+      const { setProps } = render(
+        <Autocomplete
+          value="one"
+          open
+          options={['one', 'two', 'three']}
+          getOptionLabel={(option) => option}
+          renderInput={(params) => <TextField {...params} />}
+        />,
+      );
+      const textbox = screen.getByRole('textbox');
+      expect(textbox).to.have.property('value', 'one');
+      setProps({
+        getOptionLabel: (option) => option.toUpperCase(),
+      });
+      expect(textbox).to.have.property('value', 'ONE');
+    });
+
+    it('should not update the input value when users is focusing', () => {
+      const { setProps } = render(
+        <Autocomplete
+          value="one"
+          open
+          options={['one', 'two', 'three']}
+          getOptionLabel={(option) => option}
+          renderInput={(params) => <TextField {...params} autoFocus />}
+        />,
+      );
+      const textbox = screen.getByRole('textbox');
+      expect(textbox).to.have.property('value', 'one');
+      fireEvent.change(textbox, { target: { value: 'a' } });
+      setProps({
+        getOptionLabel: (option) => option.toUpperCase(),
+      });
+      expect(textbox).to.have.property('value', 'a');
+    });
   });
 
   describe('prop: fullWidth', () => {
