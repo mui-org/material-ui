@@ -2501,3 +2501,76 @@ declare module "@material-ui/private-theming" {
   interface DefaultTheme extends Theme {}
 }
 ```
+
+### makeStyles - TypeError: Cannot read property 'drawer' of undefined
+
+This error occurs when calling `useStyles` (result of `makeStyles`) or `withStyles` outside of `<ThemeProvider>` scope like this:
+
+```js
+import * as React from 'react';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Card from '@material-ui/core/Card';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+}));
+
+const theme = createTheme();
+
+function App() {
+  const classes = useStyles(); // ❌ called outside of ThemeProvider
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Card className={classes.root}>...</Card>
+    </ThemeProvider>
+  );
+}
+
+export default App;
+```
+
+One way to fix this is to create `withThemeProvider` HOC (higher order component):
+
+```js
+import * as React from 'react';
+import { ThemeProvider } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Card from '@material-ui/core/Card';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+}));
+
+const theme = createTheme();
+
+function App() {
+  const classes = useStyles(); // ✅ This is safe because App is now rendered under <ThemeProvider>
+  return <Card className={classes.root}>...</Card>;
+}
+
+const withThemeProvider = (Component) => {
+  const WithThemeProvider = (props) => {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...props} />
+      </ThemeProvider>
+    );
+  };
+  return WithThemeProvider;
+};
+
+export default withThemeProvider(App);
+```
