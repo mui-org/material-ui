@@ -328,7 +328,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
     }
   }
 
-  const items = childrenArray.map((child) => {
+  const items = childrenArray.map((child, index, arr) => {
     if (!React.isValidElement(child)) {
       return null;
     }
@@ -369,6 +369,20 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
       foundMatch = true;
     }
 
+    const hasOptionSelected = () => {
+      if (arr.find((item) => areEqualValues(value, item.props.value))) {
+        return selected;
+      }
+      return true;
+    };
+
+    if (child.props.value === undefined) {
+      return React.cloneElement(child, {
+        'aria-readonly': true,
+        role: 'option',
+      });
+    }
+
     return React.cloneElement(child, {
       'aria-selected': selected ? 'true' : undefined,
       onClick: handleItemClick(child),
@@ -385,7 +399,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
         }
       },
       role: 'option',
-      selected,
+      selected: index === 1 && arr[0].props.value === undefined ? hasOptionSelected() : selected,
       value: undefined, // The value is most likely not a valid HTML attribute.
       'data-value': child.props.value, // Instead, we provide it as a data attribute.
     });
