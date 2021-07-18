@@ -20,13 +20,13 @@ The `style` prop must be applied to the DOM for the animation to work as expecte
 ```jsx
 // The `props` object contains a `style` prop.
 // You need to provide it to the `div` element as shown here.
-function MyComponent(props) {
+const MyComponent = React.forwardRef((props, ref) {
   return (
-    <div {...props}>
+    <div ref={ref} {...props}>
       Fade
     </div>
   );
-}
+})
 
 export default Main() {
   return (
@@ -35,6 +35,44 @@ export default Main() {
     </Fade>
   );
 }
+```
+
+> 💡 Transition components require first child component to forward ref to DOM node. If it cannot find DOM node, it throws error.
+
+```js
+// ❌ Ex.1: Custom component does not forward ref to DOM
+function CustomComponent(props) {
+  return (
+    <div {...props}>...</div>
+  )
+}
+<Fade in>
+  <CustomComponent />
+</Fade>
+
+// ❌ Ex.2: React.Fragment does not work
+<Fade in>
+  <React.Fragment>
+    <div>...</div>
+  </React.Fragment>
+</Fade>
+
+// ✅ Ex.3: Any html tag as first child works even though custom component does not forward ref.
+<Fade in>
+  <div>
+    <CustomComponent />
+  </div>
+</Fade>
+
+// ✅ Ex.4: Custom component forward ref to DOM (good practice)
+const CustomComponent = React.forwardRef((props, ref) {
+  return (
+    <div ref={ref} {...props}>...</div>
+  )
+})
+<Fade in>
+  <CustomComponent />
+</Fade>
 ```
 
 ## Collapse
