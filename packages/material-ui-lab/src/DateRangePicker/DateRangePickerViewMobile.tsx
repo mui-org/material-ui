@@ -4,9 +4,8 @@ import PickersCalendarHeader, {
 } from '../CalendarPicker/PickersCalendarHeader';
 import { DateRange } from './RangeTypes';
 import DateRangePickerDay from '../DateRangePickerDay';
-import { useUtils } from '../internal/pickers/hooks/useUtils';
+import { useDefaultDates, useUtils } from '../internal/pickers/hooks/useUtils';
 import PickersCalendar, { PickersCalendarProps } from '../CalendarPicker/PickersCalendar';
-import { defaultMinDate, defaultMaxDate } from '../internal/pickers/constants/prop-types';
 import { ExportedDesktopDateRangeCalendarProps } from './DateRangePickerViewDesktop';
 import {
   isWithinRange,
@@ -49,8 +48,9 @@ export function DateRangePickerViewMobile<TDate>(props: DesktopDateRangeCalendar
   } = props;
 
   const utils = useUtils();
-  const minDate = minDateProp || utils.date(defaultMinDate);
-  const maxDate = maxDateProp || utils.date(defaultMaxDate);
+  const defaultDates = useDefaultDates<TDate>();
+  const minDate = minDateProp ?? defaultDates.minDate;
+  const maxDate = maxDateProp ?? defaultDates.maxDate;
 
   return (
     <React.Fragment>

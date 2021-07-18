@@ -2,9 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useThemeProps } from '@material-ui/core/styles';
 import StaticWrapper, { StaticWrapperProps } from '../internal/pickers/wrappers/StaticWrapper';
-import { useUtils } from '../internal/pickers/hooks/useUtils';
-import { useParsedDate } from '../internal/pickers/hooks/date-helpers-hooks';
-import { defaultMinDate, defaultMaxDate } from '../internal/pickers/constants/prop-types';
+import { useDefaultDates, useUtils } from '../internal/pickers/hooks/useUtils';
 import { RangeInput, DateRange } from '../DateRangePicker/RangeTypes';
 import {
   DateRangeValidationError,
@@ -42,12 +40,10 @@ interface BaseDateRangePickerProps<TDate>
   mask?: ExportedDateRangePickerInputProps['mask'];
   /**
    * Min selectable date. @DateIOType
-   * @default defaultMinDate
    */
   minDate?: TDate;
   /**
    * Max selectable date. @DateIOType
-   * @default defaultMaxDate
    */
   maxDate?: TDate;
   /**
@@ -109,14 +105,15 @@ const StaticDateRangePicker = React.forwardRef(function StaticDateRangePicker<TD
     startText = 'Start',
     endText = 'End',
     inputFormat: passedInputFormat,
-    minDate: minDateProp = defaultMinDate as TDate,
-    maxDate: maxDateProp = defaultMaxDate as TDate,
+    minDate: minDateProp,
+    maxDate: maxDateProp,
     ...other
   } = props;
 
   const utils = useUtils();
-  const minDate = useParsedDate(minDateProp);
-  const maxDate = useParsedDate(maxDateProp);
+  const defaultDates = useDefaultDates<TDate>();
+  const minDate = minDateProp ?? defaultDates.minDate;
+  const maxDate = maxDateProp ?? defaultDates.maxDate;
   const [currentlySelectingRangeEnd, setCurrentlySelectingRangeEnd] = React.useState<
     'start' | 'end'
   >('start');
@@ -327,12 +324,10 @@ StaticDateRangePicker.propTypes /* remove-proptypes */ = {
   mask: PropTypes.string,
   /**
    * Max selectable date. @DateIOType
-   * @default defaultMaxDate
    */
   maxDate: PropTypes.any,
   /**
    * Min selectable date. @DateIOType
-   * @default defaultMinDate
    */
   minDate: PropTypes.any,
   /**

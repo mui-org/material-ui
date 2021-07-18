@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useThemeProps } from '@material-ui/core/styles';
-import { useUtils } from '../internal/pickers/hooks/useUtils';
+import { useDefaultDates, useUtils } from '../internal/pickers/hooks/useUtils';
 import { ExportedClockPickerProps } from '../ClockPicker/ClockPicker';
 import { pick12hOr24hFormat } from '../internal/pickers/text-field-helper';
 import {
@@ -9,11 +9,7 @@ import {
 } from '../internal/pickers/hooks/date-helpers-hooks';
 import { ExportedCalendarPickerProps } from '../CalendarPicker/CalendarPicker';
 import { DateTimeValidationError, ValidationProps } from '../internal/pickers/hooks/useValidation';
-import {
-  ParseableDate,
-  defaultMinDate,
-  defaultMaxDate,
-} from '../internal/pickers/constants/prop-types';
+import { ParseableDate } from '../internal/pickers/constants/prop-types';
 import { BasePickerProps, ToolbarComponentProps } from '../internal/pickers/typings/BasePicker';
 import { ExportedDateInputProps } from '../internal/pickers/PureDateInput';
 
@@ -89,10 +85,10 @@ export function useDateTimePickerDefaultizedProps<Props extends BaseDateTimePick
   {
     ampm,
     inputFormat,
-    maxDate: __maxDate = defaultMaxDate,
+    maxDate: __maxDate,
     maxDateTime: __maxDateTime,
     maxTime: __maxTime,
-    minDate: __minDate = defaultMinDate,
+    minDate: __minDate,
     minDateTime: __minDateTime,
     minTime: __minTime,
     openTo = 'day',
@@ -105,8 +101,9 @@ export function useDateTimePickerDefaultizedProps<Props extends BaseDateTimePick
   const utils = useUtils();
   const minTime = useParsedDate(__minTime);
   const maxTime = useParsedDate(__maxTime);
-  const minDate = useParsedDate(__minDate);
-  const maxDate = useParsedDate(__maxDate);
+  const defaultDates = useDefaultDates<unknown>();
+  const minDate = __minDate ?? defaultDates.minDate;
+  const maxDate = __maxDate ?? defaultDates.maxDate;
   const minDateTime = useParsedDate(__minDateTime);
   const maxDateTime = useParsedDate(__maxDateTime);
   const willUseAmPm = ampm ?? utils.is12HourCycleInCurrentLocale();

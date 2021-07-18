@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { styled } from '@material-ui/core/styles';
 import { DateRange } from './RangeTypes';
-import { useUtils } from '../internal/pickers/hooks/useUtils';
+import { useDefaultDates, useUtils } from '../internal/pickers/hooks/useUtils';
 import { calculateRangePreview } from './date-range-manager';
 import PickersCalendar, { PickersCalendarProps } from '../CalendarPicker/PickersCalendar';
 import DateRangePickerDay, { DateRangePickerDayProps } from '../DateRangePickerDay';
-import { defaultMinDate, defaultMaxDate } from '../internal/pickers/constants/prop-types';
 import PickersArrowSwitcher, {
   ExportedArrowSwitcherProps,
 } from '../internal/pickers/PickersArrowSwitcher';
@@ -106,8 +105,9 @@ function DateRangePickerViewDesktop<TDate>(props: DesktopDateRangeCalendarProps<
   } = props;
 
   const utils = useUtils<TDate>();
-  const minDate = minDateProp || utils.date(defaultMinDate);
-  const maxDate = maxDateProp || utils.date(defaultMaxDate);
+  const defaultDates = useDefaultDates<TDate>();
+  const minDate = minDateProp ?? defaultDates.minDate;
+  const maxDate = maxDateProp ?? defaultDates.maxDate;
 
   const [rangePreviewDay, setRangePreviewDay] = React.useState<TDate | null>(null);
 
