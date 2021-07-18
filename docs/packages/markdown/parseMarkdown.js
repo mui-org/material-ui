@@ -69,7 +69,7 @@ function getHeaders(markdown) {
 function getContents(markdown) {
   return markdown
     .replace(headerRegExp, '') // Remove header information
-    .split(/^{{("(?:demo|component)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
+    .split(/{{("(?:demo|component)":[^}]*)}}$/gm) // Split markdown into an array, separating demos
     .filter((content) => !emptyRegExp.test(content)); // Remove empty lines
 }
 
@@ -134,6 +134,16 @@ function createRender(context) {
    */
   function render(markdown) {
     const renderer = new marked.Renderer();
+    renderer.code = (code, infostring) => {
+      const lang = (infostring || '').match(/\S*/)[0];
+
+      return `
+      {{"component": "modules/components/HighlightedCode.js","encodedCode" : "${encodeURI(
+        code,
+      )}","language" : "${lang}","isCopyButtonEnabled" : true }}
+      `;
+    };
+
     renderer.heading = (headingHtml, level) => {
       // Main title, no need for an anchor.
       // It adds noises to the URL.
@@ -291,18 +301,35 @@ ${headers.components
       const toc = [];
       const render = createRender({ headingHashes, toc, userLanguage });
 
-      const rendered = contents.map((content) => {
+      const rendered = [];
+      contents.forEach((content) => {
         if (/^"(demo|component)": "(.*)"/.test(content)) {
           try {
-            return JSON.parse(`{${content}}`);
+            rendered.push(JSON.parse(`{${content}}`));
+            return;
           } catch (err) {
             console.error('JSON.parse fails with: ', `{${content}}`);
             console.error(err);
-            return null;
+            rendered.push(null);
+            return;
           }
         }
 
-        return render(content);
+        const afterRenderContents = getContents(render(content)); // seperate components for markdown elements
+        afterRenderContents.forEach((afterRenderContent) => {
+          if (/"(?:demo|component)": "(.*)"/.test(afterRenderContent)) {
+            try {
+              rendered.push(JSON.parse(`{${afterRenderContent}}`));
+              return;
+            } catch (err) {
+              console.error('JSON.parse fails with: ', `{${afterRenderContent}}`);
+              console.error(err);
+              rendered.push(null);
+              return;
+            }
+          }
+          rendered.push(afterRenderContent);
+        });
       });
 
       // fragment link symbol

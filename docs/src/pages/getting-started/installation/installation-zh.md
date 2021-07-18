@@ -9,10 +9,9 @@ Material-UI 可以通过 [npm 包](https://www.npmjs.com/package/@material-ui/co
 若想安装并写入您的 `package.json` 依赖包，请运行以下命令：
 
 ```sh
-// 使用 npm
 npm install @material-ui/core@next @emotion/react @emotion/styled
-
-// 使用 yarn
+```
+```sh
 yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 
@@ -23,10 +22,9 @@ yarn add @material-ui/core@next @emotion/react @emotion/styled
 Or if you want to use `styled-components` as a styling engine:
 
 ```sh
-// with npm
 npm install @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
-
-// with yarn
+```
+```sh
 yarn add @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
 ```
 
@@ -56,10 +54,9 @@ To use the font `Icon` component, you must first add the [Material icons](https:
 在 [icons 示例](/components/icons/)中， 您可以发现一些由我们提供的 SVG Material icons。若您想使用这个图标，您必须安装 [@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons) 这个包：
 
 ```sh
-// 通过 npm
 npm install @material-ui/icons
-
-// 通过 yarn
+```
+```sh
 yarn add @material-ui/icons
 ```
 

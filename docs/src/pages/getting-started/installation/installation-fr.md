@@ -9,10 +9,9 @@ Material-UI est disponible sous forme de package [npm](https://www.npmjs.com/pac
 Pour installer et enregistrer dans vos dépendances `package.json` , exécutez:
 
 ```sh
-// with npm
 npm install @material-ui/core@next @emotion/react @emotion/styled
-
-// with yarn
+```
+```sh
 yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 
@@ -49,10 +48,9 @@ Materiel-UI a été conçu avec la police [Roboto](https://fonts.google.com/spec
 In order to use prebuilt SVG Material icons, such as those found in the [icons demos](/components/icons/) you must first install the [@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons) package:
 
 ```sh
-// with npm
 npm install @material-ui/icons
-
-// with yarn
+```
+```sh
 yarn add @material-ui/icons
 ```
 

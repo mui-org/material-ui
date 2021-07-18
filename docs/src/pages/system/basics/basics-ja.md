@@ -27,10 +27,9 @@ yarn add @material-ui/system@next @emotion/react @emotion/styled
 Or if you want to use `styled-components` as a styling engine:
 
 ```sh
-// with npm
 npm install @material-ui/system@next @material-ui/styled-engine-sc@next styled-components
-
-// with yarn
+```
+```sh
 yarn add @material-ui/system@next @material-ui/styled-engine-sc@next styled-components
 ```
 

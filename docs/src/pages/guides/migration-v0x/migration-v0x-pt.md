@@ -27,14 +27,18 @@ utilizando o yarn:
 
 ```sh
 yarn add material-ui
-  yarn add @material-ui/core
+```
+```sh
+yarn add @material-ui/core
 ```
 
 Ou utilizando npm:
 
 ```sh
 npm install material-ui
-  npm install @material-ui/core
+```
+```sh
+npm install @material-ui/core
 ```
 
 então

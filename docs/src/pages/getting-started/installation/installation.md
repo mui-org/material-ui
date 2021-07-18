@@ -9,10 +9,10 @@ Material-UI is available as an [npm package](https://www.npmjs.com/package/@mate
 To install and save in your `package.json` dependencies, run:
 
 ```sh
-// with npm
 npm install @material-ui/core@next @emotion/react @emotion/styled
+```
 
-// with yarn
+```sh
 yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 
@@ -23,10 +23,10 @@ Please note that [react](https://www.npmjs.com/package/react) >= 17.0.0 and [rea
 Or if you want to use `styled-components` as a styling engine:
 
 ```sh
-// with npm
 npm install @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
+```
 
-// with yarn
+```sh
 yarn add @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
 ```
 
@@ -67,10 +67,10 @@ you must first install the [@material-ui/icons](https://www.npmjs.com/package/@m
 <!-- #default-branch-switch -->
 
 ```sh
-// with npm
 npm install @material-ui/icons@next
+```
 
-// with yarn
+```sh
 yarn add @material-ui/icons@next
 ```
 

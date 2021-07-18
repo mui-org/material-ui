@@ -26,10 +26,9 @@ Material-UI 的样式方案来自于许多其他 CSS-in-JS 库的启发，例如
 若想安装并写入您的 `package.json` 依赖包，请运行以下命令：
 
 ```sh
-// 用 npm 安装
 npm install @material-ui/styles
-
-// 用 yarn 安装
+```
+```sh
 yarn add @material-ui/styles
 ```
 

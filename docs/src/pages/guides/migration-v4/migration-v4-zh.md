@@ -34,9 +34,8 @@ If you're looking for the v4 docs, you can [find them here](https://material-ui.
 
 ```sh
 npm install @material-ui/core@next @emotion/react @emotion/styled
-
-或者使用
-
+```
+```sh
 yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 

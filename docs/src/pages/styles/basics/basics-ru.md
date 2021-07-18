@@ -26,10 +26,9 @@ Material-UI стремится обеспечить прочную основу 
 Для установки и сохранения в вашем ` package.json ` зависимости, запустите:
 
 ```sh
-// with npm
 npm install @material-ui/styles
-
-// with yarn
+```
+```sh
 yarn add @material-ui/styles
 ```
 

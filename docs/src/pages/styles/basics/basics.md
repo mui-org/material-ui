@@ -30,10 +30,10 @@ Material-UI's styling solution is inspired by many other styling libraries such 
 To install and save in your `package.json` dependencies, run:
 
 ```sh
-// with npm
 npm install @material-ui/styles
+```
 
-// with yarn
+```sh
 yarn add @material-ui/styles
 ```
 

@@ -26,10 +26,10 @@ You can [search the full list of these icons](/components/material-icons/).
 Install the package in your project directory with:
 
 ```sh
-// with npm
 npm install @material-ui/icons@next
+```
 
-// with yarn
+```sh
 yarn add @material-ui/icons@next
 ```
 
@@ -38,10 +38,10 @@ These components use the Material-UI `SvgIcon` component to render the SVG path 
 If you aren't already using Material-UI in your project, you can add it with:
 
 ```sh
-// with npm
 npm install @material-ui/core@next
+```
 
-// with yarn
+```sh
 yarn add @material-ui/core@next
 ```
 

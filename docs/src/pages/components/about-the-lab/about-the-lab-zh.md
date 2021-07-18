@@ -20,20 +20,18 @@
 请在您的项目目录中用以下方式安装依赖包：
 
 ```sh
-// 用 npm 安装
 npm install @material-ui/lab@next
-
-// 用 yarn 安装
+```
+```sh
 yarn add @material-ui/lab@next
 ```
 
 该 lab 和那些核心组件是对等依赖的。 若您还未在项目中使用 Material-UI，那可以按如下方式安装：
 
 ```sh
-// 用 npm 安装
 npm install @material-ui/core@next
-
-// 用 yarn 安装
+```
+```sh
 yarn add @material-ui/core@next
 ```
 

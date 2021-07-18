@@ -26,10 +26,9 @@ Die Styling-Lösung von Material-UI ist von vielen anderen Styling-Bibliotheken 
 Um die Abhängigkeit zu ihrer `package.json` hinzuzufügen, führen Sie folgenden Befehl aus:
 
 ```sh
-// mit npm
 npm install @material-ui/styles
-
-// mit yarn
+```
+```sh
 yarn add @material-ui/styles
 ```
 

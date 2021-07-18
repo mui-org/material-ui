@@ -9,10 +9,9 @@ Material-UIは[ npmパッケージ](https://www.npmjs.com/package/@material-ui/c
 次のコマンドを実行してください。これで、あなたの`package.json` に保存できます。
 
 ```sh
-// with npm
 npm install @material-ui/core@next @emotion/react @emotion/styled
-
-// with yarn
+```
+```sh
 yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 
@@ -23,10 +22,9 @@ yarn add @material-ui/core@next @emotion/react @emotion/styled
 Or if you want to use `styled-components` as a styling engine:
 
 ```sh
-// with npm
 npm install @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
-
-// with yarn
+```
+```sh
 yarn add @material-ui/core@next @material-ui/styled-engine-sc@next styled-components
 ```
 
@@ -53,10 +51,9 @@ To use the font `Icon` component, you must first add the [Material icons](https:
 [component demos](/components/icons/)にあるような事前にビルドされたSVG Material iconsを使う為には、[@material-ui/icons](https://www.npmjs.com/package/@material-ui/icons)パッケージをインストールする必要があります。
 
 ```sh
-// with npm
 npm install @material-ui/icons
-
-// with yarn
+```
+```sh
 yarn add @material-ui/icons
 ```
 

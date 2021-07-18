@@ -14,6 +14,10 @@ declare module 'docs/src/modules/components/HighlightedCode' {
      * see @material-ui/markdown/prism for possible languages
      */
     language: string;
+    /**
+     * copy button visible state
+     */
+    isCopyButtonEnabled?: boolean;
   }
   export default function HighlightedCode(props: Props): React.ReactElement;
 }

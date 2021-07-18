@@ -56,7 +56,7 @@ export default function SpacingGrid() {
             </Grid>
           </Grid>
         </Paper>
-        <HighlightedCode code={jsx} language="jsx" />
+        <HighlightedCode isCopyButtonEnabled code={jsx} language="jsx" />
       </Grid>
     </Grid>
   );

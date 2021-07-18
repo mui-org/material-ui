@@ -274,10 +274,13 @@ function ApiDocs(props) {
         </Typography>
         <Heading hash="import" />
         <HighlightedCode
-          code={`
-import ${componentName} from '${source}/${componentName}';
-// ${t('or')}
-import { ${componentName} } from '${source}';`}
+          isCopyButtonEnabled
+          code={`import ${componentName} from '${source}/${componentName}';`}
+          language="jsx"
+        />
+        <HighlightedCode
+          isCopyButtonEnabled
+          code={`import { ${componentName} } from '${source}';`}
           language="jsx"
         />
         <span dangerouslySetInnerHTML={{ __html: t('api-docs.importDifference') }} />

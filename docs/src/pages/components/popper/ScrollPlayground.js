@@ -468,7 +468,7 @@ export default function ScrollPlayground() {
           </Grid>
         </Grid>
       </Grid>
-      <HighlightedCode code={jsx} language="jsx" />
+      <HighlightedCode isCopyButtonEnabled code={jsx} language="jsx" />
     </Box>
   );
 }

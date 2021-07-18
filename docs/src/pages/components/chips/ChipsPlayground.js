@@ -253,7 +253,7 @@ function ChipsPlayground() {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <HighlightedCode code={jsx} language="jsx" />
+        <HighlightedCode isCopyButtonEnabled code={jsx} language="jsx" />
       </Grid>
     </Grid>
   );

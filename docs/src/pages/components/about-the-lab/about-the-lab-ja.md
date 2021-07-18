@@ -20,22 +20,19 @@ Coreパッケージに移るためには以下の基準を考慮します。
 次を使用して、プロジェクトディレクトリにパッケージをインストールします。
 
 ```sh
-// npmの場合
 npm install @material-ui/lab@next
-
-// yarnの場合
+```
+```sh
 yarn add @material-ui/lab@next
 ```
 
 このラボには、コアコンポーネントへのピア依存関係があります。 プロジェクトでまだMaterial-UIを使用していない場合は、次のコマンドでインストールできます。
 
 ```sh
-// npmの場合
 npm install @material-ui/core@next
-
-// yarnの場合
+```
+```sh
 yarn add @material-ui/core@next
-
 ```
 
 ## TypeScript
