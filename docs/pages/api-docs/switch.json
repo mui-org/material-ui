@@ -3,6 +3,7 @@
     "checked": { "type": { "name": "bool" } },
     "checkedIcon": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" } },
+    "className": { "type": { "name": "string" } },
     "color": {
       "type": {
         "name": "union",
@@ -12,7 +13,9 @@
     },
     "defaultChecked": { "type": { "name": "bool" } },
     "disabled": { "type": { "name": "bool" } },
+    "disableFocusRipple": { "type": { "name": "bool" } },
     "disableRipple": { "type": { "name": "bool" } },
+    "disableTouchRipple": { "type": { "name": "bool" } },
     "edge": {
       "type": {
         "name": "enum",
@@ -20,10 +23,12 @@
       },
       "default": "false"
     },
+    "focusVisibleClassName": { "type": { "name": "string" } },
     "icon": { "type": { "name": "node" } },
     "id": { "type": { "name": "string" } },
     "inputProps": { "type": { "name": "object" } },
     "inputRef": { "type": { "name": "custom", "description": "ref" } },
+    "name": { "type": { "name": "string" } },
     "onChange": { "type": { "name": "func" } },
     "required": { "type": { "name": "bool" } },
     "size": {
@@ -34,6 +39,7 @@
       "default": "'medium'"
     },
     "sx": { "type": { "name": "object" } },
+    "TouchRippleProps": { "type": { "name": "object" } },
     "value": { "type": { "name": "any" } }
   },
   "name": "Switch",
@@ -59,7 +65,7 @@
   "spread": false,
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/material-ui/src/Switch/Switch.js",
-  "inheritance": { "component": "IconButton", "pathname": "/api/icon-button/" },
+  "inheritance": null,
   "demos": "<ul><li><a href=\"/components/switches/\">Switches</a></li>\n<li><a href=\"/components/transfer-list/\">Transfer List</a></li></ul>",
   "styledComponent": true,
   "cssComponent": false
