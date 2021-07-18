@@ -298,6 +298,7 @@
     "/customization/default-theme": "Default Theme",
     "/customization/how-to-customize": "How To Customize",
     "/customization/color": "Color",
+    "/customization/unstyled-components": "Unstyled Components",
     "/guides": "How To Guides",
     "/guides/typescript": "TypeScript",
     "/guides/interoperability": "Style Library Interoperability",

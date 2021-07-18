@@ -271,6 +271,7 @@ const pages: readonly MuiPage[] = [
       },
       { pathname: '/customization/how-to-customize' },
       { pathname: '/customization/color' },
+      { pathname: '/customization/unstyled-components' },
     ],
   },
   {
