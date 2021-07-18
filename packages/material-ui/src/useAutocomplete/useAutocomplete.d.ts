@@ -112,6 +112,11 @@ export interface UseAutocompleteProps<
    * @param {object} state The state of the component.
    * @returns {T[]}
    */
+  disableOpenOnClick?: boolean;
+  /**
+   * If `true`, dropdown of options on a mouse click event will be disabled.
+   * @default false
+   */
   filterOptions?: (options: T[], state: FilterOptionsState<T>) => T[];
   /**
    * If `true`, hide the selected options from the list box.
