@@ -10,6 +10,8 @@ import MobileDatePicker from '@material-ui/lab/MobileDatePicker';
 export default function MaterialUIPickers() {
   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
 
+  const [previousValue, setPreviousValue] = React.useState(value);
+
   const handleChange = (newValue) => {
     setValue(newValue);
   };
@@ -29,6 +31,15 @@ export default function MaterialUIPickers() {
           inputFormat="MM/dd/yyyy"
           value={value}
           onChange={handleChange}
+          onAccept={(accpetValue) => {
+            setValue(accpetValue);
+          }}
+          onClose={() => {
+            setValue(previousValue);
+          }}
+          onOpen={() => {
+            setPreviousValue(value);
+          }}
           renderInput={(params) => <TextField {...params} />}
         />
         <TimePicker

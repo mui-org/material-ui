@@ -11,6 +11,7 @@ export default function MaterialUIPickers() {
   const [value, setValue] = React.useState<Date | null>(
     new Date('2014-08-18T21:11:54'),
   );
+  const [previousValue, setPreviousValue] = React.useState<Date | null>(value);
 
   const handleChange = (newValue: Date | null) => {
     setValue(newValue);
@@ -31,6 +32,15 @@ export default function MaterialUIPickers() {
           inputFormat="MM/dd/yyyy"
           value={value}
           onChange={handleChange}
+          onAccept={(accpetValue) => {
+            setValue(accpetValue);
+          }}
+          onClose={() => {
+            setValue(previousValue);
+          }}
+          onOpen={() => {
+            setPreviousValue(value);
+          }}
           renderInput={(params) => <TextField {...params} />}
         />
         <TimePicker

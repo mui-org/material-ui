@@ -10,6 +10,8 @@ import Stack from '@material-ui/core/Stack';
 export default function ResponsiveDatePickers() {
   const [value, setValue] = React.useState(new Date());
 
+  const [previousValue, setPreviousValue] = React.useState(new Date());
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack spacing={3}>
@@ -18,6 +20,15 @@ export default function ResponsiveDatePickers() {
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
+          }}
+          onAccept={(acceptValue) => {
+            setValue(acceptValue);
+          }}
+          onClose={() => {
+            setValue(previousValue);
+          }}
+          onOpen={() => {
+            setPreviousValue(value);
           }}
           renderInput={(params) => <TextField {...params} />}
         />
