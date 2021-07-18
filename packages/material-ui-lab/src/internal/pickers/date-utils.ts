@@ -69,8 +69,7 @@ export const findClosestEnabledDate = <TDate>({
     }
   }
 
-  // fallback to today if no enabled days
-  return utils.date();
+  return today;
 };
 
 export function parsePickerInputValue(utils: MuiPickersAdapter, value: unknown): unknown {

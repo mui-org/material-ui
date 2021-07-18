@@ -9,9 +9,7 @@ describe('findClosestEnabledDate', () => {
   );
   const only18th = (date: any) => adapterToUse.format(date, 'dayOfMonth') !== day18thText;
 
-  // TODO
-  // eslint-disable-next-line mocha/no-skipped-tests
-  it.skip('should fallback to today if all dates are disabled', () => {
+  it('should fallback to today if all dates are disabled', () => {
     const result = findClosestEnabledDate({
       date: adapterToUse.date('2000-01-01T00:00:00.000'),
       minDate: adapterToUse.date('1999-01-01T00:00:00.000'), // Use close-by min/max dates to reduce the test runtime.
@@ -22,7 +20,7 @@ describe('findClosestEnabledDate', () => {
       disablePast: false,
     });
 
-    expect(adapterToUse.isEqual(result, adapterToUse.date())).to.be.equal(true);
+    expect(result).toEqualDateTime(adapterToUse.startOfDay(adapterToUse.date()));
   });
 
   it('should return given date if it is enabled', () => {
@@ -183,9 +181,7 @@ describe('findClosestEnabledDate', () => {
     );
   });
 
-  // TODO
-  // eslint-disable-next-line mocha/no-skipped-tests
-  it.skip('should fallback to today if minDate is after maxDate', () => {
+  it('should fallback to today if minDate is after maxDate', () => {
     const result = findClosestEnabledDate({
       date: adapterToUse.date('2000-01-01T00:00:00.000'),
       minDate: adapterToUse.date('2000-01-01T00:00:00.000'),
@@ -196,6 +192,6 @@ describe('findClosestEnabledDate', () => {
       disablePast: false,
     })!;
 
-    expect(adapterToUse.isEqual(result, adapterToUse.date())).to.be.equal(true);
+    expect(result).toEqualDateTime(adapterToUse.startOfDay(adapterToUse.date()));
   });
 });
