@@ -191,7 +191,7 @@ describe('<ClickAwayListener />', () => {
       });
     });
 
-    it('should be called if an element is interleaved between mousedown and mouseup', () => {
+    it('should not be called if an element is interleaved between mousedown and mouseup with trigger on click', () => {
       /**
        * @param {Element} element
        * @returns {Element[]}
@@ -256,6 +256,7 @@ describe('<ClickAwayListener />', () => {
       fireDiscreteEvent.mouseUp(mouseUpTarget);
       fireDiscreteEvent.click(clickTarget);
 
+      // TODO fix, should be 0
       expect(onClickAway.callCount).to.equal(1);
     });
   });
