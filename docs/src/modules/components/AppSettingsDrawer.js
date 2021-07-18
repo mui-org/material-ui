@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/styles';
-import { createTheme, useTheme } from '@material-ui/core/styles';
+import { styled, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup';
@@ -21,20 +21,25 @@ import { useTranslate } from 'docs/src/modules/utils/i18n';
 import { useChangeTheme } from 'docs/src/modules/components/ThemeContext';
 import { getCookie } from 'docs/src/modules/utils/helpers';
 
-const styles = () => ({
-  paper: {
-    width: 352,
-  },
-  heading: {
-    margin: '16px 0 8px',
-  },
-  icon: {
-    marginRight: 8,
+const DrawerPaper = styled(Paper)({
+  width: 352,
+});
+
+const Heading = styled(Typography)({
+  margin: '16px 0 8px',
+});
+
+const IconToggleButton = styled(ToggleButton)({
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+  '& > *': {
+    marginRight: '8px',
   },
 });
 
 function AppSettingsDrawer(props) {
-  const { classes, onClose, open = false, ...other } = props;
+  const { onClose, open = false, ...other } = props;
   const t = useTranslate();
   const theme = useTheme();
   const changeTheme = useChangeTheme();
@@ -71,9 +76,7 @@ function AppSettingsDrawer(props) {
       anchor="right"
       onClose={onClose}
       open={open}
-      classes={{
-        paper: classes.paper,
-      }}
+      PaperProps={{ component: DrawerPaper }}
       {...other}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
@@ -84,9 +87,9 @@ function AppSettingsDrawer(props) {
       </Box>
       <Divider />
       <Box sx={{ pl: 2, pr: 2 }}>
-        <Typography gutterBottom id="settings-mode" className={classes.heading}>
+        <Heading gutterBottom id="settings-mode">
           {t('settings.mode')}
-        </Typography>
+        </Heading>
         <ToggleButtonGroup
           exclusive
           value={mode}
@@ -95,43 +98,37 @@ function AppSettingsDrawer(props) {
           aria-labelledby="settings-mode"
           fullWidth
         >
-          <ToggleButton
+          <IconToggleButton
             value="light"
             aria-label={t('settings.light')}
             data-ga-event-category="settings"
             data-ga-event-action="light"
           >
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <Brightness7Icon className={classes.icon} />
-              {t('settings.light')}
-            </Box>
-          </ToggleButton>
-          <ToggleButton
+            <Brightness7Icon />
+            {t('settings.light')}
+          </IconToggleButton>
+          <IconToggleButton
             value="system"
             aria-label={t('settings.system')}
             data-ga-event-category="settings"
             data-ga-event-action="system"
           >
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <SettingsBrightnessIcon className={classes.icon} />
-              {t('settings.system')}
-            </Box>
-          </ToggleButton>
-          <ToggleButton
+            <SettingsBrightnessIcon />
+            {t('settings.system')}
+          </IconToggleButton>
+          <IconToggleButton
             value="dark"
             aria-label={t('settings.dark')}
             data-ga-event-category="settings"
             data-ga-event-action="dark"
           >
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <Brightness4Icon className={classes.icon} />
-              {t('settings.dark')}
-            </Box>
-          </ToggleButton>
+            <Brightness4Icon />
+            {t('settings.dark')}
+          </IconToggleButton>
         </ToggleButtonGroup>
-        <Typography gutterBottom id="settings-direction" className={classes.heading}>
+        <Heading gutterBottom id="settings-direction">
           {t('settings.direction')}
-        </Typography>
+        </Heading>
         <ToggleButtonGroup
           exclusive
           value={theme.direction}
@@ -140,32 +137,26 @@ function AppSettingsDrawer(props) {
           color="primary"
           fullWidth
         >
-          <ToggleButton
+          <IconToggleButton
             value="ltr"
             aria-label={t('settings.light')}
             data-ga-event-category="settings"
             data-ga-event-action="ltr"
           >
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <FormatTextdirectionLToRIcon className={classes.icon} />
-              {t('settings.ltr')}
-            </Box>
-          </ToggleButton>
-          <ToggleButton
+            <FormatTextdirectionLToRIcon />
+            {t('settings.ltr')}
+          </IconToggleButton>
+          <IconToggleButton
             value="rtl"
             aria-label={t('settings.system')}
             data-ga-event-category="settings"
             data-ga-event-action="rtl"
           >
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <FormatTextdirectionRToLIcon className={classes.icon} />
-              {t('settings.rtl')}
-            </Box>
-          </ToggleButton>
+            <FormatTextdirectionRToLIcon />
+            {t('settings.rtl')}
+          </IconToggleButton>
         </ToggleButtonGroup>
-        <Typography gutterBottom className={classes.heading}>
-          {t('settings.color')}
-        </Typography>
+        <Heading gutterBottom>{t('settings.color')}</Heading>
         <Link
           href="/customization/color/#playground"
           data-ga-event-category="settings"
@@ -180,10 +171,8 @@ function AppSettingsDrawer(props) {
 }
 
 AppSettingsDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool,
 };
 
-const defaultTheme = createTheme();
-export default withStyles(styles, { defaultTheme })(AppSettingsDrawer);
+export default AppSettingsDrawer;

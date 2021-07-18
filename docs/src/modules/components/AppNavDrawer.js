@@ -1,8 +1,6 @@
 import * as React from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { createTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/styles';
+import { styled } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -53,23 +51,11 @@ PersistScroll.propTypes = {
   slot: PropTypes.string.isRequired,
 };
 
-const styles = (theme) => ({
-  paper: {
-    width: 240,
-    boxShadow: 'none',
-  },
-  title: {
-    color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(0.5),
-    '&:hover': {
-      color: theme.palette.primary.main,
-    },
-  },
-  // https://github.com/philipwalton/flexbugs#3-min-height-on-a-flex-container-wont-apply-to-its-flex-items
-  toolbarIe11: {
-    display: 'flex',
-  },
-  toolbar: {
+// https://github.com/philipwalton/flexbugs#3-min-height-on-a-flex-container-wont-apply-to-its-flex-items
+const ToolbarIE11 = styled('div')({ display: 'flex' });
+
+const ToolbarDiv = styled('div')(({ theme }) => {
+  return {
     ...theme.mixins.toolbar,
     paddingLeft: theme.spacing(3),
     display: 'flex',
@@ -77,7 +63,33 @@ const styles = (theme) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-  },
+  };
+});
+
+const TitleLink = styled(Link)(({ theme }) => {
+  return {
+    color: theme.palette.text.secondary,
+    marginBottom: theme.spacing(0.5),
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  };
+});
+
+const StyledDrawer = styled(Drawer)(({ theme }) => {
+  return {
+    [theme.breakpoints.up('xs')]: {
+      display: 'none',
+    },
+    [theme.breakpoints.up('lg')]: {
+      display: 'block',
+    },
+  };
+});
+
+const SwipeableDrawerPaperComponent = styled('div')({
+  width: 240,
+  boxShadow: 'none',
 });
 
 function renderNavItems(options) {
@@ -146,7 +158,7 @@ function reduceChildRoutes(context) {
 const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 function AppNavDrawer(props) {
-  const { classes, className, disablePermanent, mobileOpen, onClose, onOpen } = props;
+  const { className, disablePermanent, mobileOpen, onClose, onOpen } = props;
   const { activePage, pages } = React.useContext(PageContext);
   const userLanguage = useUserLanguage();
   const languagePrefix = userLanguage === 'en' ? '' : `/${userLanguage}`;
@@ -158,18 +170,11 @@ function AppNavDrawer(props) {
 
     return (
       <React.Fragment>
-        <div className={classes.toolbarIe11}>
-          <div className={classes.toolbar}>
-            <Link
-              className={classes.title}
-              href="/"
-              underline="hover"
-              onClick={onClose}
-              variant="h6"
-              color="inherit"
-            >
+        <ToolbarIE11>
+          <ToolbarDiv>
+            <TitleLink href="/" underline="hover" onClick={onClose} variant="h6" color="inherit">
               Material-UI
-            </Link>
+            </TitleLink>
             {process.env.LIB_VERSION ? (
               <Link
                 color="text.secondary"
@@ -182,8 +187,8 @@ function AppNavDrawer(props) {
                 {`v${process.env.LIB_VERSION}`}
               </Link>
             ) : null}
-          </div>
-        </div>
+          </ToolbarDiv>
+        </ToolbarIE11>
         <Divider />
         <Box sx={{ mx: 3, my: 2 }}>
           <DiamondSponsors spot="drawer" />
@@ -191,15 +196,12 @@ function AppNavDrawer(props) {
         {navItems}
       </React.Fragment>
     );
-  }, [activePage, pages, onClose, t, classes, languagePrefix]);
+  }, [activePage, pages, onClose, t, languagePrefix]);
 
   return (
     <nav className={className} aria-label={t('mainNavigation')}>
       {disablePermanent || mobile ? (
         <SwipeableDrawer
-          classes={{
-            paper: clsx(classes.paper, 'algolia-drawer'),
-          }}
           disableBackdropTransition={!iOS}
           variant="temporary"
           open={mobileOpen}
@@ -208,6 +210,10 @@ function AppNavDrawer(props) {
           ModalProps={{
             keepMounted: true,
           }}
+          PaperProps={{
+            className: 'algolia-drawer',
+            component: SwipeableDrawerPaperComponent,
+          }}
         >
           <PersistScroll slot="swipeable" enabled={mobileOpen}>
             {drawer}
@@ -215,28 +221,24 @@ function AppNavDrawer(props) {
         </SwipeableDrawer>
       ) : null}
       {disablePermanent || mobile ? null : (
-        <Drawer
-          classes={{
-            paper: classes.paper,
-          }}
+        <StyledDrawer
           variant="permanent"
           PaperProps={{
+            component: SwipeableDrawerPaperComponent,
             elevation: 2,
           }}
-          sx={{ display: { xs: 'none', lg: 'block' } }}
           open
         >
           <PersistScroll slot="side" enabled>
             {drawer}
           </PersistScroll>
-        </Drawer>
+        </StyledDrawer>
       )}
     </nav>
   );
 }
 
 AppNavDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   disablePermanent: PropTypes.bool.isRequired,
   mobileOpen: PropTypes.bool.isRequired,
@@ -244,5 +246,4 @@ AppNavDrawer.propTypes = {
   onOpen: PropTypes.func.isRequired,
 };
 
-const defaultTheme = createTheme();
-export default withStyles(styles, { defaultTheme })(AppNavDrawer);
+export default AppNavDrawer;

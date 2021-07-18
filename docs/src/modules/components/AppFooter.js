@@ -1,58 +1,13 @@
 /* eslint-disable material-ui/no-hardcoded-labels */
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Interpolate from '@trendmicro/react-interpolate';
-import { styled, createTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/styles';
+import { styled } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import Link from 'docs/src/modules/components/Link';
 import { useUserLanguage, useTranslate } from 'docs/src/modules/utils/i18n';
-
-const styles = (theme) => ({
-  root: {
-    marginTop: theme.spacing(6),
-  },
-  footer: {
-    padding: theme.spacing(3, 0),
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(8, 0),
-    },
-  },
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(4),
-    '& img': {
-      width: 28,
-      height: 22,
-      marginRight: theme.spacing(1.5),
-    },
-  },
-  list: {
-    marginBottom: theme.spacing(4),
-    '& h3': {
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-    '& ul': {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-    '& li': {
-      padding: '6px 0',
-      color: theme.palette.text.secondary,
-    },
-  },
-  version: {
-    marginTop: theme.spacing(3),
-  },
-  careers: {
-    display: 'flex',
-  },
-});
 
 const Badge = styled('span')(({ theme }) => ({
   alignSelf: 'center',
@@ -69,27 +24,82 @@ const Badge = styled('span')(({ theme }) => ({
   display: 'inline-block',
 }));
 
-function AppFooter(props) {
-  const { classes } = props;
+const Root = styled('div')(({ theme }) => {
+  return {
+    marginTop: theme.spacing(6),
+  };
+});
+
+const Logo = styled('div')(({ theme }) => {
+  return {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(4),
+    '& img': {
+      width: 28,
+      height: 22,
+      marginRight: theme.spacing(1.5),
+    },
+  };
+});
+
+const ListGrid = styled(Grid)(({ theme }) => {
+  return {
+    marginBottom: theme.spacing(4),
+    '& h3': {
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    '& ul': {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
+    '& li': {
+      padding: '6px 0',
+      color: theme.palette.text.secondary,
+    },
+  };
+});
+
+const VersionTypography = styled(Typography)(({ theme }) => {
+  return {
+    marginTop: theme.spacing(3),
+  };
+});
+
+const CareersLi = styled('li')({
+  display: 'flex',
+});
+
+const Footer = styled('footer')(({ theme }) => {
+  return {
+    padding: theme.spacing(3, 0),
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(8, 0),
+    },
+  };
+});
+
+export default function AppFooter() {
   const userLanguage = useUserLanguage();
   const languagePrefix = userLanguage === 'en' ? '' : `/${userLanguage}`;
   const t = useTranslate();
 
   return (
-    <div className={classes.root}>
+    <Root>
       <Divider />
       <Container maxWidth="md">
-        <footer className={classes.footer}>
+        <Footer>
           <Grid container>
             <Grid item xs={12} sm={3}>
-              <div className={classes.logo}>
+              <Logo>
                 <img src="/static/logo_raw.svg" alt="" />
                 <Link underline="hover" variant="body1" color="inherit" href="/">
                   Material-UI
                 </Link>
-              </div>
+              </Logo>
             </Grid>
-            <Grid item xs={6} sm={3} className={classes.list}>
+            <ListGrid item xs={6} sm={3}>
               <Typography component="h2" gutterBottom>
                 {t('footerCommunity')}
               </Typography>
@@ -135,8 +145,8 @@ function AppFooter(props) {
                   </Link>
                 </li>
               </ul>
-            </Grid>
-            <Grid item xs={6} sm={3} className={classes.list}>
+            </ListGrid>
+            <ListGrid item xs={6} sm={3}>
               <Typography component="h2" gutterBottom>
                 {t('footerResources')}
               </Typography>
@@ -172,8 +182,8 @@ function AppFooter(props) {
                   </Link>
                 </li>
               </ul>
-            </Grid>
-            <Grid item xs={6} sm={3} className={classes.list}>
+            </ListGrid>
+            <ListGrid item xs={6} sm={3}>
               <Typography component="h2" gutterBottom>
                 {t('footerCompany')}
               </Typography>
@@ -188,18 +198,18 @@ function AppFooter(props) {
                     Contact Us
                   </Link>
                 </li>
-                <li className={classes.careers}>
+                <CareersLi>
                   <Link underline="hover" color="inherit" variant="body2" href="/company/careers/">
                     Careers
                   </Link>
                   <Link underline="hover" color="inherit" variant="body2" href="/company/careers/">
                     <Badge>hiring</Badge>
                   </Link>
-                </li>
+                </CareersLi>
               </ul>
-            </Grid>
+            </ListGrid>
           </Grid>
-          <Typography className={classes.version} color="text.secondary" variant="body2">
+          <VersionTypography color="text.secondary" variant="body2">
             <Interpolate
               replacement={{
                 versionNumber: (
@@ -226,16 +236,9 @@ function AppFooter(props) {
             {' Copyright © '}
             {new Date().getFullYear()}
             {' Material-UI. '}
-          </Typography>
-        </footer>
+          </VersionTypography>
+        </Footer>
       </Container>
-    </div>
+    </Root>
   );
 }
-
-AppFooter.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-const defaultTheme = createTheme();
-export default withStyles(styles, { defaultTheme })(AppFooter);

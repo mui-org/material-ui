@@ -1,8 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { createTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/styles';
+import { styled } from '@material-ui/core/styles';
 import NProgress from 'nprogress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiLink from '@material-ui/core/Link';
@@ -77,22 +76,19 @@ function DeferredAppSearch() {
   );
 }
 
-const styles = (theme) => ({
-  '@global': {
-    '#main-content': {
+const RootDiv = styled('div')(({ theme }) => {
+  return {
+    display: 'flex',
+    backgroundColor: theme.palette.mode === 'dark' && theme.palette.grey[900],
+    // TODO: Should be handled by the main component
+    '& #main-content': {
       outline: 0,
     },
-  },
-  root: {
-    display: 'flex',
-    ...(theme.palette.mode === 'dark' && {
-      backgroundColor: theme.palette.grey[900],
-    }),
-  },
-  grow: {
-    flex: '1 1 auto',
-  },
-  skipNav: {
+  };
+});
+
+const SkipLink = styled(MuiLink)(({ theme }) => {
+  return {
     position: 'fixed',
     padding: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
@@ -113,40 +109,64 @@ const styles = (theme) => ({
     '@media print': {
       display: 'none',
     },
-  },
-  appBar: {
+  };
+});
+
+const StyledAppBar = styled(AppBar, {
+  shouldForwardProp: (prop) => prop !== 'disablePermanent',
+})(({ disablePermanent, theme }) => {
+  return {
     transition: theme.transitions.create('width'),
-  },
-  language: {
+    ...(!disablePermanent && {
+      boxShadow: 'none',
+      [theme.breakpoints.up('lg')]: {
+        width: 'calc(100% - 240px)',
+      },
+    }),
+  };
+});
+
+const GrowingDiv = styled('div')({
+  flex: '1 1 auto',
+});
+
+const LanguageSpan = styled('span')(({ theme }) => {
+  return {
     margin: theme.spacing(0, 0.5, 0, 1),
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'block',
     },
-  },
-  appBarHome: {
-    boxShadow: 'none',
-  },
-  appBarShift: {
+  };
+});
+
+const NavIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'disablePermanent',
+})(({ disablePermanent, theme }) => {
+  if (disablePermanent) {
+    return {};
+  }
+  return {
     [theme.breakpoints.up('lg')]: {
-      width: 'calc(100% - 240px)',
+      display: 'none',
     },
-  },
-  drawer: {
+  };
+});
+
+const StyledAppNavDrawer = styled(AppNavDrawer)(({ disablePermanent, theme }) => {
+  if (disablePermanent) {
+    return {};
+  }
+  return {
     [theme.breakpoints.up('lg')]: {
       flexShrink: 0,
       width: 240,
     },
-  },
-  navIconHide: {
-    [theme.breakpoints.up('lg')]: {
-      display: 'none',
-    },
-  },
+  };
 });
 
 function AppFrame(props) {
-  const { children, classes, disableDrawer = false } = props;
+  const { children, disableDrawer = false } = props;
   const t = useTranslate();
   const userLanguage = useUserLanguage();
 
@@ -183,39 +203,29 @@ function AppFrame(props) {
   const { canonical } = pathnameToLanguage(router.asPath);
   const { activePage } = React.useContext(PageContext);
 
-  let disablePermanent = false;
-  let navIconClassName = '';
-  let appBarClassName = classes.appBar;
-
-  if (activePage?.disableDrawer === true || disableDrawer === true) {
-    disablePermanent = true;
-    appBarClassName += ` ${classes.appBarHome}`;
-  } else {
-    navIconClassName = classes.navIconHide;
-    appBarClassName += ` ${classes.appBarShift}`;
-  }
+  const disablePermanent = activePage?.disableDrawer === true || disableDrawer === true;
 
   return (
-    <div className={classes.root}>
+    <RootDiv>
       <NextNProgressBar />
       <CssBaseline />
-      <MuiLink color="secondary" className={classes.skipNav} href="#main-content">
+      <SkipLink color="secondary" href="#main-content">
         {t('appFrame.skipToContent')}
-      </MuiLink>
+      </SkipLink>
       <MarkdownLinks />
-      <AppBar className={appBarClassName}>
+      <StyledAppBar disablePermanent={disablePermanent}>
         <Toolbar>
-          <IconButton
+          <NavIconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label={t('appFrame.openDrawer')}
+            disablePermanent={disablePermanent}
             onClick={handleNavDrawerOpen}
-            className={navIconClassName}
           >
             <MenuIcon />
-          </IconButton>
-          <div className={classes.grow} />
+          </NavIconButton>
+          <GrowingDiv />
           <DeferredAppSearch />
           <Tooltip title={t('appFrame.changeLanguage')} enterDelay={300}>
             <Button
@@ -227,9 +237,9 @@ function AppFrame(props) {
               data-ga-event-action="language"
             >
               <LanguageIcon />
-              <span className={classes.language}>
+              <LanguageSpan>
                 {LANGUAGES_LABEL.filter((language) => language.code === userLanguage)[0].text}
-              </span>
+              </LanguageSpan>
               <ExpandMoreIcon fontSize="small" />
             </Button>
           </Tooltip>
@@ -295,9 +305,8 @@ function AppFrame(props) {
             </IconButton>
           </Tooltip>
         </Toolbar>
-      </AppBar>
-      <AppNavDrawer
-        className={disablePermanent ? '' : classes.drawer}
+      </StyledAppBar>
+      <StyledAppNavDrawer
         disablePermanent={disablePermanent}
         onClose={handleNavDrawerClose}
         onOpen={handleNavDrawerOpen}
@@ -305,15 +314,13 @@ function AppFrame(props) {
       />
       {children}
       <AppSettingsDrawer onClose={handleSettingsDrawerClose} open={settingsOpen} />
-    </div>
+    </RootDiv>
   );
 }
 
 AppFrame.propTypes = {
   children: PropTypes.node.isRequired,
-  classes: PropTypes.object.isRequired,
   disableDrawer: PropTypes.bool,
 };
 
-const defaultTheme = createTheme();
-export default withStyles(styles, { defaultTheme })(AppFrame);
+export default AppFrame;
