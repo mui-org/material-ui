@@ -5,7 +5,7 @@
   },
   "name": "YearPicker",
   "styles": { "classes": ["root"], "globalClasses": {}, "name": "MuiYearPicker" },
-  "spread": false,
+  "spread": true,
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/material-ui-lab/src/YearPicker/YearPicker.tsx",
   "inheritance": null,

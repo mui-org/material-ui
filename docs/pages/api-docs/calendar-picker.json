@@ -1,12 +1,17 @@
 {
   "props": {
     "onChange": { "type": { "name": "func" }, "required": true },
+    "allowSameDateSelection": { "type": { "name": "bool" } },
+    "componentsProps": { "type": { "name": "object" }, "default": "{}" },
     "defaultCalendarMonth": { "type": { "name": "any" } },
+    "disableHighlightToday": { "type": { "name": "bool" } },
+    "leftArrowButtonText": { "type": { "name": "string" } },
     "loading": { "type": { "name": "bool" } },
     "maxDate": { "type": { "name": "any" } },
     "minDate": { "type": { "name": "any" } },
     "onMonthChange": { "type": { "name": "func" } },
     "onViewChange": { "type": { "name": "func" } },
+    "onYearChange": { "type": { "name": "func" } },
     "openTo": {
       "type": {
         "name": "enum",
@@ -18,12 +23,15 @@
       "type": { "name": "bool" },
       "default": "typeof navigator !== 'undefined' && /(android)/i.test(navigator.userAgent)"
     },
+    "renderDay": { "type": { "name": "func" } },
     "renderLoading": {
       "type": { "name": "func" },
       "default": "() => <span data-mui-test=\"loading-progress\">...</span>"
     },
+    "rightArrowButtonText": { "type": { "name": "string" } },
     "shouldDisableDate": { "type": { "name": "func" } },
     "shouldDisableYear": { "type": { "name": "func" } },
+    "showDaysOutsideCurrentMonth": { "type": { "name": "bool" } },
     "view": {
       "type": {
         "name": "enum",

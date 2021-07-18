@@ -84,6 +84,7 @@ const YearPicker = React.forwardRef(function YearPicker<TDate>(
     onFocusedDayChange,
     onYearChange,
     shouldDisableYear,
+    ...other
   } = props;
 
   const styleProps = props;
@@ -169,7 +170,12 @@ const YearPicker = React.forwardRef(function YearPicker<TDate>(
   };
 
   return (
-    <YearPickerRoot ref={ref} className={clsx(classes.root, className)} styleProps={styleProps}>
+    <YearPickerRoot
+      ref={ref}
+      className={clsx(classes.root, className)}
+      styleProps={styleProps}
+      {...other}
+    >
       {utils.getYearRange(minDate, maxDate).map((year) => {
         const yearNumber = utils.getYear(year);
         const selected = yearNumber === currentYear;

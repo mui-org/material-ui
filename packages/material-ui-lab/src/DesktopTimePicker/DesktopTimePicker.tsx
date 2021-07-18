@@ -53,9 +53,37 @@ const DesktopTimePicker = React.forwardRef(function DesktopTimePicker<TDate>(
     ToolbarComponent = TimePickerToolbar,
     TransitionComponent,
     value,
+    inputFormat,
+    renderInput,
+    acceptRegex,
+    disableCloseOnSelect,
+    disableMaskedInput,
+    disableOpenPicker,
+    getOpenDialogAriaText,
+    InputAdornmentProps,
+    inputRef,
+    onAccept,
+    onOpen,
+    OpenPickerButtonProps,
+    rifmFormatter,
     ...other
   } = props;
-  const DateInputProps = { ...inputProps, ...other, ref, validationError };
+  const DateInputProps = {
+    ...inputProps,
+    ...other,
+    ref,
+    validationError,
+    inputFormat,
+    renderInput,
+    acceptRegex,
+    disableMaskedInput,
+    disableOpenPicker,
+    getOpenDialogAriaText,
+    InputAdornmentProps,
+    inputRef,
+    OpenPickerButtonProps,
+    rifmFormatter,
+  };
 
   return (
     <DesktopWrapper

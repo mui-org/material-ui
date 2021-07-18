@@ -50,16 +50,42 @@ const StaticDatePicker = React.forwardRef(function StaticDatePicker<TDate>(
   const validationError = useDateValidation(props) !== null;
   const { pickerProps, inputProps } = usePickerState(props, valueManager);
 
-  // Note that we are passing down all the value without spread.
-  // It saves us >1kb gzip and make any prop available automatically on any level down.
   const {
     ToolbarComponent = DatePickerToolbar,
     value,
     onChange,
     displayStaticWrapperAs = 'mobile',
+    inputFormat,
+    renderInput,
+    acceptRegex,
+    disableCloseOnSelect,
+    disableMaskedInput,
+    disableOpenPicker,
+    getOpenDialogAriaText,
+    InputAdornmentProps,
+    inputRef,
+    onAccept,
+    onOpen,
+    OpenPickerButtonProps,
+    rifmFormatter,
     ...other
   } = props;
-  const DateInputProps = { ...inputProps, ...other, ref, validationError };
+  const DateInputProps = {
+    ...inputProps,
+    ...other,
+    ref,
+    validationError,
+    inputFormat,
+    renderInput,
+    acceptRegex,
+    disableMaskedInput,
+    disableOpenPicker,
+    getOpenDialogAriaText,
+    InputAdornmentProps,
+    inputRef,
+    OpenPickerButtonProps,
+    rifmFormatter,
+  };
 
   return (
     <StaticWrapper displayStaticWrapperAs={displayStaticWrapperAs}>

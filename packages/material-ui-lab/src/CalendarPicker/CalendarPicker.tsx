@@ -165,8 +165,10 @@ const CalendarPicker = React.forwardRef(function CalendarPicker<TDate extends an
   });
 
   const {
+    allowSameDateSelection,
     autoFocus,
     onViewChange,
+    componentsProps,
     date,
     disableFuture = false,
     disablePast = false,
@@ -184,6 +186,12 @@ const CalendarPicker = React.forwardRef(function CalendarPicker<TDate extends an
     views = ['year', 'day'],
     openTo = 'day',
     className,
+    leftArrowButtonText,
+    rightArrowButtonText,
+    onYearChange,
+    renderDay,
+    showDaysOutsideCurrentMonth,
+    disableHighlightToday,
     ...other
   } = props;
 
@@ -260,6 +268,9 @@ const CalendarPicker = React.forwardRef(function CalendarPicker<TDate extends an
         disablePast={disablePast}
         disableFuture={disableFuture}
         reduceAnimations={reduceAnimations}
+        componentsProps={componentsProps}
+        leftArrowButtonText={leftArrowButtonText}
+        rightArrowButtonText={rightArrowButtonText}
       />
       <CalendarPickerViewTransitionContainer
         reduceAnimations={reduceAnimations}
@@ -281,6 +292,7 @@ const CalendarPicker = React.forwardRef(function CalendarPicker<TDate extends an
               isDateDisabled={isDateDisabled}
               shouldDisableYear={shouldDisableYear}
               onFocusedDayChange={changeFocusedDay}
+              onYearChange={onYearChange}
             />
           )}
 
@@ -308,6 +320,10 @@ const CalendarPicker = React.forwardRef(function CalendarPicker<TDate extends an
               isDateDisabled={isDateDisabled}
               loading={loading}
               renderLoading={renderLoading}
+              allowSameDateSelection={allowSameDateSelection}
+              renderDay={renderDay}
+              showDaysOutsideCurrentMonth={showDaysOutsideCurrentMonth}
+              disableHighlightToday={disableHighlightToday}
             />
           )}
         </div>
@@ -322,6 +338,11 @@ CalendarPicker.propTypes /* remove-proptypes */ = {
   // |     To update them edit TypeScript types and run "yarn proptypes"  |
   // ----------------------------------------------------------------------
   /**
+   * If `true`, `onChange` is fired on click even if the same date is selected.
+   * @default false
+   */
+  allowSameDateSelection: PropTypes.bool,
+  /**
    * @ignore
    */
   autoFocus: PropTypes.bool,
@@ -333,6 +354,11 @@ CalendarPicker.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * The props used for each slot inside.
+   * @default {}
+   */
+  componentsProps: PropTypes.object,
   /**
    * @ignore
    */
@@ -346,9 +372,18 @@ CalendarPicker.propTypes /* remove-proptypes */ = {
    */
   disableFuture: PropTypes.bool,
   /**
+   * If `true`, todays date is rendering without highlighting with circle.
+   * @default false
+   */
+  disableHighlightToday: PropTypes.bool,
+  /**
    * @default false
    */
   disablePast: PropTypes.bool,
+  /**
+   * Left arrow icon aria-label text.
+   */
+  leftArrowButtonText: PropTypes.string,
   /**
    * If `true` renders `LoadingComponent` in calendar instead of calendar view.
    * Can be used to preload information and show it in calendar.
@@ -376,6 +411,10 @@ CalendarPicker.propTypes /* remove-proptypes */ = {
    */
   onViewChange: PropTypes.func,
   /**
+   * Callback firing on year change @DateIOType.
+   */
+  onYearChange: PropTypes.func,
+  /**
    * Initially open view.
    * @default 'day'
    */
@@ -386,10 +425,18 @@ CalendarPicker.propTypes /* remove-proptypes */ = {
    */
   reduceAnimations: PropTypes.bool,
   /**
+   * Custom renderer for day. Check the [PickersDay](https://material-ui.com/api/pickers-day/) component.
+   */
+  renderDay: PropTypes.func,
+  /**
    * Component displaying when passed `loading` true.
    * @default () => <span data-mui-test="loading-progress">...</span>
    */
   renderLoading: PropTypes.func,
+  /**
+   * Right arrow icon aria-label text.
+   */
+  rightArrowButtonText: PropTypes.string,
   /**
    * Disable specific date. @DateIOType
    */
@@ -399,6 +446,11 @@ CalendarPicker.propTypes /* remove-proptypes */ = {
    * Works like `shouldDisableDate` but for year selection view @DateIOType.
    */
   shouldDisableYear: PropTypes.func,
+  /**
+   * If `true`, days that have `outsideCurrentMonth={true}` are displayed.
+   * @default false
+   */
+  showDaysOutsideCurrentMonth: PropTypes.bool,
   /**
    * Controlled open view.
    */

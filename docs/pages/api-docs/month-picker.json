@@ -12,7 +12,7 @@
   },
   "name": "MonthPicker",
   "styles": { "classes": ["root"], "globalClasses": {}, "name": "MuiMonthPicker" },
-  "spread": false,
+  "spread": true,
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/material-ui-lab/src/MonthPicker/MonthPicker.tsx",
   "inheritance": null,
