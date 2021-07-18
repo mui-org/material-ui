@@ -95,16 +95,19 @@ const AppBarRoot = styled(Paper, {
     ...(styleProps.color === 'inherit' && {
       color: 'inherit',
     }),
-    /* Styles applied to the root element if `color="transparent"`. */
-    ...(styleProps.color === 'transparent' && {
-      backgroundColor: 'transparent',
-      color: 'inherit',
-    }),
     ...(theme.palette.mode === 'dark' &&
       !styleProps.enableColorOnDark && {
         backgroundColor: null,
         color: null,
       }),
+    /* Styles applied to the root element if `color="transparent"`. */
+    ...(styleProps.color === 'transparent' && {
+      backgroundColor: 'transparent',
+      color: 'inherit',
+      ...(theme.palette.mode === 'dark' && {
+        backgroundImage: 'none',
+      }),
+    }),
   };
 });
 
