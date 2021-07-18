@@ -44,12 +44,14 @@ const CheckboxRoot = styled(SwitchBase, {
   /* Styles applied to the root element. */
   color: theme.palette.text.secondary,
   '&:hover': {
-    backgroundColor: alpha(
-      styleProps.color === 'default'
-        ? theme.palette.action.active
-        : theme.palette[styleProps.color].main,
-      theme.palette.action.hoverOpacity,
-    ),
+    ...(!styleProps.disableRipple && {
+      backgroundColor: alpha(
+        styleProps.color === 'default'
+          ? theme.palette.action.active
+          : theme.palette[styleProps.color].main,
+        theme.palette.action.hoverOpacity,
+      ),
+    }),
     // Reset on touch devices, it doesn't add specificity
     '@media (hover: none)': {
       backgroundColor: 'transparent',
