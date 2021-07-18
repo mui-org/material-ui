@@ -15,7 +15,6 @@
     "container": { "type": { "name": "union", "description": "HTML element<br>&#124;&nbsp;func" } },
     "disableAutoFocus": { "type": { "name": "bool" } },
     "disableEnforceFocus": { "type": { "name": "bool" } },
-    "disableEscapeKeyDown": { "type": { "name": "bool" } },
     "disablePortal": { "type": { "name": "bool" } },
     "disableRestoreFocus": { "type": { "name": "bool" } },
     "disableScrollLock": { "type": { "name": "bool" } },

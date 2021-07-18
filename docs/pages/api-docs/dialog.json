@@ -9,7 +9,6 @@
     },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" } },
-    "disableEscapeKeyDown": { "type": { "name": "bool" } },
     "fullScreen": { "type": { "name": "bool" } },
     "fullWidth": { "type": { "name": "bool" } },
     "maxWidth": {

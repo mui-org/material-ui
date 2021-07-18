@@ -273,7 +273,7 @@ describe('<Modal />', () => {
       expect(onCloseSpy).to.have.property('callCount', 0);
     });
 
-    it('should call onClose when Esc is pressed and stop event propagation', () => {
+    it('should call onClose when Esc is pressed and prevent default', () => {
       const handleKeyDown = spy();
       const onCloseSpy = spy();
       const { getByTestId } = render(
@@ -292,15 +292,23 @@ describe('<Modal />', () => {
       });
 
       expect(onCloseSpy).to.have.property('callCount', 1);
-      expect(handleKeyDown).to.have.property('callCount', 0);
+      expect(onCloseSpy.firstCall.args[1]).to.equal('escapeKeyDown');
+      expect(handleKeyDown).to.have.property('callCount', 1);
+      expect(handleKeyDown.firstCall.args[0]).to.have.property('defaultPrevented', true);
     });
 
-    it('should not call onClose when `disableEscapeKeyDown={true}`', () => {
+    it('can skip closing if the Escape key is pressed', () => {
       const handleKeyDown = spy();
       const onCloseSpy = spy();
       const { getByTestId } = render(
         <div onKeyDown={handleKeyDown}>
-          <Modal open disableEscapeKeyDown onClose={onCloseSpy}>
+          <Modal
+            open
+            onClose={onCloseSpy}
+            onKeyDown={(event) => {
+              event.preventDefault();
+            }}
+          >
             <div data-testid="modal" tabIndex={-1} />
           </Modal>
         </div>,

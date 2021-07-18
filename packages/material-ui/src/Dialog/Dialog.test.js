@@ -111,10 +111,10 @@ describe('<Dialog />', () => {
   });
 
   it('can ignore backdrop click and Esc keydown', () => {
-    function DialogWithBackdropClickDisabled(props) {
+    function DialogWithBackdropClickEscKeydownDisabled(props) {
       const { onClose, ...other } = props;
       function handleClose(event, reason) {
-        if (reason !== 'backdropClick') {
+        if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
           onClose(event, reason);
         }
       }
@@ -123,14 +123,9 @@ describe('<Dialog />', () => {
     }
     const onClose = spy();
     const { getByRole } = render(
-      <DialogWithBackdropClickDisabled
-        open
-        disableEscapeKeyDown
-        onClose={onClose}
-        transitionDuration={0}
-      >
+      <DialogWithBackdropClickEscKeydownDisabled open onClose={onClose} transitionDuration={0}>
         foo
-      </DialogWithBackdropClickDisabled>,
+      </DialogWithBackdropClickEscKeydownDisabled>,
     );
     const dialog = getByRole('dialog');
     expect(dialog).not.to.equal(null);

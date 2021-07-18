@@ -65,7 +65,6 @@ const ModalUnstyled = React.forwardRef(function ModalUnstyled(props, ref) {
     container,
     disableAutoFocus = false,
     disableEnforceFocus = false,
-    disableEscapeKeyDown = false,
     disablePortal = false,
     disableRestoreFocus = false,
     disableScrollLock = false,
@@ -157,7 +156,6 @@ const ModalUnstyled = React.forwardRef(function ModalUnstyled(props, ref) {
     closeAfterTransition,
     disableAutoFocus,
     disableEnforceFocus,
-    disableEscapeKeyDown,
     disablePortal,
     disableRestoreFocus,
     disableScrollLock,
@@ -211,20 +209,12 @@ const ModalUnstyled = React.forwardRef(function ModalUnstyled(props, ref) {
       onKeyDown(event);
     }
 
-    // The handler doesn't take event.defaultPrevented into account:
-    //
-    // event.preventDefault() is meant to stop default behaviors like
-    // clicking a checkbox to check it, hitting a button to submit a form,
-    // and hitting left arrow to move the cursor in a text input etc.
-    // Only special HTML elements have these default behaviors.
     if (event.key !== 'Escape' || !isTopModal()) {
       return;
     }
 
-    if (!disableEscapeKeyDown) {
-      // Swallow the event, in case someone is listening for the escape key on the body.
-      event.stopPropagation();
-
+    if (!event.defaultPrevented) {
+      event.preventDefault();
       if (onClose) {
         onClose(event, 'escapeKeyDown');
       }
@@ -360,11 +350,6 @@ ModalUnstyled.propTypes /* remove-proptypes */ = {
    * @default false
    */
   disableEnforceFocus: PropTypes.bool,
-  /**
-   * If `true`, hitting escape will not fire the `onClose` callback.
-   * @default false
-   */
-  disableEscapeKeyDown: PropTypes.bool,
   /**
    * The `children` will be under the DOM hierarchy of the parent component.
    * @default false

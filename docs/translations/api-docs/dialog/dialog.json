@@ -6,7 +6,6 @@
     "BackdropComponent": "A backdrop component. This prop enables custom backdrop rendering.",
     "children": "Dialog children, usually the included sub-components.",
     "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
-    "disableEscapeKeyDown": "If <code>true</code>, hitting escape will not fire the <code>onClose</code> callback.",
     "fullScreen": "If <code>true</code>, the dialog is full-screen.",
     "fullWidth": "If <code>true</code>, the dialog stretches to <code>maxWidth</code>.<br>Notice that the dialog width grow is limited by the default margin.",
     "maxWidth": "Determine the max-width of the dialog. The dialog width grows with the size of the screen. Set to <code>false</code> to disable <code>maxWidth</code>.",
