@@ -84,7 +84,7 @@ const ButtonRoot = styled(ButtonBase, {
         duration: theme.transitions.duration.short,
       },
     ),
-    '&:hover': {
+    '&:hover': !styleProps.disabled && {
       textDecoration: 'none',
       backgroundColor: alpha(theme.palette.text.primary, theme.palette.action.hoverOpacity),
       // Reset on touch devices, it doesn't add specificity

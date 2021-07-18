@@ -89,6 +89,21 @@ async function main() {
       });
     });
 
+    describe('<Button />', () => {
+      it('hover styles on disabled buttons', async () => {
+        const index = routes.findIndex((route) => route === '/regression-Button/DisabledButtons');
+        const testcase = await renderFixture(index);
+
+        // force: true so that pointer-events, layout etc is ignored
+        await page.hover('button:nth-of-type(1)', { force: true });
+        await takeScreenshot({ testcase, route: '/regression-Button/DisabledButtons-hover1' });
+        await page.hover('button:nth-of-type(2)', { force: true });
+        await takeScreenshot({ testcase, route: '/regression-Button/DisabledButtons-hover2' });
+        await page.hover('button:nth-of-type(3)', { force: true });
+        await takeScreenshot({ testcase, route: '/regression-Button/DisabledButtons-hover3' });
+      });
+    });
+
     describe('Rating', () => {
       it('should handle focus-visible correctly', async () => {
         const index = routes.findIndex(
