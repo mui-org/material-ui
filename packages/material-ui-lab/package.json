@@ -40,7 +40,7 @@
     "@types/react": "^16.8.6 || ^17.0.0",
     "date-fns": "^2.0.0",
     "dayjs": "^1.8.17",
-    "luxon": "^1.21.3",
+    "luxon": "^2.0.0",
     "moment": "^2.24.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
@@ -82,7 +82,7 @@
     "@types/luxon": "^1.25.0",
     "date-fns": "^2.0.0",
     "dayjs": "^1.8.17",
-    "luxon": "^1.21.3",
+    "luxon": "^2.0.0",
     "moment": "^2.24.0"
   },
   "sideEffects": false,
