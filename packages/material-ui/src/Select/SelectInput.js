@@ -3,7 +3,7 @@ import { isFragment } from 'react-is';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import MuiError from '@material-ui/utils/macros/MuiError.macro';
-import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import { unstable_composeClasses as composeClasses, isFieldFilled } from '@material-ui/unstyled';
 import { refType } from '@material-ui/utils';
 import ownerDocument from '../utils/ownerDocument';
 import capitalize from '../utils/capitalize';
@@ -12,7 +12,6 @@ import {
   nativeSelectSelectStyles,
   nativeSelectIconStyles,
 } from '../NativeSelect/NativeSelectInput';
-import { isFilled } from '../InputBase/utils';
 import styled, { slotShouldForwardProp } from '../styles/styled';
 import useForkRef from '../utils/useForkRef';
 import useControlled from '../utils/useControlled';
@@ -320,7 +319,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
   let foundMatch = false;
 
   // No need to display any value if the field is empty.
-  if (isFilled({ value }) || displayEmpty) {
+  if (isFieldFilled({ value }) || displayEmpty) {
     if (renderValue) {
       display = renderValue(value);
     } else {

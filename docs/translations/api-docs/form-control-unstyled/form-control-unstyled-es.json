@@ -1,0 +1,13 @@
+{
+  "componentDescription": "Provides context such as filled/focused/error/required for form inputs.\nRelying on the context provides high flexibility and ensures that the state always stays\nconsistent across the children of the `FormControl`.\nThis context is used by the following components:\n\n - FormLabel\n - FormHelperText\n - Input\n - InputLabel\n\nYou can find one composition example below and more going to [the demos](/components/text-fields/#components).\n\n```jsx\n<FormControl>\n  <InputLabel htmlFor=\"my-input\">Email address</InputLabel>\n  <Input id=\"my-input\" aria-describedby=\"my-helper-text\" />\n  <FormHelperText id=\"my-helper-text\">We'll never share your email.</FormHelperText>\n</FormControl>\n```\n\n⚠️ Only one `InputBase` can be used within a FormControl because it create visual inconsistencies.\nFor instance, only one input can be focused at the same time, the state shouldn't be shared.",
+  "propDescriptions": {
+    "children": "The content of the component.",
+    "disabled": "If <code>true</code>, the label, input and helper text should be displayed in a disabled state.",
+    "error": "If <code>true</code>, the label is displayed in an error state.",
+    "extraContextProperties": "Extra properties to be placed on the FormControlContext.",
+    "focused": "If <code>true</code>, the component is displayed in focused state.",
+    "hiddenLabel": "If <code>true</code>, the label is hidden. This is used to increase density for a <code>FilledInput</code>. Be sure to add <code>aria-label</code> to the <code>input</code> element.",
+    "required": "If <code>true</code>, the label will indicate that the <code>input</code> is required."
+  },
+  "classDescriptions": {}
+}

@@ -1,6 +1,2 @@
-import * as React from 'react';
-import FormControlContext from './FormControlContext';
-
-export default function useFormControl() {
-  return React.useContext(FormControlContext);
-}
+export { useFormControl as default } from '@material-ui/unstyled';
+export { FormControlState } from '@material-ui/unstyled';

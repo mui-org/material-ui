@@ -1,7 +1,9 @@
 export { default } from './FormControl';
 export * from './FormControl';
 
-export { default as useFormControl, FormControlState } from './useFormControl';
+export { FormControlState } from './useFormControl';
 
 export { default as formControlClasses } from './formControlClasses';
 export * from './formControlClasses';
+
+export { FormControlContext, useFormControl } from '@material-ui/unstyled';

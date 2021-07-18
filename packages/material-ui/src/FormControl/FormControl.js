@@ -1,19 +1,19 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { unstable_composeClasses as composeClasses } from '@material-ui/unstyled';
+import {
+  unstable_composeClasses as composeClasses,
+  FormControlUnstyled,
+} from '@material-ui/unstyled';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
-import { isFilled, isAdornedStart } from '../InputBase/utils';
 import capitalize from '../utils/capitalize';
-import isMuiElement from '../utils/isMuiElement';
-import FormControlContext from './FormControlContext';
 import { getFormControlUtilityClasses } from './formControlClasses';
 
 const useUtilityClasses = (styleProps) => {
   const { classes, margin, fullWidth } = styleProps;
   const slots = {
-    root: ['root', margin !== 'none' && `margin${capitalize(margin)}`, fullWidth && 'fullWidth'],
+    root: [margin !== 'none' && `margin${capitalize(margin)}`, fullWidth && 'fullWidth'],
   };
 
   return composeClasses(slots, getFormControlUtilityClasses, classes);
@@ -85,7 +85,7 @@ const FormControl = React.forwardRef(function FormControl(inProps, ref) {
     component = 'div',
     disabled = false,
     error = false,
-    focused: visuallyFocused,
+    focused,
     fullWidth = false,
     hiddenLabel = false,
     margin = 'none',
@@ -111,119 +111,34 @@ const FormControl = React.forwardRef(function FormControl(inProps, ref) {
 
   const classes = useUtilityClasses(styleProps);
 
-  const [adornedStart, setAdornedStart] = React.useState(() => {
-    // We need to iterate through the children and find the Input in order
-    // to fully support server-side rendering.
-    let initialAdornedStart = false;
-
-    if (children) {
-      React.Children.forEach(children, (child) => {
-        if (!isMuiElement(child, ['Input', 'Select'])) {
-          return;
-        }
-
-        const input = isMuiElement(child, ['Select']) ? child.props.input : child;
-
-        if (input && isAdornedStart(input.props)) {
-          initialAdornedStart = true;
-        }
-      });
-    }
-    return initialAdornedStart;
-  });
-
-  const [filled, setFilled] = React.useState(() => {
-    // We need to iterate through the children and find the Input in order
-    // to fully support server-side rendering.
-    let initialFilled = false;
-
-    if (children) {
-      React.Children.forEach(children, (child) => {
-        if (!isMuiElement(child, ['Input', 'Select'])) {
-          return;
-        }
-
-        if (isFilled(child.props, true)) {
-          initialFilled = true;
-        }
-      });
-    }
-
-    return initialFilled;
-  });
-
-  const [focusedState, setFocused] = React.useState(false);
-  if (disabled && focusedState) {
-    setFocused(false);
-  }
-
-  const focused = visuallyFocused !== undefined && !disabled ? visuallyFocused : focusedState;
-
-  let registerEffect;
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const registeredInput = React.useRef(false);
-    registerEffect = () => {
-      if (registeredInput.current) {
-        console.error(
-          [
-            'Material-UI: There are multiple `InputBase` components inside a FormControl.',
-            'This creates visual inconsistencies, only use one `InputBase`.',
-          ].join('\n'),
-        );
-      }
-
-      registeredInput.current = true;
-      return () => {
-        registeredInput.current = false;
-      };
-    };
-  }
-
-  const onFilled = React.useCallback(() => {
-    setFilled(true);
-  }, []);
-
-  const onEmpty = React.useCallback(() => {
-    setFilled(false);
-  }, []);
-
   const childContext = {
-    adornedStart,
-    setAdornedStart,
     color,
-    disabled,
-    error,
-    filled,
-    focused,
     fullWidth,
-    hiddenLabel,
     size,
-    onBlur: () => {
-      setFocused(false);
-    },
-    onEmpty,
-    onFilled,
-    onFocus: () => {
-      setFocused(true);
-    },
-    registerEffect,
-    required,
     variant,
   };
 
+  const componentsProps = {
+    root: { as: component },
+  };
+
   return (
-    <FormControlContext.Provider value={childContext}>
-      <FormControlRoot
-        as={component}
-        styleProps={styleProps}
-        className={clsx(classes.root, className)}
-        ref={ref}
-        {...other}
-      >
-        {children}
-      </FormControlRoot>
-    </FormControlContext.Provider>
+    <FormControlUnstyled
+      className={clsx(classes.root, className)}
+      component={FormControlRoot}
+      componentsProps={componentsProps}
+      disabled={disabled}
+      error={error}
+      extraContextProperties={childContext}
+      focused={focused}
+      hiddenLabel={hiddenLabel}
+      ref={ref}
+      required={required}
+      styleProps={styleProps}
+      {...other}
+    >
+      {children}
+    </FormControlUnstyled>
   );
 });
 

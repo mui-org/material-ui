@@ -4,6 +4,9 @@ export * from './BackdropUnstyled';
 export { default as BadgeUnstyled } from './BadgeUnstyled';
 export * from './BadgeUnstyled';
 
+export { default as FormControlUnstyled } from './FormControlUnstyled';
+export * from './FormControlUnstyled';
+
 export { default as ModalUnstyled } from './ModalUnstyled';
 export * from './ModalUnstyled';
 

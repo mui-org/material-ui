@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { refType, elementTypeAcceptingRef } from '@material-ui/utils';
 import MuiError from '@material-ui/utils/macros/MuiError.macro';
-import { unstable_composeClasses as composeClasses, isHostComponent } from '@material-ui/unstyled';
-import formControlState from '../FormControl/formControlState';
-import FormControlContext from '../FormControl/FormControlContext';
-import useFormControl from '../FormControl/useFormControl';
+import {
+  unstable_composeClasses as composeClasses,
+  isHostComponent,
+  FormControlContext,
+  useFormControl,
+  isFieldFilled,
+  formControlState,
+} from '@material-ui/unstyled';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useTheme from '../styles/useTheme';
@@ -15,7 +19,6 @@ import useForkRef from '../utils/useForkRef';
 import useEnhancedEffect from '../utils/useEnhancedEffect';
 import TextareaAutosize from '../TextareaAutosize';
 import GlobalStyles from '../GlobalStyles';
-import { isFilled } from './utils';
 import inputBaseClasses, { getInputBaseUtilityClass } from './inputBaseClasses';
 
 export const rootOverridesResolver = (props, styles) => {
@@ -321,7 +324,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
 
   const checkDirty = React.useCallback(
     (obj) => {
-      if (isFilled(obj)) {
+      if (isFieldFilled(obj)) {
         if (onFilled) {
           onFilled();
         }
