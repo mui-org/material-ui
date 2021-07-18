@@ -162,6 +162,23 @@ Pick one of the following plugins:
   module.exports = { plugins };
   ```
 
+- [babel-plugin-direct-import](https://github.com/umidbekk/babel-plugin-direct-import) with the following configuration:
+
+  `yarn add -D babel-plugin-direct-import`
+
+  Create a `.babelrc.js` file in the root directory of your project:
+
+  ```js
+  const plugins = [
+    [
+      'babel-plugin-direct-import',
+      { modules: ['@material-ui/core', '@material-ui/icons'] },
+    ],
+  ];
+
+  module.exports = { plugins };
+  ```
+
 If you are using Create React App, you will need to use a couple of projects that let you use `.babelrc` configuration, without ejecting.
 
 `yarn add -D react-app-rewired customize-cra`
