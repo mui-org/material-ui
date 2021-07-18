@@ -2285,95 +2285,104 @@ We recommend 2 options.
 
 ### 1. Use `styled` or `sx` API
 
-- **Customize Material-UI Component**
+We provide a codemod to help migrate JSS styles to `styled` API, but this approach will increase the CSS specificity.
 
-  ```diff
-  import Chip from '@material-ui/core/Chip';
-  - import makeStyles from '@material-ui/styles/makeStyles';
-  + import { styled } from '@material-ui/core/styles';
+```sh
+npx @material-ui/codemod v5.0.0/jss-to-styled <folder|file>
+```
 
-  - const useStyles = makeStyles((theme) => ({
-  -   wrapper: {
-  -     display: 'flex',
-  -   },
-  -   chip: {
-  -     padding: theme.spacing(1, 1.5),
-  -     boxShadow: theme.shadows[1],
-  -   }
-  - }))
-  + const Root = styled('div')({
-  +   display: 'flex',
-  + })
+**Example transformation**:
 
-  function App() {
-  - const classes = useStyles();
-    return (
-  -   <div>
-  -     <Chip className={classes.chip} label="Chip" />
-  -   </div>
-  +   <Root>
-  +     <Chip label="Chip" sx={{ py: 1, px: 1.5, boxShadow: 1 }} />
-  +   </Root>
-    )
-  }
-  ```
+```diff
+import Typography from '@material-ui/core/Typography';
+-import makeStyles from '@material-ui/styles/makeStyles';
++import { styled } from '@material-ui/core/styles';
 
-- **Apply styles in a page**
+-const useStyles = makeStyles((theme) => ({
+-  root: {
+-    display: 'flex',
+-    alignItems: 'center',
+-    backgroundColor: theme.palette.primary.main
+-  },
+-  cta: {
+-    borderRadius: theme.shape.radius.
+-  },
+-  content: {
+-    color: theme.palette.common.white,
+-    fontSize: 16,
+-    lineHeight: 1.7
+-  },
+-}))
++const PREFIX = 'MyCard';
++const classes = {
++  root: `${PREFIX}-root`,
++  cta: `${PREFIX}-cta`,
++  content: `${PREFIX}-content`,
++}
++const Root = styled('div')((theme) => ({
++  [`&.${classes.root}`]: {
++    display: 'flex',
++    alignItems: 'center',
++    backgroundColor: theme.palette.primary.main
++  },
++  [`& .${classes.cta}`]: {
++    borderRadius: theme.shape.radius.
++  },
++  [`& .${classes.content}`]: {
++    color: theme.palette.common.white,
++    fontSize: 16,
++    lineHeight: 1.7
++  },
++}))
 
-  ```diff
-  import Button, { buttonClasses } from '@material-ui/core/Button';
-  - import makeStyles from '@material-ui/styles/makeStyles';
-  + import { styled } from '@material-ui/core/styles';
+export const MyCard = () => {
+- const classes = useStyles();
+  return (
+-   <div className={classes.root}>
++   <Root className={classes.root}>
+      {/* The benefit of this approach is that the code inside Root stays the same. */}
+      <Typography className={classes.content}>...</Typography>
+      <Button className={classes.cta}>Go</Button>
++   </Root>
+-   </div>
+  )
+}
+```
 
-  - const useStyles = makeStyles((theme) => ({
-  -   root: {
-  -     // root css
-  -   },
-  -   cta: {
-  -     // cta css
-  -   },
-  -   footer: {
-  -     // footer css
-  -   },
-  - }))
+> 💡 You should run this codemod per small chunk of files and then check the changes because in some cases you might need to adjust the code after the transformation (this codemod won't cover all of the cases).
 
-  + const classes = {
-  +   root: 'Marketing-root',
-  +   cta: buttonClasses.root, // buttonClasses is typed safe
-  +   footer: 'Marketing-footer',
-  + }
+We recommend `sx` API over `styled` when you have to create responsive styles or needs minor CSS overrides. [Read more about `sx`](/system/the-sx-prop/#main-content)
 
-  + const Root = styled('div')((theme) => ({
-  +   // root css,
-  +   [`& .${classes.cta}`]: {
-  +     // cta css
-  +   },
-  +   [`& .${classes.footer}]: {
-  +     // cta footer
-  +   }
-  + }))
+```diff
+import Chip from '@material-ui/core/Chip';
+- import makeStyles from '@material-ui/styles/makeStyles';
++ import { styled } from '@material-ui/core/styles';
 
-  function App() {
-  - const classes = useStyles();
-    return (
-  -   <div>
-  +   <Root>
-        <div>
-          <img />
-          <div>
-            <Button className={classes.cta}>Get started</Button>
-          </div>
-        </div>
-        <footer className={classes.footer}>
-          ...
-        </footer>
-  +   </Root>
-  -   </div>
-    )
-  }
-  ```
+- const useStyles = makeStyles((theme) => ({
+-   wrapper: {
+-     display: 'flex',
+-   },
+-   chip: {
+-     padding: theme.spacing(1, 1.5),
+-     boxShadow: theme.shadows[1],
+-   }
+- }))
++ const Root = styled('div')({
++   display: 'flex',
++ })
 
-> This approach touch only the styling part but increase CSS specificity.
+function App() {
+- const classes = useStyles();
+  return (
+-   <div>
+-     <Chip className={classes.chip} label="Chip" />
+-   </div>
++   <Root>
++     <Chip label="Chip" sx={{ py: 1, px: 1.5, boxShadow: 1 }} />
++   </Root>
+  )
+}
+```
 
 ### 2. Use [tss-react](https://github.com/garronej/tss-react)
 
