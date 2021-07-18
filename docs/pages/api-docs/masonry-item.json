@@ -1,0 +1,17 @@
+{
+  "props": {
+    "children": { "type": { "name": "node" }, "required": true },
+    "contentHeight": { "type": { "name": "number" }, "required": true },
+    "classes": { "type": { "name": "object" } },
+    "component": { "type": { "name": "elementType" } },
+    "sx": { "type": { "name": "object" } }
+  },
+  "name": "MasonryItem",
+  "styles": { "classes": ["root"], "globalClasses": {}, "name": "MuiMasonryItem" },
+  "spread": true,
+  "filename": "/packages/material-ui-lab/src/MasonryItem/MasonryItem.js",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/components/masonry/\">Masonry</a></li></ul>",
+  "styledComponent": true,
+  "cssComponent": false
+}

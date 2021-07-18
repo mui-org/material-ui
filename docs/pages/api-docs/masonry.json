@@ -1,0 +1,24 @@
+{
+  "props": {
+    "children": { "type": { "name": "node" }, "required": true },
+    "classes": { "type": { "name": "object" } },
+    "cols": { "type": { "name": "number" }, "default": "4" },
+    "component": { "type": { "name": "elementType" } },
+    "spacing": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;number<br>&#124;&nbsp;string&gt;<br>&#124;&nbsp;number<br>&#124;&nbsp;object<br>&#124;&nbsp;string"
+      },
+      "default": "1"
+    },
+    "sx": { "type": { "name": "object" } }
+  },
+  "name": "Masonry",
+  "styles": { "classes": ["root"], "globalClasses": {}, "name": "MuiMasonry" },
+  "spread": true,
+  "filename": "/packages/material-ui-lab/src/Masonry/Masonry.js",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/components/masonry/\">Masonry</a></li></ul>",
+  "styledComponent": true,
+  "cssComponent": false
+}

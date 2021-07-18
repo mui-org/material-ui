@@ -1,0 +1,11 @@
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "children": "The content of the component, normally an <code>&lt;img&gt;</code> or a <code>&lt;div&gt;</code>.",
+    "classes": "Override or extend the styles applied to the component. See <a href=\"#css\">CSS API</a> below for more details.",
+    "component": "The component used for the root node. Either a string to use a HTML element or a component.",
+    "contentHeight": "The height of the content of the component in px.",
+    "sx": "Allows defining system overrides as well as additional CSS styles. See the <a href=\"/system/the-sx-prop/\">`sx` page</a> for more details."
+  },
+  "classDescriptions": { "root": { "description": "Styles applied to the root element." } }
+}
