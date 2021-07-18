@@ -18,7 +18,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 
 const Popper = styled(MuiPopper)(({ theme }) => ({
   zIndex: 1,
-  '&[data-popper-placement*="bottom"] $arrow': {
+  '&[data-popper-placement*="bottom"] .MuiPopper-arrow': {
     top: 0,
     left: 0,
     marginTop: '-0.9em',
@@ -29,7 +29,7 @@ const Popper = styled(MuiPopper)(({ theme }) => ({
       borderColor: `transparent transparent ${theme.palette.background.paper} transparent`,
     },
   },
-  '&[data-popper-placement*="top"] $arrow': {
+  '&[data-popper-placement*="top"] .MuiPopper-arrow': {
     bottom: 0,
     left: 0,
     marginBottom: '-0.9em',
@@ -40,7 +40,7 @@ const Popper = styled(MuiPopper)(({ theme }) => ({
       borderColor: `${theme.palette.background.paper} transparent transparent transparent`,
     },
   },
-  '&[data-popper-placement*="right"] $arrow': {
+  '&[data-popper-placement*="right"] .MuiPopper-arrow': {
     left: 0,
     marginLeft: '-0.9em',
     height: '3em',
@@ -50,7 +50,7 @@ const Popper = styled(MuiPopper)(({ theme }) => ({
       borderColor: `transparent ${theme.palette.background.paper} transparent transparent`,
     },
   },
-  '&[data-popper-placement*="left"] $arrow': {
+  '&[data-popper-placement*="left"] .MuiPopper-arrow': {
     right: 0,
     marginRight: '-0.9em',
     height: '3em',
@@ -215,7 +215,7 @@ export default function ScrollPlayground() {
                 },
               ]}
             >
-              {arrow ? <Arrow ref={setArrowRef} /> : null}
+              {arrow ? <Arrow ref={setArrowRef} className="MuiPopper-arrow" /> : null}
               <Paper sx={{ maxWidth: 400, overflow: 'auto' }}>
                 <DialogTitle>{"Use Google's location service?"}</DialogTitle>
                 <DialogContent>
