@@ -249,6 +249,7 @@ const PickersPopper = (props: PickerPopperProps) => {
         <TrapFocus
           open={open}
           disableAutoFocus
+          disableRestoreFocus
           disableEnforceFocus={role === 'tooltip'}
           isEnabled={() => true}
           {...TrapFocusProps}
