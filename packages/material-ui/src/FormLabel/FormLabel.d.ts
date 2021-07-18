@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { SxProps } from '@material-ui/system';
+import { OverridableStringUnion } from '@material-ui/types';
 import { Theme } from '../styles';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { FormLabelClasses } from './formLabelClasses';
+
+export interface FormLabelPropsColorOverrides {}
 
 export interface FormLabelTypeMap<P = {}, D extends React.ElementType = 'label'> {
   props: P &
@@ -18,7 +21,10 @@ export interface FormLabelTypeMap<P = {}, D extends React.ElementType = 'label'>
       /**
        * The color of the component. It supports those theme colors that make sense for this component.
        */
-      color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+      color?: OverridableStringUnion<
+        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+        FormLabelPropsColorOverrides
+      >;
       /**
        * If `true`, the label should be displayed in a disabled state.
        */
