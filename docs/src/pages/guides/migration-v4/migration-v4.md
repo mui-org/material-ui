@@ -514,6 +514,17 @@ declare module '@material-ui/styles' {
 }
 ```
 
+### @material-ui/core/colors
+
+- The private color path is no longer export as common-js. You should import color from `@material-ui/core/colors`
+
+  > ✅ This is handled in [🪄preset-safe codemod](#preset-safe).
+
+  ```diff
+  -import red from '@material-ui/core/colors/red';
+  +import { red } from '@material-ui/core/colors';
+  ```
+
 ### @material-ui/core/styles
 
 #### createGenerateClassName
@@ -2500,4 +2511,21 @@ declare module "@material-ui/private-theming" {
 
   interface DefaultTheme extends Theme {}
 }
+```
+
+### [Jest] SyntaxError: Unexpected token 'export'
+
+In v5, `@material-ui/core/colors/red` is considered private and should not be used in your project. [More details about this error](https://github.com/mui-org/material-ui/issues/27296).
+
+You can use this codemod (**recommended**) to fix all the import in your project:
+
+```sh
+npx @material-ui/codemod v5.0.0/color-imports <folder>
+```
+
+or fix it manually like this:
+
+```diff
+-import red from '@material-ui/core/colors/red';
++import { red } from '@material-ui/core/colors';
 ```

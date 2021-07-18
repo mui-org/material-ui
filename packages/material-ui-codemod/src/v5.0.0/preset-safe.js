@@ -10,6 +10,7 @@ import transformButtonColorProp from './button-color-prop';
 import transformChipVariantProp from './chip-variant-prop';
 import transformCircularProgressVariant from './circularprogress-variant';
 import transformCollapsedHeight from './collapse-rename-collapsedheight';
+import transformColorImports from './color-imports';
 import transformCoreStylesImport from './core-styles-import';
 import transformCreateTheme from './create-theme';
 import transformDialogProps from './dialog-props';
@@ -64,6 +65,7 @@ export default function transformer(file, api, options) {
   file.source = transformChipVariantProp(file, api, options);
   file.source = transformCircularProgressVariant(file, api, options);
   file.source = transformCollapsedHeight(file, api, options);
+  file.source = transformColorImports(file, api, options);
   file.source = transformCoreStylesImport(file, api, options);
   file.source = transformCreateTheme(file, api, options);
   file.source = transformDialogProps(file, api, options);

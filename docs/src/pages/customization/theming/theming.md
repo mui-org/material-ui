@@ -118,8 +118,7 @@ Generate a theme base on the options received.
 
 ```js
 import { createTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
+import { green, purple } from '@material-ui/core/colors';
 
 const theme = createTheme({
   palette: {

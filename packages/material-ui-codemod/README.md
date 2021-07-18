@@ -81,6 +81,7 @@ The list includes these transformers
 - [`chip-variant-prop`](#chip-variant-prop)
 - [`circularprogress-variant`](#circularprogress-variant)
 - [`collapse-rename-collapsedheight`](#collapse-rename-collapsedheight)
+- [`color-imports`](#color-imports)
 - [`core-styles-import`](#core-styles-import)
 - [`create-theme`](#create-theme)
 - [`dialog-props`](#dialog-props)
@@ -348,6 +349,21 @@ npx @material-ui/codemod@next v5.0.0/collapse-rename-collapsedheight <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://next.material-ui.com/guides/migration-v4/#collapse).
+
+#### `color-imports`
+
+Fix color private import path.
+
+```diff
+-import red from '@material-ui/core/colors/red';
++import { red } from '@material-ui/core/colors';
+```
+
+<!-- #default-branch-switch -->
+
+```sh
+npx @material-ui/codemod@next v5.0.0/color-imports <path>
+```
 
 #### `component-rename-prop`
 

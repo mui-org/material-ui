@@ -51,7 +51,7 @@ The output shown in the color sample can be pasted directly into a [`createTheme
 
 ```jsx
 import { createTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+import { purple } from '@material-ui/core/colors';
 
 const theme = createTheme({
   palette: {
@@ -92,9 +92,9 @@ These color palettes, originally created by Material Design in 2014, are compris
 Given a _HUE_ (red, pink, etc.) and a _SHADE_ (500, 600, etc.) you can import the color like this:
 
 ```jsx
-import HUE from '@material-ui/core/colors/HUE';
+import { red } from '@material-ui/core/colors';
 
-const color = HUE[SHADE];
+const color = red[500];
 ```
 
 {{"demo": "pages/customization/color/Color.js", "hideToolbar": true, "bg": "inline"}}
@@ -104,8 +104,7 @@ const color = HUE[SHADE];
 For instance, you can refer to complementary primary and accent colors, "red 500" and "purple A200" like so:
 
 ```js
-import purple from '@material-ui/core/colors/purple';
-import red from '@material-ui/core/colors/red';
+import { purple, red } from '@material-ui/core/colors';
 
 const primary = red[500]; // #f44336
 const accent = purple['A200']; // #e040fb
