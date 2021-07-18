@@ -65,6 +65,12 @@ For instance, you can use an icon button to hide or reveal the password.
 
 {{"demo": "pages/components/text-fields/InputAdornments.js"}}
 
+### Start Adornments
+
+When using a start adornment, the label is always shrunk by default. You can prevent this with the `startAdornmentWidth` prop.
+
+{{"demo": "pages/components/text-fields/StartAdornments.js"}}
+
 ## Sizes
 
 Fancy smaller inputs? Use the `size` prop.
@@ -163,6 +169,7 @@ import { useFormControl } from '@material-ui/core/FormControl';
 - `value.hiddenLabel` (_bool_): Indicate whether the label is being hidden, inherited from `FormControl` `hiddenLabel` prop
 - `value.required` (_bool_): Indicate whether the label is indicating that the input is required input, inherited from the `FormControl` `required` prop
 - `value.size` (_string_): The size of the component, inherited from the `FormControl` `size` prop
+- `value.startAdornmentWidth` (_number_): The width of the start adornment, inherited from the `FormControl` `startAdornmentWidth` prop.
 - `value.variant` (_string_): The variant is being used by the `FormControl` component and its children, inherited from `FormControl` `variant` prop
 - `value.onBlur` (_func_): Should be called when the input is blurred
 - `value.onFocus` (_func_): Should be called when the input is focused

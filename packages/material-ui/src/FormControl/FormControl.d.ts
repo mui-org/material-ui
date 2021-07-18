@@ -68,6 +68,11 @@ export interface FormControlTypeMap<P = {}, D extends React.ElementType = 'div'>
      */
     size?: OverridableStringUnion<'small' | 'medium', FormControlPropsSizeOverrides>;
     /**
+     * The width of the start adornment in `px`.
+     * If provided, the label will not be initially shrunk.
+     */
+    startAdornmentWidth?: number;
+    /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
     sx?: SxProps<Theme>;

@@ -30,6 +30,7 @@
       },
       "default": "'medium'"
     },
+    "startAdornmentWidth": { "type": { "name": "number" } },
     "sx": { "type": { "name": "object" } },
     "variant": {
       "type": {

@@ -133,7 +133,11 @@ const OutlinedInput = React.forwardRef(function OutlinedInput(inProps, ref) {
           notched={
             typeof notched !== 'undefined'
               ? notched
-              : Boolean(state.startAdornment || state.filled || state.focused)
+              : Boolean(
+                  (state.startAdornment && !state.startAdornmentWidth) ||
+                    state.filled ||
+                    state.focused,
+                )
           }
         />
       )}

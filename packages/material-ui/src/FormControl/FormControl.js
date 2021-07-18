@@ -91,6 +91,7 @@ const FormControl = React.forwardRef(function FormControl(inProps, ref) {
     margin = 'none',
     required = false,
     size = 'medium',
+    startAdornmentWidth,
     variant = 'outlined',
     ...other
   } = props;
@@ -191,6 +192,7 @@ const FormControl = React.forwardRef(function FormControl(inProps, ref) {
   const childContext = {
     adornedStart,
     setAdornedStart,
+    startAdornmentWidth,
     color,
     disabled,
     error,
@@ -301,6 +303,11 @@ FormControl.propTypes /* remove-proptypes */ = {
     PropTypes.oneOf(['medium', 'small']),
     PropTypes.string,
   ]),
+  /**
+   * The width of the start adornment in `px`.
+   * If provided, the label will not be initially shrunk.
+   */
+  startAdornmentWidth: PropTypes.number,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

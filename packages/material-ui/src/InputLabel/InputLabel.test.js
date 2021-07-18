@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import FormLabel from '@material-ui/core/FormLabel';
 import InputLabel, { inputLabelClasses as classes } from '@material-ui/core/InputLabel';
+import FormControlContext from '@material-ui/core/FormControl/FormControlContext';
 
 describe('<InputLabel />', () => {
   const render = createClientRender();
@@ -108,5 +109,14 @@ describe('<InputLabel />', () => {
         expect(getByTestId('root')).to.have.class(classes.shrink);
       });
     });
+  });
+
+  it('should not have the shrink class when adornedStart is true and startAdornmentWidth is provided', () => {
+    const { getByTestId } = render(
+      <FormControlContext.Provider value={{ adornedStart: true, startAdornmentWidth: 10 }}>
+        <InputLabel data-testid="root" />
+      </FormControlContext.Provider>,
+    );
+    expect(getByTestId('root')).to.not.have.class(classes.shrink);
   });
 });

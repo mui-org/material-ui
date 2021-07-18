@@ -45,70 +45,83 @@ const InputLabelRoot = styled(FormLabel, {
       styles[styleProps.variant],
     ];
   },
-})(({ theme, styleProps }) => ({
-  display: 'block',
-  transformOrigin: 'top left',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  maxWidth: '100%',
-  ...(styleProps.formControl && {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    // slight alteration to spec spacing to match visual spec result
-    transform: 'translate(0, 20px) scale(1)',
-  }),
-  ...(styleProps.size === 'small' && {
-    // Compensation for the `Input.inputSizeSmall` style.
-    transform: 'translate(0, 17px) scale(1)',
-  }),
-  ...(styleProps.shrink && {
-    transform: 'translate(0, -1.5px) scale(0.75)',
+})(({ theme, styleProps }) => {
+  const { startAdornmentWidth } = styleProps.formControl || {};
+  let translateX =
+    (styleProps.variant === 'filled' || !styleProps.shrink) && startAdornmentWidth
+      ? startAdornmentWidth + 8
+      : 0;
+  if (styleProps.variant === 'filled') {
+    translateX += 12;
+  }
+  if (styleProps.variant === 'outlined') {
+    translateX += 14;
+  }
+  return {
+    display: 'block',
     transformOrigin: 'top left',
-    maxWidth: '133%',
-  }),
-  ...(!styleProps.disableAnimation && {
-    transition: theme.transitions.create(['color', 'transform', 'max-width'], {
-      duration: theme.transitions.duration.shorter,
-      easing: theme.transitions.easing.easeOut,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '100%',
+    ...(styleProps.formControl && {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      // slight alteration to spec spacing to match visual spec result
+      transform: `translate(${translateX}px, 20px) scale(1)`,
     }),
-  }),
-  ...(styleProps.variant === 'filled' && {
-    // Chrome's autofill feature gives the input field a yellow background.
-    // Since the input field is behind the label in the HTML tree,
-    // the input field is drawn last and hides the label with an opaque background color.
-    // zIndex: 1 will raise the label above opaque background-colors of input.
-    zIndex: 1,
-    pointerEvents: 'none',
-    transform: 'translate(12px, 16px) scale(1)',
-    maxWidth: 'calc(100% - 24px)',
     ...(styleProps.size === 'small' && {
-      transform: 'translate(12px, 13px) scale(1)',
+      // Compensation for the `Input.inputSizeSmall` style.
+      transform: `translate(${translateX}px, 17px) scale(1)`,
     }),
     ...(styleProps.shrink && {
-      transform: 'translate(12px, 7px) scale(0.75)',
-      maxWidth: 'calc(133% - 24px)',
-      ...(styleProps.size === 'small' && {
-        transform: 'translate(12px, 4px) scale(0.75)',
+      transform: `translate(${translateX}px, -1.5px) scale(0.75)`,
+      transformOrigin: 'top left',
+      maxWidth: '133%',
+    }),
+    ...(!styleProps.disableAnimation && {
+      transition: theme.transitions.create(['color', 'transform', 'max-width'], {
+        duration: theme.transitions.duration.shorter,
+        easing: theme.transitions.easing.easeOut,
       }),
     }),
-  }),
-  ...(styleProps.variant === 'outlined' && {
-    // see comment above on filled.zIndex
-    zIndex: 1,
-    pointerEvents: 'none',
-    transform: 'translate(14px, 16px) scale(1)',
-    maxWidth: 'calc(100% - 24px)',
-    ...(styleProps.size === 'small' && {
-      transform: 'translate(14px, 9px) scale(1)',
+    ...(styleProps.variant === 'filled' && {
+      // Chrome's autofill feature gives the input field a yellow background.
+      // Since the input field is behind the label in the HTML tree,
+      // the input field is drawn last and hides the label with an opaque background color.
+      // zIndex: 1 will raise the label above opaque background-colors of input.
+      zIndex: 1,
+      pointerEvents: 'none',
+      transform: `translate(${translateX}px, 16px) scale(1)`,
+      maxWidth: 'calc(100% - 24px)',
+      ...(styleProps.size === 'small' && {
+        transform: `translate(${translateX}px, 13px) scale(1)`,
+      }),
+      ...(styleProps.shrink && {
+        transform: `translate(${translateX}px, 7px) scale(0.75)`,
+        maxWidth: 'calc(133% - 24px)',
+        ...(styleProps.size === 'small' && {
+          transform: `translate(${translateX}px, 4px) scale(0.75)`,
+        }),
+      }),
     }),
-    ...(styleProps.shrink && {
-      maxWidth: 'calc(133% - 24px)',
-      transform: 'translate(14px, -9px) scale(0.75)',
+    ...(styleProps.variant === 'outlined' && {
+      // see comment above on filled.zIndex
+      zIndex: 1,
+      pointerEvents: 'none',
+      transform: `translate(${translateX}px, 16px) scale(1)`,
+      maxWidth: 'calc(100% - 24px)',
+      ...(styleProps.size === 'small' && {
+        transform: `translate(${translateX}px, 9px) scale(1)`,
+      }),
+      ...(styleProps.shrink && {
+        maxWidth: 'calc(133% - 24px)',
+        transform: `translate(${translateX}px, -9px) scale(0.75)`,
+      }),
     }),
-  }),
-}));
+  };
+});
 
 const InputLabel = React.forwardRef(function InputLabel(inProps, ref) {
   const props = useThemeProps({ name: 'MuiInputLabel', props: inProps });
@@ -118,7 +131,10 @@ const InputLabel = React.forwardRef(function InputLabel(inProps, ref) {
 
   let shrink = shrinkProp;
   if (typeof shrink === 'undefined' && muiFormControl) {
-    shrink = muiFormControl.filled || muiFormControl.focused || muiFormControl.adornedStart;
+    shrink =
+      muiFormControl.filled ||
+      muiFormControl.focused ||
+      (muiFormControl.adornedStart && !muiFormControl.startAdornmentWidth);
   }
 
   const fcs = formControlState({

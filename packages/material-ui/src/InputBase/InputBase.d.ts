@@ -167,6 +167,7 @@ export interface InputBaseProps
     margin?: 'dense' | 'none' | 'normal';
     required?: boolean;
     startAdornment?: React.ReactNode;
+    startAdornmentWidth?: number;
   }) => React.ReactNode;
   /**
    * Number of rows to display when multiline option is set to true.

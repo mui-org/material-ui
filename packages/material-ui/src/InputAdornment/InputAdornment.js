@@ -48,12 +48,13 @@ const InputAdornmentRoot = styled('div', {
   alignItems: 'center',
   whiteSpace: 'nowrap',
   color: theme.palette.action.active,
-  ...(styleProps.variant === 'filled' && {
-    // Styles applied to the root element if `variant="filled"`.
-    [`&.${inputAdornmentClasses.positionStart}&:not(.${inputAdornmentClasses.hiddenLabel})`]: {
-      marginTop: 16,
-    },
-  }),
+  ...(styleProps.variant === 'filled' &&
+    !styleProps.startAdornmentWidth && {
+      // Styles applied to the root element if `variant="filled"`.
+      [`&.${inputAdornmentClasses.positionStart}&:not(.${inputAdornmentClasses.hiddenLabel})`]: {
+        marginTop: 16,
+      },
+    }),
   ...(styleProps.position === 'start' && {
     // Styles applied to the root element if `position="start"`.
     marginRight: 8,
@@ -67,6 +68,8 @@ const InputAdornmentRoot = styled('div', {
     pointerEvents: 'none',
   }),
 }));
+
+let warnedOnce = false;
 
 const InputAdornment = React.forwardRef(function InputAdornment(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiInputAdornment' });
@@ -87,11 +90,13 @@ const InputAdornment = React.forwardRef(function InputAdornment(inProps, ref) {
 
   if (variantProp && muiFormControl.variant) {
     if (process.env.NODE_ENV !== 'production') {
-      if (variantProp === muiFormControl.variant) {
+      if (variantProp === muiFormControl.variant && !warnedOnce) {
         console.error(
           'Material-UI: The `InputAdornment` variant infers the variant prop ' +
             'you do not have to provide one.',
         );
+
+        warnedOnce = true;
       }
     }
   }
@@ -107,6 +112,7 @@ const InputAdornment = React.forwardRef(function InputAdornment(inProps, ref) {
     disablePointerEvents,
     position,
     variant,
+    startAdornmentWidth: muiFormControl.startAdornmentWidth,
   };
 
   const classes = useUtilityClasses(styleProps);

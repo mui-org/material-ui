@@ -300,7 +300,16 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
   const fcs = formControlState({
     props,
     muiFormControl,
-    states: ['color', 'disabled', 'error', 'hiddenLabel', 'size', 'required', 'filled'],
+    states: [
+      'color',
+      'disabled',
+      'error',
+      'hiddenLabel',
+      'size',
+      'required',
+      'filled',
+      'startAdornmentWidth',
+    ],
   });
 
   fcs.focused = muiFormControl ? muiFormControl.focused : focused;
