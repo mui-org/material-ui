@@ -87,14 +87,12 @@ describe('<Grid />', () => {
           paddingTop: '8px',
         },
         marginTop: '-8px',
-        width: 'calc(100% + 8px)',
       },
       [`@media (min-width:${defaultTheme.breakpoints.values.sm}px)`]: {
         '& > .MuiGrid-item': {
           paddingTop: '16px',
         },
         marginTop: '-16px',
-        width: 'calc(100% + 16px)',
       },
     });
 

@@ -131,7 +131,6 @@ export function generateRowGap({ theme, styleProps }) {
 
       if (themeSpacing !== '0px') {
         return {
-          width: `calc(100% + ${getOffset(themeSpacing)})`,
           marginTop: `-${getOffset(themeSpacing)}`,
           [`& > .${gridClasses.item}`]: {
             paddingTop: getOffset(themeSpacing),
