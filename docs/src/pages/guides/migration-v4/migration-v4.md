@@ -509,7 +509,7 @@ The `@material-ui/styles` package is no longer part of `@material-ui/core/styles
 // in your theme file that you call `createTheme()`
 import { Theme } from '@material-ui/core/styles';
 
-declare module '@material-ui/styles' {
+declare module '@material-ui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
 ```
