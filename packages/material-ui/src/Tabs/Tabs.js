@@ -421,7 +421,9 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
 
   const scroll = (scrollValue, { animation = true } = {}) => {
     if (animation) {
-      animate(scrollStart, tabsRef.current, scrollValue);
+      animate(scrollStart, tabsRef.current, scrollValue, {
+        duration: theme.transitions.duration.standard,
+      });
     } else {
       tabsRef.current[scrollStart] = scrollValue;
     }
