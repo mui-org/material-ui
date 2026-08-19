@@ -53,3 +53,6 @@ test-results/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Copied from @docsearch/css at build time (docs/scripts/copyDocSearchCss.mjs)
+docs/public/static/styles/docsearch.css

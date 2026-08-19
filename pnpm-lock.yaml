@@ -9,6 +9,9 @@ catalogs:
     '@base-ui/react':
       specifier: ^1.7.0
       version: 1.7.0
+    '@docsearch/css':
+      specifier: ^4.7.0
+      version: 4.7.0
     '@docsearch/react':
       specifier: ^4.7.0
       version: 4.7.0
@@ -257,6 +260,9 @@ importers:
       '@base-ui/react':
         specifier: catalog:docs
         version: 1.7.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@docsearch/css':
+        specifier: catalog:docs
+        version: 4.7.0
       '@docsearch/react':
         specifier: catalog:docs
         version: 4.7.0(@algolia/client-search@5.56.0)(@types/react@19.2.18)(algoliasearch@5.56.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)

@@ -36,6 +36,7 @@ catalogs:
   docs:
     stylis: '4.2.0'
     '@base-ui/react': '^1.7.0'
+    '@docsearch/css': '^4.7.0'
     '@docsearch/react': '^4.7.0'
     '@emotion/cache': '^11.14.0'
     '@emotion/react': '^11.14.0'

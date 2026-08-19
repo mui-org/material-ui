@@ -220,11 +220,7 @@ export interface AppSearchProps {
 }
 
 export function AppSearch(props: AppSearchProps) {
-  useLazyCSS(
-    'https://cdn.jsdelivr.net/npm/@docsearch/css@4.7.0/dist/style.min.css',
-    '#app-search',
-    { layer: 'docsearch' },
-  );
+  useLazyCSS('/static/styles/docsearch.css', '#app-search', { layer: 'docsearch' });
   const FADE_DURATION = 120; // ms
   const t = useTranslate();
   const userLanguage = useUserLanguage();

@@ -3,11 +3,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "rimraf ./export && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=8192 next build --webpack && pnpm build-sw && pnpm link-check",
-    "build:turbopack": "rimraf ./export && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=8192 next build --turbopack && pnpm build-sw",
+    "build": "pnpm copy-docsearch-css && rimraf ./export && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=8192 next build --webpack && pnpm build-sw && pnpm link-check",
+    "build:turbopack": "pnpm copy-docsearch-css && rimraf ./export && cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=8192 next build --turbopack && pnpm build-sw",
     "build:clean": "rimraf .next && pnpm build",
     "build-sw": "node ./scripts/buildServiceWorker.js",
-    "dev": "next dev --turbopack",
+    "dev": "pnpm copy-docsearch-css && next dev --turbopack",
     "deploy": "git fetch upstream master && git push -f material-ui-docs FETCH_HEAD:latest",
     "icons": "rimraf --glob public/static/icons/* && node ./scripts/buildIcons.js",
     "start": "serve ./export",
@@ -15,12 +15,14 @@
     "typescript": "tsgo -p tsconfig.json && tsgo -p scripts/tsconfig.json",
     "typescript:transpile": "echo 'Use `pnpm docs:typescript:formatted'` instead && exit 1",
     "typescript:transpile:dev": "echo 'Use `pnpm docs:typescript'` instead && exit 1",
-    "link-check": "tsx ./scripts/reportBrokenLinks.mts"
+    "link-check": "tsx ./scripts/reportBrokenLinks.mts",
+    "copy-docsearch-css": "node ./scripts/copyDocSearchCss.mjs"
   },
   "dependencies": {
     "@babel/core": "^7.29.7",
     "@babel/runtime": "^7.29.7",
     "@base-ui/react": "catalog:docs",
+    "@docsearch/css": "catalog:docs",
     "@docsearch/react": "catalog:docs",
     "@emotion/cache": "catalog:docs",
     "@emotion/react": "catalog:docs",
