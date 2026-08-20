@@ -55,4 +55,4 @@ test-results/
 next-env.d.ts
 
 # Copied from @docsearch/css at build time (docs/scripts/copyDocSearchCss.mjs)
-docs/public/static/styles/docsearch.css
+docs/public/static/docsearch/

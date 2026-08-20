@@ -4,6 +4,10 @@
 /static/images/*
   Cache-Control: public, max-age=86400
 
+# Version is in the path, so a bump lands on a URL nothing has cached.
+/static/docsearch/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /static/favicon.ico
   Content-Type: image/x-icon
 

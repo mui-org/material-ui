@@ -757,6 +757,9 @@ importers:
         specifier: catalog:docs
         version: 4.2.0
     devDependencies:
+      '@docsearch/css':
+        specifier: catalog:docs
+        version: 4.7.0
       '@mui/icons-material':
         specifier: workspace:*
         version: link:../../packages/mui-icons-material/build

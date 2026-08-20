@@ -8,6 +8,7 @@ import {
   type InternalDocSearchHit,
   type StoredDocSearchHit,
 } from '@docsearch/react';
+import { version as docSearchCssVersion } from '@docsearch/css/package.json';
 import Chip from '@mui/material/Chip';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import StickyNote2RoundedIcon from '@mui/icons-material/StickyNote2Rounded';
@@ -220,7 +221,9 @@ export interface AppSearchProps {
 }
 
 export function AppSearch(props: AppSearchProps) {
-  useLazyCSS('/static/styles/docsearch.css', '#app-search', { layer: 'docsearch' });
+  useLazyCSS(`/static/docsearch/${docSearchCssVersion}/style.css`, '#app-search', {
+    layer: 'docsearch',
+  });
   const FADE_DURATION = 120; // ms
   const t = useTranslate();
   const userLanguage = useUserLanguage();

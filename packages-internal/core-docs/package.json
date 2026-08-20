@@ -39,6 +39,7 @@
     "stylis": "catalog:docs"
   },
   "devDependencies": {
+    "@docsearch/css": "catalog:docs",
     "@mui/icons-material": "workspace:*",
     "@mui/internal-api-docs-builder": "workspace:*",
     "@mui/material": "workspace:*",
@@ -53,6 +54,7 @@
   },
   "peerDependencies": {
     "@base-ui/react": "^1",
+    "@docsearch/css": "catalog:docs",
     "@docsearch/react": "catalog:docs",
     "@emotion/cache": "catalog:docs",
     "@emotion/react": "catalog:docs",
