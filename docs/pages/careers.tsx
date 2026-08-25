@@ -110,6 +110,31 @@ const openRolesData: RoleCategory[] = [
     title: 'Developer Experience',
     roles: [],
   },
+  {
+    title: 'Product',
+    roles: [
+      {
+        title: 'Product Manager',
+        description: 'We are looking for a product manager to guide our roadmap and build a great product.',
+        url: '/careers/product-manager/',
+      },
+    ],
+  },
+  {
+    title: 'Operations',
+    roles: [
+      {
+        title: 'Operations Engineer',
+        description: 'Help us reach operational excellence using engineering skills.',
+        url: '/careers/operations-engineer/',
+      },
+      {
+        title: 'Operations Engineer',
+        description: 'Help up reach operational excellence using engineering skills.',
+        url: '/careers/operations-engineer/',
+      },
+    ],
+  },
 ];
 
 const nextRolesData = [
@@ -136,6 +161,10 @@ const nextRolesData = [
     title: 'Marketing',
     roles: [],
   },
+  {
+    title: 'Operations',
+    roles: [],
+  }
 ] as typeof openRolesData;
 
 const openRolesCount = openRolesData.reduce((acc, item) => acc + item.roles.length, 0);
