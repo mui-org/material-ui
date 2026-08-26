@@ -4,9 +4,9 @@
 
 ## Details of the role
 
-- **Location**: Remote (preference for UTC-6 to UTC+5).
-- **Type of work**: Full-time (contractor or employee [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
-- **Level**: [IC5 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
+- **Location:** Remote (preference for UTC-5 to UTC+5).
+- **Type of work:** Full-time (employee or contractor [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
+- **Level:** [IC4 Senior and above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
 - We're a **remote** company, operating mostly asynchronously.
 
 ## The company
@@ -37,7 +37,7 @@ MUI is scaling, but traditional business operations have become a strong bottlen
 The leadership team is spending too much time on manual, repetitive tasks, building spreadsheets, debugging ETL regressions, wiring SaaS tools together, firefighting operational issues, etc.
 
 Rather than hiring a conventional IT team, we treat internal company operations as an engineering problem.
-We believe that applying systems thinking, modern software engineering, and AI automation directly to business operations will create massive leverage.
+We believe that applying systems thinking, modern software engineering, and AI automation directly to business operations will create immense leverage.
 
 We are opening this role to act as a **hands-on force multiplier** across the organization—building zero-defect data models, automated internal tools, and AI-driven workflows across Finance, GTM (RevOps, Sales, Marketing), People, and Product.
 
@@ -46,12 +46,12 @@ We need talented people to keep up with the demands of our exigent community!
 
 ### Why this is interesting
 
-- **Function as a modern Hands-On CIO / Head of Business Systems:** Instead of managing large corporate budgets or enterprise governance, you will directly apply software engineering (TypeScript, SQL, AI frameworks) to real-world business systems.
+- **Function as a modern hands-on CIO / Head of business systems:** Instead of managing large corporate budgets or enterprise governance, you will directly apply software engineering (TypeScript, SQL, AI frameworks) to real-world business systems.
 - **Massive organizational leverage:** You will step into cross-functional gaps to eliminate operational bottlenecks, saving hundreds of hours of leadership time and accelerating company velocity.
 - **High-agency autonomy:** Operating without a rigid backlog, you will systematically map MUI's cross-functional workflows using Lean principles, identify high-leverage opportunities, and build end-to-end technical solutions.
 - **AI-first execution:** You will be at the forefront of implementing AI agents, LLM tool integrations, and low-code orchestration engines to automate routine business tasks across every department.
 
-Our products empower React developers to build awesome applications faster – we see millions of developers on MUI's docs every year, one million a month.
+Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries.
 
 ## The role
 
@@ -60,9 +60,9 @@ Our products empower React developers to build awesome applications faster – w
 Depending on the day, you'll:
 
 - **Internal systems architecture & management (Modern IT/CIO):** Own, maintain, and connect the company's internal software stack—from CRM, billing, and Accounting platforms to internal databases and analytics dashboards.
-- **AI & workflow automation engine:** Identify, prototype, and build custom scripts (SQL, JavaScript), AI agents, low-code integrations (e.g., Zapier/Make), etc. to eliminate manual tasks across People, Finance, Sales, Marketing, Product, and Ops.
+- **AI & workflow automation engine:** Identify, prototype, and build custom scripts (SQL, JavaScript), AI agents, low-code integrations (for example, Zapier, Make), etc. to eliminate manual tasks across People, Finance, Sales, Marketing, Product, and Operations.
 - **GTM & RevOps technical execution:** Partner with Sales and Marketing to streamline lead pipelines, customer data enrichment, conversion funnels, and customer-facing website updates.
-- **Data Engineering & Operational Analytics:** Build and maintain data pipelines, operational dashboards, and data models to power strategic decision-making (e.g., pricing model LTV analysis, product adoption telemetry, sales PO volumes, npm/GitHub ecosystem metrics, or OKRs progress).
+- **Data engineering & Operational analytics:** Build and maintain data pipelines, operational dashboards, and data models to power strategic decision-making (for example, pricing model LTV analysis, product adoption telemetry, sales PO volumes, npm/GitHub ecosystem metrics, or OKRs progress).
 - **Process engineering & Systems optimization:** Apply the five core Lean principles and systems analysis to map company workflows, identify operational or financial bottlenecks, and build technological solutions to resolve them.
 - **Technical force multiplier for Leadership:** Serve as a direct execution arm for executive leadership—stepping in to resolve unowned, cross-cutting technical issues across products, vendor platforms, or internal operations.
 
@@ -70,13 +70,15 @@ Depending on the day, you'll:
 
 ### Required
 
-- **Systems & Process Engineering (Lean/Systems thinking):** Ability to map cross-functional workflows, spot operational bottlenecks, and apply Lean principles to eliminate non-value-added steps.
-- **Extreme High-Agency & Cross-Functional Judgment:** Self-directed problem solver who thrives in ambiguity and can prioritize among many opportunities.
-- **Full-Stack Engineering:** Proficiency in TypeScript and SQL; can quickly build internal tools, scripts, and API integrations.
-- **Data Engineering & Analytics Architecture:** Track record of designing reliable data pipelines, maintaining zero-defect data models, and delivering actionable BI dashboards (Revenue, LTV, PLG telemetry).
-- **Modern Business Tech Stack Management (CIO/RevOps):** Technical mastery over core SaaS ecosystems (Salesforce/HubSpot, Stripe, NetSuite/Xero, Segment, GitHub/npm APIs).
-- **High conscientiousness & Detail rigor:** Strong commitment to no-defect execution; double-checks everything, maintains immaculate documentation. For example, ensures data & financial models match to the cent.
-- **Workflow Automation & AI Agent:** Hands-on experience with modern AI workflows (LLM APIs, agentic frameworks, function calling) alongside low-code orchestration engines (e.g., Pipedream, Make, Zapier, n8n).
+- **High-agency & Cross-functional judgment:** Self-directed problem solver who thrives in ambiguity and can prioritize among many opportunities. See [Manager of one](https://mui-org.notion.site/Managers-of-one-00432bb0f6cf4667ae4ce9dd4cca23d3).
+- **High conscientiousness & Detail rigor:** Strong commitment to eventually reach no-defect execution; double-checks everything, maintains clean documentation, focuses on friction-free user experiences.
+- **Modern business Tech Stack management (CIO/RevOps):** Technical mastery over core SaaS ecosystems (Salesforce/HubSpot, Stripe, NetSuite/Xero, Segment, GitHub/npm APIs).
+- **Systems & Process engineering (Lean/Systems thinking):** Ability to map cross-functional workflows, spot operational bottlenecks, and apply Lean principles to eliminate non-value-added steps.
+- **Full-Stack engineering:** Proficiency in TypeScript and SQL; can quickly build internal tools, scripts, and API integrations.
+- **Data engineering & Analytics architecture:** Track record of designing reliable data pipelines, maintaining zero-defect data models, and delivering actionable BI dashboards (Revenue, LTV, PLG telemetry).
+  For example, ensures data & financial models match to the cent.
+- **Workflow automation & AI agents:** Hands-on experience with modern AI workflows (LLM APIs, agentic frameworks, function calling) alongside low-code orchestration engines (for example, Pipedream, Make, Zapier, n8n).
+- **4+ years of professional software engineering experience**, with at least 2+ years spent building internal tools, data pipelines, or cross-functional business automation.
 
 ### Nice to have (but not required)
 
@@ -92,7 +94,7 @@ You can find the other perks and benefits on the [careers](https://mui.com/caree
 
 ## How to apply
 
-[Apply now for this position 📮](https://jobs.ashbyhq.com/MUI/__ID__/application?utm_source=ZNRrPGBkqO)
+[Apply now for this position 📮](https://jobs.ashbyhq.com/MUI/4bfd5851-6252-489d-a7b1-06a704c285a7/application?utm_source=ZNRrPGBkqO)
 
 Don't meet every requirement?
 Apply anyway!
