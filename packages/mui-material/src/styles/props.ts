@@ -68,6 +68,7 @@ import type { MenuProps } from '../Menu';
 import type { MobileStepperProps } from '../MobileStepper';
 import type { ModalProps } from '../Modal';
 import type { NativeSelectProps } from '../NativeSelect';
+import type { NumberFieldProps } from '../NumberField';
 import type { UseMediaQueryOptions } from '../useMediaQuery';
 import type { OutlinedInputProps } from '../OutlinedInput';
 import type { PaginationProps } from '../Pagination';
@@ -209,6 +210,7 @@ export interface ComponentsPropsList {
   MuiSlider: SliderProps;
   MuiSnackbar: SnackbarProps;
   MuiSnackbarContent: SnackbarContentProps;
+  MuiNumberField: NumberFieldProps;
   MuiSpeedDial: SpeedDialProps;
   MuiSpeedDialAction: SpeedDialActionProps;
   MuiSpeedDialIcon: SpeedDialIconProps;

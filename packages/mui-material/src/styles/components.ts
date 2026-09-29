@@ -498,6 +498,13 @@ export interface Components<Theme = unknown> {
         variants?: ComponentsVariants<Theme>['MuiNativeSelect'] | undefined;
       }
     | undefined;
+  MuiNumberField?:
+    | {
+        defaultProps?: ComponentsProps['MuiNumberField'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiNumberField'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiNumberField'] | undefined;
+      }
+    | undefined;
   MuiOutlinedInput?:
     | {
         defaultProps?: ComponentsProps['MuiOutlinedInput'] | undefined;

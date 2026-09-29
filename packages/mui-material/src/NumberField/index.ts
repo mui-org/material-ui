@@ -1,8 +1,6 @@
-export { default as NumberField } from './NumberField';
+export { default } from './NumberField';
 
-export type {
-  NumberFieldProps,
-  NumberFieldOwnerState,
-  NumberFieldSlotsAndSlotProps,
-} from './NumberField.types';
+export * from './NumberField.types';
+
+export { default as numberFieldClasses } from './numberFieldClasses';
 export * from './numberFieldClasses';
