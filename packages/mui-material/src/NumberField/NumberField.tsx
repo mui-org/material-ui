@@ -9,6 +9,7 @@ import useId from '@mui/utils/useId';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import type { NumberFieldProps } from './NumberField.types';
 import RootSlot from './NumberFieldRootSlot';
+import InputSlot from './NumberFieldInputSlot';
 
 const NumberField = React.forwardRef(function NumberField(
   inProps: NumberFieldProps,
@@ -21,8 +22,11 @@ const NumberField = React.forwardRef(function NumberField(
     disabled = false,
     helperText,
     id: idProp,
+    inputRef,
     label,
     name,
+    onBlur,
+    onFocus,
     onValueChange,
     onValueCommitted,
     required = false,
@@ -49,6 +53,7 @@ const NumberField = React.forwardRef(function NumberField(
   const externalForwardedProps = {
     slots,
     slotProps,
+    ...other,
   };
 
   return (
@@ -66,11 +71,22 @@ const NumberField = React.forwardRef(function NumberField(
           baseState={state}
           materialProps={ownerState}
           ref={ref}
-          externalForwardedProps={{ ...externalForwardedProps, ...other }}
+          externalForwardedProps={externalForwardedProps}
         />
       )}
       value={value}
-    ></BaseNumberField.Root>
+    >
+      <BaseNumberField.Input
+        render={(baseProps, state) => (
+          <InputSlot
+            baseProps={baseProps}
+            baseState={state}
+            materialProps={ownerState}
+            externalForwardedProps={externalForwardedProps}
+          />
+        )}
+      />
+    </BaseNumberField.Root>
   );
 });
 

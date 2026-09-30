@@ -10,12 +10,11 @@ import type { NumberFieldClasses } from './numberFieldClasses';
 import type { FormHelperTextProps } from '../FormHelperText';
 import type { InputLabelProps } from '../InputLabel';
 import type { Theme } from '../styles/createTheme';
-import type { SxProps } from '..';
+import type { InputBaseProps, SxProps } from '..';
 
 type NumberFieldVariants = 'outlined' | 'standard' | 'filled';
 
 export interface NumberFieldSlots {
-  input: React.ElementType;
   /**
    * The component that renders the helper text.
    * @default FormHelperText
@@ -25,6 +24,7 @@ export interface NumberFieldSlots {
    * The component that renders the input.
    * @default OutlinedInput
    */
+  input: React.ElementType;
   /**
    * The component that renders the input's label.
    * @default InputLabel
@@ -33,6 +33,11 @@ export interface NumberFieldSlots {
   /** The component that renders the root
    * @default FormControl
    */
+  /**
+   * The html input element.
+   * @default 'input'
+   */
+  htmlInput: React.ElementType;
   root: React.ElementType;
 }
 
@@ -72,6 +77,15 @@ export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotPro
     inputLabel: SlotProps<
       React.ElementType<InputLabelProps>,
       NumberFieldInputLabelSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the html input slot.
+     * By default, the available props are based on the html input element.
+     */
+    htmlInput: SlotProps<
+      React.ElementType<InputBaseProps['inputProps']>,
+      {},
       NumberFieldOwnerState
     >;
     /**

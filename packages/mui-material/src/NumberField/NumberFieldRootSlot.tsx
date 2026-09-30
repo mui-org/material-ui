@@ -2,10 +2,10 @@ import * as React from 'react';
 import clsx from 'clsx';
 
 import { NumberField as BaseNumberField } from '@base-ui/react/number-field';
-import type { HTMLProps } from '@base-ui/react/internals/types';
+import type { HTMLProps } from '@base-ui/react/types';
 import { mergeProps } from '@base-ui/react/merge-props';
 
-import type { NumberFieldOwnerState, NumberFieldSlotsAndSlotProps } from './NumberField.types';
+import type { NumberFieldOwnerState, NumberFieldProps } from './NumberField.types';
 import FormControl from '../FormControl';
 import useSlot from '../utils/useSlot';
 import useUtilityClasses from './utils/useUtilityClasses';
@@ -18,16 +18,19 @@ interface NumberFieldRootProps {
   baseProps: HTMLProps;
   baseState: BaseNumberField.Root.State;
   materialProps: NumberFieldOwnerState;
-  externalForwardedProps: {
-    slots: NumberFieldSlotsAndSlotProps<unknown>['slots'];
-    slotProps: NumberFieldSlotsAndSlotProps<unknown>['slotProps'];
-  };
+  externalForwardedProps: Pick<NumberFieldProps, 'slots' | 'slotProps'>;
 }
 
 const NumberFieldRoot = styled(FormControl, {
   name: 'MuiNumberField',
   slot: 'Root',
 })({});
+
+// This component is a placeholder for FormControl to correctly set the shrink label state on SSR.
+function SSRInitialFilled(_: { value: string }) {
+  return null;
+}
+SSRInitialFilled.muiName = 'Input';
 
 const NumberFieldRootSlot = React.forwardRef(
   (props: NumberFieldRootProps, ref: React.Ref<HTMLDivElement>) => {
@@ -77,18 +80,19 @@ const NumberFieldRootSlot = React.forwardRef(
       className: undefined,
     });
 
-    const shouldRenderLabel = label != null && label !== '';
-    const shouldRenderHelperText = helperText != null && helperText !== '';
+    const hasLabel = label != null && label !== '';
+    const hasHelperText = helperText != null && helperText !== '';
 
     return (
       <RootSlot {...rootProps}>
-        {shouldRenderLabel && (
+        <SSRInitialFilled value={baseState.inputValue} />
+        {hasLabel && (
           <InputLabelSlot htmlFor={id} id={labelId} {...(inputLabelProps as InputLabelProps)}>
             {label}
           </InputLabelSlot>
         )}
         {children}
-        {shouldRenderHelperText && (
+        {hasHelperText && (
           <FormHelperTextSlot id={helperTextId} {...formHelperTextProps}>
             {helperText}
           </FormHelperTextSlot>
