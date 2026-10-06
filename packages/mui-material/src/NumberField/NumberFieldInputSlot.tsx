@@ -10,6 +10,7 @@ import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
 import FilledInput from '../FilledInput';
 import Input from '../Input';
+import resolveNumberFieldInputProps from './utils/resolveNumberFieldInputProps';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -66,14 +67,28 @@ const NumberFieldInputSlot = React.forwardRef(
       ref,
     });
 
+    const { materialInputProps, nativeSlotProps } = resolveNumberFieldInputProps({
+      inputProps,
+      htmlInputSlotProps: externalForwardedProps.slotProps.htmlInput,
+      ownerState,
+    });
+
     const [HtmlInputSlot, htmlInputProps] = useSlot('htmlInput', {
       elementType: 'input',
-      externalForwardedProps,
+      externalForwardedProps: {
+        ...externalForwardedProps,
+        slotProps: {
+          ...externalForwardedProps.slotProps,
+          htmlInput: nativeSlotProps,
+        },
+      },
       ownerState,
       className: undefined,
       getSlotProps: (externalHandlers) => {
+        // An unspecified Base UI validation state must not clear Material's aria-invalid.
         const { 'aria-invalid': ariaInvalid, ...restBaseProps } = baseProps;
 
+        // Compose the selected consumer handlers with Base UI; useSlot merges their refs.
         return mergeProps(ariaInvalid === undefined ? restBaseProps : baseProps, externalHandlers);
       },
     });
@@ -86,14 +101,14 @@ const NumberFieldInputSlot = React.forwardRef(
         value={value}
         id={id}
         inputRef={inputRef}
-        inputProps={htmlInputProps}
         onBlur={materialProps.onBlur}
         onFocus={materialProps.onFocus}
         readOnly={baseState.readOnly}
         slots={{
           input: externalForwardedProps.slots.htmlInput ? HtmlInputSlot : undefined,
         }}
-        {...inputProps}
+        {...materialInputProps}
+        inputProps={htmlInputProps}
       />
     );
   },
