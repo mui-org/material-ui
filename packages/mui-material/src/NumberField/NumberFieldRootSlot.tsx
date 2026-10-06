@@ -47,7 +47,7 @@ const NumberFieldRootSlot = React.forwardRef(
 
     const classes = useUtilityClasses(ownerState);
 
-    const [RootSlot, { children, ...rootProps }] = useSlot('root', {
+    const [RootSlot, rootProps] = useSlot('root', {
       elementType: NumberFieldRoot,
       externalForwardedProps,
       shouldForwardComponentProp: true,
@@ -91,7 +91,7 @@ const NumberFieldRootSlot = React.forwardRef(
             {label}
           </InputLabelSlot>
         )}
-        {children}
+        {baseProps.children}
         {hasHelperText && (
           <FormHelperTextSlot id={helperTextId} {...formHelperTextProps}>
             {helperText}

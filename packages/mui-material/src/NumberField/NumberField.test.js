@@ -52,6 +52,51 @@ describe('<NumberField />', () => {
   );
 
   describe('slot prop merging', () => {
+    describe('root children', () => {
+      [
+        { name: 'top-level children', props: { children: 'Replacement' } },
+        { name: 'root slot children', props: { slotProps: { root: { children: 'Replacement' } } } },
+        {
+          name: 'root slot callback children',
+          props: { slotProps: { root: () => ({ children: 'Replacement' }) } },
+        },
+      ].forEach(({ name, props }) => {
+        it(`preserves the owned inputs when passed ${name}`, async () => {
+          const onValueChange = vi.fn();
+          const { user } = render(
+            <form aria-label="Number form">
+              <NumberField
+                label="Amount"
+                helperText="Enter an amount"
+                name="amount"
+                defaultValue={5}
+                onValueChange={onValueChange}
+                {...props}
+              />
+            </form>,
+          );
+          const input = screen.getByRole('textbox', { name: 'Amount' });
+          const form = screen.getByRole('form', { name: 'Number form' });
+
+          expect(screen.queryByText('Replacement')).to.equal(null);
+          expect(input).to.have.value('5');
+          expect(input).to.have.attribute(
+            'aria-describedby',
+            screen.getByText('Enter an amount').id,
+          );
+          expect(new FormData(form).getAll('amount')).to.deep.equal(['5']);
+
+          await user.click(input);
+          await user.keyboard('{ArrowUp}');
+
+          expect(input).to.have.value('6');
+          expect(onValueChange).toHaveBeenCalledTimes(1);
+          expect(onValueChange.mock.calls[0][0]).to.equal(6);
+          expect(new FormData(form).getAll('amount')).to.deep.equal(['6']);
+        });
+      });
+    });
+
     describe('keyboard handlers and refs', () => {
       ['outlined', 'filled', 'standard'].forEach((variant) => {
         it(`composes Material keyboard handlers with Base UI (${variant})`, async () => {
