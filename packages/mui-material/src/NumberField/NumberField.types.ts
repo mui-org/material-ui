@@ -108,6 +108,14 @@ export interface NumberFieldProps
     >,
     NumberFieldSlotsAndSlotProps<StandardInputProps> {
   /**
+   * If `true`, the number input element will allow values outside the specified range.
+   */
+  allowOutOfRange?: BaseNumberField.Root.Props['allowOutOfRange'] | undefined;
+  /**
+   * If `true`, the number input element will respond to wheel scrub gestures.
+   */
+  allowWheelScrub?: BaseNumberField.Root.Props['allowWheelScrub'] | undefined;
+  /**
    * If `true`, the `input` element is focused during the first mount.
    * @default false
    */
@@ -234,6 +242,10 @@ export interface NumberFieldProps
    * The small step value for the number input element.
    */
   smallStep?: BaseNumberField.Root.Props['smallStep'] | undefined;
+  /**
+   * If `true`, the number input element will snap to the nearest step value.
+   */
+  snapOnStep?: BaseNumberField.Root.Props['snapOnStep'] | undefined;
   /**
    * The step attribute of the number input element.
    */

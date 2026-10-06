@@ -17,6 +17,8 @@ const NumberField = React.forwardRef(function NumberField(
 ) {
   const props = useDefaultProps<NumberFieldProps>({ props: inProps, name: 'MuiNumberField' });
   const {
+    allowOutOfRange = false,
+    allowWheelScrub = false,
     color = 'primary',
     defaultValue,
     disabled = false,
@@ -42,6 +44,7 @@ const NumberField = React.forwardRef(function NumberField(
     slotProps = {},
     smallStep,
     step,
+    snapOnStep = false,
     value,
     variant = 'outlined',
     ...other
@@ -51,12 +54,15 @@ const NumberField = React.forwardRef(function NumberField(
 
   const ownerState = {
     ...props,
+    allowOutOfRange,
+    allowWheelScrub,
     color,
     disabled,
     id,
     readOnly,
     required,
     size,
+    snapOnStep,
     variant,
   };
 
@@ -68,6 +74,8 @@ const NumberField = React.forwardRef(function NumberField(
 
   return (
     <BaseNumberField.Root
+      allowOutOfRange={allowOutOfRange}
+      allowWheelScrub={allowWheelScrub}
       defaultValue={defaultValue}
       disabled={disabled}
       form={form}
@@ -92,6 +100,7 @@ const NumberField = React.forwardRef(function NumberField(
         />
       )}
       smallStep={smallStep}
+      snapOnStep={snapOnStep}
       step={step}
       value={value}
     >
