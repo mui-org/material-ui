@@ -2,12 +2,13 @@ import * as React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { createRenderer, screen } from '@mui/internal-test-utils';
 import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import NumberField, { numberFieldClasses as classes } from '@mui/material/NumberField';
 import describeConformance from '../../test/describeConformance';
 
 describe('<NumberField />', () => {
-  const { render } = createRenderer();
+  const { render, renderToString } = createRenderer();
 
   const TestInput = React.forwardRef(function TestInput(props, ref) {
     return <OutlinedInput {...props} ref={ref} data-testid={props['data-testid'] ?? 'custom'} />;
@@ -50,6 +51,109 @@ describe('<NumberField />', () => {
       },
     }),
   );
+
+  describe('server rendering', () => {
+    describe('initial value', () => {
+      ['outlined', 'filled', 'standard'].forEach((variant) => {
+        ['value', 'defaultValue'].forEach((prop) => {
+          [
+            { value: 42, displayValue: '42', shrink: 'true' },
+            { value: 0, displayValue: '0', shrink: 'true' },
+            { value: null, displayValue: '', shrink: 'false' },
+          ].forEach(({ value, displayValue, shrink }) => {
+            it(`initializes label shrink before hydration with ${prop}=${value} (${variant})`, () => {
+              const { hydrate } = renderToString(
+                <NumberField variant={variant} label="Amount" {...{ [prop]: value }} />,
+              );
+              const input = screen.getByRole('textbox', { name: 'Amount' });
+              const label = screen.getByText('Amount', { selector: 'label' });
+
+              // No adornment or client effect should be needed to initialize filled state.
+              expect(input).to.have.value(displayValue);
+              expect(label).to.have.attribute('data-shrink', shrink);
+
+              hydrate();
+
+              expect(screen.getByRole('textbox', { name: 'Amount' })).to.equal(input);
+              expect(screen.getByText('Amount', { selector: 'label' })).to.equal(label);
+              expect(input).to.have.value(displayValue);
+              expect(label).to.have.attribute('data-shrink', shrink);
+            });
+          });
+        });
+      });
+    });
+
+    ['outlined', 'filled', 'standard'].forEach((variant) => {
+      ['object', 'callback'].forEach((configuration) => {
+        it(`shrinks an empty adorned label before hydration with ${configuration} slot props (${variant})`, () => {
+          const adornment = <InputAdornment position="start">$</InputAdornment>;
+          const inputSlotProps =
+            configuration === 'object'
+              ? { startAdornment: adornment }
+              : (ownerState) => ({
+                  startAdornment: ownerState.readOnly ? adornment : undefined,
+                });
+          const { hydrate } = renderToString(
+            <NumberField
+              variant={variant}
+              label="Amount"
+              readOnly
+              slotProps={{ input: inputSlotProps }}
+            />,
+          );
+          const label = screen.getByText('Amount', { selector: 'label' });
+          const input = screen.getByRole('textbox', { name: 'Amount' });
+
+          // Assert server markup before InputBase's effect can update FormControl.
+          expect(input).to.have.value('');
+          expect(screen.getByText('$')).not.to.equal(null);
+          expect(label).to.have.attribute('data-shrink', 'true');
+
+          hydrate();
+
+          expect(screen.getByText('Amount', { selector: 'label' })).to.equal(label);
+          expect(label).to.have.attribute('data-shrink', 'true');
+        });
+      });
+    });
+
+    [
+      { name: 'without adornments', inputSlotProps: undefined },
+      {
+        name: 'with only an end adornment',
+        inputSlotProps: { endAdornment: <InputAdornment position="end">kg</InputAdornment> },
+      },
+    ].forEach(({ name, inputSlotProps }) => {
+      it(`does not shrink an empty server-rendered label ${name}`, () => {
+        renderToString(<NumberField label="Amount" slotProps={{ input: inputSlotProps }} />);
+
+        expect(screen.getByRole('textbox', { name: 'Amount' })).to.have.value('');
+        expect(screen.getByText('Amount', { selector: 'label' })).to.have.attribute(
+          'data-shrink',
+          'false',
+        );
+      });
+    });
+
+    it('preserves an explicit shrink override when server-rendering a start adornment', () => {
+      renderToString(
+        <NumberField
+          label="Amount"
+          slotProps={{
+            input: { startAdornment: <InputAdornment position="start">$</InputAdornment> },
+            inputLabel: { shrink: false },
+          }}
+        />,
+      );
+
+      expect(screen.getByText('$')).not.to.equal(null);
+      expect(screen.getByText('Amount', { selector: 'label' })).to.have.attribute(
+        'data-shrink',
+        'false',
+      );
+    });
+  });
 
   describe('slot prop merging', () => {
     describe('root children', () => {

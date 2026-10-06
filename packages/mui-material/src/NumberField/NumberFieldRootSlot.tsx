@@ -5,6 +5,8 @@ import { NumberField as BaseNumberField } from '@base-ui/react/number-field';
 import type { HTMLProps } from '@base-ui/react/types';
 import { mergeProps } from '@base-ui/react/merge-props';
 
+import resolveComponentProps from '@mui/utils/resolveComponentProps';
+
 import type { NumberFieldOwnerState, NumberFieldProps } from './NumberField.types';
 import FormControl from '../FormControl';
 import useSlot from '../utils/useSlot';
@@ -27,7 +29,7 @@ const NumberFieldRoot = styled(FormControl, {
 })({});
 
 // This component is a placeholder for FormControl to correctly set the shrink label state on SSR.
-function SSRInitialFilled(_: { value: string }) {
+function SSRInitialFilled(_: { value: string; startAdornment?: React.ReactNode }) {
   return null;
 }
 SSRInitialFilled.muiName = 'Input';
@@ -39,6 +41,7 @@ const NumberFieldRootSlot = React.forwardRef(
       ...materialProps,
       disabled: baseState.disabled,
       required: baseState.required,
+      readOnly: baseState.readOnly,
     };
     const { id, label, helperText } = materialProps;
 
@@ -83,9 +86,22 @@ const NumberFieldRootSlot = React.forwardRef(
     const hasLabel = label != null && label !== '';
     const hasHelperText = helperText != null && helperText !== '';
 
+    // FormControl needs the adornment before effects run to initialize label shrink.
+    const resolvedInputSlotProps = resolveComponentProps(
+      externalForwardedProps.slotProps?.input,
+      ownerState,
+    );
+    const startAdornment =
+      resolvedInputSlotProps && 'startAdornment' in resolvedInputSlotProps
+        ? resolvedInputSlotProps.startAdornment
+        : undefined;
+
     return (
       <RootSlot {...rootProps}>
-        <SSRInitialFilled value={baseState.inputValue} />
+        <SSRInitialFilled
+          value={baseState.inputValue}
+          startAdornment={startAdornment}
+        />
         {hasLabel && (
           <InputLabelSlot htmlFor={id} id={labelId} {...(inputLabelProps as InputLabelProps)}>
             {label}
