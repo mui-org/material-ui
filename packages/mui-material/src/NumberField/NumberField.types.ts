@@ -10,7 +10,7 @@ import type { NumberFieldClasses } from './numberFieldClasses';
 import type { FormHelperTextProps } from '../FormHelperText';
 import type { InputLabelProps } from '../InputLabel';
 import type { Theme } from '../styles/createTheme';
-import type { InputBaseProps, SxProps } from '..';
+import type { FilledInputProps, InputBaseProps, OutlinedInputProps, SxProps } from '..';
 
 type NumberFieldVariants = 'outlined' | 'standard' | 'filled';
 
@@ -100,13 +100,10 @@ export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotPro
   }
 >;
 
-export interface NumberFieldProps
-  extends
-    StandardProps<
-      FormControlProps,
-      'children' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus'
-    >,
-    NumberFieldSlotsAndSlotProps<StandardInputProps> {
+export interface BaseNumberFieldProps extends StandardProps<
+  FormControlProps,
+  'children' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus'
+> {
   /**
    * If `true`, the number input element will allow values outside the specified range.
    */
@@ -265,7 +262,30 @@ export interface NumberFieldProps
   variant?: NumberFieldVariants | undefined;
 }
 
-export interface NumberFieldOwnerState extends NumberFieldProps {
+export interface StandardNumberFieldProps
+  extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<StandardInputProps> {
+  variant: 'standard';
+}
+
+export interface OutlinedNumberFieldProps
+  extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<OutlinedInputProps> {
+  variant?: 'outlined' | undefined;
+}
+
+export interface FilledNumberFieldProps
+  extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<FilledInputProps> {
+  variant: 'filled';
+}
+
+export type NumberFieldProps<Variant extends NumberFieldVariants = NumberFieldVariants> =
+  Variant extends 'filled'
+    ? FilledNumberFieldProps
+    : Variant extends 'standard'
+      ? StandardNumberFieldProps
+      : OutlinedNumberFieldProps;
+
+export interface NumberFieldOwnerState
+  extends BaseNumberFieldProps, Pick<NumberFieldProps, 'slots' | 'slotProps'> {
   variant: NumberFieldVariants;
   size: NonNullable<NumberFieldProps['size']>;
   color: NonNullable<NumberFieldProps['color']>;
