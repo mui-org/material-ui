@@ -33,12 +33,13 @@ const NumberFieldInputSlot = React.forwardRef(
       ...materialProps,
       disabled: baseState.disabled,
       required: baseState.required,
+      readOnly: baseState.readOnly,
     };
 
     const hasHelperText = materialProps.helperText != null && materialProps.helperText !== '';
     const helperTextId = hasHelperText && id ? `${id}-helper-text` : undefined;
 
-    const InputComponent = variantComponent[materialProps.variant || 'standard'];
+    const InputComponent = variantComponent[materialProps.variant ?? 'standard'];
     const inputLabelSlotProps = resolveComponentProps(
       externalForwardedProps.slotProps?.inputLabel,
       ownerState,
@@ -88,6 +89,7 @@ const NumberFieldInputSlot = React.forwardRef(
         inputProps={htmlInputProps}
         onBlur={materialProps.onBlur}
         onFocus={materialProps.onFocus}
+        readOnly={baseState.readOnly}
         slots={{
           input: externalForwardedProps.slots.htmlInput ? HtmlInputSlot : undefined,
         }}

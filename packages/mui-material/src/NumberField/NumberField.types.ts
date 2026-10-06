@@ -30,14 +30,14 @@ export interface NumberFieldSlots {
    * @default InputLabel
    */
   inputLabel: React.ElementType;
-  /** The component that renders the root
-   * @default FormControl
-   */
   /**
    * The html input element.
    * @default 'input'
    */
   htmlInput: React.ElementType;
+  /** The component that renders the root
+   * @default FormControl
+   */
   root: React.ElementType;
 }
 
@@ -147,6 +147,16 @@ export interface NumberFieldProps
    */
   error?: boolean | undefined;
   /**
+   * Identifies the form that owns the input element.
+   */
+  form?: BaseNumberField.Root.Props['form'] | undefined;
+  /**
+   * Options to format the input value.
+   *
+   * See [MDN - Intl](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+   */
+  format?: BaseNumberField.Root.Props['format'] | undefined;
+  /**
    * If `true`, the input will take up the full width of its container.
    * @default false
    */
@@ -168,6 +178,24 @@ export interface NumberFieldProps
    */
   label?: React.ReactNode | undefined;
   /**
+   * The large step value for the number input element.
+   */
+  largeStep?: BaseNumberField.Root.Props['largeStep'] | undefined;
+  /**
+   * Options to format the input value.
+   *
+   * See [MDN - Intl Number Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
+   */
+  locale?: BaseNumberField.Root.Props['locale'] | undefined;
+  /**
+   * The maximum value allowed for the number input element.
+   */
+  max?: BaseNumberField.Root.Props['max'] | undefined;
+  /**
+   * The minimum value allowed for the number input element.
+   */
+  min?: BaseNumberField.Root.Props['min'] | undefined;
+  /**
    * Name attribute of the `input` element.
    */
   name?: string | undefined;
@@ -188,6 +216,11 @@ export interface NumberFieldProps
    */
   onValueCommitted?: BaseNumberField.Root.Props['onValueCommitted'] | undefined;
   /**
+   * If `true`, the input element is read-only.
+   * @default false
+   */
+  readOnly?: boolean | undefined;
+  /**
    * If `true`, the label is displayed as required and the `input` element is required.
    * @default false
    */
@@ -197,6 +230,14 @@ export interface NumberFieldProps
    * @default 'medium'
    */
   size?: OverridableStringUnion<'small' | 'medium', NumberFieldPropsSizeOverrides> | undefined;
+  /**
+   * The small step value for the number input element.
+   */
+  smallStep?: BaseNumberField.Root.Props['smallStep'] | undefined;
+  /**
+   * The step attribute of the number input element.
+   */
+  step?: BaseNumberField.Root.Props['step'] | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

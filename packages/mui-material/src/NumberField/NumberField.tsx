@@ -20,19 +20,28 @@ const NumberField = React.forwardRef(function NumberField(
     color = 'primary',
     defaultValue,
     disabled = false,
+    form,
+    format,
     helperText,
     id: idProp,
     inputRef,
     label,
+    locale,
+    largeStep,
+    max,
+    min,
     name,
     onBlur,
     onFocus,
     onValueChange,
     onValueCommitted,
+    readOnly = false,
     required = false,
     size = 'medium',
     slots = {},
     slotProps = {},
+    smallStep,
+    step,
     value,
     variant = 'outlined',
     ...other
@@ -45,6 +54,7 @@ const NumberField = React.forwardRef(function NumberField(
     color,
     disabled,
     id,
+    readOnly,
     required,
     size,
     variant,
@@ -60,27 +70,36 @@ const NumberField = React.forwardRef(function NumberField(
     <BaseNumberField.Root
       defaultValue={defaultValue}
       disabled={disabled}
+      form={form}
+      format={format}
       id={id}
+      locale={locale}
+      largeStep={largeStep}
+      max={max}
+      min={min}
       name={name}
       onValueChange={onValueChange}
       onValueCommitted={onValueCommitted}
+      readOnly={readOnly}
       required={required}
-      render={(baseProps, state) => (
+      render={(baseProps, baseState) => (
         <RootSlot
           baseProps={baseProps}
-          baseState={state}
+          baseState={baseState}
           materialProps={ownerState}
           ref={ref}
           externalForwardedProps={externalForwardedProps}
         />
       )}
+      smallStep={smallStep}
+      step={step}
       value={value}
     >
       <BaseNumberField.Input
-        render={(baseProps, state) => (
+        render={(baseProps, baseState) => (
           <InputSlot
             baseProps={baseProps}
-            baseState={state}
+            baseState={baseState}
             materialProps={ownerState}
             externalForwardedProps={externalForwardedProps}
           />
