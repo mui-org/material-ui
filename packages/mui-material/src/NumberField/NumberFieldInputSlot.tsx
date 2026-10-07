@@ -93,6 +93,19 @@ const NumberFieldInputSlot = React.forwardRef(
       },
     });
 
+    // Keep Material styling and native behavior aligned with Base UI's resolved state.
+    const inputStateProps = {
+      disabled: ownerState.disabled,
+      required: ownerState.required,
+      readOnly: ownerState.readOnly,
+    };
+
+    // Apply behavioral flags after native consumer props, preserving merged handlers and refs.
+    const finalHtmlInputProps = {
+      ...htmlInputProps,
+      ...inputStateProps,
+    };
+
     return (
       <InputSlot
         aria-describedby={helperTextId}
@@ -103,12 +116,12 @@ const NumberFieldInputSlot = React.forwardRef(
         inputRef={inputRef}
         onBlur={materialProps.onBlur}
         onFocus={materialProps.onFocus}
-        readOnly={baseState.readOnly}
         slots={{
           input: externalForwardedProps.slots.htmlInput ? HtmlInputSlot : undefined,
         }}
         {...materialInputProps}
-        inputProps={htmlInputProps}
+        {...inputStateProps}
+        inputProps={finalHtmlInputProps}
       />
     );
   },

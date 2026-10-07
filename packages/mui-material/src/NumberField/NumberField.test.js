@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { createRenderer, screen } from '@mui/internal-test-utils';
+import { Field as BaseField } from '@base-ui/react/field';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -51,6 +52,190 @@ describe('<NumberField />', () => {
       },
     }),
   );
+
+  describe('behavioral prop precedence', () => {
+    const slotPropPaths = [
+      { name: 'root', getSlotProps: (props) => ({ root: props }) },
+      { name: 'input', getSlotProps: (props) => ({ input: () => props }) },
+      { name: 'htmlInput', getSlotProps: (props) => ({ htmlInput: () => props }) },
+      { name: 'input.inputProps', getSlotProps: (props) => ({ input: { inputProps: props } }) },
+      {
+        name: 'input.slotProps.input',
+        getSlotProps: (props) => ({ input: { slotProps: { input: props } } }),
+      },
+    ];
+
+    slotPropPaths.forEach(({ name, getSlotProps }) => {
+      describe(`slotProps.${name}`, () => {
+        [false, true].forEach((disabled) => {
+          it(`preserves top-level disabled=${disabled} despite the opposite slot prop`, async () => {
+            const onValueChange = vi.fn();
+            const { user } = render(
+              <NumberField
+                label="Amount"
+                helperText="Helper text"
+                defaultValue={5}
+                disabled={disabled}
+                onValueChange={onValueChange}
+                slotProps={getSlotProps({ disabled: !disabled })}
+              />,
+            );
+            const input = screen.getByRole('textbox', { name: 'Amount' });
+            const label = screen.getByText('Amount', { selector: 'label' });
+            const wrapper = input.closest('.MuiInputBase-root');
+
+            expect(input.disabled).to.equal(disabled);
+            expect(wrapper.classList.contains('Mui-disabled')).to.equal(disabled);
+            expect(label.classList.contains('Mui-disabled')).to.equal(disabled);
+            expect(screen.getByText('Helper text').classList.contains('Mui-disabled')).to.equal(
+              disabled,
+            );
+
+            if (disabled) {
+              await user.tab();
+              expect(input).not.to.equal(document.activeElement);
+            } else {
+              await user.click(input);
+              expect(input).to.equal(document.activeElement);
+            }
+            await user.keyboard('{ArrowUp}');
+
+            expect(input).to.have.value(disabled ? '5' : '6');
+            expect(onValueChange).toHaveBeenCalledTimes(disabled ? 0 : 1);
+          });
+        });
+
+        [false, true].forEach((required) => {
+          it(`preserves top-level required=${required} despite the opposite slot prop`, () => {
+            render(
+              <NumberField
+                label="Amount"
+                required={required}
+                slotProps={getSlotProps({ required: !required })}
+              />,
+            );
+            const input = screen.getByRole('textbox', { name: /Amount/ });
+            const label = screen.getByText('Amount', { selector: 'label' });
+
+            expect(input.required).to.equal(required);
+            expect(input.validity.valueMissing).to.equal(required);
+            expect(label.classList.contains('Mui-required')).to.equal(required);
+            expect(label.querySelector('.MuiInputLabel-asterisk') !== null).to.equal(required);
+            expect(
+              input.closest('.MuiInputBase-root').querySelector('legend').textContent.includes('*'),
+            ).to.equal(required);
+          });
+        });
+
+        // FormControl does not have a readOnly prop; it applies to the Material and native inputs.
+        if (name !== 'root') {
+          [false, true].forEach((readOnly) => {
+            it(`preserves top-level readOnly=${readOnly} despite the opposite slot prop`, async () => {
+              const onValueChange = vi.fn();
+              const { user } = render(
+                <NumberField
+                  label="Amount"
+                  defaultValue={5}
+                  readOnly={readOnly}
+                  onValueChange={onValueChange}
+                  slotProps={getSlotProps({ readOnly: !readOnly })}
+                />,
+              );
+              const input = screen.getByRole('textbox', { name: 'Amount' });
+              const wrapper = input.closest('.MuiInputBase-root');
+
+              expect(input.readOnly).to.equal(readOnly);
+              expect(wrapper.classList.contains('Mui-readOnly')).to.equal(readOnly);
+
+              await user.click(input);
+              expect(input).to.equal(document.activeElement);
+              await user.keyboard('{ArrowUp}');
+
+              expect(input).to.have.value(readOnly ? '5' : '6');
+              expect(onValueChange).toHaveBeenCalledTimes(readOnly ? 0 : 1);
+
+              if (readOnly) {
+                await user.keyboard('9');
+                expect(input).to.have.value('5');
+                expect(onValueChange).toHaveBeenCalledTimes(0);
+              } else {
+                await user.clear(input);
+                await user.keyboard('9');
+                expect(input).to.have.value('9');
+                expect(onValueChange.mock.lastCall[0]).to.equal(9);
+              }
+            });
+          });
+        }
+
+        it('preserves inherited Base UI disabled state despite explicit false props', async () => {
+          const onValueChange = vi.fn();
+          const { user } = render(
+            <BaseField.Root disabled>
+              <NumberField
+                label="Amount"
+                helperText="Helper text"
+                defaultValue={5}
+                disabled={false}
+                onValueChange={onValueChange}
+                slotProps={getSlotProps({ disabled: false })}
+              />
+            </BaseField.Root>,
+          );
+          const input = screen.getByRole('textbox', { name: 'Amount' });
+
+          expect(input.disabled).to.equal(true);
+          expect(input.closest('.MuiInputBase-root')).to.have.class('Mui-disabled');
+          expect(screen.getByText('Amount', { selector: 'label' })).to.have.class('Mui-disabled');
+          expect(screen.getByText('Helper text')).to.have.class('Mui-disabled');
+
+          await user.tab();
+          expect(input).not.to.equal(document.activeElement);
+          await user.keyboard('{ArrowUp}');
+
+          expect(input).to.have.value('5');
+          expect(onValueChange).toHaveBeenCalledTimes(0);
+        });
+      });
+    });
+
+    ['standard', 'filled'].forEach((variant) => {
+      [false, true].forEach((state) => {
+        it(`keeps resolved state=${state} consistent across all layers (${variant})`, () => {
+          const overrides = { disabled: !state, required: !state, readOnly: !state };
+          render(
+            <NumberField
+              variant={variant}
+              label="Amount"
+              disabled={state}
+              required={state}
+              readOnly={state}
+              slotProps={{
+                root: { disabled: !state, required: !state },
+                input: {
+                  ...overrides,
+                  inputProps: overrides,
+                  slotProps: { input: overrides },
+                },
+                htmlInput: overrides,
+              }}
+            />,
+          );
+          const input = screen.getByRole('textbox', { name: /Amount/ });
+          const wrapper = input.closest('.MuiInputBase-root');
+          const label = screen.getByText('Amount', { selector: 'label' });
+
+          expect(input.disabled).to.equal(state);
+          expect(input.required).to.equal(state);
+          expect(input.readOnly).to.equal(state);
+          expect(wrapper.classList.contains('Mui-disabled')).to.equal(state);
+          expect(wrapper.classList.contains('Mui-readOnly')).to.equal(state);
+          expect(label.classList.contains('Mui-disabled')).to.equal(state);
+          expect(label.classList.contains('Mui-required')).to.equal(state);
+        });
+      });
+    });
+  });
 
   describe('server rendering', () => {
     describe('initial value', () => {

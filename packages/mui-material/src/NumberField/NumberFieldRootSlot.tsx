@@ -64,8 +64,6 @@ const NumberFieldRootSlot = React.forwardRef(
         fullWidth: ownerState.fullWidth,
         size: ownerState.size,
         variant: ownerState.variant,
-        disabled: ownerState.disabled,
-        required: ownerState.required,
       },
     });
 
@@ -97,7 +95,7 @@ const NumberFieldRootSlot = React.forwardRef(
         : undefined;
 
     return (
-      <RootSlot {...rootProps}>
+      <RootSlot {...rootProps} disabled={ownerState.disabled} required={ownerState.required}>
         <SSRInitialFilled value={baseState.inputValue} startAdornment={startAdornment} />
         {hasLabel && (
           <InputLabelSlot htmlFor={id} id={labelId} {...(inputLabelProps as InputLabelProps)}>
