@@ -34,6 +34,9 @@ function SSRInitialFilled(_: { value: string; startAdornment?: React.ReactNode }
 }
 SSRInitialFilled.muiName = 'Input';
 
+/**
+ * @ignore - internal component.
+ */
 const NumberFieldRootSlot = React.forwardRef(
   (props: NumberFieldRootProps, ref: React.Ref<HTMLDivElement>) => {
     const { baseProps, baseState, materialProps, externalForwardedProps } = props;

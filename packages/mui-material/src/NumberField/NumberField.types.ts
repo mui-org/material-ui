@@ -106,10 +106,12 @@ export interface BaseNumberFieldProps extends StandardProps<
 > {
   /**
    * If `true`, the number input element will allow values outside the specified range.
+   * @default false
    */
   allowOutOfRange?: BaseNumberField.Root.Props['allowOutOfRange'] | undefined;
   /**
    * If `true`, the number input element will respond to wheel scrub gestures.
+   * @default false
    */
   allowWheelScrub?: BaseNumberField.Root.Props['allowWheelScrub'] | undefined;
   /**
@@ -241,6 +243,7 @@ export interface BaseNumberFieldProps extends StandardProps<
   smallStep?: BaseNumberField.Root.Props['smallStep'] | undefined;
   /**
    * If `true`, the number input element will snap to the nearest step value.
+   * @default false
    */
   snapOnStep?: BaseNumberField.Root.Props['snapOnStep'] | undefined;
   /**
@@ -264,16 +267,28 @@ export interface BaseNumberFieldProps extends StandardProps<
 
 export interface StandardNumberFieldProps
   extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<StandardInputProps> {
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
   variant: 'standard';
 }
 
 export interface OutlinedNumberFieldProps
   extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<OutlinedInputProps> {
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
   variant?: 'outlined' | undefined;
 }
 
 export interface FilledNumberFieldProps
   extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<FilledInputProps> {
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
   variant: 'filled';
 }
 

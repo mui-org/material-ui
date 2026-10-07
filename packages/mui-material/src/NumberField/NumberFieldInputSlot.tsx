@@ -25,6 +25,9 @@ const variantComponent = {
   outlined: OutlinedInput,
 };
 
+/**
+ * @ignore - internal component.
+ */
 const NumberFieldInputSlot = React.forwardRef(
   (props: NumberFieldInputProps, ref: React.Ref<HTMLDivElement>) => {
     const { baseProps, baseState, materialProps, externalForwardedProps } = props;

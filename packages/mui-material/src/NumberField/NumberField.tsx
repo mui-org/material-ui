@@ -11,7 +11,17 @@ import { useDefaultProps } from '../DefaultPropsProvider';
 import type { NumberFieldProps } from './NumberField.types';
 import RootSlot from './NumberFieldRootSlot';
 import InputSlot from './NumberFieldInputSlot';
-
+/**
+ *
+ * Demos:
+ *
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ *
+ * API:
+ *
+ * - [NumberField API](https://next.mui.com/material-ui/api/number-field/)
+ * - inherits [FormControl API](https://next.mui.com/material-ui/api/form-control/)
+ */
 const NumberField = React.forwardRef(function NumberField(
   inProps: NumberFieldProps,
   ref: React.Ref<HTMLDivElement>,
@@ -126,10 +136,12 @@ NumberField.propTypes /* remove-proptypes */ = {
   // └─────────────────────────────────────────────────────────────────────┘
   /**
    * If `true`, the number input element will allow values outside the specified range.
+   * @default false
    */
   allowOutOfRange: PropTypes.bool,
   /**
    * If `true`, the number input element will respond to wheel scrub gestures.
+   * @default false
    */
   allowWheelScrub: PropTypes.bool,
   /**
@@ -338,6 +350,7 @@ NumberField.propTypes /* remove-proptypes */ = {
   smallStep: PropTypes.number,
   /**
    * If `true`, the number input element will snap to the nearest step value.
+   * @default false
    */
   snapOnStep: PropTypes.bool,
   /**
@@ -358,6 +371,7 @@ NumberField.propTypes /* remove-proptypes */ = {
   value: PropTypes.number,
   /**
    * The variant to use.
+   * @default 'outlined'
    */
   variant: PropTypes.oneOf(['filled', 'outlined', 'standard']),
 } as any;

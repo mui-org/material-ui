@@ -1,0 +1,70 @@
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "allowOutOfRange": {
+      "description": "If <code>true</code>, the number input element will allow values outside the specified range."
+    },
+    "allowWheelScrub": {
+      "description": "If <code>true</code>, the number input element will respond to wheel scrub gestures."
+    },
+    "autoFocus": {
+      "description": "If <code>true</code>, the <code>input</code> element is focused during the first mount."
+    },
+    "classes": { "description": "Override or extend the styles applied to the component." },
+    "color": {
+      "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
+    },
+    "defaultValue": { "description": "The default value of the number input element." },
+    "disabled": { "description": "If <code>true</code>, the component is disabled." },
+    "error": { "description": "If <code>true</code>, the label is displayed in an error state." },
+    "form": { "description": "Identifies the form that owns the input element." },
+    "format": {
+      "description": "Options to format the input value.<br>See <a href=\"https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl\">MDN - Intl</a>."
+    },
+    "fullWidth": {
+      "description": "If <code>true</code>, the input will take up the full width of its container."
+    },
+    "helperText": { "description": "The helper text content." },
+    "id": { "description": "The id of the input element." },
+    "inputRef": { "description": "The ref of the input element." },
+    "label": { "description": "The label content." },
+    "largeStep": { "description": "The large step value for the number input element." },
+    "locale": {
+      "description": "The locale used for number formatting and parsing.<br>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat\">MDN - Intl Number Format</a>."
+    },
+    "max": { "description": "The maximum value allowed for the number input element." },
+    "min": { "description": "The minimum value allowed for the number input element." },
+    "name": { "description": "Name attribute of the <code>input</code> element." },
+    "onBlur": { "description": "The blur event handler of the input element." },
+    "onFocus": { "description": "The focus event handler of the input element." },
+    "onValueChange": { "description": "The change event handler of the number input element." },
+    "onValueCommitted": {
+      "description": "The committed value event handler of the number input element."
+    },
+    "readOnly": { "description": "If <code>true</code>, the input element is read-only." },
+    "required": {
+      "description": "If <code>true</code>, the label is displayed as required and the <code>input</code> element is required."
+    },
+    "size": { "description": "The size of the component." },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
+    "smallStep": { "description": "The small step value for the number input element." },
+    "snapOnStep": {
+      "description": "If <code>true</code>, the number input element will snap to the nearest step value."
+    },
+    "step": { "description": "The step attribute of the number input element." },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    },
+    "value": { "description": "The value of the number input element." },
+    "variant": { "description": "The variant to use." }
+  },
+  "classDescriptions": {},
+  "slotDescriptions": {
+    "formHelperText": "The component that renders the helper text.",
+    "htmlInput": "The html input element.",
+    "input": "The component that renders the input.",
+    "inputLabel": "The component that renders the input&#39;s label.",
+    "root": "The component that renders the root"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "props": {
+    "allowOutOfRange": { "type": { "name": "bool" }, "default": "false" },
+    "allowWheelScrub": { "type": { "name": "bool" }, "default": "false" },
+    "autoFocus": { "type": { "name": "bool" }, "default": "false" },
+    "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
+    "color": {
+      "type": {
+        "name": "enum",
+        "description": "'error'<br>&#124;&nbsp;'info'<br>&#124;&nbsp;'primary'<br>&#124;&nbsp;'secondary'<br>&#124;&nbsp;'success'<br>&#124;&nbsp;'warning'"
+      },
+      "default": "'primary'"
+    },
+    "defaultValue": { "type": { "name": "number" } },
+    "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "error": { "type": { "name": "bool" }, "default": "false" },
+    "form": { "type": { "name": "string" } },
+    "format": {
+      "type": {
+        "name": "shape",
+        "description": "{ compactDisplay?: 'long'<br>&#124;&nbsp;'short', currency?: string, currencyDisplay?: 'code'<br>&#124;&nbsp;'name'<br>&#124;&nbsp;'narrowSymbol'<br>&#124;&nbsp;'symbol', currencySign?: 'accounting'<br>&#124;&nbsp;'standard', localeMatcher?: 'best fit'<br>&#124;&nbsp;'lookup', maximumFractionDigits?: number, maximumSignificantDigits?: number, minimumFractionDigits?: number, minimumIntegerDigits?: number, minimumSignificantDigits?: number, notation?: 'compact'<br>&#124;&nbsp;'engineering'<br>&#124;&nbsp;'scientific'<br>&#124;&nbsp;'standard', numberingSystem?: string, signDisplay?: 'always'<br>&#124;&nbsp;'auto'<br>&#124;&nbsp;'exceptZero'<br>&#124;&nbsp;'never', style?: 'currency'<br>&#124;&nbsp;'decimal'<br>&#124;&nbsp;'percent'<br>&#124;&nbsp;'unit', unit?: string, unitDisplay?: 'long'<br>&#124;&nbsp;'narrow'<br>&#124;&nbsp;'short', useGrouping?: bool }"
+      }
+    },
+    "fullWidth": { "type": { "name": "bool" }, "default": "false" },
+    "helperText": { "type": { "name": "node" } },
+    "id": { "type": { "name": "string" } },
+    "inputRef": {
+      "type": { "name": "union", "description": "func<br>&#124;&nbsp;{ current?: object }" }
+    },
+    "label": { "type": { "name": "node" } },
+    "largeStep": { "type": { "name": "number" } },
+    "locale": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;{ baseName: string, calendar?: string, caseFirst?: 'false'<br>&#124;&nbsp;'lower'<br>&#124;&nbsp;'upper', collation?: string, hourCycle?: 'h11'<br>&#124;&nbsp;'h12'<br>&#124;&nbsp;'h23'<br>&#124;&nbsp;'h24', language: string, maximize: func, minimize: func, numberingSystem?: string, numeric?: bool, region?: string, script?: string, toString: func }<br>&#124;&nbsp;string&gt;<br>&#124;&nbsp;{ baseName: string, calendar?: string, caseFirst?: 'false'<br>&#124;&nbsp;'lower'<br>&#124;&nbsp;'upper', collation?: string, hourCycle?: 'h11'<br>&#124;&nbsp;'h12'<br>&#124;&nbsp;'h23'<br>&#124;&nbsp;'h24', language: string, maximize: func, minimize: func, numberingSystem?: string, numeric?: bool, region?: string, script?: string, toString: func }<br>&#124;&nbsp;string"
+      }
+    },
+    "max": { "type": { "name": "number" } },
+    "min": { "type": { "name": "number" } },
+    "name": { "type": { "name": "string" } },
+    "onBlur": { "type": { "name": "func" } },
+    "onFocus": { "type": { "name": "func" } },
+    "onValueChange": { "type": { "name": "func" } },
+    "onValueCommitted": { "type": { "name": "func" } },
+    "readOnly": { "type": { "name": "bool" }, "default": "false" },
+    "required": { "type": { "name": "bool" }, "default": "false" },
+    "size": {
+      "type": { "name": "enum", "description": "'small'<br>&#124;&nbsp;'medium'" },
+      "default": "'medium'"
+    },
+    "slotProps": {
+      "type": {
+        "name": "shape",
+        "description": "{ formHelperText?: func<br>&#124;&nbsp;object, htmlInput?: func<br>&#124;&nbsp;object, input?: func<br>&#124;&nbsp;object, inputLabel?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
+      },
+      "default": "{}"
+    },
+    "slots": {
+      "type": {
+        "name": "shape",
+        "description": "{ formHelperText?: elementType, htmlInput?: elementType, input?: elementType, inputLabel?: elementType, root?: elementType }"
+      },
+      "default": "{}"
+    },
+    "smallStep": { "type": { "name": "number" } },
+    "snapOnStep": { "type": { "name": "bool" }, "default": "false" },
+    "step": { "type": { "name": "union", "description": "'any'<br>&#124;&nbsp;number" } },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    },
+    "value": { "type": { "name": "number" } },
+    "variant": {
+      "type": {
+        "name": "enum",
+        "description": "'filled'<br>&#124;&nbsp;'outlined'<br>&#124;&nbsp;'standard'"
+      },
+      "default": "'outlined'"
+    }
+  },
+  "name": "NumberField",
+  "imports": [
+    "import NumberField from '@mui/material/NumberField';",
+    "import { NumberField } from '@mui/material';"
+  ],
+  "slots": [
+    {
+      "name": "formHelperText",
+      "description": "The component that renders the helper text.",
+      "default": "FormHelperText",
+      "class": null
+    },
+    {
+      "name": "input",
+      "description": "The component that renders the input.",
+      "default": "OutlinedInput",
+      "class": null
+    },
+    {
+      "name": "inputLabel",
+      "description": "The component that renders the input's label.",
+      "default": "InputLabel",
+      "class": null
+    },
+    {
+      "name": "htmlInput",
+      "description": "The html input element.",
+      "default": "'input'",
+      "class": null
+    },
+    {
+      "name": "root",
+      "description": "The component that renders the root",
+      "default": "FormControl",
+      "class": "MuiNumberField-root"
+    }
+  ],
+  "classes": [],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiNumberField",
+  "forwardsRefTo": "HTMLDivElement",
+  "filename": "/packages/mui-material/src/NumberField/NumberField.tsx",
+  "inheritance": { "component": "FormControl", "pathname": "/material-ui/api/form-control/" },
+  "demos": "<ul><li><a href=\"/material-ui/react-number-field/\">Number Field</a></li></ul>"
+}

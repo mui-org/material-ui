@@ -1,7 +1,7 @@
 ---
 productId: material-ui
 title: Number field React component
-components: Button, IconButton, InputLabel, FormControl, FormLabel, FormHelperText, OutlinedInput
+components: Button, IconButton, InputLabel, FormControl, FormLabel, FormHelperText, OutlinedInput, NumberField
 ---
 
 # Number Field

@@ -77,6 +77,7 @@ export default [
   { pathname: '/material-ui/api/modal' },
   { pathname: '/material-ui/api/native-select' },
   { pathname: '/material-ui/api/no-ssr' },
+  { pathname: '/material-ui/api/number-field' },
   { pathname: '/material-ui/api/outlined-input' },
   { pathname: '/material-ui/api/pagination' },
   { pathname: '/material-ui/api/pagination-item' },
