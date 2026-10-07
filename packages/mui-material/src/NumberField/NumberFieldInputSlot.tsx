@@ -28,7 +28,7 @@ const variantComponent = {
 const NumberFieldInputSlot = React.forwardRef(
   (props: NumberFieldInputProps, ref: React.Ref<HTMLDivElement>) => {
     const { baseProps, baseState, materialProps, externalForwardedProps } = props;
-    const { value } = baseState;
+    const { inputValue } = baseState;
     const { autoFocus, variant, label, id, fullWidth, inputRef } = materialProps;
     const ownerState = {
       ...materialProps,
@@ -98,7 +98,7 @@ const NumberFieldInputSlot = React.forwardRef(
         aria-describedby={helperTextId}
         autoFocus={autoFocus}
         fullWidth={fullWidth}
-        value={value}
+        value={inputValue}
         id={id}
         inputRef={inputRef}
         onBlur={materialProps.onBlur}

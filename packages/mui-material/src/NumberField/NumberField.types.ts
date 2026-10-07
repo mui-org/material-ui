@@ -187,7 +187,7 @@ export interface BaseNumberFieldProps extends StandardProps<
    */
   largeStep?: BaseNumberField.Root.Props['largeStep'] | undefined;
   /**
-   * Options to format the input value.
+   * The locale used for number formatting and parsing.
    *
    * See [MDN - Intl Number Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
    */
@@ -286,9 +286,10 @@ export type NumberFieldProps<Variant extends NumberFieldVariants = NumberFieldVa
 
 export interface NumberFieldOwnerState
   extends BaseNumberFieldProps, Pick<NumberFieldProps, 'slots' | 'slotProps'> {
-  variant: NumberFieldVariants;
-  size: NonNullable<NumberFieldProps['size']>;
   color: NonNullable<NumberFieldProps['color']>;
   disabled: boolean;
+  readOnly: boolean;
   required: boolean;
+  size: NonNullable<NumberFieldProps['size']>;
+  variant: NumberFieldVariants;
 }

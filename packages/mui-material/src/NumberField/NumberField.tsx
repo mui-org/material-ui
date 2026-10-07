@@ -225,7 +225,7 @@ NumberField.propTypes /* remove-proptypes */ = {
    */
   largeStep: PropTypes.number,
   /**
-   * Options to format the input value.
+   * The locale used for number formatting and parsing.
    *
    * See [MDN - Intl Number Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
    */
