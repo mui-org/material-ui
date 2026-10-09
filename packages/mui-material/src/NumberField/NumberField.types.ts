@@ -10,16 +10,39 @@ import type { NumberFieldClasses } from './numberFieldClasses';
 import type { FormHelperTextProps } from '../FormHelperText';
 import type { InputLabelProps } from '../InputLabel';
 import type { Theme } from '../styles/createTheme';
-import type { FilledInputProps, InputBaseProps, OutlinedInputProps, SxProps } from '..';
+import type {
+  FilledInputProps,
+  IconButtonProps,
+  InputBaseProps,
+  OutlinedInputProps,
+  SxProps,
+} from '..';
 
 type NumberFieldVariants = 'outlined' | 'standard' | 'filled';
 
+type ControlPosition = 'start' | 'end' | 'split';
+
 export interface NumberFieldSlots {
+  /**
+   * The component that renders the decrement button.
+   * @default 'button'
+   */
+  decrementButton: React.ElementType;
   /**
    * The component that renders the helper text.
    * @default FormHelperText
    */
   formHelperText: React.ElementType;
+  /**
+   * The html input element.
+   * @default 'input'
+   */
+  htmlInput: React.ElementType;
+  /**
+   * The component that renders the increment button.
+   * @default 'button'
+   */
+  incrementButton: React.ElementType;
   /**
    * The component that renders the input.
    * @default OutlinedInput
@@ -30,11 +53,6 @@ export interface NumberFieldSlots {
    * @default InputLabel
    */
   inputLabel: React.ElementType;
-  /**
-   * The html input element.
-   * @default 'input'
-   */
-  htmlInput: React.ElementType;
   /** The component that renders the root
    * @default FormControl
    */
@@ -48,17 +66,42 @@ export interface NumberFieldRootSlotOverrides {}
 export interface NumberFieldInputSlotPropsOverrides {}
 export interface NumberFieldFormHelperTextSlotPropsOverrides {}
 export interface NumberFieldInputLabelSlotPropsOverrides {}
+export interface NumberFieldDecrementButtonSlotPropsOverrides {}
+export interface NumberFieldIncrementButtonSlotPropsOverrides {}
 
 export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotProps<
   NumberFieldSlots,
   {
+    decrementButton: SlotProps<
+      React.ElementType<IconButtonProps>,
+      NumberFieldDecrementButtonSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
     /**
-     * Props forwarded to the root slot.
-     * By default, the available props are based on the [FormControl](https://mui.com/material-ui/api/form-control/#props) component.
+     * Props forwarded to the form helper text slot.
+     * By default, the available props are based on the [FormHelperText](https://mui.com/material-ui/api/form-helper-text/#props) component.
      */
-    root: SlotProps<
-      React.ElementType<FormControlProps>,
-      NumberFieldRootSlotOverrides,
+    formHelperText: SlotProps<
+      React.ElementType<FormHelperTextProps>,
+      NumberFieldFormHelperTextSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the html input slot.
+     * By default, the available props are based on the html input element.
+     */
+    htmlInput: SlotProps<
+      React.ElementType<InputBaseProps['inputProps']>,
+      {},
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the increment button slot.
+     * By default, the available props are based on the increment button element.
+     */
+    incrementButton: SlotProps<
+      React.ElementType<IconButtonProps>,
+      NumberFieldIncrementButtonSlotPropsOverrides,
       NumberFieldOwnerState
     >;
     /**
@@ -80,21 +123,12 @@ export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotPro
       NumberFieldOwnerState
     >;
     /**
-     * Props forwarded to the html input slot.
-     * By default, the available props are based on the html input element.
+     * Props forwarded to the root slot.
+     * By default, the available props are based on the [FormControl](https://mui.com/material-ui/api/form-control/#props) component.
      */
-    htmlInput: SlotProps<
-      React.ElementType<InputBaseProps['inputProps']>,
-      {},
-      NumberFieldOwnerState
-    >;
-    /**
-     * Props forwarded to the form helper text slot.
-     * By default, the available props are based on the [FormHelperText](https://mui.com/material-ui/api/form-helper-text/#props) component.
-     */
-    formHelperText: SlotProps<
-      React.ElementType<FormHelperTextProps>,
-      NumberFieldFormHelperTextSlotPropsOverrides,
+    root: SlotProps<
+      React.ElementType<FormControlProps>,
+      NumberFieldRootSlotOverrides,
       NumberFieldOwnerState
     >;
   }
@@ -139,6 +173,10 @@ export interface BaseNumberFieldProps extends StandardProps<
         NumberFieldPropsColorOverrides
       >
     | undefined;
+  /**
+   * The position of the control buttons relative to the input element.
+   */
+  controlPosition?: ControlPosition | undefined;
   /**
    * The default value of the number input element.
    */
