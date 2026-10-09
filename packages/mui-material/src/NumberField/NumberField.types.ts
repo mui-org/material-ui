@@ -20,7 +20,7 @@ import type {
 
 type NumberFieldVariants = 'outlined' | 'standard' | 'filled';
 
-type ControlPosition = 'start' | 'end' | 'split';
+export type ControlsPosition = 'start' | 'end' | 'split';
 
 export interface NumberFieldSlots {
   /**
@@ -175,8 +175,9 @@ export interface BaseNumberFieldProps extends StandardProps<
     | undefined;
   /**
    * The position of the control buttons relative to the input element.
+   * @default 'end'
    */
-  controlPosition?: ControlPosition | undefined;
+  controlsPosition?: ControlsPosition | undefined;
   /**
    * The default value of the number input element.
    */
@@ -339,6 +340,7 @@ export type NumberFieldProps<Variant extends NumberFieldVariants = NumberFieldVa
 
 export interface NumberFieldOwnerState
   extends BaseNumberFieldProps, Pick<NumberFieldProps, 'slots' | 'slotProps'> {
+  controlsPosition: NonNullable<NumberFieldProps['controlsPosition']>;
   color: NonNullable<NumberFieldProps['color']>;
   disabled: boolean;
   readOnly: boolean;

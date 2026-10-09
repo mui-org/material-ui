@@ -10,7 +10,9 @@ import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
 import FilledInput from '../FilledInput';
 import Input from '../Input';
-import resolveNumberFieldInputProps from './utils/resolveNumberFieldInputProps';
+import { getControlElements, resolveNumberFieldInputProps } from './utils';
+import IconButton from '../IconButton';
+import type { IconButtonProps } from '../IconButton';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -96,6 +98,46 @@ const NumberFieldInputSlot = React.forwardRef(
       },
     });
 
+    const [DecrementButtonSlot, decrementButtonProps] = useSlot('decrementButton', {
+      elementType: IconButton,
+      externalForwardedProps,
+      ownerState,
+      className: undefined,
+    });
+    const [IncrementButtonSlot, incrementButtonProps] = useSlot('incrementButton', {
+      elementType: IconButton,
+      externalForwardedProps,
+      ownerState,
+      className: undefined,
+    });
+    const { startControls, endControls } = getControlElements(
+      ownerState.controlsPosition,
+      <IncrementButtonSlot {...(incrementButtonProps as IconButtonProps)} />,
+      <DecrementButtonSlot {...(decrementButtonProps as IconButtonProps)} />,
+    );
+    const consumerStartAdornment =
+      'startAdornment' in materialInputProps ? materialInputProps.startAdornment : undefined;
+
+    const consumerEndAdornment =
+      'endAdornment' in materialInputProps ? materialInputProps.endAdornment : undefined;
+    const startAdornment = startControls ? (
+      <React.Fragment>
+        {startControls}
+        {consumerStartAdornment}
+      </React.Fragment>
+    ) : (
+      consumerStartAdornment
+    );
+
+    const endAdornment = endControls ? (
+      <React.Fragment>
+        {consumerEndAdornment}
+        {endControls}
+      </React.Fragment>
+    ) : (
+      consumerEndAdornment
+    );
+
     // Keep Material styling and native behavior aligned with Base UI's resolved state.
     const inputStateProps = {
       disabled: ownerState.disabled,
@@ -123,6 +165,8 @@ const NumberFieldInputSlot = React.forwardRef(
           input: externalForwardedProps.slots.htmlInput ? HtmlInputSlot : undefined,
         }}
         {...materialInputProps}
+        startAdornment={startAdornment}
+        endAdornment={endAdornment}
         {...inputStateProps}
         inputProps={finalHtmlInputProps}
       />
