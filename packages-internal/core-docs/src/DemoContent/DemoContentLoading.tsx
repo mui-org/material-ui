@@ -4,7 +4,6 @@ import { useCodeFallback } from '@mui/internal-docs-infra/CodeHighlighter';
 import { useUrlHashState } from '@mui/internal-docs-infra/useUrlHashState';
 import { CodeSource } from './CodeSource';
 import { DemoContainer, DemoFileTabBarSkeleton } from './DemoContainer';
-import { DemoToolbar } from './DemoToolbar';
 import { useTranslate } from '../i18n';
 import type { DemoOptions } from './DemoContent';
 import { demoAnchorId, fileSourceAnchorIds } from './sourceAnchors';
@@ -20,17 +19,14 @@ import { loadDemoContent } from './loadDemoContent';
 //     mount the demo in the client-only portal — never inline in the static
 //     HTML (which would otherwise fail HTML validation), matching the live
 //     `DemoContent`.
-//   - the toolbar buttons, inert (the handlers need `useDemo` state)
+//   - space reserved for the live toolbar
 //   - the SSR'd `source` (initial file) in the code slot when expanded, which
 //     includes landing on a source deep link (see `expanded` below)
 // ---------------------------------------------------------------------------
 
 export type DemoContentLoadingProps = ContentLoadingProps<DemoOptions>;
 
-// The skeleton toolbar has no demo state to act on; its buttons only hold the
-// layout (and the accessible names) until the live toolbar takes over.
-const noop = () => {};
-const noopAsync = async () => {};
+const TOOLBAR_HEIGHT = 42;
 
 export default function DemoContentLoading(props: DemoContentLoadingProps) {
   // `code` is the ready `<code>` for the displayed file — the hook applies
@@ -62,7 +58,6 @@ export default function DemoContentLoading(props: DemoContentLoadingProps) {
     name,
     slug,
     anchorId: anchorIdOption,
-    hideEditButton,
   } = props;
   const t = useTranslate();
 
@@ -87,7 +82,7 @@ export default function DemoContentLoading(props: DemoContentLoadingProps) {
   const [hash] = useUrlHashState();
   const expanded =
     initialExpanded === true || (hash != null && sourceAnchorIds?.includes(hash) === true);
-  const { sourceVisible, hasSourceFocus } = resolveDemoSourceView({
+  const { sourceVisible } = resolveDemoSourceView({
     expanded,
     focusedLines,
     collapsible,
@@ -115,39 +110,8 @@ export default function DemoContentLoading(props: DemoContentLoadingProps) {
     );
   }
 
-  // The live toolbar ships in the code-split `DemoContent` chunk, behind the
-  // highlighter runtime and the demo's precompute (~30kB gz on a 4Mbps link
-  // that is ~0.5s after hydration, vs ~0.2s for master's 8kB lazy toolbar).
-  // Render the same buttons here, inert and `aria-busy`, so they are visible
-  // from first paint and the swap to the live toolbar changes nothing visually.
-  // The label mirrors `DemoContent`'s `showCodeLabel` for the initial state.
-  const showCodeLabel = hasSourceFocus
-    ? t(expanded ? 'hideFullSource' : 'showFullSource')
-    : t(expanded ? 'hideSource' : 'showSource');
-  const toolbar = (
-    <DemoToolbar
-      gaLabel={slug ?? name ?? ''}
-      demoSourceId={demoSourceId}
-      expanded={expanded}
-      onToggleExpand={noop}
-      toggleRef={null}
-      showCodeLabel={showCodeLabel}
-      hasJsTransform={false}
-      isJsSelected={false}
-      onLanguageClick={noop}
-      variants={[]}
-      selectedVariant=""
-      onSelectVariant={noop}
-      openMuiChat={noopAsync}
-      hideEditButton={hideEditButton}
-      onOpenStackBlitz={noop}
-      onOpenCodeSandbox={noop}
-      onCopySource={noopAsync}
-      onResetFocus={noop}
-      onReset={noop}
-      tsSourceAnchor={rootFileName}
-    />
-  );
+  // Reserve the live toolbar's 42px content height without rendering inactive controls.
+  const toolbar = <div aria-hidden style={{ height: TOOLBAR_HEIGHT, width: '100%' }} />;
 
   const tabs =
     expanded && fileNames && fileNames.length > 1 ? <DemoFileTabBarSkeleton aria-hidden /> : null;

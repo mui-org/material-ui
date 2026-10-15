@@ -1,6 +1,6 @@
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { createRenderer, isJsdom, screen, waitFor } from '@mui/internal-test-utils';
+import { createRenderer, screen, waitFor } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@mui/material/styles';
 import { brandingLightTheme } from '../branding';
 import { UserLanguageProvider } from '../i18n';
@@ -37,12 +37,7 @@ describe('DemoContentLoading client behavior', () => {
     mocks.loadDemoContent.mockClear();
   });
 
-  // The live toolbar arrives with the code-split `DemoContent` chunk. The
-  // skeleton renders the same buttons, inert, so they are visible from first
-  // paint instead of popping in once the chunk lands.
-  // Skipped in jsdom: without media queries the toolbar stays `display: none`
-  // (it shows from the `sm` breakpoint up), which empties the accessible names.
-  it.skipIf(isJsdom())('renders the toolbar buttons before the live content mounts', () => {
+  it('reserves toolbar space until live controls are ready', () => {
     render(
       <UserLanguageProvider defaultUserLanguage="en">
         <ThemeProvider theme={brandingLightTheme}>
@@ -51,12 +46,8 @@ describe('DemoContentLoading client behavior', () => {
       </UserLanguageProvider>,
     );
 
-    expect(screen.getByRole('toolbar', { name: 'demo source' })).to.have.attribute(
-      'aria-busy',
-      'true',
-    );
-    expect(screen.getByRole('button', { name: 'Show code' })).not.to.equal(null);
-    expect(screen.getByRole('button', { name: 'Copy the source' })).not.to.equal(null);
+    expect(screen.getByRole('toolbar', { hidden: true })).to.have.attribute('aria-busy', 'true');
+    expect(screen.queryByRole('button', { name: 'Show code', hidden: true })).to.equal(null);
   });
 
   // Landing on a source deep link expands the skeleton at hydration, so the
@@ -73,7 +64,6 @@ describe('DemoContentLoading client behavior', () => {
       );
 
       expect(container.querySelector('[data-code-expanded]')).not.to.equal(null);
-      expect(screen.getByRole('button', { name: 'Hide code', hidden: true })).not.to.equal(null);
     } finally {
       window.history.replaceState(null, '', window.location.pathname);
     }
