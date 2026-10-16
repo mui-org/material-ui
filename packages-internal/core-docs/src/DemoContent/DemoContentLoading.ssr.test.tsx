@@ -11,7 +11,7 @@ vi.mock('@mui/internal-docs-infra/CodeHighlighter', () => ({
 }));
 
 describe('DemoContentLoading SSR', () => {
-  it('reserves toolbar space without rendering unavailable actions', () => {
+  it('renders inert toolbar controls before hydration', () => {
     const view = ReactDOM.renderToString(
       <UserLanguageProvider defaultUserLanguage="en">
         <ThemeProvider theme={brandingLightTheme}>
@@ -22,8 +22,8 @@ describe('DemoContentLoading SSR', () => {
 
     expect(view).to.contain('Demo preview');
     expect(view).to.contain('aria-busy="true"');
-    expect(view).to.contain('height:42px');
-    expect(view).not.to.contain('aria-label="Copy the source"');
-    expect(view).not.to.contain('aria-label="Show code"');
+    expect(view).to.contain('inert=""');
+    expect(view).to.contain('aria-label="Copy the source"');
+    expect(view).to.contain('>Show code</button>');
   });
 });

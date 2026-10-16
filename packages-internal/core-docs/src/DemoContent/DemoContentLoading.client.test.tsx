@@ -37,7 +37,7 @@ describe('DemoContentLoading client behavior', () => {
     mocks.loadDemoContent.mockClear();
   });
 
-  it('reserves toolbar space until live controls are ready', () => {
+  it('renders inert toolbar controls until live content is ready', () => {
     render(
       <UserLanguageProvider defaultUserLanguage="en">
         <ThemeProvider theme={brandingLightTheme}>
@@ -46,8 +46,14 @@ describe('DemoContentLoading client behavior', () => {
       </UserLanguageProvider>,
     );
 
-    expect(screen.getByRole('toolbar', { hidden: true })).to.have.attribute('aria-busy', 'true');
-    expect(screen.queryByRole('button', { name: 'Show code', hidden: true })).to.equal(null);
+    const toolbar = screen.getByRole('toolbar', { hidden: true });
+
+    expect(toolbar).to.have.attribute('aria-busy', 'true');
+    expect(toolbar).to.have.attribute('inert');
+    expect(screen.getByRole('button', { name: 'Show code', hidden: true })).not.to.equal(null);
+    expect(screen.getByRole('button', { name: 'Copy the source', hidden: true })).not.to.equal(
+      null,
+    );
   });
 
   // Landing on a source deep link expands the skeleton at hydration, so the
