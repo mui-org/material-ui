@@ -96,10 +96,14 @@ const NumberFieldRootSlot = React.forwardRef(
       resolvedInputSlotProps && 'startAdornment' in resolvedInputSlotProps
         ? resolvedInputSlotProps.startAdornment
         : undefined;
+    const hasStartAdornment =
+      ownerState.controlsPosition === 'start' ||
+      ownerState.controlsPosition === 'split' ||
+      Boolean(startAdornment);
 
     return (
       <RootSlot {...rootProps} disabled={ownerState.disabled} required={ownerState.required}>
-        <SSRInitialFilled value={baseState.inputValue} startAdornment={startAdornment} />
+        <SSRInitialFilled value={baseState.inputValue} startAdornment={hasStartAdornment} />
         {hasLabel && (
           <InputLabelSlot htmlFor={id} id={labelId} {...(inputLabelProps as InputLabelProps)}>
             {label}
