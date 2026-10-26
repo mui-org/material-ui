@@ -10,7 +10,7 @@ import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
 import FilledInput from '../FilledInput';
 import Input from '../Input';
-import { getControlElements, resolveNumberFieldInputProps } from './utils';
+import { getControlElements, resolveInputProps } from './utils';
 import IconButton from '../IconButton';
 import type { IconButtonProps } from '../IconButton';
 
@@ -72,7 +72,7 @@ const NumberFieldInputSlot = React.forwardRef(
       ref,
     });
 
-    const { materialInputProps, nativeSlotProps } = resolveNumberFieldInputProps({
+    const { materialInputProps, nativeSlotProps } = resolveInputProps({
       inputProps,
       htmlInputSlotProps: externalForwardedProps.slotProps.htmlInput,
       ownerState,
@@ -117,9 +117,9 @@ const NumberFieldInputSlot = React.forwardRef(
     );
     const consumerStartAdornment =
       'startAdornment' in materialInputProps ? materialInputProps.startAdornment : undefined;
-
     const consumerEndAdornment =
       'endAdornment' in materialInputProps ? materialInputProps.endAdornment : undefined;
+
     const startAdornment = startControls ? (
       <React.Fragment>
         {startControls}

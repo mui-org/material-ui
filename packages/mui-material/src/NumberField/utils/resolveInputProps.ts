@@ -8,7 +8,7 @@ type ResolvedInputSlotProps = Exclude<
   ((ownerState: NumberFieldOwnerState) => unknown) | undefined
 >;
 
-interface ResolveNumberFieldInputPropsParameters<T extends ResolvedInputSlotProps> {
+interface ResolveInputPropsParameters<T extends ResolvedInputSlotProps> {
   inputProps: T;
   htmlInputSlotProps: HtmlInputSlotProps;
   ownerState: NumberFieldOwnerState;
@@ -29,11 +29,11 @@ interface ResolveNumberFieldInputPropsParameters<T extends ResolvedInputSlotProp
  * - `nativeSlotProps`: The resolved native input props to be spread on the underlying HTML input element.
  *
  */
-export default function resolveNumberFieldInputProps<T extends ResolvedInputSlotProps>({
+export default function resolveInputProps<T extends ResolvedInputSlotProps>({
   inputProps,
   htmlInputSlotProps,
   ownerState,
-}: ResolveNumberFieldInputPropsParameters<T>) {
+}: ResolveInputPropsParameters<T>) {
   // Route keyboard handlers through the native merge so they compose with Base UI.
   // Remove them from the wrapper so an overridden handler cannot reappear there.
   const { onKeyDown, onKeyUp, ...materialInputProps } = inputProps;

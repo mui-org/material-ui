@@ -11,14 +11,14 @@ const Controls = styled(InputAdornment, {
 /**
  * Returns the start and end controls for the number field based on the controls position.
  * @param controlsPosition - The position of the controls ('start', 'end', 'split').
- * @param incrementButton - The increment button element.
- * @param decrementButton - The decrement button element.
+ * @param IncrementButton - The increment button element.
+ * @param DecrementButton - The decrement button element.
  * @returns An object containing the start and end controls.
  */
 function getControlElements(
   controlsPosition: ControlsPosition,
-  incrementButton: React.ReactNode,
-  decrementButton: React.ReactNode,
+  IncrementButton: React.ReactNode,
+  DecrementButton: React.ReactNode,
 ): {
   startControls: React.ReactNode | null;
   endControls: React.ReactNode | null;
@@ -29,22 +29,22 @@ function getControlElements(
         startControls: null,
         endControls: (
           <Controls position="end">
-            {incrementButton}
-            {decrementButton}
+            {IncrementButton}
+            {DecrementButton}
           </Controls>
         ),
       };
     case 'split':
       return {
-        startControls: <Controls position="start">{decrementButton}</Controls>,
-        endControls: <Controls position="end">{incrementButton}</Controls>,
+        startControls: <Controls position="start">{DecrementButton}</Controls>,
+        endControls: <Controls position="end">{IncrementButton}</Controls>,
       };
     case 'start':
       return {
         startControls: (
           <Controls position="start">
-            {incrementButton}
-            {decrementButton}
+            {IncrementButton}
+            {DecrementButton}
           </Controls>
         ),
         endControls: null,
