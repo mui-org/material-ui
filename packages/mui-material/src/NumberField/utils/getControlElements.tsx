@@ -1,12 +1,21 @@
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { styled } from '../../zero-styled';
-import type { ControlsPosition } from '../NumberField.types';
+import type { ControlsPosition, NumberFieldOwnerState } from '../NumberField.types';
+import type { NumberFieldClasses } from '../numberFieldClasses';
 
 const Controls = styled(InputAdornment, {
   name: 'MuiNumberField',
   slot: 'Controls',
-})({});
+})<{ ownerState: NumberFieldOwnerState }>({});
+
+interface GetControlElementsOptions {
+  controlsPosition: ControlsPosition;
+  IncrementButton: React.ReactNode;
+  DecrementButton: React.ReactNode;
+  classes: Pick<NumberFieldClasses, 'controls'>;
+  ownerState: NumberFieldOwnerState;
+}
 
 /**
  * Returns the start and end controls for the number field based on the controls position.
@@ -15,20 +24,24 @@ const Controls = styled(InputAdornment, {
  * @param DecrementButton - The decrement button element.
  * @returns An object containing the start and end controls.
  */
-function getControlElements(
-  controlsPosition: ControlsPosition,
-  IncrementButton: React.ReactNode,
-  DecrementButton: React.ReactNode,
-): {
+function getControlElements({
+  controlsPosition,
+  IncrementButton,
+  DecrementButton,
+  classes,
+  ownerState,
+}: GetControlElementsOptions): {
   startControls: React.ReactNode | null;
   endControls: React.ReactNode | null;
 } {
+  const controlProps = { className: classes.controls, ownerState };
+
   switch (controlsPosition) {
     case 'end':
       return {
         startControls: null,
         endControls: (
-          <Controls position="end">
+          <Controls position="end" {...controlProps}>
             {IncrementButton}
             {DecrementButton}
           </Controls>
@@ -36,13 +49,21 @@ function getControlElements(
       };
     case 'split':
       return {
-        startControls: <Controls position="start">{DecrementButton}</Controls>,
-        endControls: <Controls position="end">{IncrementButton}</Controls>,
+        startControls: (
+          <Controls position="start" {...controlProps}>
+            {DecrementButton}
+          </Controls>
+        ),
+        endControls: (
+          <Controls position="end" {...controlProps}>
+            {IncrementButton}
+          </Controls>
+        ),
       };
     case 'start':
       return {
         startControls: (
-          <Controls position="start">
+          <Controls position="start" {...controlProps}>
             {IncrementButton}
             {DecrementButton}
           </Controls>

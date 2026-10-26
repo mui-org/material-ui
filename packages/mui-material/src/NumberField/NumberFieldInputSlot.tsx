@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import clsx from 'clsx';
+
 import { NumberField as BaseNumberField } from '@base-ui/react/number-field';
 import { mergeProps } from '@base-ui/react/merge-props';
 
@@ -12,10 +14,11 @@ import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
 import FilledInput from '../FilledInput';
 import Input from '../Input';
-import { getControlElements, resolveInputProps } from './utils';
+import { getControlElements, resolveInputProps, useUtilityClasses } from './utils';
 import IconButton from '../IconButton';
 import type { IconButtonProps } from '../IconButton';
 import NumberFieldButtonSlot from './NumberFieldButtonSlot';
+import { styled } from '../styles';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -29,6 +32,15 @@ const variantComponent = {
   filled: FilledInput,
   outlined: OutlinedInput,
 };
+
+const NumberFieldIncrementButton = styled(IconButton, {
+  name: 'MuiNumberField',
+  slot: 'IncrementButton',
+})({});
+const NumberFieldDecrementButton = styled(IconButton, {
+  name: 'MuiNumberField',
+  slot: 'DecrementButton',
+})({});
 
 /**
  * @ignore - internal component.
@@ -47,6 +59,8 @@ const NumberFieldInputSlot = React.forwardRef(
 
     const hasHelperText = materialProps.helperText != null && materialProps.helperText !== '';
     const helperTextId = hasHelperText && id ? `${id}-helper-text` : undefined;
+
+    const classes = useUtilityClasses(ownerState);
 
     const InputComponent = variantComponent[materialProps.variant ?? 'standard'];
     const inputLabelSlotProps = resolveComponentProps(
@@ -71,7 +85,7 @@ const NumberFieldInputSlot = React.forwardRef(
       externalForwardedProps,
       additionalProps: inputAdditionalProps,
       ownerState,
-      className: undefined,
+      className: clsx(classes.input, materialProps.className),
       ref,
     });
 
@@ -102,20 +116,20 @@ const NumberFieldInputSlot = React.forwardRef(
     });
 
     const [DecrementButtonSlot, decrementButtonProps] = useSlot('decrementButton', {
-      elementType: IconButton,
+      elementType: NumberFieldDecrementButton,
       externalForwardedProps,
       ownerState,
-      className: undefined,
+      className: clsx(classes.decrementButton, materialProps.className),
       additionalProps: {
         size: ownerState.size,
         children: <KeyboardArrowDownIcon fontSize="inherit" />,
       },
     });
     const [IncrementButtonSlot, incrementButtonProps] = useSlot('incrementButton', {
-      elementType: IconButton,
+      elementType: NumberFieldIncrementButton,
       externalForwardedProps,
       ownerState,
-      className: undefined,
+      className: clsx(classes.incrementButton, materialProps.className),
       additionalProps: {
         size: ownerState.size,
         children: <KeyboardArrowUpIcon fontSize="inherit" />,
@@ -153,11 +167,13 @@ const NumberFieldInputSlot = React.forwardRef(
         )}
       />
     );
-    const { startControls, endControls } = getControlElements(
-      ownerState.controlsPosition,
-      incrementButton,
-      decrementButton,
-    );
+    const { startControls, endControls } = getControlElements({
+      controlsPosition: ownerState.controlsPosition,
+      IncrementButton: incrementButton,
+      DecrementButton: decrementButton,
+      classes,
+      ownerState,
+    });
     const consumerStartAdornment =
       'startAdornment' in materialInputProps ? materialInputProps.startAdornment : undefined;
     const consumerEndAdornment =
