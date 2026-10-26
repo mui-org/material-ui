@@ -5,6 +5,8 @@ import { mergeProps } from '@base-ui/react/merge-props';
 
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
 
+import KeyboardArrowDownIcon from '../internal/svg-icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '../internal/svg-icons/KeyboardArrowUp';
 import type { NumberFieldOwnerState, NumberFieldProps } from './NumberField.types';
 import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
@@ -13,6 +15,7 @@ import Input from '../Input';
 import { getControlElements, resolveInputProps } from './utils';
 import IconButton from '../IconButton';
 import type { IconButtonProps } from '../IconButton';
+import NumberFieldButtonSlot from './NumberFieldButtonSlot';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -103,17 +106,57 @@ const NumberFieldInputSlot = React.forwardRef(
       externalForwardedProps,
       ownerState,
       className: undefined,
+      additionalProps: {
+        size: ownerState.size,
+        children: <KeyboardArrowDownIcon fontSize="inherit" />,
+      },
     });
     const [IncrementButtonSlot, incrementButtonProps] = useSlot('incrementButton', {
       elementType: IconButton,
       externalForwardedProps,
       ownerState,
       className: undefined,
+      additionalProps: {
+        size: ownerState.size,
+        children: <KeyboardArrowUpIcon fontSize="inherit" />,
+      },
     });
+    const { disabled: decrementButtonDisabled, ...restDecrementButtonProps } =
+      decrementButtonProps as IconButtonProps;
+    const { disabled: incrementButtonDisabled, ...restIncrementButtonProps } =
+      incrementButtonProps as IconButtonProps;
+    const incrementButton = (
+      <BaseNumberField.Increment
+        disabled={incrementButtonDisabled}
+        render={(buttonBaseProps, buttonBaseState) => (
+          <NumberFieldButtonSlot
+            ButtonSlot={IncrementButtonSlot}
+            buttonProps={restIncrementButtonProps}
+            baseProps={buttonBaseProps}
+            baseState={buttonBaseState}
+            materialProps={ownerState}
+          />
+        )}
+      />
+    );
+    const decrementButton = (
+      <BaseNumberField.Decrement
+        disabled={decrementButtonDisabled}
+        render={(buttonBaseProps, buttonBaseState) => (
+          <NumberFieldButtonSlot
+            ButtonSlot={DecrementButtonSlot}
+            buttonProps={restDecrementButtonProps}
+            baseProps={buttonBaseProps}
+            baseState={buttonBaseState}
+            materialProps={ownerState}
+          />
+        )}
+      />
+    );
     const { startControls, endControls } = getControlElements(
       ownerState.controlsPosition,
-      <IncrementButtonSlot {...(incrementButtonProps as IconButtonProps)} />,
-      <DecrementButtonSlot {...(decrementButtonProps as IconButtonProps)} />,
+      incrementButton,
+      decrementButton,
     );
     const consumerStartAdornment =
       'startAdornment' in materialInputProps ? materialInputProps.startAdornment : undefined;
