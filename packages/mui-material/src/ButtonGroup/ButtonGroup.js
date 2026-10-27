@@ -337,7 +337,7 @@ const ButtonGroup = React.forwardRef(function ButtonGroup(inProps, ref) {
         {validChildren.map((child, index) => {
           return (
             <ButtonGroupButtonContext.Provider
-              key={index}
+              key={child.key}
               value={getButtonPositionClassName(index)}
             >
               {child}
