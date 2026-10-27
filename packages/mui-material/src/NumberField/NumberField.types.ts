@@ -25,7 +25,7 @@ export type ControlsPosition = 'start' | 'end' | 'split';
 export interface NumberFieldSlots {
   /**
    * The component that renders the decrement button.
-   * @default 'button'
+   * @default IconButton
    */
   decrementButton: React.ElementType;
   /**
@@ -40,7 +40,7 @@ export interface NumberFieldSlots {
   htmlInput: React.ElementType;
   /**
    * The component that renders the increment button.
-   * @default 'button'
+   * @default IconButton
    */
   incrementButton: React.ElementType;
   /**

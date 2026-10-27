@@ -7,7 +7,6 @@ const useUtilityClasses = (ownerState: NumberFieldProps) => {
 
   const slots = {
     root: ['root'],
-    input: ['input'],
     controls: ['controls'],
     incrementButton: ['incrementButton'],
     decrementButton: ['decrementButton'],

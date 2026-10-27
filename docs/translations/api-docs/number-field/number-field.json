@@ -14,6 +14,9 @@
     "color": {
       "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
     },
+    "controlsPosition": {
+      "description": "The position of the control buttons relative to the input element."
+    },
     "defaultValue": { "description": "The default value of the number input element." },
     "disabled": { "description": "If <code>true</code>, the component is disabled." },
     "error": { "description": "If <code>true</code>, the label is displayed in an error state." },
@@ -59,10 +62,17 @@
     "value": { "description": "The value of the number input element." },
     "variant": { "description": "The variant to use." }
   },
-  "classDescriptions": {},
+  "classDescriptions": {
+    "controls": {
+      "description": "Styles applied to {{nodeName}}.",
+      "nodeName": "each controls adornment"
+    }
+  },
   "slotDescriptions": {
+    "decrementButton": "The component that renders the decrement button.",
     "formHelperText": "The component that renders the helper text.",
     "htmlInput": "The html input element.",
+    "incrementButton": "The component that renders the increment button.",
     "input": "The component that renders the input.",
     "inputLabel": "The component that renders the input&#39;s label.",
     "root": "The component that renders the root"

@@ -167,6 +167,11 @@ NumberField.propTypes /* remove-proptypes */ = {
    */
   color: PropTypes.oneOf(['error', 'info', 'primary', 'secondary', 'success', 'warning']),
   /**
+   * The position of the control buttons relative to the input element.
+   * @default 'end'
+   */
+  controlsPosition: PropTypes.oneOf(['end', 'split', 'start']),
+  /**
    * The default value of the number input element.
    */
   defaultValue: PropTypes.number,
@@ -329,8 +334,10 @@ NumberField.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   slotProps: PropTypes /* @typescript-to-proptypes-ignore */.shape({
+    decrementButton: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     formHelperText: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     htmlInput: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    incrementButton: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     inputLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
@@ -340,8 +347,10 @@ NumberField.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   slots: PropTypes.shape({
+    decrementButton: PropTypes.elementType,
     formHelperText: PropTypes.elementType,
     htmlInput: PropTypes.elementType,
+    incrementButton: PropTypes.elementType,
     input: PropTypes.elementType,
     inputLabel: PropTypes.elementType,
     root: PropTypes.elementType,

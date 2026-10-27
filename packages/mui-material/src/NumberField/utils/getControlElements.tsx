@@ -1,4 +1,4 @@
-import InputAdornment from '@mui/material/InputAdornment';
+import InputAdornment from '../../InputAdornment';
 
 import { styled } from '../../zero-styled';
 import type { ControlsPosition, NumberFieldOwnerState } from '../NumberField.types';
@@ -18,11 +18,7 @@ interface GetControlElementsOptions {
 }
 
 /**
- * Returns the start and end controls for the number field based on the controls position.
- * @param controlsPosition - The position of the controls ('start', 'end', 'split').
- * @param IncrementButton - The increment button element.
- * @param DecrementButton - The decrement button element.
- * @returns An object containing the start and end controls.
+ * Places the built-in controls in the input's start/end adornments.
  */
 function getControlElements({
   controlsPosition,
@@ -71,7 +67,9 @@ function getControlElements({
         endControls: null,
       };
     default:
-      throw new Error(`Invalid controls position: ${controlsPosition}`);
+      throw /* minify-error */ new Error(
+        `MUI: Cannot position NumberField controls because "controlsPosition" is invalid: ${controlsPosition}. Use "start", "end", or "split".`,
+      );
   }
 }
 

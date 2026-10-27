@@ -4,8 +4,6 @@ import generateUtilityClass from '@mui/utils/generateUtilityClass';
 export interface NumberFieldClasses {
   /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to the Material input wrapper. */
-  input: string;
   /** Styles applied to each controls adornment. */
   controls: string;
   /** Styles applied to the increment button. */
@@ -22,7 +20,6 @@ export function getNumberFieldUtilityClass(slot: string): string {
 
 const numberFieldClasses: NumberFieldClasses = generateUtilityClasses('MuiNumberField', [
   'root',
-  'input',
   'controls',
   'incrementButton',
   'decrementButton',

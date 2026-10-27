@@ -11,6 +11,13 @@
       },
       "default": "'primary'"
     },
+    "controlsPosition": {
+      "type": {
+        "name": "enum",
+        "description": "'end'<br>&#124;&nbsp;'split'<br>&#124;&nbsp;'start'"
+      },
+      "default": "'end'"
+    },
     "defaultValue": { "type": { "name": "number" } },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
     "error": { "type": { "name": "bool" }, "default": "false" },
@@ -51,14 +58,14 @@
     "slotProps": {
       "type": {
         "name": "shape",
-        "description": "{ formHelperText?: func<br>&#124;&nbsp;object, htmlInput?: func<br>&#124;&nbsp;object, input?: func<br>&#124;&nbsp;object, inputLabel?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
+        "description": "{ decrementButton?: func<br>&#124;&nbsp;object, formHelperText?: func<br>&#124;&nbsp;object, htmlInput?: func<br>&#124;&nbsp;object, incrementButton?: func<br>&#124;&nbsp;object, input?: func<br>&#124;&nbsp;object, inputLabel?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
       },
       "default": "{}"
     },
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ formHelperText?: elementType, htmlInput?: elementType, input?: elementType, inputLabel?: elementType, root?: elementType }"
+        "description": "{ decrementButton?: elementType, formHelperText?: elementType, htmlInput?: elementType, incrementButton?: elementType, input?: elementType, inputLabel?: elementType, root?: elementType }"
       },
       "default": "{}"
     },
@@ -88,10 +95,28 @@
   ],
   "slots": [
     {
+      "name": "decrementButton",
+      "description": "The component that renders the decrement button.",
+      "default": "IconButton",
+      "class": "MuiNumberField-decrementButton"
+    },
+    {
       "name": "formHelperText",
       "description": "The component that renders the helper text.",
       "default": "FormHelperText",
       "class": null
+    },
+    {
+      "name": "htmlInput",
+      "description": "The html input element.",
+      "default": "'input'",
+      "class": null
+    },
+    {
+      "name": "incrementButton",
+      "description": "The component that renders the increment button.",
+      "default": "IconButton",
+      "class": "MuiNumberField-incrementButton"
     },
     {
       "name": "input",
@@ -106,19 +131,20 @@
       "class": null
     },
     {
-      "name": "htmlInput",
-      "description": "The html input element.",
-      "default": "'input'",
-      "class": null
-    },
-    {
       "name": "root",
       "description": "The component that renders the root",
       "default": "FormControl",
       "class": "MuiNumberField-root"
     }
   ],
-  "classes": [],
+  "classes": [
+    {
+      "key": "controls",
+      "className": "MuiNumberField-controls",
+      "description": "Styles applied to each controls adornment.",
+      "isGlobal": false
+    }
+  ],
   "spread": true,
   "themeDefaultProps": true,
   "muiName": "MuiNumberField",

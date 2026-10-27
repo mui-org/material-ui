@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import clsx from 'clsx';
-
 import { NumberField as BaseNumberField } from '@base-ui/react/number-field';
 import { mergeProps } from '@base-ui/react/merge-props';
 
@@ -18,7 +16,7 @@ import { getControlElements, resolveInputProps, useUtilityClasses } from './util
 import IconButton from '../IconButton';
 import type { IconButtonProps } from '../IconButton';
 import NumberFieldButtonSlot from './NumberFieldButtonSlot';
-import { styled } from '../styles';
+import { styled } from '../zero-styled';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -85,7 +83,7 @@ const NumberFieldInputSlot = React.forwardRef(
       externalForwardedProps,
       additionalProps: inputAdditionalProps,
       ownerState,
-      className: clsx(classes.input, materialProps.className),
+      className: undefined,
       ref,
     });
 
@@ -119,7 +117,7 @@ const NumberFieldInputSlot = React.forwardRef(
       elementType: NumberFieldDecrementButton,
       externalForwardedProps,
       ownerState,
-      className: clsx(classes.decrementButton, materialProps.className),
+      className: classes.decrementButton,
       additionalProps: {
         size: ownerState.size,
         children: <KeyboardArrowDownIcon fontSize="inherit" />,
@@ -129,7 +127,7 @@ const NumberFieldInputSlot = React.forwardRef(
       elementType: NumberFieldIncrementButton,
       externalForwardedProps,
       ownerState,
-      className: clsx(classes.incrementButton, materialProps.className),
+      className: classes.incrementButton,
       additionalProps: {
         size: ownerState.size,
         children: <KeyboardArrowUpIcon fontSize="inherit" />,

@@ -3,10 +3,10 @@ import * as React from 'react';
 import type { NumberField as BaseNumberField } from '@base-ui/react/number-field';
 import { mergeProps } from '@base-ui/react/merge-props';
 
+import useForkRef from '@mui/utils/useForkRef';
 import appendOwnerState from '@mui/utils/appendOwnerState';
 
 import type { NumberFieldOwnerState } from './NumberField.types';
-import { useForkRef } from '../utils';
 import type { IconButtonProps } from '../IconButton';
 
 interface NumberFieldButtonProps {
