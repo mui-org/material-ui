@@ -122,6 +122,7 @@ const NumberFieldInputSlot = React.forwardRef(
         size: ownerState.size,
         children: <KeyboardArrowDownIcon fontSize="inherit" />,
       },
+      shouldForwardComponentProp: true,
     });
     const [IncrementButtonSlot, incrementButtonProps] = useSlot('incrementButton', {
       elementType: NumberFieldIncrementButton,
@@ -132,6 +133,7 @@ const NumberFieldInputSlot = React.forwardRef(
         size: ownerState.size,
         children: <KeyboardArrowUpIcon fontSize="inherit" />,
       },
+      shouldForwardComponentProp: true,
     });
     const { disabled: decrementButtonDisabled, ...restDecrementButtonProps } =
       decrementButtonProps as IconButtonProps;
