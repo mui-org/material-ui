@@ -2,27 +2,45 @@ import * as React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { createRenderer, screen } from '@mui/internal-test-utils';
 import { Field as BaseField } from '@base-ui/react/field';
-import FormControl from '@mui/material/FormControl';
+import type { BaseUIEvent } from '@base-ui/react/types';
+import FormControl, { type FormControlProps } from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import NumberField, { numberFieldClasses as classes } from '@mui/material/NumberField';
+import OutlinedInput, { type OutlinedInputProps } from '@mui/material/OutlinedInput';
+import NumberField, {
+  numberFieldClasses as classes,
+  type NumberFieldOwnerState,
+  type NumberFieldProps,
+} from '@mui/material/NumberField';
 import describeConformance from '../../test/describeConformance';
+
+interface TestSlotProps {
+  'data-testid'?: string;
+  ownerState?: NumberFieldOwnerState;
+  as?: React.ElementType;
+}
 
 describe('<NumberField />', () => {
   const { render, renderToString } = createRenderer();
 
-  const TestInput = React.forwardRef(function TestInput(props, ref) {
-    return <OutlinedInput {...props} ref={ref} data-testid={props['data-testid'] ?? 'custom'} />;
-  });
+  const TestInput = React.forwardRef<HTMLDivElement, OutlinedInputProps & TestSlotProps>(
+    function TestInput(props, ref) {
+      return <OutlinedInput {...props} ref={ref} data-testid={props['data-testid'] ?? 'custom'} />;
+    },
+  );
 
-  const TestHtmlInput = React.forwardRef(function TestHtmlInput(props, ref) {
+  const TestHtmlInput = React.forwardRef<
+    HTMLInputElement,
+    React.ComponentPropsWithoutRef<'input'> & TestSlotProps
+  >(function TestHtmlInput(props, ref) {
     const { ownerState, as, ...other } = props;
     return <input {...other} ref={ref} data-testid={props['data-testid'] ?? 'custom'} />;
   });
 
-  const TestFormControl = React.forwardRef(function TestFormControl(props, ref) {
-    return <FormControl {...props} ref={ref} data-testid={props['data-testid'] ?? 'custom'} />;
-  });
+  const TestFormControl = React.forwardRef<HTMLDivElement, FormControlProps & TestSlotProps>(
+    function TestFormControl(props, ref) {
+      return <FormControl {...props} ref={ref} data-testid={props['data-testid'] ?? 'custom'} />;
+    },
+  );
 
   describeConformance(
     <NumberField variant="standard" label="Amount" helperText="Helper text" />,
@@ -37,17 +55,22 @@ describe('<NumberField />', () => {
         root: {
           expectedClassName: classes.root,
           testWithComponent: TestFormControl,
+          // @ts-expect-error Conformance supports components here at runtime, but only types intrinsic elements.
           testWithElement: TestFormControl,
         },
+        // @ts-expect-error Conformance requires a class name in its types even for slots without one.
         input: {
           testWithComponent: TestInput,
           testWithElement: null,
         },
+        // @ts-expect-error Conformance requires a class name in its types even for slots without one.
         htmlInput: {
           testWithComponent: TestHtmlInput,
           testWithElement: 'input',
         },
+        // @ts-expect-error Conformance requires a class name in its types even for slots without one.
         inputLabel: {},
+        // @ts-expect-error Conformance requires a class name in its types even for slots without one.
         formHelperText: {},
       },
     }),
@@ -63,7 +86,12 @@ describe('<NumberField />', () => {
         name: 'input.slotProps.input',
         getSlotProps: (props) => ({ input: { slotProps: { input: props } } }),
       },
-    ];
+    ] satisfies {
+      name: string;
+      getSlotProps: (
+        props: Partial<Pick<NumberFieldOwnerState, 'disabled' | 'required' | 'readOnly'>>,
+      ) => NumberFieldProps['slotProps'];
+    }[];
 
     slotPropPaths.forEach(({ name, getSlotProps }) => {
       describe(`slotProps.${name}`, () => {
@@ -80,9 +108,9 @@ describe('<NumberField />', () => {
                 slotProps={getSlotProps({ disabled: !disabled })}
               />,
             );
-            const input = screen.getByRole('textbox', { name: 'Amount' });
+            const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
             const label = screen.getByText('Amount', { selector: 'label' });
-            const wrapper = input.closest('.MuiInputBase-root');
+            const wrapper = input.closest<HTMLDivElement>('.MuiInputBase-root')!;
 
             expect(input.disabled).to.equal(disabled);
             expect(wrapper.classList.contains('Mui-disabled')).to.equal(disabled);
@@ -114,7 +142,7 @@ describe('<NumberField />', () => {
                 slotProps={getSlotProps({ required: !required })}
               />,
             );
-            const input = screen.getByRole('textbox', { name: /Amount/ });
+            const input = screen.getByRole<HTMLInputElement>('textbox', { name: /Amount/ });
             const label = screen.getByText('Amount', { selector: 'label' });
 
             expect(input.required).to.equal(required);
@@ -122,7 +150,10 @@ describe('<NumberField />', () => {
             expect(label.classList.contains('Mui-required')).to.equal(required);
             expect(label.querySelector('.MuiInputLabel-asterisk') !== null).to.equal(required);
             expect(
-              input.closest('.MuiInputBase-root').querySelector('legend').textContent.includes('*'),
+              input
+                .closest<HTMLDivElement>('.MuiInputBase-root')!
+                .querySelector('legend')!
+                .textContent.includes('*'),
             ).to.equal(required);
           });
         });
@@ -141,8 +172,8 @@ describe('<NumberField />', () => {
                   slotProps={getSlotProps({ readOnly: !readOnly })}
                 />,
               );
-              const input = screen.getByRole('textbox', { name: 'Amount' });
-              const wrapper = input.closest('.MuiInputBase-root');
+              const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
+              const wrapper = input.closest<HTMLDivElement>('.MuiInputBase-root')!;
 
               expect(input.readOnly).to.equal(readOnly);
               expect(wrapper.classList.contains('Mui-readOnly')).to.equal(readOnly);
@@ -162,7 +193,7 @@ describe('<NumberField />', () => {
                 await user.clear(input);
                 await user.keyboard('9');
                 expect(input).to.have.value('9');
-                expect(onValueChange.mock.lastCall[0]).to.equal(9);
+                expect(onValueChange.mock.lastCall![0]).to.equal(9);
               }
             });
           });
@@ -182,7 +213,7 @@ describe('<NumberField />', () => {
               />
             </BaseField.Root>,
           );
-          const input = screen.getByRole('textbox', { name: 'Amount' });
+          const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
 
           expect(input.disabled).to.equal(true);
           expect(input.closest('.MuiInputBase-root')).to.have.class('Mui-disabled');
@@ -199,7 +230,7 @@ describe('<NumberField />', () => {
       });
     });
 
-    ['standard', 'filled'].forEach((variant) => {
+    (['standard', 'filled'] as const).forEach((variant) => {
       [false, true].forEach((state) => {
         it(`keeps resolved state=${state} consistent across all layers (${variant})`, () => {
           const overrides = { disabled: !state, required: !state, readOnly: !state };
@@ -221,8 +252,8 @@ describe('<NumberField />', () => {
               }}
             />,
           );
-          const input = screen.getByRole('textbox', { name: /Amount/ });
-          const wrapper = input.closest('.MuiInputBase-root');
+          const input = screen.getByRole<HTMLInputElement>('textbox', { name: /Amount/ });
+          const wrapper = input.closest<HTMLDivElement>('.MuiInputBase-root')!;
           const label = screen.getByText('Amount', { selector: 'label' });
 
           expect(input.disabled).to.equal(state);
@@ -239,7 +270,7 @@ describe('<NumberField />', () => {
 
   describe('server rendering', () => {
     describe('initial value', () => {
-      ['outlined', 'filled', 'standard'].forEach((variant) => {
+      (['outlined', 'filled', 'standard'] as const).forEach((variant) => {
         ['value', 'defaultValue'].forEach((prop) => {
           [
             { value: 42, displayValue: '42', shrink: 'true' },
@@ -250,7 +281,7 @@ describe('<NumberField />', () => {
               const { hydrate } = renderToString(
                 <NumberField variant={variant} label="Amount" {...{ [prop]: value }} />,
               );
-              const input = screen.getByRole('textbox', { name: 'Amount' });
+              const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
               const label = screen.getByText('Amount', { selector: 'label' });
 
               // No adornment or client effect should be needed to initialize filled state.
@@ -259,7 +290,9 @@ describe('<NumberField />', () => {
 
               hydrate();
 
-              expect(screen.getByRole('textbox', { name: 'Amount' })).to.equal(input);
+              expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' })).to.equal(
+                input,
+              );
               expect(screen.getByText('Amount', { selector: 'label' })).to.equal(label);
               expect(input).to.have.value(displayValue);
               expect(label).to.have.attribute('data-shrink', shrink);
@@ -269,14 +302,14 @@ describe('<NumberField />', () => {
       });
     });
 
-    ['outlined', 'filled', 'standard'].forEach((variant) => {
+    (['outlined', 'filled', 'standard'] as const).forEach((variant) => {
       ['object', 'callback'].forEach((configuration) => {
         it(`shrinks an empty adorned label before hydration with ${configuration} slot props (${variant})`, () => {
           const adornment = <InputAdornment position="start">$</InputAdornment>;
           const inputSlotProps =
             configuration === 'object'
               ? { startAdornment: adornment }
-              : (ownerState) => ({
+              : (ownerState: NumberFieldOwnerState) => ({
                   startAdornment: ownerState.readOnly ? adornment : undefined,
                 });
           const { hydrate } = renderToString(
@@ -288,7 +321,7 @@ describe('<NumberField />', () => {
             />,
           );
           const label = screen.getByText('Amount', { selector: 'label' });
-          const input = screen.getByRole('textbox', { name: 'Amount' });
+          const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
 
           // Assert server markup before InputBase's effect can update FormControl.
           expect(input).to.have.value('');
@@ -313,7 +346,7 @@ describe('<NumberField />', () => {
       it(`does not shrink an empty server-rendered label ${name}`, () => {
         renderToString(<NumberField label="Amount" slotProps={{ input: inputSlotProps }} />);
 
-        expect(screen.getByRole('textbox', { name: 'Amount' })).to.have.value('');
+        expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' })).to.have.value('');
         expect(screen.getByText('Amount', { selector: 'label' })).to.have.attribute(
           'data-shrink',
           'false',
@@ -364,8 +397,8 @@ describe('<NumberField />', () => {
               />
             </form>,
           );
-          const input = screen.getByRole('textbox', { name: 'Amount' });
-          const form = screen.getByRole('form', { name: 'Number form' });
+          const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
+          const form = screen.getByRole<HTMLFormElement>('form', { name: 'Number form' });
 
           expect(screen.queryByText('Replacement')).to.equal(null);
           expect(input).to.have.value('5');
@@ -387,7 +420,7 @@ describe('<NumberField />', () => {
     });
 
     describe('keyboard handlers and refs', () => {
-      ['outlined', 'filled', 'standard'].forEach((variant) => {
+      (['outlined', 'filled', 'standard'] as const).forEach((variant) => {
         it(`composes Material keyboard handlers with Base UI (${variant})`, async () => {
           const onKeyDown = vi.fn();
           const onKeyUp = vi.fn();
@@ -398,7 +431,7 @@ describe('<NumberField />', () => {
               slotProps={{ input: { onKeyDown, onKeyUp } }}
             />,
           );
-          const input = screen.getByRole('textbox');
+          const input = screen.getByRole<HTMLInputElement>('textbox');
 
           await user.click(input);
           await user.keyboard('{ArrowUp}');
@@ -412,9 +445,9 @@ describe('<NumberField />', () => {
           const earlierHandler = vi.fn();
           const onKeyDown = vi.fn();
           const onKeyUp = vi.fn();
-          const inputRef = React.createRef();
-          const nativeRef = React.createRef();
-          const earlierRef = React.createRef();
+          const inputRef = React.createRef<HTMLInputElement>();
+          const nativeRef = React.createRef<HTMLInputElement>();
+          const earlierRef = React.createRef<HTMLInputElement>();
           const { user } = render(
             <NumberField
               variant={variant}
@@ -432,13 +465,17 @@ describe('<NumberField />', () => {
                   },
                   slotProps: {
                     root: { title: 'Material input' },
-                    input: { onKeyDown, onKeyUp, ref: nativeRef },
+                    input: {
+                      onKeyDown,
+                      onKeyUp,
+                      ref: nativeRef,
+                    } as React.ComponentPropsWithRef<'input'>,
                   },
                 },
               }}
             />,
           );
-          const input = screen.getByRole('textbox');
+          const input = screen.getByRole<HTMLInputElement>('textbox');
           expect(inputRef.current).to.equal(input);
           expect(nativeRef.current).to.equal(input);
           expect(earlierRef.current).to.equal(null);
@@ -469,7 +506,7 @@ describe('<NumberField />', () => {
               }}
             />,
           );
-          const input = screen.getByRole('textbox');
+          const input = screen.getByRole<HTMLInputElement>('textbox');
 
           await user.click(input);
           await user.keyboard('{ArrowUp}');
@@ -481,8 +518,8 @@ describe('<NumberField />', () => {
         it(`preserves numeric behavior, handlers and refs with nested inputProps (${variant})`, async () => {
           const onKeyDown = vi.fn();
           const onValueChange = vi.fn();
-          const inputRef = React.createRef();
-          const nativeRef = React.createRef();
+          const inputRef = React.createRef<HTMLInputElement>();
+          const nativeRef = React.createRef<HTMLInputElement>();
           const { user } = render(
             <NumberField
               variant={variant}
@@ -501,7 +538,7 @@ describe('<NumberField />', () => {
             />,
           );
 
-          const input = screen.getByRole('textbox', { name: 'Amount' });
+          const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
           expect(inputRef.current).to.equal(input);
           expect(nativeRef.current).to.equal(input);
 
@@ -530,7 +567,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox', { name: 'Amount' });
+        const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
 
         await user.click(input);
         await user.keyboard('{ArrowUp}');
@@ -550,7 +587,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox', { name: 'Amount' });
+        const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
         expect(input).to.have.attribute('placeholder', 'Amount');
 
         await user.click(input);
@@ -581,7 +618,7 @@ describe('<NumberField />', () => {
               }}
             />,
           );
-          const input = screen.getByRole('textbox');
+          const input = screen.getByRole<HTMLInputElement>('textbox');
 
           await user.click(input);
           await user.keyboard('{ArrowUp}');
@@ -595,7 +632,11 @@ describe('<NumberField />', () => {
         [undefined, null].forEach((unsetValue) => {
           it(`preserves Base UI when ${source} sets keyboard handlers to ${unsetValue}`, async () => {
             const materialHandler = vi.fn();
-            const nativeProps = { onKeyDown: unsetValue, onKeyUp: unsetValue };
+            // JavaScript consumers can pass null handlers, which React's types exclude.
+            const nativeProps = {
+              onKeyDown: unsetValue,
+              onKeyUp: unsetValue,
+            } as React.InputHTMLAttributes<HTMLInputElement>;
             const { user } = render(
               <NumberField
                 defaultValue={5}
@@ -609,7 +650,7 @@ describe('<NumberField />', () => {
                 }}
               />,
             );
-            const input = screen.getByRole('textbox');
+            const input = screen.getByRole<HTMLInputElement>('textbox');
 
             await user.click(input);
             await user.keyboard('{ArrowUp}');
@@ -622,7 +663,9 @@ describe('<NumberField />', () => {
 
       it('allows the selected consumer handler to prevent Base UI handling', async () => {
         const onValueChange = vi.fn();
-        const onKeyDown = vi.fn((event) => event.preventBaseUIHandler());
+        const onKeyDown = vi.fn((event: BaseUIEvent<React.KeyboardEvent<HTMLInputElement>>) =>
+          event.preventBaseUIHandler(),
+        );
         const { user } = render(
           <NumberField
             defaultValue={5}
@@ -631,10 +674,10 @@ describe('<NumberField />', () => {
           />,
         );
 
-        await user.click(screen.getByRole('textbox'));
+        await user.click(screen.getByRole<HTMLInputElement>('textbox'));
         await user.keyboard('{ArrowUp}');
 
-        expect(screen.getByRole('textbox')).to.have.value('5');
+        expect(screen.getByRole<HTMLInputElement>('textbox')).to.have.value('5');
         expect(onKeyDown).toHaveBeenCalledTimes(1);
         expect(onValueChange).toHaveBeenCalledTimes(0);
       });
@@ -642,8 +685,8 @@ describe('<NumberField />', () => {
       it('lets nested inputProps replace the consumer htmlInput slot props', async () => {
         const htmlInputKeyDown = vi.fn();
         const nestedKeyDown = vi.fn();
-        const htmlInputRef = React.createRef();
-        const nestedRef = React.createRef();
+        const htmlInputRef = React.createRef<HTMLInputElement>();
+        const nestedRef = React.createRef<HTMLInputElement>();
         const { user } = render(
           <NumberField
             defaultValue={5}
@@ -663,7 +706,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox', { name: 'Amount' });
+        const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
         expect(input).not.to.have.attribute('placeholder');
         expect(htmlInputRef.current).to.equal(null);
         expect(nestedRef.current).to.equal(input);
@@ -687,7 +730,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox');
+        const input = screen.getByRole<HTMLInputElement>('textbox');
         expect(input).not.to.have.attribute('placeholder');
 
         await user.click(input);
@@ -700,8 +743,8 @@ describe('<NumberField />', () => {
 
     describe('wrapper and native events', () => {
       it('keeps Material click handlers on the wrapper, including clicks on adornments', async () => {
-        const wrapperTargets = [];
-        const nativeTargets = [];
+        const wrapperTargets: HTMLElement[] = [];
+        const nativeTargets: HTMLInputElement[] = [];
         const { user } = render(
           <NumberField
             slotProps={{
@@ -710,11 +753,14 @@ describe('<NumberField />', () => {
                 endAdornment: <button type="button">Action</button>,
                 slotProps: { root: { title: 'Material input' } },
               },
-              htmlInput: { onClick: (event) => nativeTargets.push(event.currentTarget) },
+              htmlInput: {
+                onClick: (event: React.MouseEvent<HTMLInputElement>) =>
+                  nativeTargets.push(event.currentTarget),
+              },
             }}
           />,
         );
-        const input = screen.getByRole('textbox');
+        const input = screen.getByRole<HTMLInputElement>('textbox');
         const wrapper = screen.getByTitle('Material input');
 
         await user.click(input);
@@ -727,9 +773,9 @@ describe('<NumberField />', () => {
 
     describe('focus, blur and change handlers', () => {
       it('composes deeper native callbacks while preserving Material callback order and state', async () => {
-        const calls = [];
-        const targets = [];
-        const record = (name) => (event) => {
+        const calls: string[] = [];
+        const targets: HTMLElement[] = [];
+        const record = (name: string) => (event: React.SyntheticEvent<HTMLElement>) => {
           calls.push(name);
           targets.push(event.currentTarget);
         };
@@ -760,7 +806,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox', { name: 'Amount' });
+        const input = screen.getByRole<HTMLInputElement>('textbox', { name: 'Amount' });
         const label = screen.getByText('Amount', { selector: 'label' });
 
         await user.click(input);
@@ -807,7 +853,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox');
+        const input = screen.getByRole<HTMLInputElement>('textbox');
 
         await user.click(input);
         await user.keyboard('4');
@@ -821,8 +867,8 @@ describe('<NumberField />', () => {
       });
 
       it('preserves focus, blur and value commits with nested inputProps', async () => {
-        const focusTargets = [];
-        const blurTargets = [];
+        const focusTargets: HTMLInputElement[] = [];
+        const blurTargets: HTMLInputElement[] = [];
         const nativeFocus = vi.fn();
         const nativeBlur = vi.fn();
         const onValueCommitted = vi.fn();
@@ -836,7 +882,7 @@ describe('<NumberField />', () => {
             }}
           />,
         );
-        const input = screen.getByRole('textbox');
+        const input = screen.getByRole<HTMLInputElement>('textbox');
 
         await user.click(input);
         await user.keyboard('4');
