@@ -1,29 +1,22 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import NumberSpinner from './NumberSpinner';
 
 export default function SpinnerDemo() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 4,
-        justifyContent: 'center',
+    // @focus-start @padding 2
+    <NumberSpinner
+      label="Quantity"
+      defaultValue={2}
+      min={1}
+      max={10}
+      helperText="Choose 1 to 10 items."
+      controlsPosition="split"
+      slotProps={{
+        incrementButton: { children: <AddIcon fontSize="small" /> },
+        decrementButton: { children: <RemoveIcon fontSize="small" /> },
       }}
-    >
-      {/* @focus-start */}
-      <NumberSpinner label="Number Spinner" min={10} max={40} />
-      <NumberSpinner label="Number Spinner (Small)" size="small" />
-      <NumberSpinner
-        label="Spinner with Error"
-        min={10}
-        max={40}
-        defaultValue={100}
-        size="small"
-        error
-      />
-      {/* @focus-end */}
-    </Box>
+    />
+    // @focus-end
   );
 }

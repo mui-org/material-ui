@@ -1,73 +1,188 @@
 ---
 productId: material-ui
-title: Number field React component
-components: Button, IconButton, InputLabel, FormControl, FormLabel, FormHelperText, OutlinedInput, NumberField
+title: React Number Field component
+components: NumberField, FormControl, Input, FilledInput, OutlinedInput, InputLabel, FormHelperText, InputAdornment, IconButton
+githubLabel: 'scope: number field'
+githubSource: packages/mui-material/src/NumberField
 ---
 
 # Number Field
 
-<p class="description">A React component for capturing numeric input from users.</p>
+<p class="description">Number Fields let users enter, format, and adjust numeric values.</p>
+
+Number fields combine a numeric input with increment and decrement buttons.
+Use them for quantities, prices, percentages, and other values that users need to adjust.
 
 {{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
-A number field is an input with increment and decrement buttons for capturing numeric input from users.
+## Basic NumberField
 
-Material UI does not include a number field component out of the box, but this page provides components composed with the [Base UI `NumberField`](https://base-ui.com/react/components/number-field) and styled to align with Material Design (MD2) specifications, so they can be used with Material UI.
+The `NumberField` component includes a label, an input, stepper buttons, and optional helper text.
+It comes with three variants: outlined (default), filled, and standard.
 
-As such, you must install Base UI before proceeding.
-The examples that follow can then be copied and pasted directly into your app.
-Note that Base UI is tree-shakeable, so the final bundle will only include the components used in your project.
+{{"component": "file://./demos/basic/index.ts"}}
 
-## Installation
+## Form props
 
-<codeblock storageKey="package-manager">
+Use `required`, `disabled`, and `readOnly` to control interaction with the field.
+The `helperText` prop provides context about the expected input.
 
-```bash npm
-npm install @base-ui/react
+{{"component": "file://./demos/form-props/index.ts"}}
+
+## Validation
+
+Use `error` to display an error state and `helperText` to explain how to correct the value.
+The following example applies a custom validation rule to the controlled numeric value.
+
+{{"component": "file://./demos/validation/index.ts"}}
+
+## Minimum and maximum values
+
+Use `min` and `max` to limit the value.
+The increment and decrement buttons become disabled at their respective bounds.
+Values typed outside the range are clamped when the input loses focus.
+
+Set `allowOutOfRange` to keep typed values outside the range.
+Stepping with the buttons or keyboard still respects the bounds.
+
+{{"component": "file://./demos/constraints/index.ts"}}
+
+## Stepping
+
+Use `step` to set the amount added or subtracted by the buttons and the <kbd>Arrow Up</kbd> and <kbd>Arrow Down</kbd> keys.
+The default step is `1`.
+Use `smallStep` and `largeStep` to set the step while holding <kbd>Alt</kbd> (<kbd>Option</kbd> on macOS) and <kbd>Shift</kbd>, respectively.
+Their defaults are `0.1` and `10`.
+
+When bounds are set, <kbd>Home</kbd> moves to `min` and <kbd>End</kbd> moves to `max`.
+
+Set `snapOnStep` to move an off-step value to a step multiple when stepping.
+
+{{"component": "file://./demos/steps/index.ts"}}
+
+### Mouse wheel
+
+Set `allowWheelScrub` to adjust the value with the mouse wheel while the input is focused and hovered.
+Wheel stepping is disabled by default.
+
+```jsx
+<NumberField label="Quantity" defaultValue={5} allowWheelScrub />
 ```
 
-```bash pnpm
-pnpm add @base-ui/react
+## Formatting and localization
+
+Use `format` to display currencies, percentages, units, or a specific number of decimal places.
+It accepts the options supported by `Intl.NumberFormat`.
+Use `locale` to control formatting and parsing independently of the browser's locale.
+
+The value and value callbacks use numbers regardless of how the input is formatted.
+For example, a value of `0.125` is displayed as `12.5%` with percent formatting.
+
+{{"component": "file://./demos/format/index.ts"}}
+
+## Control placement
+
+Use `controlsPosition` to place both buttons at the `start` or `end` of the input, or `split` them across both sides.
+The default position is `end`.
+Start and end follow the text direction.
+
+{{"component": "file://./demos/controls-position/index.ts"}}
+
+## Input adornments
+
+Use `slotProps.input` to add an [`InputAdornment`](/material-ui/api/input-adornment/) as a prefix, suffix, or action.
+Consumer adornments can share either side of the input with the built-in controls.
+
+{{"component": "file://./demos/adornments/index.ts"}}
+
+## Sizes
+
+Use `size="small"` for a more compact field.
+The size applies to the input and both stepper buttons.
+
+{{"component": "file://./demos/sizes/index.ts"}}
+
+## Color
+
+The `color` prop changes the highlight color when the field is focused.
+
+{{"component": "file://./demos/color/index.ts"}}
+
+## Full width
+
+Use `fullWidth` to fill the width of the field's container.
+
+{{"component": "file://./demos/full-width/index.ts"}}
+
+## Controlled and uncontrolled values
+
+Use `defaultValue` for an uncontrolled field, or `value` with `onValueChange` for a controlled field.
+An empty field has a value of `null`; zero is a numeric value.
+
+`onValueChange` receives the next number or `null`, followed by details about the interaction.
+Use `onValueCommitted` to respond when an edit is committed: typing commits on blur, keyboard steps commit immediately, and button steps commit on release.
+Both callbacks include a `details.reason` identifying the interaction.
+Call `details.cancel()` in `onValueChange` to reject a proposed change.
+
+{{"component": "file://./demos/state/index.ts"}}
+
+## Form submission
+
+Set `name` to include the numeric value in form submission.
+The submitted value is the unformatted number, even when the input displays a currency or another format.
+Use `form` to associate a field with a form outside its DOM ancestry.
+
+For form reset support, control the value and restore it from the form's `onReset` handler, as shown below.
+Native form reset does not currently restore uncontrolled fields to their `defaultValue`.
+
+{{"component": "file://./demos/form/index.ts"}}
+
+## Controlling the input
+
+Use `slotProps.htmlInput` to pass attributes to the native input element.
+Use `slotProps.input` to configure the Material UI `Input`, `FilledInput`, or `OutlinedInput` component selected by `variant`.
+
+```jsx
+<NumberField
+  label="Quantity"
+  slotProps={{
+    input: { sx: { borderRadius: 2 } },
+    htmlInput: { 'data-testid': 'quantity' },
+  }}
+/>
 ```
 
-```bash yarn
-yarn add @base-ui/react
-```
+The forwarded `ref` points to the root element.
+Use `inputRef` to access or focus the visible input.
 
-</codeblock>
+## Customization
 
-## Usage
+### Spinner
 
-1. Select one of the demos below that fits your visual design needs.
-2. Click **Expand code** in the toolbar.
-3. Select the file that starts with `./components/`.
-4. Copy the code and paste it into your project.
-
-## Outlined field
-
-The outlined field uses the same building-block components as Material UI's outlined `TextField`—`FormControl`, `OutlinedInput`, `InputLabel`, and `FormHelperText`—with end adornments for the increment and decrement buttons.
-See [Text Field—Components](/material-ui/react-text-field/#components) for more details.
-
-{{"component": "file://./demos/field-demo/index.ts"}}
-
-## Spinner field
-
-For the spinner field component, the increment and decrement buttons are placed next to the outlined input.
-This is ideal for touch devices and narrow ranges of values.
+Combine `controlsPosition="split"` with custom button content and styles to create a spinner.
+The built-in controls retain their labels, stepping behavior, and disabled states.
 
 {{"component": "file://./demos/spinner-demo/index.ts"}}
 
-## Units and currency
+### Theme overrides
 
-Both fields above use the input's end adornment for the increment and decrement buttons, so that slot is not available for a unit or currency symbol.
-Use the [`format`](https://base-ui.com/react/components/number-field#NumberFieldRoot-format) prop instead—it accepts [`Intl.NumberFormatOptions`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options) and is forwarded to the Base UI `NumberField.Root`:
+Use `MuiNumberField` in the theme to set default props or override the `root`, `controls`, `incrementButton`, and `decrementButton` styles.
+The following example stacks the controls vertically and changes their icons through `slotProps`.
+
+{{"component": "file://./demos/theme/index.ts"}}
+
+See [themed components](/material-ui/customization/theme-components/) for more details.
+
+## Accessibility
+
+Provide a `label` to name the input.
+NumberField links the label and helper text to the input automatically and generates an ID when `id` is omitted.
+For a field without a visible label, provide an accessible name through `slotProps.htmlInput`:
 
 ```jsx
-<NumberField label="Price" format={{ style: 'currency', currency: 'USD' }} />
+<NumberField slotProps={{ htmlInput: { 'aria-label': 'Quantity' } }} />
 ```
 
-## Base UI API
+The stepper buttons are excluded from the tab order; users can adjust the value from the input with the [keyboard shortcuts described above](#stepping).
 
-See the documentation below for a complete reference to all of the props.
-
-- [`NumberField`](https://base-ui.com/react/components/number-field#api-reference)
+NumberField uses [Base UI](https://base-ui.com/react/components/number-field) for numeric input behavior and Material UI components for its appearance.

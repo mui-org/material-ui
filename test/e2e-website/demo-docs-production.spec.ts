@@ -302,14 +302,14 @@ export default function BasicButtons() {
     });
 
     test('opens matching source and renders relative modules as tabs', async ({ page }) => {
-      await page.goto('/material-ui/react-number-field/#FieldDemo.js');
+      await page.goto('/material-ui/react-number-field/#SpinnerDemo.js');
 
-      const demo = getDemo(page, 'FieldDemo');
+      const demo = getDemo(page, 'SpinnerDemo');
       await expect(demo.getByRole('button', { name: 'Collapse code' })).toBeVisible();
       const tabs = demo.getByRole('tab');
       await expect(tabs).toHaveCount(2);
-      await expect(tabs.first()).toHaveText('FieldDemo.jsx');
-      await expect(tabs.nth(1)).toHaveText('NumberField.jsx');
+      await expect(tabs.first()).toHaveText('SpinnerDemo.jsx');
+      await expect(tabs.nth(1)).toHaveText('NumberSpinner.jsx');
       await editor(demo);
       await expect(demo.locator('textarea:visible')).toHaveCount(1);
 
@@ -329,20 +329,20 @@ export default function BasicButtons() {
         viewport: { width: 1280, height: 800 },
       });
       const page = await context.newPage();
-      await page.goto('/material-ui/react-number-field/#FieldDemo.js');
+      await page.goto('/material-ui/react-number-field/#SpinnerDemo.js');
 
-      const demo = getDemo(page, 'FieldDemo');
-      await (await editor(demo)).fill('export default function FieldDemo() { return null; }');
+      const demo = getDemo(page, 'SpinnerDemo');
+      await (await editor(demo)).fill('export default function SpinnerDemo() { return null; }');
       await demo.getByRole('button', { name: 'Copy the source' }).click();
       await expect
         .poll(async () => page.evaluate(() => navigator.clipboard.readText()))
-        .toContain("import Box from '@mui/material/Box';");
+        .toContain("import AddIcon from '@mui/icons-material/Add';");
 
       await demo.getByRole('tab').nth(1).click();
       await demo.getByRole('button', { name: 'Copy the source' }).click();
       await expect
         .poll(async () => page.evaluate(() => navigator.clipboard.readText()))
-        .toContain('function SSRInitialFilled');
+        .toContain('const NumberSpinner = styled(NumberField)');
 
       await context.close();
     });
@@ -509,9 +509,9 @@ export default function BasicButtons() {
           });
         };
       });
-      await page.goto('/material-ui/react-number-field/#FieldDemo.tsx');
+      await page.goto('/material-ui/react-number-field/#SpinnerDemo.tsx');
 
-      const demo = getDemo(page, 'FieldDemo');
+      const demo = getDemo(page, 'SpinnerDemo');
       await demo.getByRole('button', { name: 'Edit in StackBlitz' }).click();
       await demo.getByRole('button', { name: 'Edit in CodeSandbox' }).click();
 
@@ -523,18 +523,18 @@ export default function BasicButtons() {
             }
           ).demoSubmissions,
       );
-      expect(submissions[0].fields['project[files][src/NumberField.tsx]']).toContain(
-        'function SSRInitialFilled',
+      expect(submissions[0].fields['project[files][src/NumberSpinner.tsx]']).toContain(
+        'const NumberSpinner = styled(NumberField)',
       );
       expect(submissions[0].fields['project[files][src/Demo.tsx]']).toContain(
-        "from './NumberField'",
+        "from './NumberSpinner'",
       );
 
       const codeSandboxProject = decodeCodeSandboxParameters(submissions[1].fields.parameters);
-      expect(codeSandboxProject.files['src/NumberField.tsx'].content).toContain(
-        'function SSRInitialFilled',
+      expect(codeSandboxProject.files['src/NumberSpinner.tsx'].content).toContain(
+        'const NumberSpinner = styled(NumberField)',
       );
-      expect(codeSandboxProject.files['src/Demo.tsx'].content).toContain("from './NumberField'");
+      expect(codeSandboxProject.files['src/Demo.tsx'].content).toContain("from './NumberSpinner'");
     });
 
     test('supports keyboard navigation', async ({ page }) => {
