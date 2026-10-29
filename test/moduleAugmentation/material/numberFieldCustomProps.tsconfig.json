@@ -1,0 +1,4 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["numberFieldCustomProps.spec.tsx"]
+}

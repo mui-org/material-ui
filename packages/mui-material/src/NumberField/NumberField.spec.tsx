@@ -138,3 +138,127 @@ function ValueCallbacks(props: NumberFieldProps) {
     expectType<React.FocusEvent<HTMLInputElement>, typeof event>(event);
   }}
 />;
+
+// Base UI numeric options retain their public input types through the Material wrapper.
+<NumberField
+  min={-10}
+  max={10}
+  step="any"
+  smallStep={0.25}
+  largeStep={5}
+  allowOutOfRange
+  allowWheelScrub
+  snapOnStep
+  locale={['de-DE', 'en-US']}
+  format={{ style: 'currency', currency: 'EUR', maximumFractionDigits: 2 }}
+  controlsPosition="split"
+  name="amount"
+  form="order"
+/>;
+
+// @ts-expect-error Only numeric steps and the "any" keyword are supported.
+<NumberField step="auto" />;
+// @ts-expect-error Bounds are numeric values.
+<NumberField min="0" />;
+// @ts-expect-error The uncontrolled default is a number; null is a controlled empty value.
+<NumberField defaultValue={null} />;
+// @ts-expect-error Controls have three supported positions.
+<NumberField controlsPosition="top" />;
+
+// Root and visible-input refs expose different DOM elements.
+<NumberField
+  ref={(node) => {
+    expectType<HTMLDivElement | null, typeof node>(node);
+  }}
+  inputRef={(node) => {
+    expectType<HTMLInputElement | null, typeof node>(node);
+  }}
+/>;
+
+// @ts-expect-error The root ref does not expose a button.
+<NumberField ref={React.createRef<HTMLButtonElement>()} />;
+// @ts-expect-error inputRef must target the visible native input.
+<NumberField inputRef={React.createRef<HTMLDivElement>()} />;
+
+// Slot props expose the corresponding Material component API. Root/button handlers
+// need explicit event annotations with the current Material SlotProps types.
+<NumberField
+  slotProps={{
+    root: {
+      component: 'section',
+      ref: React.createRef<HTMLDivElement>(),
+      onClick: (event: React.MouseEvent<HTMLDivElement>) => event.currentTarget.focus(),
+    },
+    input: {
+      ref: React.createRef<HTMLDivElement>(),
+      startAdornment: <span>$</span>,
+      onKeyDown: (event) => {
+        expectType<React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, typeof event>(
+          event,
+        );
+      },
+    },
+    htmlInput: { ref: React.createRef<HTMLInputElement>(), inputMode: 'decimal' },
+    inputLabel: { shrink: true, htmlFor: 'amount', ref: React.createRef<HTMLLabelElement>() },
+    formHelperText: { component: 'div' },
+    incrementButton: {
+      ref: React.createRef<HTMLButtonElement>(),
+      children: '+',
+      size: 'large',
+      onClick: (event: React.MouseEvent<HTMLButtonElement>) => event.currentTarget.focus(),
+    },
+    decrementButton: {
+      component: 'button',
+      disableRipple: true,
+      onPointerDown: (event: React.PointerEvent<HTMLButtonElement>) => event.currentTarget.focus(),
+    },
+  }}
+/>;
+
+// @ts-expect-error InputLabel's shrink prop is boolean.
+<NumberField slotProps={{ inputLabel: { shrink: 'true' } }} />;
+// @ts-expect-error controls is an internal adornment, not a replaceable slot.
+<NumberField slots={{ controls: 'div' }} />;
+// @ts-expect-error Internal controls do not expose public slot props.
+<NumberField slotProps={{ controls: {} }} />;
+// @ts-expect-error Input classes belong to slotProps.input.classes.
+<NumberField classes={{ input: 'input' }} />;
+
+// Every callback receives NumberField owner state rather than an individual Base UI state.
+<NumberField
+  slotProps={{
+    root: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      return { fullWidth: ownerState.fullWidth };
+    },
+    input: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      expectType<boolean, typeof ownerState.readOnly>(ownerState.readOnly);
+      return { notched: ownerState.required };
+    },
+    htmlInput: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      return { readOnly: ownerState.readOnly };
+    },
+    inputLabel: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      return { shrink: ownerState.required };
+    },
+    formHelperText: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      return { error: ownerState.error };
+    },
+    incrementButton: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      expectType<'start' | 'end' | 'split', typeof ownerState.controlsPosition>(
+        ownerState.controlsPosition,
+      );
+      return { disabled: ownerState.disabled };
+    },
+    decrementButton: (ownerState) => {
+      expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      expectType<number | null | undefined, typeof ownerState.value>(ownerState.value);
+      return { disabled: ownerState.disabled };
+    },
+  }}
+/>;
