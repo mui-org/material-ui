@@ -5,8 +5,8 @@ import { mergeProps } from '@base-ui/react/merge-props';
 
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
 
-import KeyboardArrowDownIcon from '../internal/svg-icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '../internal/svg-icons/KeyboardArrowUp';
+import AddIcon from '../internal/svg-icons/Add';
+import RemoveIcon from '../internal/svg-icons/Remove';
 import type { NumberFieldOwnerState, NumberFieldProps } from './NumberField.types';
 import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
@@ -120,7 +120,7 @@ const NumberFieldInputSlot = React.forwardRef(
       className: classes.decrementButton,
       additionalProps: {
         size: ownerState.size,
-        children: <KeyboardArrowDownIcon fontSize="inherit" />,
+        children: <RemoveIcon fontSize="inherit" />,
       },
       shouldForwardComponentProp: true,
     });
@@ -131,7 +131,7 @@ const NumberFieldInputSlot = React.forwardRef(
       className: classes.incrementButton,
       additionalProps: {
         size: ownerState.size,
-        children: <KeyboardArrowUpIcon fontSize="inherit" />,
+        children: <AddIcon fontSize="inherit" />,
       },
       shouldForwardComponentProp: true,
     });

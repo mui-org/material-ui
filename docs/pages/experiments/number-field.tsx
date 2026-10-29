@@ -4,6 +4,8 @@ import createCache from '@emotion/cache';
 import { prefixer } from 'stylis';
 import rtlPlugin from '@mui/stylis-plugin-rtl';
 import { Field } from '@base-ui/react/field';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -54,9 +56,9 @@ const gridStyles = {
   gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' },
   gap: 2,
 };
-const iconProps = {
-  incrementButton: { children: <span aria-hidden>+</span> },
-  decrementButton: { children: <span aria-hidden>−</span> },
+const customIconProps = {
+  incrementButton: { children: <KeyboardArrowUpIcon fontSize="inherit" /> },
+  decrementButton: { children: <KeyboardArrowDownIcon fontSize="inherit" /> },
 };
 
 type RecordEvent = (source: string, details?: unknown) => void;
@@ -172,7 +174,7 @@ function Playground({ record }: { record: RecordEvent }) {
           {`Color: ${colors[colorIndex]}`}
         </Button>
         <Toggle label="Full width" checked={fullWidth} onChange={setFullWidth} />
-        <Toggle label="Use custom +/− icons" checked={customIcons} onChange={setCustomIcons} />
+        <Toggle label="Use custom chevron icons" checked={customIcons} onChange={setCustomIcons} />
         <Button
           variant="outlined"
           onClick={() => setVariant(variants[(variants.indexOf(variant) + 1) % variants.length])}
@@ -209,7 +211,7 @@ function Playground({ record }: { record: RecordEvent }) {
           size={small ? 'small' : 'medium'}
           color={colors[colorIndex]}
           fullWidth={fullWidth}
-          slotProps={customIcons ? iconProps : undefined}
+          slotProps={customIcons ? customIconProps : undefined}
           onFocus={(event) => record('public focus', { tag: event.currentTarget.tagName })}
           onBlur={(event) => record('public blur', { tag: event.currentTarget.tagName })}
           onClick={(event) =>
@@ -231,9 +233,9 @@ function AppearanceCases() {
   return (
     <Section id="appearance" title="Variants, sizes, and control positions">
       <Alert severity="info">
-        These fields use the default arrow icons and control styles. Check hover, focus, disabled
-        controls at bounds, narrow widths, light/dark mode, and RTL. The playground can replace the
-        icons with +/−.
+        These fields use the default plus/minus icons and control styles. Check hover, focus,
+        disabled controls at bounds, narrow widths, light/dark mode, and RTL. The playground can
+        replace the icons with chevrons.
       </Alert>
       <Box
         sx={{ ...gridStyles, gridTemplateColumns: { xs: '1fr', lg: 'repeat(3, minmax(0, 1fr))' } }}
@@ -358,8 +360,8 @@ function ControlCases({ record }: { record: RecordEvent }) {
             max={6}
             defaultValue={5}
             slotProps={{
-              incrementButton: { disabled: lockIncrement, children: '+' },
-              decrementButton: { disabled: false, children: '−' },
+              incrementButton: { disabled: lockIncrement },
+              decrementButton: { disabled: false },
             }}
             onValueChange={(value, details) =>
               record('bounded change', { value, reason: details.reason })
@@ -384,7 +386,6 @@ function ControlCases({ record }: { record: RecordEvent }) {
             defaultValue={5}
             slotProps={{
               incrementButton: {
-                children: '+',
                 onPointerDown: (event: React.PointerEvent<HTMLButtonElement>) => {
                   record('consumer increment pointerdown');
                   if (cancelPointer) {
@@ -393,7 +394,6 @@ function ControlCases({ record }: { record: RecordEvent }) {
                 },
                 onClick: () => record('consumer increment click'),
               },
-              decrementButton: iconProps.decrementButton,
             }}
             onValueChange={(value, details) =>
               record('button change', { value, reason: details.reason })
@@ -412,8 +412,8 @@ function ControlCases({ record }: { record: RecordEvent }) {
             label="Unset button handlers"
             defaultValue={5}
             slotProps={{
-              incrementButton: { ...iconProps.incrementButton, ...absentHandlers },
-              decrementButton: { ...iconProps.decrementButton, ...absentHandlers },
+              incrementButton: absentHandlers,
+              decrementButton: absentHandlers,
             }}
           />
         </Example>
@@ -430,7 +430,6 @@ function ControlCases({ record }: { record: RecordEvent }) {
               defaultValue={5}
               fullWidth
               slotProps={{
-                ...iconProps,
                 input: {
                   startAdornment: <InputAdornment position="start">$</InputAdornment>,
                   endAdornment: <InputAdornment position="end">USD</InputAdornment>,
@@ -713,8 +712,8 @@ function CustomSlotCases() {
               root: { component: 'section' },
               input: { ref: materialRef },
               htmlInput: { ref: nativeRef },
-              incrementButton: { ref: incrementRef, children: '+', 'aria-label': 'Add one' },
-              decrementButton: { ref: decrementRef, children: '−', 'aria-label': 'Subtract one' },
+              incrementButton: { ref: incrementRef, 'aria-label': 'Add one' },
+              decrementButton: { ref: decrementRef, 'aria-label': 'Subtract one' },
             }}
             sx={{ '&.number-field-experiment-custom': { borderColor: 'secondary.main' } }}
           />
@@ -757,7 +756,6 @@ function CustomSlotCases() {
             min={4}
             max={6}
             slots={{ incrementButton: 'button', decrementButton: 'button' }}
-            slotProps={iconProps}
           />
         </Example>
         <Example

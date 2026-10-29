@@ -1,6 +1,18 @@
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import NumberSpinner from './NumberSpinner';
+import NumberField, { numberFieldClasses } from '@mui/material/NumberField';
+import { styled } from '@mui/material/styles';
+
+const NumberSpinner = styled(NumberField)({
+  width: 220,
+  '& .MuiOutlinedInput-root': { paddingInline: 4 },
+  '& .MuiInputBase-input': { textAlign: 'center', paddingInline: 8 },
+  [`& .${numberFieldClasses.controls}`]: { margin: 0 },
+  [`& .${numberFieldClasses.incrementButton}, & .${numberFieldClasses.decrementButton}`]:
+    {
+      borderRadius: 4,
+      width: 40,
+      height: 40,
+    },
+});
 
 export default function SpinnerDemo() {
   return (
@@ -12,10 +24,6 @@ export default function SpinnerDemo() {
       max={10}
       helperText="Choose 1 to 10 items."
       controlsPosition="split"
-      slotProps={{
-        incrementButton: { children: <AddIcon fontSize="small" /> },
-        decrementButton: { children: <RemoveIcon fontSize="small" /> },
-      }}
     />
     // @focus-end
   );

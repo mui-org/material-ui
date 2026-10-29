@@ -159,7 +159,7 @@ Use `inputRef` to access or focus the visible input.
 
 ### Spinner
 
-Combine `controlsPosition="split"` with custom button content and styles to create a spinner.
+Combine `controlsPosition="split"` with custom styles to create a spinner using the default plus/minus icons.
 The built-in controls retain their labels, stepping behavior, and disabled states.
 
 {{"component": "file://./demos/spinner-demo/index.ts"}}
@@ -167,7 +167,7 @@ The built-in controls retain their labels, stepping behavior, and disabled state
 ### Theme overrides
 
 Use `MuiNumberField` in the theme to set default props or override the `root`, `controls`, `incrementButton`, and `decrementButton` styles.
-The following example stacks the controls vertically and changes their icons through `slotProps`.
+The following example stacks the controls vertically and replaces the plus/minus icons with arrows through `slotProps`.
 
 {{"component": "file://./demos/theme/index.ts"}}
 

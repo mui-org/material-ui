@@ -997,20 +997,20 @@ describe('<NumberField />', () => {
     // Defaults must remain visible and inherit the field size, while replacing the
     // icon content must leave button names and stepping behavior intact.
     describe('icons and size', () => {
-      it('renders default arrow icons and forwards the field size to both controls', () => {
+      it('renders default plus/minus icons and forwards the field size to both controls', () => {
         render(<NumberField label="Amount" size="small" />);
         const increment = screen.getByRole('button', { name: 'Increase' });
         const decrement = screen.getByRole('button', { name: 'Decrease' });
-        const upIcon = screen.getByTestId('KeyboardArrowUpIcon');
-        const downIcon = screen.getByTestId('KeyboardArrowDownIcon');
+        const addIcon = screen.getByTestId('AddIcon');
+        const removeIcon = screen.getByTestId('RemoveIcon');
 
-        expect(increment).to.contain(upIcon);
-        expect(decrement).to.contain(downIcon);
+        expect(increment).to.contain(addIcon);
+        expect(decrement).to.contain(removeIcon);
         for (const button of [increment, decrement]) {
           expect(button).to.have.attribute('type', 'button');
           expect(button).to.have.class('MuiIconButton-sizeSmall');
         }
-        for (const icon of [upIcon, downIcon]) {
+        for (const icon of [addIcon, removeIcon]) {
           expect(icon).to.have.class('MuiSvgIcon-fontSizeInherit');
           expect(icon).to.have.attribute('aria-hidden', 'true');
         }
@@ -1033,8 +1033,8 @@ describe('<NumberField />', () => {
 
         expect(increment).to.contain(screen.getByText('Plus'));
         expect(decrement).to.contain(screen.getByText('Minus'));
-        expect(screen.queryByTestId('KeyboardArrowUpIcon')).to.equal(null);
-        expect(screen.queryByTestId('KeyboardArrowDownIcon')).to.equal(null);
+        expect(screen.queryByTestId('AddIcon')).to.equal(null);
+        expect(screen.queryByTestId('RemoveIcon')).to.equal(null);
         await user.click(increment);
         expect(input).to.have.value('6');
         await user.click(decrement);
