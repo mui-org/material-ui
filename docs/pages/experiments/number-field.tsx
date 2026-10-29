@@ -7,18 +7,22 @@ import { Field } from '@base-ui/react/field';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
-import NumberField, { NumberFieldOwnerState, NumberFieldProps } from '@mui/material/NumberField';
+import NumberField, {
+  NumberFieldOwnerState,
+  NumberFieldProps,
+  numberFieldClasses,
+} from '@mui/material/NumberField';
 import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { createTheme, styled, ThemeProvider, useTheme } from '@mui/material/styles';
 
@@ -60,11 +64,10 @@ type RecordEvent = (source: string, details?: unknown) => void;
 interface ExampleProps {
   title: string;
   expected: string;
-  pending?: boolean;
   children: React.ReactNode;
 }
 
-function Example({ title, expected, pending = false, children }: ExampleProps) {
+function Example({ title, expected, children }: ExampleProps) {
   return (
     <Paper component="article" variant="outlined" sx={{ p: 2.5, minWidth: 0 }}>
       <Stack spacing={2}>
@@ -72,7 +75,6 @@ function Example({ title, expected, pending = false, children }: ExampleProps) {
           <Typography component="h3" variant="subtitle1" sx={{ fontWeight: 600 }}>
             {title}
           </Typography>
-          {pending && <Chip label="Known gap" size="small" color="warning" variant="outlined" />}
         </Stack>
         {children}
         <Typography variant="body2" color="text.secondary">
@@ -170,7 +172,7 @@ function Playground({ record }: { record: RecordEvent }) {
           {`Color: ${colors[colorIndex]}`}
         </Button>
         <Toggle label="Full width" checked={fullWidth} onChange={setFullWidth} />
-        <Toggle label="Supply button icons" checked={customIcons} onChange={setCustomIcons} />
+        <Toggle label="Use custom +/− icons" checked={customIcons} onChange={setCustomIcons} />
         <Button
           variant="outlined"
           onClick={() => setVariant(variants[(variants.indexOf(variant) + 1) % variants.length])}
@@ -229,9 +231,9 @@ function AppearanceCases() {
   return (
     <Section id="appearance" title="Variants, sizes, and control positions">
       <Alert severity="info">
-        These fields use the component defaults. Empty buttons expose the missing default icons;
-        their accessible names and behavior can still be checked. The playground can supply icons
-        without changing the component.
+        These fields use the default arrow icons and control styles. Check hover, focus, disabled
+        controls at bounds, narrow widths, light/dark mode, and RTL. The playground can replace the
+        icons with +/−.
       </Alert>
       <Box
         sx={{ ...gridStyles, gridTemplateColumns: { xs: '1fr', lg: 'repeat(3, minmax(0, 1fr))' } }}
@@ -259,6 +261,30 @@ function AppearanceCases() {
           )),
         )}
       </Box>
+      <Example
+        title="Alignment with TextField"
+        expected="Each pair has matching input height, label position, and helper spacing. Default controls fit inside the NumberField without making it taller. Resize the page and check long labels and focus outlines."
+      >
+        {variants.map((variant) => (
+          <Stack key={variant} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <NumberField
+              data-number-field-case={`alignment-${variant}`}
+              variant={variant}
+              label="NumberField with a longer label"
+              helperText="Numeric input with default controls."
+              defaultValue={5}
+              fullWidth
+            />
+            <TextField
+              variant={variant}
+              label="TextField with a longer label"
+              helperText="Reference input for comparison."
+              defaultValue="5"
+              fullWidth
+            />
+          </Stack>
+        ))}
+      </Example>
     </Section>
   );
 }
@@ -307,6 +333,7 @@ function ValueCases({ record }: { record: RecordEvent }) {
 }
 
 function ControlCases({ record }: { record: RecordEvent }) {
+  const [position, setPosition] = React.useState<(typeof positions)[number]>('end');
   const [lockIncrement, setLockIncrement] = React.useState(false);
   const [cancelPointer, setCancelPointer] = React.useState(false);
   const [unsetHandlers, setUnsetHandlers] = React.useState<'undefined' | 'null'>('undefined');
@@ -411,6 +438,39 @@ function ControlCases({ record }: { record: RecordEvent }) {
               }}
             />
           ))}
+        </Example>
+        <Example
+          title="Move controls after editing"
+          expected="Type a value, then move the controls. The edited value and native input stay intact. Consumer $/kg adornments keep their order, and an empty label shrinks when controls move to start or split."
+        >
+          <Stack direction="row" spacing={1}>
+            {positions.map((option) => (
+              <Button
+                key={option}
+                variant={position === option ? 'contained' : 'outlined'}
+                onClick={() => setPosition(option)}
+              >
+                {option}
+              </Button>
+            ))}
+          </Stack>
+          <NumberField
+            data-number-field-case="moving-controls"
+            label="Move controls"
+            defaultValue={5}
+            controlsPosition={position}
+            slotProps={{
+              input: () => ({
+                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+              }),
+            }}
+          />
+          <NumberField
+            data-number-field-case="moving-empty-controls"
+            label="Empty moving controls"
+            controlsPosition={position}
+          />
         </Example>
       </Box>
     </Section>
@@ -826,8 +886,14 @@ function FormCases({ record }: { record: RecordEvent }) {
     <Section id="forms" title="Form submission, validation, and reset">
       <Example
         title="Raw values, one entry per name, and external form association"
-        expected="FormData contains raw numeric amount, quantity, fixed, and externalAmount entries exactly once. Disabled omitted is absent. Required/range/step validation blocks invalid submission. Reset should restore uncontrolled defaults in both the visible input and submitted values."
+        expected="FormData contains raw numeric amount, quantity, fixed, and externalAmount entries exactly once. Disabled omitted is absent. Required/range/step validation blocks invalid submission. Edit a value, reset, and submit again to check the reset gap below."
       >
+        <Alert severity="warning">
+          Known gap: native form reset currently preserves edited uncontrolled values instead of
+          restoring defaultValue. Edit the currency amount, reset, then submit to compare its
+          visible and submitted values. Reset all examples remounts the fields and restores
+          defaults.
+        </Alert>
         <Box
           component="form"
           id="number-field-form"
@@ -902,6 +968,12 @@ function FormCases({ record }: { record: RecordEvent }) {
 
 function AccessibilityCases() {
   const [autoFocus, setAutoFocus] = React.useState(false);
+  const [content, setContent] = React.useState<'text' | 'zero' | 'none'>('text');
+  const contentProps = {
+    text: { label: 'Changing amount', helperText: 'Changing helper' },
+    zero: { label: 0, helperText: 0 },
+    none: { label: undefined, helperText: undefined },
+  }[content];
 
   return (
     <Section id="accessibility" title="Labels, helper text, IDs, and keyboard access">
@@ -956,6 +1028,29 @@ function AccessibilityCases() {
             />
           )}
         </Example>
+        <Example
+          title="Label and helper updates"
+          expected="Switch content without remounting. Text and numeric zero render as label/helper content. Removing them removes their elements and the helper association, while aria-label keeps the input named."
+        >
+          <Stack direction="row" spacing={1}>
+            {(['text', 'zero', 'none'] as const).map((option) => (
+              <Button
+                key={option}
+                variant={content === option ? 'contained' : 'outlined'}
+                onClick={() => setContent(option)}
+              >
+                {option}
+              </Button>
+            ))}
+          </Stack>
+          <NumberField
+            data-number-field-case="changing-label-helper"
+            {...contentProps}
+            slotProps={{
+              htmlInput: { 'aria-label': content === 'none' ? 'Changing amount' : undefined },
+            }}
+          />
+        </Example>
       </Box>
     </Section>
   );
@@ -975,7 +1070,6 @@ function ThemeCases() {
               required: true,
               controlsPosition: 'split',
               helperText: 'Theme defaultProps helper.',
-              slotProps: iconProps,
             },
             styleOverrides: {
               root: {
@@ -984,6 +1078,24 @@ function ThemeCases() {
                 borderColor: outerTheme.palette.secondary.main,
                 borderRadius: 8,
               },
+              controls: {
+                outline: `1px dashed ${outerTheme.palette.info.main}`,
+                gap: 4,
+              },
+              incrementButton: ({ ownerState, theme }) => ({
+                border: '1px solid',
+                borderColor: ownerState.disabled
+                  ? theme.palette.action.disabled
+                  : theme.palette.success.main,
+                borderRadius: 4,
+              }),
+              decrementButton: ({ ownerState, theme }) => ({
+                border: '1px solid',
+                borderColor: ownerState.disabled
+                  ? theme.palette.action.disabled
+                  : theme.palette.warning.main,
+                borderRadius: 4,
+              }),
             },
             variants: [
               {
@@ -1002,13 +1114,16 @@ function ThemeCases() {
       <Box sx={gridStyles}>
         <Example
           title="Theme defaults and explicit prop precedence"
-          expected="The first field inherits required, secondary color, split controls, helper text, and icons. The second overrides required/color/position. Both get the root override; only small gets the shaded variant."
+          expected="Theme defaults supply required, secondary color, split controls, and helper text. All four styleOverride slots apply: root border, dashed controls, green increment, orange decrement. Only small gets the shaded variant. At 4/6, the unavailable button border turns gray from its resolved owner state."
         >
           <ThemeProvider theme={componentTheme}>
             <NumberField
               data-number-field-case="theme-defaults"
               label="Theme defaults"
               size="small"
+              defaultValue={5}
+              min={4}
+              max={6}
             />
             <NumberField
               data-number-field-case="theme-explicit"
@@ -1018,25 +1133,43 @@ function ThemeCases() {
               controlsPosition="end"
               size="medium"
               defaultValue={5}
+              min={4}
+              max={6}
             />
           </ThemeProvider>
         </Example>
         <Example
-          title="NumberField control classes"
-          pending
-          expected="Once the planned utility classes exist, the controls wrapper and both buttons receive dashed outlines. Add the corresponding typed styleOverrides cases when those keys are implemented."
+          title="Utility classes, custom classes, and sx"
+          expected="Custom root and controls classes add a purple border and blue dotted outlines. Exported button classes add dashed outlines through sx. Disabled Material button states remain visible at the bounds."
         >
           <NumberField
-            data-number-field-case="pending-control-classes"
-            label="Future styling hooks"
+            data-number-field-case="control-classes"
+            label="Styling hooks"
             defaultValue={5}
-            slotProps={iconProps}
+            min={4}
+            max={6}
+            controlsPosition="split"
+            classes={{
+              root: 'number-field-custom-root',
+              controls: 'number-field-custom-controls',
+              incrementButton: 'number-field-custom-increment',
+              decrementButton: 'number-field-custom-decrement',
+            }}
             sx={{
-              '& .MuiNumberField-controls': { outline: '1px dashed', outlineColor: 'info.main' },
-              '& .MuiNumberField-incrementButton, & .MuiNumberField-decrementButton': {
-                outline: '1px dashed',
-                outlineColor: 'secondary.main',
+              '&.number-field-custom-root': {
+                border: '1px solid',
+                borderColor: 'secondary.main',
+                p: 2,
               },
+              '& .number-field-custom-controls': {
+                outline: '1px dotted',
+                outlineColor: 'info.main',
+              },
+              [`& .${numberFieldClasses.incrementButton}, & .${numberFieldClasses.decrementButton}`]:
+                {
+                  outline: '1px dashed',
+                  outlineColor: 'secondary.main',
+                },
             }}
           />
         </Example>
@@ -1068,8 +1201,7 @@ function SsrCases() {
           <Example
             key={variant}
             title={`${variant} initial state`}
-            pending
-            expected="Zero and filled values shrink immediately. Empty end controls do not. Empty start/split controls do. Server attributes must already match the expected values; hydration must preserve labels and input nodes."
+            expected="Zero, formatted values, and empty start adornments shrink immediately; empty end controls do not. Explicit shrink=false wins. Server attributes must match the expected values before hydration."
           >
             {cases.map(({ name, value, controlsPosition, shrink }) => (
               <NumberField
@@ -1089,6 +1221,34 @@ function SsrCases() {
               variant={variant}
               label="Uncontrolled zero"
               defaultValue={0}
+            />
+            <NumberField
+              data-number-field-case={`ssr-${variant}-formatted`}
+              data-expected-shrink="true"
+              variant={variant}
+              label="Formatted initial value"
+              defaultValue={1234.5}
+              locale="de-DE"
+              format={{ style: 'currency', currency: 'EUR' }}
+            />
+            <NumberField
+              data-number-field-case={`ssr-${variant}-consumer-start`}
+              data-expected-shrink="true"
+              variant={variant}
+              label="Empty consumer adornment"
+              slotProps={{
+                input: () => ({
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }),
+              }}
+            />
+            <NumberField
+              data-number-field-case={`ssr-${variant}-explicit-shrink`}
+              data-expected-shrink="false"
+              variant={variant}
+              label="Explicit shrink false"
+              controlsPosition="start"
+              slotProps={{ inputLabel: { shrink: false } }}
             />
           </Example>
         ))}
@@ -1111,6 +1271,7 @@ function inspectFields(container: ParentNode) {
     return {
       example: root.dataset.numberFieldCase,
       rootTag: root.tagName.toLowerCase(),
+      rootClasses: root.className,
       rootCallbackState: root.getAttribute('title'),
       inputCallbackState: root.querySelector('.MuiInputBase-root')?.getAttribute('title'),
       input: input && {
@@ -1123,6 +1284,8 @@ function inspectFields(container: ParentNode) {
         placeholder: input.placeholder,
         describedBy: input.getAttribute('aria-describedby'),
         invalid: input.getAttribute('aria-invalid'),
+        valid: input.validity.valid,
+        validationMessage: input.validationMessage,
         name: input.name,
         form: input.form?.id ?? null,
       },
@@ -1131,6 +1294,8 @@ function inspectFields(container: ParentNode) {
         name: hidden.name,
         disabled: hidden.disabled,
         form: hidden.form?.id ?? null,
+        valid: hidden.validity.valid,
+        validationMessage: hidden.validationMessage,
       },
       label: label && {
         id: label.id,
@@ -1148,6 +1313,10 @@ function inspectFields(container: ParentNode) {
         callbackState: helper.getAttribute('title'),
         describedByInput: input?.getAttribute('aria-describedby')?.split(' ').includes(helper.id),
       },
+      controls: Array.from(root.querySelectorAll(`.${numberFieldClasses.controls}`), (control) => ({
+        classes: control.className,
+        position: control.classList.contains('MuiInputAdornment-positionStart') ? 'start' : 'end',
+      })),
       buttons: Array.from(root.querySelectorAll<HTMLButtonElement>('button'), (button) => ({
         name: button.getAttribute('aria-label') ?? button.textContent,
         disabled: button.disabled,
@@ -1155,6 +1324,7 @@ function inspectFields(container: ParentNode) {
         tabIndex: button.tabIndex,
         controls: button.getAttribute('aria-controls'),
         classes: button.className,
+        iconCount: button.querySelectorAll('svg').length,
         ownerDisabled: button.dataset.buttonOwnerDisabled,
         ownerStateLeaked: button.hasAttribute('ownerState'),
       })),
@@ -1274,9 +1444,10 @@ export default function NumberFieldExperiment() {
                 NumberField implementation checks
               </Typography>
               <Typography color="text.secondary">
-                A manual check page for the current implementation and remaining work. Each case
-                describes the intended result, not a claim that it passes. Known gaps remain
-                visible. Use the event log and DOM/server inspection to verify behavior.
+                Manual integration and visual checks for the implemented API. Each case describes
+                the expected result; use the event log and DOM/server inspection to verify it.
+                Compare light/dark mode, RTL, and narrow screens before deciding which control
+                styles need refinement.
               </Typography>
             </div>
             <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap', gap: 1 }}>
@@ -1305,12 +1476,12 @@ export default function NumberFieldExperiment() {
                 </Button>
               ))}
             </Stack>
-            <Alert severity="warning">
-              Remaining implementation work includes default icons and control layout/styles,
-              NumberField control utility classes and theme override keys, and initial SSR shrink
-              for start controls. API generation, control-slot type/conformance tests, docs
-              migration, and the final accessibility/browser checks also need coverage outside this
-              experiment. Scrub-area composition is a separate API decision.
+            <Alert severity="info">
+              Default icons, control classes, theme overrides, slot composition, and initial SSR
+              label state are implemented. Scrub-area composition is deferred. This page supports
+              manual review; component documentation and accessibility checks in the regression
+              suite still need to be updated for the new component. The Forms section also records a
+              confirmed native reset gap.
             </Alert>
             <Stack key={generation} ref={examplesRef} spacing={5}>
               <Playground record={record} />
