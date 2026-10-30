@@ -41,6 +41,7 @@ const sections = [
   ['appearance', 'Appearance'],
   ['values', 'Values'],
   ['controls', 'Controls'],
+  ['scrubbing', 'Scrubbing'],
   ['numbers', 'Numbers'],
   ['state', 'State'],
   ['slots', 'Slots and refs'],
@@ -286,6 +287,64 @@ function AppearanceCases() {
             />
           </Stack>
         ))}
+      </Example>
+    </Section>
+  );
+}
+
+function ScrubbingCases({ record }: { record: RecordEvent }) {
+  return (
+    <Section id="scrubbing" title="Scrub handles and floating cursors">
+      <Box sx={{ ...gridStyles, gridTemplateColumns: { xs: '1fr', lg: 'repeat(3, 1fr)' } }}>
+        {variants.map((variant) => (
+          <Example
+            key={variant}
+            title={variant}
+            expected="Handles and buttons fit both sizes. The handle and floating cursor indicate the drag axis. Consumer adornments stay beside the value. Check the cursor in dark mode and RTL too."
+          >
+            {(['medium', 'small'] as const).map((size) => (
+              <NumberField
+                key={size}
+                data-number-field-case={`scrub-${variant}-${size}`}
+                variant={variant}
+                size={size}
+                label={`${size} amount`}
+                defaultValue={5}
+                scrubArea={size === 'medium' ? 'start' : 'end'}
+                controlsPosition="split"
+                fullWidth
+                slotProps={{
+                  scrubArea: { direction: size === 'medium' ? 'horizontal' : 'vertical' },
+                  input: {
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                  },
+                }}
+                onValueCommitted={(value, details) =>
+                  record('scrub commit', { value, reason: details.reason })
+                }
+              />
+            ))}
+          </Example>
+        ))}
+      </Box>
+      <Example
+        title="Disabled, read-only, and empty fields"
+        expected="Disabled and read-only handles use a neutral cursor and cannot change the value. An empty start handle shrinks the label; an empty end handle leaves it resting until focus."
+      >
+        <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+          <NumberField label="Disabled" defaultValue={5} scrubArea="start" disabled fullWidth />
+          <NumberField
+            label="Read only"
+            defaultValue={5}
+            scrubArea="end"
+            readOnly
+            fullWidth
+            slotProps={{ scrubArea: { direction: 'vertical' } }}
+          />
+          <NumberField label="Empty start" scrubArea="start" fullWidth />
+          <NumberField label="Empty end" scrubArea="end" fullWidth />
+        </Stack>
       </Example>
     </Section>
   );
@@ -1476,16 +1535,16 @@ export default function NumberFieldExperiment() {
             </Stack>
             <Alert severity="info">
               Default icons, control classes, theme overrides, slot composition, and initial SSR
-              label state are implemented. Scrub-area composition is deferred. This page supports
-              manual review; component documentation and accessibility checks in the regression
-              suite still need to be updated for the new component. The Forms section also records a
-              confirmed native reset gap.
+              label state and scrub-area composition are implemented. This page supports manual
+              review; accessibility checks in the regression suite still need to be added for the
+              new component. The Forms section also records a confirmed native reset gap.
             </Alert>
             <Stack key={generation} ref={examplesRef} spacing={5}>
               <Playground record={record} />
               <AppearanceCases />
               <ValueCases record={record} />
               <ControlCases record={record} />
+              <ScrubbingCases record={record} />
               <NumericCases record={record} />
               <StateCases />
               <CustomSlotCases />

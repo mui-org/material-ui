@@ -88,6 +88,29 @@ Start and end follow the text direction.
 
 {{"component": "file://./demos/controls-position/index.ts"}}
 
+## Scrubbing
+
+Set `scrubArea` to `"start"` or `"end"` to add a handle that users can drag to adjust the value.
+The default is `false`, which hides the handle.
+Its position is independent of `controlsPosition`.
+
+{{"component": "file://./demos/scrub-area-placement/index.ts"}}
+
+### Direction and sensitivity
+
+Dragging adjusts the value horizontally by default.
+Set `slotProps.scrubArea.direction` to `"vertical"` for up/down dragging.
+Increase `pixelSensitivity` to require more pointer movement before the value changes.
+
+{{"component": "file://./demos/scrub-area-options/index.ts"}}
+
+### Custom handle and cursor
+
+Use `slotProps.scrubArea` to customize the handle and `slotProps.scrubAreaCursor` to customize the cursor displayed during dragging.
+Both slots support custom content through `children` and styles through `sx`.
+
+{{"component": "file://./demos/scrub-area-customization/index.ts"}}
+
 ## Input adornments
 
 Use `slotProps.input` to add an [`InputAdornment`](/material-ui/api/input-adornment/) as a prefix, suffix, or action.

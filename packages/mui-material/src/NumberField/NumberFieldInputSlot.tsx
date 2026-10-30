@@ -7,16 +7,21 @@ import resolveComponentProps from '@mui/utils/resolveComponentProps';
 
 import AddIcon from '../internal/svg-icons/Add';
 import RemoveIcon from '../internal/svg-icons/Remove';
+import ImportExportIcon from '../internal/svg-icons/ImportExport';
+import OpenInFullIcon from '../internal/svg-icons/OpenInFull';
+
 import type { NumberFieldOwnerState, NumberFieldProps } from './NumberField.types';
 import useSlot from '../utils/useSlot';
 import OutlinedInput, { OutlinedInputProps } from '../OutlinedInput';
 import FilledInput from '../FilledInput';
 import Input from '../Input';
+import InputAdornment from '../InputAdornment';
 import { getControlElements, resolveInputProps, useUtilityClasses } from './utils';
 import IconButton from '../IconButton';
 import type { IconButtonProps } from '../IconButton';
 import NumberFieldButtonSlot from './NumberFieldButtonSlot';
 import { styled } from '../zero-styled';
+import memoTheme from '../utils/memoTheme';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -31,14 +36,70 @@ const variantComponent = {
   outlined: OutlinedInput,
 };
 
+const buttonStyles = {
+  variants: [
+    {
+      props: { variant: 'standard' },
+      // The standard input has no vertical padding to accommodate a full-size IconButton.
+      style: { padding: 4 },
+    },
+  ],
+};
 const NumberFieldIncrementButton = styled(IconButton, {
   name: 'MuiNumberField',
   slot: 'IncrementButton',
-})({});
+})(buttonStyles);
 const NumberFieldDecrementButton = styled(IconButton, {
   name: 'MuiNumberField',
   slot: 'DecrementButton',
-})({});
+})(buttonStyles);
+const NumberFieldScrubArea = styled('span', {
+  name: 'MuiNumberField',
+  slot: 'ScrubArea',
+})<{ ownerState: NumberFieldOwnerState }>(
+  memoTheme(({ theme }) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    padding: 4,
+    borderRadius: (theme.vars || theme).shape.borderRadius,
+    fontSize: theme.typography.pxToRem(24),
+    lineHeight: 0,
+    color: (theme.vars || theme).palette.action.active,
+    cursor: 'ew-resize',
+    variants: [
+      { props: { 'data-direction': 'vertical' }, style: { cursor: 'ns-resize' } },
+      { props: { size: 'small' }, style: { fontSize: theme.typography.pxToRem(18) } },
+      {
+        props: ({ ownerState }: { ownerState: NumberFieldOwnerState }) =>
+          ownerState.disabled || ownerState.readOnly,
+        style: {
+          color: (theme.vars || theme).palette.action.disabled,
+          cursor: 'default',
+        },
+      },
+    ],
+  })),
+);
+const NumberFieldScrubAreaCursor = styled('span', {
+  name: 'MuiNumberField',
+  slot: 'ScrubAreaCursor',
+})(
+  memoTheme(({ theme }) => ({
+    display: 'inline-flex',
+    fontSize: theme.typography.pxToRem(24),
+    lineHeight: 0,
+    // Match Base UI's black/white SVG cursor and shadow at the larger size.
+    color: (theme.vars || theme).palette.common.black,
+    filter: 'drop-shadow(0 1px 1px #0008)',
+    '& svg': {
+      stroke: (theme.vars || theme).palette.common.white,
+      strokeWidth: 1,
+    },
+    zIndex: theme.zIndex.tooltip + 1,
+  })),
+);
 
 /**
  * @ignore - internal component.
@@ -113,6 +174,52 @@ const NumberFieldInputSlot = React.forwardRef(
       },
     });
 
+    // Build direction-aware defaults without evaluating the consumer's slot callback twice.
+    const resolvedScrubAreaSlotProps = resolveComponentProps(
+      externalForwardedProps.slotProps.scrubArea,
+      ownerState,
+    );
+    const scrubDirection = resolvedScrubAreaSlotProps?.direction ?? 'horizontal';
+    const [ScrubAreaSlot, scrubAreaSlotProps] = useSlot('scrubArea', {
+      elementType: NumberFieldScrubArea,
+      externalForwardedProps: {
+        ...externalForwardedProps,
+        slotProps: {
+          ...externalForwardedProps.slotProps,
+          scrubArea: resolvedScrubAreaSlotProps,
+        },
+      },
+      ownerState,
+      className: classes.scrubArea,
+      additionalProps: {
+        'data-direction': scrubDirection,
+        children: (
+          <ImportExportIcon
+            fontSize="inherit"
+            style={{ transform: scrubDirection === 'horizontal' ? 'rotate(90deg)' : undefined }}
+          />
+        ),
+      },
+    });
+    const [ScrubAreaCursorSlot, scrubAreaCursorProps] = useSlot('scrubAreaCursor', {
+      elementType: NumberFieldScrubAreaCursor,
+      externalForwardedProps,
+      ownerState,
+      className: classes.scrubAreaCursor,
+      additionalProps: {
+        // Rotate the SVG, since Base UI updates the cursor container's transform as it moves.
+        // Inline transforms also preserve the drag axis when RTL styles are flipped.
+        children: (
+          <OpenInFullIcon
+            fontSize="inherit"
+            style={{
+              transform: scrubDirection === 'horizontal' ? 'rotate(45deg)' : 'rotate(-45deg)',
+            }}
+          />
+        ),
+      },
+    });
+
     const [DecrementButtonSlot, decrementButtonProps] = useSlot('decrementButton', {
       elementType: NumberFieldDecrementButton,
       externalForwardedProps,
@@ -135,10 +242,40 @@ const NumberFieldInputSlot = React.forwardRef(
       },
       shouldForwardComponentProp: true,
     });
+
+    const {
+      direction,
+      pixelSensitivity,
+      teleportDistance,
+      children: scrubAreaChildren,
+      ...restScrubAreaProps
+    } = scrubAreaSlotProps;
+    // Unset consumer handlers must preserve Base UI's internal handlers.
+    const scrubAreaProps = Object.fromEntries(
+      Object.entries(restScrubAreaProps).filter(
+        ([key, value]) => !(/^on[A-Z]/.test(key) && value == null),
+      ),
+    ) as typeof restScrubAreaProps;
+
     const { disabled: decrementButtonDisabled, ...restDecrementButtonProps } =
       decrementButtonProps as IconButtonProps;
     const { disabled: incrementButtonDisabled, ...restIncrementButtonProps } =
       incrementButtonProps as IconButtonProps;
+
+    const scrubAreaElement = ownerState.scrubArea !== false && (
+      <BaseNumberField.ScrubArea
+        direction={direction}
+        pixelSensitivity={pixelSensitivity}
+        teleportDistance={teleportDistance}
+        render={<ScrubAreaSlot {...scrubAreaProps} />}
+      >
+        {scrubAreaChildren}
+        <BaseNumberField.ScrubAreaCursor
+          render={<ScrubAreaCursorSlot {...scrubAreaCursorProps} />}
+        />
+      </BaseNumberField.ScrubArea>
+    );
+
     const incrementButton = (
       <BaseNumberField.Increment
         disabled={incrementButtonDisabled}
@@ -167,6 +304,7 @@ const NumberFieldInputSlot = React.forwardRef(
         )}
       />
     );
+
     const { startControls, endControls } = getControlElements({
       controlsPosition: ownerState.controlsPosition,
       IncrementButton: incrementButton,
@@ -174,28 +312,40 @@ const NumberFieldInputSlot = React.forwardRef(
       classes,
       ownerState,
     });
+
     const consumerStartAdornment =
       'startAdornment' in materialInputProps ? materialInputProps.startAdornment : undefined;
     const consumerEndAdornment =
       'endAdornment' in materialInputProps ? materialInputProps.endAdornment : undefined;
 
-    const startAdornment = startControls ? (
-      <React.Fragment>
-        {startControls}
-        {consumerStartAdornment}
-      </React.Fragment>
-    ) : (
-      consumerStartAdornment
+    const startScrubArea = ownerState.scrubArea === 'start' && (
+      <InputAdornment position="start">{scrubAreaElement}</InputAdornment>
+    );
+    const endScrubArea = ownerState.scrubArea === 'end' && (
+      <InputAdornment position="end">{scrubAreaElement}</InputAdornment>
     );
 
-    const endAdornment = endControls ? (
-      <React.Fragment>
-        {consumerEndAdornment}
-        {endControls}
-      </React.Fragment>
-    ) : (
-      consumerEndAdornment
-    );
+    // An empty fragment would still mark the input as adorned and shrink its label.
+    const startAdornment =
+      startControls || startScrubArea ? (
+        <React.Fragment>
+          {startControls}
+          {startScrubArea}
+          {consumerStartAdornment}
+        </React.Fragment>
+      ) : (
+        consumerStartAdornment
+      );
+    const endAdornment =
+      endControls || endScrubArea ? (
+        <React.Fragment>
+          {consumerEndAdornment}
+          {endScrubArea}
+          {endControls}
+        </React.Fragment>
+      ) : (
+        consumerEndAdornment
+      );
 
     // Keep Material styling and native behavior aligned with Base UI's resolved state.
     const inputStateProps = {

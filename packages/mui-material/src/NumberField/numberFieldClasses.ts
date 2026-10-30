@@ -10,6 +10,10 @@ export interface NumberFieldClasses {
   incrementButton: string;
   /** Styles applied to the decrement button. */
   decrementButton: string;
+  /** Styles applied to the scrub area. */
+  scrubArea: string;
+  /** Styles applied to the scrub area cursor. */
+  scrubAreaCursor: string;
 }
 
 export type NumberFieldClassKey = keyof NumberFieldClasses;
@@ -23,6 +27,8 @@ const numberFieldClasses: NumberFieldClasses = generateUtilityClasses('MuiNumber
   'controls',
   'incrementButton',
   'decrementButton',
+  'scrubArea',
+  'scrubAreaCursor',
 ]);
 
 export default numberFieldClasses;

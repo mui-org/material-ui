@@ -3015,6 +3015,176 @@ describe('<NumberField />', () => {
     });
   });
 
+  // Scrubbing is optional and shares the input adornments with controls and consumer
+  // content. Cover composition, slot plumbing, and drag interactions through the Material wrapper.
+  describe('scrub area', () => {
+    it('omits the scrub area by default', () => {
+      const { container } = render(<NumberField />);
+
+      expect(container.querySelector(`.${classes.scrubArea}`)).to.equal(null);
+    });
+
+    (['start', 'end', 'split'] as const).forEach((controlsPosition) => {
+      (['start', 'end'] as const).forEach((scrubArea) => {
+        it(`places the ${scrubArea} scrub area with ${controlsPosition} controls and consumer adornments`, () => {
+          const { container } = render(
+            <NumberField
+              controlsPosition={controlsPosition}
+              scrubArea={scrubArea}
+              slotProps={{
+                input: {
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                },
+              }}
+            />,
+          );
+          const input = screen.getByRole('textbox');
+          const increase = screen.getByRole('button', { name: 'Increase' });
+          const decrease = screen.getByRole('button', { name: 'Decrease' });
+          const scrub = container.querySelector(`.${classes.scrubArea}`)!;
+          const prefix = screen.getByText('$');
+          const suffix = screen.getByText('kg');
+          const wrapper = input.closest('.MuiInputBase-root')!;
+          const startButtons = {
+            start: [increase, decrease],
+            end: [],
+            split: [decrease],
+          }[controlsPosition];
+          const endButtons = {
+            start: [],
+            end: [increase, decrease],
+            split: [increase],
+          }[controlsPosition];
+          const expectedOrder = [
+            ...startButtons,
+            ...(scrubArea === 'start' ? [scrub] : []),
+            prefix,
+            input,
+            suffix,
+            ...(scrubArea === 'end' ? [scrub] : []),
+            ...endButtons,
+          ];
+
+          // Compare element order even though the adornments add their own wrappers.
+          const elements = Array.from(wrapper.querySelectorAll('*')).filter((element) =>
+            expectedOrder.includes(element),
+          );
+          expect(elements).to.deep.equal(expectedOrder);
+          expect(scrub.parentElement).to.have.class(
+            `MuiInputAdornment-position${scrubArea === 'start' ? 'Start' : 'End'}`,
+          );
+          expect(scrub.closest(`.${classes.controls}`)).to.equal(null);
+        });
+      });
+    });
+
+    it('resolves scrub slot callbacks and preserves custom children and refs', () => {
+      const scrubRef = React.createRef<HTMLSpanElement>();
+      const { container } = render(
+        <NumberField
+          scrubArea="start"
+          size="small"
+          slotProps={{
+            scrubArea: (ownerState) => ({
+              ref: scrubRef,
+              direction: ownerState.size === 'small' ? 'vertical' : 'horizontal',
+              children: <span>Drag</span>,
+            }),
+          }}
+        />,
+      );
+      const scrub = container.querySelector(`.${classes.scrubArea}`)!;
+
+      expect(scrubRef.current).to.equal(scrub);
+      expect(scrub).to.have.attribute('data-direction', 'vertical');
+      expect(scrub).to.contain(screen.getByText('Drag'));
+      expect(scrub.querySelector('svg')).to.equal(null);
+    });
+
+    // The rendered handle must retain Base UI's pointer handlers and refs so dragging
+    // updates the visible value and commits on release, while unavailable fields stay unchanged.
+    describe('dragging', () => {
+      // user-event does not supply the movementX/movementY deltas used for scrubbing.
+      function movePointer(movementX: number, movementY: number) {
+        const event = new window.MouseEvent('pointermove', { bubbles: true, cancelable: true });
+        Object.defineProperties(event, {
+          movementX: { value: movementX },
+          movementY: { value: movementY },
+        });
+        act(() => {
+          window.dispatchEvent(event);
+        });
+      }
+
+      (['horizontal', 'vertical'] as const).forEach((direction) => {
+        it(`changes the value in both ${direction} directions and commits on release`, async () => {
+          const onValueChange = vi.fn<NonNullable<NumberFieldProps['onValueChange']>>();
+          const onValueCommitted = vi.fn<NonNullable<NumberFieldProps['onValueCommitted']>>();
+          const { container, user } = render(
+            <NumberField
+              label="Amount"
+              defaultValue={5}
+              scrubArea="start"
+              onValueChange={onValueChange}
+              onValueCommitted={onValueCommitted}
+              slotProps={direction === 'vertical' ? { scrubArea: { direction } } : undefined}
+            />,
+          );
+          const input = screen.getByRole('textbox', { name: 'Amount' });
+          const scrub = container.querySelector(`.${classes.scrubArea}`)!;
+          const movementX = direction === 'horizontal' ? 4 : 0;
+          const movementY = direction === 'vertical' ? -4 : 0;
+
+          await user.pointer({ keys: '[MouseLeft>]', target: scrub });
+          movePointer(movementX, movementY);
+          expect(input).to.have.value('9');
+          movePointer(-movementX, -movementY);
+          expect(input).to.have.value('5');
+          expect(
+            onValueChange.mock.calls.map(([value, details]) => [value, details.reason]),
+          ).to.deep.equal([
+            [9, 'scrub'],
+            [5, 'scrub'],
+          ]);
+          expect(onValueCommitted).toHaveBeenCalledTimes(0);
+
+          await user.pointer({ keys: '[/MouseLeft]', target: scrub });
+          expect(onValueCommitted).toHaveBeenCalledTimes(1);
+          expect(onValueCommitted.mock.calls[0][0]).to.equal(5);
+          expect(onValueCommitted.mock.calls[0][1].reason).to.equal('scrub');
+        });
+      });
+
+      (['disabled', 'readOnly'] as const).forEach((state) => {
+        it(`does not scrub a ${state} field`, async () => {
+          const onValueChange = vi.fn();
+          const onValueCommitted = vi.fn();
+          const { container, user } = render(
+            <NumberField
+              defaultValue={5}
+              scrubArea="start"
+              disabled={state === 'disabled'}
+              readOnly={state === 'readOnly'}
+              onValueChange={onValueChange}
+              onValueCommitted={onValueCommitted}
+            />,
+          );
+          const input = screen.getByRole('textbox');
+          const scrub = container.querySelector(`.${classes.scrubArea}`)!;
+
+          await user.pointer({ keys: '[MouseLeft>]', target: scrub });
+          movePointer(4, 0);
+          await user.pointer({ keys: '[/MouseLeft]', target: scrub });
+
+          expect(input).to.have.value('5');
+          expect(onValueChange).toHaveBeenCalledTimes(0);
+          expect(onValueCommitted).toHaveBeenCalledTimes(0);
+        });
+      });
+    });
+  });
+
   // FormControl needs the initial filled/adorned state in server markup so labels
   // render correctly before effects run and stay stable during hydration.
   describe('server rendering', () => {
@@ -3093,6 +3263,14 @@ describe('<NumberField />', () => {
     // Start adornments affect shrink even when the field is empty. Check object and
     // callback props plus explicit overrides so server labels follow Material rules.
     describe('adornments and shrink overrides', () => {
+      (['start', 'end'] as const).forEach((scrubArea) => {
+        it(`keeps an empty label stable through hydration with a ${scrubArea} scrub area`, () => {
+          const { hydrate } = renderToString(<NumberField label="Amount" scrubArea={scrubArea} />);
+
+          expectStableHydration(hydrate, { displayValue: '', shrink: scrubArea === 'start' });
+        });
+      });
+
       (['start', 'split'] as const).forEach((controlsPosition) => {
         it(`shrinks an empty label before hydration with ${controlsPosition} controls`, () => {
           const { hydrate } = renderToString(

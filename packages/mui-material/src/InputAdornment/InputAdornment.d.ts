@@ -51,6 +51,7 @@ export interface InputAdornmentTypeMap<
  *
  * Demos:
  *
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
  * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:

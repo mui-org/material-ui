@@ -57,6 +57,16 @@ export interface NumberFieldSlots {
    * @default FormControl
    */
   root: React.ElementType;
+  /**
+   * The component that renders the scrub area.
+   * @default 'span'
+   */
+  scrubArea: React.ElementType;
+  /**
+   * The component that renders the scrub area cursor.
+   * @default 'span'
+   */
+  scrubAreaCursor: React.ElementType;
 }
 
 export interface NumberFieldPropsSizeOverrides {}
@@ -68,6 +78,8 @@ export interface NumberFieldFormHelperTextSlotPropsOverrides {}
 export interface NumberFieldInputLabelSlotPropsOverrides {}
 export interface NumberFieldDecrementButtonSlotPropsOverrides {}
 export interface NumberFieldIncrementButtonSlotPropsOverrides {}
+export interface NumberFieldScrubAreaSlotPropsOverrides {}
+export interface NumberFieldScrubAreaCursorSlotPropsOverrides {}
 
 export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotProps<
   NumberFieldSlots,
@@ -129,6 +141,28 @@ export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotPro
     root: SlotProps<
       React.ElementType<FormControlProps>,
       NumberFieldRootSlotOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the scrub area slot.
+     * By default, the available props are based on the span element.
+     */
+    scrubArea: SlotProps<
+      'span',
+      NumberFieldScrubAreaSlotPropsOverrides &
+        Pick<
+          BaseNumberField.ScrubArea.Props,
+          'direction' | 'pixelSensitivity' | 'teleportDistance'
+        >,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the scrub area cursor slot.
+     * By default, the available props are based on the span element.
+     */
+    scrubAreaCursor: SlotProps<
+      'span',
+      NumberFieldScrubAreaCursorSlotPropsOverrides,
       NumberFieldOwnerState
     >;
   }
@@ -272,6 +306,11 @@ export interface BaseNumberFieldProps extends StandardProps<
    */
   required?: boolean | undefined;
   /**
+   * The area of the input element where the scrub control is displayed. Set to false to hide it.
+   * @default false
+   */
+  scrubArea?: 'start' | 'end' | false | undefined;
+  /**
    * The size of the component.
    * @default 'medium'
    */
@@ -345,6 +384,7 @@ export interface NumberFieldOwnerState
   disabled: boolean;
   readOnly: boolean;
   required: boolean;
+  scrubArea: NonNullable<NumberFieldProps['scrubArea']>;
   size: NonNullable<NumberFieldProps['size']>;
   variant: NumberFieldVariants;
 }

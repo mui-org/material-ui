@@ -48,6 +48,9 @@
     "required": {
       "description": "If <code>true</code>, the label is displayed as required and the <code>input</code> element is required."
     },
+    "scrubArea": {
+      "description": "The area of the input element where the scrub control is displayed. Set to false to hide it."
+    },
     "size": { "description": "The size of the component." },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
@@ -75,6 +78,8 @@
     "incrementButton": "The component that renders the increment button.",
     "input": "The component that renders the input.",
     "inputLabel": "The component that renders the input&#39;s label.",
-    "root": "The component that renders the root"
+    "root": "The component that renders the root",
+    "scrubArea": "The component that renders the scrub area.",
+    "scrubAreaCursor": "The component that renders the scrub area cursor."
   }
 }

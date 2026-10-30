@@ -51,6 +51,13 @@
     "onValueCommitted": { "type": { "name": "func" } },
     "readOnly": { "type": { "name": "bool" }, "default": "false" },
     "required": { "type": { "name": "bool" }, "default": "false" },
+    "scrubArea": {
+      "type": {
+        "name": "enum",
+        "description": "'end'<br>&#124;&nbsp;'start'<br>&#124;&nbsp;false"
+      },
+      "default": "false"
+    },
     "size": {
       "type": { "name": "enum", "description": "'small'<br>&#124;&nbsp;'medium'" },
       "default": "'medium'"
@@ -65,7 +72,7 @@
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ decrementButton?: elementType, formHelperText?: elementType, htmlInput?: elementType, incrementButton?: elementType, input?: elementType, inputLabel?: elementType, root?: elementType }"
+        "description": "{ decrementButton?: elementType, formHelperText?: elementType, htmlInput?: elementType, incrementButton?: elementType, input?: elementType, inputLabel?: elementType, root?: elementType, scrubArea?: elementType, scrubAreaCursor?: elementType }"
       },
       "default": "{}"
     },
@@ -135,6 +142,18 @@
       "description": "The component that renders the root",
       "default": "FormControl",
       "class": "MuiNumberField-root"
+    },
+    {
+      "name": "scrubArea",
+      "description": "The component that renders the scrub area.",
+      "default": "'span'",
+      "class": "MuiNumberField-scrubArea"
+    },
+    {
+      "name": "scrubAreaCursor",
+      "description": "The component that renders the scrub area cursor.",
+      "default": "'span'",
+      "class": "MuiNumberField-scrubAreaCursor"
     }
   ],
   "classes": [

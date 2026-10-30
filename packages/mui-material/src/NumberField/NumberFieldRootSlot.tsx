@@ -99,6 +99,7 @@ const NumberFieldRootSlot = React.forwardRef(
     const hasStartAdornment =
       ownerState.controlsPosition === 'start' ||
       ownerState.controlsPosition === 'split' ||
+      ownerState.scrubArea === 'start' ||
       Boolean(startAdornment);
 
     return (

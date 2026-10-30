@@ -51,6 +51,7 @@ const NumberField = React.forwardRef(function NumberField(
     onValueCommitted,
     readOnly = false,
     required = false,
+    scrubArea = false,
     size = 'medium',
     slots = {},
     slotProps = {},
@@ -74,6 +75,7 @@ const NumberField = React.forwardRef(function NumberField(
     id,
     readOnly,
     required,
+    scrubArea,
     size,
     snapOnStep,
     variant,
@@ -325,6 +327,11 @@ NumberField.propTypes /* remove-proptypes */ = {
    */
   required: PropTypes.bool,
   /**
+   * The area of the input element where the scrub control is displayed. Set to false to hide it.
+   * @default false
+   */
+  scrubArea: PropTypes.oneOf(['end', 'start', false]),
+  /**
    * The size of the component.
    * @default 'medium'
    */
@@ -354,6 +361,8 @@ NumberField.propTypes /* remove-proptypes */ = {
     input: PropTypes.elementType,
     inputLabel: PropTypes.elementType,
     root: PropTypes.elementType,
+    scrubArea: PropTypes.elementType,
+    scrubAreaCursor: PropTypes.elementType,
   }),
   /**
    * The small step value for the number input element.

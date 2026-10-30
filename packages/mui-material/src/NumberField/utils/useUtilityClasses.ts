@@ -8,6 +8,8 @@ const useUtilityClasses = (ownerState: NumberFieldProps) => {
   const slots = {
     root: ['root'],
     controls: ['controls'],
+    scrubArea: ['scrubArea'],
+    scrubAreaCursor: ['scrubAreaCursor'],
     incrementButton: ['incrementButton'],
     decrementButton: ['decrementButton'],
   };
