@@ -70,6 +70,7 @@ describe('DemoContentLoading client behavior', () => {
       );
 
       expect(container.querySelector('[data-code-expanded]')).not.to.equal(null);
+      expect(screen.getByRole('button', { name: 'Hide code', hidden: true })).not.to.equal(null);
     } finally {
       window.history.replaceState(null, '', window.location.pathname);
     }
