@@ -12,15 +12,14 @@ import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
+import type { IconButtonProps } from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
-import NumberField, {
-  NumberFieldOwnerState,
-  NumberFieldProps,
-  numberFieldClasses,
-} from '@mui/material/NumberField';
-import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import NumberField, { numberFieldClasses } from '@mui/material/NumberField';
+import type { NumberFieldOwnerState, NumberFieldProps } from '@mui/material/NumberField';
+import type { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';

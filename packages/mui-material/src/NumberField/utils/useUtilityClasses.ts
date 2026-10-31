@@ -1,5 +1,5 @@
 import composeClasses from '@mui/utils/composeClasses';
-import { NumberFieldProps } from '../NumberField.types';
+import type { NumberFieldProps } from '../NumberField.types';
 import { getNumberFieldUtilityClass } from '../numberFieldClasses';
 
 const useUtilityClasses = (ownerState: NumberFieldProps) => {

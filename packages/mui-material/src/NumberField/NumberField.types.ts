@@ -1,4 +1,4 @@
-import { NumberField as BaseNumberField } from '@base-ui/react/number-field';
+import type { NumberField as BaseNumberField } from '@base-ui/react/number-field';
 
 import type { OverridableStringUnion } from '@mui/types';
 

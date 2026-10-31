@@ -3,15 +3,15 @@ import { describe, it, expect, vi } from 'vitest';
 import { act, createRenderer, screen } from '@mui/internal-test-utils';
 import { Field as BaseField } from '@base-ui/react/field';
 import type { BaseUIEvent } from '@base-ui/react/types';
-import FormControl, { type FormControlProps } from '@mui/material/FormControl';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import type { IconButtonProps } from '@mui/material/IconButton';
+import type { FormControlProps } from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput, { type OutlinedInputProps } from '@mui/material/OutlinedInput';
-import NumberField, {
-  numberFieldClasses as classes,
-  type NumberFieldOwnerState,
-  type NumberFieldProps,
-} from '@mui/material/NumberField';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import type { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import NumberField, { numberFieldClasses as classes } from '@mui/material/NumberField';
+import type { NumberFieldOwnerState, NumberFieldProps } from '@mui/material/NumberField';
 import describeConformance from '../../test/describeConformance';
 
 interface TestSlotProps {

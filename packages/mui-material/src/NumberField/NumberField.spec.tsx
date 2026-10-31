@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import type { NumberField as BaseNumberField } from '@base-ui/react/number-field';
-import NumberField, {
+import NumberField from '@mui/material/NumberField';
+import type {
   NumberFieldProps,
   NumberFieldOwnerState,
   StandardNumberFieldProps,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
 
-import { NumberField as BaseNumberField } from '@base-ui/react/number-field';
+import type { NumberField as BaseNumberField } from '@base-ui/react/number-field';
 import type { HTMLProps } from '@base-ui/react/types';
 import { mergeProps } from '@base-ui/react/merge-props';
 
