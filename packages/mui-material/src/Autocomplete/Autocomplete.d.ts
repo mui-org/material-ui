@@ -3,10 +3,10 @@ import { SxProps } from '@mui/system';
 import { OverridableStringUnion, PartiallyRequired } from '@mui/types';
 import { Theme } from '../styles';
 import { InternalStandardProps as StandardProps } from '../internal';
-import { IconButtonProps } from '../IconButton';
+import IconButton, { IconButtonProps } from '../IconButton';
 import { ChipProps, ChipTypeMap } from '../Chip';
-import { PaperProps } from '../Paper';
-import { PopperProps } from '../Popper';
+import Paper, { PaperProps } from '../Paper';
+import Popper, { PopperProps } from '../Popper';
 import useAutocomplete, {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -198,7 +198,7 @@ export type AutocompleteSlotsAndSlotProps<
       >
     >;
     chip: SlotProps<
-      React.ElementType<Partial<ChipProps<ChipComponent>>>,
+      React.JSXElementConstructor<Partial<ChipProps<ChipComponent>>>,
       AutocompleteChipSlotPropsOverrides,
       AutocompleteOwnerState<
         Value,
@@ -210,7 +210,7 @@ export type AutocompleteSlotsAndSlotProps<
       >
     >;
     clearIndicator: SlotProps<
-      React.ElementType<Partial<IconButtonProps>>,
+      typeof IconButton,
       AutocompleteClearIndicatorSlotPropsOverrides,
       AutocompleteOwnerState<
         Value,
@@ -254,7 +254,7 @@ export type AutocompleteSlotsAndSlotProps<
       >
     >;
     paper: SlotProps<
-      React.ElementType<Partial<PaperProps>>,
+      typeof Paper,
       AutocompletePaperSlotPropsOverrides,
       AutocompleteOwnerState<
         Value,
@@ -266,7 +266,7 @@ export type AutocompleteSlotsAndSlotProps<
       >
     >;
     popper: SlotProps<
-      React.ElementType<Partial<PopperProps>>,
+      typeof Popper,
       AutocompletePopperSlotPropsOverrides,
       AutocompleteOwnerState<
         Value,
@@ -278,7 +278,7 @@ export type AutocompleteSlotsAndSlotProps<
       >
     >;
     popupIndicator: SlotProps<
-      React.ElementType<Partial<IconButtonProps>>,
+      typeof IconButton,
       AutocompletePopupIndicatorSlotPropsOverrides,
       AutocompleteOwnerState<
         Value,
