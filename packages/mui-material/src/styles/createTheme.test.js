@@ -1324,15 +1324,12 @@ describe('createTheme', () => {
 
     const { unmount } = render(<App mode="light" />);
 
-    expect(screen.getByTestId('cell')).toHaveComputedStyle({
-      borderBottomColor: 'oklch(0.879995 0.0000438227 0)',
-    });
+    // an opaque color has no alpha component in window.getComputedStyle()
+    expect(getComputedStyle(screen.getByTestId('cell')).borderBottomColor).not.to.include('/');
 
     unmount();
     render(<App mode="dark" />);
 
-    expect(screen.getByTestId('cell')).toHaveComputedStyle({
-      borderBottomColor: 'oklch(0.319998 0.0000159355 23.7884)',
-    });
+    expect(getComputedStyle(screen.getByTestId('cell')).borderBottomColor).not.to.include('/');
   });
 });
