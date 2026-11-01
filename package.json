@@ -147,9 +147,9 @@
   "config": {
     "valeVersion": "3.25.1"
   },
-  "packageManager": "pnpm@12.16.0",
+  "packageManager": "pnpm@12.16.1",
   "engines": {
-    "pnpm": "12.16.0",
+    "pnpm": "12.16.1",
     "node": ">=22.23.4"
   }
 }
