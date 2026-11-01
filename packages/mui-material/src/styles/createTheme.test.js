@@ -10,7 +10,6 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import OutlinedInput, { outlinedInputClasses } from '@mui/material/OutlinedInput';
-import TableCell from '@mui/material/TableCell';
 import SystemThemeProvider from '@mui/system/ThemeProvider';
 import { ThemeProvider, THEME_ID, createTheme, styled } from '@mui/material/styles';
 import { deepOrange, green, grey } from '@mui/material/colors';
@@ -258,6 +257,19 @@ describe('createTheme', () => {
       );
       expect(theme.colorSchemes.dark.palette.Skeleton.bg).to.equal(
         'rgba(var(--mui-palette-text-primaryChannel, 255 255 255) / 0.13)',
+      );
+    });
+
+    it('should make the TableCell border opaque with nativeColor', () => {
+      const theme = createTheme({
+        cssVariables: { nativeColor: true },
+        colorSchemes: { light: true, dark: true },
+      });
+      expect(theme.colorSchemes.light.palette.TableCell.border).to.equal(
+        'color-mix(in oklch, oklch(from var(--mui-palette-divider) l c h / 1), #fff 88%)',
+      );
+      expect(theme.colorSchemes.dark.palette.TableCell.border).to.equal(
+        'color-mix(in oklch, oklch(from var(--mui-palette-divider) l c h / 1), #000 68%)',
       );
     });
 
@@ -1299,37 +1311,4 @@ describe('createTheme', () => {
       });
     },
   );
-
-  it.skipIf(isJSDOM)('should render an opaque TableCell border with nativeColor', () => {
-    function App({ mode }) {
-      const theme = createTheme({
-        cssVariables: {
-          nativeColor: true,
-        },
-        palette: { mode },
-      });
-
-      return (
-        <ThemeProvider theme={theme}>
-          <table>
-            <tbody>
-              <tr>
-                <TableCell data-testid="cell">Cell</TableCell>
-              </tr>
-            </tbody>
-          </table>
-        </ThemeProvider>
-      );
-    }
-
-    const { unmount } = render(<App mode="light" />);
-
-    // an opaque color has no alpha component in window.getComputedStyle()
-    expect(getComputedStyle(screen.getByTestId('cell')).borderBottomColor).not.to.include('/');
-
-    unmount();
-    render(<App mode="dark" />);
-
-    expect(getComputedStyle(screen.getByTestId('cell')).borderBottomColor).not.to.include('/');
-  });
 });
