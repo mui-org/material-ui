@@ -721,6 +721,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
     }
 
     return React.cloneElement(child, {
+      disabled: disabled || child.props.disabled,
       'aria-selected': selected ? 'true' : 'false',
       onMouseDown: (event) => {
         didPointerDownOnItemRef.current = true;

@@ -36,6 +36,29 @@ describe('<Select />', () => {
     skip: ['componentProp', 'themeVariants', 'themeStyleOverrides'],
   }));
 
+  it.each([false, true])('disables options with controlled open = %s', async (controlledOpen) => {
+    const onChange = vi.fn();
+    const { setProps } = render(
+      <Select
+        {...(controlledOpen ? { open: true } : { defaultOpen: true })}
+        defaultValue="apple"
+        onChange={onChange}
+      >
+        <MenuItem value="apple">Apple</MenuItem>
+        <MenuItem value="orange">Orange</MenuItem>
+      </Select>,
+    );
+    const orange = screen.getByRole('option', { name: 'Orange' });
+    setProps({ disabled: true });
+    expect(screen.getByRole('listbox')).not.to.equal(null);
+    expect(orange).to.have.attribute('aria-disabled', 'true');
+    fireEvent.click(orange);
+    expect(onChange).not.toHaveBeenCalled();
+    setProps({ disabled: false });
+    fireEvent.click(orange);
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
   describe('pointer interactions', () => {
     beforeEach(() => {
       clock.restore();
