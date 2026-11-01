@@ -85,7 +85,7 @@
     "react-intersection-observer": "^11.0.1",
     "react-is": "^19.3.1",
     "react-number-format": "^5.4.5",
-    "react-router": "^8.5.0",
+    "react-router": "^8.5.1",
     "react-runner": "^1.0.5",
     "react-simple-code-editor": "^0.14.1",
     "react-swipeable-views": "^0.14.2",
