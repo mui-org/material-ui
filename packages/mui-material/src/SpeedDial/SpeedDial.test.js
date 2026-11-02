@@ -296,6 +296,49 @@ describe('<SpeedDial />', () => {
         await flushEffects();
       },
     );
+
+    describe('while hidden', () => {
+      const hideWithFocusedAction = async (props) => {
+        const { setProps } = render(
+          <SpeedDial ariaLabel="mySpeedDial" open {...props}>
+            <SpeedDialAction slotProps={{ tooltip: { title: 'action1' } }} />
+            <SpeedDialAction slotProps={{ tooltip: { title: 'action2' } }} />
+          </SpeedDial>,
+        );
+        const actions = screen.getAllByRole('menuitem');
+        await act(async () => {
+          actions[0].focus();
+        });
+        setProps({ hidden: true });
+        clock.runAll();
+
+        return actions;
+      };
+
+      it('should close on Escape from an action', async () => {
+        const handleClose = spy();
+        const actions = await hideWithFocusedAction({ onClose: handleClose });
+
+        fireEvent.keyDown(actions[0], { key: 'Escape' });
+
+        expect(handleClose.callCount).to.equal(1);
+        expect(handleClose.args[0][1]).to.equal('escapeKeyDown');
+      });
+
+      it('should keep arrow navigation within the actions', async () => {
+        const actions = await hideWithFocusedAction();
+
+        fireEvent.keyDown(actions[0], { key: 'ArrowUp' });
+        fireEvent.keyDown(actions[0], { key: 'ArrowDown' });
+        expect(document.activeElement).to.equal(actions[0]);
+
+        fireEvent.keyDown(actions[0], { key: 'ArrowUp' });
+        fireEvent.keyDown(actions[1], { key: 'ArrowUp' });
+        expect(document.activeElement).to.equal(actions[1]);
+
+        await flushEffects();
+      });
+    });
   });
 
   describe('dial focus', () => {
