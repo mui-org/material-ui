@@ -4,6 +4,8 @@ import type { Theme } from './createTheme';
 import type { DensityEnhancedTheme, DensityScaleOverrides, EnhanceableTheme } from './densityScale';
 import { applyDensity } from './densityScale';
 import switchClasses from '../Switch/switchClasses';
+import toggleButtonGroupClasses from '../ToggleButtonGroup/toggleButtonGroupClasses';
+import paginationItemClasses from '../PaginationItem/paginationItemClasses';
 import breadcrumbsClasses from '../Breadcrumbs/breadcrumbsClasses';
 import buttonBaseClasses from '../ButtonBase/buttonBaseClasses';
 import tabClasses from '../Tab/tabClasses';
@@ -134,6 +136,7 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
   const iconSmall = `calc(${iconSize} - ${spacing('xxSmall')})`;
   const iconLarge = `calc(${iconSize} + 8px)`;
   const inputMediumPadBlock = `calc((${touchTarget} - 1lh) / 2)`;
+  const wcagTargetSize = '24px';
   const inputSmallPadBlock = `calc((${touchTarget} - ${spacing('xxSmall')} - 1lh) / 2)`;
   const filledInputMediumPadTop = `calc(${spacing('medium')} + (${touchTarget} - 1lh) / 2)`;
   const filledInputSmallPadTop = `calc(${spacing('medium')} + (${touchTarget} - 1lh) / 4)`;
@@ -160,26 +163,26 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
       {
         props: { size: 'small' },
         style: {
-          width: smallBox,
-          height: smallBox,
+          width: `max(${wcagTargetSize}, ${smallBox})`,
+          height: `max(${wcagTargetSize}, ${smallBox})`,
           '& svg': { fontSize: iconSmall },
           [`.${formControlLabelClasses.labelPlacementEnd}:has(&)`]: {
-            '--_labelMarginLeft': `calc((${smallBox} - ${iconSmall}) / -2)`,
+            '--_labelMarginLeft': `calc((max(${wcagTargetSize}, ${smallBox}) - ${iconSmall}) / -2)`,
           },
           [`.${formControlLabelClasses.labelPlacementStart}:has(&)`]: {
-            '--_labelMarginRight': `calc((${smallBox} - ${iconSmall}) / -2)`,
+            '--_labelMarginRight': `calc((max(${wcagTargetSize}, ${smallBox}) - ${iconSmall}) / -2)`,
           },
         },
       },
       { props: { edge: 'start' }, style: { marginLeft: `calc(${touchTarget} / -4)` } },
       {
         props: { edge: 'start', size: 'small' },
-        style: { marginLeft: `calc(${smallBox} / -8)` },
+        style: { marginLeft: `calc(max(${wcagTargetSize}, ${smallBox}) / -8)` },
       },
       { props: { edge: 'end' }, style: { marginRight: `calc(${touchTarget} / -4)` } },
       {
         props: { edge: 'end', size: 'small' },
-        style: { marginRight: `calc(${smallBox} / -8)` },
+        style: { marginRight: `calc(max(${wcagTargetSize}, ${smallBox}) / -8)` },
       },
     ],
   };
@@ -227,7 +230,19 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
     variants: [
       {
         props: { size: 'small' },
-        style: { minHeight: smallBox, '--_padInline': spacing('small') },
+        style: {
+          minHeight: smallBox,
+          '--_padInline': spacing('small'),
+          marginBlock: `max(0px, (${wcagTargetSize} - ${smallBox}) / 2)`,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            insetInline: 0,
+            height: `max(100%, ${wcagTargetSize})`,
+            transform: 'translateY(-50%)',
+          },
+        },
       },
       {
         props: { size: 'medium' },
@@ -287,7 +302,23 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
     padding: 0,
     fontSize: iconSize,
     variants: [
-      { props: { size: 'small' }, style: { minWidth: smallBox, minHeight: smallBox } },
+      {
+        props: { size: 'small' },
+        style: {
+          minWidth: smallBox,
+          minHeight: smallBox,
+          margin: `max(0px, (${wcagTargetSize} - ${smallBox}) / 2)`,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: `max(100%, ${wcagTargetSize})`,
+            height: `max(100%, ${wcagTargetSize})`,
+            transform: 'translate(-50%, -50%)',
+          },
+        },
+      },
       {
         props: { size: 'medium' },
         style: { minWidth: touchTarget, minHeight: touchTarget },
@@ -300,7 +331,27 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
       { props: { edge: 'end' }, style: { marginRight: `calc(${touchTarget} / -4)` } },
     ],
   });
-  addStyleOverride(enhanced.components, 'MuiButtonGroup', 'grouped', { minWidth: touchTarget });
+  addStyleOverride(enhanced.components, 'MuiButtonGroup', 'root', {
+    variants: [
+      {
+        props: { size: 'small', orientation: 'horizontal' },
+        style: { marginBlock: `max(0px, (${wcagTargetSize} - ${smallBox}) / 2)` },
+      },
+    ],
+  });
+  addStyleOverride(enhanced.components, 'MuiButtonGroup', 'grouped', {
+    minWidth: touchTarget,
+    variants: [
+      { props: { size: 'small' }, style: { marginBlock: 0 } },
+      {
+        props: { size: 'small', orientation: 'vertical' },
+        style: {
+          minHeight: `max(${wcagTargetSize}, ${smallBox})`,
+          '&::before': { content: 'none' },
+        },
+      },
+    ],
+  });
 
   addStyleOverride(enhanced.components, 'MuiSvgIcon', 'root', {
     variants: [
@@ -715,7 +766,24 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
     variants: [
       {
         props: { size: 'small' },
-        style: { '--_size': smallBox },
+        style: {
+          '--_size': smallBox,
+          [`&:not(.${toggleButtonGroupClasses.grouped})`]: {
+            margin: `max(0px, (${wcagTargetSize} - ${smallBox}) / 2)`,
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: `max(100%, ${wcagTargetSize})`,
+              height: `max(100%, ${wcagTargetSize})`,
+              transform: 'translate(-50%, -50%)',
+            },
+          },
+          [`&.${toggleButtonGroupClasses.grouped}`]: {
+            '--_size': `max(${wcagTargetSize}, ${smallBox})`,
+          },
+        },
       },
       {
         props: { size: 'large' },
@@ -751,7 +819,7 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
       {
         props: { size: 'small' },
         style: {
-          '--_touchSize': smallBox,
+          '--_touchSize': `max(${wcagTargetSize}, ${smallBox})`,
           '--_thumbWidth': `calc(${spacing('medium')} - 4px)`,
           '--_thumbHeight': `calc(${spacing('medium')} - 4px)`,
           // Master's small rules sit nested under the root variant at higher
@@ -1027,7 +1095,7 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
         props: { dense: false },
         style: { minHeight: touchTarget },
       },
-      { props: { dense: true }, style: { minHeight: smallBox } },
+      { props: { dense: true }, style: { minHeight: `max(${wcagTargetSize}, ${smallBox})` } },
       {
         props: { dense: false, disableGutters: false },
         style: { paddingInline: spacing('small') },
@@ -1367,7 +1435,20 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
       { props: { shape: 'circular' }, style: { borderRadius: '50%' } },
       {
         props: { size: 'small' },
-        style: { height: smallBox, minWidth: smallBox },
+        style: {
+          height: smallBox,
+          minWidth: smallBox,
+          margin: `max(0px, (${wcagTargetSize} - ${smallBox}) / 2)`,
+          [`&:not(.${paginationItemClasses.ellipsis})::before`]: {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: `max(100%, ${wcagTargetSize})`,
+            height: `max(100%, ${wcagTargetSize})`,
+            transform: 'translate(-50%, -50%)',
+          },
+        },
       },
       {
         props: { size: 'medium' },
@@ -1440,6 +1521,20 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
           '--_paddingInline': spacing('xSmall'),
           gap: spacing('xxSmall'),
           ...enhanced.typography?.body2,
+        },
+      },
+      {
+        props: { size: 'small', clickable: true },
+        style: {
+          marginBlock: `max(0px, (${wcagTargetSize} - var(--_height)) / 2)`,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: '50%',
+            insetInline: 0,
+            height: `max(100%, ${wcagTargetSize})`,
+            transform: 'translateY(-50%)',
+          },
         },
       },
     ],

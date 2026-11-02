@@ -124,6 +124,9 @@ const ramp = (density: Density, size: string | undefined) => {
   return density.touchTarget;
 };
 
+const rampToTargetSize = (density: Density, size: string | undefined) =>
+  Math.max(24, ramp(density, size));
+
 const CONTROLS: Record<string, Spec> = {
   Button: {
     sizes: ['small', 'medium', 'large'],
@@ -145,13 +148,13 @@ const CONTROLS: Record<string, Spec> = {
     sizes: ['small', 'medium'],
     render: (size) => <Checkbox size={size} />,
     selector: '.MuiCheckbox-root',
-    height: ramp,
+    height: rampToTargetSize,
   },
   Radio: {
     sizes: ['small', 'medium'],
     render: (size) => <Radio size={size} />,
     selector: '.MuiRadio-root',
-    height: ramp,
+    height: rampToTargetSize,
   },
   ToggleButton: {
     sizes: ['small', 'medium', 'large'],
@@ -173,7 +176,7 @@ const CONTROLS: Record<string, Spec> = {
     sizes: ['small', 'medium'],
     render: (size) => <Switch size={size} />,
     selector: '.MuiSwitch-root',
-    height: ramp,
+    height: rampToTargetSize,
   },
   Avatar: {
     render: () => <Avatar>A</Avatar>,
@@ -427,6 +430,12 @@ const CONTROLS: Record<string, Spec> = {
     axis: 'minHeight',
     height: (density) => Math.max(28, density.touchTarget),
   },
+  ListItemButtonDense: {
+    render: () => <ListItemButton dense>Item</ListItemButton>,
+    selector: '.MuiListItemButton-root',
+    axis: 'minHeight',
+    height: (density) => Math.max(24, density.touchTarget - density.step.xxSmall),
+  },
   ListItemButton: {
     render: () => <ListItemButton>Item</ListItemButton>,
     selector: '.MuiListItemButton-root',
@@ -540,6 +549,233 @@ describe.skipIf(isJsdom())('density contract', () => {
         iconButton: rect('.MuiIconButton-root').height,
         icon: parseFloat(css('.MuiIconButton-root svg').fontSize),
       }).to.deep.equal({ button: 44, checkbox: 44, iconButton: 44, icon: 24 });
+    });
+
+    describe('touch area', () => {
+      const touchArea = (selector: string, scope?: ParentNode) => {
+        const element = query(selector, scope);
+        const before = getComputedStyle(element, '::before');
+        return {
+          margin: (['Top', 'Right', 'Bottom', 'Left'] as const).map((side) =>
+            parseFloat(getComputedStyle(element)[`margin${side}`]),
+          ),
+          tap:
+            before.content === 'none'
+              ? null
+              : {
+                  width: round2(parseFloat(before.width)),
+                  height: round2(parseFloat(before.height)),
+                },
+        };
+      };
+      const smallControls = cases({
+        filled: <Chip size="small" label="Chip" onClick={() => {}} />,
+        outlined: <Chip size="small" variant="outlined" label="Chip" onClick={() => {}} />,
+        icon: (
+          <IconButton size="small">
+            <AddIcon />
+          </IconButton>
+        ),
+        edgeStart: (
+          <IconButton size="small" edge="start">
+            <AddIcon />
+          </IconButton>
+        ),
+      });
+      const paddingBox = (selector: string, scope?: ParentNode) => {
+        const element = query(selector, scope);
+        const border = parseFloat(getComputedStyle(element).borderTopWidth);
+        const { width, height } = element.getBoundingClientRect();
+        return { width: round2(width - 2 * border), height: round2(height - 2 * border) };
+      };
+
+      DENSITIES.forEach((density) => {
+        test(`${density.id}: small clickable Chip and small IconButton reach 24px`, () => {
+          renderIn(THEMES[density.id], smallControls);
+          const small = density.touchTarget - density.step.xxSmall;
+          const margin = Math.max(0, (24 - small) / 2);
+          const tap = Math.max(24, small);
+          expect({
+            filled: touchArea('.MuiChip-root', inCase('filled')),
+            outlined: touchArea('.MuiChip-root', inCase('outlined')),
+            icon: touchArea('.MuiIconButton-root', inCase('icon')),
+            edgeStart: touchArea('.MuiIconButton-root', inCase('edgeStart')),
+          }).to.deep.equal({
+            filled: {
+              margin: [margin, 0, margin, 0],
+              tap: {
+                width: paddingBox('.MuiChip-root', inCase('filled')).width,
+                height: Math.max(24, paddingBox('.MuiChip-root', inCase('filled')).height),
+              },
+            },
+            outlined: {
+              margin: [margin, 0, margin, 0],
+              tap: {
+                width: paddingBox('.MuiChip-root', inCase('outlined')).width,
+                height: Math.max(24, paddingBox('.MuiChip-root', inCase('outlined')).height),
+              },
+            },
+            icon: { margin: [margin, margin, margin, margin], tap: { width: tap, height: tap } },
+            edgeStart: {
+              margin: [margin, margin, margin, -density.touchTarget / 4],
+              tap: { width: tap, height: tap },
+            },
+          });
+        });
+      });
+
+      DENSITIES.forEach((density) => {
+        test(`${density.id}: small Button, ToggleButton and PaginationItem reach 24px`, () => {
+          renderIn(
+            THEMES[density.id],
+            cases({
+              button: <Button size="small">Label</Button>,
+              toggle: (
+                <ToggleButton value="a" size="small">
+                  <AddIcon />
+                </ToggleButton>
+              ),
+              page: <PaginationItem size="small" page={1} />,
+              ellipsis: <PaginationItem size="small" type="start-ellipsis" />,
+            }),
+          );
+          const small = density.touchTarget - density.step.xxSmall;
+          const margin = Math.max(0, (24 - small) / 2);
+          const grown = (selector: string, name: string) => {
+            const box = paddingBox(selector, inCase(name));
+            return { width: Math.max(24, box.width), height: Math.max(24, box.height) };
+          };
+          expect({
+            button: touchArea('.MuiButton-root', inCase('button')),
+            toggle: touchArea('.MuiToggleButton-root', inCase('toggle')),
+            page: touchArea('.MuiPaginationItem-root', inCase('page')),
+            ellipsis: touchArea('.MuiPaginationItem-root', inCase('ellipsis')),
+          }).to.deep.equal({
+            button: {
+              margin: [margin, 0, margin, 0],
+              tap: {
+                width: paddingBox('.MuiButton-root', inCase('button')).width,
+                height: grown('.MuiButton-root', 'button').height,
+              },
+            },
+            toggle: {
+              margin: [margin, margin, margin, margin],
+              tap: grown('.MuiToggleButton-root', 'toggle'),
+            },
+            page: {
+              margin: [margin, margin, margin, margin],
+              tap: grown('.MuiPaginationItem-root', 'page'),
+            },
+            ellipsis: { margin: [margin, margin, margin, margin], tap: null },
+          });
+        });
+
+        test(`${density.id}: small groups reach 24px: ButtonGroup reserves space on the group, grouped toggles grow square`, () => {
+          renderIn(
+            THEMES[density.id],
+            cases(
+              byName(['horizontal', 'vertical'], (orientation: any) => (
+                <React.Fragment>
+                  <ButtonGroup size="small" orientation={orientation}>
+                    <Button>One</Button>
+                    <Button>Two</Button>
+                  </ButtonGroup>
+                  <ToggleButtonGroup size="small" orientation={orientation}>
+                    <ToggleButton value="a">
+                      <AddIcon />
+                    </ToggleButton>
+                    <ToggleButton value="b">
+                      <AddIcon />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </React.Fragment>
+              )),
+            ),
+          );
+          const small = density.touchTarget - density.step.xxSmall;
+          const margin = Math.max(0, (24 - small) / 2);
+          const size = (selector: string, orientation: string) => {
+            const { width, height } = rect(selector, inCase(orientation));
+            return { width: round2(width), height: round2(height) };
+          };
+          const read = (orientation: string) => ({
+            buttonGroup: touchArea('.MuiButtonGroup-root', inCase(orientation)).margin,
+            button: touchArea('.MuiButton-root', inCase(orientation)),
+            toggleGroup: touchArea('.MuiToggleButtonGroup-root', inCase(orientation)).margin,
+            toggle: touchArea('.MuiToggleButton-root', inCase(orientation)),
+            toggleSize: size('.MuiToggleButton-root', orientation),
+          });
+          const buttonBox = paddingBox('.MuiButton-root', inCase('horizontal'));
+          const toggleSide = Math.max(24, small);
+          expect({ horizontal: read('horizontal'), vertical: read('vertical') }).to.deep.equal({
+            horizontal: {
+              buttonGroup: [margin, 0, margin, 0],
+              button: {
+                margin: [0, 0, 0, 0],
+                tap: { width: buttonBox.width, height: Math.max(24, buttonBox.height) },
+              },
+              toggleGroup: [0, 0, 0, 0],
+              toggle: { margin: [0, 0, 0, 0], tap: null },
+              toggleSize: { width: toggleSide, height: toggleSide },
+            },
+            vertical: {
+              buttonGroup: [0, 0, 0, 0],
+              button: { margin: [0, 0, 0, 0], tap: null },
+              toggleGroup: [0, 0, 0, 0],
+              toggle: { margin: [0, 0, 0, 0], tap: null },
+              toggleSize: { width: toggleSide, height: toggleSide },
+            },
+          });
+          expect(size('.MuiButton-root', 'vertical').height).to.equal(
+            Math.max(24, size('.MuiButton-root', 'horizontal').height),
+          );
+        });
+      });
+
+      test('leaves non-clickable Chips and medium sizes alone', () => {
+        renderIn(
+          THEMES.high,
+          cases({
+            static: <Chip size="small" label="Chip" />,
+            deletable: <Chip size="small" label="Chip" onDelete={() => {}} />,
+            mediumChip: <Chip label="Chip" onClick={() => {}} />,
+            mediumIcon: (
+              <IconButton>
+                <AddIcon />
+              </IconButton>
+            ),
+          }),
+        );
+        const untouched = { margin: [0, 0, 0, 0], tap: null };
+        expect({
+          static: touchArea('.MuiChip-root', inCase('static')),
+          deletable: touchArea('.MuiChip-root', inCase('deletable')),
+          mediumChip: touchArea('.MuiChip-root', inCase('mediumChip')),
+          mediumIcon: touchArea('.MuiIconButton-root', inCase('mediumIcon')),
+        }).to.deep.equal({
+          static: untouched,
+          deletable: untouched,
+          mediumChip: untouched,
+          mediumIcon: untouched,
+        });
+      });
+
+      test('a region that lowers --mui-touchTarget grows the margin and keeps the tap area at 24px', () => {
+        renderIn(
+          enhanceDensity(createTheme({ cssVariables: true })),
+          <div style={{ '--mui-touchTarget': '20px' } as React.CSSProperties}>{smallControls}</div>,
+        );
+        expect({
+          filled: touchArea('.MuiChip-root', inCase('filled')),
+          icon: touchArea('.MuiIconButton-root', inCase('icon')),
+        }).to.deep.equal({
+          filled: {
+            margin: [4, 0, 4, 0],
+            tap: { width: paddingBox('.MuiChip-root', inCase('filled')).width, height: 24 },
+          },
+          icon: { margin: [4, 4, 4, 4], tap: { width: 24, height: 24 } },
+        });
+      });
     });
 
     test('a size added by the app renders like medium', () => {
