@@ -1,6 +1,6 @@
 {
   "name": "@mui/types",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Utility types for Material UI.",
   "license": "MIT",
@@ -32,11 +32,11 @@
     "directory": "build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7"
+    "@babel/runtime": "^7.29.7 || ^8.0.5"
   },
   "devDependencies": {
     "@mui/types": "workspace:*",
-    "@types/react": "19.2.18"
+    "@types/react": "19.3.0"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0"

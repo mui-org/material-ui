@@ -1,14 +1,13 @@
 {
-  "name": "envinfo-test-project",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/material": "9.0.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@types/react": "19.2.18"
+    "@types/react": "19.3.0"
   }
 }

@@ -42,11 +42,11 @@ export interface TableRowTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableRow API](https://mui.com/material-ui/api/table-row/)
+ * - [TableRow API](https://next.mui.com/material-ui/api/table-row/)
  */
 declare const TableRow: OverridableComponent<TableRowTypeMap>;
 

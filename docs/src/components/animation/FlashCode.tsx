@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { styled, alpha, SxProps } from '@mui/material/styles';
+import type { SxProps } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 
 const FlashCodeRoot = styled('div')(({ theme }) => ({
   borderRadius: 2,

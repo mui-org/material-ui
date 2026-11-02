@@ -20,13 +20,13 @@ Expand from the start edge of the child element.
 Use the `orientation` prop if you need a horizontal collapse.
 The `collapsedSize` prop can be used to set the minimum width/height when not expanded.
 
-{{"demo": "SimpleCollapse.js", "bg": true}}
+{{"component": "file://./demos/simple-collapse/index.ts", "bg": true}}
 
 ## Fade
 
 Fade in from transparent to opaque.
 
-{{"demo": "SimpleFade.js", "bg": true}}
+{{"component": "file://./demos/simple-fade/index.ts", "bg": true}}
 
 ## Grow
 
@@ -35,7 +35,7 @@ Expands outwards from the center of the child element, while also fading in from
 The second example demonstrates how to change the `transform-origin`, and conditionally applies
 the `timeout` prop to change the entry speed.
 
-{{"demo": "SimpleGrow.js", "bg": true}}
+{{"component": "file://./demos/simple-grow/index.ts", "bg": true}}
 
 ## Slide
 
@@ -48,14 +48,14 @@ This prevents the relatively positioned component from scrolling into view
 from its off-screen position.
 Similarly, the `unmountOnExit` prop removes the component from the DOM after it has been transition off-screen.
 
-{{"demo": "SimpleSlide.js", "bg": true}}
+{{"component": "file://./demos/simple-slide/index.ts", "bg": true}}
 
 ### Slide relative to a container
 
 The Slide component also accepts `container` prop, which is a reference to a DOM node.
 If this prop is set, the Slide component will slide from the edge of that DOM node.
 
-{{"demo": "SlideFromContainer.js", "bg": true}}
+{{"component": "file://./demos/slide-from-container/index.ts", "bg": true}}
 
 ## Zoom
 
@@ -63,7 +63,7 @@ Expand outwards from the center of the child element.
 
 This example also demonstrates how to delay the enter transition.
 
-{{"demo": "SimpleZoom.js", "bg": true}}
+{{"component": "file://./demos/simple-zoom/index.ts", "bg": true}}
 
 ## Reduced motion
 
@@ -124,7 +124,7 @@ export default function Main() {
 To animate a component when it is mounted or unmounted, you can use the [`TransitionGroup`](https://reactcommunity.org/react-transition-group/transition-group/) component from _react-transition-group_.
 As components are added or removed, the `in` prop is toggled automatically by `TransitionGroup`.
 
-{{"demo": "TransitionGroupExample.js"}}
+{{"component": "file://./demos/group-example/index.ts"}}
 
 ## Transition slots
 

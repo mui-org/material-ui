@@ -23,6 +23,8 @@ export interface InitColorSchemeScriptProps {
   defaultDarkColorScheme?: string | undefined;
   /**
    * The node (provided as string) used to attach the color-scheme attribute.
+   *
+   * Requires a static value, do not derive from user input.
    * @default 'document.documentElement'
    */
   colorSchemeNode?: string | undefined;
@@ -55,6 +57,32 @@ const safeReact = { ...React };
 const maybeReactUseSyncExternalStore: undefined | any = safeReact.useSyncExternalStore;
 
 const subscribe = () => () => {};
+
+// Serialize a value into a JS string literal safe to embed in the inline script. JSON.stringify
+// escapes quotes and backslashes; the extra replaces handle what it does not: `<` (so `</script>`
+// can't close the element) and the U+2028/U+2029 line separators, invalid raw inside a JS string.
+function serializeScriptValue(value: string) {
+  return JSON.stringify(value)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
+// Insert a runtime scheme variable (`light`, `dark`, or `colorScheme`) into every `%s` placeholder
+// of an attribute/selector template.
+function interpolateScheme(template: string, variable: string) {
+  const segments = template.split('%s');
+  const tokens: string[] = [];
+  for (let index = 0; index < segments.length; index += 1) {
+    if (index > 0) {
+      tokens.push(variable);
+    }
+    if (segments[index]) {
+      tokens.push(serializeScriptValue(segments[index]));
+    }
+  }
+  return tokens.join(' + ') || '""';
+}
 
 /**
  * `true` during the server render and the matching hydration render, `false`
@@ -96,20 +124,25 @@ export function buildInitColorSchemeScript(options?: InitColorSchemeScriptProps)
   }
   if (attribute.startsWith('.')) {
     const selector = attribute.substring(1);
-    setter += `${colorSchemeNode}.classList.remove('${selector}'.replace('%s', light), '${selector}'.replace('%s', dark));
-      ${colorSchemeNode}.classList.add('${selector}'.replace('%s', colorScheme));`;
+    setter += `${colorSchemeNode}.classList.remove(${interpolateScheme(selector, 'light')}, ${interpolateScheme(selector, 'dark')});
+      ${colorSchemeNode}.classList.add(${interpolateScheme(selector, 'colorScheme')});`;
   }
   const matches = attribute.match(/\[([^[\]]+)\]/); // case [data-color-scheme='%s'] or [data-color-scheme]
   if (matches) {
-    const [attr, value] = matches[1].split('=');
+    const separator = matches[1].indexOf('=');
+    const attr = separator === -1 ? matches[1] : matches[1].slice(0, separator);
+    const value = separator === -1 ? undefined : matches[1].slice(separator + 1);
     if (!value) {
-      setter += `${colorSchemeNode}.removeAttribute('${attr}'.replace('%s', light));
-      ${colorSchemeNode}.removeAttribute('${attr}'.replace('%s', dark));`;
+      setter += `${colorSchemeNode}.removeAttribute(${interpolateScheme(attr, 'light')});
+      ${colorSchemeNode}.removeAttribute(${interpolateScheme(attr, 'dark')});`;
     }
+    const attributeValue = value
+      ? interpolateScheme(value.replace(/^(['"])(.*)\1$/, '$2'), 'colorScheme')
+      : '""';
     setter += `
-      ${colorSchemeNode}.setAttribute('${attr}'.replace('%s', colorScheme), ${value ? `${value}.replace('%s', colorScheme)` : '""'});`;
-  } else if (attribute !== '.%s') {
-    setter += `${colorSchemeNode}.setAttribute('${attribute}', colorScheme);`;
+      ${colorSchemeNode}.setAttribute(${interpolateScheme(attr, 'colorScheme')}, ${attributeValue});`;
+  } else if (!attribute.startsWith('.')) {
+    setter += `${colorSchemeNode}.setAttribute(${serializeScriptValue(attribute)}, colorScheme);`;
   }
 
   return (
@@ -122,9 +155,9 @@ export function buildInitColorSchemeScript(options?: InitColorSchemeScriptProps)
         __html: `(function() {
 try {
   let colorScheme = '';
-  const mode = localStorage.getItem('${modeStorageKey}') || '${defaultMode}';
-  const dark = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
-  const light = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
+  const mode = localStorage.getItem(${serializeScriptValue(modeStorageKey)}) || ${serializeScriptValue(defaultMode)};
+  const dark = localStorage.getItem(${serializeScriptValue(`${colorSchemeStorageKey}-dark`)}) || ${serializeScriptValue(defaultDarkColorScheme)};
+  const light = localStorage.getItem(${serializeScriptValue(`${colorSchemeStorageKey}-light`)}) || ${serializeScriptValue(defaultLightColorScheme)};
   if (mode === 'system') {
     // handle system mode
     const mql = window.matchMedia('(prefers-color-scheme: dark)');

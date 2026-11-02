@@ -1,6 +1,6 @@
 {
   "name": "@mui/stylis-plugin-rtl",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "A plugin for Material UI that provides RTL (right-to-left) support.",
   "license": "MIT",
@@ -31,11 +31,11 @@
     "attw": "attw --pack ./build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "cssjanus": "^2.3.1"
   },
   "devDependencies": {
-    "@types/node": "20.19.43",
+    "@types/node": "22.20.5",
     "@types/stylis": "4.2.7",
     "stylis": "4.4.0"
   },
@@ -46,9 +46,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts"

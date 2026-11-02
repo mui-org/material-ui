@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { AppType } from 'next/app';
-import { EmotionCache } from '@emotion/react';
+import type { AppType } from 'next/app';
+import type { EmotionCache } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import nextDocument from './nextDocument.cjs';
-import { EmotionCacheProviderProps } from './pagesRouterV13App';
+import type { EmotionCacheProviderProps } from './pagesRouterV13App';
 import createEmotionCache from './createCache';
+import escapeHtmlInCss from '../escapeHtmlInCss';
 
 const Document = nextDocument.default || nextDocument;
 
@@ -106,7 +107,7 @@ export async function documentGetInitialProps(
             if (!style.css.trim()) {
               return null;
             }
-            const isLayerOrderRule = style.css.startsWith('@layer') && !style.css.match(/\{.*\}/);
+            const isLayerOrderRule = style.css.startsWith('@layer') && !style.css.includes('{');
             return (
               <style
                 // If the style is a layer order rule, prefix with the cache key to let Emotion hydrate this node.
@@ -114,7 +115,7 @@ export async function documentGetInitialProps(
                 data-emotion={`${isLayerOrderRule ? `${cache.key} ` : ''}${style.key} ${style.ids.join(' ')}`}
                 key={style.key}
                 // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: style.css }}
+                dangerouslySetInnerHTML={{ __html: escapeHtmlInCss(style.css) }}
                 nonce={cache.nonce}
               />
             );

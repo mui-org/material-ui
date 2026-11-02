@@ -35,6 +35,11 @@ The following sections cover the most important theme variables:
 
 You can check out the [default theme section](/material-ui/customization/default-theme/) to view the default theme in full.
 
+:::warning
+Theme values are written into the stylesheet as they are.
+If you build a theme from user input, validate those values first, see [dynamic values in `sx`](/system/getting-started/the-sx-prop/#dynamic-values).
+:::
+
 ### Custom variables
 
 When using Material UI's theme with [MUI System](/system/getting-started/) or [any other styling solution](/material-ui/integrations/interoperability/), it can be convenient to add additional variables to the theme so you can use them everywhere.
@@ -80,7 +85,7 @@ declare module '@mui/material/styles' {
 }
 ```
 
-{{"demo": "CustomStyles.js"}}
+{{"component": "file://./demos/custom-styles/index.ts"}}
 
 To add extra variables to the `theme.palette`, see [palette customization](/material-ui/customization/palette/).
 
@@ -113,12 +118,12 @@ function DeepChild() {
 
 [You can nest](https://v6.mui.com/system/styles/advanced/#theme-nesting) multiple theme providers.
 
-{{"demo": "ThemeNesting.js"}}
+{{"component": "file://./demos/theme-nesting/index.ts"}}
 
 The inner theme will **override** the outer theme.
 You can extend the outer theme by providing a function:
 
-{{"demo": "ThemeNestingExtend.js"}}
+{{"component": "file://./demos/theme-nesting-extend/index.ts"}}
 
 ## CSS theme variables
 

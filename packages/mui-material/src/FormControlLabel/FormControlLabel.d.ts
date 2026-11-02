@@ -6,6 +6,8 @@ import Typography from '../Typography';
 import { FormControlLabelClasses } from './formControlLabelClasses';
 import { CreateSlotsAndSlotProps, SlotProps } from '../utils/types';
 
+export interface FormControlLabelTypographySlotPropsOverrides {}
+
 export interface FormControlLabelSlots {
   /**
    * The component that renders the label.
@@ -18,7 +20,11 @@ export interface FormControlLabelSlots {
 export type FormControlLabelSlotsAndSlotProps = CreateSlotsAndSlotProps<
   FormControlLabelSlots,
   {
-    typography: SlotProps<typeof Typography, {}, FormControlLabelProps>;
+    typography: SlotProps<
+      typeof Typography,
+      FormControlLabelTypographySlotPropsOverrides,
+      FormControlLabelProps
+    >;
   }
 >;
 
@@ -46,10 +52,6 @@ export interface FormControlLabelProps
    * If `true`, the label is rendered as it is passed without an additional typography node.
    */
   disableTypography?: boolean | undefined;
-  /**
-   * Pass a ref to the `input` element.
-   */
-  inputRef?: React.Ref<any> | undefined;
   /**
    * A text or an element to be used in an enclosing label element.
    */
@@ -87,12 +89,12 @@ export interface FormControlLabelProps
  *
  * Demos:
  *
- * - [Checkbox](https://mui.com/material-ui/react-checkbox/)
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
- * - [Switch](https://mui.com/material-ui/react-switch/)
+ * - [Checkbox](https://next.mui.com/material-ui/react-checkbox/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
+ * - [Switch](https://next.mui.com/material-ui/react-switch/)
  *
  * API:
  *
- * - [FormControlLabel API](https://mui.com/material-ui/api/form-control-label/)
+ * - [FormControlLabel API](https://next.mui.com/material-ui/api/form-control-label/)
  */
 export default function FormControlLabel(props: FormControlLabelProps): React.JSX.Element;

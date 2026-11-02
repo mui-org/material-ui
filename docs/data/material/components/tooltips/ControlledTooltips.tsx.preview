@@ -1,9 +1,0 @@
-<Tooltip
-  describeChild
-  open={open}
-  onClose={handleClose}
-  onOpen={handleOpen}
-  title="Add"
->
-  <Button>Controlled</Button>
-</Tooltip>

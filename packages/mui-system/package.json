@@ -1,6 +1,6 @@
 {
   "name": "@mui/system",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "MUI System is a set of CSS utilities to help you build custom designs more efficiently. It makes it possible to rapidly lay out custom designs.",
   "license": "MIT",
@@ -28,31 +28,29 @@
     "release": "pnpm build && pnpm publish",
     "test": "pnpm --workspace-root test:unit --project \"*:@mui/system\"",
     "typescript": "tsc -p tsconfig.json",
-    "typescript:module-augmentation": "node scripts/testModuleAugmentation.js",
     "attw": "attw --pack ./build --entrypoints \".\" \"Box\" \"styled\" \"useTheme\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7",
-    "@mui/private-theming": "workspace:^",
-    "@mui/styled-engine": "workspace:^",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
+    "@mui/private-theming": "workspace:*",
+    "@mui/styled-engine": "workspace:*",
     "@mui/types": "workspace:^",
-    "@mui/utils": "workspace:^",
+    "@mui/utils": "workspace:*",
     "clsx": "^2.1.1",
     "csstype": "^3.2.3",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
+    "@emotion/cache": "11.14.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@mui/system": "workspace:*",
     "@types/prop-types": "15.7.15",
-    "@types/react": "19.2.18",
-    "@types/sinon": "22.0.0",
-    "es-toolkit": "1.52.0",
-    "fast-glob": "3.3.3",
-    "react": "19.2.8",
+    "@types/react": "19.3.0",
+    "@types/sinon": "22.0.2",
+    "react": "19.3.1",
     "sinon": "22.1.0",
-    "styled-components": "6.5.3"
+    "styled-components": "6.6.0"
   },
   "peerDependencies": {
     "@emotion/react": "^11.5.0",
@@ -75,9 +73,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts",

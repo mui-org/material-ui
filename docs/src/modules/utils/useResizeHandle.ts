@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 const useResizeHandle = (
-  target: React.MutableRefObject<HTMLDivElement | null>,
+  target: React.RefObject<HTMLDivElement | null>,
   options?: {
     minWidth?: string;
     maxWidth?: string;
     onDragging?: (
-      target: React.MutableRefObject<HTMLDivElement>['current'],
+      target: React.RefObject<HTMLDivElement>['current'],
       length: number,
       dragOffset: number,
     ) => void;

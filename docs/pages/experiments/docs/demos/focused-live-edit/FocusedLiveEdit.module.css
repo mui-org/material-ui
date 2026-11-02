@@ -1,0 +1,6 @@
+.root {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: rgb(20 70 120);
+}

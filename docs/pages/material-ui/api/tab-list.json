@@ -80,7 +80,7 @@
   "themeDefaultProps": false,
   "muiName": "MuiTabList",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-lab/src/TabList/TabList.js",
+  "filename": "/packages/mui-lab/src/TabList/TabList.tsx",
   "inheritance": { "component": "Tabs", "pathname": "/material-ui/api/tabs/" },
   "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>"
 }

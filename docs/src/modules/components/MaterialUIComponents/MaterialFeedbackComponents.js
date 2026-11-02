@@ -13,16 +13,6 @@ const feedbackComponents = [
     noGuidelines: true,
   },
   {
-    name: 'Backdrop',
-    srcLight: '/static/material-ui/react-components/backdrop-light.png',
-    srcDark: '/static/material-ui/react-components/backdrop-dark.png',
-    link: '/material-ui/react-backdrop/',
-    md1: false,
-    md2: false,
-    md3: false,
-    noGuidelines: true,
-  },
-  {
     name: 'Dialog',
     srcLight: '/static/material-ui/react-components/dialog-light.png',
     srcDark: '/static/material-ui/react-components/dialog-dark.png',

@@ -1,6 +1,0 @@
-<ThemeProvider theme={outerTheme}>
-  <Checkbox defaultChecked />
-  <ThemeProvider theme={innerTheme}>
-    <Checkbox defaultChecked />
-  </ThemeProvider>
-</ThemeProvider>

@@ -103,7 +103,16 @@ const SelectIcon = styled(StyledSelectIcon, {
     const { ownerState } = props;
     return [styles.icon, ownerState.open && styles.iconOpen];
   },
-})({});
+})({
+  variants: [
+    {
+      props: ({ ownerState }) => ownerState.open,
+      style: {
+        transform: 'rotate(180deg)',
+      },
+    },
+  ],
+});
 
 const SelectNativeInput = styled('input', {
   shouldForwardProp: (prop) => slotShouldForwardProp(prop) && prop !== 'classes',
@@ -452,21 +461,6 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
 
   const childrenArray = React.Children.toArray(children);
 
-  // Support autofill.
-  const handleChange = (event) => {
-    const child = childrenArray.find((childItem) => childItem.props.value === event.target.value);
-
-    if (child === undefined) {
-      return;
-    }
-
-    setValueState(child.props.value);
-
-    if (onChange) {
-      onChange(event, child);
-    }
-  };
-
   const handleValueChange = (event, child, newValue) => {
     setValueState(newValue);
 
@@ -476,6 +470,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
       // https://github.com/mui/material-ui/issues/13485#issuecomment-676048492
       // Clone the event to not override `target` of the original event.
       const nativeEvent = event.nativeEvent || event;
+      // eslint-disable-next-line new-cap
       const clonedEvent = new nativeEvent.constructor(nativeEvent.type, nativeEvent);
 
       Object.defineProperty(clonedEvent, 'target', {
@@ -484,6 +479,19 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
       });
       onChange(clonedEvent, child);
     }
+  };
+
+  // Support autofill.
+  const handleChange = (event) => {
+    const child = childrenArray.find((childItem) =>
+      areEqualValues(event.target.value, childItem.props.value),
+    );
+
+    if (child === undefined) {
+      return;
+    }
+
+    handleValueChange(event, child, multiple ? [child.props.value] : child.props.value);
   };
 
   const handleItemClick = (child) => (event) => {
@@ -498,7 +506,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
 
     if (multiple) {
       newValue = Array.isArray(value) ? value.slice() : [];
-      const itemIndex = value.indexOf(child.props.value);
+      const itemIndex = value.findIndex((v) => areEqualValues(v, child.props.value));
       if (itemIndex === -1) {
         newValue.push(child.props.value);
       } else {

@@ -1,6 +1,6 @@
 {
   "name": "@mui/styled-engine",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "styled() API wrapper package for emotion.",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "attw": "attw --pack ./build --entrypoints \".\" \"GlobalStyles\" \"StyledEngineProvider\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "@emotion/cache": "^11.14.0",
     "@emotion/serialize": "^1.3.3",
     "@emotion/sheet": "^1.4.0",
@@ -43,8 +43,8 @@
     "@emotion/styled": "11.14.1",
     "@mui/styled-engine": "workspace:*",
     "@types/prop-types": "15.7.15",
-    "@types/react": "19.2.18",
-    "react": "19.2.8"
+    "@types/react": "19.3.0",
+    "react": "19.3.1"
   },
   "peerDependencies": {
     "@emotion/react": "^11.4.1",
@@ -63,9 +63,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts",

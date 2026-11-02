@@ -1,7 +1,8 @@
 'use client';
 import styleFunctionSx from '@mui/system/styleFunctionSx';
-import { unstable_createCssVarsProvider as createCssVarsProvider, SxProps } from '@mui/system';
-import { SupportedColorScheme, CssVarsTheme } from './createThemeWithVars';
+import type { SxProps } from '@mui/system';
+import { unstable_createCssVarsProvider as createCssVarsProvider } from '@mui/system';
+import type { SupportedColorScheme, CssVarsTheme } from './createThemeWithVars';
 import createTheme from './createTheme';
 import createTypography from './createTypography';
 import THEME_ID from './identifier';
@@ -13,7 +14,6 @@ const {
   getInitColorSchemeScript: deprecatedGetInitColorSchemeScript,
 } = createCssVarsProvider<SupportedColorScheme, typeof THEME_ID>({
   themeId: THEME_ID,
-  // @ts-ignore ignore module augmentation tests
   theme: () => createTheme({ cssVariables: true }),
   colorSchemeStorageKey: defaultConfig.colorSchemeStorageKey,
   modeStorageKey: defaultConfig.modeStorageKey,

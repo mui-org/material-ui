@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typescript:module-augmentation": "pnpm --workspace-root --filter \"./test/moduleAugmentation...\" -r run build && node testModuleAugmentation.ts"
+  },
+  "devDependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/material": "workspace:^",
+    "@mui/system": "workspace:^",
+    "@mui/types": "workspace:^",
+    "@types/react": "19.3.0",
+    "es-toolkit": "1.52.0",
+    "fast-glob": "3.3.3",
+    "react": "19.3.1"
+  }
+}

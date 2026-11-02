@@ -1,6 +1,6 @@
 {
   "name": "@mui/styled-engine-sc",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "styled() API wrapper package for styled-components.",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "typescript": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "@types/hoist-non-react-statics": "^3.3.7",
     "csstype": "^3.2.3",
     "hoist-non-react-statics": "^3.3.2",
@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@types/prop-types": "15.7.15",
-    "@types/react": "19.2.18",
-    "react": "19.2.8",
-    "styled-components": "6.5.3"
+    "@types/react": "19.3.0",
+    "react": "19.3.1",
+    "styled-components": "6.6.0"
   },
   "peerDependencies": {
     "styled-components": "^6.0.0"
@@ -49,9 +49,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts",

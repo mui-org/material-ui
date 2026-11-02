@@ -3,16 +3,17 @@ import * as React from 'react';
 import { act, createRenderer, isJsdom, screen } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@mui/material/styles';
 import { brandingLightTheme } from '../branding';
-import DemoContext, { type DemoContextValue } from '../DemoContext';
+import DemoContext from '../DemoContext';
+import type { DemoContextValue } from '../DemoContext';
 import PageContext from '../PageContext';
 import { OpenInMUIChatButton } from './OpenInMUIChatButton';
-import type { DemoData } from './sandbox/types';
+import type { DemoData } from '../sandbox/types';
 
 const mocks = vi.hoisted(() => ({
   openSandbox: vi.fn(async () => {}),
 }));
 
-vi.mock('./sandbox/MuiChat', () => ({
+vi.mock('../sandbox/MuiChat', () => ({
   createMuiChat: () => ({ openSandbox: mocks.openSandbox }),
 }));
 
@@ -85,7 +86,7 @@ describe.skipIf(!isJsdom())('OpenInMUIChatButton', () => {
     await user.click(chatButton);
     expect(chatButton).to.have.property('disabled', true);
 
-    act(() => chatButton.blur());
+    act(() => document.documentElement.focus());
     expect(document.activeElement).not.to.equal(chatButton);
 
     await act(async () => deferred.resolve());
@@ -103,7 +104,9 @@ describe.skipIf(!isJsdom())('OpenInMUIChatButton', () => {
     await user.click(chatButton);
     expect(chatButton).to.have.property('disabled', true);
 
-    act(() => chatButton.blur());
+    act(() => document.documentElement.focus());
+    expect(document.activeElement).not.to.equal(chatButton);
+
     await act(async () => deferred.reject(new Error('Unable to open MUI Chat')));
 
     expect(chatButton).to.have.property('disabled', false);

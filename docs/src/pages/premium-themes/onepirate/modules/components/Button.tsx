@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import MuiButton, { ButtonProps } from '@mui/material/Button';
+import type { ButtonProps } from '@mui/material/Button';
+import MuiButton from '@mui/material/Button';
 
 const ButtonRoot = styled(MuiButton)(({ theme }) => ({
   borderRadius: 0,

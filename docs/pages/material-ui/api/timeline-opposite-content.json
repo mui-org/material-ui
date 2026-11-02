@@ -51,7 +51,7 @@
   "themeDefaultProps": true,
   "muiName": "MuiTimelineOppositeContent",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-lab/src/TimelineOppositeContent/TimelineOppositeContent.js",
+  "filename": "/packages/mui-lab/src/TimelineOppositeContent/TimelineOppositeContent.tsx",
   "inheritance": { "component": "Typography", "pathname": "/material-ui/api/typography/" },
   "demos": "<ul><li><a href=\"/material-ui/react-timeline/\">Timeline</a></li></ul>"
 }

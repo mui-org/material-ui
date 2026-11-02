@@ -103,7 +103,7 @@ function getCache(injectFirst?: boolean, enableCssLayer?: boolean) {
     if (enableCssLayer) {
       const prevInsert = emotionCache.insert;
       (emotionCache as any).insert = (...args: any[]) => {
-        if (!args[1].styles.match(/^@layer\s+[^{]*$/)) {
+        if (!args[1].styles.match(/^@layer\s[^{]*$/)) {
           // avoid nested @layer
           args[1].styles = `@layer mui {${args[1].styles}}`;
         }

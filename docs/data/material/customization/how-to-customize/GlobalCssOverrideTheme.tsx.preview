@@ -1,8 +1,0 @@
-<React.Fragment>
-  <GlobalStyles
-    styles={(theme) => ({
-      h1: { color: theme.palette.primary.main },
-    })}
-  />
-  <h1>Grey h1 element</h1>
-</React.Fragment>

@@ -1,4 +1,4 @@
-import * as doctrine from 'doctrine';
+import type * as doctrine from 'doctrine';
 import * as recast from 'recast';
 import type { PropTypeDescriptor } from 'react-docgen';
 import { escapeCell, removeNewLines } from '../buildApi';
@@ -6,8 +6,8 @@ import {
   isElementTypeAcceptingRefProp,
   isElementAcceptingRefProp,
 } from './generatePropTypeDescription';
-import { DescribeablePropDescriptor } from './createDescribeableProp';
-import { SeeMore } from '../types/utils.types';
+import type { DescribeablePropDescriptor } from './createDescribeableProp';
+import type { SeeMore } from '../types/utils.types';
 
 function resolveType(type: NonNullable<doctrine.Tag['type']>): string {
   if (type.type === 'AllLiteral') {

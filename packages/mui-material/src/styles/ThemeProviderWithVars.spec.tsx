@@ -1,11 +1,5 @@
-import {
-  extendTheme,
-  ThemeProvider,
-  styled,
-  useTheme,
-  Overlays,
-  StorageManager,
-} from '@mui/material/styles';
+import type { Overlays, StorageManager } from '@mui/material/styles';
+import { extendTheme, ThemeProvider, styled, useTheme } from '@mui/material/styles';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 
 const customTheme = extendTheme({
@@ -22,7 +16,7 @@ const customTheme = extendTheme({
           darkColor: '',
           defaultBg: '',
         },
-        // @ts-expect-error
+        // @ts-expect-error: Palette mode accepts light or dark, not an empty string.
         mode: '',
         getContrastText: () => '',
         tonalOffset: 1,

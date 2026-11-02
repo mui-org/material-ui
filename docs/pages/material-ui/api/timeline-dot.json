@@ -89,7 +89,7 @@
   "themeDefaultProps": true,
   "muiName": "MuiTimelineDot",
   "forwardsRefTo": "HTMLSpanElement",
-  "filename": "/packages/mui-lab/src/TimelineDot/TimelineDot.js",
+  "filename": "/packages/mui-lab/src/TimelineDot/TimelineDot.tsx",
   "inheritance": null,
   "demos": "<ul><li><a href=\"/material-ui/react-timeline/\">Timeline</a></li></ul>"
 }

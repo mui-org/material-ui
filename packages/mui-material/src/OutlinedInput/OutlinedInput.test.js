@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { createRenderer } from '@mui/internal-test-utils';
+import { act, createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import OutlinedInput, { outlinedInputClasses as classes } from '@mui/material/OutlinedInput';
 import InputBase from '@mui/material/InputBase';
@@ -100,5 +100,22 @@ describe('<OutlinedInput />', () => {
         </ThemeProvider>,
       ),
     ).not.to.throw();
+  });
+  describe('theme.focusVisible', () => {
+    // The notched outline already recolors on focus, so the theme ring would be a second indicator.
+    it.skipIf(isJsdom())('does not render the ring on focus', async () => {
+      render(
+        <ThemeProvider theme={createTheme({ focusVisible: true })}>
+          <OutlinedInput data-testid="root" />
+        </ThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+    });
   });
 });

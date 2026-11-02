@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { createRenderer, screen } from '@mui/internal-test-utils';
-import { styled } from '@mui/material/styles';
+import { act, createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import FilledInput, { filledInputClasses as classes } from '@mui/material/FilledInput';
 import InputBase from '@mui/material/InputBase';
 import describeConformance from '../../test/describeConformance';
@@ -107,5 +107,45 @@ describe('<FilledInput />', () => {
   it('should not forward the notched prop to the DOM', () => {
     render(<FilledInput notched data-testid="root" />);
     expect(screen.getByTestId('root')).not.to.have.attribute('notched');
+  });
+
+  describe('theme.focusVisible', () => {
+    const theme = createTheme({ focusVisible: true });
+
+    it.skipIf(isJsdom())('renders the ring on focus when the underline is disabled', async () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <FilledInput disableUnderline data-testid="root" />
+        </ThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({
+        outlineStyle: 'solid',
+        outlineWidth: '2px',
+        outlineOffset: '2px',
+      });
+    });
+
+    it.skipIf(isJsdom())('does not render the ring when the underline is shown', async () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <FilledInput data-testid="root" />
+        </ThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+    });
   });
 });

@@ -1,5 +1,0 @@
-<TextareaAutosize
-  aria-label="empty textarea"
-  placeholder="Empty"
-  style={{ width: 200 }}
-/>

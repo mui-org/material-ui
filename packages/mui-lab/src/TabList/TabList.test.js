@@ -9,7 +9,6 @@ import describeConformance from '../../test/describeConformance';
 describe('<TabList />', () => {
   const { render } = createRenderer();
 
-  // @ts-ignore mui name does not exist for this component
   describeConformance(<TabList />, () => ({
     classes,
     inheritComponent: Tabs,

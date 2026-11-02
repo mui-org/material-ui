@@ -6,7 +6,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 <AvatarGroup variant="rounded" />;
 <AvatarGroup variant="square" />;
 
-// @ts-expect-error
+// @ts-expect-error: unknown is not a supported AvatarGroup variant.
 <AvatarGroup variant="unknown" />;
 
 <AvatarGroup
@@ -15,3 +15,8 @@ import AvatarGroup from '@mui/material/AvatarGroup';
     return <div>{surplus}</div>;
   }}
 />;
+
+<AvatarGroup slotProps={{ surplus: { variant: 'rounded', className: 'x' } }} />;
+<AvatarGroup slotProps={{ surplus: (ownerState) => ({ variant: ownerState.variant }) }} />;
+// @ts-expect-error: The surplus Avatar slot rejects nonExistentProp.
+<AvatarGroup slotProps={{ surplus: { nonExistentProp: true } }} />;

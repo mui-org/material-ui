@@ -1,7 +1,7 @@
 {
   "name": "next-webpack5",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "pnpm next build && concurrently --success first --kill-others \"pnpm next start\" \"node testNextWebpack5Integration\""
   },

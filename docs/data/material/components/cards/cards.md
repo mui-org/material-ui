@@ -25,7 +25,7 @@ The Material UI Card component includes several complementary utility component
 - Card Actions: an optional wrapper that groups a set of buttons.
 - Card Action Area: an optional wrapper that allows users to interact with the specified area of the Card.
 
-{{"demo": "BasicCard.js", "bg": true}}
+{{"component": "file://./demos/basic/index.ts", "bg": true}}
 
 ## Basics
 
@@ -42,33 +42,33 @@ Although cards can support multiple actions, UI controls, and an overflow menu, 
 
 Set `variant="outlined"` to render an outlined card.
 
-{{"demo": "OutlinedCard.js", "bg": true}}
+{{"component": "file://./demos/outlined/index.ts", "bg": true}}
 
 ## Complex Interaction
 
 On desktop, card content can expand. (Click the downward chevron to view the recipe.)
 
-{{"demo": "RecipeReviewCard.js", "bg": true}}
+{{"component": "file://./demos/recipe-review/index.ts", "bg": true}}
 
 ## Media
 
 Example of a card using an image to reinforce the content.
 
-{{"demo": "MediaCard.js", "bg": true}}
+{{"component": "file://./demos/media/index.ts", "bg": true}}
 
 By default, we use the combination of a `<div>` element and a _background image_ to display the media. It can be problematic in some situations, for example, you might want to display a video or a responsive image. Use the `component` prop for these use cases:
 
-{{"demo": "ImgMediaCard.js", "bg": true}}
+{{"component": "file://./demos/img-media/index.ts", "bg": true}}
 
 ## Primary action
 
 Often a card allow users to interact with the entirety of its surface to trigger its main action, be it an expansion, a link to another screen or some other behavior. The action area of the card can be specified by wrapping its contents in a `CardActionArea` component.
 
-{{"demo": "ActionAreaCard.js", "bg": true}}
+{{"component": "file://./demos/action-area/index.ts", "bg": true}}
 
 A card can also offer supplemental actions which should stand detached from the main action area in order to avoid event overlap.
 
-{{"demo": "MultiActionAreaCard.js", "bg": true}}
+{{"component": "file://./demos/multi-action-area/index.ts", "bg": true}}
 
 ## UI Controls
 
@@ -76,12 +76,12 @@ Supplemental actions within the card are explicitly called out using icons, text
 
 Here's an example of a media control card.
 
-{{"demo": "MediaControlCard.js", "bg": true}}
+{{"component": "file://./demos/media-control/index.ts", "bg": true}}
 
 ## Active state styles
 
 To customize a Card's styles when it's in an active state, you can attach a `data-active` attribute to the Card Action Area component and apply styles with the `&[data-active]` selector, as shown below:
 
-{{"demo": "SelectActionCard.js", "bg": true}}
+{{"component": "file://./demos/select-action/index.ts", "bg": true}}
 
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/primitive/card).

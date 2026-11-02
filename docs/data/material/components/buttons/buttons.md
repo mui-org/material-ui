@@ -25,7 +25,7 @@ Buttons communicate actions that users can take. They are typically placed throu
 
 The `Button` comes with three variants: text (default), contained, and outlined.
 
-{{"demo": "BasicButtons.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ### Text button
 
@@ -33,7 +33,7 @@ The `Button` comes with three variants: text (default), contained, and outlined.
 are typically used for less-pronounced actions, including those located: in dialogs, in cards.
 In cards, text buttons help maintain an emphasis on card content.
 
-{{"demo": "TextButtons.js"}}
+{{"component": "file://./demos/text/index.ts"}}
 
 ### Contained button
 
@@ -41,11 +41,11 @@ In cards, text buttons help maintain an emphasis on card content.
 are high-emphasis, distinguished by their use of elevation and fill.
 They contain actions that are primary to your app.
 
-{{"demo": "ContainedButtons.js"}}
+{{"component": "file://./demos/contained/index.ts"}}
 
 You can remove the elevation with the `disableElevation` prop.
 
-{{"demo": "DisableElevation.js"}}
+{{"component": "file://./demos/disable-elevation/index.ts"}}
 
 ### Outlined button
 
@@ -55,7 +55,7 @@ They contain actions that are important but aren't the primary action in an app.
 Outlined buttons are also a lower emphasis alternative to contained buttons,
 or a higher emphasis alternative to text buttons.
 
-{{"demo": "OutlinedButtons.js"}}
+{{"component": "file://./demos/outlined/index.ts"}}
 
 ## Handling clicks
 
@@ -75,7 +75,7 @@ Note that the documentation [avoids](/material-ui/guides/api/#native-properties)
 
 ## Color
 
-{{"demo": "ColorButtons.js"}}
+{{"component": "file://./demos/color/index.ts"}}
 
 In addition to using the default button colors, you can add custom ones, or disable any you don't need. See the [Adding new colors](/material-ui/customization/palette/#custom-colors) examples for more info.
 
@@ -83,13 +83,13 @@ In addition to using the default button colors, you can add custom ones, or disa
 
 For larger or smaller buttons, use the `size` prop.
 
-{{"demo": "ButtonSizes.js"}}
+{{"component": "file://./demos/sizes/index.ts"}}
 
 ## Buttons with icons and label
 
 Sometimes you might want to have icons for certain buttons to enhance the UX of the application as we recognize logos more easily than plain text. For example, if you have a delete button you can label it with a dustbin icon.
 
-{{"demo": "IconLabelButtons.js"}}
+{{"component": "file://./demos/icon-label/index.ts"}}
 
 ## Icon button
 
@@ -98,47 +98,47 @@ Icon buttons are commonly found in app bars and toolbars.
 Icons are also appropriate for toggle buttons that allow a single choice to be selected or
 deselected, such as adding or removing a star to an item.
 
-{{"demo": "IconButtons.js"}}
+{{"component": "file://./demos/icon/index.ts"}}
 
 ### Sizes
 
 For larger or smaller icon buttons, use the `size` prop.
 
-{{"demo": "IconButtonSizes.js"}}
+{{"component": "file://./demos/icon-sizes/index.ts"}}
 
 ### Colors
 
 Use `color` prop to apply theme color palette to component.
 
-{{"demo": "IconButtonColors.js"}}
+{{"component": "file://./demos/icon-colors/index.ts"}}
 
 ### Loading
 
 Starting from v6.4.0, use `loading` prop to set icon buttons in a loading state and disable interactions.
 
-{{"demo": "LoadingIconButton.js"}}
+{{"component": "file://./demos/loading-icon/index.ts"}}
 
 ### Badge
 
 You can use the [`Badge`](/material-ui/react-badge/) component to add a badge to an `IconButton`.
 
-{{"demo": "IconButtonWithBadge.js"}}
+{{"component": "file://./demos/icon-with-badge/index.ts"}}
 
 ## File upload
 
 To create a file upload button, turn the button into a label using `component="label"` and then create a visually-hidden input with type `file`.
 
-{{"demo": "InputFileUpload.js"}}
+{{"component": "file://./demos/input-file-upload/index.ts"}}
 
 ## Loading
 
 Starting from v6.4.0, use the `loading` prop to set buttons in a loading state and disable interactions.
 
-{{"demo": "LoadingButtons.js"}}
+{{"component": "file://./demos/loading/index.ts"}}
 
 Toggle the loading switch to see the transition between the different states.
 
-{{"demo": "LoadingButtonsTransition.js"}}
+{{"component": "file://./demos/loading-transition/index.ts"}}
 
 :::warning
 When the `loading` prop is set to `boolean`, the loading wrapper is always present in the DOM to prevent a [Google Translation Crash](https://github.com/mui/material-ui/issues/27853).
@@ -170,7 +170,7 @@ const CustomButton = React.forwardRef(function CustomButton(props, ref) {
 Here are some examples of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedButtons.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/customized/index.ts", "collapseToEmpty": true}}
 
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/primitive/button).
 
@@ -179,7 +179,7 @@ You can learn more about this in the [overrides documentation page](/material-ui
 The Text Buttons, Contained Buttons, Floating Action Buttons and Icon Buttons are built on top of the same component: the `ButtonBase`.
 You can take advantage of this lower-level component to build custom interactions.
 
-{{"demo": "ButtonBaseDemo.js"}}
+{{"component": "file://./demos/base-demo/index.ts"}}
 
 ## Third-party routing library
 

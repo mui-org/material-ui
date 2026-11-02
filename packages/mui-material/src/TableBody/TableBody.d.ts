@@ -30,11 +30,11 @@ export interface TableBodyTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableBody API](https://mui.com/material-ui/api/table-body/)
+ * - [TableBody API](https://next.mui.com/material-ui/api/table-body/)
  */
 declare const TableBody: OverridableComponent<TableBodyTypeMap>;
 

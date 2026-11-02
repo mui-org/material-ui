@@ -1,9 +1,11 @@
 'use client';
 import * as React from 'react';
-import createCache, { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
+import type { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
+import createCache from '@emotion/cache';
 import { CacheProvider as DefaultCacheProvider } from '@emotion/react';
 import { useServerInsertedHTML } from './nextNavigation.cjs';
 import { useRouter as usePagesRouter } from '../nextCompatRouter.cjs';
+import escapeHtmlInCss from '../escapeHtmlInCss';
 
 export type AppRouterCacheProviderProps = {
   /**
@@ -53,7 +55,7 @@ export default function AppRouterCacheProvider(props: AppRouterCacheProviderProp
     let inserted: { name: string; isGlobal: boolean }[] = [];
     // Override the insert method to support streaming SSR with flush().
     cache.insert = (...args) => {
-      if (options?.enableCssLayer && !args[1].styles.match(/^@layer\s+[^{]*$/)) {
+      if (options?.enableCssLayer && !args[1].styles.match(/^@layer\s[^{]*$/)) {
         args[1].styles = `@layer mui {${args[1].styles}}`;
       }
       const [selector, serialized] = args;
@@ -107,7 +109,7 @@ export default function AppRouterCacheProvider(props: AppRouterCacheProviderProp
             key={name}
             data-emotion={`${registry.cache.key}-global ${name}`}
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: style }}
+            dangerouslySetInnerHTML={{ __html: escapeHtmlInCss(style) }}
           />
         ))}
         {styles && (
@@ -115,7 +117,7 @@ export default function AppRouterCacheProvider(props: AppRouterCacheProviderProp
             nonce={options?.nonce}
             data-emotion={dataEmotionAttribute}
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: styles }}
+            dangerouslySetInnerHTML={{ __html: escapeHtmlInCss(styles) }}
           />
         )}
       </React.Fragment>

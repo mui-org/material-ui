@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Grid';
 import { InfoCard } from '@mui/internal-core-docs/InfoCard';
+import LayersRoundedIcon from '@mui/icons-material/LayersRounded';
 import HighlightAltRoundedIcon from '@mui/icons-material/HighlightAltRounded';
 import CssRoundedIcon from '@mui/icons-material/CssRounded';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
@@ -12,6 +13,11 @@ import ZoomOutMapRoundedIcon from '@mui/icons-material/ZoomOutMapRounded';
 import DevicesOtherRoundedIcon from '@mui/icons-material/DevicesOtherRounded';
 
 const utilComponents = [
+  {
+    title: 'Backdrop',
+    link: '/material-ui/react-backdrop/',
+    icon: <LayersRoundedIcon color="primary" />,
+  },
   {
     title: 'Click-Away Listener',
     link: '/material-ui/react-click-away-listener/',

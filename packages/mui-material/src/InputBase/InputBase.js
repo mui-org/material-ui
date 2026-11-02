@@ -111,15 +111,9 @@ export const InputBaseRoot = styled('div', {
     },
     variants: [
       {
-        props: ({ ownerState }) => ownerState.multiline,
-        style: {
-          padding: '4px 0 5px',
-        },
-      },
-      {
-        props: ({ ownerState, size }) => ownerState.multiline && size === 'small',
-        style: {
-          paddingTop: 1,
+        props: { internalDisabledThemeFocusVisible: false },
+        style: theme.focusVisible && {
+          [`&.${inputBaseClasses.focused}`]: theme.focusVisible,
         },
       },
       {
@@ -230,8 +224,6 @@ export const InputBaseInput = styled('input', {
           style: {
             height: 'auto',
             resize: 'none',
-            padding: 0,
-            paddingTop: 0,
           },
         },
         {
@@ -276,8 +268,11 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     fullWidth = false,
     id,
     inputComponent = 'input',
-    inputProps: inputPropsProp = {},
+    inputProps: inputPropsBase,
     inputRef: inputRefProp,
+    /* eslint-disable react/prop-types */
+    internalDisabledThemeFocusVisible = false,
+    /* eslint-enable react/prop-types */
     margin,
     maxRows,
     minRows,
@@ -302,6 +297,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     ...other
   } = props;
 
+  const inputPropsProp = { ...inputPropsBase, ...slotProps.input };
   const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
   const { current: isControlled } = React.useRef(value != null);
 
@@ -530,6 +526,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     color: fcs.color || 'primary',
     disabled: fcs.disabled,
     endAdornment,
+    internalDisabledThemeFocusVisible,
     error: fcs.error,
     focused: fcs.focused,
     formControl: muiFormControl,
@@ -547,7 +544,6 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
   const rootProps = slotProps.root || {};
 
   const Input = slots.input || InputBaseInput;
-  inputProps = { ...inputProps, ...slotProps.input };
 
   return (
     <React.Fragment>

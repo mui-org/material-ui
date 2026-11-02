@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "tsc -p tsconfig.json && tsc -p tsconfig.json --module commonjs --moduleResolution node && tsc -p tsconfig.json --module esnext --moduleResolution bundler"
+  },
+  "devDependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/material": "workspace:^",
+    "@types/react": "19.3.0",
+    "react": "19.3.1",
+    "typescript": "5.9.3"
+  }
+}

@@ -17,7 +17,7 @@
     "onClose": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(event: React.SyntheticEvent<any> | Event, reason: string) => void",
+        "type": "function(event: React.SyntheticEvent<any> | Event | null, reason: string) => void",
         "describedArgs": ["event", "reason"]
       }
     },

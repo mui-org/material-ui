@@ -1,2 +1,0 @@
-<DemoPaper square={false}>rounded corners</DemoPaper>
-<DemoPaper square>square corners</DemoPaper>

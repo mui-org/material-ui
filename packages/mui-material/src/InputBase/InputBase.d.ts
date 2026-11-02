@@ -242,10 +242,10 @@ export interface InputBaseComponentProps extends React.HTMLAttributes<
  *
  * Demos:
  *
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [InputBase API](https://mui.com/material-ui/api/input-base/)
+ * - [InputBase API](https://next.mui.com/material-ui/api/input-base/)
  */
 export default function InputBase(props: InputBaseProps): React.JSX.Element;

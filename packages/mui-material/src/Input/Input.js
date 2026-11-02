@@ -19,6 +19,7 @@ import {
   InputBaseRoot,
   InputBaseInput,
 } from '../InputBase/InputBase';
+import { applyInsetFocusVisible } from '../styles/focusVisible';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, disableUnderline } = ownerState;
@@ -67,6 +68,14 @@ const InputRoot = styled(InputBaseRoot, {
             [`label + &, .${inputLabelClasses.root} + &`]: {
               marginTop: 16,
             },
+          },
+        },
+        {
+          props: ({ ownerState }) => ownerState.disableUnderline && theme.focusVisible,
+          style: {
+            // prevent indicator too close to the label in TextField
+            ...applyInsetFocusVisible(1),
+            paddingInline: 4,
           },
         },
         {
@@ -172,6 +181,7 @@ const Input = React.forwardRef(function Input(inProps, ref) {
       slotProps={componentsProps}
       fullWidth={fullWidth}
       inputComponent={inputComponent}
+      internalDisabledThemeFocusVisible={!disableUnderline}
       multiline={multiline}
       ref={ref}
       type={type}

@@ -1587,4 +1587,18 @@ describe('<Tooltip />', () => {
       expect(screen.getByTestId('popper')).to.have.class('my-class');
     });
   });
+
+  it('should apply the popperClose class when closed', () => {
+    const { setProps } = render(
+      <Tooltip title="Hello World" open={false} slotProps={{ popper: { keepMounted: true } }}>
+        <button type="button">Hello World</button>
+      </Tooltip>,
+    );
+
+    expect(document.querySelector(`.${classes.popper}`)).to.have.class(classes.popperClose);
+
+    setProps({ open: true });
+
+    expect(document.querySelector(`.${classes.popper}`)).not.to.have.class(classes.popperClose);
+  });
 });

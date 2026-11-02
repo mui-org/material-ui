@@ -1,0 +1,14 @@
+{
+  "axe": "docs/data/material/components/text-fields/text-fields.a11y.json",
+  "criteria": {
+    "1.3.5": {},
+    "1.4.3": { "responsibility": "Component" },
+    "1.4.11": { "group": "Manual" },
+    "2.4.7": { "responsibility": "Component" },
+    "3.3.1": {},
+    "3.3.2": { "flagged": true },
+    "3.3.3": {},
+    "4.1.3": {}
+  },
+  "notApplicable": ["1.1.1"]
+}

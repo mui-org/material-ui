@@ -9,7 +9,7 @@ This is especially useful for one-off components with custom designs.
 
 The following code samples illustrate the difference between styled-components and `sx`:
 
-{{"demo": "Why.js", "bg": true, "defaultCodeOpen": false}}
+{{"component": "file://./demos/why/index.ts", "bg": true, "collapseToEmpty": true}}
 
 1. Using the styled-components API:
 
@@ -120,7 +120,7 @@ Visit [the `sx` prop page](/system/getting-started/the-sx-prop/) for complete de
 The following demo shows how to use the `sx` prop to apply custom styles and create a complex UI component using the `Box` wrapper alone.
 Resize the window to see the responsive breakpoints:
 
-{{"demo": "Demo.js", "bg": true, "defaultCodeOpen": true}}
+{{"component": "file://./demos/demo/index.ts", "bg": true, "initialExpanded": true}}
 
 ## When to use MUI System
 
@@ -280,7 +280,7 @@ For example, `width: { lg: 100 }` is equivalent to `theme.breakpoints.up('lg')`.
 
 The following demo shows how to define a set of breakpoints using the object syntax:
 
-{{"demo": "BreakpointsAsObject.js"}}
+{{"component": "file://./demos/breakpoints-as-object/index.ts"}}
 
 :::info
 📣 Starting from v6, the object structure supports [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries) shorthand with `@`.
@@ -293,14 +293,14 @@ The shorthand syntax is `@{breakpoint}/{container}`:
 - **breakpoint**: a number for `px` unit or a breakpoint key (e.g. `sm`, `md`, `lg`, `xl` for default breakpoints) or a valid CSS value (e.g. `40em`).
 - **container** (optional): the name of the [containment context](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries#naming_containment_contexts).
 
-{{"demo": "ContainerQueries.js"}}
+{{"component": "file://./demos/container-queries/index.ts"}}
 
 #### Breakpoints as an array
 
 The second option is to define your breakpoints as an array, from smallest to largest.
 Here's what that looks like:
 
-{{"demo": "BreakpointsAsArray.js"}}
+{{"component": "file://./demos/breakpoints-as-array/index.ts"}}
 
 :::success
 This option should only be considered when the theme has a limited number of breakpoints, for example 3.
@@ -375,4 +375,4 @@ declare module '@mui/material/styles' {
 If you wish to use the theme for a CSS property that is not supported natively by MUI System, then you can use a function as the value, in which you can access the theme object.
 The following demo shows how this works:
 
-{{"demo": "ValueAsFunction.js"}}
+{{"component": "file://./demos/value-as-function/index.ts"}}

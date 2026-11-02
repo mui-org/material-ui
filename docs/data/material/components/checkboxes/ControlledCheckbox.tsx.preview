@@ -1,7 +1,0 @@
-<Checkbox
-  checked={checked}
-  onChange={handleChange}
-  slotProps={{
-    input: { 'aria-label': 'controlled' },
-  }}
-/>

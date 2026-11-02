@@ -1,5 +1,5 @@
 'use client';
-import * as React from 'react';
+import type * as React from 'react';
 import PropTypes from 'prop-types';
 import ClassNameGenerator from '@mui/utils/ClassNameGenerator';
 import type { OverridableComponent, OverrideProps } from '@mui/types';

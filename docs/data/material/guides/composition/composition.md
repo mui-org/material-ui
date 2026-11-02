@@ -20,7 +20,7 @@ const WrappedIcon = (props) => <Icon {...props} />;
 WrappedIcon.muiName = Icon.muiName;
 ```
 
-{{"demo": "Composition.js"}}
+{{"component": "file://./demos/composition/index.ts"}}
 
 ### Forwarding slot props
 

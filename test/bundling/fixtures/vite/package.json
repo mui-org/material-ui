@@ -1,7 +1,7 @@
 {
   "name": "vite",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "prestart": "node ../../scripts/createFixture.js vite",
     "start": "pnpm vite build && concurrently --success first --kill-others \"pnpm server\" \"node testViteIntegration\"",

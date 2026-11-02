@@ -39,13 +39,15 @@ SimpleSpeedDial.propTypes = {
 
 function Directions() {
   return (
-    <Box sx={{ position: 'relative', height: 360, width: 400 }}>
-      {['up', 'down'].map((direction) => (
+    <Box sx={{ position: 'relative', height: 360, width: 560 }}>
+      {['up', 'down', 'left', 'right'].map((direction) => (
         <SimpleSpeedDial
           sx={{
             position: 'absolute',
             ...(direction === 'up' && { bottom: 0, right: 0 }),
             ...(direction === 'down' && { top: 0, left: 0 }),
+            ...(direction === 'left' && { top: 0, right: 0 }),
+            ...(direction === 'right' && { bottom: 0, left: 0 }),
           }}
           key={direction}
           ariaLabel={direction}

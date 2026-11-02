@@ -1,6 +1,5 @@
 const templateMap = new Map<string, { files: Record<string, string>; codeVariant: 'TS' | 'JS' }>();
 let sharedTheme: { files: Record<string, string>; codeVariant: 'TS' | 'JS' } | null = null;
-// @ts-ignore
 const req = require.context(
   '../../../data/material/getting-started/templates/?raw',
   true,

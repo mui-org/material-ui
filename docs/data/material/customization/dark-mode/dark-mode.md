@@ -32,7 +32,7 @@ export default function App() {
 
 Adding `mode: 'dark'` to the `createTheme()` helper modifies several palette values, as shown in the following demo:
 
-{{"demo": "DarkTheme.js", "bg": "inline", "hideToolbar": true}}
+{{"component": "file://./demos/dark-theme/index.ts", "bg": "inline", "hideToolbar": true}}
 
 Adding `<CssBaseline />` inside of the `<ThemeProvider>` component will also enable dark mode for the app's background.
 
@@ -124,7 +124,7 @@ To give your users a way to toggle between modes for [built-in support](#built-i
 The `mode` is always `undefined` on first render, so make sure to handle this case as shown in the demo below—otherwise you may encounter a hydration mismatch error.
 :::
 
-{{"demo": "ToggleColorMode.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/toggle-color-mode/index.ts", "collapseToEmpty": true}}
 
 ## Storage manager
 

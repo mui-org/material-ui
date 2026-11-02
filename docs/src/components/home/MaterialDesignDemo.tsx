@@ -1,7 +1,8 @@
 import * as React from 'react';
 import MuiChip from '@mui/material/Chip';
 import MuiCardMedia from '@mui/material/CardMedia';
-import MuiCard, { CardProps } from '@mui/material/Card';
+import type { CardProps } from '@mui/material/Card';
+import MuiCard from '@mui/material/Card';
 import MuiSwitch from '@mui/material/Switch';
 import MuiTypography from '@mui/material/Typography';
 import MuiStack from '@mui/material/Stack';

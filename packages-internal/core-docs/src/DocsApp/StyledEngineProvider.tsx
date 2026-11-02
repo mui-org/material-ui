@@ -5,58 +5,40 @@ import { prefixer } from 'stylis';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { ThemeOptionsContext } from '../ThemeContext';
 
+type EmotionCache = ReturnType<typeof createCache>;
+
 type StyledEngineProviderProps = {
-  cacheLtr: ReturnType<typeof createCache>;
+  cacheLtr: EmotionCache;
   children: React.ReactNode;
 };
 
-type RtlBundle = typeof import('../utils/rtlBundle');
-type RtlState = {
-  bundle: RtlBundle;
-  cacheRtl: ReturnType<typeof createCache>;
-};
-
-let rtlPromise: Promise<RtlState> | undefined;
-function loadRtl() {
-  if (!rtlPromise) {
-    rtlPromise = import('../utils/rtlBundle').then((bundle) => ({
-      bundle,
-      cacheRtl: createCache({
-        key: 'rtl',
-        prepend: true,
-        enableCssLayer: true,
-        stylisPlugins: [prefixer, bundle.rtlPlugin],
-      }),
-    }));
-  }
-  return rtlPromise;
+let rtlCachePromise: Promise<EmotionCache> | undefined;
+function loadRtlCache() {
+  rtlCachePromise ??= import('@mui/stylis-plugin-rtl').then(({ default: rtlPlugin }) =>
+    createCache({
+      key: 'rtl',
+      prepend: true,
+      enableCssLayer: true,
+      stylisPlugins: [prefixer, rtlPlugin],
+    }),
+  );
+  return rtlCachePromise;
 }
 
 export default function StyledEngineProvider(props: StyledEngineProviderProps) {
   const { children, cacheLtr } = props;
   const { direction } = React.useContext(ThemeOptionsContext);
   const rtl = direction === 'rtl';
-  const [rtlState, setRtlState] = React.useState<RtlState | null>(null);
+  const [cacheRtl, setCacheRtl] = React.useState<EmotionCache | null>(null);
 
   React.useEffect(() => {
-    if (rtl && !rtlState) {
-      loadRtl().then(setRtlState);
+    if (rtl && !cacheRtl) {
+      loadRtlCache().then(setCacheRtl);
     }
-  }, [rtl, rtlState]);
+  }, [rtl, cacheRtl]);
 
-  if (rtl && rtlState) {
-    const { bundle, cacheRtl } = rtlState;
-    return (
-      <bundle.StyleSheetManager stylisPlugins={[bundle.rtlPlugin]}>
-        <CacheProvider value={cacheRtl}>
-          <GlobalStyles styles="@layer theme, docsearch, mui, utilities;" />
-          {children}
-        </CacheProvider>
-      </bundle.StyleSheetManager>
-    );
-  }
   return (
-    <CacheProvider value={cacheLtr}>
+    <CacheProvider value={rtl && cacheRtl ? cacheRtl : cacheLtr}>
       <GlobalStyles styles="@layer theme, docsearch, mui, utilities;" />
       {children}
     </CacheProvider>

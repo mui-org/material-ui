@@ -43,7 +43,7 @@ This component _only_ has a root slot; more complex components may have addition
 Use the `component` prop to override a component's root slot.
 The demo below shows how to replace the Button's `<button>` tag with a `<a>` to create a link button:
 
-{{"demo": "OverridingRootSlot.js"}}
+{{"component": "file://./demos/overriding-root-slot/index.ts"}}
 
 :::info
 The `href`, `target`, and `rel` props are specific to `<a>` tags.
@@ -62,7 +62,7 @@ For example, the [Autocomplete](/material-ui/react-autocomplete/) is composed of
 Use the `slots` prop to replace a component's interior slots.
 The example below shows how to replace the popper slot in the [Autocomplete](/material-ui/react-autocomplete/) component to remove the popup functionality:
 
-{{"demo": "OverridingInternalSlot.js"}}
+{{"component": "file://./demos/overriding-internal-slot/index.ts"}}
 
 ### The slotProps prop
 

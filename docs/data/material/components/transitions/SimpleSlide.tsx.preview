@@ -1,7 +1,0 @@
-<FormControlLabel
-  control={<Switch checked={checked} onChange={handleChange} />}
-  label="Show"
-/>
-<Slide direction="up" in={checked} mountOnEnter unmountOnExit>
-  {icon}
-</Slide>

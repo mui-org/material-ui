@@ -1,6 +1,0 @@
-<Avatar sx={{ bgcolor: deepOrange[500] }} variant="square">
-  N
-</Avatar>
-<Avatar sx={{ bgcolor: green[500] }} variant="rounded">
-  <AssignmentIcon />
-</Avatar>

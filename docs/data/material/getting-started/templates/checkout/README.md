@@ -12,4 +12,4 @@
 
 <!-- #host-reference -->
 
-View the demo at https://mui.com/material-ui/getting-started/templates/checkout/.
+View the demo at https://next.mui.com/material-ui/getting-started/templates/checkout/.

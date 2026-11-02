@@ -9,7 +9,7 @@ function MouseEnterTest() {
   <ListItem onMouseEnter={handleMouseEnter} />;
 
   function handleMouseEnterButton(event: React.MouseEvent<HTMLDivElement>) {}
-  // @ts-expect-error
+  // @ts-expect-error: The default li root cannot use a mouse handler restricted to HTMLDivElement.
   <ListItem onMouseEnter={handleMouseEnterButton} />; // desired: missing property button
   <ListItemButton onMouseEnter={handleMouseEnterButton} />;
 }

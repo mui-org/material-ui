@@ -2,7 +2,7 @@ import * as React from 'react';
 import copy from 'clipboard-copy';
 import { debounce } from '@mui/material/utils';
 import { alpha, styled } from '@mui/material/styles';
-import { Tabs } from '@base-ui/react/tabs';
+import { Tabs, TabsTabDataAttributes } from '@base-ui/react/tabs';
 import { unstable_useId as useId } from '@mui/utils';
 import IconButton from '@mui/material/IconButton';
 import type { ButtonBaseActions } from '@mui/material/ButtonBase';
@@ -326,7 +326,7 @@ const InitialFocus = styled(IconButton)(({ theme }) => ({
 
 const selectionOverride = (theme: any) => ({
   cursor: 'pointer',
-  '&[data-active]': {
+  [`&[${TabsTabDataAttributes.active}]`]: {
     color: (theme.vars || theme).palette.primary[700],
     backgroundColor: (theme.vars || theme).palette.primary[50],
     borderColor: (theme.vars || theme).palette.primary[200],

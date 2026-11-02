@@ -1,6 +1,7 @@
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Card, { CardProps } from '@mui/material/Card';
+import type { CardProps } from '@mui/material/Card';
+import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';

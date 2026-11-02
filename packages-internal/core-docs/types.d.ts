@@ -4,3 +4,6 @@ declare module '@mui/icons-material/*' {
 
   export default SvgIcon;
 }
+
+// Stylesheets imported for their side effects (e.g. `syntax.css` in tests).
+declare module '*.css';

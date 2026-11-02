@@ -35,12 +35,12 @@ export interface FilledInputProps extends StandardProps<InputBaseProps> {
  *
  * Demos:
  *
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [FilledInput API](https://mui.com/material-ui/api/filled-input/)
- * - inherits [InputBase API](https://mui.com/material-ui/api/input-base/)
+ * - [FilledInput API](https://next.mui.com/material-ui/api/filled-input/)
+ * - inherits [InputBase API](https://next.mui.com/material-ui/api/input-base/)
  */
 declare const FilledInput: ((props: FilledInputProps) => React.JSX.Element) & { muiName: string };
 

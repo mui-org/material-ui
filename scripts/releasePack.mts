@@ -4,6 +4,8 @@ import { hideBin } from 'yargs/helpers';
 import { $ } from 'execa';
 import * as path from 'path';
 import * as fs from 'fs/promises';
+import { availableParallelism } from 'node:os';
+import { mapAsync } from 'es-toolkit/array';
 
 interface WorkspaceDefinition {
   name: string;
@@ -23,11 +25,9 @@ interface RunOptions {
 }
 
 async function packWorkspace(workspace: WorkspaceDefinition, outDir: string): Promise<string> {
-  const packages: Record<string, string> = {};
   const { stdout: zipFilePath } = await $({
     cwd: workspace.path,
   })`pnpm pack --pack-destination ${outDir}`;
-  packages[workspace.name] = zipFilePath;
   return zipFilePath;
 }
 
@@ -52,24 +52,21 @@ async function run({ packages, outDir, concurrency }: RunOptions) {
 
   const absoluteDestination = path.resolve(outDir);
 
-  const workspacesIterator = workspacesToPack.values();
-  const manifest: Manifest = { packages: {} };
-  const workers = Array.from({ length: concurrency }).map(async () => {
-    for (const workspace of workspacesIterator) {
-      /* eslint-disable no-await-in-loop */
+  const packed = await mapAsync(
+    workspacesToPack,
+    async (workspace) => {
       console.log(`packing "${workspace.name}"`);
       const zipFilePath = await packWorkspace(workspace, absoluteDestination);
       const newName = path.join(absoluteDestination, `${workspace.name}.tgz`);
       await fs.mkdir(path.dirname(newName), { recursive: true });
       await fs.rename(zipFilePath, newName);
-      const relativeZipFilePath = path.relative(absoluteDestination, newName);
-      manifest.packages[workspace.name] = relativeZipFilePath;
       console.log(`packed "${zipFilePath}"`);
-      /* eslint-enable no-await-in-loop */
-    }
-  });
+      return [workspace.name, path.relative(absoluteDestination, newName)] as const;
+    },
+    { concurrency },
+  );
 
-  await Promise.all(workers);
+  const manifest: Manifest = { packages: Object.fromEntries(packed) };
 
   await fs.writeFile(
     path.join(absoluteDestination, 'manifest.json'),
@@ -94,9 +91,15 @@ yargs(hideBin(process.argv))
           type: 'string',
         })
         .option('concurrency', {
-          default: 5,
+          default: availableParallelism(),
           describe: 'Number of concurrent packing processes',
           type: 'number',
+        })
+        .check(({ concurrency }) => {
+          if (!Number.isInteger(concurrency) || concurrency < 1) {
+            throw new Error(`--concurrency must be a positive integer, received ${concurrency}.`);
+          }
+          return true;
         });
     },
     run,

@@ -2,9 +2,10 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { OverridableComponent, OverrideProps } from '@mui/types';
-import { SxProps } from '@mui/system';
-// @ts-ignore
+import type { OverridableComponent, OverrideProps } from '@mui/types';
+import type { SxProps } from '@mui/system';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- The peer is resolvable only after its build.
+// @ts-ignore: material-pigment-css links to its build directory, which is absent in a fresh checkout.
 import Grid from '@mui/material-pigment-css/Grid';
 import composeClasses from '@mui/utils/composeClasses';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
@@ -13,7 +14,7 @@ import {
   unstable_generateSizeClassNames as generateSizeClassNames,
   unstable_generateSpacingClassNames as generateSpacingClassNames,
 } from '@mui/system/Grid';
-import { Breakpoint, Theme } from '../styles';
+import type { Breakpoint, Theme } from '../styles';
 
 type ResponsiveStyleValue<T> = T | Array<T | null> | { [key in Breakpoint]?: T | null };
 
@@ -123,11 +124,11 @@ const useUtilityClasses = (ownerState: GridBaseProps) => {
  *
  * Demos:
  *
- * - [Grid](https://mui.com/material-ui/react-grid/)
+ * - [Grid](https://next.mui.com/material-ui/react-grid/)
  *
  * API:
  *
- * - [PigmentGrid API](https://mui.com/material-ui/api/pigment-grid/)
+ * - [PigmentGrid API](https://next.mui.com/material-ui/api/pigment-grid/)
  */
 const PigmentGrid = React.forwardRef(function PigmentGrid(props, ref) {
   const { className, ...other } = props;
@@ -238,7 +239,7 @@ PigmentGrid.propTypes /* remove-proptypes */ = {
   wrap: PropTypes.oneOf(['nowrap', 'wrap-reverse', 'wrap']),
 } as any;
 
-// @ts-ignore internal logic for nested grid
+// @ts-expect-error: The overridable component type does not declare the internal muiName marker.
 PigmentGrid.muiName = 'Grid';
 
 export default PigmentGrid;

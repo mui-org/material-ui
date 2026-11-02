@@ -1,7 +1,0 @@
-<Link href="#">Link</Link>
-<Link href="#" color="inherit">
-  {'color="inherit"'}
-</Link>
-<Link href="#" variant="body2">
-  {'variant="body2"'}
-</Link>

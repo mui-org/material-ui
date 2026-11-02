@@ -1,5 +1,4 @@
 {
-  "name": "@mui-internal/test-e2e",
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=production pnpm build && concurrently --success first --kill-others \"pnpm run test\" \"pnpm run server\"",

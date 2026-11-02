@@ -11,7 +11,7 @@ The following demo illustrates how to work with the `sx` prop.
 Note that not all of the values are valid CSS properties—that's because the `sx` keys are mapped to specific properties of the theme.
 The rest of this document explores this concept in more detail.
 
-{{"demo": "Example.js", "bg": true, "defaultCodeOpen": true}}
+{{"component": "file://./demos/example/index.ts", "bg": true, "initialExpanded": true}}
 
 ## Theme-aware properties
 
@@ -301,7 +301,7 @@ Each index can be an object or a callback.
 
 If you want to receive the `sx` prop from a custom component and pass it down to another MUI System, we recommend this approach:
 
-{{"demo": "PassingSxProp.js", "bg": true, "defaultCodeOpen": true}}
+{{"component": "file://./demos/passing-sx-prop/index.ts", "bg": true, "initialExpanded": true}}
 
 ## Dynamic values
 
@@ -313,7 +313,13 @@ If you're having problems with your Content Security Policy while using inline s
 Visit the [Content Security Policy guide](/material-ui/guides/content-security-policy/) for configuration details.
 :::
 
-{{"demo": "DynamicValues.js", "bg": true}}
+{{"component": "file://./demos/dynamic-values/index.ts", "bg": true}}
+
+:::warning
+Values in `sx` are written into the stylesheet as they are, so a value containing `}` can end the rule and add CSS of its own.
+If a value comes from user input, check it against the format you expect before using it, for example `/^#[0-9a-f]{6}$/i` for a color from a color picker, or `Number()` for a size.
+The same applies to [theme values](/material-ui/customization/theming/#theme-configuration-variables) and [`GlobalStyles`](/material-ui/customization/how-to-customize/#4-global-css-override).
+:::
 
 ## TypeScript usage
 

@@ -45,7 +45,7 @@ const theme = createTheme({
 To test a [material.io/design/color](https://m2.material.io/design/color/) color scheme with the Material UI documentation, simply select colors using the palette and sliders below.
 Alternatively, you can enter hex values in the Primary and Secondary text fields.
 
-{{"demo": "ColorTool.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/tool/index.ts", "hideToolbar": true, "bg": true}}
 
 The output shown in the color sample can be pasted directly into a [`createTheme()`](/material-ui/customization/theming/#createtheme-options-args-theme) function (to be used with [`ThemeProvider`](/material-ui/customization/theming/#theme-provider)):
 
@@ -98,7 +98,7 @@ import { red } from '@mui/material/colors';
 const color = red[500];
 ```
 
-{{"demo": "Color.js", "hideToolbar": true, "bg": "inline"}}
+{{"component": "file://./demos/color/index.ts", "hideToolbar": true, "bg": "inline"}}
 
 ### Examples
 

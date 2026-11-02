@@ -1,5 +1,5 @@
-import { OverridableStringUnion } from '@mui/types';
-import {
+import type { OverridableStringUnion } from '@mui/types';
+import type {
   SxConfig,
   SxProps,
   CSSObject,
@@ -8,14 +8,14 @@ import {
   Shape as SystemShape,
   ShapeOptions as SystemShapeOptions,
 } from '@mui/system';
-import { ExtractTypographyTokens } from '@mui/system/cssVars';
-import { Palette, PaletteOptions } from './createPalette';
-import { Shadows } from './shadows';
-import { Motion } from './createMotion';
-import { Transitions } from './createTransitions';
-import { Mixins } from './createMixins';
-import { TypographyVariants } from './createTypography';
-import { ZIndex } from './zIndex';
+import type { ExtractTypographyTokens } from '@mui/system/cssVars';
+import type { Palette, PaletteOptions } from './createPalette';
+import type { Shadows } from './shadows';
+import type { Motion } from './createMotion';
+import type { Transitions } from './createTransitions';
+import type { Mixins } from './createMixins';
+import type { TypographyVariants } from './createTypography';
+import type { ZIndex } from './zIndex';
 
 /**
  * default MD color-schemes
@@ -296,6 +296,9 @@ export interface ColorSystem {
   overlays: Overlays;
 }
 
+type ActionOpacityKey =
+  'hoverOpacity' | 'selectedOpacity' | 'disabledOpacity' | 'focusOpacity' | 'activatedOpacity';
+
 // should not include keys defined in `shouldSkipGeneratingVar` and have value typeof function
 export interface ThemeVars {
   font: ExtractTypographyTokens<TypographyVariants>;
@@ -307,13 +310,18 @@ export interface ThemeVars {
     | 'tonalOffset'
     | 'getContrastText'
     | 'augmentColor'
-  >;
-  opacity: Opacity;
+    | 'action'
+  > & {
+    action: Omit<ColorSystem['palette']['action'], ActionOpacityKey> & {
+      [K in ActionOpacityKey]: string;
+    };
+  };
+  opacity: { [K in keyof Opacity]: string };
   overlays: Overlays;
   shadows: Shadows;
   shape: Shape;
   spacing: string;
-  zIndex: ZIndex;
+  zIndex: { [K in keyof ZIndex]: string };
 }
 
 type Split<T, K extends keyof T = keyof T> = K extends string | number

@@ -1,5 +1,0 @@
-<ThemeProvider theme={customTheme(outerTheme)}>
-  <TextField label="Outlined" />
-  <TextField label="Filled" variant="filled" />
-  <TextField label="Standard" variant="standard" />
-</ThemeProvider>

@@ -6,6 +6,8 @@ import { InternalStandardProps as StandardProps } from '../internal';
 import { InputBaseProps } from '../InputBase';
 import { OutlinedInputClasses } from './outlinedInputClasses';
 
+export interface OutlinedInputNotchedOutlineSlotPropsOverrides {}
+
 interface OutlinedInputSlots {
   /**
    * The component that renders the notchedOutline slot.
@@ -17,7 +19,11 @@ interface OutlinedInputSlots {
 type OutlinedInputSlotsAndSlotProps = CreateSlotsAndSlotProps<
   OutlinedInputSlots,
   {
-    notchedOutline: SlotProps<'fieldset', {}, OutlinedInputOwnerState>;
+    notchedOutline: SlotProps<
+      'fieldset',
+      OutlinedInputNotchedOutlineSlotPropsOverrides,
+      OutlinedInputOwnerState
+    >;
   }
 > & {
   slots?: InputBaseProps['slots'] | undefined;
@@ -25,9 +31,7 @@ type OutlinedInputSlotsAndSlotProps = CreateSlotsAndSlotProps<
 };
 
 export interface OutlinedInputProps
-  extends
-    Omit<StandardProps<InputBaseProps>, 'slots' | 'slotProps'>,
-    OutlinedInputSlotsAndSlotProps {
+  extends StandardProps<InputBaseProps, 'slots' | 'slotProps'>, OutlinedInputSlotsAndSlotProps {
   /**
    * Override or extend the styles applied to the component.
    */
@@ -53,13 +57,13 @@ export interface OutlinedInputOwnerState extends Omit<OutlinedInputProps, 'slots
  *
  * Demos:
  *
- * - [Number Field](https://mui.com/material-ui/react-number-field/)
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [OutlinedInput API](https://mui.com/material-ui/api/outlined-input/)
- * - inherits [InputBase API](https://mui.com/material-ui/api/input-base/)
+ * - [OutlinedInput API](https://next.mui.com/material-ui/api/outlined-input/)
+ * - inherits [InputBase API](https://next.mui.com/material-ui/api/input-base/)
  */
 declare const OutlinedInput: ((props: OutlinedInputProps) => React.JSX.Element) & {
   muiName: string;

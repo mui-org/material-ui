@@ -33,14 +33,14 @@ import Box from '@mui/material/Box';
 The Box component renders as a `<div>` by default, but you can swap in any other valid HTML tag or React component using the `component` prop.
 The demo below replaces the `<div>` with a `<section>` element:
 
-{{"demo": "BoxBasic.js", "defaultCodeOpen": true }}
+{{"component": "file://./demos/basic/index.ts", "initialExpanded": true }}
 
 ## Customization
 
 Use the [`sx` prop](/system/getting-started/the-sx-prop/) to quickly customize any Box instance using a superset of CSS that has access to all the style functions and theme-aware properties exposed in the MUI System package.
 The demo below shows how to apply colors from the theme using this prop:
 
-{{"demo": "BoxSx.js", "defaultCodeOpen": true }}
+{{"component": "file://./demos/sx/index.ts", "initialExpanded": true }}
 
 ## Anatomy
 

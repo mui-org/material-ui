@@ -7,7 +7,7 @@ export default {
   },
   lab: {
     rootPath: path.join(process.cwd(), 'packages/mui-lab'),
-    entryPointPath: 'src/index.d.ts',
+    entryPointPath: 'src/index.ts',
   },
   system: {
     rootPath: path.join(process.cwd(), 'packages/mui-system'),

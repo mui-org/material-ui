@@ -162,7 +162,7 @@ describe('ThemeProvider', () => {
       });
       const nestedTheme = createTheme({
         palette: {
-          // @ts-ignore
+          // @ts-expect-error: This runtime test adds ochre without globally augmenting PaletteOptions.
           ochre: {
             main: '#E3D026',
             light: '#E9DB5D',

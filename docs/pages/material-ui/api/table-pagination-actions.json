@@ -6,7 +6,14 @@
       "signature": { "type": "function(type: string) => string", "describedArgs": ["type"] }
     },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
-    "disabled": { "type": { "name": "bool" }, "default": "false" }
+    "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    }
   },
   "name": "TablePaginationActions",
   "imports": [
@@ -63,7 +70,14 @@
       "class": null
     }
   ],
-  "classes": [],
+  "classes": [
+    {
+      "key": "root",
+      "className": "MuiTablePaginationActions-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
+    }
+  ],
   "spread": true,
   "themeDefaultProps": true,
   "muiName": "MuiTablePaginationActions",

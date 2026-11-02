@@ -26,45 +26,45 @@ The animations of the components rely on CSS as much as possible to work even be
 
 The default version of CircularProgress renders an indeterminate spinner.
 
-{{"demo": "CircularIndeterminate.js"}}
+{{"component": "file://./demos/circular-indeterminate/index.ts"}}
 
 ### Circular color
 
-{{"demo": "CircularColor.js"}}
+{{"component": "file://./demos/circular-color/index.ts"}}
 
 ### Circular size
 
-{{"demo": "CircularSize.js"}}
+{{"component": "file://./demos/circular-size/index.ts"}}
 
 ### Circular determinate
 
 To specify the loading progress of an operation, use the `determinate` value for the `variant` prop. To show the actual progress, use the `value` prop.
 
-{{"demo": "CircularDeterminate.js"}}
+{{"component": "file://./demos/circular-determinate/index.ts"}}
 
 ### Circular custom scale
 
 By default, progress values are expected in the 0–100 range. You can customize this range by using the `min` and `max` props.
 
-{{"demo": "CircularCustomScale.js"}}
+{{"component": "file://./demos/circular-custom-scale/index.ts"}}
 
 ### Circular track
 
 To have the circular track always visible, pass the `enableTrackSlot` prop.
 
-{{"demo": "CircularEnableTrack.js"}}
+{{"component": "file://./demos/circular-enable-track/index.ts"}}
 
 ### Interactive integration
 
 The following examples show how to integrate the CircularProgress with the Button and FAB components, creating loading states that can be triggered by user actions.
 
-{{"demo": "CircularIntegration.js"}}
+{{"component": "file://./demos/circular-integration/index.ts"}}
 
 ### Circular with label
 
 The example shows how to integrate the visual progress value with the CircularProgress component.
 
-{{"demo": "CircularWithValueLabel.js"}}
+{{"component": "file://./demos/circular-with-value-label/index.ts"}}
 
 ## Linear
 
@@ -72,48 +72,48 @@ The example shows how to integrate the visual progress value with the CircularPr
 
 LinearProgress shows an indeterminate progress bar by default.
 
-{{"demo": "LinearIndeterminate.js"}}
+{{"component": "file://./demos/linear-indeterminate/index.ts"}}
 
 ### Linear query
 
 To reverse the direction of the indeterminate animation, use the `query` value for the `variant` prop.
 
-{{"demo": "LinearQuery.js"}}
+{{"component": "file://./demos/linear-query/index.ts"}}
 
 ### Linear color
 
-{{"demo": "LinearColor.js"}}
+{{"component": "file://./demos/linear-color/index.ts"}}
 
 ### Linear determinate
 
 To show the progress on the loading bar, use the `determinate` value for the `variant` prop, along with the `value` prop.
 
-{{"demo": "LinearDeterminate.js"}}
+{{"component": "file://./demos/linear-determinate/index.ts"}}
 
 ### Linear buffer
 
 Use the `buffer` value for the `variant` prop to show a buffer progress alongside the actual progress value. The `valueBuffer` prop should be greater than the `value` prop.
 
-{{"demo": "LinearBuffer.js"}}
+{{"component": "file://./demos/linear-buffer/index.ts"}}
 
 ### Linear with label
 
 The progress `value` can also be displayed alongside the progress bar.
 
-{{"demo": "LinearWithValueLabel.js"}}
+{{"component": "file://./demos/linear-with-value-label/index.ts"}}
 
 ### Linear with custom value text
 
 By default, the progress value is read by assistive technology as percentages. Use `aria-valuetext` when the progress value does not involve percentages.
 
-{{"demo": "LinearWithAriaValueText.js"}}
+{{"component": "file://./demos/linear-with-aria-value-text/index.ts"}}
 
 ## Customization
 
 Here are some examples of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedProgressBars.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/customized-bars/index.ts", "collapseToEmpty": true}}
 
 ## Delaying appearance
 
@@ -122,7 +122,7 @@ The ripple effect of the `ButtonBase` component ensures that the user feels that
 Normally, no special feedback is necessary during delays of more than 0.1 but less than 1.0 second.
 After 1.0 second, you can display a loader to keep user's flow of thought uninterrupted.
 
-{{"demo": "DelayingAppearance.js"}}
+{{"component": "file://./demos/delaying-appearance/index.ts"}}
 
 ## Accessibility
 
@@ -142,7 +142,7 @@ You should run processor intensive operations in a web worker or by batch in ord
 When it's not possible, you can leverage the `disableShrink` prop to mitigate the issue.
 See [this issue](https://github.com/mui/material-ui/issues/10327).
 
-{{"demo": "CircularUnderLoad.js"}}
+{{"component": "file://./demos/circular-under-load/index.ts"}}
 
 ### High frequency updates
 

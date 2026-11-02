@@ -18,7 +18,7 @@ There are examples for the following styling solutions:
 
 Nothing fancy, just plain CSS.
 
-{{"demo": "StyledComponents.js", "hideToolbar": true, "anchorId": null}}
+{{"component": "file://./demos/styled-components/index.ts", "hideToolbar": true, "anchorId": null}}
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/plain-css-fdue7)
 
@@ -95,7 +95,7 @@ In Material UI, all child elements have an increased specificity of 2: `.parent
 
 The following examples override the slider's `thumb` style in addition to the custom styles on the slider itself.
 
-{{"demo": "StyledComponentsDeep.js", "hideToolbar": true, "anchorId": null}}
+{{"component": "file://./demos/styled-components-deep/index.ts", "hideToolbar": true, "anchorId": null}}
 
 ```css title="PlainCssSliderDeep1.css"
 .slider {
@@ -236,7 +236,7 @@ In Material UI, all child elements have an increased specificity of 2: `.parent
 
 The following example overrides the slider's `thumb` style in addition to the custom styles on the slider itself.
 
-{{"demo": "StyledComponentsDeep.js", "hideToolbar": true, "anchorId": null}}
+{{"component": "file://./demos/styled-components-deep/index.ts", "hideToolbar": true, "anchorId": null}}
 
 ```css title="GlobalCssSliderDeep.css"
 .MuiSlider-root {
@@ -277,7 +277,7 @@ Following this approach reduces the bundle size, and removes the need to configu
 After the style engine is configured properly, you can use the [`styled()`](/system/styled/) utility
 from `@mui/material/styles` and have direct access to the theme.
 
-{{"demo": "StyledComponents.js", "hideToolbar": true}}
+{{"component": "file://./demos/styled-components/index.ts", "hideToolbar": true}}
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/styled-components-interoperability-w9z9d)
 
@@ -307,7 +307,7 @@ In Material UI, all child elements have an increased specificity of 2: `.parent
 
 The following examples override the slider's `thumb` style in addition to the custom styles on the slider itself.
 
-{{"demo": "StyledComponentsDeep.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/styled-components-deep/index.ts", "initialExpanded": true}}
 
 The above demo relies on the [default `className` values](https://v6.mui.com/system/styles/advanced/), but you can provide your own class name with the `slotProps` API.
 
@@ -367,7 +367,7 @@ const CustomizedSlider = styled(Slider)(
 );
 ```
 
-{{"demo": "StyledComponentsTheme.js"}}
+{{"component": "file://./demos/styled-components-theme/index.ts"}}
 
 ### Portals
 
@@ -393,7 +393,7 @@ const StyledTooltip = styled(({ className, ...props }) => (
 `;
 ```
 
-{{"demo": "StyledComponentsPortal.js"}}
+{{"component": "file://./demos/styled-components-portal/index.ts"}}
 
 ## CSS Modules
 
@@ -401,7 +401,7 @@ const StyledTooltip = styled(({ className, ...props }) => (
 
 It's hard to know the market share of [this styling solution](https://github.com/css-modules/css-modules) as it's dependent on the bundling solution people are using.
 
-{{"demo": "StyledComponents.js", "hideToolbar": true, "anchorId": null}}
+{{"component": "file://./demos/styled-components/index.ts", "hideToolbar": true, "anchorId": null}}
 
 [![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/css-modules-nuyg8)
 
@@ -596,7 +596,7 @@ This technique allows you to maintain modular styles while responding to dynamic
 
 Emotion's `css()` method works seamlessly with Material UI.
 
-{{"demo": "EmotionCSS.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/emotion-css/index.ts", "initialExpanded": true}}
 
 ### Theme
 
@@ -760,7 +760,7 @@ If styles aren't applying correctly:
 
 Now it's all set up and you can start using Tailwind CSS on the Material UI components!
 
-{{"demo": "StyledComponents.js", "hideToolbar": true, "anchorId": null}}
+{{"component": "file://./demos/styled-components/index.ts", "hideToolbar": true, "anchorId": null}}
 
 [![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/github-ndkshy?file=pages%2Findex.tsx)
 
@@ -784,7 +784,7 @@ If you attempt to style the Slider, for example, you'll likely want to customize
 
 This example showcases how to override the Slider's `thumb` style.
 
-{{"demo": "StyledComponentsDeep.js", "hideToolbar": true, "anchorId": null}}
+{{"component": "file://./demos/styled-components-deep/index.ts", "hideToolbar": true, "anchorId": null}}
 
 ```jsx title="SliderThumbOverrides.tsx"
 import * as React from 'react';

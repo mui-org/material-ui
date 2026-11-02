@@ -3,12 +3,12 @@ import * as React from 'react';
 import useEventCallback from '@mui/utils/useEventCallback';
 import useTimeout from '@mui/utils/useTimeout';
 import extractEventHandlers from '@mui/utils/extractEventHandlers';
-import {
+import type {
   UseSnackbarParameters,
   SnackbarCloseReason,
   UseSnackbarReturnValue,
 } from './useSnackbar.types';
-import { EventHandlers } from '../utils/types';
+import type { EventHandlers } from '../utils/types';
 
 function useSnackbar(parameters: UseSnackbarParameters = {}): UseSnackbarReturnValue {
   const {

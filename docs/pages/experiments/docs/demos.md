@@ -2,44 +2,59 @@
 
 <p class="description">The different variants of demo containers we have in the docs.</p>
 
+Demos are powered by [`@mui/internal-docs-infra`](https://mui-internal.netlify.app/docs-infra/). Relevant references:
+
+- [CodeHighlighter](https://mui-internal.netlify.app/docs-infra/components/code-highlighter/) — the underlying renderer
+- [`useDemo()`](https://mui-internal.netlify.app/docs-infra/hooks/use-demo/) — client hook
+- [`abstractCreateDemo({ DemoContent })`](https://mui-internal.netlify.app/docs-infra/factories/abstract-create-demo/) — factory used to build `createDemo`
+- [`loadPrecomputedCodeHighlighter`](https://mui-internal.netlify.app/docs-infra/pipeline/load-precomputed-code-highlighter/) — webpack loader
+
+The supported options (for example, `bg`, `hideToolbar`, `isolated`, `iframe`, …) are defined by the `DemoOptions` interface in `packages-internal/core-docs/src/DemoContent/DemoContent.tsx`.
+
 ## Standard demo
 
 "Standard" refers to when no background is explicitly defined.
 So, it renders the "outlined" background variant.
 
-{{"demo": "DemoInDocs.js"}}
+{{"component": "file://./demos/in-docs/index.ts"}}
 
 ## "bg": "outlined"
 
-{{"demo": "DemoInDocs.js", "bg": "outlined"}}
+{{"component": "file://./demos/in-docs/index.ts", "bg": "outlined"}}
 
 ## "bg": "inline"
 
-{{"demo": "DemoInDocs.js", "bg": "inline"}}
+{{"component": "file://./demos/in-docs/index.ts", "bg": "inline"}}
 
 ## "bg": true
 
-{{"demo": "DemoInDocs.js", "bg": true}}
+{{"component": "file://./demos/in-docs/index.ts", "bg": true}}
 
 ## "bg": gradient
 
-{{"demo": "DemoInDocs.js", "bg": "gradient"}}
+{{"component": "file://./demos/in-docs/index.ts", "bg": "gradient"}}
+
+## "bg": "playground"
+
+{{"component": "file://./demos/in-docs/index.ts", "bg": "playground"}}
 
 ## "hideToolbar": true
 
-{{"demo": "DemoInDocsNotEditable.js", "hideToolbar": true}}
+{{"component": "file://./demos/in-docs-not-editable/index.ts", "hideToolbar": true}}
 
 ## "hideToolbar": true, "bg": true
 
-{{"demo": "DemoInDocsNotEditable.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/in-docs-not-editable/index.ts", "hideToolbar": true, "bg": true}}
 
 ## "hideToolbar": true, "bg": "inline"
 
-{{"demo": "DemoInDocsNotEditable.js", "hideToolbar": true, "bg": "inline"}}
+{{"component": "file://./demos/in-docs-not-editable/index.ts", "hideToolbar": true, "bg": "inline"}}
 
 ## Multiple Tabs demo
 
-{{"demo": "DemoMultiTabs.js", "bg": "inline" }}
+Demos that export more than one file (for example, a main component plus extracted helpers) render a tab bar above the code viewer so each file can be inspected independently.
+
+{{"component": "file://./demos/multi-tabs/index.ts", "bg": "inline" }}
 
 ## Isolated demo
 
@@ -74,7 +89,7 @@ export default function DemoIsolated(props) {
 
 ### Mode toggle with CSS variables
 
-{{"demo": "DemoModeToggle.js", "isolated": true, "bg": "inline" }}
+{{"component": "file://./demos/mode-toggle/index.ts", "isolated": true, "bg": "inline" }}
 
 ```js title="DemoModeToggle.js"
 import { ThemeProvider, createTheme, useColorScheme } from '@mui/material/styles';
@@ -110,7 +125,7 @@ The demo with `isolated` will always set to `system` mode when refresh the page.
 
 Provide custom palettes to light and/or dark color schemes.
 
-{{"demo": "DemoModeToggleCustomTheme.js", "isolated": true, "bg": "inline", "theme": "dark" }}
+{{"component": "file://./demos/mode-toggle-custom-theme/index.ts", "isolated": true, "bg": "inline" }}
 
 ```js title="DemoModeToggleCustomTheme.js"
 import { ThemeProvider, createTheme, useColorScheme } from '@mui/material/styles';
@@ -146,4 +161,52 @@ export default function DemoModeToggleCustomTheme(props) {
 
 `isolated: true` can be used with iframe demos. The difference is that the node to attach the color scheme selector will be the `html` of the iframe instead of the demo container.
 
-{{"demo": "DemoModeToggleIframe.js", "bg": "inline", "defaultCodeOpen": false, "iframe": true, "isolated": true }}
+{{"component": "file://./demos/mode-toggle-iframe/index.ts", "bg": "inline", "defaultCodeOpen": false, "iframe": true, "isolated": true }}
+
+## Sizing
+
+### "maxWidth": number
+
+{{"component": "file://./demos/in-docs/index.ts", "bg": "inline", "maxWidth": 320}}
+
+### "height": number
+
+{{"component": "file://./demos/in-docs/index.ts", "bg": "inline", "height": 240}}
+
+## Toolbar variants
+
+### "hideEditButton": true
+
+{{"component": "file://./demos/in-docs/index.ts", "hideEditButton": true}}
+
+### "defaultCodeOpen": true
+
+{{"component": "file://./demos/in-docs/index.ts", "defaultCodeOpen": true}}
+
+### "disableLiveEdit": true
+
+{{"component": "file://./demos/in-docs/index.ts", "disableLiveEdit": true}}
+
+### "aiSuggestion": string
+
+When set, renders a "Customize with AI" hero with the provided prompt.
+
+{{"component": "file://./demos/in-docs/index.ts", "aiSuggestion": "Make this Alert more prominent"}}
+
+## Other options
+
+These options don't have a visual variant worth showcasing, but they are supported:
+
+| Option      | Type             | Purpose                                                                          |
+| :---------- | :--------------- | :------------------------------------------------------------------------------- |
+| `disableAd` | `boolean`        | Suppresses the inline Carbon ad even when ads are enabled globally.              |
+| `anchorId`  | `string \| null` | Overrides the anchor `id` used for deep-links. `null` disables anchors entirely. |
+
+## Validation rules
+
+`DemoContent` throws at build time when these invalid combinations are used:
+
+- `"hideToolbar": false` — redundant; remove it.
+- `"hideToolbar": true` combined with `"defaultCodeOpen": true`.
+- `"hideToolbar": true` combined with `"disableAd": true`.
+- Referencing a `.ts` / `.tsx` demo without `"hideToolbar": true` (TypeScript demos cannot be edited live).

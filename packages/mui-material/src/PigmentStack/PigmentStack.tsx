@@ -2,13 +2,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent, OverrideProps } from '@mui/types';
-// @ts-ignore
+import type { OverridableComponent, OverrideProps } from '@mui/types';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- The peer is resolvable only after its build.
+// @ts-ignore: material-pigment-css links to its build directory, which is absent in a fresh checkout.
 import Stack from '@mui/material-pigment-css/Stack';
 import composeClasses from '@mui/utils/composeClasses';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
-import { SxProps } from '@mui/system';
-import { Breakpoint, Theme } from '../styles';
+import type { SxProps } from '@mui/system';
+import type { Breakpoint, Theme } from '../styles';
 
 type ResponsiveStyleValue<T> = T | Array<T | null> | { [key in Breakpoint]?: T | null };
 
@@ -64,11 +65,11 @@ const useUtilityClasses = () => {
  *
  * Demos:
  *
- * - [Stack](https://mui.com/material-ui/react-stack/)
+ * - [Stack](https://next.mui.com/material-ui/react-stack/)
  *
  * API:
  *
- * - [PigmentStack API](https://mui.com/material-ui/api/pigment-stack/)
+ * - [PigmentStack API](https://next.mui.com/material-ui/api/pigment-stack/)
  */
 const PigmentStack = React.forwardRef(function PigmentStack({ className, ...props }, ref) {
   const classes = useUtilityClasses();

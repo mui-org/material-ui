@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import { getDialogContentUtilityClass } from './dialogContentClasses';
 import dialogTitleClasses from '../DialogTitle/dialogTitleClasses';
@@ -34,6 +35,12 @@ const DialogContentRoot = styled('div', {
     WebkitOverflowScrolling: 'touch',
     overflowY: 'auto',
     padding: '20px 24px',
+    ...(theme.focusVisible && {
+      '&:focus-visible': {
+        ...applyInsetFocusVisible(1),
+        ...theme.focusVisible,
+      },
+    }),
     variants: [
       {
         props: ({ ownerState }) => ownerState.dividers,

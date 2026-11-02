@@ -6,6 +6,9 @@ function resolveComponentProps<TProps, TOwnerState, TSlotState>(
   componentProps:
     TProps | ((ownerState: TOwnerState, slotState?: TSlotState) => TProps) | undefined,
   ownerState: TOwnerState,
+  /**
+   * @deprecated Not used internally and will be removed in the next major version.
+   */
   slotState?: TSlotState,
 ): TProps | undefined {
   if (typeof componentProps === 'function') {

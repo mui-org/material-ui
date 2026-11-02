@@ -1,6 +1,6 @@
 {
   "name": "@mui/material",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Material UI is an open-source React component library that implements Google's Material Design. It's comprehensive and can be used in production out of the box.",
   "license": "MIT",
@@ -25,38 +25,37 @@
     "url": "https://opencollective.com/mui-org"
   },
   "scripts": {
-    "build": "code-infra build --tsgo --flat",
+    "prebuild": "node ./scripts/stagePublishedDocs.mjs",
+    "build": "code-infra build --tsgo --flat --copy \"published-docs/**:docs\"",
     "release": "pnpm build && pnpm publish",
     "test": "pnpm --workspace-root test:unit --project \"*:@mui/material\"",
     "typescript": "tsc -p tsconfig.json",
-    "typescript:module-augmentation": "node scripts/testModuleAugmentation.js",
     "attw": "attw --pack ./build --entrypoints \".\" \"Button\" \"styles\" \"utils\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "@mui/core-downloads-tracker": "workspace:^",
-    "@mui/system": "workspace:^",
+    "@mui/system": "workspace:*",
     "@mui/types": "workspace:^",
-    "@mui/utils": "workspace:^",
+    "@mui/utils": "workspace:*",
     "@popperjs/core": "^2.11.8",
     "@types/react-transition-group": "^4.4.12",
     "clsx": "^2.1.1",
     "csstype": "^3.2.3",
     "prop-types": "^15.8.1",
-    "react-is": "^19.2.8",
+    "react-is": "^19.3.1",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@types/prop-types": "15.7.15",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
-    "@types/sinon": "22.0.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/sinon": "22.0.2",
     "css-mediaquery": "0.1.2",
     "es-toolkit": "1.52.0",
-    "fast-glob": "3.3.3",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "react-router": "8.3.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router": "8.5.1",
     "sinon": "22.1.0"
   },
   "peerDependencies": {
@@ -86,9 +85,6 @@
     "access": "public",
     "directory": "build"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "browser": {
     "react-transition-group/cjs/TransitionGroupContext.js": "react-transition-group/esm/TransitionGroupContext.js"
   },
@@ -98,6 +94,7 @@
     "./zero-styled": "./src/zero-styled/index.tsx",
     "./className": "./src/className/index.ts",
     "./ClickAwayListener": "./src/ClickAwayListener/index.ts",
+    "./colors": "./src/colors/index.ts",
     "./darkScrollbar": "./src/darkScrollbar/index.ts",
     "./DefaultPropsProvider": "./src/DefaultPropsProvider/index.ts",
     "./generateUtilityClass": "./src/generateUtilityClass/index.ts",
@@ -106,13 +103,20 @@
     "./InitColorSchemeScript": "./src/InitColorSchemeScript/index.ts",
     "./internal": "./src/internal/index.ts",
     "./locale": "./src/locale/index.ts",
+    "./NoSsr": "./src/NoSsr/index.ts",
     "./OverridableComponent": "./src/OverridableComponent/index.ts",
     "./PigmentContainer": "./src/PigmentContainer/index.ts",
     "./PigmentGrid": "./src/PigmentGrid/index.ts",
     "./PigmentStack": "./src/PigmentStack/index.ts",
+    "./Popper": "./src/Popper/index.ts",
+    "./Portal": "./src/Portal/index.ts",
+    "./TextareaAutosize": "./src/TextareaAutosize/index.ts",
     "./themeCssVarsAugmentation": "./src/themeCssVarsAugmentation/index.ts",
     "./transitions": "./src/transitions/index.ts",
+    "./Unstable_TrapFocus": "./src/Unstable_TrapFocus/index.ts",
     "./useLazyRipple": "./src/useLazyRipple/index.ts",
+    "./useMediaQuery": "./src/useMediaQuery/index.ts",
+    "./utils": "./src/utils/index.ts",
     "./version": "./src/version/index.ts",
     "./*": "./src/*/index.js"
   },

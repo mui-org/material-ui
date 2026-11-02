@@ -306,6 +306,7 @@ const ButtonRoot = styled(ButtonBase, {
         },
         {
           props: {
+            loading: true,
             loadingPosition: 'center',
           },
           style: {

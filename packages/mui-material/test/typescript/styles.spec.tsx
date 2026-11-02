@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { blue } from '@mui/material/colors';
 
@@ -101,12 +102,12 @@ const t1: string = createTheme().spacing(1);
 const t2: string = createTheme().spacing(1, 2);
 const t3: string = createTheme().spacing(1, 2, 3);
 const t4: string = createTheme().spacing(1, 2, 3, 4);
-// @ts-expect-error
+// @ts-expect-error: The spacing helper accepts at most four arguments.
 const t5 = createTheme().spacing(1, 2, 3, 4, 5);
 
 function themeProviderTest() {
   <ThemeProvider theme={{ foo: 1 }}>{null}</ThemeProvider>;
-  // @ts-expect-error
+  // @ts-expect-error: The explicit Theme type requires the standard theme fields.
   <ThemeProvider<Theme> theme={{ foo: 1 }}>{null}</ThemeProvider>;
   <ThemeProvider<Theme>
     theme={{ components: { MuiAppBar: { defaultProps: { 'aria-atomic': 'true' } } } }}

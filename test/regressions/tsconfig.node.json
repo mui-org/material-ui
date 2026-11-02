@@ -20,5 +20,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.mts"]
+  "include": ["vite.config.mts", "globalSetup.mts"]
 }

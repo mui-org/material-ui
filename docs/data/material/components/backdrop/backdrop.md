@@ -8,10 +8,11 @@ githubSource: packages/mui-material/src/Backdrop
 
 # Backdrop
 
-<p class="description">The Backdrop component narrows the user's focus to a particular element on the screen.</p>
+<p class="description">The Backdrop component is a low-level utility that adds a dimmed layer over the application.</p>
 
-The Backdrop signals a state change within the application and can be used for creating loaders, dialogs, and more.
-In its simplest form, the Backdrop component will add a dimmed layer over your application.
+Backdrop is normally used through higher-level components such as [Dialog](/material-ui/react-dialog/) and [Modal](/material-ui/react-modal/), which already include it and handle focus and assistive technology.
+
+Most apps should not use Backdrop directly. Reach for it only when you need a custom overlay (for example, a full-screen loader).
 
 {{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
@@ -20,7 +21,7 @@ In its simplest form, the Backdrop component will add a dimmed layer over your a
 The demo below shows a basic Backdrop with a Circular Progress component in the foreground to indicate a loading state.
 After clicking **Show Backdrop**, you can click anywhere on the page to close it.
 
-{{"demo": "SimpleBackdrop.js"}}
+{{"component": "file://./demos/simple/index.ts"}}
 
 ## Transitions
 

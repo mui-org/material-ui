@@ -438,6 +438,20 @@ describe('<Checkbox />', () => {
       expect(handleChange.callCount).to.equal(0);
     });
 
+    it('3.2.2 On Input: state changes only from explicit activation, never on its own', async () => {
+      const handleChange = spy();
+      const { user } = render(<Checkbox onChange={handleChange} />);
+      const checkbox = screen.getByRole('checkbox');
+
+      expect(checkbox).to.have.property('checked', false);
+      expect(handleChange.callCount).to.equal(0);
+
+      // A value change is not a change of context.
+      await user.click(checkbox);
+      expect(checkbox).to.have.property('checked', true);
+      expect(handleChange.callCount).to.equal(1);
+    });
+
     describe('4.1.2 Name, Role, Value', () => {
       it('exposes the mixed state through the native indeterminate property', () => {
         // The `prop: indeterminate` block above covers the property lifecycle;

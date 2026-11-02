@@ -2,24 +2,24 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent } from '@mui/types';
+import type { OverridableComponent } from '@mui/types';
 import deepmerge from '@mui/utils/deepmerge';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import composeClasses from '@mui/utils/composeClasses';
 import systemStyled from '../styled';
 import useThemePropsSystem from '../useThemeProps';
 import createTheme from '../createTheme';
-import { CreateMUIStyled } from '../createStyled';
-import { StackTypeMap, StackOwnerState } from './StackProps';
+import type { CreateMUIStyled } from '../createStyled';
+import type { StackTypeMap, StackOwnerState } from './StackProps';
 import type { Breakpoint } from '../createTheme';
-import { Breakpoints } from '../createBreakpoints/createBreakpoints';
+import type { Breakpoints } from '../createBreakpoints/createBreakpoints';
 import {
   handleBreakpoints,
   mergeBreakpointsInOrder,
   resolveBreakpointValues,
 } from '../breakpoints';
 import { createUnarySpacing, getValue } from '../spacing';
-import { Spacing } from '../createTheme/createSpacing';
+import type { Spacing } from '../createTheme/createSpacing';
 
 const defaultTheme = createTheme();
 

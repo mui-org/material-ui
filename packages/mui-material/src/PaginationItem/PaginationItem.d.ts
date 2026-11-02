@@ -158,12 +158,12 @@ export interface PaginationItemTypeMap<
  *
  * Demos:
  *
- * - [Pagination](https://mui.com/material-ui/react-pagination/)
+ * - [Pagination](https://next.mui.com/material-ui/react-pagination/)
  *
  * API:
  *
- * - [PaginationItem API](https://mui.com/material-ui/api/pagination-item/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [PaginationItem API](https://next.mui.com/material-ui/api/pagination-item/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const PaginationItem: OverridableComponent<PaginationItemTypeMap>;
 

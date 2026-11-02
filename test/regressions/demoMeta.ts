@@ -169,7 +169,7 @@ export const SCREENSHOT_RULES: ScreenshotRule[] = [
     viewportWidth: 1440,
     waitForSelector: '.MuiDataGrid-row:not(.MuiDataGrid-rowSkeleton) .MuiDataGrid-cell',
   },
-  { test: 'docs/data/material/components/progress/*', enabled: false }, // Animated progress bars make screenshots flaky; axe still runs on the enrolled LinearProgress demos
+  { test: 'docs/data/material/components/progress/*', enabled: false }, // Animated progress bars make screenshots flaky; axe still runs on the enrolled LinearProgress and CircularProgress demos
   // The a11y fixture tree exists for axe, so screenshots are off by default.
   // Later rules re-enable single fixtures that also guard a visual state.
   { test: 'test/regressions/a11y/fixtures/**', enabled: false }, // A11y-only coverage fixtures
@@ -201,8 +201,9 @@ const TOGGLE_BUTTON_A11Y_DEMOS = [
   'VerticalToggleButtons',
 ];
 
-// LinearProgress docs demos enrolled for axe assertions; CircularProgress and
-// the mixed/customized demos (CustomizedProgressBars, DelayingAppearance) are excluded.
+// Progress docs demos enrolled for axe assertions. Mixed demos that are not one
+// component (CustomizedProgressBars, DelayingAppearance, CircularIntegration)
+// stay excluded.
 const LINEARPROGRESS_A11Y_DEMOS = [
   'LinearIndeterminate',
   'LinearDeterminate',
@@ -211,6 +212,17 @@ const LINEARPROGRESS_A11Y_DEMOS = [
   'LinearColor',
   'LinearWithValueLabel',
   'LinearWithAriaValueText',
+];
+
+const CIRCULARPROGRESS_A11Y_DEMOS = [
+  'CircularIndeterminate',
+  'CircularDeterminate',
+  'CircularColor',
+  'CircularWithValueLabel',
+  'CircularSize',
+  'CircularEnableTrack',
+  'CircularCustomScale',
+  'CircularUnderLoad',
 ];
 
 // Button docs demos enrolled for axe assertions; IconButton/ButtonBase demos are excluded.
@@ -368,15 +380,29 @@ export const A11Y_RULES: A11yRule[] = [
     assertions: 'all',
   },
   {
-    test: `docs/data/material/components/progress/{${LINEARPROGRESS_A11Y_DEMOS.join(',')}}`,
+    test: `docs/data/material/components/progress/{${[
+      ...LINEARPROGRESS_A11Y_DEMOS,
+      ...CIRCULARPROGRESS_A11Y_DEMOS,
+    ].join(',')}}`,
     enabled: true,
     assertions: 'all',
   },
+  // The percentage caption is positioned over the SVG arc, so axe cannot
+  // resolve its background and reports `color-contrast` incomplete. The
+  // caption is author-supplied Typography, not part of the component.
+  // Recorded, not asserted.
+  {
+    test: 'docs/data/material/components/progress/CircularWithValueLabel',
+    enabled: true,
+    assertions: 'all',
+    skipAssertions: ['color-contrast'],
+  },
   // A11y-only fixtures live under `test/regressions/a11y/fixtures/progress/`
   // (no docs page consumes them); the suite name maps their results into the
-  // same `progress.a11y.json` as the docs demos above.
+  // same `progress.a11y.json` as the docs demos above. Linear and circular
+  // share that file because the reporter keys results by the docs slug.
   {
-    test: 'test/regressions/a11y/fixtures/progress/{LinearProgressA11ySemanticStates,LinearProgressA11yColorMatrix}',
+    test: 'test/regressions/a11y/fixtures/progress/{LinearProgressA11ySemanticStates,LinearProgressA11yColorMatrix,CircularProgressA11ySemanticStates,CircularProgressA11yColorMatrix}',
     enabled: true,
     assertions: 'all',
   },

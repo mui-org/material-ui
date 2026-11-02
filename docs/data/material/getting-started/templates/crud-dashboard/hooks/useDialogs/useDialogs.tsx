@@ -317,17 +317,17 @@ export function useDialogs(): DialogHook {
   const { open, close } = dialogsContext;
 
   const alert = useEventCallback<OpenAlertDialog>(
-    (msg, { onClose, ...options } = {}) =>
+    (msg, { onClose, ...options }: AlertOptions = {}) =>
       open(AlertDialog, { ...options, msg }, { onClose }),
   );
 
   const confirm = useEventCallback<OpenConfirmDialog>(
-    (msg, { onClose, ...options } = {}) =>
+    (msg, { onClose, ...options }: ConfirmOptions = {}) =>
       open(ConfirmDialog, { ...options, msg }, { onClose }),
   );
 
   const prompt = useEventCallback<OpenPromptDialog>(
-    (msg, { onClose, ...options } = {}) =>
+    (msg, { onClose, ...options }: PromptOptions = {}) =>
       open(PromptDialog, { ...options, msg }, { onClose }),
   );
 

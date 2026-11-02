@@ -1,8 +1,0 @@
-<Router>
-  <Box sx={{ width: '100%' }}>
-    <Routes>
-      <Route path="*" element={<CurrentRoute />} />
-    </Routes>
-    <MyTabs />
-  </Box>
-</Router>

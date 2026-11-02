@@ -38,7 +38,7 @@
     }
   ],
   "spread": true,
-  "themeDefaultProps": false,
+  "themeDefaultProps": true,
   "muiName": "MuiRadioGroup",
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/RadioGroup/RadioGroup.js",

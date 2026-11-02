@@ -3,7 +3,7 @@
 // `@typescript/typescript6` is Microsoft's republished 6.x API for exactly
 // this case. Swap it for the stable API once TypeScript 7.1 ships it
 // (https://github.com/microsoft/TypeScript/issues/63703).
-import ts from '@typescript/typescript6';
+import type ts from '@typescript/typescript6';
 
 export interface PropTypeDefinition {
   name: string;

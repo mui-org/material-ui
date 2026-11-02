@@ -1,4 +1,4 @@
-import { ValidationMap } from 'prop-types';
+import type { ValidationMap } from 'prop-types';
 // This module is based on https://github.com/airbnb/prop-types-exact repository.
 // However, in order to reduce the number of dependencies and to remove some extra safe checks
 // the module was forked.

@@ -1,6 +1,0 @@
-<ThemeProvider theme={defaultContrastThresholdTheme}>
-  <ContrastShowcase title="Default contrast threshold" />
-</ThemeProvider>
-<ThemeProvider theme={highContrastThresholdTheme}>
-  <ContrastShowcase title="Higher contrast threshold" />
-</ThemeProvider>

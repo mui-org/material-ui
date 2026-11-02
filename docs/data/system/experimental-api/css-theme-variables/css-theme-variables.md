@@ -184,7 +184,7 @@ Now, the Button's `backgroundColor`, `borderColor` and text `color` values will 
 
 ### Demo
 
-{{"demo": "CreateCssVarsProvider.js"}}
+{{"component": "file://./demos/create-css-vars-provider/index.ts"}}
 
 For framework- or language-specific setup instructions, see [CSS theme variables—Usage—Server-side rendering](/material-ui/customization/css-theme-variables/usage/).
 For framework or language specific setup, see [this](/material-ui/customization/css-theme-variables/usage/)

@@ -53,10 +53,21 @@ export default function handleRequest(
               const html = Buffer.concat(chunks).toString();
 
               // Extract emotion styles from the collected HTML
-              const styles = constructStyleTagsFromChunks(extractCriticalToChunks(html));
+              const emotionChunks = extractCriticalToChunks(html);
+              // The chunks go into a <style> verbatim, and the browser ends that element at the
+              // first `</style>` it sees, even one sitting inside a CSS value. `\3c` is the CSS
+              // escape for `<`, so the rule keeps its meaning but the text can no longer close
+              // the element.
+              emotionChunks.styles = emotionChunks.styles.map((style) => ({
+                ...style,
+                css: style.css.replace(/<(?=\/?style\b)/gi, '\\3c '),
+              }));
+              const styles = constructStyleTagsFromChunks(emotionChunks);
 
               if (styles) {
-                const injectedHtml = html.replace('</head>', `${styles}</head>`);
+                // The replacement is a function so that `$&` and friends inside the stylesheet are
+                // not expanded as replacement patterns.
+                const injectedHtml = html.replace('</head>', () => `${styles}</head>`);
                 this.push(injectedHtml);
               } else {
                 this.push(html);

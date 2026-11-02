@@ -1,7 +1,0 @@
-<StyledRating
-  name="highlight-selected-only"
-  defaultValue={2}
-  getLabelText={(value: number) => customIcons[value].label}
-  slotProps={{ icon: { component: IconContainer } }}
-  highlightSelectedOnly
-/>

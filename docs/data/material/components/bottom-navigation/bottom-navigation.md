@@ -19,19 +19,19 @@ Bottom navigation bars display three to five destinations at the bottom of a scr
 
 When there are only **three** actions, display both icons and text labels at all times.
 
-{{"demo": "SimpleBottomNavigation.js", "bg": true}}
+{{"component": "file://./demos/simple/index.ts", "bg": true}}
 
 ## Bottom navigation with no label
 
 If there are **four** or **five** actions, display inactive views as icons only.
 
-{{"demo": "LabelBottomNavigation.js", "bg": true}}
+{{"component": "file://./demos/label/index.ts", "bg": true}}
 
 ## Fixed positioning
 
 This demo keeps bottom navigation fixed to the bottom, no matter the amount of content on-screen.
 
-{{"demo": "FixedBottomNavigation.js", "bg": true, "iframe": true, "maxWidth": 600}}
+{{"component": "file://./demos/fixed/index.ts", "bg": true, "iframe": true, "maxWidth": 600}}
 
 ## Third-party routing library
 

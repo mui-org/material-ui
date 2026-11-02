@@ -1,3 +1,0 @@
-<QueryClientProvider client={queryClient}>
-  <InfiniteQueryAutocomplete />
-</QueryClientProvider>

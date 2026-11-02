@@ -16,7 +16,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import InputBase, { inputBaseClasses as classes } from '@mui/material/InputBase';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 
 describe('<InputBase />', () => {
@@ -759,6 +759,37 @@ describe('<InputBase />', () => {
     });
   });
 
+  describe('prop: slotProps.input', () => {
+    it('should call the event handlers and forward the ref', () => {
+      const inputRef = React.createRef();
+      const handleFocus = spy();
+      const handleBlur = spy();
+      const handleChange = spy();
+      const { container } = render(
+        <InputBase
+          slotProps={{
+            input: {
+              ref: inputRef,
+              onFocus: handleFocus,
+              onBlur: handleBlur,
+              onChange: handleChange,
+            },
+          }}
+        />,
+      );
+      const input = container.querySelector('input');
+
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'a' } });
+      fireEvent.blur(input);
+
+      expect(inputRef.current).to.equal(input);
+      expect(handleFocus.callCount).to.equal(1);
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleBlur.callCount).to.equal(1);
+    });
+  });
+
   describe('autofill', () => {
     it.skipIf(isJsdom())(
       'does not animate display during autofill detection',
@@ -946,5 +977,49 @@ describe('<InputBase />', () => {
         });
       },
     );
+  });
+  describe('theme.focusVisible', () => {
+    const focusVisibleTheme = createTheme({ focusVisible: true });
+
+    it.skipIf(isJsdom())('renders the ring on focus', async () => {
+      render(
+        <MuiThemeProvider theme={focusVisibleTheme}>
+          <InputBase data-testid="root" />
+        </MuiThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({
+        outlineStyle: 'solid',
+        outlineWidth: '2px',
+        outlineOffset: '2px',
+      });
+    });
+
+    it.skipIf(isJsdom())('lets a wrapper opt out and draw its own indicator', async () => {
+      render(
+        <MuiThemeProvider theme={focusVisibleTheme}>
+          <InputBase internalDisabledThemeFocusVisible data-testid="root" />
+        </MuiThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+    });
+
+    it('does not forward the private opt-out prop to the DOM', () => {
+      render(<InputBase internalDisabledThemeFocusVisible data-testid="root" />);
+      expect(screen.getByTestId('root')).not.to.have.attribute('internalDisabledThemeFocusVisible');
+    });
   });
 });

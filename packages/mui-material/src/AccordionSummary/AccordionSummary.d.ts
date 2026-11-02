@@ -93,12 +93,12 @@ export interface AccordionSummaryOwnerState extends Omit<
  *
  * Demos:
  *
- * - [Accordion](https://mui.com/material-ui/react-accordion/)
+ * - [Accordion](https://next.mui.com/material-ui/react-accordion/)
  *
  * API:
  *
- * - [AccordionSummary API](https://mui.com/material-ui/api/accordion-summary/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [AccordionSummary API](https://next.mui.com/material-ui/api/accordion-summary/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const AccordionSummary: ExtendButtonBase<AccordionSummaryTypeMap>;
 

@@ -87,6 +87,12 @@
     "getOptionLabel": {
       "description": "Used to determine the string value for a given option. It&#39;s used to fill the input (and the list box options if <code>renderOption</code> is not provided).<br>If used in free solo mode, it must accept both the type of the options and a string."
     },
+    "getOptionValue": {
+      "description": "Used to determine the selected value for a given option.<br>When provided, the <code>value</code>, <code>defaultValue</code>, and <code>onChange</code> value use the returned type instead of the option type. The returned value must be a unique, non-null primitive. When <code>freeSolo</code> is enabled, it must not return a string because strings are reserved for free-solo values.",
+      "typeDescriptions": {
+        "option": { "name": "option", "description": "The option to get the value for." }
+      }
+    },
     "groupBy": {
       "description": "If provided, the options will be grouped under the returned string. The groupBy value is also used as the text for group headings when <code>renderGroup</code> is not provided.",
       "typeDescriptions": {
@@ -104,10 +110,13 @@
     },
     "inputValue": { "description": "The input value." },
     "isOptionEqualToValue": {
-      "description": "Used to determine if the option represents the given value. Uses strict equality by default. ⚠️ Both arguments need to be handled, an option can only match with one value.",
+      "description": "Used to determine if the option represents the given value. Uses strict equality against the option by default, or against the value returned by <code>getOptionValue</code> when that prop is provided. ⚠️ Both arguments need to be handled, an option can only match with one value.",
       "typeDescriptions": {
         "option": { "name": "option", "description": "The option to test." },
-        "value": { "name": "value", "description": "The value to test against." }
+        "value": {
+          "name": "value",
+          "description": "The selected value to test against. When <code>getOptionValue</code> is provided, this is the value returned by <code>getOptionValue</code> (or a free-solo string)."
+        }
       }
     },
     "limitTags": {
@@ -129,7 +138,10 @@
       "description": "Callback fired when the value changes.",
       "typeDescriptions": {
         "event": { "name": "event", "description": "The event source of the callback." },
-        "value": { "name": "value", "description": "The new value of the component." },
+        "value": {
+          "name": "value",
+          "description": "The new selected value of the component. When <code>getOptionValue</code> is provided, this contains the value(s) returned by <code>getOptionValue</code>."
+        },
         "reason": {
           "name": "reason",
           "description": "One of &quot;createOption&quot;, &quot;selectOption&quot;, &quot;removeOption&quot;, &quot;blur&quot; or &quot;clear&quot;."
@@ -208,7 +220,7 @@
       "typeDescriptions": {
         "value": {
           "name": "value",
-          "description": "The <code>value</code> provided to the component."
+          "description": "The <code>value</code> provided to the component. When <code>getOptionValue</code> is provided, this contains mapped values."
         },
         "getItemProps": { "name": "getItemProps", "description": "The value item props." },
         "ownerState": {
@@ -230,7 +242,7 @@
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },
     "value": {
-      "description": "The value of the autocomplete.<br>The value must have reference equality with the option in order to be selected. You can customize the equality behavior with the <code>isOptionEqualToValue</code> prop."
+      "description": "The value of the autocomplete.<br>Without <code>getOptionValue</code>, the value must have reference equality with the option in order to be selected. When <code>getOptionValue</code> is provided, its returned value is used instead. You can customize the equality behavior with the <code>isOptionEqualToValue</code> prop."
     }
   },
   "classDescriptions": {
@@ -317,6 +329,7 @@
     }
   },
   "slotDescriptions": {
+    "chip": "The component used to render the selected values when <code>multiple</code> is <code>true</code>.",
     "clearIndicator": "The component used to render the clear indicator element.",
     "listbox": "The component used to render the listbox.",
     "paper": "The component used to render the body of the popup.",

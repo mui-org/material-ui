@@ -1,6 +1,6 @@
 {
   "name": "@mui/material-nextjs",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Collection of utilities for integration between Material UI and Next.js.",
   "license": "MIT",
@@ -30,15 +30,15 @@
     "attw": "attw --pack ./build --entrypoints \"v13-pagesRouter\" \"v16-appRouter\" \"v15-appRouter\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7"
+    "@babel/runtime": "^7.29.7 || ^8.0.5"
   },
   "devDependencies": {
     "@emotion/cache": "11.14.0",
     "@emotion/react": "11.14.0",
     "@emotion/server": "11.11.0",
-    "@types/react": "19.2.18",
-    "next": "16.3.4",
-    "react": "19.2.8"
+    "@types/react": "19.3.0",
+    "next": "16.4.3",
+    "react": "19.3.1"
   },
   "peerDependencies": {
     "@emotion/cache": "^11.11.0",
@@ -63,9 +63,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     "./v13-pagesRouter": "./src/v13-pagesRouter/index.ts",

@@ -14,45 +14,45 @@ githubSource: packages/mui-material/src/Pagination
 
 ## Basic pagination
 
-{{"demo": "BasicPagination.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Outlined pagination
 
-{{"demo": "PaginationOutlined.js"}}
+{{"component": "file://./demos/outlined/index.ts"}}
 
 ## Rounded pagination
 
-{{"demo": "PaginationRounded.js"}}
+{{"component": "file://./demos/rounded/index.ts"}}
 
 ## Pagination size
 
-{{"demo": "PaginationSize.js"}}
+{{"component": "file://./demos/size/index.ts"}}
 
 ## Buttons
 
 You can optionally enable first-page and last-page buttons, or disable the previous-page and next-page buttons.
 
-{{"demo": "PaginationButtons.js"}}
+{{"component": "file://./demos/buttons/index.ts"}}
 
 ## Custom icons
 
 It's possible to customize the control icons.
 
-{{"demo": "CustomIcons.js"}}
+{{"component": "file://./demos/custom-icons/index.ts"}}
 
 ## Pagination ranges
 
 You can specify how many digits to display either side of current page with the `siblingCount` prop, and adjacent to the start and end page number with the `boundaryCount` prop.
 
-{{"demo": "PaginationRanges.js"}}
+{{"component": "file://./demos/ranges/index.ts"}}
 
 ## Controlled pagination
 
-{{"demo": "PaginationControlled.js"}}
+{{"component": "file://./demos/controlled/index.ts"}}
 
 ## Router integration
 
-{{"demo": "PaginationLink.js"}}
+{{"component": "file://./demos/link/index.ts"}}
 
 ## `usePagination`
 
@@ -65,7 +65,7 @@ The Pagination component is built on this hook.
 import usePagination from '@mui/material/usePagination';
 ```
 
-{{"demo": "UsePagination.js"}}
+{{"component": "file://./demos/use/index.ts"}}
 
 ## Table pagination
 
@@ -74,7 +74,7 @@ It's preferred in contexts where SEO is important, for instance, a blog.
 
 For the pagination of a large set of tabular data, you should use the `TablePagination` component.
 
-{{"demo": "TablePaginationDemo.js"}}
+{{"component": "file://./demos/table-demo/index.ts"}}
 
 :::warning
 Note that the `Pagination` page prop starts at 1 to match the requirement of including the value in the URL, while the `TablePagination` page prop starts at 0 to match the requirement of zero-based JavaScript arrays that come with rendering a lot of tabular data.

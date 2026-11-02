@@ -99,4 +99,4 @@ Finally, set the `colorSchemeNode` prop using `shadowRootElement`, from step 1, 
 
 In the example below you can see that the component outside of the shadow DOM is affected by global styles, while the component inside of the shadow DOM is not:
 
-{{"demo": "ShadowDOMDemoNoSnap.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/demo-no-snap/index.ts", "hideToolbar": true, "bg": true}}

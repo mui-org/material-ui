@@ -460,6 +460,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     getOptionDisabled,
     getOptionKey,
     getOptionLabel: getOptionLabelProp,
+    getOptionValue,
     isOptionEqualToValue,
     groupBy,
     handleHomeEndKeys = !props.freeSolo,
@@ -504,6 +505,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     getClearProps,
     getItemProps,
     getListboxProps,
+    getOptionFromValue,
     getOptionProps,
     value,
     dirty,
@@ -549,19 +551,22 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
   // the last open-state options instead of flashing "No options" or an empty Paper.
   // These options are stale because they no longer reflect the hook's current
   // groupedOptions, but they are non-interactive while closing and reset on next open.
-  const previousGroupedOptionsRef = React.useRef([]);
+  // Keep the grouping mode with the options so changes to groupBy cannot change
+  // how the cached options are interpreted during the exit transition.
+  const isGrouped = Boolean(groupBy);
+  const previousOptionsRef = React.useRef({ options: [], isGrouped: false });
   const prevPopupOpenRef = React.useRef(false);
-  const renderedOptions = popupOpen ? groupedOptions : previousGroupedOptionsRef.current;
+  const rendered = popupOpen ? { options: groupedOptions, isGrouped } : previousOptionsRef.current;
 
   useEnhancedEffect(() => {
     if (popupOpen && !prevPopupOpenRef.current) {
-      previousGroupedOptionsRef.current = [];
+      previousOptionsRef.current = { options: [], isGrouped };
     }
     prevPopupOpenRef.current = popupOpen;
     if (popupOpen && groupedOptions.length > 0) {
-      previousGroupedOptionsRef.current = groupedOptions;
+      previousOptionsRef.current = { options: groupedOptions, isGrouped };
     }
-  }, [popupOpen, groupedOptions]);
+  }, [popupOpen, groupedOptions, isGrouped]);
 
   const hasClearIcon = !disableClearable && !disabled && dirty && !readOnly;
   const hasPopupIcon = (!freeSolo || forcePopupIcon === true) && forcePopupIcon !== false;
@@ -618,6 +623,9 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     externalForwardedProps,
     ownerState,
     className: classes.paper,
+    additionalProps: {
+      elevation: 8,
+    },
   });
 
   const [StatusSlot, statusProps] = useSlot('status', {
@@ -655,10 +663,10 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
   // Don't render the Popper when there's no content to show.
   // In freeSolo mode, "No options" text is suppressed, so if there are also no
   // matching options and loading is false, the Paper would be empty.
-  // Uses renderedOptions (not groupedOptions) so Popper stays during exit transitions.
+  // Uses rendered.options (not groupedOptions) so Popper stays during exit transitions.
   // Respect keepMounted from resolved popperProps (handles both object and callback slotProps forms).
   const hasPopupContent =
-    renderedOptions.length > 0 || loading || !freeSolo || popperProps.keepMounted === true;
+    rendered.options.length > 0 || loading || !freeSolo || popperProps.keepMounted === true;
 
   const [ClearIndicatorSlot, clearIndicatorProps] = useSlot('clearIndicator', {
     elementType: AutocompleteClearIndicator,
@@ -687,6 +695,14 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
     },
   });
 
+  const [ChipSlot, chipProps] = useSlot('chip', {
+    elementType: Chip,
+    externalForwardedProps,
+    ownerState,
+    className: classes.tag,
+    shouldForwardComponentProp: true,
+  });
+
   let startAdornment;
 
   const getCustomizedItemProps = (params) => ({
@@ -700,15 +716,17 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
       if (renderValue) {
         startAdornment = renderValue(value, getCustomizedItemProps, ownerState);
       } else {
-        startAdornment = value.map((option, index) => {
+        startAdornment = value.map((valueItem, index) => {
           const { key, ...customItemProps } = getCustomizedItemProps({ index });
+          const resolved = getOptionFromValue(valueItem);
+
           return (
-            <Chip
+            <ChipSlot
               key={key}
-              label={getOptionLabel(option)}
+              label={resolved === null ? '' : getOptionLabel(resolved.option)}
               size={size}
               {...customItemProps}
-              {...externalForwardedProps.slotProps.chip}
+              {...chipProps}
             />
           );
         });
@@ -820,12 +838,12 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
         <AutocompletePopper as={PopperSlot} {...popperProps}>
           <AutocompletePaper as={PaperSlot} {...paperProps}>
             <StatusSlot {...statusProps}>
-              {loading && renderedOptions.length === 0 ? (
+              {loading && rendered.options.length === 0 ? (
                 <AutocompleteLoading className={classes.loading} ownerState={ownerState}>
                   {loadingText}
                 </AutocompleteLoading>
               ) : null}
-              {renderedOptions.length === 0 && !freeSolo && !loading ? (
+              {rendered.options.length === 0 && !freeSolo && !loading ? (
                 <AutocompleteNoOptions
                   className={classes.noOptions}
                   ownerState={ownerState}
@@ -838,10 +856,10 @@ const Autocomplete = React.forwardRef(function Autocomplete(inProps, ref) {
                 </AutocompleteNoOptions>
               ) : null}
             </StatusSlot>
-            {renderedOptions.length > 0 ? (
+            {rendered.options.length > 0 ? (
               <ListboxSlot {...listboxProps}>
-                {renderedOptions.map((option, index) => {
-                  if (groupBy) {
+                {rendered.options.map((option, index) => {
+                  if (rendered.isGrouped) {
                     return renderGroup({
                       key: option.key,
                       group: option.group,
@@ -1051,6 +1069,18 @@ Autocomplete.propTypes /* remove-proptypes */ = {
    */
   getOptionLabel: PropTypes.func,
   /**
+   * Used to determine the selected value for a given option.
+   *
+   * When provided, the `value`, `defaultValue`, and `onChange` value use the returned type instead
+   * of the option type. The returned value must be a unique, non-null primitive.
+   * When `freeSolo` is enabled, it must not return a string because strings are reserved for
+   * free-solo values.
+   *
+   * @param {Value} option The option to get the value for.
+   * @returns {MappedValue}
+   */
+  getOptionValue: PropTypes.func,
+  /**
    * If provided, the options will be grouped under the returned string.
    * The groupBy value is also used as the text for group headings when `renderGroup` is not provided.
    *
@@ -1080,11 +1110,13 @@ Autocomplete.propTypes /* remove-proptypes */ = {
   inputValue: PropTypes.string,
   /**
    * Used to determine if the option represents the given value.
-   * Uses strict equality by default.
+   * Uses strict equality against the option by default, or against the value returned by
+   * `getOptionValue` when that prop is provided.
    * ⚠️ Both arguments need to be handled, an option can only match with one value.
    *
    * @param {Value} option The option to test.
-   * @param {Value|string} value The value to test against.
+   * @param {Value|MappedValue|string} value The selected value to test against. When `getOptionValue` is
+   * provided, this is the value returned by `getOptionValue` (or a free-solo string).
    * @returns {boolean}
    */
   isOptionEqualToValue: PropTypes.func,
@@ -1123,7 +1155,8 @@ Autocomplete.propTypes /* remove-proptypes */ = {
    * Callback fired when the value changes.
    *
    * @param {React.SyntheticEvent} event The event source of the callback.
-   * @param {Value|Value[]} value The new value of the component.
+   * @param {Value|MappedValue|Array<Value|MappedValue>} value The new selected value of the component. When `getOptionValue` is
+   * provided, this contains the value(s) returned by `getOptionValue`.
    * @param {string} reason One of "createOption", "selectOption", "removeOption", "blur" or "clear".
    * @param {string} [details]
    */
@@ -1227,7 +1260,8 @@ Autocomplete.propTypes /* remove-proptypes */ = {
   /**
    * Renders the selected value(s) as rich content in the input for both single and multiple selections.
    *
-   * @param {AutocompleteRenderValue<Value, Multiple, FreeSolo>} value The `value` provided to the component.
+   * @param {AutocompleteRenderValue<Value|MappedValue, Multiple, FreeSolo>} value The `value` provided to the component.
+   * When `getOptionValue` is provided, this contains mapped values.
    * @param {function} getItemProps The value item props.
    * @param {object} ownerState The state of the Autocomplete component.
    * @returns {ReactNode}
@@ -1272,6 +1306,7 @@ Autocomplete.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   slots: PropTypes.shape({
+    chip: PropTypes.elementType,
     clearIndicator: PropTypes.elementType,
     listbox: PropTypes.elementType,
     paper: PropTypes.elementType,
@@ -1291,7 +1326,8 @@ Autocomplete.propTypes /* remove-proptypes */ = {
   /**
    * The value of the autocomplete.
    *
-   * The value must have reference equality with the option in order to be selected.
+   * Without `getOptionValue`, the value must have reference equality with the option in order to
+   * be selected. When `getOptionValue` is provided, its returned value is used instead.
    * You can customize the equality behavior with the `isOptionEqualToValue` prop.
    */
   value: chainPropTypes(PropTypes.any, (props) => {

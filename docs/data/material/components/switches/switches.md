@@ -19,43 +19,43 @@ should be made clear from the corresponding inline label.
 
 ## Basic switches
 
-{{"demo": "BasicSwitches.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Label
 
 You can provide a label to the `Switch` thanks to the `FormControlLabel` component.
 
-{{"demo": "SwitchLabels.js"}}
+{{"component": "file://./demos/labels/index.ts"}}
 
 ## Size
 
 Use the `size` prop to change the size of the switch.
 
-{{"demo": "SwitchesSize.js"}}
+{{"component": "file://./demos/size/index.ts"}}
 
 ## Color
 
-{{"demo": "ColorSwitches.js"}}
+{{"component": "file://./demos/color/index.ts"}}
 
 ## Controlled
 
 You can control the switch with the `checked` and `onChange` props:
 
-{{"demo": "ControlledSwitches.js"}}
+{{"component": "file://./demos/controlled/index.ts"}}
 
 ## Switches with FormGroup
 
 `FormGroup` is a helpful wrapper used to group selection controls components that provides an easier API.
 However, you are encouraged to use [Checkboxes](/material-ui/react-checkbox/) instead if multiple related controls are required. (See: [When to use](#when-to-use)).
 
-{{"demo": "SwitchesGroup.js"}}
+{{"component": "file://./demos/group/index.ts"}}
 
 ## Customization
 
 Here are some examples of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedSwitches.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/primitive/switch).
 
@@ -63,7 +63,7 @@ You can learn more about this in the [overrides documentation page](/material-ui
 
 You can change the placement of the label:
 
-{{"demo": "FormControlLabelPosition.js"}}
+{{"component": "file://./demos/form-control-label-position/index.ts"}}
 
 ## When to use
 

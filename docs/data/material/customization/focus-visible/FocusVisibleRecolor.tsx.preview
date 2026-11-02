@@ -1,3 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Button variant="outlined">Tab to me</Button>
-</ThemeProvider>

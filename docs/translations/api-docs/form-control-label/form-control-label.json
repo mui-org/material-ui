@@ -10,7 +10,6 @@
     "disableTypography": {
       "description": "If <code>true</code>, the label is rendered as it is passed without an additional typography node."
     },
-    "inputRef": { "description": "Pass a ref to the <code>input</code> element." },
     "label": { "description": "A text or an element to be used in an enclosing label element." },
     "labelPlacement": { "description": "The position of the label." },
     "onChange": {

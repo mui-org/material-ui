@@ -1,1 +1,0 @@
-<span>{`(min-width:600px) matches: ${matches}`}</span>

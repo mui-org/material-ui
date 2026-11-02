@@ -3,11 +3,11 @@
 // `webkitAnimationStart` and plain `animationstart` never reaches `onAnimationStart`.
 if (typeof globalThis.AnimationEvent === 'undefined') {
   class AnimationEventPolyfill extends Event implements AnimationEvent {
-    animationName: string;
+    declare animationName: string;
 
-    elapsedTime: number;
+    declare elapsedTime: number;
 
-    pseudoElement: string;
+    declare pseudoElement: string;
 
     constructor(type: string, options: AnimationEventInit = {}) {
       super(type, options);

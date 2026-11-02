@@ -23,10 +23,10 @@ export interface AccordionDetailsProps extends StandardProps<React.HTMLAttribute
  *
  * Demos:
  *
- * - [Accordion](https://mui.com/material-ui/react-accordion/)
+ * - [Accordion](https://next.mui.com/material-ui/react-accordion/)
  *
  * API:
  *
- * - [AccordionDetails API](https://mui.com/material-ui/api/accordion-details/)
+ * - [AccordionDetails API](https://next.mui.com/material-ui/api/accordion-details/)
  */
 export default function AccordionDetails(props: AccordionDetailsProps): React.JSX.Element;

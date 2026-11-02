@@ -1,9 +1,0 @@
-<ThemeProvider theme={defaultTonalOffsetTheme}>
-  <ColorShowcase title="Default tonal offset" color="primary" />
-</ThemeProvider>
-<ThemeProvider theme={higherTonalOffsetTheme}>
-  <ColorShowcase title="Higher tonal offset" color="primary" />
-</ThemeProvider>
-<ThemeProvider theme={asymmetricTonalOffsetTheme}>
-  <ColorShowcase title="Asymmetric tonal offset" color="primary" />
-</ThemeProvider>

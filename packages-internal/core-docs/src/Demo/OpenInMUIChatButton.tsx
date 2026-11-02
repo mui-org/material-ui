@@ -2,14 +2,15 @@ import * as React from 'react';
 import useForkRef from '@mui/utils/useForkRef';
 import { getActiveElement, ownerDocument } from '@mui/material/utils';
 import { styled, keyframes, alpha } from '@mui/material/styles';
-import Button, { type ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
+import type { ButtonProps } from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import PageContext from '../PageContext';
 import { useDemoContext } from '../DemoContext';
-import { createMuiChat } from './sandbox/MuiChat';
-import type { DemoData } from './sandbox/types';
+import { createMuiChat } from '../sandbox/MuiChat';
+import type { DemoData } from '../sandbox/types';
 
 export interface OpenInMUIChatButtonProps extends ButtonProps {
   demoData: DemoData;

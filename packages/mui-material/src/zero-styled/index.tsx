@@ -1,8 +1,9 @@
-import { Interpolation } from '@mui/system';
+import type { Interpolation } from '@mui/system';
 import { extendSxProp } from '@mui/system/styleFunctionSx';
-import { Theme } from '../styles/createTheme';
+import type { Theme } from '../styles/createTheme';
 import useTheme from '../styles/useTheme';
-import GlobalStyles, { GlobalStylesProps } from '../GlobalStyles';
+import GlobalStyles from '../GlobalStyles';
+import type { GlobalStylesProps } from '../GlobalStyles';
 
 export { css, keyframes } from '@mui/system';
 

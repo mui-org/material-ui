@@ -7,10 +7,11 @@
     "declaration": true,
     "rootDir": "./src",
     "outDir": "build",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "stripInternal": true
   },
   "include": ["src/**/*.ts*"],
-  "exclude": ["src/**/*.d.ts", "src/**/*.test.*", "./**/*.spec.*"],
+  "exclude": ["src/**/*.test.*", "./**/*.spec.*"],
   "references": [
     { "path": "../mui-material/tsconfig.build.json" },
     { "path": "../mui-system/tsconfig.build.json" }

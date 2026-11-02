@@ -13,7 +13,7 @@
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
-    "@mui/material": "latest",
+    "@mui/material": "next",
     "@react-router/node": "latest",
     "@react-router/serve": "latest",
     "isbot": "latest",

@@ -51,7 +51,7 @@
   "themeDefaultProps": true,
   "muiName": "MuiTimelineContent",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-lab/src/TimelineContent/TimelineContent.js",
+  "filename": "/packages/mui-lab/src/TimelineContent/TimelineContent.tsx",
   "inheritance": { "component": "Typography", "pathname": "/material-ui/api/typography/" },
   "demos": "<ul><li><a href=\"/material-ui/react-timeline/\">Timeline</a></li></ul>"
 }

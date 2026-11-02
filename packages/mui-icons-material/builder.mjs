@@ -6,8 +6,7 @@ import Mustache from 'mustache';
 import globAsync from 'fast-glob';
 import * as svgo from 'svgo';
 import { fileURLToPath } from 'url';
-import { intersection } from 'es-toolkit/array';
-import { Queue } from '@mui/internal-waterfall';
+import { intersection, mapAsync } from 'es-toolkit/array';
 import { hideBin } from 'yargs/helpers';
 
 const currentDirectory = path.dirname(fileURLToPath(new URL(import.meta.url)));
@@ -257,7 +256,10 @@ export async function handler(options) {
     }),
   ]);
 
-  const queue = new Queue(
+  // Icon conversion runs on the main thread, so this only overlaps the file
+  // reads and writes. The `src:icons` script raises UV_THREADPOOL_SIZE to match.
+  await mapAsync(
+    svgPaths,
     (svgPath) =>
       worker({
         progress,
@@ -268,9 +270,6 @@ export async function handler(options) {
       }),
     { concurrency: 8 },
   );
-
-  queue.push(svgPaths);
-  await queue.wait({ empty: true });
 
   let legacyFiles = await globAsync(normalizePath(path.join(currentDirectory, '/legacy', '*.js')));
   legacyFiles = legacyFiles.map((file) => path.basename(file));

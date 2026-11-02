@@ -22,7 +22,10 @@
     "onClose": {
       "description": "Callback fired when the component requests to be closed. Typically <code>onClose</code> is used to set state in the parent component, which is used to control the <code>Snackbar</code> <code>open</code> prop. The <code>reason</code> parameter can optionally be used to control the response to <code>onClose</code>, for example ignoring <code>clickaway</code>.",
       "typeDescriptions": {
-        "event": { "name": "event", "description": "The event source of the callback." },
+        "event": {
+          "name": "event",
+          "description": "The event source of the callback, or <code>null</code> when <code>autoHideDuration</code> expired."
+        },
         "reason": {
           "name": "reason",
           "description": "Can be: <code>&quot;timeout&quot;</code> (<code>autoHideDuration</code> expired), <code>&quot;clickaway&quot;</code>, or <code>&quot;escapeKeyDown&quot;</code>."

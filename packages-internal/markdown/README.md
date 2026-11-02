@@ -1,4 +1,4 @@
-# @mui-internal/markdown
+# @mui/internal-markdown
 
 MUI markdown parser and webpack loader.
 This is an internal package not meant for general use.

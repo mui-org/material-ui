@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Router from 'next/router';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
@@ -13,6 +14,7 @@ import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 import { BrandingCssThemeProvider } from '../branding/BrandingCssVarsProvider';
 
 const COOKIE_CONSENT_KEY = 'docs-cookie-consent';
+const COOKIE_PREFERENCES_HASH = '#cookie-preferences';
 
 type ConsentStatus = 'analytics' | 'essential' | null;
 
@@ -58,14 +60,16 @@ export function useAnalyticsConsent() {
 }
 
 export function CookieConsentDialog() {
-  const { needsConsent, setAnalyticsConsent, setEssentialOnly } = useAnalyticsConsent();
+  const { consentStatus, needsConsent, setAnalyticsConsent, setEssentialOnly } =
+    useAnalyticsConsent();
   const [show, setShow] = React.useState(false);
 
   React.useEffect(() => {
     if (needsConsent) {
-      // Double rAF to ensure the initial opacity: 0 state is painted before transitioning
-      const frame = requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
+      // Double rAF to ensure the initial opacity: 0 state is painted before transitioning.
+      // The first callback replaces the handle, so the cleanup cancels whichever frame is pending.
+      let frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(() => {
           setShow(true);
         });
       });
@@ -142,7 +146,13 @@ export function CookieConsentDialog() {
                     sx={{ textAlign: { xs: 'center', sm: 'start' } }}
                   >
                     We use cookies to understand site usage and improve our content. This includes
-                    third-party analytics.
+                    third-party analytics.{' '}
+                    {consentStatus !== null && (
+                      <Box component="span" sx={{ display: 'block', mt: 1 }}>
+                        Current preference:{' '}
+                        {consentStatus === 'analytics' ? 'Analytics allowed' : 'Essential only'}
+                      </Box>
+                    )}
                   </Typography>
                 </Stack>
               </Stack>
@@ -183,9 +193,36 @@ function updateGoogleConsent(hasAnalytics: boolean) {
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const [consentStatus, setConsentStatus] = useLocalStorageState(COOKIE_CONSENT_KEY, null);
   const doNotTrack = useDoNotTrack();
+  const [preferencesRequested, setPreferencesRequested] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      setPreferencesRequested(window.location.hash === COOKIE_PREFERENCES_HASH);
+    };
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    Router.events.on('hashChangeComplete', handleHashChange);
+    Router.events.on('routeChangeComplete', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      Router.events.off('hashChangeComplete', handleHashChange);
+      Router.events.off('routeChangeComplete', handleHashChange);
+    };
+  }, []);
+
+  const closePreferences = React.useCallback(() => {
+    setPreferencesRequested(false);
+    if (window.location.hash === COOKIE_PREFERENCES_HASH) {
+      window.history.replaceState(
+        window.history.state,
+        '',
+        window.location.pathname + window.location.search,
+      );
+    }
+  }, []);
 
   // Respect Do Not Track - don't show dialog and treat as essential only
-  const needsConsent = consentStatus === null && !doNotTrack;
+  const needsConsent = (consentStatus === null || preferencesRequested) && !doNotTrack;
 
   // Update Google consent when status changes or on mount if already set
   React.useEffect(() => {
@@ -199,11 +236,13 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
 
   const setAnalyticsConsent = React.useCallback(() => {
     setConsentStatus('analytics');
-  }, [setConsentStatus]);
+    closePreferences();
+  }, [setConsentStatus, closePreferences]);
 
   const setEssentialOnly = React.useCallback(() => {
     setConsentStatus('essential');
-  }, [setConsentStatus]);
+    closePreferences();
+  }, [setConsentStatus, closePreferences]);
 
   const contextValue = React.useMemo<AnalyticsContextValue>(
     () => ({

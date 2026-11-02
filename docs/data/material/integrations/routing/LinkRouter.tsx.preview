@@ -1,7 +1,0 @@
-<Router>
-  <Link component={RouterLink} to="/">
-    With prop forwarding
-  </Link>
-  <br />
-  <Link component={LinkBehavior}>Without prop forwarding</Link>
-</Router>

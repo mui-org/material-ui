@@ -6,7 +6,7 @@
     "@babel/helper-builder-react-jsx": "latest",
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@mui/material": "latest",
+    "@mui/material": "next",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
     "@testing-library/user-event": "latest",

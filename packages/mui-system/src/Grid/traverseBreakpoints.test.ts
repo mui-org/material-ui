@@ -94,7 +94,7 @@ describe('traverse breakpoints', () => {
 
   describe('custom breakpoints', () => {
     const customBreakpoints = createBreakpoints({
-      // @ts-ignore
+      // @ts-expect-error: This runtime fixture supplies custom breakpoint names without module augmentation.
       values: { xxs: 0, xs: 400, sm: 600, md: 768 },
     });
 
@@ -142,7 +142,7 @@ describe('traverse breakpoints', () => {
 
     it('supports object (random order)', () => {
       const newBreakpoints = createBreakpoints({
-        // @ts-ignore
+        // @ts-expect-error: This runtime fixture supplies custom breakpoint names without module augmentation.
         values: { mobile: 0, laptop: 1024, tablet: 640, desktop: 1280 },
       });
       const styles = {};
@@ -172,7 +172,7 @@ describe('traverse breakpoints', () => {
     const newBreakpoints = createBreakpoints({
       values: {
         // order does not matter
-        // @ts-ignore
+        // @ts-expect-error: laptop is a custom breakpoint absent from the default BreakpointOverrides.
         laptop: 1024,
         tablet: 640,
         mobile: 0,

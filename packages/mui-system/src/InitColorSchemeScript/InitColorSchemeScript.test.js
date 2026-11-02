@@ -135,6 +135,21 @@ describe('InitColorSchemeScript', () => {
     expect(document.documentElement.getAttribute('data-mode')).to.equal('bar');
   });
 
+  it('should keep an `=` inside a bracketed attribute value', () => {
+    storage[DEFAULT_MODE_STORAGE_KEY] = 'dark';
+    storage[`${DEFAULT_COLOR_SCHEME_STORAGE_KEY}-dark`] = 'bar';
+
+    let { container } = renderToString(<InitColorSchemeScript attribute="[data-mode='a=b']" />);
+    eval(container.firstChild.textContent);
+    expect(document.documentElement.getAttribute('data-mode')).to.equal('a=b');
+
+    ({ container } = renderToString(<InitColorSchemeScript attribute="[data-mode='v=%s']" />));
+    eval(container.firstChild.textContent);
+    expect(document.documentElement.getAttribute('data-mode')).to.equal('v=bar');
+
+    document.documentElement.removeAttribute('data-mode'); // cleanup
+  });
+
   it('should set `dark` color scheme to body', () => {
     storage[DEFAULT_MODE_STORAGE_KEY] = 'dark';
     storage[`${DEFAULT_COLOR_SCHEME_STORAGE_KEY}-dark`] = 'bar';
@@ -184,6 +199,66 @@ describe('InitColorSchemeScript', () => {
       eval(container.firstChild.textContent);
       expect(document.documentElement.getAttribute(DEFAULT_ATTRIBUTE)).to.equal('yellow');
     });
+  });
+
+  it('should resolve the %s placeholder at build time, not with a runtime replace', () => {
+    // The generated script uses string concatenation (`"mode-" + colorScheme`); no `%s` template
+    // or `.replace('%s', …)` call should survive into the browser.
+    ['class', 'data', '.mode-%s', '[data-mode-%s]', "[data-mode='%s']"].forEach((attribute) => {
+      const { container } = renderToString(<InitColorSchemeScript attribute={attribute} />);
+      const script = container.firstChild.textContent;
+      expect(script).not.to.include("replace('%s'");
+      expect(script).not.to.include('%s');
+    });
+  });
+
+  it('should serialize the attribute so it cannot break out of the script', () => {
+    const payload = `x');globalThis.muiScriptInjection = true;//</script><script>globalThis.muiScriptInjection = true</script>`;
+    storage[DEFAULT_MODE_STORAGE_KEY] = 'light';
+    delete globalThis.muiScriptInjection;
+
+    const { container } = renderToString(<InitColorSchemeScript attribute={payload} />);
+    expect(container.querySelectorAll('script')).to.have.length(1);
+    eval(container.firstChild.textContent);
+    expect(globalThis.muiScriptInjection).to.equal(undefined);
+  });
+
+  // colorSchemeNode is emitted as a raw expression (see the prop docs), so it is not covered here.
+  it('should serialize storage keys and default scheme names before embedding them in the script', () => {
+    const payload = `';globalThis.muiScriptInjection = true;//</script><script>globalThis.muiScriptInjection = true</script>`;
+    const configurations = [
+      { modeStorageKey: payload },
+      { colorSchemeStorageKey: payload },
+      { defaultMode: payload },
+      { defaultLightColorScheme: payload },
+      { defaultDarkColorScheme: payload },
+    ];
+
+    configurations.forEach((configuration) => {
+      delete globalThis.muiScriptInjection;
+      const { container } = renderToString(<InitColorSchemeScript {...configuration} />);
+
+      expect(container.querySelectorAll('script')).to.have.length(1);
+      eval(container.firstChild.textContent);
+      expect(globalThis.muiScriptInjection).to.equal(undefined);
+    });
+  });
+
+  it('should read back serialized keys and default values with special characters', () => {
+    // Serialization must round-trip, not just neutralize: a storage key or default scheme name
+    // with `<`, a quote, and a line separator has to resolve to the exact same string at runtime.
+    // A mangled key would miss the mode lookup (applying the wrong scheme) and a mangled value
+    // would land altered - both fail this assertion.
+    const modeStorageKey = "a<b'c\u2028d";
+    const darkScheme = "x<y'z\u2029";
+    storage[modeStorageKey] = 'dark';
+
+    const { container } = renderToString(
+      <InitColorSchemeScript modeStorageKey={modeStorageKey} defaultDarkColorScheme={darkScheme} />,
+    );
+    eval(container.firstChild.textContent);
+
+    expect(document.documentElement.getAttribute(DEFAULT_ATTRIBUTE)).to.equal(darkScheme);
   });
 
   // Client renders must stay script-free (#48595).

@@ -2,6 +2,8 @@
 
 ## Release
 
+> Tip: You can also run or assist any stage of the release with an LLM agent through the `mui-release` skill (installed at `.agents/skills/mui-release`) — for example, type `/mui-release` in Claude Code. The agent treats this README as the source of truth.
+
 ### Prerequisites
 
 1. Make sure you have added the `material-ui-docs` and `upstream` remotes to deploy the documentation:

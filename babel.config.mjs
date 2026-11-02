@@ -79,14 +79,17 @@ export default function getBabelConfig(api) {
     ...baseConfig,
     plugins: basePlugins,
     // `@babel/plugin-transform-react-constant-elements` hoists static JSX — prod-only optimization.
-    overrides: isProductionBuild
-      ? [
-          {
-            exclude: /\.test\.(m?js|ts|tsx)$/,
-            plugins: ['@babel/plugin-transform-react-constant-elements'],
-          },
-        ]
-      : [],
+    overrides: [
+      ...(baseConfig.overrides ?? []),
+      ...(isProductionBuild
+        ? [
+            {
+              exclude: /\.test\.(m?js|ts|tsx)$/,
+              plugins: ['@babel/plugin-transform-react-constant-elements'],
+            },
+          ]
+        : []),
+    ],
     env: {
       development: {
         plugins: [

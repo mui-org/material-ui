@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { SxProps } from '@mui/system';
-import { Theme, styled, alpha } from '@mui/material/styles';
+import type { SxProps } from '@mui/system';
+import type { Theme } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -31,7 +32,7 @@ export default function EmailSubscribe({ sx }: { sx?: SxProps<Theme> }) {
     email: '',
     status: 'initial',
   });
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setForm((current) => ({ ...current, status: 'loading' }));
     try {

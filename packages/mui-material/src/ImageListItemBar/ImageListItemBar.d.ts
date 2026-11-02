@@ -45,10 +45,10 @@ export interface ImageListItemBarProps extends StandardProps<
  *
  * Demos:
  *
- * - [Image List](https://mui.com/material-ui/react-image-list/)
+ * - [Image List](https://next.mui.com/material-ui/react-image-list/)
  *
  * API:
  *
- * - [ImageListItemBar API](https://mui.com/material-ui/api/image-list-item-bar/)
+ * - [ImageListItemBar API](https://next.mui.com/material-ui/api/image-list-item-bar/)
  */
 export default function ImageListItemBar(props: ImageListItemBarProps): React.JSX.Element;

@@ -16,36 +16,36 @@ githubSource: packages/mui-material/src/Avatar
 
 Image avatars can be created by passing standard `img` props `src` or `srcSet` to the component.
 
-{{"demo": "ImageAvatars.js"}}
+{{"component": "file://./demos/image/index.ts"}}
 
 ## Letter avatars
 
 Avatars containing simple characters can be created by passing a string as `children`.
 
-{{"demo": "LetterAvatars.js"}}
+{{"component": "file://./demos/letter/index.ts"}}
 
 You can use different background colors for the avatar.
 The following demo generates the color based on the name of the person.
 
-{{"demo": "BackgroundLetterAvatars.js"}}
+{{"component": "file://./demos/background-letter/index.ts"}}
 
 ## Sizes
 
 You can change the size of the avatar with the `height` and `width` CSS properties.
 
-{{"demo": "SizeAvatars.js"}}
+{{"component": "file://./demos/size/index.ts"}}
 
 ## Icon avatars
 
 Icon avatars are created by passing an icon as `children`.
 
-{{"demo": "IconAvatars.js"}}
+{{"component": "file://./demos/icon/index.ts"}}
 
 ## Variants
 
 If you need square or rounded avatars, use the `variant` prop.
 
-{{"demo": "VariantAvatars.js"}}
+{{"component": "file://./demos/variant/index.ts"}}
 
 ## Fallbacks
 
@@ -55,19 +55,19 @@ If there is an error loading the avatar image, the component falls back to an al
 - the first letter of the `alt` text
 - a generic avatar icon
 
-{{"demo": "FallbackAvatars.js"}}
+{{"component": "file://./demos/fallback/index.ts"}}
 
 ## Grouped
 
 `AvatarGroup` renders its children as a stack. Use the `max` prop to limit the number of avatars.
 
-{{"demo": "GroupAvatars.js"}}
+{{"component": "file://./demos/group/index.ts"}}
 
 ### Total avatars
 
 If you need to control the total number of avatars not shown, you can use the `total` prop.
 
-{{"demo": "TotalAvatars.js"}}
+{{"component": "file://./demos/total/index.ts"}}
 
 ### Custom surplus
 
@@ -75,18 +75,18 @@ Set the `renderSurplus` prop as a callback to customize the surplus avatar. The 
 
 The `renderSurplus` prop is useful when you need to render the surplus based on the data sent from the server.
 
-{{"demo": "CustomSurplusAvatars.js"}}
+{{"component": "file://./demos/custom-surplus/index.ts"}}
 
 ### Spacing
 
 You can change the spacing between avatars using the `spacing` prop. You can use one of the presets (`"medium"`, the default, or `"small"`) or set a custom numeric value.
 
-{{"demo": "Spacing.js"}}
+{{"component": "file://./demos/spacing/index.ts"}}
 
 ## With badge
 
-{{"demo": "BadgeAvatars.js"}}
+{{"component": "file://./demos/badge/index.ts"}}
 
 ## Avatar upload
 
-{{"demo": "UploadAvatars.js"}}
+{{"component": "file://./demos/upload/index.ts"}}

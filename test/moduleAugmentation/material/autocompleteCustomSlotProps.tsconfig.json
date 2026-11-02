@@ -1,0 +1,4 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["autocompleteCustomSlotProps.spec.tsx"]
+}

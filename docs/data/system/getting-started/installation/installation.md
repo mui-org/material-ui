@@ -44,15 +44,15 @@ If you want to use [styled-components](https://styled-components.com/) instead, 
 <codeblock storageKey="package-manager">
 
 ```bash npm
-npm install @mui/system @mui/styled-engine-sc styled-components
+npm install @mui/system@next @mui/styled-engine-sc@next styled-components
 ```
 
 ```bash pnpm
-pnpm add @mui/system @mui/styled-engine-sc styled-components
+pnpm add @mui/system@next @mui/styled-engine-sc@next styled-components
 ```
 
 ```bash yarn
-yarn add @mui/system @mui/styled-engine-sc styled-components
+yarn add @mui/system@next @mui/styled-engine-sc@next styled-components
 ```
 
 </codeblock>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { extendTheme, CssVarsProvider } from '@mui/material/styles';
+import { extendTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -273,7 +273,7 @@ export default function MaterialHero() {
         overflow: 'hidden', // the components on the Hero section are mostly illustrative, even though they're interactive. That's why scrolling is disabled.
       }}
       right={
-        <CssVarsProvider theme={customTheme}>
+        <ThemeProvider theme={customTheme}>
           <Paper sx={{ maxWidth: 772, p: 2, mb: 4 }}>
             <Stepper activeStep={1}>
               <Step>
@@ -487,7 +487,7 @@ export default function MaterialHero() {
               </Card>
             </Stack>
           </Box>
-        </CssVarsProvider>
+        </ThemeProvider>
       }
     />
   );

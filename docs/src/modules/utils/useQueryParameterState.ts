@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { debounce } from '@mui/material/utils';
 
 const QUERY_UPDATE_WAIT_MS = 220;
@@ -36,9 +36,10 @@ export default function useQueryParameterState(
         }
         const newSearch = query.toString();
         if (window.location.search !== newSearch) {
-          router.replace(
+          // Router singleton, so this debounced writer is the same across navigations.
+          Router.replace(
             {
-              pathname: router.pathname,
+              pathname: Router.pathname,
               // TODO: this resets the scroll position, even though we have scroll: false
               // hash: window.location.hash,
               search: newSearch,
@@ -51,7 +52,7 @@ export default function useQueryParameterState(
           );
         }
       }, QUERY_UPDATE_WAIT_MS),
-    [name, router],
+    [name],
   );
 
   React.useEffect(

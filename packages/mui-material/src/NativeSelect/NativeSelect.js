@@ -3,11 +3,13 @@ import * as React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import composeClasses from '@mui/utils/composeClasses';
+import getReactElementRef from '@mui/utils/getReactElementRef';
 import NativeSelectInput from './NativeSelectInput';
 import { useFormControlState } from '../FormControl/useFormControl';
 import ArrowDropDownIcon from '../internal/svg-icons/ArrowDropDown';
 import Input from '../Input';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import useForkRef from '../utils/useForkRef';
 import { getNativeSelectUtilityClasses } from './nativeSelectClasses';
 
 const useUtilityClasses = (ownerState) => {
@@ -45,6 +47,7 @@ const NativeSelect = React.forwardRef(function NativeSelect(inProps, ref) {
   const ownerState = { ...props, classes: classesProp };
   const classes = useUtilityClasses(ownerState);
   const { root, ...otherClasses } = classesProp;
+  const inputRef = useForkRef(ref, getReactElementRef(input));
 
   return (
     <React.Fragment>
@@ -61,7 +64,7 @@ const NativeSelect = React.forwardRef(function NativeSelect(inProps, ref) {
           ...inputProps,
           ...(input ? input.props.inputProps : {}),
         },
-        ref,
+        ref: inputRef,
         ...other,
         className: clsx(classes.root, input.props.className, className),
       })}

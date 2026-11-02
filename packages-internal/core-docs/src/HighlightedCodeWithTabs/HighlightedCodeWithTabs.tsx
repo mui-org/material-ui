@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { Tabs } from '@base-ui/react/tabs';
+import { Tabs, TabsTabDataAttributes } from '@base-ui/react/tabs';
 import useLocalStorageState from '@mui/utils/useLocalStorageState';
 import { HighlightedCode } from '../HighlightedCode';
 
@@ -245,7 +245,7 @@ export const CodeTab = styled(Tabs.Tab)<{
     {
       props: ({ ownerState }) => !ownerState?.contained && ownerState.mounted,
       style: {
-        '&[data-active]': {
+        [`&[${TabsTabDataAttributes.active}]`]: {
           color: '#FFF',
           '&::after': {
             content: "''",

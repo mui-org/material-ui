@@ -28,12 +28,12 @@ export interface DialogContentTextTypeMap<
  *
  * Demos:
  *
- * - [Dialog](https://mui.com/material-ui/react-dialog/)
+ * - [Dialog](https://next.mui.com/material-ui/react-dialog/)
  *
  * API:
  *
- * - [DialogContentText API](https://mui.com/material-ui/api/dialog-content-text/)
- * - inherits [Typography API](https://mui.com/material-ui/api/typography/)
+ * - [DialogContentText API](https://next.mui.com/material-ui/api/dialog-content-text/)
+ * - inherits [Typography API](https://next.mui.com/material-ui/api/typography/)
  */
 declare const DialogContentText: OverridableComponent<DialogContentTextTypeMap>;
 

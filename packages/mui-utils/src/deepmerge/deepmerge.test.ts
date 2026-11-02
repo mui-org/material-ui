@@ -111,7 +111,7 @@ describe('deepmerge', () => {
 
     expect(result).to.deep.equal({ foo: { baz: 'test' } });
 
-    // @ts-ignore
+    // @ts-expect-error: The inferred target type does not include the baz property copied from the source.
     result.foo.baz = 'new test';
 
     expect(result).to.deep.equal({ foo: { baz: 'new test' } });

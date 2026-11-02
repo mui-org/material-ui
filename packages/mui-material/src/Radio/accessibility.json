@@ -1,0 +1,7 @@
+{
+  "axe": "docs/data/material/components/radio-buttons/radio-buttons.a11y.json",
+  "criteria": {
+    "2.5.8": { "responsibility": "Shared" },
+    "3.3.2": { "responsibility": "Author", "group": "Manual" }
+  }
+}

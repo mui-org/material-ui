@@ -17,7 +17,6 @@ import GoogleAnalytics from './GoogleAnalytics';
 import DocsStyledEngineProvider from './StyledEngineProvider';
 import createEmotionCache from './createEmotionCache';
 import { loadDependencies } from './loadDependencies';
-import { registerServiceWorker } from './serviceWorker';
 import VersionsContext from './VersionsContext';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -47,10 +46,6 @@ export interface DocsAppProps {
    * Docs configuration object (from docs/config.ts)
    */
   docsConfig?: DocsConfig;
-  /**
-   * Path to the service worker file, e.g. '/sw.js'
-   */
-  serviceWorkerPath: string;
   /**
    * The currently active page object
    */
@@ -99,7 +94,6 @@ function DocsApp(props: DocsAppProps) {
     emotionCache = clientSideEmotionCache,
     pageProps,
     docsConfig = DEFAULT_DOCS_CONFIG,
-    serviceWorkerPath,
     activePage,
     activePageParents,
     pageList,
@@ -136,14 +130,13 @@ function DocsApp(props: DocsAppProps) {
 
   React.useEffect(() => {
     loadDependencies();
-    registerServiceWorker(serviceWorkerPath);
 
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement!.removeChild(jssStyles);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <React.Fragment>

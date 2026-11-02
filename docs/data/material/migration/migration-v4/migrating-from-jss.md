@@ -18,6 +18,8 @@ Note that you may continue to use JSS for adding overrides for the components (f
 Then, if at any point you want to move over to the new styling engine, you can refactor your components progressively.
 
 :::info
+<!-- #target-branch-reference -->
+
 If you are using Next.js and you are not sure how to configure SSR to work with both Emotion & JSS, take a look at this [example project](https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts-v4-v5-migration).
 :::
 

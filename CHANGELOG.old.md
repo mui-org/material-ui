@@ -150,7 +150,7 @@ A big thanks to the 22 contributors who made this release possible.
 
 - Fix unwanted attribute on DOM from InitColorSchemeScript `class` attribute (#47200) @siriwatknp
 
-### @mui/lab@7.3.6
+### @mui/lab@7.0.1-beta.20
 
 - [Masonry] Fix layout flicker and single column issue (#43903) @Fanzzzd
 

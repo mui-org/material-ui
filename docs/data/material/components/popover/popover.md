@@ -19,7 +19,7 @@ Things to know when using the `Popover` component:
 
 ## Basic Popover
 
-{{"demo": "BasicPopover.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Anchor playground
 
@@ -29,13 +29,13 @@ When it is `anchorPosition`, the component will, instead of `anchorEl`,
 refer to the `anchorPosition` prop which you can adjust to set
 the position of the popover.
 
-{{"demo": "AnchorPlayground.js", "hideToolbar": true}}
+{{"component": "file://./demos/anchor-playground/index.ts", "hideToolbar": true}}
 
 ## Mouse hover interaction
 
 This demo demonstrates how to use the `Popover` component with `mouseenter` and `mouseleave` events to achieve popover behavior.
 
-{{"demo": "MouseHoverPopover.js"}}
+{{"component": "file://./demos/mouse-hover/index.ts"}}
 
 ## Virtual element
 
@@ -51,7 +51,7 @@ interface PopoverVirtualElement {
 
 Highlight part of the text to see the popover:
 
-{{"demo": "VirtualElementPopover.js"}}
+{{"component": "file://./demos/virtual-element/index.ts"}}
 
 For more information on the virtual element's properties, see the following resources:
 
@@ -80,4 +80,4 @@ For more advanced use cases, you might be able to take advantage of:
 
 The package [`material-ui-popup-state`](https://github.com/jcoreio/material-ui-popup-state) that takes care of popover state for you in most cases.
 
-{{"demo": "PopoverPopupState.js"}}
+{{"component": "file://./demos/popup-state/index.ts"}}

@@ -159,21 +159,36 @@ describe('getConfig', () => {
       getConfig(A11Y_RULES, 'docs/data/material/components/progress/LinearDeterminate'),
     ).to.deep.include({ enabled: true, assertions: 'all' });
     expect(
+      getConfig(A11Y_RULES, 'docs/data/material/components/progress/CircularIndeterminate'),
+    ).to.deep.include({ enabled: true, assertions: 'all' });
+    expect(
       getConfig(
         A11Y_RULES,
         'test/regressions/a11y/fixtures/progress/LinearProgressA11yColorMatrix',
       ),
     ).to.deep.include({ enabled: true, assertions: 'all' });
+    expect(
+      getConfig(
+        A11Y_RULES,
+        'test/regressions/a11y/fixtures/progress/CircularProgressA11yColorMatrix',
+      ),
+    ).to.deep.include({ enabled: true, assertions: 'all' });
+    expect(
+      getConfig(A11Y_RULES, 'docs/data/material/components/progress/CircularWithValueLabel'),
+    ).to.deep.include({
+      enabled: true,
+      assertions: 'all',
+      skipAssertions: ['color-contrast'],
+    });
   });
 
-  it('returns undefined for a CircularProgress or customized demo outside the progress enrolment', () => {
-    // The progress enrolment covers @mui/material/LinearProgress, not CircularProgress
-    // or the mixed/customized demos.
-    expect(
-      getConfig(A11Y_RULES, 'docs/data/material/components/progress/CircularIndeterminate'),
-    ).to.equal(undefined);
+  it('returns undefined for a mixed progress demo outside the enrolment', () => {
+    // CustomizedProgressBars and CircularIntegration render more than one component.
     expect(
       getConfig(A11Y_RULES, 'docs/data/material/components/progress/CustomizedProgressBars'),
+    ).to.equal(undefined);
+    expect(
+      getConfig(A11Y_RULES, 'docs/data/material/components/progress/CircularIntegration'),
     ).to.equal(undefined);
   });
 

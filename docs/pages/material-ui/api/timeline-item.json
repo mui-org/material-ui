@@ -63,7 +63,7 @@
   "themeDefaultProps": true,
   "muiName": "MuiTimelineItem",
   "forwardsRefTo": "HTMLLIElement",
-  "filename": "/packages/mui-lab/src/TimelineItem/TimelineItem.js",
+  "filename": "/packages/mui-lab/src/TimelineItem/TimelineItem.tsx",
   "inheritance": null,
   "demos": "<ul><li><a href=\"/material-ui/react-timeline/\">Timeline</a></li></ul>"
 }

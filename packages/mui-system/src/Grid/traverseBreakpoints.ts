@@ -1,4 +1,4 @@
-import { Breakpoints, Breakpoint } from '../createBreakpoints/createBreakpoints';
+import type { Breakpoints, Breakpoint } from '../createBreakpoints/createBreakpoints';
 
 export const filterBreakpointKeys = (breakpointsKeys: Breakpoint[], responsiveKeys: string[]) =>
   breakpointsKeys.filter((key: string) => responsiveKeys.includes(key));
@@ -37,7 +37,7 @@ export const traverseBreakpoints = <T = unknown>(
 
     keys.forEach((key) => {
       if (breakpoints.keys.includes(key as Breakpoint)) {
-        // @ts-ignore already checked that responsive is an object
+        // @ts-expect-error: The object check does not narrow the generic responsive value to a string-indexed record.
         const breakpointValue: T = responsive[key];
         if (breakpointValue !== undefined) {
           iterator((responsiveStyles, style) => {

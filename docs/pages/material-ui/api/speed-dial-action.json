@@ -68,19 +68,31 @@
     {
       "key": "staticTooltipClosed",
       "className": "MuiSpeedDialAction-staticTooltipClosed",
-      "description": "Styles applied to the root element if `tooltipOpen={true}` and `open={false}`.",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `open` is `false`.",
+      "isGlobal": false
+    },
+    {
+      "key": "tooltipPlacementBottom",
+      "className": "MuiSpeedDialAction-tooltipPlacementBottom",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"bottom\".",
       "isGlobal": false
     },
     {
       "key": "tooltipPlacementLeft",
       "className": "MuiSpeedDialAction-tooltipPlacementLeft",
-      "description": "Styles applied to the root element if `tooltipOpen={true}` and `tooltipPlacement=\"left\"``",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"left\".",
       "isGlobal": false
     },
     {
       "key": "tooltipPlacementRight",
       "className": "MuiSpeedDialAction-tooltipPlacementRight",
-      "description": "Styles applied to the root element if `tooltipOpen={true}` and `tooltipPlacement=\"right\"``",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"right\".",
+      "isGlobal": false
+    },
+    {
+      "key": "tooltipPlacementTop",
+      "className": "MuiSpeedDialAction-tooltipPlacementTop",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"top\".",
       "isGlobal": false
     }
   ],

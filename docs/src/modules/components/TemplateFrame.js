@@ -21,7 +21,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import PaletteIcon from '@mui/icons-material/PaletteOutlined';
-import { codeSandbox, stackBlitz } from '@mui/internal-core-docs/Demo';
+import { codeSandbox, stackBlitz } from '@mui/internal-core-docs/sandbox';
 import sourceMaterialTemplates from 'docs/src/modules/material/sourceMaterialTemplates';
 import { pascalCase } from '@mui/internal-core-docs/helpers';
 

@@ -50,7 +50,7 @@ const PaperRoot = styled('div', {
       {
         props: ({ ownerState }) => !ownerState.square,
         style: {
-          borderRadius: theme.shape.borderRadius,
+          borderRadius: (theme.vars || theme).shape.borderRadius,
         },
       },
       {

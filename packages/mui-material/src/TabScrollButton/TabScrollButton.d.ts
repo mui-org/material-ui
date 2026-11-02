@@ -78,10 +78,10 @@ export interface TabScrollButtonProps extends Omit<ButtonBaseProps, 'nativeButto
  *
  * Demos:
  *
- * - [Tabs](https://mui.com/material-ui/react-tabs/)
+ * - [Tabs](https://next.mui.com/material-ui/react-tabs/)
  *
  * API:
  *
- * - [TabScrollButton API](https://mui.com/material-ui/api/tab-scroll-button/)
+ * - [TabScrollButton API](https://next.mui.com/material-ui/api/tab-scroll-button/)
  */
 export default function TabScrollButton(props: TabScrollButtonProps): React.JSX.Element;

@@ -1,26 +1,54 @@
 import React from 'https://esm.sh/react@18.2.0';
 // eslint-disable-next-line import/extensions
-import { ImageResponse } from 'https://deno.land/x/og_edge/mod.ts';
+import { ImageResponse } from 'https://deno.land/x/og_edge@0.0.6/mod.ts';
 
+// The image only ever shows 5 authors (2 rendered rows), so this one is a layout cap, not a
+// safety limit. The length caps below are deliberately wide — pure backstops against a crafted
+// URL blowing up the render, sitting far above any real title/description/name.
 const MAX_AUTHORS = 5;
+const MAX_TITLE_LENGTH = 1000;
+const MAX_DESCRIPTION_LENGTH = 1000;
+const MAX_PRODUCT_LENGTH = 200;
+const MAX_AUTHORS_PARAMETER_LENGTH = 2000;
+const MAX_AUTHOR_NAME_LENGTH = 200;
+const GITHUB_USERNAME = /^[A-Za-z\d](?:[A-Za-z\d-]{0,37}[A-Za-z\d])?$/;
+
+function truncate(value: string | null, maxLength: number) {
+  return value?.slice(0, maxLength);
+}
+
+// Bound query-controlled inputs before they reach the image renderer, so a crafted URL can't
+// drive unbounded layout/render work via many title words, huge text fields, or a long author list.
+function getOgImageParams(url: string) {
+  const params = new URL(url).searchParams;
+  const rawAuthors = truncate(params.get('authors'), MAX_AUTHORS_PARAMETER_LENGTH);
+  const authors = rawAuthors
+    ? rawAuthors
+        .split(',', MAX_AUTHORS)
+        .map((author) => {
+          const [name, github] = author.split('@', 2).map((part) => part.trim());
+          if (!name || !github || !GITHUB_USERNAME.test(github)) {
+            return null;
+          }
+          return {
+            name: name.slice(0, MAX_AUTHOR_NAME_LENGTH),
+            github,
+          };
+        })
+        .filter((author) => author !== null)
+    : [];
+
+  return {
+    title: truncate(params.get('title'), MAX_TITLE_LENGTH),
+    description: truncate(params.get('description'), MAX_DESCRIPTION_LENGTH),
+    product: truncate(params.get('product'), MAX_PRODUCT_LENGTH),
+    authors,
+  };
+}
+
 export default async function handler(req: Request) {
-  const params = new URL(req.url).searchParams;
-  const title = params.get('title');
-  const authors = params.get('authors');
-  const product = params.get('product');
-  const description = params.get('description');
-
-  const parsedAuthors =
-    authors &&
-    authors
-      .split(',')
-      .map((author) => {
-        const [name, github] = author.split('@');
-        return { name: name.trim(), github: github.trim() };
-      })
-      .filter(({ name, github }) => name && github);
-
-  const withAuthors = parsedAuthors && parsedAuthors.length > 0;
+  const { title, authors, product, description } = getOgImageParams(req.url);
+  const withAuthors = authors.length > 0;
   let starCount = 0;
 
   return new ImageResponse(
@@ -155,7 +183,7 @@ export default async function handler(req: Request) {
           }}
         >
           {withAuthors &&
-            parsedAuthors.slice(0, MAX_AUTHORS).map(({ name, github }) => {
+            authors.map(({ name, github }) => {
               return (
                 <div
                   style={{
@@ -264,4 +292,12 @@ export default async function handler(req: Request) {
 export const config = {
   cache: 'manual',
   path: '/edge-functions/og-image',
+  // This endpoint is public and unauthenticated, and each distinct query string is a fresh
+  // cache key that triggers image layout + font fetches. Rate-limit at the edge (before the
+  // handler runs) so one client can't force unbounded render work by varying parameters.
+  rateLimit: {
+    windowLimit: 100,
+    windowSize: 60,
+    aggregateBy: ['ip', 'domain'],
+  },
 };

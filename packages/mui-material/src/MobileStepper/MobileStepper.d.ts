@@ -115,11 +115,11 @@ export interface MobileStepperOwnerState extends Omit<MobileStepperProps, 'slots
  *
  * Demos:
  *
- * - [Stepper](https://mui.com/material-ui/react-stepper/)
+ * - [Stepper](https://next.mui.com/material-ui/react-stepper/)
  *
  * API:
  *
- * - [MobileStepper API](https://mui.com/material-ui/api/mobile-stepper/)
- * - inherits [Paper API](https://mui.com/material-ui/api/paper/)
+ * - [MobileStepper API](https://next.mui.com/material-ui/api/mobile-stepper/)
+ * - inherits [Paper API](https://next.mui.com/material-ui/api/paper/)
  */
 export default function MobileStepper(props: MobileStepperProps): React.JSX.Element;

@@ -4,7 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import yargs from 'yargs';
 import { fileURLToPath } from 'url';
-import { Queue, sleep, retry } from '@mui/internal-waterfall';
+import { mapAsync } from 'es-toolkit/array';
+import { retry } from 'es-toolkit/function';
 
 const currentDirectory = fileURLToPath(new URL('.', import.meta.url));
 
@@ -175,42 +176,39 @@ function downloadIcon(icon) {
 }
 
 async function run() {
-  try {
-    const argv = yargs(process.argv.slice(2))
-      .usage('Download the SVG from material.io/resources/icons')
-      .describe('start-after', 'Resume at the following index').argv;
-    console.log('run', argv);
-    const iconDir = path.join(currentDirectory, '../material-icons');
-    await fs.rm(iconDir, { recursive: true, force: true });
-    await fs.mkdir(iconDir, { recursive: true });
-    const response = await fetch(
-      'https://fonts.google.com/metadata/icons?key=material_symbols&incomplete=true',
-    );
-    const text = await response.text();
-    const data = JSON.parse(text.replace(")]}'", ''));
-    let icons = data.icons;
-    icons = icons.filter((icon) => {
-      return !ignoredIconNames.has(icon.name) && !legacyIconNames.has(icon.name);
-    });
-    icons = icons.map((icon, index) => ({ index, ...icon }));
-    icons = icons.splice(argv.startAfter || 0);
-    console.log(`${icons.length} icons to download`);
+  const argv = yargs(process.argv.slice(2))
+    .usage('Download the SVG from material.io/resources/icons')
+    .describe('start-after', 'Resume at the following index').argv;
+  console.log('run', argv);
+  const iconDir = path.join(currentDirectory, '../material-icons');
+  await fs.rm(iconDir, { recursive: true, force: true });
+  await fs.mkdir(iconDir, { recursive: true });
+  const response = await fetch(
+    'https://fonts.google.com/metadata/icons?key=material_symbols&incomplete=true',
+  );
+  const text = await response.text();
+  const data = JSON.parse(text.replace(")]}'", ''));
+  let icons = data.icons;
+  icons = icons.filter((icon) => {
+    return !ignoredIconNames.has(icon.name) && !legacyIconNames.has(icon.name);
+  });
+  icons = icons.map((icon, index) => ({ index, ...icon }));
+  icons = icons.splice(argv.startAfter || 0);
+  console.log(`${icons.length} icons to download`);
 
-    const queue = new Queue(
-      async (icon) => {
-        await retry(async ({ tries }) => {
-          await sleep((tries - 1) * 100);
-          await downloadIcon(icon);
-        });
-      },
-      { concurrency: 5 },
-    );
-    queue.push(icons);
-    await queue.wait({ empty: true });
-  } catch (err) {
-    console.log('err', err);
-    throw err;
-  }
+  // Third party endpoint, keep the request rate modest.
+  await mapAsync(
+    icons,
+    (icon) =>
+      retry(() => downloadIcon(icon), {
+        retries: 2,
+        delay: (attempts) => (attempts + 1) * 100,
+      }),
+    { concurrency: 5 },
+  );
 }
 
-run();
+run().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

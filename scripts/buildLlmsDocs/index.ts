@@ -58,16 +58,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { pathToFileURL } from 'node:url';
-import yargs, { ArgumentsCamelCase } from 'yargs';
+import type { ArgumentsCamelCase } from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { kebabCase } from 'es-toolkit/string';
 import { processMarkdownFile, processApiFile } from '@mui/internal-scripts/generate-llms-txt';
-import {
-  ComponentInfo,
-  ProjectSettings,
-  findComponents,
-  findPagesMarkdown,
-} from '@mui/internal-api-docs-builder';
+import type { ComponentInfo, ProjectSettings } from '@mui/internal-api-docs-builder';
+import { findComponents, findPagesMarkdown } from '@mui/internal-api-docs-builder';
 import { getHeaders } from '@mui/internal-markdown';
 
 // Determine the host based on environment variables
@@ -109,6 +106,7 @@ type CommandOptions = {
   grep?: string;
   outputDir?: string;
   projectSettings?: string;
+  includeExtraFiles?: boolean;
 };
 
 /**
@@ -292,7 +290,10 @@ function findNonComponentMarkdownFiles(
 /**
  * Process a single component
  */
-function processComponent(component: ComponentDocInfo): string | null {
+async function processComponent(
+  component: ComponentDocInfo,
+  options: { includeExtraFiles?: boolean } = {},
+): Promise<string | null> {
   // Processing component: ${component.name}
 
   // Skip if no markdown file found
@@ -302,7 +303,7 @@ function processComponent(component: ComponentDocInfo): string | null {
   }
 
   // Process the markdown file with demo replacement
-  let processedMarkdown = processMarkdownFile(component.markdownPath);
+  let processedMarkdown = await processMarkdownFile(component.markdownPath, options);
 
   // Read the frontmatter to get all components listed in this markdown file
   const markdownContent = fs.readFileSync(component.markdownPath, 'utf-8');
@@ -340,13 +341,26 @@ function toTitleCase(kebabCaseStr: string): string {
 }
 
 /**
- * Generate llms.txt content for a specific directory
+ * Wrap inline HTML tags (e.g. `<button>`) in backticks so they render as code
+ * in markdown instead of being interpreted as HTML.
+ */
+function inlineCodeHtmlTags(text: string): string {
+  return text.replace(/<\/?[a-zA-Z][^>]*>/g, '`$&`');
+}
+
+/**
+ * Generate llms.txt content for a specific directory.
+ *
+ * When `relative` is true, links are emitted as relative paths (e.g.
+ * `./react-button.md`) instead of absolute URLs, so the file can be shipped
+ * inside the package and browsed offline. This is used to generate `index.md`.
  */
 function generateLlmsTxt(
   generatedFiles: GeneratedFile[],
   projectName: string,
   baseDir: string,
   origin?: string,
+  relative = false,
 ): string {
   // Group files by category
   const groupedByCategory: Record<string, GeneratedFile[]> = {};
@@ -403,14 +417,25 @@ function generateLlmsTxt(
     // Non-component files are already in the order they were discovered
 
     for (const file of files) {
-      // Calculate relative path from the baseDir to the file
-      const relativePath = file.outputPath.startsWith(`${baseDir}/`)
-        ? `/${baseDir}/${file.outputPath.substring(baseDir.length + 1)}`
-        : `/${file.outputPath}`;
-      const url = origin ? new URL(relativePath, origin).href : relativePath;
+      // Path of the file relative to baseDir, e.g. `react-button.md` or
+      // `customization/color.md`.
+      const pathWithinBaseDir = file.outputPath.startsWith(`${baseDir}/`)
+        ? file.outputPath.substring(baseDir.length + 1)
+        : file.outputPath;
+      let url;
+      if (relative) {
+        // Relative link to a sibling file, so the index can be browsed from
+        // within the shipped `docs/` folder.
+        url = `./${pathWithinBaseDir}`;
+      } else {
+        const absolutePath = file.outputPath.startsWith(`${baseDir}/`)
+          ? `/${baseDir}/${pathWithinBaseDir}`
+          : `/${pathWithinBaseDir}`;
+        url = origin ? new URL(absolutePath, origin).href : absolutePath;
+      }
       content += `- [${file.title}](${url})`;
       if (file.description) {
-        content += `: ${file.description}`;
+        content += `: ${inlineCodeHtmlTags(file.description)}`;
       }
       content += '\n';
     }
@@ -421,11 +446,26 @@ function generateLlmsTxt(
 }
 
 /**
+ * Deletes the markdown and txt files a previous run wrote anywhere under `dir`.
+ * Files of any other type are kept, and emptied directories stay behind.
+ */
+function removeGeneratedFiles(dir: string): void {
+  for (const entry of fs.globSync(['**/*.md', '**/*.txt'], { cwd: dir })) {
+    fs.rmSync(path.join(dir, entry));
+  }
+}
+
+/**
  * Main build function
  */
 async function buildLlmsDocs(argv: ArgumentsCamelCase<CommandOptions>): Promise<void> {
   const grep = argv.grep ? new RegExp(argv.grep) : null;
   const outputDir = argv.outputDir || path.join(process.cwd(), 'docs/public');
+  const demoOptions = { includeExtraFiles: argv.includeExtraFiles ?? false };
+
+  if (!grep) {
+    removeGeneratedFiles(path.join(outputDir, 'material-ui'));
+  }
 
   // Load project settings from the specified path
   if (!argv.projectSettings) {
@@ -458,7 +498,8 @@ async function buildLlmsDocs(argv: ArgumentsCamelCase<CommandOptions>): Promise<
   // Process each component
   let processedCount = 0;
   for (const component of components) {
-    const processedMarkdown = processComponent(component);
+    // eslint-disable-next-line no-await-in-loop
+    const processedMarkdown = await processComponent(component, demoOptions);
 
     if (!processedMarkdown) {
       continue;
@@ -509,7 +550,8 @@ async function buildLlmsDocs(argv: ArgumentsCamelCase<CommandOptions>): Promise<
     // Processing non-component file: ${path.relative(process.cwd(), file.markdownPath)}
 
     // Process the markdown file with demo replacement
-    const processedMarkdown = processMarkdownFile(file.markdownPath);
+    // eslint-disable-next-line no-await-in-loop
+    const processedMarkdown = await processMarkdownFile(file.markdownPath, demoOptions);
 
     const outputPath = path.join(outputDir, file.outputPath);
 
@@ -589,6 +631,17 @@ async function buildLlmsDocs(argv: ArgumentsCamelCase<CommandOptions>): Promise<
       fs.writeFileSync(llmsPath, llmsContent, 'utf-8');
       // ✓ Generated: ${dirName}/llms.txt
       processedCount += 1;
+
+      // Generate an `index.md` with relative links so the generated docs can be
+      // shipped inside the package and browsed offline (llms.txt uses absolute
+      // website URLs and is a .txt, so it isn't shipped).
+      const indexContent = generateLlmsTxt(files, projectName, dirName, undefined, true)
+        .replace(/Ui/g, 'UI')
+        .replace(/Api/g, 'API');
+      const indexPath = path.join(outputDir, dirName, 'index.md');
+      fs.writeFileSync(indexPath, indexContent, 'utf-8');
+      // ✓ Generated: ${dirName}/index.md
+      processedCount += 1;
     }
   }
 
@@ -620,6 +673,12 @@ yargs()
             'Path to the project settings module that exports ProjectSettings interface.',
           type: 'string',
           demandOption: true,
+        })
+        .option('includeExtraFiles', {
+          description:
+            "Include each demo's extra files (helpers) alongside its entry file, each labelled with a filename comment. Disabled by default.",
+          type: 'boolean',
+          default: false,
         });
     },
     handler: buildLlmsDocs,

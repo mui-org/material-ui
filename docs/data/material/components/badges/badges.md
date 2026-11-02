@@ -24,42 +24,42 @@ githubSource: packages/mui-material/src/Badge
 - **Use dot badges for simple states**: A dot badge does not show text or a number, so use
   it only when the surrounding UI makes the state clear, such as `Online` or `Unread`.
 
-{{"demo": "BadgeIntro.js"}}
+{{"component": "file://./demos/intro/index.ts"}}
 
 This demo applies the same pattern to a `ListItemButton` with a `Badge`: the visible
 count is included in the item's accessible name so it's announced in the context of the
 surrounding UI.
 
-{{"demo": "BadgeListItem.js"}}
+{{"component": "file://./demos/list-item/index.ts"}}
 
 ## Badge content
 
 Use `badgeContent` to add a short count or label to the wrapped element.
 
-{{"demo": "SimpleBadge.js"}}
+{{"component": "file://./demos/simple/index.ts"}}
 
 ### Dot badge
 
 Use `variant="dot"` for a compact status indicator without a count.
 
-{{"demo": "DotBadge.js"}}
+{{"component": "file://./demos/dot/index.ts"}}
 
 ### Visibility
 
 Control badge visibility with the `invisible` prop.
 
-{{"demo": "BadgeVisibility.js"}}
+{{"component": "file://./demos/visibility/index.ts"}}
 
 The badge hides automatically when `badgeContent` is zero. Override this with the `showZero`
 prop when zero is meaningful to the interface.
 
-{{"demo": "ShowZeroBadge.js"}}
+{{"component": "file://./demos/show-zero/index.ts"}}
 
 ### Maximum value
 
 Use the `max` prop to cap large numeric values.
 
-{{"demo": "BadgeMax.js"}}
+{{"component": "file://./demos/max/index.ts"}}
 
 ## Customization
 
@@ -67,23 +67,23 @@ Use the `max` prop to cap large numeric values.
 
 Use the `color` prop to apply theme palette colors to the badge.
 
-{{"demo": "ColorBadge.js"}}
+{{"component": "file://./demos/color/index.ts"}}
 
 ### Badge alignment
 
 Use the `anchorOrigin` prop to move the badge to any corner of the wrapped element.
 
-{{"demo": "BadgeAlignment.js", "hideToolbar": true}}
+{{"component": "file://./demos/alignment/index.ts", "hideToolbar": true}}
 
 ### Badge overlap
 
 Use the `overlap` prop when the wrapped element is circular.
 
-{{"demo": "BadgeOverlap.js"}}
+{{"component": "file://./demos/overlap/index.ts"}}
 
 ### Custom styles
 
 Use theme style overrides, the `sx` prop, or `styled()` to customize the badge.
 Learn more in the [customization guide](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedBadges.js"}}
+{{"component": "file://./demos/customized/index.ts"}}

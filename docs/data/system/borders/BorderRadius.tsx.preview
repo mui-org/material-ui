@@ -1,3 +1,0 @@
-<Box sx={{ ...commonStyles, borderRadius: '50%' }} />
-<Box sx={{ ...commonStyles, borderRadius: 1 }} />
-<Box sx={{ ...commonStyles, borderRadius: '16px' }} />

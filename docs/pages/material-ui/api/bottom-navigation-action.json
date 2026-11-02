@@ -4,6 +4,7 @@
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "icon": { "type": { "name": "node" } },
     "label": { "type": { "name": "node" } },
+    "selected": { "type": { "name": "bool" } },
     "showLabel": { "type": { "name": "bool" } },
     "slotProps": {
       "type": {

@@ -40,14 +40,19 @@ export default function handleRequest(
 
   styles.forEach(({ key, ids, css }) => {
     const emotionKey = `${key} ${ids.join(' ')}`;
-    const newStyleTag = `<style data-emotion="${emotionKey}">${css}</style>`;
+    // The CSS goes into a <style> verbatim, and the browser ends that element at the first
+    // `</style>` it sees, even one sitting inside a CSS value. `\3c` is the CSS escape for `<`, so
+    // the rule keeps its meaning but the text can no longer close the element.
+    const escapedCss = css.replace(/<(?=\/?style\b)/gi, '\\3c ');
+    const newStyleTag = `<style data-emotion="${emotionKey}">${escapedCss}</style>`;
     stylesHTML = `${stylesHTML}${newStyleTag}`;
   });
 
-  // Add the Emotion style tags after the insertion point meta tag
+  // Add the Emotion style tags after the insertion point meta tag. The replacement is a function so
+  // that `$&` and friends inside the stylesheet are not expanded as replacement patterns.
   const markup = html.replace(
     /<meta(\s)*name="emotion-insertion-point"(\s)*content="emotion-insertion-point"(\s)*\/>/,
-    `<meta name="emotion-insertion-point" content="emotion-insertion-point"/>${stylesHTML}`,
+    () => `<meta name="emotion-insertion-point" content="emotion-insertion-point"/>${stylesHTML}`,
   );
 
   responseHeaders.set('Content-Type', 'text/html');

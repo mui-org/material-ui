@@ -18,8 +18,8 @@ import useNotifications from '../hooks/useNotifications/useNotifications';
 import {
   deleteOne as deleteEmployee,
   getOne as getEmployee,
-  type Employee,
 } from '../data/employees';
+import type { Employee } from '../data/employees';
 import PageContainer from './PageContainer';
 
 export default function EmployeeShow() {

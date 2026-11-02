@@ -22,11 +22,7 @@ export interface AvatarGroupSlots {
 export type AvatarGroupSlotsAndSlotProps = CreateSlotsAndSlotProps<
   AvatarGroupSlots,
   {
-    surplus: SlotProps<
-      React.ElementType<React.ComponentPropsWithRef<typeof Avatar>>,
-      AvatarGroupComponentsPropsOverrides,
-      AvatarGroupOwnerState
-    >;
+    surplus: SlotProps<typeof Avatar, AvatarGroupComponentsPropsOverrides, AvatarGroupOwnerState>;
   }
 >;
 export interface AvatarGroupOwnProps extends AvatarGroupSlotsAndSlotProps {
@@ -89,11 +85,11 @@ export interface AvatarGroupTypeMap<
  *
  * Demos:
  *
- * - [Avatar](https://mui.com/material-ui/react-avatar/)
+ * - [Avatar](https://next.mui.com/material-ui/react-avatar/)
  *
  * API:
  *
- * - [AvatarGroup API](https://mui.com/material-ui/api/avatar-group/)
+ * - [AvatarGroup API](https://next.mui.com/material-ui/api/avatar-group/)
  */
 declare const AvatarGroup: OverridableComponent<AvatarGroupTypeMap>;
 

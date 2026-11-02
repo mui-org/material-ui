@@ -92,6 +92,12 @@ export interface DemoContextValue {
    * Configuration for CodeSandbox/StackBlitz sandbox generation.
    */
   csb: SandboxConfig;
+
+  /**
+   * Page/site-wide killswitch for the inline Carbon ad rendered inside demos.
+   * Per-demo `disableAd` may also be set via the demo options.
+   */
+  disableAd?: boolean;
 }
 
 const DemoContext = React.createContext<DemoContextValue | null>(null);

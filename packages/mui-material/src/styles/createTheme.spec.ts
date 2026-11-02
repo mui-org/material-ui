@@ -1,4 +1,5 @@
-import { createTheme, ThemeOptions, FocusVisible } from '@mui/material/styles';
+import type { ThemeOptions, FocusVisible } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { buttonClasses } from '@mui/material/Button';
 
 const theme = createTheme();
@@ -155,6 +156,16 @@ const theme = createTheme();
         styleOverrides: {
           row: {
             justifyContent: 'space-between',
+          },
+        },
+      },
+      MuiTabScrollButton: {
+        defaultProps: {
+          disableRipple: true,
+        },
+        styleOverrides: {
+          vertical: {
+            height: 32,
           },
         },
       },
@@ -342,4 +353,14 @@ const theme = createTheme();
     // @ts-expect-error focusVisible must be a boolean or a CSS properties object
     focusVisible: 'solid',
   });
+}
+
+// `theme.vars.zIndex`, `theme.vars.opacity` and the action opacities are typed as CSS variable strings
+{
+  const varsTheme = createTheme({ cssVariables: true });
+  const zIndexVar: string = varsTheme.vars.zIndex.appBar;
+  const opacityVar: string = varsTheme.vars.opacity.inputPlaceholder;
+  const hoverOpacityVar: string = varsTheme.vars.palette.action.hoverOpacity;
+  // Non-opacity action colors are unchanged
+  const activeColor: string = varsTheme.vars.palette.action.active;
 }

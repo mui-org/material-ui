@@ -14,4 +14,4 @@ Please note that **the documentation site is using a custom theme** (the MUI's o
 
 <hr/>
 
-{{"demo": "DefaultTheme.js", "hideToolbar": true, "bg": "inline"}}
+{{"component": "file://./demos/default-theme/index.ts", "hideToolbar": true, "bg": "inline"}}

@@ -14,7 +14,7 @@ function CustomComponent() {
 
 <DefaultPropsProvider
   value={{
-    // @ts-expect-error
+    // @ts-expect-error: Random is not a registered component in the default props map.
     Random: {},
   }}
 />;

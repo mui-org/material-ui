@@ -19,7 +19,8 @@ describe('<RadioGroup />', () => {
     classes: {},
     inheritComponent: FormGroup,
     refInstanceof: window.HTMLDivElement,
-    skip: ['componentProp', 'themeDefaultProps', 'themeStyleOverrides', 'themeVariants'],
+    muiName: 'MuiRadioGroup',
+    skip: ['componentProp', 'themeStyleOverrides', 'themeVariants'],
   }));
 
   it('should fire the onBlur callback', () => {

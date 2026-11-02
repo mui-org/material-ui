@@ -102,7 +102,6 @@ const BottomNavigationAction = React.forwardRef(function BottomNavigationAction(
     label,
     onChange,
     onClick,
-    // eslint-disable-next-line react/prop-types -- private, always overridden by BottomNavigation
     selected,
     showLabel,
     value,
@@ -201,6 +200,12 @@ BottomNavigationAction.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   onClick: PropTypes.func,
+  /**
+   * If `true`, the component appears selected.
+   *
+   * `BottomNavigation` sets this on each child from its own `value`.
+   */
+  selected: PropTypes.bool,
   /**
    * If `true`, the `BottomNavigationAction` will show its label.
    * By default, only the selected `BottomNavigationAction`

@@ -10,13 +10,13 @@ theme.getCssVar('shape-borderRadius');
 theme.getCssVar('shadows-0');
 theme.getCssVar('overlays-0');
 
-// @ts-expect-error
+// @ts-expect-error: getCssVar requires a CSS variable name.
 theme.getCssVar();
-// @ts-expect-error
+// @ts-expect-error: An empty string is not a theme CSS variable name.
 theme.getCssVar('');
-// @ts-expect-error
+// @ts-expect-error: custom-color is not a declared theme CSS variable.
 theme.getCssVar('custom-color');
-// @ts-expect-error
+// @ts-expect-error: An empty string is not a valid fallback CSS variable name.
 theme.getCssVar('palette-primary-main', '');
 
 // dark only application

@@ -12,11 +12,11 @@ import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import inputAdornmentClasses from '../InputAdornment/inputAdornmentClasses';
 
 const useUtilityClasses = (ownerState) => {
-  const { classes, variant, disabled, multiple, open, error } = ownerState;
+  const { classes, variant, disabled, multiple, error } = ownerState;
 
   const slots = {
     select: ['select', variant, disabled && 'disabled', multiple && 'multiple', error && 'error'],
-    icon: ['icon', `icon${capitalize(variant)}`, open && 'iconOpen', disabled && 'disabled'],
+    icon: ['icon', `icon${capitalize(variant)}`, disabled && 'disabled'],
   };
 
   return composeClasses(slots, getNativeSelectUtilityClasses, classes);
@@ -147,12 +147,6 @@ export const StyledSelectIcon = styled('svg', {
   },
   variants: [
     {
-      props: ({ ownerState }) => ownerState.open,
-      style: {
-        transform: 'rotate(180deg)',
-      },
-    },
-    {
       props: {
         variant: 'filled',
       },
@@ -176,11 +170,7 @@ const NativeSelectIcon = styled(StyledSelectIcon, {
   slot: 'Icon',
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
-    return [
-      styles.icon,
-      ownerState.variant && styles[`icon${capitalize(ownerState.variant)}`],
-      ownerState.open && styles.iconOpen,
-    ];
+    return [styles.icon, ownerState.variant && styles[`icon${capitalize(ownerState.variant)}`]];
   },
 })({});
 

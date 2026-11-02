@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { CodeProviderLazy } from '@mui/internal-docs-infra/CodeProvider';
+import { createEnhanceCodeEmphasis } from '@mui/internal-docs-infra/pipeline/enhanceCodeEmphasis';
 import { AdManager, AD_MARGIN_TOP, AD_HEIGHT, AD_HEIGHT_MOBILE, AD_MARGIN_BOTTOM } from '../../Ad';
 import { AppFrame } from './AppFrame';
 import { AppContainer } from './AppContainer';
@@ -10,7 +12,14 @@ import { AppLayoutHead as Head } from './AppLayoutHead';
 import { BackToTop } from '../components/BackToTop';
 import { convertProductIdToName } from '../../utils/convertProductIdToName';
 import { getProductInfoFromUrl } from '../../utils/getProductInfoFromUrl';
-import { TOC_WIDTH, type TocItem, AppTableOfContents } from '../../TableOfContents';
+import { TOC_WIDTH, AppTableOfContents } from '../../TableOfContents';
+import type { TocItem } from '../../TableOfContents';
+
+// Opt in to the `data-frame-indent` attribute that DemoContent's CSS uses
+// to shift highlighted/focus frames left when collapsed. This mirrors the
+// `emphasisOptions` configured for the build-time loader in next.config.ts
+// so runtime-highlighted source (e.g. on variant switch) behaves the same.
+const sourceEnhancers = [createEnhanceCodeEmphasis({ emitFrameIndent: true })];
 
 interface MainProps {
   disableToc: boolean;
@@ -218,7 +227,7 @@ export function AppLayoutDocs(props: AppLayoutDocsProps) {
             disableToc={disableToc}
             wideLayout={wideLayout}
           >
-            {children}
+            <CodeProviderLazy sourceEnhancers={sourceEnhancers}>{children}</CodeProviderLazy>
             <AppLayoutDocsFooter tableOfContents={toc} location={location} />
           </StyledAppContainer>
           {disableToc ? null : <AppTableOfContents toc={toc} wideLayout={wideLayout} />}

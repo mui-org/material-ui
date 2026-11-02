@@ -8,7 +8,7 @@ import setRef from '@mui/utils/setRef';
 import getReactElementRef from '@mui/utils/getReactElementRef';
 import exactProp from '@mui/utils/exactProp';
 import HTMLElementType from '@mui/utils/HTMLElementType';
-import { PortalProps } from './Portal.types';
+import type { PortalProps } from './Portal.types';
 
 function getContainer(container: PortalProps['container']) {
   return typeof container === 'function' ? container() : container;
@@ -20,11 +20,11 @@ function getContainer(container: PortalProps['container']) {
  *
  * Demos:
  *
- * - [Portal](https://mui.com/material-ui/react-portal/)
+ * - [Portal](https://next.mui.com/material-ui/react-portal/)
  *
  * API:
  *
- * - [Portal API](https://mui.com/material-ui/api/portal/)
+ * - [Portal API](https://next.mui.com/material-ui/api/portal/)
  */
 const Portal = React.forwardRef(function Portal(
   props: PortalProps,

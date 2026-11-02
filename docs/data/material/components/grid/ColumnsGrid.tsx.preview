@@ -1,8 +1,0 @@
-<Grid container spacing={2} columns={16}>
-  <Grid size={8}>
-    <Item>size=8</Item>
-  </Grid>
-  <Grid size={8}>
-    <Item>size=8</Item>
-  </Grid>
-</Grid>

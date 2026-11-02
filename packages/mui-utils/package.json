@@ -1,6 +1,6 @@
 {
   "name": "@mui/utils",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Utility functions for React components.",
   "license": "MIT",
@@ -31,22 +31,21 @@
     "attw": "attw --pack ./build --entrypoints \".\" \"deepmerge\" \"useId\" \"composeClasses\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.29.7",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "@mui/types": "workspace:^",
     "@types/prop-types": "^15.7.15",
     "clsx": "^2.1.1",
     "prop-types": "^15.8.1",
-    "react-is": "^19.2.8"
+    "react-is": "^19.3.1"
   },
   "devDependencies": {
-    "@mui/types": "workspace:^",
-    "@types/node": "20.19.43",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
-    "@types/react-is": "19.2.0",
-    "@types/sinon": "22.0.0",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/react-is": "19.3.0",
+    "@types/sinon": "22.0.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "sinon": "22.1.0"
   },
   "peerDependencies": {
@@ -62,9 +61,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts",

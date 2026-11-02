@@ -1,7 +1,0 @@
-<Masonry columns={{ xs: 3, sm: 4 }} spacing={2}>
-  {heights.map((height, index) => (
-    <Item key={index} sx={{ height }}>
-      {index + 1}
-    </Item>
-  ))}
-</Masonry>

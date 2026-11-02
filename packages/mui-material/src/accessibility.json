@@ -1,0 +1,364 @@
+{
+  "criteria": {
+    "1.1.1": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "1.2.1": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.2.2": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.2.3": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.2.4": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.2.5": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.3.1": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "1.3.2": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false
+    },
+    "1.3.3": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false
+    },
+    "1.3.4": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.3.5": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Hybrid",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.4.1": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": true
+    },
+    "1.4.2": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "1.4.3": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "1.4.4": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false
+    },
+    "1.4.5": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false
+    },
+    "1.4.10": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false
+    },
+    "1.4.11": {
+      "conformance": "Partially Supports",
+      "responsibility": "Component",
+      "group": "Hybrid",
+      "flagged": true
+    },
+    "1.4.12": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false
+    },
+    "1.4.13": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.1.1": {
+      "conformance": "Supports",
+      "responsibility": "Component",
+      "group": "Automated",
+      "flagged": false
+    },
+    "2.1.2": {
+      "conformance": "Supports",
+      "responsibility": "Component",
+      "group": "Automated",
+      "flagged": false
+    },
+    "2.1.4": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.2.1": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.2.2": {
+      "conformance": "Partially Supports",
+      "responsibility": "Shared",
+      "group": "Manual",
+      "flagged": true,
+      "notApplicable": true
+    },
+    "2.3.1": {
+      "conformance": "Supports",
+      "responsibility": "Component",
+      "group": "Manual",
+      "flagged": true,
+      "notApplicable": true
+    },
+    "2.4.1": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.4.2": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.4.3": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false
+    },
+    "2.4.4": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.4.5": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.4.6": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "2.4.7": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "2.4.11": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false
+    },
+    "2.5.1": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.5.2": {
+      "conformance": "Supports",
+      "responsibility": "Component",
+      "group": "Automated",
+      "flagged": false
+    },
+    "2.5.3": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false
+    },
+    "2.5.4": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.5.7": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "2.5.8": {
+      "conformance": "Supports",
+      "responsibility": "Component",
+      "group": "Automated",
+      "flagged": false
+    },
+    "3.1.1": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.1.2": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.2.1": {
+      "conformance": "Supports",
+      "responsibility": "Component",
+      "group": "Automated",
+      "flagged": false
+    },
+    "3.2.2": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false
+    },
+    "3.2.3": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.2.4": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false
+    },
+    "3.2.6": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.3.1": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Automated",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.3.2": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "3.3.3": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.3.4": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.3.7": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "3.3.8": {
+      "conformance": "Supports",
+      "responsibility": "Author",
+      "group": "Manual",
+      "flagged": false,
+      "notApplicable": true
+    },
+    "4.1.2": {
+      "conformance": "Supports",
+      "responsibility": "Shared",
+      "group": "Hybrid",
+      "flagged": false
+    },
+    "4.1.3": {
+      "conformance": "Partially Supports",
+      "responsibility": "Shared",
+      "group": "Manual",
+      "flagged": true,
+      "notApplicable": true
+    }
+  }
+}

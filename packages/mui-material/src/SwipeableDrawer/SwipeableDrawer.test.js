@@ -208,6 +208,7 @@ describe('<SwipeableDrawer />', () => {
             ],
           });
           expect(handleOpen.callCount).to.equal(1);
+          expect(handleOpen.args[0][0]).to.have.property('type', 'touchend');
 
           setProps({ open: true });
 
@@ -228,6 +229,7 @@ describe('<SwipeableDrawer />', () => {
             ],
           });
           expect(handleClose.callCount).to.equal(1);
+          expect(handleClose.args[0][0]).to.have.property('type', 'touchend');
         });
 
         // Need layout

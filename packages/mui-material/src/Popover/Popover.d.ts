@@ -99,12 +99,7 @@ interface PopoverVirtualElement {
 }
 
 export interface PopoverProps
-  extends
-    StandardProps<
-      Omit<ModalProps, 'slots' | 'slotProps' | 'BackdropProps' | 'BackdropComponent'>,
-      'children'
-    >,
-    PopoverSlotsAndSlotProps {
+  extends StandardProps<ModalProps, 'slots' | 'slotProps' | 'children'>, PopoverSlotsAndSlotProps {
   /**
    * A ref for imperative actions.
    * It currently only supports updatePosition() action.
@@ -225,12 +220,12 @@ export declare const PopoverPaper: React.FC<PopoverPaperProps>;
  *
  * Demos:
  *
- * - [Menu](https://mui.com/material-ui/react-menu/)
- * - [Popover](https://mui.com/material-ui/react-popover/)
+ * - [Menu](https://next.mui.com/material-ui/react-menu/)
+ * - [Popover](https://next.mui.com/material-ui/react-popover/)
  *
  * API:
  *
- * - [Popover API](https://mui.com/material-ui/api/popover/)
- * - inherits [Modal API](https://mui.com/material-ui/api/modal/)
+ * - [Popover API](https://next.mui.com/material-ui/api/popover/)
+ * - inherits [Modal API](https://next.mui.com/material-ui/api/modal/)
  */
 export default function Popover(props: PopoverProps): React.JSX.Element;

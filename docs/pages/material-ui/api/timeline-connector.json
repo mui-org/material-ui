@@ -27,7 +27,7 @@
   "themeDefaultProps": true,
   "muiName": "MuiTimelineConnector",
   "forwardsRefTo": "HTMLSpanElement",
-  "filename": "/packages/mui-lab/src/TimelineConnector/TimelineConnector.js",
+  "filename": "/packages/mui-lab/src/TimelineConnector/TimelineConnector.tsx",
   "inheritance": null,
   "demos": "<ul><li><a href=\"/material-ui/react-timeline/\">Timeline</a></li></ul>"
 }

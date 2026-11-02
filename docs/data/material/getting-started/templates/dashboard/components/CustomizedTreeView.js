@@ -168,31 +168,6 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(props, ref) {
   );
 });
 
-CustomTreeItem.propTypes = {
-  /**
-   * The content of the component.
-   */
-  children: PropTypes.node,
-  /**
-   * If `true`, the item is disabled.
-   * @default false
-   */
-  disabled: PropTypes.bool,
-  /**
-   * The id attribute of the item. If not provided, it will be generated.
-   */
-  id: PropTypes.string,
-  /**
-   * The id of the item.
-   * Must be unique.
-   */
-  itemId: PropTypes.string.isRequired,
-  /**
-   * The label of the item.
-   */
-  label: PropTypes.node,
-};
-
 export default function CustomizedTreeView() {
   return (
     <Card

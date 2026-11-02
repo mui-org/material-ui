@@ -47,82 +47,91 @@ const projects = {
 
 const names = new Set(process.argv.slice(2));
 
-(async () => {
+async function main() {
   // eslint-disable-next-line no-console
   console.info('Host:', host);
   const browser = await chromium.launch({ headless: true });
 
-  await Promise.all(
-    Object.entries(projects)
-      .filter(([project]) => names.size === 0 || names.has(project))
-      .map(async ([project, { input, output, viewport }]) => {
-        const page = await browser.newPage({
-          viewport,
-          reducedMotion: 'reduce',
-        });
+  const selected = Object.entries(projects).filter(
+    ([project]) => names.size === 0 || names.has(project),
+  );
 
-        names.delete(project);
+  try {
+    const failed: string[] = [];
 
-        const files = await fs.readdir(input);
-        const urls = files
-          .filter(
-            (file) =>
-              !file.startsWith('index') &&
-              (names.size === 0 || names.has(file.replace(/\.(js|tsx)$/, ''))),
-          )
-          .map(
-            (file) => `/${project}/getting-started/templates/${file.replace(/\.(js|tsx)$/, '/')}`,
-          );
-
-        async function toggleMode() {
-          await page.locator('css=[data-screenshot="toggle-mode"]').locator('visible=true').click();
-        }
-
-        async function captureDarkMode(outputPath: string) {
-          const btn = await page.$('[data-screenshot="toggle-mode"]');
-          if (btn) {
-            if ((await btn.getAttribute('aria-haspopup')) === 'true') {
-              await toggleMode();
-              await page.getByRole('menuitem').filter({ hasText: /dark/i }).click();
-              await page.waitForLoadState('networkidle'); // changing to dark mode might trigger image loading
-              await sleep(100); // give time for image decoding, resizing, rendering
-
-              await page.screenshot({ path: outputPath, animations: 'disabled' });
-
-              await toggleMode();
-              await page
-                .getByRole('menuitem')
-                .filter({ hasText: /system/i })
-                .click(); // switch back to light
-            } else if ((await btn.getAttribute('aria-haspopup')) === 'listbox') {
-              await toggleMode();
-              await page.getByRole('option').filter({ hasText: /dark/i }).click();
-              await page.waitForLoadState('networkidle'); // changing to dark mode might trigger image loading
-              await sleep(100); // give time for image decoding, resizing, rendering
-
-              await page.screenshot({ path: outputPath, animations: 'disabled' });
-
-              await toggleMode();
-              await page
-                .getByRole('option')
-                .filter({ hasText: /system/i })
-                .click(); // switch back to light
-            } else {
-              await toggleMode();
-              await page.waitForLoadState('networkidle'); // changing to dark mode might trigger image loading
-              await sleep(100); // give time for image decoding, resizing, rendering
-
-              await page.screenshot({ path: outputPath, animations: 'disabled' });
-
-              await toggleMode(); // switch back to light
-            }
-          }
-        }
-
+    await Promise.allSettled(
+      selected.map(async ([project, { input, output, viewport }]) => {
         try {
-          await Promise.resolve().then(() =>
-            urls.reduce(async (sequence, aUrl) => {
-              await sequence;
+          const page = await browser.newPage({
+            viewport,
+            reducedMotion: 'reduce',
+          });
+
+          try {
+            names.delete(project);
+
+            const files = await fs.readdir(input);
+            const urls = files
+              .filter(
+                (file) =>
+                  !file.startsWith('index') &&
+                  (names.size === 0 || names.has(file.replace(/\.(js|tsx)$/, ''))),
+              )
+              .map(
+                (file) =>
+                  `/${project}/getting-started/templates/${file.replace(/\.(js|tsx)$/, '/')}`,
+              );
+
+            async function toggleMode() {
+              await page
+                .locator('css=[data-screenshot="toggle-mode"]')
+                .locator('visible=true')
+                .click();
+            }
+
+            async function captureDarkMode(outputPath: string) {
+              const btn = await page.$('[data-screenshot="toggle-mode"]');
+              if (btn) {
+                if ((await btn.getAttribute('aria-haspopup')) === 'true') {
+                  await toggleMode();
+                  await page.getByRole('menuitem').filter({ hasText: /dark/i }).click();
+                  await page.waitForLoadState('networkidle'); // changing to dark mode might trigger image loading
+                  await sleep(100); // give time for image decoding, resizing, rendering
+
+                  await page.screenshot({ path: outputPath, animations: 'disabled' });
+
+                  await toggleMode();
+                  await page
+                    .getByRole('menuitem')
+                    .filter({ hasText: /system/i })
+                    .click(); // switch back to light
+                } else if ((await btn.getAttribute('aria-haspopup')) === 'listbox') {
+                  await toggleMode();
+                  await page.getByRole('option').filter({ hasText: /dark/i }).click();
+                  await page.waitForLoadState('networkidle'); // changing to dark mode might trigger image loading
+                  await sleep(100); // give time for image decoding, resizing, rendering
+
+                  await page.screenshot({ path: outputPath, animations: 'disabled' });
+
+                  await toggleMode();
+                  await page
+                    .getByRole('option')
+                    .filter({ hasText: /system/i })
+                    .click(); // switch back to light
+                } else {
+                  await toggleMode();
+                  await page.waitForLoadState('networkidle'); // changing to dark mode might trigger image loading
+                  await sleep(100); // give time for image decoding, resizing, rendering
+
+                  await page.screenshot({ path: outputPath, animations: 'disabled' });
+
+                  await toggleMode(); // switch back to light
+                }
+              }
+            }
+
+            for (const aUrl of urls) {
+              /* eslint-disable no-await-in-loop -- screenshots share one page, so they run in sequence */
               await page.goto(`${host}${aUrl}?hideFrame=true`, { waitUntil: 'networkidle' });
 
               const filePath = `${output}${aUrl.replace(/\/$/, '')}.jpg`;
@@ -143,15 +152,27 @@ const names = new Set(process.argv.slice(2));
 
                 await captureDarkMode(filePath.replace('.jpg', '-default-dark.jpg'));
               }
-
-              return Promise.resolve();
-            }, Promise.resolve()),
-          );
+              /* eslint-enable no-await-in-loop */
+            }
+          } finally {
+            await page.close();
+          }
         } catch (error) {
-          console.error(error);
+          console.error(`Failed to generate screenshots for ${project}:`, error);
+          failed.push(project);
         }
       }),
-  );
+    );
 
-  await browser.close();
-})();
+    if (failed.length > 0) {
+      throw new Error(`Failed to generate screenshots for: ${failed.join(', ')}`);
+    }
+  } finally {
+    await browser.close();
+  }
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

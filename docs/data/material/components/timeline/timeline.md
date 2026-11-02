@@ -20,48 +20,48 @@ This component is not documented in the [Material Design guidelines](https://m2.
 
 A basic timeline showing list of events.
 
-{{"demo": "BasicTimeline.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Left-positioned timeline
 
 The main content of the timeline can be positioned on the left side relative to the time axis.
 
-{{"demo": "LeftPositionedTimeline.js"}}
+{{"component": "file://./demos/left-positioned/index.ts"}}
 
 ## Alternating timeline
 
 The timeline can display the events on alternating sides.
 
-{{"demo": "AlternateTimeline.js"}}
+{{"component": "file://./demos/alternate/index.ts"}}
 
 ## Reverse Alternating timeline
 
 The timeline can display the events on alternating sides in reverse order.
 
-{{"demo": "AlternateReverseTimeline.js"}}
+{{"component": "file://./demos/alternate-reverse/index.ts"}}
 
 ## Color
 
 The `TimelineDot` can appear in different colors from theme palette.
 
-{{"demo": "ColorsTimeline.js"}}
+{{"component": "file://./demos/colors/index.ts"}}
 
 ## Outlined
 
-{{"demo": "OutlinedTimeline.js"}}
+{{"component": "file://./demos/outlined/index.ts"}}
 
 ## Opposite content
 
 The timeline can display content on opposite sides.
 
-{{"demo": "OppositeContentTimeline.js"}}
+{{"component": "file://./demos/opposite-content/index.ts"}}
 
 ## Customization
 
 Here is an example of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedTimeline.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 ## Alignment
 
@@ -75,12 +75,12 @@ The demos below show how to adjust the relative width of the left and right side
 
 ### Left-aligned
 
-{{"demo": "LeftAlignedTimeline.js"}}
+{{"component": "file://./demos/left-aligned/index.ts"}}
 
 ### Right-aligned
 
-{{"demo": "RightAlignedTimeline.js"}}
+{{"component": "file://./demos/right-aligned/index.ts"}}
 
 ### Left-aligned with no opposite content
 
-{{"demo": "NoOppositeContent.js"}}
+{{"component": "file://./demos/no-opposite-content/index.ts"}}

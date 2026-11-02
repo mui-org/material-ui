@@ -27,7 +27,7 @@
   "themeDefaultProps": true,
   "muiName": "MuiTimelineSeparator",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-lab/src/TimelineSeparator/TimelineSeparator.js",
+  "filename": "/packages/mui-lab/src/TimelineSeparator/TimelineSeparator.tsx",
   "inheritance": null,
   "demos": "<ul><li><a href=\"/material-ui/react-timeline/\">Timeline</a></li></ul>"
 }

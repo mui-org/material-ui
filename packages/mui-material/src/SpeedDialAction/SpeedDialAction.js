@@ -125,6 +125,48 @@ const SpeedDialActionStaticTooltip = styled('span', {
           },
         },
       },
+      {
+        props: {
+          tooltipPlacement: 'top',
+        },
+        style: {
+          // The label sits in a zero-height row, so it widens the action to keep
+          // neighboring labels apart without making the action taller.
+          display: 'grid',
+          gridTemplateRows: '0 auto',
+          justifyItems: 'center',
+          // Stay as tall as the Fab when a sibling action is larger.
+          alignSelf: 'center',
+          [`& .${speedDialActionClasses.staticTooltipLabel}`]: {
+            position: 'static',
+            alignSelf: 'end',
+            transformOrigin: '50% 100%',
+            marginBottom: 8,
+            marginLeft: 8,
+            marginRight: 8,
+          },
+        },
+      },
+      {
+        props: {
+          tooltipPlacement: 'bottom',
+        },
+        style: {
+          display: 'grid',
+          gridTemplateRows: 'auto 0',
+          justifyItems: 'center',
+          alignSelf: 'center',
+          [`& .${speedDialActionClasses.staticTooltipLabel}`]: {
+            position: 'static',
+            gridRow: 2,
+            alignSelf: 'start',
+            transformOrigin: '50% 0%',
+            marginTop: 8,
+            marginLeft: 8,
+            marginRight: 8,
+          },
+        },
+      },
     ],
   })),
 );
@@ -153,7 +195,12 @@ const SpeedDialAction = React.forwardRef(function SpeedDialAction(inProps, ref) 
 
   const resolvedTooltipSlotProps =
     typeof slotProps.tooltip === 'function' ? slotProps.tooltip(props) : (slotProps.tooltip ?? {});
-  const tooltipPlacement = resolvedTooltipSlotProps.placement ?? 'left';
+  // The label is styled per side: compound placements like `top-start` use their side,
+  // and placements without one, like `auto`, fall back to the left.
+  const placementSide = String(resolvedTooltipSlotProps.placement).split('-')[0];
+  const tooltipPlacement = ['top', 'right', 'bottom', 'left'].includes(placementSide)
+    ? placementSide
+    : 'left';
 
   const ownerState = { ...props, tooltipPlacement };
   const classes = useUtilityClasses(ownerState);

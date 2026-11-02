@@ -9,6 +9,8 @@
 // clock. Keeping them here, imported *after* `./fakeDateSetup`, guarantees the
 // override is in place first.
 
+import assertUniqueFixtures from './assertUniqueFixtures';
+
 // Get all the fixtures specifically written for preventing visual regressions.
 const importRegressionFixtures = import.meta.glob(['./fixtures/**/*.{js,ts,tsx}'], {
   import: 'default',
@@ -78,44 +80,36 @@ Object.keys(importA11yFixtures).forEach((path) => {
 // (e.g. `{ test: 'docs/data/material/components/foo/{BasicFoo,FooVariants}', enabled: true }`).
 const importDemos = import.meta.glob(
   [
-    'docs/data/**/[A-Z]*.js',
+    // Migrated docs-infra demos: `<area>/demos/<slug>/<Name>.{js,tsx}`.
+    'docs/data/**/demos/*/[A-Z]*.{js,tsx}',
+    // Templates: flat `templates/<name>/<Name>.{js,tsx}` layout (not yet
+    // migrated). Each template ships both files; only `.js` is enrolled so a
+    // template can't register the same route/screenshot path twice.
+    'docs/data/material/getting-started/templates/*/[A-Z]*.js',
+    // Legacy Base UI variants (not yet migrated to the docs-infra demo layout).
     'docs/data/base/**/[A-Z]*/css/index.js',
     'docs/data/base/**/[A-Z]*/tailwind/index.js',
     'docs/data/base/**/[A-Z]*/system/index.js',
     // ================== Structural — cannot be imported safely ==================
-    '!docs/data/experiments',
+    '!docs/data/experiments/**',
     '!docs/data/material/**/*NoSnap.*',
-    // Templates — not demos
-    '!docs/data/material/getting-started/templates/blog/components/**',
-    '!docs/data/material/getting-started/templates/checkout/components/**',
-    '!docs/data/material/getting-started/templates/crud-dashboard/components/**',
-    '!docs/data/material/getting-started/templates/crud-dashboard/theme/customizations/**',
-    '!docs/data/material/getting-started/templates/crud-dashboard/hooks/**',
-    '!docs/data/material/getting-started/templates/crud-dashboard/context/**',
-    '!docs/data/material/getting-started/templates/dashboard/components/**',
-    '!docs/data/material/getting-started/templates/dashboard/internals/components/**',
-    '!docs/data/material/getting-started/templates/dashboard/theme/customizations/**',
-    '!docs/data/material/getting-started/templates/marketing-page/components/**',
-    '!docs/data/material/getting-started/templates/marketing-page/MarketingPage.*',
+    // Templates that aren't standalone demos
+    '!docs/data/material/getting-started/templates/marketing-page/**',
     '!docs/data/material/getting-started/templates/shared-theme/**',
-    '!docs/data/material/getting-started/templates/sign-in/components/**',
-    '!docs/data/material/getting-started/templates/sign-in-side/components/**',
-    '!docs/data/material/getting-started/templates/sign-up/components/**',
     // Customization demos — not component pages
-    '!docs/data/material/customization/breakpoints/**',
-    '!docs/data/material/customization/color/**',
-    '!docs/data/material/customization/container-queries/ResizableDemo.*',
-    '!docs/data/material/customization/default-theme/**',
-    '!docs/data/material/customization/density/DensityTool.*',
-    '!docs/data/material/customization/right-to-left/RtlDemo.*',
-    '!docs/data/material/customization/transitions/TransitionHover.*',
-    '!docs/data/material/customization/typography/ResponsiveFontSizesChart.*',
+    '!docs/data/material/customization/breakpoints/demos/**',
+    '!docs/data/material/customization/color/demos/**',
+    '!docs/data/material/customization/container-queries/demos/resizable/**',
+    '!docs/data/material/customization/default-theme/demos/**',
+    '!docs/data/material/customization/density/demos/**',
+    '!docs/data/material/customization/right-to-left/demos/rtl-demo/**',
+    '!docs/data/material/customization/transitions/demos/**',
+    '!docs/data/material/customization/typography/demos/responsive-font-sizes-chart/**',
     // Other non-demo subtrees
-    '!docs/data/material/components/menubar/components/**', // Source subdir, not demos
-    '!docs/data/material/getting-started/supported-components/MaterialUIComponents.*',
+    '!docs/data/material/getting-started/supported-components/demos/**',
     '!docs/data/material/guides/**',
-    '!docs/data/base/getting-started/quickstart/BaseButtonTailwind.*',
-    '!docs/data/base/guides/working-with-tailwind-css/PlayerFinal.*',
+    '!docs/data/base/getting-started/quickstart/BaseButtonTailwind/**',
+    '!docs/data/base/guides/working-with-tailwind-css/PlayerFinal/**',
     '!docs/data/premium-themes/**',
     // ================== Slug-level — no tool consumer ==================
     '!docs/data/material/components/backdrop/**', // Needs interaction
@@ -123,7 +117,7 @@ const importDemos = import.meta.glob(
     '!docs/data/material/components/container/**', // Can't see the impact
     '!docs/data/material/components/dialogs/**', // Needs interaction
     '!docs/data/material/components/image-list/**', // Images don't load
-    '!docs/data/material/components/material-icons/SearchIcons.*', // Heavy icon grid
+    '!docs/data/material/components/material-icons/demos/search-icons/**', // Heavy icon grid
     '!docs/data/material/components/menus/**', // Needs interaction
     '!docs/data/material/components/popper/**', // Needs interaction
     // `progress` is included so axe can run on the enrolled LinearProgress docs
@@ -134,21 +128,7 @@ const importDemos = import.meta.glob(
     '!docs/data/material/components/tooltips/**', // Needs interaction
     '!docs/data/material/components/transitions/**', // Needs interaction
     '!docs/data/material/components/use-media-query/**', // Need to dynamically resize to test
-    '!docs/data/material/customization/breakpoints/**', // Need to dynamically resize to test
-    '!docs/data/material/customization/color/**', // Escape viewport
-    '!docs/data/material/customization/container-queries/ResizableDemo.*', // No public components
-    '!docs/data/material/customization/default-theme/**', // Redux isolation
-    '!docs/data/material/customization/density/DensityTool.*', // Redux isolation
-    '!docs/data/material/customization/right-to-left/RtlDemo.*',
-    '!docs/data/material/customization/transitions/TransitionHover.*', // Need interaction
-    '!docs/data/material/customization/typography/ResponsiveFontSizesChart.*',
-    '!docs/data/material/getting-started/supported-components/MaterialUIComponents.*', // No public components
-    '!docs/data/material/guides/**',
-    '!docs/data/base/getting-started/quickstart/BaseButtonTailwind.*', // CodeSandbox
-    '!docs/data/base/guides/working-with-tailwind-css/PlayerFinal.*', // No public components
-    '!docs/data/premium-themes/**',
-    '!docs/data/material/getting-started/versions/LatestVersions.*', // not a component
-    '!docs/data/material/getting-started/versions/ReleasedVersions.*', // not a component
+    '!docs/data/material/getting-started/versions/demos/**', // not a component
   ],
   {
     import: 'default',
@@ -159,14 +139,24 @@ const importDemos = import.meta.glob(
 const demoFixtures = [];
 Object.keys(importDemos).forEach((path) => {
   const [name, ...suiteArray] = path
-    .replace('../../docs/data/', '')
-    .replace('.js', '')
+    .replace(/^.*?docs\/data\//, '')
+    .replace(/\.(tsx?|jsx?)$/, '')
     .split('/')
     .reverse();
-  const suite = `docs-${suiteArray
-    .reverse()
-    .join('-')
-    .replace(/^material-/, '')}`;
+  // Drop the `demos/<slug>` infix introduced by the docs-infra demo layout so
+  // the suite slug stays stable: `<comp>/demos/<slug>/<Name>` -> `<comp>/<Name>`.
+  // After reverse + destructure, the original `demos/<slug>` pair shows up as
+  // adjacent entries `<slug>, demos` in `suiteArray`.
+  const segments = suiteArray.reverse();
+  const cleaned = [];
+  for (let i = 0; i < segments.length; i += 1) {
+    if (segments[i] === 'demos') {
+      i += 1; // also skip the slug that follows
+      continue;
+    }
+    cleaned.push(segments[i]);
+  }
+  const suite = `docs-${cleaned.join('-').replace(/^material-/, '')}`;
 
   demoFixtures.push({
     path,
@@ -233,9 +223,8 @@ Object.keys(importComposites).forEach((path) => {
   });
 }, []);
 
-const fixtures = regressionFixtures
-  .concat(a11yFixtures)
-  .concat(demoFixtures)
-  .concat(compositeFixtures);
+const fixtures = assertUniqueFixtures(
+  regressionFixtures.concat(a11yFixtures).concat(demoFixtures).concat(compositeFixtures),
+);
 
 export default fixtures;

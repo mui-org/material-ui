@@ -19,46 +19,46 @@ Image lists represent a collection of items in a repeated pattern. They help imp
 
 Standard image lists are best for items of equal importance. They have a uniform container size, ratio, and spacing.
 
-{{"demo": "StandardImageList.js"}}
+{{"component": "file://./demos/standard/index.ts"}}
 
 ## Quilted image list
 
 Quilted image lists emphasize certain items over others in a collection. They create hierarchy using varied container sizes and ratios.
 
-{{"demo": "QuiltedImageList.js"}}
+{{"component": "file://./demos/quilted/index.ts"}}
 
 ## Woven image list
 
 Woven image lists use alternating container ratios to create a rhythmic layout. A woven image list is best for browsing peer content.
 
-{{"demo": "WovenImageList.js"}}
+{{"component": "file://./demos/woven/index.ts"}}
 
 ## Masonry image list
 
 Masonry image lists use dynamically sized container heights that reflect the aspect ratio of each image. This image list is best used for browsing uncropped peer content.
 
-{{"demo": "MasonryImageList.js"}}
+{{"component": "file://./demos/masonry/index.ts"}}
 
 ## Image list with title bars
 
 This example demonstrates the use of the `ImageListItemBar` to add an overlay to each item.
 The overlay can accommodate a `title`, `subtitle` and secondary action - in this example an `IconButton`.
 
-{{"demo": "TitlebarImageList.js"}}
+{{"component": "file://./demos/titlebar/index.ts"}}
 
 ### Title bar below image (standard)
 
 The title bar can be placed below the image.
 
-{{"demo": "TitlebarBelowImageList.js"}}
+{{"component": "file://./demos/titlebar-below/index.ts"}}
 
 ### Title bar below image (masonry)
 
-{{"demo": "TitlebarBelowMasonryImageList.js"}}
+{{"component": "file://./demos/titlebar-below-masonry/index.ts"}}
 
 ## Custom image list
 
 In this example the items have a customized titlebar, positioned at the top and with a custom gradient `titleBackground`.
 The secondary action `IconButton` is positioned on the left. The `gap` prop is used to adjust the gap between items.
 
-{{"demo": "CustomImageList.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/custom/index.ts", "collapseToEmpty": true}}

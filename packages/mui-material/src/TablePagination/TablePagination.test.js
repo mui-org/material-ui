@@ -2,7 +2,15 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import * as React from 'react';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
-import { fireEvent, createRenderer, isJsdom, screen } from '@mui/internal-test-utils';
+import {
+  act,
+  fireEvent,
+  createRenderer,
+  focusVisible,
+  isJsdom,
+  screen,
+  simulatePointerDevice,
+} from '@mui/internal-test-utils';
 import TableFooter from '@mui/material/TableFooter';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -11,6 +19,7 @@ import { inputClasses } from '@mui/material/Input';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 import { filledInputClasses } from '@mui/material/FilledInput';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { inputBaseClasses } from '@mui/material/InputBase';
 import IconButton, { iconButtonClasses } from '@mui/material/IconButton';
 import { svgIconClasses } from '@mui/material/SvgIcon';
 import { createSvgIcon } from '@mui/material/utils';
@@ -566,6 +575,88 @@ describe('<TablePagination />', () => {
     });
   });
 
+  describe('theme: focusVisible', () => {
+    function setup(theme) {
+      render(
+        <ThemeProvider theme={theme}>
+          <table>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={1}
+                  page={0}
+                  onPageChange={noop}
+                  onRowsPerPageChange={noop}
+                  rowsPerPage={10}
+                />
+              </TableRow>
+            </TableFooter>
+          </table>
+        </ThemeProvider>,
+      );
+
+      return screen.getByRole('combobox');
+    }
+
+    it.skipIf(isJsdom())('keeps the focus tint on the select without the theme ring', () => {
+      const combobox = setup(createTheme());
+
+      act(() => combobox.focus());
+
+      expect(combobox).toHaveComputedStyle({ backgroundColor: 'rgba(0, 0, 0, 0.12)' });
+    });
+
+    it.skipIf(isJsdom())('drops the focus tint on the select with the theme ring', () => {
+      const combobox = setup(createTheme({ focusVisible: true }));
+
+      act(() => combobox.focus());
+
+      expect(combobox).toHaveComputedStyle({ backgroundColor: 'rgba(0, 0, 0, 0)' });
+    });
+
+    it.skipIf(isJsdom())('rings the select on keyboard focus instead of the InputBase root', () => {
+      const combobox = setup(createTheme({ focusVisible: true }));
+
+      focusVisible(combobox);
+
+      expect(combobox).toHaveComputedStyle({ outlineStyle: 'solid', outlineWidth: '2px' });
+      expect(combobox.closest(`.${inputBaseClasses.root}`)).toHaveComputedStyle({
+        outlineStyle: 'none',
+      });
+    });
+
+    it.skipIf(isJsdom())('insets the action button ring so the root cannot clip it', () => {
+      render(
+        <ThemeProvider
+          theme={createTheme({
+            focusVisible: true,
+            components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
+          })}
+        >
+          <table>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={30}
+                  page={0}
+                  onPageChange={noop}
+                  onRowsPerPageChange={noop}
+                  rowsPerPage={10}
+                />
+              </TableRow>
+            </TableFooter>
+          </table>
+        </ThemeProvider>,
+      );
+      const nextButton = screen.getByRole('button', { name: 'Go to next page' });
+
+      simulatePointerDevice();
+      focusVisible(nextButton);
+
+      expect(nextButton).toHaveComputedStyle({ outlineStyle: 'solid', outlineOffset: '-2px' });
+    });
+  });
+
   describe('prop: rowsPerPage', () => {
     it('should display max number of rows text when prop is -1', () => {
       const { container } = render(
@@ -889,5 +980,33 @@ describe('<TablePagination />', () => {
     const [combobox] = screen.getAllByRole('button');
 
     expect(combobox.parentElement).not.to.have.attribute('variant');
+  });
+
+  it.skipIf(isJsdom())('should apply toolbar styleOverrides that use variants', () => {
+    const theme = createTheme({
+      components: {
+        MuiTablePagination: {
+          styleOverrides: {
+            toolbar: { color: 'rgb(255, 0, 0)', variants: [] },
+          },
+        },
+      },
+    });
+
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <table>
+          <tbody>
+            <tr>
+              <TablePagination count={1} onPageChange={noop} page={0} rowsPerPage={10} />
+            </tr>
+          </tbody>
+        </table>
+      </ThemeProvider>,
+    );
+
+    expect(container.querySelector(`.${classes.toolbar}`)).toHaveComputedStyle({
+      color: 'rgb(255, 0, 0)',
+    });
   });
 });

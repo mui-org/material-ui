@@ -230,7 +230,7 @@ Depending on your project, you may follow one of the following approaches:
    <!-- #npm-tag-reference -->
 
    ```bash
-   npx @mui/codemod@latest v7.0.0/grid-props <path/to/folder>
+   npx @mui/codemod@next v7.0.0/grid-props <path/to/folder>
    ```
 
    See the [Grid upgrade guide](/material-ui/migration/upgrade-to-grid-v2/) for more information.
@@ -303,7 +303,7 @@ Use this codemod to automatically update the `size` value:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v7.0.0/input-label-size-normal-medium <path/to/folder>
+npx @mui/codemod@next v7.0.0/input-label-size-normal-medium <path/to/folder>
 ```
 
 **Note:** Because the default size of `InputLabel` was changed from `normal` to `medium`, the class `MuiInputLabel‑sizeMedium` is no longer added. If you relied on this class for custom styling, use a different class.
@@ -311,6 +311,8 @@ npx @mui/codemod@latest v7.0.0/input-label-size-normal-medium <path/to/folder>
 ### SvgIcon's data-testid removed
 
 The default `data-testid` prop has been removed from the icons in `@mui/icons-material` in production bundles. This change ensures that the `data-testid` prop is only defined where needed, reducing the potential for naming clashes and removing unnecessary properties in production.
+
+If your test relied on those, add it back in your tests where needed.
 
 ### TablePaginationActions types import path changed
 
@@ -570,7 +572,7 @@ Use this codemod to automatically update the imports:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v7.0.0/lab-removed-components <path/to/folder>
+npx @mui/codemod@next v7.0.0/lab-removed-components <path/to/folder>
 ```
 
 :::warning

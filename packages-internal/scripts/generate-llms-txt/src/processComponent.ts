@@ -1,9 +1,15 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { replaceFileComponentsWithSnippets } from './loadDemoSource';
 
 interface DemoReplaceOptions {
   basePath?: string;
   includeTypeScript?: boolean;
+  /**
+   * Include each `file://` demo's extra files (helpers) alongside its entry file,
+   * with a comment naming each file per block. Off by default. See `loadDemoSource`.
+   */
+  includeExtraFiles?: boolean;
 }
 
 /**
@@ -97,7 +103,10 @@ export function replaceDemoWithSnippet(
  * @param options - Options for parsing
  * @returns The processed markdown content
  */
-export function processMarkdownFile(filePath: string, options: DemoReplaceOptions = {}): string {
+export async function processMarkdownFile(
+  filePath: string,
+  options: DemoReplaceOptions = {},
+): Promise<string> {
   let content = fs.readFileSync(filePath, 'utf-8');
   const dir = path.dirname(filePath);
 
@@ -107,7 +116,13 @@ export function processMarkdownFile(filePath: string, options: DemoReplaceOption
     basePath: options.basePath || dir,
   };
 
-  // First, remove component syntax
+  // First, expand `file://` demo components into their source code blocks, before
+  // the remaining (non-demo) component markers are stripped below.
+  content = await replaceFileComponentsWithSnippets(content, filePath, {
+    includeExtraFiles: options.includeExtraFiles,
+  });
+
+  // Remove the remaining component syntax (e.g. `ComponentLinkHeader`)
   content = removeComponentSyntax(content);
 
   // Clean description HTML tags

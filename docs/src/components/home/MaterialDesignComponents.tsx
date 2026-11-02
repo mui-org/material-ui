@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-  styled,
-  Theme,
-  ThemeOptions,
-  alpha,
-  extendTheme,
-  CssVarsProvider,
-} from '@mui/material/styles';
+import type { Theme, ThemeOptions } from '@mui/material/styles';
+import { styled, alpha, extendTheme, createTheme, ThemeProvider } from '@mui/material/styles';
 import { capitalize } from '@mui/material/utils';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -117,6 +111,8 @@ const Grid = styled('div')(({ theme }) => [
   }),
 ]);
 
+const fallbackTheme = createTheme({ cssVariables: true });
+
 function Demo({
   name,
   children,
@@ -172,13 +168,13 @@ function Demo({
         className="mui-default-theme"
         sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
-        <CssVarsProvider theme={props.theme}>
+        <ThemeProvider theme={props.theme ?? fallbackTheme}>
           {React.cloneElement(children, {
             ...(control && {
               [control.prop]: propValue,
             }),
           })}
-        </CssVarsProvider>
+        </ThemeProvider>
       </Box>
       <Typography variant="body2" sx={{ fontWeight: 'semiBold' }}>
         {name}

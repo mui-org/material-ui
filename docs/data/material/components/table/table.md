@@ -38,7 +38,7 @@ Tables are implemented using a collection of related components:
 
 A simple example with no frills.
 
-{{"demo": "BasicTable.js", "bg": true}}
+{{"component": "file://./demos/basic/index.ts", "bg": true}}
 
 ## Data table
 
@@ -48,13 +48,13 @@ This constraint makes building rich data tables challenging.
 The [`DataGrid` component](/x/react-data-grid/) is designed for use-cases that are focused on handling large amounts of tabular data.
 While it comes with a more rigid structure, in exchange, you gain more powerful features.
 
-{{"demo": "DataTable.js", "bg": true}}
+{{"component": "file://./demos/data/index.ts", "bg": true}}
 
 ## Dense table
 
 A simple example of a dense table with no frills.
 
-{{"demo": "DenseTable.js", "bg": true}}
+{{"component": "file://./demos/dense/index.ts", "bg": true}}
 
 ## Sorting & selecting
 
@@ -62,14 +62,14 @@ This example demonstrates the use of `Checkbox` and clickable rows for selection
 
 The Table has been given a fixed width to demonstrate horizontal scrolling. In order to prevent the pagination controls from scrolling, the TablePagination component is used outside of the Table. (The ['Custom Table Pagination Action' example](#custom-pagination-actions) below shows the pagination within the TableFooter.)
 
-{{"demo": "EnhancedTable.js", "bg": true}}
+{{"component": "file://./demos/enhanced/index.ts", "bg": true}}
 
 ## Customization
 
 Here is an example of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedTables.js", "bg": true}}
+{{"component": "file://./demos/customized/index.ts", "bg": true}}
 
 ### Custom pagination options
 
@@ -93,7 +93,7 @@ You should either provide an array of:
 The `ActionsComponent` prop of the `TablePagination` component allows the implementation of custom actions.
 A replacement action component is responsible for its own tooltips and focus management, unless it composes the built-in `TablePaginationActions` component.
 
-{{"demo": "CustomPaginationActionsTable.js", "bg": true}}
+{{"component": "file://./demos/custom-pagination-actions/index.ts", "bg": true}}
 
 #### Customizing individual action buttons
 
@@ -116,7 +116,7 @@ If a custom slot disables itself through its own state without re-rendering `Tab
 Here is an example of a table with scrollable rows and fixed column headers.
 It leverages the `stickyHeader` prop.
 
-{{"demo": "StickyHeadTable.js", "bg": true}}
+{{"component": "file://./demos/sticky-head/index.ts", "bg": true}}
 
 ## Column grouping
 
@@ -129,20 +129,20 @@ You can group column headers by rendering multiple table rows inside a table hea
 </TableHead>
 ```
 
-{{"demo": "ColumnGroupingTable.js", "bg": true}}
+{{"component": "file://./demos/column-grouping/index.ts", "bg": true}}
 
 ## Collapsible table
 
 An example of a table with expandable rows, revealing more information.
 It utilizes the [`Collapse`](/material-ui/api/collapse/) component.
 
-{{"demo": "CollapsibleTable.js", "bg": true}}
+{{"component": "file://./demos/collapsible/index.ts", "bg": true}}
 
 ## Spanning table
 
 A simple example with spanning rows & columns.
 
-{{"demo": "SpanningTable.js", "bg": true}}
+{{"component": "file://./demos/spanning/index.ts", "bg": true}}
 
 ## Virtualized table
 
@@ -150,7 +150,7 @@ In the following example, we demonstrate how to use [react-virtuoso](https://git
 It renders 200 rows and can easily handle more.
 Virtualization helps with performance issues.
 
-{{"demo": "ReactVirtualizedTable.js", "bg": true}}
+{{"component": "file://./demos/react-virtualized/index.ts", "bg": true}}
 
 ## Accessibility
 
@@ -182,4 +182,4 @@ See the [Data Grid row headers guide](/x/react-data-grid/accessibility/#row-head
 
 A caption functions like a heading for a table. Most screen readers announce the content of captions. Captions help users to find a table and understand what it's about and decide if they want to read it.
 
-{{"demo": "AccessibleTable.js", "bg": true}}
+{{"component": "file://./demos/accessible/index.ts", "bg": true}}

@@ -10,7 +10,7 @@ import Button from '../components/Button';
 function ProductCTA() {
   const [open, setOpen] = React.useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setOpen(true);
   };
