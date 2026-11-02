@@ -1517,7 +1517,7 @@ function emitComponentDensity<T extends EnhanceableTheme>(enhanced: DensityEnhan
       {
         props: { size: 'small' },
         style: {
-          '--_height': `calc(${touchTarget} - ${spacing('xxSmall')})`,
+          '--_height': smallBox,
           '--_paddingInline': spacing('xSmall'),
           gap: spacing('xxSmall'),
           ...enhanced.typography?.body2,
