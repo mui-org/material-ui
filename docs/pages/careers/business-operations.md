@@ -52,7 +52,7 @@ The role also offers large autonomy and high strategic leverage.
 
 Note that we care deeply about precision, excellence, and deep focus on the inputs (not the outputs): "How you do anything is how you do everything."
 
-Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries.
+Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries every year.
 
 ## The role
 

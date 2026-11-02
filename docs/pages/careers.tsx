@@ -113,12 +113,12 @@ const openRolesData: RoleCategory[] = [
   {
     title: 'Product',
     roles: [
-      {
-        title: 'Product Manager',
-        description:
-          'We are looking for a product manager to guide our roadmap and build a great product.',
-        url: '/careers/product-manager/',
-      },
+      // {
+      //   title: 'Product Manager',
+      //   description:
+      //     'We are looking for a product manager to guide our roadmap and build a great product.',
+      //   url: '/careers/product-manager/',
+      // },
     ],
   },
   {

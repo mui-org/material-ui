@@ -51,7 +51,7 @@ We need talented people to keep up with the demands of our exigent community!
 - **High-agency autonomy:** Operating without a rigid backlog, you will systematically map MUI's cross-functional workflows using Lean principles, identify high-leverage opportunities, and build end-to-end technical solutions.
 - **AI-first execution:** You will be at the forefront of implementing AI agents, LLM tool integrations, and low-code orchestration engines to automate routine business tasks across every department.
 
-Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries.
+Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries every year.
 
 ## The role
 
