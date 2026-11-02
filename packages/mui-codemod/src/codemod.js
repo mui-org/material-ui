@@ -165,7 +165,7 @@ function run(argv) {
   runPostcssTransform(codemod, files);
 }
 
-yargs
+yargs(process.argv.slice(2))
   .command({
     command: '$0 <codemod> <paths...>',
     describe: 'Applies a `@mui/codemod` to the specified paths',

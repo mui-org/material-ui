@@ -1,4 +1,3 @@
-import { dirname } from 'path';
 import addImports from 'jscodeshift-add-imports';
 import getJSExports from '../util/getJSExports';
 
@@ -7,11 +6,7 @@ export default function transformer(fileInfo, api, options) {
   const importModule = options.importModule || '@mui/material';
   const targetModule = options.targetModule || '@mui/material';
 
-  const whitelist = getJSExports(
-    require.resolve(`@mui/material-v5/modern`, {
-      paths: [dirname(fileInfo.path)],
-    }),
-  );
+  const whitelist = getJSExports(require.resolve('@mui/material-v5/modern'));
   const printOptions = options.printOptions || {
     quote: 'single',
     trailingComma: true,
