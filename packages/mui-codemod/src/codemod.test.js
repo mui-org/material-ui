@@ -8,6 +8,8 @@ function runCli(...args) {
   return spawnSync(process.execPath, [path.join(__dirname, 'codemod.js'), ...args], {
     // Run outside the repo, like a user. The root Babel config does not load in jscodeshift workers.
     cwd: os.tmpdir(),
+    // pnpm sets NODE_PATH, which resolves packages that a user does not have.
+    env: { ...process.env, NODE_PATH: '' },
     encoding: 'utf8',
   });
 }
