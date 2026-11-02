@@ -84,6 +84,14 @@ describe('cssContainerQueries', () => {
     expect(theme.containerQueries.up('sm')).to.equal('@container (min-width:600px)');
   });
 
+  it('should keep a container name that contains `and` in `not`', () => {
+    const theme = createTheme();
+
+    expect(theme.containerQueries('landing').not('sm')).to.equal(
+      '@container landing (width<600px) or (width>899.95px)',
+    );
+  });
+
   it('should sort container queries', () => {
     const theme = createTheme();
 
