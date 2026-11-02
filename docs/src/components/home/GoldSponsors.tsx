@@ -64,7 +64,7 @@ const BACKLINKs = [
   },
   {
     name: 'SocialBoosting',
-    description: 'Buy Instagram & TikTok followers, likes, and views.',
+    description: 'Instagram & TikTok followers, likes, views.',
     href: 'https://www.socialboosting.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
   },
 ];
