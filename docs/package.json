@@ -50,7 +50,7 @@
     "@react-spring/web": "^10.1.2",
     "@tailwindcss/postcss": "^4.3.3",
     "@tanstack/react-query": "^5.104.5",
-    "@tanstack/react-virtual": "^3.14.22",
+    "@tanstack/react-virtual": "^3.14.24",
     "autosuggest-highlight": "^3.3.4",
     "babel-plugin-module-resolver": "^5.0.3",
     "babel-plugin-optimize-clsx": "^2.6.2",
