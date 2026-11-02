@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.29.7",
-    "@babel/runtime": "^8.0.7",
+    "@babel/runtime": "^8.0.10",
     "@base-ui/react": "catalog:docs",
     "@docsearch/react": "catalog:docs",
     "@emotion/cache": "catalog:docs",
