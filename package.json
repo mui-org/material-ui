@@ -75,7 +75,7 @@
   "dependencies": {
     "@netlify/functions": "^6.0.3",
     "@slack/bolt": "^5.1.0",
-    "execa": "^10.1.1"
+    "execa": "^10.2.1"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
