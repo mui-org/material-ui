@@ -1,7 +1,8 @@
 /* eslint-disable mui/material-ui-no-empty-box */
 import * as React from 'react';
 import MuiPaper from '@mui/material/Paper';
-import Chip, { ChipProps } from '@mui/material/Chip';
+import type { ChipProps } from '@mui/material/Chip';
+import MuiChip from '@mui/material/Chip';
 import { styled, css, ThemeProvider, createTheme } from '@mui/material/styles';
 
 const Box = styled('div')(({ theme }) => ({
@@ -280,13 +281,18 @@ const PickerPopperPaper = styled(MuiPaper, {
   ],
 });
 
-interface FilteredChipProps extends Omit<ChipProps, 'color'> {
-  color?: ChipProps['color'] | 'peace';
+// https://github.com/mui/material-ui/issues/38626
+interface CustomChipProps extends Omit<ChipProps, 'color'> {
+  color?: ChipProps['color'] | 'custom';
 }
 
-const FilteredChip = styled(Chip, {
-  shouldForwardProp: (propName: string): propName is keyof Omit<ChipProps, 'color'> =>
-    propName !== 'color',
-})<FilteredChipProps>({});
+const CustomChip = styled(MuiChip, {
+  shouldForwardProp: (prop): prop is keyof Omit<ChipProps, 'color'> => prop !== 'color',
+})<CustomChipProps>(({ color }) => ({
+  ...(color === 'custom' && { backgroundColor: 'teal' }),
+}));
 
-<FilteredChip color="peace" label="Custom chip" />;
+<CustomChip color="custom" label="Custom" variant="outlined" />;
+
+// @ts-expect-error invalid color
+<CustomChip color="unknown" />;
