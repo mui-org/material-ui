@@ -82,11 +82,12 @@ export interface BaseTheme extends SystemTheme {
    * Scales the `theme.focusVisible` ring's `outlineOffset` on the element.
    *
    * - `1` keeps the ring at the theme's offset.
-   * - `-1` mirrors it to the other side of the element's edge, and also insets the ring's `boxShadow`.
+   * - `-1` moves it inside the element's edge, and also insets the ring's `boxShadow`.
    * - `2` doubles its distance from the edge.
    *
-   * With the default ring, a positive value draws it outside the element and a negative value draws it inside.
-   * A theme `outlineOffset` of zero or less doesn't move the outline inside with a negative value.
+   * A positive value multiplies the theme's `outlineOffset`.
+   * A negative value multiplies the larger of `outlineOffset` and `outlineWidth`, so the whole outline stays inside.
+   * A keyword `outlineWidth` (`thin`, `medium`, `thick`) is ignored.
    *
    * @param scale A multiplier of the theme's `outlineOffset`, not a pixel value.
    * @example

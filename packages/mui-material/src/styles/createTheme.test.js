@@ -549,14 +549,17 @@ describe('createTheme', () => {
           expect(theme.scaleFocusVisibleOffset(1)).to.deep.equal({
             '--_focusVisible-offset': 1,
             '--_focusVisible-behavior': 'initial',
+            '--_focusVisible-inset': 0,
           });
           expect(theme.scaleFocusVisibleOffset(-3)).to.deep.equal({
             '--_focusVisible-offset': -3,
             '--_focusVisible-behavior': 'inset',
+            '--_focusVisible-inset': 1,
           });
           expect(theme.scaleFocusVisibleOffset(0)).to.deep.equal({
             '--_focusVisible-offset': 0,
             '--_focusVisible-behavior': 'initial',
+            '--_focusVisible-inset': 0,
           });
         });
       });
@@ -578,17 +581,54 @@ describe('createTheme', () => {
         expect(screen.getByTestId('double')).toHaveComputedStyle({ outlineOffset: '8px' });
       });
 
-      it.skipIf(isJSDOM)('mirrors a negative outlineOffset outward', () => {
-        const theme = createTheme({ focusVisible: { outlineOffset: -2 } });
+      it.skipIf(isJSDOM)('insets by the outline width when it exceeds the outlineOffset', () => {
+        const theme = createTheme({ focusVisible: { outlineWidth: 2, outlineOffset: 1 } });
         render(
           <ThemeProvider theme={theme}>
+            <Box data-testid="outset" sx={[theme.focusVisible, theme.scaleFocusVisibleOffset(1)]} />
+            <Box data-testid="inset" sx={[theme.focusVisible, theme.scaleFocusVisibleOffset(-1)]} />
             <Box
-              data-testid="mirrored"
-              sx={[theme.focusVisible, theme.scaleFocusVisibleOffset(-1)]}
+              data-testid="triple"
+              sx={[theme.focusVisible, theme.scaleFocusVisibleOffset(-3)]}
             />
           </ThemeProvider>,
         );
-        expect(screen.getByTestId('mirrored')).toHaveComputedStyle({ outlineOffset: '2px' });
+        expect(screen.getByTestId('outset')).toHaveComputedStyle({ outlineOffset: '1px' });
+        expect(screen.getByTestId('inset')).toHaveComputedStyle({ outlineOffset: '-2px' });
+        expect(screen.getByTestId('triple')).toHaveComputedStyle({ outlineOffset: '-6px' });
+      });
+
+      it.skipIf(isJSDOM)('keeps a zero or negative outlineOffset inside', () => {
+        const zero = createTheme({ focusVisible: { outlineOffset: 0 } });
+        const negative = createTheme({ focusVisible: { outlineOffset: -2 } });
+        render(
+          <ThemeProvider theme={zero}>
+            <Box data-testid="zero" sx={[zero.focusVisible, zero.scaleFocusVisibleOffset(-1)]} />
+            <Box
+              data-testid="negative"
+              sx={[negative.focusVisible, negative.scaleFocusVisibleOffset(-1)]}
+            />
+            <Box
+              data-testid="negative-outset"
+              sx={[negative.focusVisible, negative.scaleFocusVisibleOffset(1)]}
+            />
+          </ThemeProvider>,
+        );
+        expect(screen.getByTestId('zero')).toHaveComputedStyle({ outlineOffset: '-2px' });
+        expect(screen.getByTestId('negative')).toHaveComputedStyle({ outlineOffset: '-2px' });
+        expect(screen.getByTestId('negative-outset')).toHaveComputedStyle({
+          outlineOffset: '-2px',
+        });
+      });
+
+      it.skipIf(isJSDOM)('insets by a non-px outline width', () => {
+        const theme = createTheme({ focusVisible: { outlineWidth: '0.25rem', outlineOffset: 1 } });
+        render(
+          <ThemeProvider theme={theme}>
+            <Box data-testid="inset" sx={[theme.focusVisible, theme.scaleFocusVisibleOffset(-1)]} />
+          </ThemeProvider>,
+        );
+        expect(screen.getByTestId('inset')).toHaveComputedStyle({ outlineOffset: '-4px' });
       });
 
       it('survives recomposing a theme', () => {
@@ -598,6 +638,7 @@ describe('createTheme', () => {
         expect(theme.scaleFocusVisibleOffset(-1)).to.deep.equal({
           '--_focusVisible-offset': -1,
           '--_focusVisible-behavior': 'inset',
+          '--_focusVisible-inset': 1,
         });
       });
 
@@ -640,14 +681,21 @@ describe('createTheme', () => {
       );
     });
 
-    it('outlineOffset is a fixed curated 2px, a custom width does not scale it, a custom offset is inset-aware', () => {
+    it('outlineOffset is a fixed curated 2px, a wider outline adds its gap when inset, a custom offset is inset-aware', () => {
       const auto = createTheme({ cssVariables: false, focusVisible: true });
       expect(auto.focusVisible.outlineOffset).to.equal(
         'calc(var(--_focusVisible-offset, 1) * 2px)',
       );
       const wide = createTheme({ cssVariables: false, focusVisible: { outlineWidth: 4 } });
       expect(wide.focusVisible.outlineOffset).to.equal(
-        'calc(var(--_focusVisible-offset, 1) * 2px)',
+        'calc(var(--_focusVisible-offset, 1) * (2px + var(--_focusVisible-inset, 0) * 2px))',
+      );
+      const keyword = createTheme({
+        cssVariables: false,
+        focusVisible: { outlineWidth: 'thick', outlineOffset: 1 },
+      });
+      expect(keyword.focusVisible.outlineOffset).to.equal(
+        'calc(var(--_focusVisible-offset, 1) * 1px)',
       );
       const fixed = createTheme({ cssVariables: false, focusVisible: { outlineOffset: 6 } });
       expect(fixed.focusVisible.outlineOffset).to.equal(

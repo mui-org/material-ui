@@ -106,13 +106,14 @@ For example, a menu with padding leaves room to draw the [inner focus indicator]
 The number multiplies the theme's `outlineOffset`, so it is not a pixel value:
 
 - `1` keeps the indicator at the theme's offset, which is outside the edge by default.
-- `-1` mirrors it to the other side of the edge, which is inside by default.
+- `-1` moves it inside the edge.
 - `2` doubles its distance from the edge.
 
 {{"component": "file://./demos/offset/index.ts"}}
 
-A negative number draws the outline inside only when the theme's `outlineOffset` is positive.
-With `outlineOffset: 0` or a negative value, a negative number keeps the outline outside the component.
+A negative number keeps the whole outline inside the component.
+It multiplies the larger of the theme's `outlineOffset` and `outlineWidth`, so a 2px outline with `outlineOffset: 1` moves to `-2px` with `-1`.
+With a keyword `outlineWidth` (`thin`, `medium`, or `thick`), only the `outlineOffset` is used.
 
 :::warning
 Move the indicator outside only when the container leaves room for it.

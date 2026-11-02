@@ -4,15 +4,18 @@ import deepmerge from '@mui/utils/deepmerge';
 const focusVisibleOffsetVar = '--_focusVisible-offset';
 const focusVisibleBehaviorVar = '--_focusVisible-behavior';
 const focusVisibleShadowVar = '--_focusVisible-shadow';
+const focusVisibleInsetVar = '--_focusVisible-inset';
 
 const offsetValue = `var(${focusVisibleOffsetVar}, 1)`;
 const behaviorValue = `var(${focusVisibleBehaviorVar}, )`;
+const insetValue = `var(${focusVisibleInsetVar}, 0)`;
 
 export function scaleFocusVisibleOffset(scale: number) {
   return {
     [focusVisibleOffsetVar]: scale,
     // `initial` reverts the var to guaranteed-invalid so `var(--_focusVisible-behavior, )` falls back to empty — there is no explicit `outset` keyword.
     [focusVisibleBehaviorVar]: scale < 0 ? 'inset' : 'initial',
+    [focusVisibleInsetVar]: scale < 0 ? 1 : 0,
   };
 }
 
@@ -77,6 +80,32 @@ export function resolveFocusVisible(
   });
 }
 
+const toPx = (value: string | number) => (typeof value === 'number' ? `${value}px` : value);
+
+const outlineWidthKeywords = new Set([
+  'thin',
+  'medium',
+  'thick',
+  'inherit',
+  'initial',
+  'unset',
+  'revert',
+  'revert-layer',
+]);
+
+function getInsetWidthGap(
+  offset: string | number,
+  width: React.CSSProperties['outlineWidth'],
+): string | null {
+  if (width == null || (typeof width === 'string' && outlineWidthKeywords.has(width.trim()))) {
+    return null;
+  }
+  if (typeof width === 'number' && typeof offset === 'number') {
+    return width > offset ? `${width - offset}px` : null;
+  }
+  return `max(0px, ${toPx(width)} - (${toPx(offset)}))`;
+}
+
 /**
  * Wire the private inset vars into a resolved `theme.focusVisible` so a custom `outlineOffset` or
  * `boxShadow` insets automatically on clip-prone components. Mutates and returns the object.
@@ -86,8 +115,11 @@ export function wireFocusVisibleVars(resolved: React.CSSProperties): React.CSSPr
   // already wired: re-composing a resolved theme must not wrap the calc twice and invert the sign.
   const offset = resolved.outlineOffset ?? 0;
   if (typeof offset !== 'string' || !offset.includes(focusVisibleOffsetVar)) {
-    const offsetPx = typeof offset === 'number' ? `${offset}px` : offset;
-    resolved.outlineOffset = `calc(${offsetValue} * ${offsetPx})`;
+    const offsetPx = toPx(offset);
+    const widthGap = getInsetWidthGap(offset, resolved.outlineWidth);
+    resolved.outlineOffset = widthGap
+      ? `calc(${offsetValue} * (${offsetPx} + ${insetValue} * ${widthGap}))`
+      : `calc(${offsetValue} * ${offsetPx})`;
   }
   // Prefix a box-shadow with the behavior var so it insets there too, unless it already opts in.
   // Standalone keywords are complete values — prefixing would produce an invalid `inset none`.
