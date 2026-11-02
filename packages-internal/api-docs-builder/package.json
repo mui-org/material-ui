@@ -29,7 +29,7 @@
     "react-docgen": "^8.0.4",
     "recast": "^0.24.0",
     "remark": "^15.0.1",
-    "unist-util-visit": "^5.1.0"
+    "unist-util-visit": "^5.2.0"
   },
   "devDependencies": {
     "@types/babel__core": "7.20.5",
