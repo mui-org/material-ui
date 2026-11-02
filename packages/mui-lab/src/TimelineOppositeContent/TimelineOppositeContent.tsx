@@ -2,16 +2,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
-import Typography, { type TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
+import type { TypographyProps } from '@mui/material/Typography';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
 import TimelineContext from '../Timeline/TimelineContext';
-import {
-  getTimelineOppositeContentUtilityClass,
-  type TimelineOppositeContentClasses,
-  type TimelineOppositeContentClassKey,
+import { getTimelineOppositeContentUtilityClass } from './timelineOppositeContentClasses';
+import type {
+  TimelineOppositeContentClasses,
+  TimelineOppositeContentClassKey,
 } from './timelineOppositeContentClasses';
 import convertTimelinePositionToClass from '../internal/convertTimelinePositionToClass';
 

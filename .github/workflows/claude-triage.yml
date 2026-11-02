@@ -1,0 +1,32 @@
+name: Claude issue triage
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+jobs:
+  triage:
+    if: >-
+      !github.event.issue.pull_request &&
+      ((github.event_name == 'issues' && github.event.label.name == 'ai: needs-triage') ||
+       (github.event_name == 'issue_comment' && github.event.comment.user.type == 'User' &&
+        (contains(github.event.issue.labels.*.name, 'ai: needs-triage') ||
+         contains(github.event.issue.labels.*.name, 'ai: triaged')) &&
+        (github.event.comment.user.login == github.event.issue.user.login ||
+         contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association))))
+    # Maximum grant required by the reusable workflow; its model-running job uses read-only GitHub access.
+    # Automated fixes and their publisher are disabled in the pinned workflow.
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+    uses: mui/mui-public/.github/workflows/claude-triage.yml@86a5228c41898421f1082ea32df84fe2464f2f84 # master
+    with:
+      issue-number: ${{ github.event.issue.number }}
+      mode: triage
+      comment-id: ${{ github.event_name == 'issue_comment' && github.event.comment.id || 0 }}

@@ -262,7 +262,7 @@ const ToggleButtonGroup = React.forwardRef(function ToggleButtonGroup(inProps, r
 
             return (
               <ToggleButtonGroupButtonContext.Provider
-                key={index}
+                key={child.key}
                 value={getButtonPositionClassName(index)}
               >
                 {child}

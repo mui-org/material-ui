@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { type Translations, UserLanguageProvider } from '../i18n';
-import { type AdConfig, AdProvider } from '../Ad';
+import { UserLanguageProvider } from '../i18n';
+import type { Translations } from '../i18n';
+import { AdProvider } from '../Ad';
+import type { AdConfig } from '../Ad';
 import {
   LANGUAGES,
   LANGUAGES_IGNORE_PAGES,

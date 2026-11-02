@@ -179,6 +179,24 @@ describe('usePagination', () => {
     ]);
   });
 
+  it('keeps ellipses when boundary and sibling counts are zero', () => {
+    const expectedByPage = [
+      [1, ['previous', 1, 2, 'end-ellipsis', 'next']],
+      [2, ['previous', 1, 2, 'end-ellipsis', 'next']],
+      [5, ['previous', 'start-ellipsis', 5, 'end-ellipsis', 'next']],
+      [7, ['previous', 'start-ellipsis', 7, 'end-ellipsis', 'next']],
+      [9, ['previous', 'start-ellipsis', 9, 10, 'next']],
+      [10, ['previous', 'start-ellipsis', 9, 10, 'next']],
+    ];
+
+    expectedByPage.forEach(([page, expected]) => {
+      const items = renderHook(() =>
+        usePagination({ count: 10, page, boundaryCount: 0, siblingCount: 0 }),
+      ).result.current.items;
+      expect(serialize(items), `page=${page}`).to.deep.equal(expected);
+    });
+  });
+
   it('should never render a page item outside of the count range', () => {
     [0, 1, 2, 3, 4, 5, 11].forEach((count) => {
       [1, 3, 7].forEach((page) => {

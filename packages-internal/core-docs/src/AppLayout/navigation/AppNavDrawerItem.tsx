@@ -1,11 +1,13 @@
 import * as React from 'react';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
-import { alpha, styled, type SxProps, type Theme } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
+import type { SxProps, Theme } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import { samePageLinkNavigation, Link, type LinkProps } from '../../Link';
-import { type MuiPageIcon } from '../../MuiPage';
+import { samePageLinkNavigation, Link } from '../../Link';
+import type { LinkProps } from '../../Link';
+import type { MuiPageIcon } from '../../MuiPage';
 import { standardNavIcons } from '../icons/navIcons';
 
 interface ItemBaseProps {

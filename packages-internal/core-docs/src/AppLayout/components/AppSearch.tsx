@@ -2,12 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  DocSearchModal,
-  useDocSearchKeyboardEvents,
-  type InternalDocSearchHit,
-  type StoredDocSearchHit,
-} from '@docsearch/react';
+import { DocSearchModal, useDocSearchKeyboardEvents } from '@docsearch/react';
+import type { InternalDocSearchHit, StoredDocSearchHit } from '@docsearch/react';
 import Chip from '@mui/material/Chip';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import StickyNote2RoundedIcon from '@mui/icons-material/StickyNote2Rounded';
@@ -20,7 +16,8 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import ChecklistRoundedIcon from '@mui/icons-material/ChecklistRounded';
 import NewspaperRoundedIcon from '@mui/icons-material/NewspaperRounded';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { alpha, type SxProps } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+import type { SxProps } from '@mui/material/styles';
 import { pathnameToLanguage } from '../../helpers';
 import { Link } from '../../Link';
 import { useTranslate, useUserLanguage } from '../../i18n';

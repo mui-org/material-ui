@@ -27,6 +27,38 @@
 # The Discord server is closed, point the stale links to the support page.
 /r/discord /material-ui/getting-started/support/ 302
 
+# Careers pages migrated to Ashby job IDs.
+/careers/accessibility-engineer/ /careers/roles/ebc6db2a-fda9-431e-b45a-692377ef74aa/ 301!
+/careers/account-executive/ /careers/roles/a0078669-159a-416e-9412-e0ea65e1664d/ 301!
+/careers/account-manager/ /careers/roles/04091577-abf8-4654-bc15-929755de0170/ 301!
+/careers/code-infra-engineer/ /careers/roles/a2e74037-a44a-471b-9ac5-c1a0408034e7/ 301!
+/careers/design-engineer-x-grid/ /careers/roles/5a1c18de-e0b5-4253-aca1-e3f261112920/ 301!
+/careers/design-engineer/ /careers/roles/c45a0b2d-aa37-4dec-8bcd-e70040f3af49/ 301!
+/careers/developer-advocate/ /careers/roles/28287eeb-88d2-465f-96d7-e7fd99fabd7d/ 301!
+/careers/full-stack-engineer/ /careers/roles/4f76b45b-a18e-4bdb-8a34-8bb5a3c9c2ef/ 301!
+/careers/head-of-operations/ /careers/roles/86ab11dc-0320-4e14-9b5b-7c8b3fb5bb71/ 301!
+/careers/people-operation-manager/ /careers/roles/b46968b7-dde3-4b91-9785-a05aa0a816d8/ 301!
+/careers/product-engineer-store/ /careers/roles/e641bac3-5538-4ec8-8d73-eaa1a03704d6/ 301!
+/careers/product-marketing-manager/ /careers/roles/7e1d14d3-03e9-46f8-9453-ffe1c7a3b8d8/ 301!
+/careers/react-community-engineer/ /careers/roles/e362a14c-6674-4ac9-8eee-bcf44a8767c8/ 301!
+/careers/react-engineer-core/ /careers/roles/e6d7cc26-3003-442f-bafb-464373fb2624/ 301!
+/careers/react-engineer-docs-infra/ /careers/roles/673f3178-56f4-47fd-bd2b-6dcba57758aa/ 301!
+/careers/react-engineer-explore/ /careers/roles/f7b1b8cd-b8b7-4565-92de-34c5f49581c6/ 301!
+/careers/react-engineer-material-ui-maintainer/ /careers/roles/f28a1482-22fb-4cf8-9263-092ec0f81657/ 301!
+/careers/react-engineer-x-charts/ /careers/roles/2a1b0084-53aa-4aca-84ec-f8cfe25093ae/ 301!
+/careers/react-engineer-x-grid/ /careers/roles/77584e4c-9379-45f3-a294-6e50bf250383/ 301!
+/careers/react-engineer-x/ /careers/roles/77584e4c-9379-45f3-a294-6e50bf250383/ 301!
+/careers/react-tech-lead-core/ /careers/roles/73e07586-d3aa-43b3-bfef-8eec52884e2a/ 301!
+/careers/react-tech-lead-x-grid/ /careers/roles/dffc8ead-fab1-4a07-8b44-a932e2838e0e/ 301!
+/careers/senior-designer/ /careers/roles/4ea9d324-3350-48d5-bfab-706ebfc23ed2/ 301!
+/careers/staff-engineer-pigment-css/ /careers/roles/c1a372c0-7ea0-4edf-b317-5327431b14aa/ 301!
+/careers/staff-ui-engineer-base-ui/ /careers/roles/3094f65a-0144-4bd2-ba5b-6b9c61040858/ 301!
+/careers/support-agent/ /careers/roles/79a9b5ec-6fb3-41ec-b48b-0a792ced7c19/ 301!
+/careers/technical-recruiter/ /careers/roles/0738df5d-6827-45d4-a480-a8b04b7e01bf/ 301!
+# Serve the careers-specific 404 for closed or unknown roles. Existing
+# generated pages take precedence over this unforced rule.
+/careers/roles/* /careers/404/ 404
+
 # Legacy redirection
 # Added in chronological order (the last line is the most recent one)
 # To be removed 3+ years after being introduced

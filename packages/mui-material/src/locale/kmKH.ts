@@ -1,9 +1,9 @@
 import type { Localization } from './utils/LocaleTextApi';
 import buildFormatNumber from './utils/buildFormatNumber';
 
-const formatNumber = buildFormatNumber('kh-KH');
+const formatNumber = buildFormatNumber('km-KH');
 
-export const khKH: Localization = {
+export const kmKH: Localization = {
   components: {
     MuiBreadcrumbs: {
       defaultProps: {

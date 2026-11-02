@@ -1,7 +1,5 @@
-import {
-  describeConformance as baseDescribeConformance,
-  ConformanceOptions,
-} from '@mui/internal-test-utils';
+import type { ConformanceOptions } from '@mui/internal-test-utils';
+import { describeConformance as baseDescribeConformance } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import DefaultPropsProvider from '@mui/material/DefaultPropsProvider';
 

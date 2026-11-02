@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { AppType } from 'next/app';
-import { EmotionCache } from '@emotion/react';
+import type { AppType } from 'next/app';
+import type { EmotionCache } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import nextDocument from './nextDocument.cjs';
-import { EmotionCacheProviderProps } from './pagesRouterV13App';
+import type { EmotionCacheProviderProps } from './pagesRouterV13App';
 import createEmotionCache from './createCache';
 import escapeHtmlInCss from '../escapeHtmlInCss';
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { blue } from '@mui/material/colors';
 

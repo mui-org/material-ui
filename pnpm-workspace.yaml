@@ -7,7 +7,6 @@ packages:
   - test/*
 
 engineStrict: true
-enablePrePostScripts: true
 updateNotifier: false
 autoDedupe: true
 blockExoticSubdeps: true
@@ -17,8 +16,6 @@ minimumReleaseAgeExclude:
   - '@base-ui/*'
   # Renovate security update: postcss@8.5.23
   - postcss@8.5.23
-  # Renovate security update: nx@23.2.1
-  - nx@23.2.1
 # Drop exemptions from minimumReleaseAgeExclude once the lockfile stops resolving them,
 # so the security-update entries Renovate adds do not accumulate.
 minimumReleaseAgeExcludePrune: true
@@ -49,7 +46,7 @@ overrides:
   'docs>stylis': '4.2.0'
   'docs>react-is': '19.3.1'
   # Migrated from package.json "resolutions" (pnpm 11 ignores that field).
-  caniuse-lite: '^1.0.30001816'
+  caniuse-lite: '^1.0.30001819'
   '@types/node': '22.20.5'
   cross-fetch: '^4.1.0'
   '@pigment-css/react': '0.0.31'

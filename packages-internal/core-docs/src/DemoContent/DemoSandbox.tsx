@@ -5,10 +5,11 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { createTheme, useTheme, styled } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import type * as StylisPluginRtl from '@mui/stylis-plugin-rtl';
 import { ThemeOptionsContext } from '../ThemeContext';
 import { useDemoContext } from '../DemoContext';
 
-type RtlModule = typeof import('@mui/stylis-plugin-rtl');
+type RtlModule = typeof StylisPluginRtl;
 
 let rtlModulePromise: Promise<RtlModule> | undefined;
 function loadRtlModule() {

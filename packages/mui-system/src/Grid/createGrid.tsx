@@ -2,14 +2,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent } from '@mui/types';
+import type { OverridableComponent } from '@mui/types';
 import isMuiElement from '@mui/utils/isMuiElement';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import composeClasses from '@mui/utils/composeClasses';
 import systemStyled from '../styled';
 import useThemePropsSystem from '../useThemeProps';
 import useThemeSystem from '../useTheme';
-import createTheme, { Breakpoint, Breakpoints } from '../createTheme';
+import type { Breakpoint, Breakpoints } from '../createTheme';
+import createTheme from '../createTheme';
 import {
   generateGridStyles,
   generateGridSizeStyles,
@@ -22,8 +23,8 @@ import {
   generateSpacingClassNames,
   generateDirectionClasses,
 } from './gridGenerator';
-import { CreateMUIStyled } from '../createStyled';
-import { GridTypeMap, GridOwnerState, GridProps, GridOffset, GridSize } from './GridProps';
+import type { CreateMUIStyled } from '../createStyled';
+import type { GridTypeMap, GridOwnerState, GridProps, GridOffset, GridSize } from './GridProps';
 
 const defaultTheme = createTheme();
 
@@ -74,7 +75,7 @@ export default function createGrid(
   };
 
   function parseResponsiveProp<T extends GridSize | GridOffset>(
-    propValue: T | null | (T | null)[] | { [key in Breakpoint]?: T | null },
+    propValue: T | null | ReadonlyArray<T | null> | { [key in Breakpoint]?: T | null },
     breakpoints: Breakpoints,
     shouldUseValue: (val: T) => boolean = () => true,
   ): { [key in Breakpoint]: T } {
@@ -92,7 +93,7 @@ export default function createGrid(
       });
     } else if (typeof propValue === 'object') {
       Object.keys(propValue).forEach((key) => {
-        const value = propValue[key as Breakpoint];
+        const value = (propValue as { [key in Breakpoint]?: T | null })[key as Breakpoint];
         if (value !== null && value !== undefined && shouldUseValue(value)) {
           parsedProp[key as Breakpoint] = value;
         }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { alpha, darken, styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import useForkRef from '@mui/utils/useForkRef';
 import { brandingDarkTheme as darkTheme, brandingLightTheme as lightTheme } from '../branding';
 
@@ -49,9 +49,10 @@ const Root = styled('div')(
     '& :not(pre) > code': {
       padding: '2px 4px',
       color: `var(--muidocs-palette-text-primary, ${lightTheme.palette.text.primary})`,
-      backgroundColor: `var(--muidocs-palette-grey-50, ${lightTheme.palette.grey[50]})`,
+      // Translucent, so the pill is a shade of whatever background it sits on.
+      backgroundColor: alpha(lightTheme.palette.grey[900], 0.035),
       border: '1px solid',
-      borderColor: `var(--muidocs-palette-grey-200, ${lightTheme.palette.grey[200]})`,
+      borderColor: alpha(lightTheme.palette.grey[900], 0.125),
       borderRadius: 6,
       fontSize: lightTheme.typography.pxToRem(13),
       direction: 'ltr /*! @noflip */',
@@ -152,7 +153,7 @@ const Root = styled('div')(
       },
     },
     '& a code': {
-      color: darken(lightTheme.palette.primary.main, 0.2),
+      color: 'inherit',
     },
     '& h1, & h2, & h3, & h4': {
       display: 'flex',
@@ -331,8 +332,10 @@ const Root = styled('div')(
       },
       '& code': {
         height: 'fit-content',
-        backgroundColor: `var(--muidocs-palette-grey-100, ${lightTheme.palette.grey[100]})`,
-        borderColor: `var(--muidocs-palette-grey-300, ${lightTheme.palette.grey[300]})`,
+      },
+      '& :not(pre) > code': {
+        backgroundColor: alpha(lightTheme.palette.grey[900], 0.06),
+        borderColor: alpha(lightTheme.palette.grey[900], 0.18),
       },
       '& p': {
         marginBottom: '8px',
@@ -387,7 +390,6 @@ const Root = styled('div')(
         },
         '& a': {
           color: `var(--muidocs-palette-error-800, ${lightTheme.palette.error[800]})`,
-          '& code': { color: 'inherit' },
           textDecorationColor: alpha(lightTheme.palette.error.main, 0.4),
           '&:hover': {
             textDecorationColor: 'inherit',
@@ -404,6 +406,10 @@ const Root = styled('div')(
         '& svg': {
           fill: `var(--muidocs-palette-grey-600, ${lightTheme.palette.grey[600]})`,
         },
+        // primary-600 linked code is under 4.5:1 on the code pill over this background.
+        '& a': {
+          color: `var(--muidocs-palette-primary-700, ${lightTheme.palette.primary[700]})`,
+        },
       },
       '&.MuiCallout-success': {
         color: `var(--muidocs-palette-success-900, ${lightTheme.palette.success[900]})`,
@@ -417,7 +423,6 @@ const Root = styled('div')(
         },
         '& a': {
           color: `var(--muidocs-palette-success-900, ${lightTheme.palette.success[900]})`,
-          '& code': { color: 'inherit' },
           textDecorationColor: alpha(lightTheme.palette.success.main, 0.4),
           '&:hover': {
             textDecorationColor: 'inherit',
@@ -436,7 +441,6 @@ const Root = styled('div')(
         },
         '& a': {
           color: `var(--muidocs-palette-warning-800, ${lightTheme.palette.warning[800]})`,
-          '& code': { color: 'inherit' },
           textDecorationColor: alpha(lightTheme.palette.warning.main, 0.4),
           '&:hover': {
             textDecorationColor: 'inherit',
@@ -672,8 +676,8 @@ const Root = styled('div')(
       '& :not(pre) > code': {
         // inline code block
         color: `var(--muidocs-palette-text-primary, ${darkTheme.palette.text.primary})`,
-        borderColor: alpha(darkTheme.palette.primaryDark[600], 0.6),
-        backgroundColor: `var(--muidocs-palette-grey-900, ${darkTheme.palette.grey[900]})`,
+        borderColor: alpha(darkTheme.palette.grey[50], 0.1),
+        backgroundColor: alpha(darkTheme.palette.grey[50], 0.055),
       },
       '& strong': {
         color: `var(--muidocs-palette-grey-200, ${darkTheme.palette.grey[200]})`,
@@ -685,7 +689,7 @@ const Root = styled('div')(
         color: `var(--muidocs-palette-primary-300, ${darkTheme.palette.primary[300]})`,
       },
       '& a code': {
-        color: `var(--muidocs-palette-primary-light, ${darkTheme.palette.primary.light})`,
+        color: 'inherit',
       },
       '& h1, & h2, & h3, & h4, & h5': {
         color: `var(--muidocs-palette-grey-50, ${darkTheme.palette.grey[50]})`,
@@ -734,9 +738,9 @@ const Root = styled('div')(
       },
       '& .MuiCallout-root': {
         borderColor: `var(--muidocs-palette-primaryDark-700, ${darkTheme.palette.primaryDark[700]})`,
-        '& code': {
-          backgroundColor: `var(--muidocs-palette-primaryDark-600, ${darkTheme.palette.primaryDark[600]})`,
-          borderColor: `var(--muidocs-palette-primaryDark-500, ${darkTheme.palette.primaryDark[500]})`,
+        '& :not(pre) > code': {
+          backgroundColor: alpha(darkTheme.palette.grey[50], 0.12),
+          borderColor: alpha(darkTheme.palette.grey[50], 0.2),
         },
         '&.MuiCallout-error': {
           color: `var(--muidocs-palette-error-50, ${darkTheme.palette.error[50]})`,
@@ -750,7 +754,6 @@ const Root = styled('div')(
           },
           '& a': {
             color: `var(--muidocs-palette-error-200, ${darkTheme.palette.error[200]})`,
-            '& code': { color: 'inherit' },
           },
         },
         '&.MuiCallout-info': {
@@ -762,6 +765,10 @@ const Root = styled('div')(
           },
           '& svg': {
             fill: `var(--muidocs-palette-grey-400, ${darkTheme.palette.grey[400]})`,
+          },
+          // Undoes the light info link color, which outranks the dark `'& a'`.
+          '& a': {
+            color: `var(--muidocs-palette-primary-300, ${darkTheme.palette.primary[300]})`,
           },
         },
         '&.MuiCallout-success': {
@@ -776,7 +783,6 @@ const Root = styled('div')(
           },
           '& a': {
             color: `var(--muidocs-palette-success-100, ${darkTheme.palette.success[100]})`,
-            '& code': { color: 'inherit' },
           },
         },
         '&.MuiCallout-warning': {
@@ -791,7 +797,6 @@ const Root = styled('div')(
           },
           '& a': {
             color: `var(--muidocs-palette-warning-100, ${darkTheme.palette.warning[100]})`,
-            '& code': { color: 'inherit' },
           },
         },
       },

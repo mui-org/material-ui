@@ -4,7 +4,7 @@ import * as url from 'url';
 import * as fs from 'fs';
 import * as semver from 'semver';
 import { createRequire } from 'module';
-import { NextConfig } from 'next';
+import type { NextConfig } from 'next';
 import { withDeploymentConfig } from '@mui/internal-docs-infra/withDocsInfra';
 import { findPages } from './src/modules/utils/find';
 
@@ -341,6 +341,10 @@ export default withDeploymentConfig({
           (page.pathname.startsWith('/experiments/') || page.pathname === '/experiments') &&
           process.env.DEPLOY_ENV === 'production'
         ) {
+          return;
+        }
+        // getStaticPaths provides the concrete URLs for this dynamic page.
+        if (page.pathname === '/careers/roles/[slug]') {
           return;
         }
         if (!page.children) {

@@ -1,4 +1,4 @@
-import { PropType } from './models';
+import type { PropType } from './models';
 
 export default function getTypeHash(type: PropType): string {
   switch (type.type) {

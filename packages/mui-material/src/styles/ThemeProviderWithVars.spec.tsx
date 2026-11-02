@@ -1,11 +1,5 @@
-import {
-  extendTheme,
-  ThemeProvider,
-  styled,
-  useTheme,
-  Overlays,
-  StorageManager,
-} from '@mui/material/styles';
+import type { Overlays, StorageManager } from '@mui/material/styles';
+import { extendTheme, ThemeProvider, styled, useTheme } from '@mui/material/styles';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 
 const customTheme = extendTheme({

@@ -50,12 +50,12 @@
     "@types/prop-types": "15.7.15",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@types/sinon": "22.0.0",
+    "@types/sinon": "22.0.2",
     "css-mediaquery": "0.1.2",
     "es-toolkit": "1.52.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "react-router": "8.4.0",
+    "react-router": "8.5.0",
     "sinon": "22.1.0"
   },
   "peerDependencies": {

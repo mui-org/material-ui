@@ -47,7 +47,7 @@ jobs:
           ref: ${{ github.event_name == 'push' && github.sha || inputs.sha }}
           fetch-depth: 0 # Fetch full history for proper git operations
       - name: Prepare for publishing
-        uses: mui/mui-public/.github/actions/publish-prepare@afa705d3e675d687aaa77f6a3448cd87ea6f5711 # master
+        uses: mui/mui-public/.github/actions/publish-prepare@86a5228c41898421f1082ea32df84fe2464f2f84 # master
         with:
           node-version: '22.23.4'
       - name: Publish packages
@@ -70,7 +70,7 @@ jobs:
           ref: ${{ inputs.sha }}
           fetch-depth: 0 # Fetch full history for proper git operations
       - name: Prepare for publishing
-        uses: mui/mui-public/.github/actions/publish-prepare@afa705d3e675d687aaa77f6a3448cd87ea6f5711 # master
+        uses: mui/mui-public/.github/actions/publish-prepare@86a5228c41898421f1082ea32df84fe2464f2f84 # master
         with:
           node-version: '22.23.4'
       - name: Publish packages

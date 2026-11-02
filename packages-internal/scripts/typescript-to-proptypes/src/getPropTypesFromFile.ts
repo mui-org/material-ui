@@ -1,10 +1,10 @@
 import ts from '@typescript/typescript6';
 import * as doctrine from 'doctrine';
-import {
+import type {
   GetPropsFromComponentDeclarationOptions,
-  getPropsFromComponentNode,
   TypeScriptProject,
 } from '@mui/internal-docs-utils';
+import { getPropsFromComponentNode } from '@mui/internal-docs-utils';
 import {
   createUnionType,
   createUndefinedType,
@@ -20,7 +20,7 @@ import {
   createObjectType,
   createStringType,
 } from './createType';
-import { PropTypeDefinition, PropTypesComponent, PropType } from './models';
+import type { PropTypeDefinition, PropTypesComponent, PropType } from './models';
 
 function getSymbolFileNames(symbol: ts.Symbol): Set<string> {
   const declarations = symbol.getDeclarations() || [];

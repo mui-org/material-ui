@@ -24,5 +24,5 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.d.ts", "vite.config.mts"],
-  "exclude": ["vitest.config.ts"]
+  "exclude": ["vitest.config.ts", "globalSetup.mts"]
 }

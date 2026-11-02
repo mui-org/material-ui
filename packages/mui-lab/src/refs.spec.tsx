@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
-import TabPanel, { TabPanelProps } from '@mui/lab/TabPanel';
-import TimelineConnector, { TimelineConnectorProps } from '@mui/lab/TimelineConnector';
-import TimelineContent, { TimelineContentProps } from '@mui/lab/TimelineContent';
-import TimelineDot, { TimelineDotProps } from '@mui/lab/TimelineDot';
-import TimelineItem, { TimelineItemProps } from '@mui/lab/TimelineItem';
-import TimelineOppositeContent, {
-  TimelineOppositeContentProps,
-} from '@mui/lab/TimelineOppositeContent';
-import TimelineSeparator, { TimelineSeparatorProps } from '@mui/lab/TimelineSeparator';
+import type { TabPanelProps } from '@mui/lab/TabPanel';
+import TabPanel from '@mui/lab/TabPanel';
+import type { TimelineConnectorProps } from '@mui/lab/TimelineConnector';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import type { TimelineContentProps } from '@mui/lab/TimelineContent';
+import TimelineContent from '@mui/lab/TimelineContent';
+import type { TimelineDotProps } from '@mui/lab/TimelineDot';
+import TimelineDot from '@mui/lab/TimelineDot';
+import type { TimelineItemProps } from '@mui/lab/TimelineItem';
+import TimelineItem from '@mui/lab/TimelineItem';
+import type { TimelineOppositeContentProps } from '@mui/lab/TimelineOppositeContent';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import type { TimelineSeparatorProps } from '@mui/lab/TimelineSeparator';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
 
 function TabPanelWrapper(props: TabPanelProps) {
   return <TabPanel {...props} />;

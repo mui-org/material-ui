@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import { styled, alpha, ThemeProvider, type Theme } from '@mui/material/styles';
+import { styled, alpha, ThemeProvider } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import List from '@mui/material/List';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
@@ -21,9 +22,10 @@ import { AppNavDrawerItem } from './AppNavDrawerItem';
 import { LogoWithCopyMenu } from '../components/LogoWithCopyMenu';
 import { MuiProductSelector } from './MuiProductSelector';
 import { pageToTitleI18n } from '../../helpers';
-import PageContext, { type ProductVersion } from '../../PageContext';
+import PageContext from '../../PageContext';
+import type { ProductVersion } from '../../PageContext';
 import { useTranslate } from '../../i18n';
-import { type MuiPage } from '../../MuiPage';
+import type { MuiPage } from '../../MuiPage';
 
 // TODO: Collapse should expose an API to customize the duration based on the height.
 function transitionTheme(theme: Theme) {

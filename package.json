@@ -29,6 +29,7 @@
     "docs:create-playground": "pnpm --filter docs create-playground",
     "docs:link-check": "pnpm --filter docs link-check",
     "docs:typescript:check": "pnpm --filter docs typescript",
+    "docs:sync-careers": "tsx ./docs/scripts/syncCareers.ts",
     "docs:sync-team": "tsx ./docs/scripts/syncTeamMembers.ts && pnpm prettier",
     "docs:mdicons:synonyms": "cross-env BABEL_ENV=development babel-node --extensions \".tsx,.ts,.js,.mjs\" ./docs/scripts/updateIconSynonyms && pnpm prettier",
     "extract-error-codes": "code-infra extract-error-codes --errorCodesPath docs/public/static/error-codes.json --skip @mui/core-downloads-tracker @mui/envinfo @mui/internal-core-docs @mui/codemod @mui/icons-material",
@@ -54,7 +55,7 @@
     "test:e2e:dev": "pnpm -F ./test/e2e dev",
     "test:e2e-website": "playwright test test/e2e-website --config test/e2e-website/playwright.config.ts",
     "test:e2e-website:dev": "cross-env PLAYWRIGHT_TEST_BASE_URL=http://localhost:3000 playwright test test/e2e-website --config test/e2e-website/playwright.config.ts",
-    "test:regressions": "cross-env NODE_ENV=production pnpm test:regressions:build && concurrently --success first --kill-others \"pnpm test:regressions:run\" \"pnpm test:regressions:server\" && prettier --write \"docs/data/material/components/**/*.a11y.json\"",
+    "test:regressions": "cross-env NODE_ENV=production pnpm test:regressions:build && pnpm test:regressions:run && prettier --write \"docs/data/material/components/**/*.a11y.json\"",
     "test:regressions:build": "vite build test/regressions",
     "test:regressions:dev": "vite test/regressions --port 5001",
     "test:regressions:run": "vitest run -r ./test/regressions/",
@@ -72,9 +73,9 @@
     "clean": "pnpm -r exec rm -rf build"
   },
   "dependencies": {
-    "@netlify/functions": "^6.0.2",
+    "@netlify/functions": "^6.0.3",
     "@slack/bolt": "^5.1.0",
-    "execa": "^10.1.1"
+    "execa": "^10.2.1"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
@@ -92,7 +93,7 @@
     "@mui/internal-test-utils": "2.1.1-canary.5",
     "@mui/material": "workspace:^",
     "@mui/utils": "workspace:^",
-    "@next/eslint-plugin-next": "16.4.2",
+    "@next/eslint-plugin-next": "16.4.3",
     "@octokit/rest": "22.0.1",
     "@pigment-css/react": "0.0.31",
     "@playwright/test": "1.63.0",
@@ -107,7 +108,7 @@
     "@vitejs/plugin-react": "^6.0.0",
     "@vitest/browser-playwright": "^5.0.0",
     "@vitest/coverage-v8": "^5.0.0",
-    "@vitest/eslint-plugin": "1.6.27",
+    "@vitest/eslint-plugin": "1.6.28",
     "axe-core": "4.14.0",
     "babel-plugin-module-resolver": "5.0.3",
     "chalk": "6.0.1",
@@ -116,15 +117,15 @@
     "cross-env": "10.1.0",
     "dotenv": "18.0.8",
     "es-toolkit": "1.52.0",
-    "eslint": "10.12.0",
+    "eslint": "10.13.0",
     "eslint-plugin-consistent-default-export-name": "0.0.15",
     "fast-glob": "3.3.3",
     "git-url-parse": "16.1.0",
     "globby": "16.2.4",
-    "jsdom": "30.1.2",
+    "jsdom": "30.1.3",
     "lerna": "10.1.1",
     "minimatch": "10.2.6",
-    "nx": "23.2.1",
+    "nx": "23.3.1",
     "pkg-pr-new": "0.0.91",
     "playwright": "1.63.0",
     "prettier": "3.9.10",
@@ -144,11 +145,11 @@
     "yargs": "18.2.0"
   },
   "config": {
-    "valeVersion": "3.24.0"
+    "valeVersion": "3.25.1"
   },
-  "packageManager": "pnpm@12.14.0",
+  "packageManager": "pnpm@12.16.0",
   "engines": {
-    "pnpm": "12.14.0",
+    "pnpm": "12.16.0",
     "node": ">=22.23.4"
   }
 }

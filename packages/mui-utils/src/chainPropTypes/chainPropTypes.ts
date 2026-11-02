@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import type PropTypes from 'prop-types';
 
 export default function chainPropTypes<A, B>(
   propType1: PropTypes.Validator<A>,

@@ -1,12 +1,7 @@
 name: No response
 
-# `issues`.`closed`, `issue_comment`.`created`, and `scheduled` event types are required for this Action
-# to work properly.
 on:
-  issues:
-    types: [closed]
-  issue_comment:
-    types: [created]
+  workflow_dispatch:
   schedule:
     # These runs in our repos are spread evenly throughout the day to avoid hitting rate limits.
     # If you change this schedule, consider changing the remaining repositories as well.
@@ -17,21 +12,8 @@ permissions: {}
 
 jobs:
   noResponse:
-    runs-on: ubuntu-latest
     permissions:
-      contents: read
       issues: write
-    steps:
-      - uses: MBilalShafi/no-response-add-label@8336c12292902f27b931154c34ba4670cb9899a2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # Number of days of inactivity before an Issue is closed for lack of response
-          daysUntilClose: 7
-          # Label requiring a response
-          responseRequiredLabel: 'status: waiting for author'
-          # Label to add back when required label is removed
-          optionalFollowupLabel: 'status: waiting for maintainer'
-          # Comment to post when closing an Issue for lack of response. Set to `false` to disable
-          closeComment: >
-            Since the issue is missing key information and has been inactive for 7 days, it has been automatically closed.
-            If you wish to see the issue reopened, please provide the missing information.
+      pull-requests: write
+    name: Handle stale issues and PRs
+    uses: mui/mui-public/.github/workflows/general_handle-stale-issues-and-prs.yml@86a5228c41898421f1082ea32df84fe2464f2f84 # master

@@ -1,4 +1,6 @@
-let demoContentPromise: Promise<typeof import('./DemoContent')> | undefined;
+import type * as DemoContentModule from './DemoContent';
+
+let demoContentPromise: Promise<typeof DemoContentModule> | undefined;
 
 export function loadDemoContent() {
   demoContentPromise ??= import('./DemoContent').catch((error) => {

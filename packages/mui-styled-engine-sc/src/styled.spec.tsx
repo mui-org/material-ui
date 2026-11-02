@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CreateMUIStyled, StyledComponent } from '@mui/styled-engine-sc';
+import type { CreateMUIStyled, StyledComponent } from '@mui/styled-engine-sc';
 
 interface Theme {
   palette: {

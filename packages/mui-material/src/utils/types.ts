@@ -1,6 +1,6 @@
-import { SxProps } from '@mui/system';
-import { SlotComponentProps } from '@mui/utils/types';
-import { Theme } from '../styles';
+import type { SxProps } from '@mui/system';
+import type { SlotComponentProps } from '@mui/utils/types';
+import type { Theme } from '../styles';
 
 export type {
   EventHandlers,

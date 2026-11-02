@@ -2,12 +2,8 @@ import { describe, test, expect } from 'vitest';
 import * as React from 'react';
 import { spy } from 'sinon';
 import { act, createRenderer, fireEvent, screen } from '@mui/internal-test-utils';
-import {
-  type UseRovingTabIndexParams,
-  type UseRovingTabIndexReturnValue,
-  useRovingTabIndexRoot,
-  useRovingTabIndexItem,
-} from './useRovingTabIndex';
+import { useRovingTabIndexRoot, useRovingTabIndexItem } from './useRovingTabIndex';
+import type { UseRovingTabIndexParams, UseRovingTabIndexReturnValue } from './useRovingTabIndex';
 import { RovingTabIndexContext } from './RovingTabIndexContext';
 
 interface TestItem {

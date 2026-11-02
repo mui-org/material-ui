@@ -10,7 +10,7 @@ import elementAcceptingRef from '@mui/utils/elementAcceptingRef';
 import contains from '../utils/contains';
 import getActiveElement from '../utils/getActiveElement';
 import { getFocusTarget } from '../utils/focusable';
-import { FocusTrapProps } from './FocusTrap.types';
+import type { FocusTrapProps } from './FocusTrap.types';
 
 // Inspired by https://github.com/focus-trap/tabbable
 const candidatesSelector = [
@@ -155,7 +155,10 @@ function FocusTrap(props: FocusTrapProps): React.JSX.Element {
       return;
     }
 
-    activated.current = !disableAutoFocus;
+    // A child (e.g. MenuList) may have already moved focus inside.
+    activated.current =
+      !disableAutoFocus ||
+      contains(rootRef.current, getActiveElement(ownerDocument(rootRef.current)));
   }, [disableAutoFocus, open]);
 
   React.useEffect(() => {

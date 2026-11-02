@@ -36,6 +36,7 @@ const AccordionSummaryRoot = styled(ButtonBase, {
     width: '100%',
     minHeight: 48,
     padding: theme.spacing(0, 2),
+    font: 'inherit',
     ...getTransitionStyles(theme, ['min-height', 'background-color'], {
       duration: theme.transitions.duration.shortest,
     }),

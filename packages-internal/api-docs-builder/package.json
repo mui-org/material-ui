@@ -37,7 +37,7 @@
     "@types/doctrine": "0.0.9",
     "@types/mdast": "4.0.4",
     "@types/node": "22.20.5",
-    "@types/sinon": "22.0.0",
+    "@types/sinon": "22.0.2",
     "sinon": "22.1.0"
   },
   "exports": {

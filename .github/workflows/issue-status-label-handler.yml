@@ -1,0 +1,21 @@
+name: Issue status label handler
+
+on:
+  issue_comment:
+    # on 'issue_comment.created' we check if the comment comes from the author and remove the "status: waiting for author" label
+    # additionally we reopen the issue when it is closed and the author comments on it
+    types: [created]
+  issues:
+    # on 'issues.closed' events we simply remove the "status: waiting for author" or "status: waiting for maintainer" label
+    types: [closed]
+
+permissions: {}
+
+jobs:
+  statusHandling:
+    permissions:
+      contents: read
+      issues: write
+      actions: write
+    name: Handle status labels
+    uses: mui/mui-public/.github/workflows/issues_status-label-handler.yml@86a5228c41898421f1082ea32df84fe2464f2f84 # master

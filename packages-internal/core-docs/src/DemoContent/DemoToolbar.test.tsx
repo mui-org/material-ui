@@ -5,7 +5,8 @@ import { act, createRenderer, fireEvent, screen } from '@mui/internal-test-utils
 import { ThemeProvider } from '@mui/material/styles';
 import { brandingLightTheme } from '../branding';
 import { UserLanguageProvider } from '../i18n';
-import { DemoToolbar, type DemoToolbarProps, useToolbarKeyboard } from './DemoToolbar';
+import { DemoToolbar, useToolbarKeyboard } from './DemoToolbar';
+import type { DemoToolbarProps } from './DemoToolbar';
 
 const noop = () => {};
 const asyncNoop = async () => {};

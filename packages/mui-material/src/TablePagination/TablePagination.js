@@ -8,6 +8,8 @@ import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import { applyInsetFocusVisible } from '../styles/focusVisible';
+import { buttonBaseClasses } from '../ButtonBase';
 import InputBase from '../InputBase';
 import MenuItem from '../MenuItem';
 import Select from '../Select';
@@ -57,6 +59,9 @@ const TablePaginationToolbar = styled(Toolbar, {
     [`& .${tablePaginationClasses.actions}`]: {
       flexShrink: 0,
       marginLeft: 20,
+      ...(theme.focusVisible && {
+        [`& .${buttonBaseClasses.root}`]: applyInsetFocusVisible(1),
+      }),
     },
   })),
 );
@@ -104,11 +109,17 @@ const TablePaginationSelect = styled(Select, {
 });
 
 const TablePaginationInputBase = styled(InputBase)(
-  memoTheme(({ theme }) => ({
-    [`& .${tablePaginationClasses.select}:focus`]: {
-      backgroundColor: (theme.vars || theme).palette.action.focus,
-    },
-  })),
+  memoTheme(({ theme }) =>
+    theme.focusVisible
+      ? {
+          [`& .${tablePaginationClasses.select}:focus-visible`]: theme.focusVisible,
+        }
+      : {
+          [`& .${tablePaginationClasses.select}:focus`]: {
+            backgroundColor: (theme.vars || theme).palette.action.focus,
+          },
+        },
+  ),
 );
 
 const TablePaginationMenuItem = styled(MenuItem, {
@@ -276,7 +287,9 @@ const TablePagination = React.forwardRef(function TablePagination(inProps, ref) 
         {rowsPerPageOptions.length > 1 && (
           <SelectSlot
             variant="standard"
-            {...(!selectProps.variant && { input: <TablePaginationInputBase /> })}
+            {...(!selectProps.variant && {
+              input: <TablePaginationInputBase internalDisabledThemeFocusVisible />,
+            })}
             value={rowsPerPage}
             onChange={onRowsPerPageChange}
             id={selectId}

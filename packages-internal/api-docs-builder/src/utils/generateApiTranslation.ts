@@ -2,7 +2,7 @@ import { mkdirSync } from 'fs';
 import path from 'path';
 import { kebabCase } from 'es-toolkit/string';
 import { writePrettifiedFile } from '../buildApiUtils';
-import { HooksTranslations, PropsTranslations } from '../types/ApiBuilder.types';
+import type { HooksTranslations, PropsTranslations } from '../types/ApiBuilder.types';
 
 /**
  * Sorts object keys, does not recurse).
