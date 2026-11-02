@@ -73,6 +73,17 @@ describe('cssContainerQueries', () => {
     );
   });
 
+  it('should keep the name of a named containment context that is stored', () => {
+    const theme = createTheme();
+
+    const sidebar = theme.containerQueries('sidebar');
+    const content = theme.containerQueries('content');
+
+    expect(sidebar.up('sm')).to.equal('@container sidebar (min-width:600px)');
+    expect(content.up('sm')).to.equal('@container content (min-width:600px)');
+    expect(theme.containerQueries.up('sm')).to.equal('@container (min-width:600px)');
+  });
+
   it('should sort container queries', () => {
     const theme = createTheme();
 

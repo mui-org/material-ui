@@ -121,8 +121,8 @@ export default function cssContainerQueries<T extends { breakpoints: Breakpoints
       return result;
     };
   }
-  const node = {};
   const containerQueries = ((name: string) => {
+    const node = {};
     attachCq(node, name);
     return node;
   }) as CssContainerQueries['containerQueries'];
