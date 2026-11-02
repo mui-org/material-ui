@@ -62,6 +62,13 @@ const theme = enhanceDensity(createTheme(), {
 
 :::info
 Interactive components with a single size, or with `size="medium"`, take up at least `touchTarget`.
+
+Interactive components with the `small` size prop keep a touch area of at least 24×24px, the WCAG 2.2 minimum target size:
+
+- Checkbox, Radio, Switch, grouped ToggleButtons, and buttons in a vertical ButtonGroup grow to 24px.
+- Button, IconButton, ToggleButton, PaginationItem, and clickable Chip keep their size. A transparent `::before` extends the touch area, and a margin reserves the space so it doesn't overlap nearby controls. In a horizontal ButtonGroup, the group reserves the space instead.
+
+Dense ListItemButton also grows to 24px. Nothing changes when a component is already 24px or taller.
 :::
 
 ### Spacing scale

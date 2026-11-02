@@ -1,5 +1,5 @@
 // The authored control height per `size` — the same ladder for every sized
-// button family (Button, Pagination, ToggleButton).
+// button family (Button, Pagination, and ToggleButton outside a group).
 const HEIGHT_BY_SIZE = {
   small: 'touchTarget - xxSmall',
   medium: 'touchTarget',
@@ -431,7 +431,7 @@ export const DENSITY_ANNOTATIONS = {
       {
         on: '.MuiCheckbox-root',
         aspect: 'touch-target',
-        token: small ? 'touchTarget - xxSmall' : 'touchTarget',
+        token: small ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
         label: 'Checkbox',
       },
       // The preset sizes the glyph `fontSize: iconSize`, so `medium` names it.
@@ -574,12 +574,12 @@ export const DENSITY_ANNOTATIONS = {
         label: 'List',
         route: { gutter: 'top', at: 0.85 },
       },
-      // Dense names the authored floor (`minHeight: touchTarget - xxSmall`);
-      // the box measures above it because the content outgrows 24px.
+      // Dense names the authored floor (`minHeight: max(24px, touchTarget - xxSmall)`);
+      // the box measures above it when the content outgrows the floor.
       {
         on: '.MuiListItem-root:nth-of-type(2) .MuiListItemButton-root',
         aspect: 'touch-target',
-        token: dense ? 'touchTarget - xxSmall' : 'touchTarget',
+        token: dense ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
         label: 'Item',
       },
       {
@@ -727,7 +727,7 @@ export const DENSITY_ANNOTATIONS = {
       {
         on: '.MuiRadio-root',
         aspect: 'touch-target',
-        token: small ? 'touchTarget - xxSmall' : 'touchTarget',
+        token: small ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
         label: 'Radio',
       },
       {
@@ -975,7 +975,7 @@ export const DENSITY_ANNOTATIONS = {
       {
         on: '.MuiSwitch-root',
         aspect: 'touch-target',
-        token: small ? 'touchTarget - xxSmall' : 'touchTarget',
+        token: small ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
         label: 'Switch',
         route: { gutter: 'left' },
       },
@@ -1212,7 +1212,10 @@ export const DENSITY_ANNOTATIONS = {
     ];
   },
   ToggleButton: (values) => {
-    const box = HEIGHT_BY_SIZE[values.size];
+    const box =
+      values.size === 'small'
+        ? 'max(24px, touchTarget - xxSmall)'
+        : HEIGHT_BY_SIZE[values.size];
     // First button only — the group's two buttons double every label.
     return [
       {
