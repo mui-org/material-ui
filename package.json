@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@babel/core": "8.0.7",
+    "@babel/core": "8.0.9",
     "@babel/node": "8.0.6",
     "@babel/plugin-transform-react-constant-elements": "8.0.5",
     "@eslint/compat": "2.1.1",

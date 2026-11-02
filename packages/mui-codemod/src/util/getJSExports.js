@@ -8,6 +8,9 @@ const getJSExports = memoize((file) => {
 
   const ast = parseSync(readFileSync(file, 'utf8'), {
     filename: file,
+    // The app's Babel config can target another Babel major, and these files do not need it.
+    configFile: false,
+    babelrc: false,
   });
 
   traverse(ast, {

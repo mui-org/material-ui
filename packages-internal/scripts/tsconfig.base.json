@@ -10,6 +10,7 @@
     "sourceMap": true,
     "composite": true,
     "esModuleInterop": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "skipLibCheck": true
   }
 }

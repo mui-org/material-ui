@@ -15,10 +15,9 @@
     "directory": "packages-internal/api-docs-builder"
   },
   "dependencies": {
-    "@babel/core": "^7.29.7",
-    "@babel/preset-typescript": "^7.29.7",
-    "@babel/traverse": "^7.29.10",
-    "@babel/types": "^7.29.8",
+    "@babel/core": "^8.0.9",
+    "@babel/preset-typescript": "^8.0.7",
+    "@babel/traverse": "^8.0.7",
     "@mui/internal-docs-utils": "workspace:^",
     "@mui/internal-markdown": "workspace:^",
     "@typescript/typescript6": "^6.0.2",
@@ -32,8 +31,6 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@types/babel__core": "7.20.5",
-    "@types/babel__traverse": "7.28.0",
     "@types/doctrine": "0.0.9",
     "@types/mdast": "4.0.4",
     "@types/node": "22.20.5",

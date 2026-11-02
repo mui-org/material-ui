@@ -1,9 +1,8 @@
-import type { NodePath } from '@babel/traverse';
-import * as t from '@babel/types';
 import type { Annotation } from 'doctrine';
 import { parse as parseDoctrine } from 'doctrine';
 import { utils } from 'react-docgen';
-import type { Handler } from 'react-docgen';
+// react-docgen still uses Babel 7, so these nodes and paths use its types.
+import type { babelTypes as t, Handler, NodePath } from 'react-docgen';
 
 const { getPropertyName, isReactForwardRefCall, printValue, resolveToValue } = utils;
 
@@ -29,14 +28,14 @@ function getMemberExpressionString(node: t.MemberExpression): string {
   const parts: string[] = [];
   let current: t.Expression = node;
 
-  while (t.isMemberExpression(current)) {
-    if (t.isIdentifier(current.property)) {
+  while (current.type === 'MemberExpression') {
+    if (current.property.type === 'Identifier') {
       parts.unshift(current.property.name);
     }
     current = current.object;
   }
 
-  if (t.isIdentifier(current)) {
+  if (current.type === 'Identifier') {
     parts.unshift(current.name);
   }
 
@@ -103,10 +102,10 @@ function getDefaultValue(propertyPath: NodePath) {
         path.isImportNamespaceSpecifier()
       ) {
         // Get the local name from the original identifier
-        if (t.isTSAsExpression(node)) {
+        if (node.type === 'TSAsExpression') {
           node = node.expression;
         }
-        if (t.isIdentifier(node)) {
+        if (node.type === 'Identifier') {
           defaultValue = node.name;
         }
       }
@@ -119,7 +118,10 @@ function getDefaultValue(propertyPath: NodePath) {
   if (defaultValue !== undefined) {
     return {
       value: defaultValue,
-      computed: t.isCallExpression(node) || t.isMemberExpression(node) || t.isIdentifier(node),
+      computed:
+        node.type === 'CallExpression' ||
+        node.type === 'MemberExpression' ||
+        node.type === 'Identifier',
     };
   }
 

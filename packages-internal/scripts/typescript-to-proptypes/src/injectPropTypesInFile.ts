@@ -47,7 +47,7 @@ export interface InjectPropTypesInFileOptions extends Pick<
   /**
    * Options passed to babel.transformSync
    */
-  babelOptions?: babel.TransformOptions;
+  babelOptions?: babel.InputOptions;
 }
 
 /**
@@ -126,7 +126,7 @@ function getUsedProps(
 
 function flattenTsAsExpression(node: babel.types.Node | null | undefined) {
   if (babelTypes.isTSAsExpression(node)) {
-    return node.expression as babel.Node;
+    return node.expression as babel.types.Node;
   }
 
   return node;
@@ -140,7 +140,7 @@ function createBabelPlugin({
   components: PropTypesComponent[];
   options: InjectPropTypesInFileOptions;
   mapOfPropTypes: Map<string, string>;
-}): babel.PluginObj {
+}): babel.PluginObject {
   const {
     includeUnusedProps = false,
     reconcilePropTypes = (
@@ -212,7 +212,7 @@ function createBabelPlugin({
 
     // `Component.propTypes` already exists
     if (originalPropTypesPath) {
-      originalPropTypesPath.replaceWith(babel.template.ast(placeholder) as babel.Node);
+      originalPropTypesPath.replaceWith(babel.template.ast(placeholder) as babel.types.Node);
     } else if (!emptyPropTypes && babelTypes.isExportNamedDeclaration(path.parent)) {
       // in:
       // export function Component() {}
@@ -433,7 +433,7 @@ function createBabelPlugin({
             getFromProp(node);
           } else {
             // x = react.memo(props => <div/>) / react.forwardRef(props => <div />)
-            let resolvedNode: babel.Node = nodeInit;
+            let resolvedNode: babel.types.Node = nodeInit;
             while (babelTypes.isCallExpression(resolvedNode)) {
               resolvedNode = resolvedNode.arguments[0];
             }
@@ -505,10 +505,9 @@ export function injectPropTypesInFile({
   const { plugins: babelPlugins = [], ...babelOptions } = options.babelOptions || {};
   const result = babel.transformSync(target, {
     plugins: [
-      require.resolve('@babel/plugin-syntax-class-properties'),
       require.resolve('@babel/plugin-syntax-jsx'),
-      [require.resolve('@babel/plugin-syntax-typescript'), { isTSX: true }],
-      createBabelPlugin({ components, options, mapOfPropTypes }),
+      require.resolve('@babel/plugin-syntax-typescript'),
+      () => createBabelPlugin({ components, options, mapOfPropTypes }),
       ...(babelPlugins || []),
     ],
     configFile: false,

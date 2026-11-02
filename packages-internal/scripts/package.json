@@ -28,11 +28,10 @@
     "typescript": "tsc -b tsconfig.typecheck.json"
   },
   "dependencies": {
-    "@babel/core": "^7.29.7",
-    "@babel/plugin-syntax-class-properties": "^7.12.13",
-    "@babel/plugin-syntax-jsx": "^7.29.7",
-    "@babel/plugin-syntax-typescript": "^7.29.7",
-    "@babel/types": "^7.29.8",
+    "@babel/core": "^8.0.9",
+    "@babel/plugin-syntax-jsx": "^8.0.1",
+    "@babel/plugin-syntax-typescript": "^8.0.3",
+    "@babel/types": "^8.0.8",
     "@mui/internal-docs-infra": "catalog:docs",
     "@mui/internal-docs-utils": "workspace:^",
     "@typescript/typescript6": "^6.0.2",
@@ -40,8 +39,7 @@
     "es-toolkit": "^1.52.0"
   },
   "devDependencies": {
-    "@babel/register": "7.29.7",
-    "@types/babel__core": "7.20.5",
+    "@babel/register": "8.0.6",
     "@types/doctrine": "0.0.9",
     "@types/node": "22.20.5",
     "@types/react": "19.3.0",

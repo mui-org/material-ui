@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node"],
+    "skipLibCheck": true
   },
   "include": ["./**/*.ts", "./**/*.js"],
   "exclude": ["node_modules", "vitest.config.ts"]

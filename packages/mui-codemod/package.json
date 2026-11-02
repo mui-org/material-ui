@@ -28,9 +28,9 @@
     "url": "https://opencollective.com/mui-org"
   },
   "dependencies": {
-    "@babel/core": "^7.29.7",
+    "@babel/core": "^8.0.9",
     "@babel/runtime": "^7.29.7 || ^8.0.5",
-    "@babel/traverse": "^7.29.10",
+    "@babel/traverse": "^8.0.7",
     "@mui/material-v5": "npm:@mui/material@5.18.0",
     "jscodeshift": "^17.4.0",
     "jscodeshift-add-imports": "^1.0.11",
@@ -48,6 +48,6 @@
     "directory": "build"
   },
   "engines": {
-    "node": ">=20.19.0"
+    "node": "^22.18.0 || >=24.11.0"
   }
 }

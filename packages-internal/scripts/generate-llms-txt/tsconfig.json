@@ -5,8 +5,7 @@
     "outDir": "../build/generate-llms-txt",
     "tsBuildInfoFile": "../build/generate-llms-txt/.tsbuildinfo",
     "noImplicitAny": false,
-    "strict": false,
-    "skipLibCheck": true
+    "strict": false
   },
   "include": ["./src/*"]
 }

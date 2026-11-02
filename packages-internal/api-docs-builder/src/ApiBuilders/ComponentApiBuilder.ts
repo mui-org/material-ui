@@ -89,6 +89,8 @@ async function annotateComponentDefinition(
     configFile: false,
     filename: typesFilename,
     presets: [require.resolve('@babel/preset-typescript')],
+    // The Babel 8 TypeScript preset does not enable JSX for `.tsx` files.
+    overrides: [{ test: /\.tsx$/, parserOpts: { plugins: ['jsx'] } }],
   });
   if (typesAST === null) {
     throw new Error('No AST returned from babel.');
@@ -101,7 +103,7 @@ async function annotateComponentDefinition(
       /**
        * export default function Menu() {}
        */
-      let node: babel.Node = babelPath.node;
+      let node: babel.types.Node = babelPath.node;
       if (node.declaration.type === 'Identifier') {
         // declare const Menu: {};
         // export default Menu;
@@ -151,12 +153,16 @@ async function annotateComponentDefinition(
     },
 
     ExportNamedDeclaration(babelPath) {
-      let node: babel.Node = babelPath.node;
+      let node: babel.types.Node = babelPath.node;
 
       if (node.declaration == null) {
         // export { Menu };
         node.specifiers.forEach((specifier) => {
-          if (specifier.type === 'ExportSpecifier' && specifier.local.name === fileName) {
+          if (
+            specifier.type === 'ExportSpecifier' &&
+            specifier.local.type === 'Identifier' &&
+            specifier.local.name === fileName
+          ) {
             const binding = babelPath.scope.bindings[specifier.local.name];
 
             if (babel.types.isFunctionDeclaration(binding.path.node)) {

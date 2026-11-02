@@ -17,7 +17,7 @@ function getTestFilesNames(filepath: string) {
 
 async function parseWithConfig(filename: string) {
   const source = await fs.readFile(filename, { encoding: 'utf8' });
-  const partialConfig = babel.loadPartialConfig({
+  const partialConfig = await babel.loadPartialConfigAsync({
     filename,
   });
 
@@ -29,7 +29,7 @@ async function parseWithConfig(filename: string) {
 }
 
 function findConformanceDescriptor(
-  file: babel.ParseResult,
+  file: babel.types.File,
 ): null | { name: string; body: babel.types.ObjectExpression } {
   const { types: t } = babel;
 
@@ -62,7 +62,7 @@ function findConformanceDescriptor(
   return descriptor;
 }
 
-function getRefInstance(valueNode: babel.Node): string | undefined {
+function getRefInstance(valueNode: babel.types.Node): string | undefined {
   if (babel.types.isIdentifier(valueNode)) {
     return valueNode.name;
   }
