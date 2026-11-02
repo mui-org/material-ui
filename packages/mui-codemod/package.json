@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/core": "^7.29.7",
     "@babel/runtime": "^7.29.7 || ^8.0.5",
-    "@babel/traverse": "^7.29.10",
+    "@babel/traverse": "^7.29.12",
     "@mui/material-v5": "npm:@mui/material@5.18.0",
     "jscodeshift": "^17.4.0",
     "jscodeshift-add-imports": "^1.0.11",
