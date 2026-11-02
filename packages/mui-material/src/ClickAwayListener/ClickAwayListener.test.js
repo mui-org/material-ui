@@ -152,8 +152,7 @@ describe('<ClickAwayListener />', () => {
       expect(handleClickAway.callCount).to.equal(0);
 
       fireEvent.click(screen.getByText('Stop inside a portal'));
-      // undesired behavior in React 16
-      expect(handleClickAway.callCount).to.equal(React.version.startsWith('16') ? 1 : 0);
+      expect(handleClickAway.callCount).to.equal(0);
     });
 
     ['onClick', 'onClickCapture'].forEach((eventListenerName) => {

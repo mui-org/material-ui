@@ -4,8 +4,6 @@ import { act, createRenderer, RenderCounter, screen } from '@mui/internal-test-u
 import type { ReducedMotionMode } from '../styles/createMotion';
 import useReducedMotion from './useReducedMotion';
 
-const safeReact = { ...React };
-const usesUseSyncExternalStore = safeReact.useSyncExternalStore !== undefined;
 const NOOP = () => {};
 
 describe('useReducedMotion', () => {
@@ -120,7 +118,7 @@ describe('useReducedMotion', () => {
 
     render(<LoggingTest mode="system" />);
 
-    expect(renderedValues[0]).to.equal(!usesUseSyncExternalStore);
+    expect(renderedValues[0]).to.equal(false);
     expect(screen.getByTestId('result')).to.have.attribute('data-should-reduce', 'false');
   });
 
@@ -176,7 +174,7 @@ describe('useReducedMotion', () => {
 
     setProps({ disablePrefersReducedMotion: false });
 
-    expect(renderedValues[0]).to.equal(!usesUseSyncExternalStore);
+    expect(renderedValues[0]).to.equal(false);
     expect(screen.getByTestId('result')).to.have.attribute('data-should-reduce', 'false');
   });
 
@@ -201,7 +199,7 @@ describe('useReducedMotion', () => {
     hydrate();
 
     expect(screen.getByTestId('result')).to.have.attribute('data-should-reduce', 'true');
-    expect(getRenderCountRef.current!()).to.equal(usesUseSyncExternalStore ? 1 : 2);
+    expect(getRenderCountRef.current!()).to.equal(1);
   });
 
   it('allows per-instance opt-out', () => {

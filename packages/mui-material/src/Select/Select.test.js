@@ -705,7 +705,7 @@ describe('<Select />', () => {
         const { user } = render(<ControlledSelect />);
 
         await waitFor(() => {
-          expect(warn.mock.calls.length).to.equal(reactMajor >= 18 ? 3 : 2);
+          expect(warn.mock.calls.length).to.equal(3);
         });
         warn.mock.calls.forEach(([message]) => {
           expect(String(message)).to.include(
@@ -1418,12 +1418,6 @@ describe('<Select />', () => {
         const errorMessage =
           'MUI: You have provided an out-of-range value `20` for the select component.';
 
-        let expectedOccurrences = 2;
-
-        if (reactMajor >= 18) {
-          expectedOccurrences = 3;
-        }
-
         expect(() =>
           render(
             <Select value={20}>
@@ -1431,7 +1425,7 @@ describe('<Select />', () => {
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>,
           ),
-        ).toWarnDev(Array(expectedOccurrences).fill(errorMessage));
+        ).toWarnDev([errorMessage, errorMessage, errorMessage]);
       });
     });
   });

@@ -30,7 +30,7 @@ Please note that [react](https://www.npmjs.com/package/react) is a peer dependen
 
 ```json
 "peerDependencies": {
-  "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  "react": "^18.0.0 || ^19.0.0"
 },
 ```
 

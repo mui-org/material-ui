@@ -293,7 +293,7 @@ jobs:
           command: pnpm test:regressions
       - run:
           name: A11y results committed?
-          # The react@17/18/next jobs pin React via `package-overrides`, which rewrites
+          # The react@18/next jobs pin React via `package-overrides`, which rewrites
           # pnpm-workspace.yaml (overrides) and may touch pnpm-lock.yaml. Exclude those so
           # this check still verifies the a11y results without tripping on the pinned deps.
           command: git add -A -- . ':(exclude)pnpm-*.yaml' && git diff --exit-code --staged
@@ -568,58 +568,6 @@ workflows:
           <<: *default-context
           requires:
             - test_bundling_prepare
-
-  # This workflow can be triggered manually on the PR
-  react-17:
-    when:
-      equal: [react-17, << pipeline.parameters.workflow >>]
-    jobs:
-      - test_unit:
-          <<: *default-context
-          react-version: ^17.0.0
-          name: test_unit-react@17
-      - test_browser:
-          <<: *default-context
-          react-version: ^17.0.0
-          name: test_browser-react@17
-      - test_regressions:
-          <<: *default-context
-          react-version: ^17.0.0
-          name: test_regressions-react@17
-      - test_e2e:
-          <<: *default-context
-          react-version: ^17.0.0
-          name: test_e2e-react@17
-
-  # This workflow is identical to react-17, but scheduled
-  # TODO: The v17 tests have deteriorated to the point of no return. Fix for v18 once we
-  #       deprecate v17, and reenable this workflow.
-  # react-17-cron:
-  #   triggers:
-  #     - schedule:
-  #         cron: '0 0 * * *'
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #               - next
-  #   jobs:
-  #     - test_unit:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_unit-react@17
-  #     - test_browser:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_browser-react@17
-  #     - test_regressions:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_regressions-react@17
-  #     - test_e2e:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_e2e-react@17
 
   # Manually-triggered counterpart of nightly-cron — runs the compatibility
   # suite (react@18, react@next, typescript@next, minimum TypeScript) on the current PR branch.

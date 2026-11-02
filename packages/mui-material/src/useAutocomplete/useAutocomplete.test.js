@@ -337,13 +337,6 @@ describe('useAutocomplete', () => {
     const defaultErrorMessages = [muiErrorMessage, nodeErrorMessage, nodeErrorMessage];
 
     const errorMessagesByReactMajor = {
-      17: [
-        nodeErrorMessage,
-        muiErrorMessage,
-        nodeErrorMessage,
-        aboveErrorUlElementMessage,
-        aboveErrorTestComponentMessage,
-      ],
       18: [
         nodeErrorMessage,
         muiErrorMessage,

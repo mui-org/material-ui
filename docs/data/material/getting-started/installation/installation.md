@@ -32,14 +32,14 @@ Please note that [react](https://www.npmjs.com/package/react) and [react-dom](ht
 
 ```json
 "peerDependencies": {
-  "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
-  "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  "react": "^18.0.0 || ^19.0.0",
+  "react-dom": "^18.0.0 || ^19.0.0"
 },
 ```
 
-### React 18 and below
+### React 18
 
-If you are using React 18 or below, you need to set up a resolution of `react-is` package to the same version as the `react` you are using.
+If you are using React 18, you need to set up a resolution of `react-is` package to the same version as the `react` you are using.
 
 For example, if you are using `react@18.3.1`, do the following steps:
 

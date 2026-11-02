@@ -248,7 +248,7 @@ pnpm code-infra set-version-overrides --pkg react@<version>
 Possible values for `version`:
 
 - a tag on npm, for example `next`, `experimental` or `latest`
-- an older version, for example `^17.0.0`
+- an older version, for example `^18.0.0`
 
 The command pins `react`, `react-dom` and `react-is` in the `overrides` field of `pnpm-workspace.yaml`, then runs `pnpm dedupe`.
 
@@ -263,10 +263,9 @@ pnpm install
 
 ##### Circle CI web interface
 
-There are two workflows that can be triggered for any given PR manually in the CircleCI web interface:
+There is a workflow that can be triggered for any given PR manually in the CircleCI web interface:
 
 - `nightly`: runs the tests against React 18 and `react@next`, and the type tests against `typescript@next` and the minimum supported TypeScript version
-- `react-17`: runs the tests against React 17
 
 Follow these steps:
 
@@ -274,9 +273,9 @@ Follow these steps:
 2. Click `Trigger Pipeline` button.
 3. Expand `Add parameters (optional)` and add the following parameter:
 
-   | Parameter type | Name       | Value                   |
-   | :------------- | :--------- | :---------------------- |
-   | `string`       | `workflow` | `nightly` or `react-17` |
+   | Parameter type | Name       | Value     |
+   | :------------- | :--------- | :-------- |
+   | `string`       | `workflow` | `nightly` |
 
 4. Click `Trigger Pipeline` button.
 
