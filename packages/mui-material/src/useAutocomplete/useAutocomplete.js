@@ -475,17 +475,28 @@ function useAutocomplete(props) {
         reason !== 'mouse' &&
         reason !== 'touch'
       ) {
-        const element = option;
+        // `offsetTop` ignores CSS transforms (used by virtualization libraries), so measure the
+        // option relative to the listbox with `getBoundingClientRect()` instead.
+        // Divide by the rendered scale so a scaled ancestor doesn't skew the result.
+        // `offsetHeight` is rounded, so a difference below 1px is not a scale.
+        const listboxRect = listboxNode.getBoundingClientRect();
+        const scale =
+          Math.abs(listboxRect.height - listboxNode.offsetHeight) < 1
+            ? 1
+            : listboxRect.height / listboxNode.offsetHeight || 1;
+        const elementHeight = option.offsetHeight;
+        const elementTop =
+          (option.getBoundingClientRect().top - listboxRect.top) / scale -
+          listboxNode.clientTop +
+          listboxNode.scrollTop;
+        const elementOffset = elementHeight * (groupBy ? 1.3 : 0);
 
         const scrollBottom = listboxNode.clientHeight + listboxNode.scrollTop;
-        const elementBottom = element.offsetTop + element.offsetHeight;
+        const elementBottom = elementTop + elementHeight;
         if (elementBottom > scrollBottom) {
           listboxNode.scrollTop = elementBottom - listboxNode.clientHeight;
-        } else if (
-          element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0) <
-          listboxNode.scrollTop
-        ) {
-          listboxNode.scrollTop = element.offsetTop - element.offsetHeight * (groupBy ? 1.3 : 0);
+        } else if (elementTop - elementOffset < listboxNode.scrollTop) {
+          listboxNode.scrollTop = elementTop - elementOffset;
         }
       }
     },
