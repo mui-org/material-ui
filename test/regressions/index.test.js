@@ -17,13 +17,12 @@ async function main() {
   const screenshotDir = path.resolve(currentDirectory, './screenshots/chrome');
 
   const browser = await chromium.launch({
-    args: [
-      '--font-render-hinting=none',
-      // Skia otherwise picks SIMD code paths per host CPU, which shifts glyph edges.
-      '--disable-skia-runtime-opts',
-    ],
-    // otherwise the loaded google Roboto font isn't applied
-    headless: false,
+    args: ['--font-render-hinting=none'],
+    // New headless mode of the full Chromium build, so that only Playwright sends input.
+    // Under xvfb, a headed browser also gets mouse moves from the X server pointer.
+    channel: 'chromium',
+    // Keep the scrollbars that Playwright hides in headless mode. They are part of the captures.
+    ignoreDefaultArgs: ['--hide-scrollbars'],
   });
 
   /**
@@ -329,9 +328,6 @@ async function main() {
         // The modal portals to `document.body`, so it lands outside the
         // testcase element and has to be screenshotted on its own.
         await page.getByRole('button', { name: /search/i }).click();
-        // The click leaves the pointer on the button. Move it to the top-right corner,
-        // outside the modal at both widths, so that no hover state gets into a capture.
-        await page.mouse.move(page.viewportSize().width - 1, 0);
         const modal = await page.waitForSelector('.DocSearch-Modal');
         // `useLazyCSS` fetches the DocSearch stylesheet and injects it as a
         // `<style data-href>`. Without it the modal is unstyled.

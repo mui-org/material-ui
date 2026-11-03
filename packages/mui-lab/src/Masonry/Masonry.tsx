@@ -3,8 +3,6 @@ import composeClasses from '@mui/utils/composeClasses';
 import * as ReactDOM from 'react-dom';
 import { styled, useThemeProps } from '@mui/material/styles';
 import {
-  createUnarySpacing,
-  getValue,
   handleBreakpoints,
   unstable_resolveBreakpointValues as resolveBreakpointValues,
 } from '@mui/system';
@@ -17,7 +15,8 @@ import * as React from 'react';
 import type { ResponsiveStyleValue, SxProps } from '@mui/system';
 import type { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
 import type { Theme } from '@mui/material/styles';
-import { getMasonryUtilityClass, type MasonryClasses } from './masonryClasses';
+import { getMasonryUtilityClass } from './masonryClasses';
+import type { MasonryClasses } from './masonryClasses';
 
 export interface MasonryOwnProps {
   /**
@@ -110,7 +109,13 @@ export const getStyle = ({ ownerState, theme }: any) => {
   // Only applicable for Server-Side Rendering
   if (ownerState.isSSR) {
     const orderStyleSSR: any = {};
-    const defaultSpacing = parseToNumber(theme.spacing(ownerState.defaultSpacing));
+    const { defaultSpacing: defaultSpacingProp } = ownerState;
+    // Treat a numeric string as a spacing factor, like the client-side styles.
+    const defaultSpacing = theme.spacing(
+      typeof defaultSpacingProp === 'string' && !Number.isNaN(Number(defaultSpacingProp))
+        ? Number(defaultSpacingProp)
+        : defaultSpacingProp,
+    );
     for (let i = 1; i <= ownerState.defaultColumns; i += 1) {
       orderStyleSSR[
         `&:nth-of-type(${ownerState.defaultColumns}n+${i % ownerState.defaultColumns})`
@@ -119,12 +124,12 @@ export const getStyle = ({ ownerState, theme }: any) => {
       };
     }
     stylesSSR.height = ownerState.defaultHeight;
-    stylesSSR.margin = -(defaultSpacing / 2);
+    stylesSSR.margin = `calc(0px - (${defaultSpacing} / 2))`;
     stylesSSR['& > *'] = {
       ...styles['& > *'],
       ...orderStyleSSR,
-      margin: defaultSpacing / 2,
-      width: `calc(${(100 / ownerState.defaultColumns).toFixed(2)}% - ${defaultSpacing}px)`,
+      margin: `calc(${defaultSpacing} / 2)`,
+      width: `calc(${(100 / ownerState.defaultColumns).toFixed(2)}% - ${defaultSpacing})`,
     };
 
     return {
@@ -138,7 +143,6 @@ export const getStyle = ({ ownerState, theme }: any) => {
     breakpoints: theme.breakpoints.values,
   });
 
-  const transformer = createUnarySpacing(theme);
   const spacingStyleFromPropValue = (propValue: any) => {
     let spacing: any;
     // in case of string/number value
@@ -147,7 +151,7 @@ export const getStyle = ({ ownerState, theme }: any) => {
       typeof propValue === 'number'
     ) {
       const themeSpacingValue = Number(propValue);
-      spacing = getValue(transformer, themeSpacingValue);
+      spacing = theme.spacing(themeSpacingValue);
     } else {
       spacing = propValue;
     }
@@ -158,10 +162,7 @@ export const getStyle = ({ ownerState, theme }: any) => {
         margin: `calc(${spacing} / 2)`,
       },
       ...(ownerState.maxColumnHeight && {
-        height:
-          typeof spacing === 'number'
-            ? Math.ceil(ownerState.maxColumnHeight + parseToNumber(spacing as any))
-            : `calc(${ownerState.maxColumnHeight}px + ${spacing})`,
+        height: `calc(${ownerState.maxColumnHeight}px + ${spacing})`,
       }),
     };
   };
@@ -182,7 +183,7 @@ export const getStyle = ({ ownerState, theme }: any) => {
     const spacing =
       (typeof spacingValues === 'string' && !Number.isNaN(Number(spacingValues))) ||
       typeof spacingValues === 'number'
-        ? getValue(transformer, Number(spacingValues))
+        ? theme.spacing(Number(spacingValues))
         : '0px';
     return {
       '& > *': { width: `calc(${width} - ${spacing})` },
@@ -197,9 +198,12 @@ export const getStyle = ({ ownerState, theme }: any) => {
       styles,
       handleBreakpoints({ theme }, spacingValues, (propValue: any, breakpoint: any) => {
         if (breakpoint) {
-          const themeSpacingValue = Number(propValue);
           const lastBreakpoint = Object.keys(columnValues).pop();
-          const spacing = getValue(transformer, themeSpacingValue);
+          const spacing =
+            (typeof propValue === 'string' && !Number.isNaN(Number(propValue))) ||
+            typeof propValue === 'number'
+              ? theme.spacing(Number(propValue))
+              : propValue;
           const column =
             typeof columnValues === 'object'
               ? columnValues[breakpoint] || columnValues[lastBreakpoint as string]
@@ -225,11 +229,11 @@ const MasonryRoot = styled('div', {
  *
  * Demos:
  *
- * - [Masonry](https://mui.com/material-ui/react-masonry/)
+ * - [Masonry](https://next.mui.com/material-ui/react-masonry/)
  *
  * API:
  *
- * - [Masonry API](https://mui.com/material-ui/api/masonry/)
+ * - [Masonry API](https://next.mui.com/material-ui/api/masonry/)
  */
 const Masonry = React.forwardRef(function Masonry(
   inProps: MasonryOwnProps & {

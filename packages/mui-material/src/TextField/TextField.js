@@ -148,12 +148,17 @@ const TextField = React.forwardRef(function TextField(inProps, ref) {
 
   const nativeSelect = select && selectProps.native;
 
+  const [InputLabelSlot, inputLabelProps] = useSlot('inputLabel', {
+    elementType: InputLabel,
+    externalForwardedProps,
+    ownerState,
+  });
+
   const inputAdditionalProps = {};
-  const inputLabelSlotProps = externalForwardedProps.slotProps.inputLabel;
 
   if (variant === 'outlined') {
-    if (inputLabelSlotProps && typeof inputLabelSlotProps.shrink !== 'undefined') {
-      inputAdditionalProps.notched = inputLabelSlotProps.shrink;
+    if (typeof inputLabelProps.shrink !== 'undefined') {
+      inputAdditionalProps.notched = inputLabelProps.shrink;
     }
     inputAdditionalProps.label = label;
   }
@@ -189,12 +194,6 @@ const TextField = React.forwardRef(function TextField(inProps, ref) {
     elementType: InputComponent,
     externalForwardedProps,
     additionalProps: inputAdditionalProps,
-    ownerState,
-  });
-
-  const [InputLabelSlot, inputLabelProps] = useSlot('inputLabel', {
-    elementType: InputLabel,
-    externalForwardedProps,
     ownerState,
   });
 

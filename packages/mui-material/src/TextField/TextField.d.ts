@@ -53,6 +53,7 @@ export interface TextFieldSlots {
 export interface TextFieldRootSlotPropsOverrides {}
 export interface TextFieldInputSlotPropsOverrides {}
 export interface TextFieldInputLabelSlotPropsOverrides {}
+export interface TextFieldHtmlInputSlotPropsOverrides {}
 export interface TextFieldFormHelperTextSlotPropsOverrides {}
 export interface TextFieldSelectSlotPropsOverrides {}
 
@@ -90,7 +91,11 @@ export type TextFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotProps
      * Props forwarded to the html input slot.
      * By default, the available props are based on the html input element.
      */
-    htmlInput: SlotProps<React.ElementType<InputBaseProps['inputProps']>, {}, TextFieldOwnerState>;
+    htmlInput: SlotProps<
+      React.ElementType<InputBaseProps['inputProps']>,
+      TextFieldHtmlInputSlotPropsOverrides,
+      TextFieldOwnerState
+    >;
     /**
      * Props forwarded to the form helper text slot.
      * By default, the available props are based on the [FormHelperText](https://mui.com/material-ui/api/form-helper-text/#props) component.
@@ -309,12 +314,12 @@ export type TextFieldOwnerState = BaseTextFieldProps;
  * It's important to understand that the text field is a simple abstraction
  * on top of the following components:
  *
- * * [FormControl](https://mui.com/material-ui/api/form-control/)
- * * [InputLabel](https://mui.com/material-ui/api/input-label/)
- * * [FilledInput](https://mui.com/material-ui/api/filled-input/)
- * * [OutlinedInput](https://mui.com/material-ui/api/outlined-input/)
- * * [Input](https://mui.com/material-ui/api/input/)
- * * [FormHelperText](https://mui.com/material-ui/api/form-helper-text/)
+ * * [FormControl](https://next.mui.com/material-ui/api/form-control/)
+ * * [InputLabel](https://next.mui.com/material-ui/api/input-label/)
+ * * [FilledInput](https://next.mui.com/material-ui/api/filled-input/)
+ * * [OutlinedInput](https://next.mui.com/material-ui/api/outlined-input/)
+ * * [Input](https://next.mui.com/material-ui/api/input/)
+ * * [FormHelperText](https://next.mui.com/material-ui/api/form-helper-text/)
  *
  * If you wish to alter the props applied to the `input` element, you can do so as follows:
  *
@@ -336,13 +341,13 @@ export type TextFieldOwnerState = BaseTextFieldProps;
  *
  * Demos:
  *
- * - [Autocomplete](https://mui.com/material-ui/react-autocomplete/)
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Autocomplete](https://next.mui.com/material-ui/react-autocomplete/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [TextField API](https://mui.com/material-ui/api/text-field/)
- * - inherits [FormControl API](https://mui.com/material-ui/api/form-control/)
+ * - [TextField API](https://next.mui.com/material-ui/api/text-field/)
+ * - inherits [FormControl API](https://next.mui.com/material-ui/api/form-control/)
  */
 export default function TextField<Variant extends TextFieldVariants>(
   props: {

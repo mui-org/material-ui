@@ -184,7 +184,7 @@ export default function DesignKitFAQ() {
             </Typography>
             <Button
               component="a"
-              // @ts-expect-error
+              // @ts-expect-error: The branding theme provides link without global Button variant augmentation.
               variant="link"
               size="small"
               href="mailto:sales@mui.com"

@@ -4,7 +4,7 @@
       "type": { "name": "func" },
       "required": true,
       "signature": {
-        "type": "function(event: React.SyntheticEvent<{}>) => void",
+        "type": "function(event: React.SyntheticEvent<{}> | Event) => void",
         "describedArgs": ["event"]
       }
     },
@@ -12,7 +12,7 @@
       "type": { "name": "func" },
       "required": true,
       "signature": {
-        "type": "function(event: React.SyntheticEvent<{}>) => void",
+        "type": "function(event: React.SyntheticEvent<{}> | Event) => void",
         "describedArgs": ["event"]
       }
     },

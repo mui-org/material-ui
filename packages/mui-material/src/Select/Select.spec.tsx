@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Select, { SelectChangeEvent, SelectProps } from '@mui/material/Select';
+import type { SelectChangeEvent, SelectProps } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme } from '@mui/material/styles';
 import { expectType } from '@mui/types';
@@ -12,7 +13,7 @@ function genericValueTest() {
     event: React.ChangeEvent<{ name?: string; value: string }>,
   ) {}
   <Select<number>
-    // @ts-expect-error
+    // @ts-expect-error: A numeric Select cannot use a change handler restricted to string values.
     onChange={handleChangeWithDifferentTypeFromSelect}
   />;
 
@@ -29,7 +30,7 @@ function genericValueTest() {
       function testNumber(value: number) {}
 
       testString(event.target.value);
-      // @ts-expect-error
+      // @ts-expect-error: This Select infers string values, which testNumber rejects.
       testNumber(event.target.value);
     }}
     value="1"

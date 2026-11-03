@@ -68,6 +68,10 @@
       "default": "(option) => option.label ?? option",
       "signature": { "type": "function(option: Value | string) => string", "describedArgs": [] }
     },
+    "getOptionValue": {
+      "type": { "name": "func" },
+      "signature": { "type": "function(option: Value) => MappedValue", "describedArgs": ["option"] }
+    },
     "groupBy": {
       "type": { "name": "func" },
       "signature": { "type": "function(option: Value) => string", "describedArgs": ["option"] }
@@ -79,7 +83,7 @@
     "isOptionEqualToValue": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(option: Value, value: Value | string) => boolean",
+        "type": "function(option: Value, value: Value | MappedValue | string) => boolean",
         "describedArgs": ["option", "value"]
       }
     },
@@ -91,7 +95,7 @@
     "onChange": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(event: React.SyntheticEvent, value: Value | Array<Value>, reason: string, details?: string) => void",
+        "type": "function(event: React.SyntheticEvent, value: Value | MappedValue | Array<Value | MappedValue>, reason: string, details?: string) => void",
         "describedArgs": ["event", "value", "reason"]
       }
     },
@@ -145,7 +149,7 @@
     "renderValue": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(value: AutocompleteRenderValue<Value, Multiple, FreeSolo>, getItemProps: function, ownerState: object) => ReactNode",
+        "type": "function(value: AutocompleteRenderValue<Value | MappedValue, Multiple, FreeSolo>, getItemProps: function, ownerState: object) => ReactNode",
         "describedArgs": ["value", "getItemProps", "ownerState"]
       }
     },
@@ -168,7 +172,7 @@
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ clearIndicator?: elementType, listbox?: elementType, paper?: elementType, popper?: elementType, popupIndicator?: elementType, root?: elementType, status?: elementType }"
+        "description": "{ chip?: elementType, clearIndicator?: elementType, listbox?: elementType, paper?: elementType, popper?: elementType, popupIndicator?: elementType, root?: elementType, status?: elementType }"
       },
       "default": "{}"
     },
@@ -192,6 +196,12 @@
       "description": "The component that renders the root.",
       "default": "'div'",
       "class": "MuiAutocomplete-root"
+    },
+    {
+      "name": "chip",
+      "description": "The component used to render the selected values when `multiple` is `true`.",
+      "default": "Chip",
+      "class": null
     },
     {
       "name": "clearIndicator",

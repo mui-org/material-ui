@@ -36,11 +36,11 @@ export interface ScopedCssBaselineTypeMap<
  *
  * Demos:
  *
- * - [CSS Baseline](https://mui.com/material-ui/react-css-baseline/)
+ * - [CSS Baseline](https://next.mui.com/material-ui/react-css-baseline/)
  *
  * API:
  *
- * - [ScopedCssBaseline API](https://mui.com/material-ui/api/scoped-css-baseline/)
+ * - [ScopedCssBaseline API](https://next.mui.com/material-ui/api/scoped-css-baseline/)
  */
 declare const ScopedCssBaseline: OverridableComponent<ScopedCssBaselineTypeMap>;
 

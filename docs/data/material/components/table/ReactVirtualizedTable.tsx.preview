@@ -1,8 +1,0 @@
-<Paper style={{ height: 400, width: '100%' }}>
-  <TableVirtuoso
-    data={rows}
-    components={VirtuosoTableComponents}
-    fixedHeaderContent={fixedHeaderContent}
-    itemContent={rowContent}
-  />
-</Paper>

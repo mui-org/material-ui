@@ -37,8 +37,7 @@ Have a look at the older [versions](https://mui.com/material-ui/getting-started/
 
 ## TypeScript
 
-Material UI requires a minimum version of TypeScript 4.9.
-This aims to match the policy of [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped), with the support of the versions of TypeScript that are less than two years old.
+Material UI supports TypeScript 5 and later.
 
 ## webpack
 

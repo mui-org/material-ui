@@ -30,14 +30,14 @@ or:
 
 <!-- #host-reference -->
 
-This is the reference implementation of the [Server Rendering tutorial](https://mui.com/material-ui/guides/server-rendering/).
+This is the reference implementation of the [Server Rendering tutorial](https://next.mui.com/material-ui/guides/server-rendering/).
 
 The example project includes `@mui/material` and its peer dependencies, including [Emotion](https://emotion.sh/docs/introduction), the default style engine in Material UI.
-If you prefer, you can [use styled-components instead](https://mui.com/material-ui/integrations/interoperability/#styled-components).
+If you prefer, you can [use styled-components instead](https://next.mui.com/material-ui/integrations/interoperability/#styled-components).
 
 ## What's next?
 
 <!-- #host-reference -->
 
 You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+You can head back to the documentation and continue by browsing the [templates](https://next.mui.com/material-ui/getting-started/templates/) section.

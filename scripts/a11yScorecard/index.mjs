@@ -26,14 +26,21 @@ import {
   docsPagePath,
   format,
   indexPath,
+  knownGapsPath,
   packageJsonPath,
   readOptional,
   relative,
   replaceBlock,
   scorecardPath,
 } from './files.mjs';
-import readReports, { readDefaults } from './read.mjs';
-import { validateDefaults, validateReport, validateSource } from './validate.mjs';
+import { demoNames, unclaimedDemoNames } from './axe.mjs';
+import readReports, { readDefaults, readJson } from './read.mjs';
+import {
+  validateDefaults,
+  validateKnownGaps,
+  validateReport,
+  validateSource,
+} from './validate.mjs';
 import { resolveReports, rollUpCriteria, summarize, summarizeRollup } from './rollup.mjs';
 import {
   renderDocsAbout,
@@ -41,9 +48,40 @@ import {
   renderDefaultReasons,
   renderDocsTable,
   renderIndexTable,
+  renderKnownGaps,
   renderManualChecklist,
   renderReport,
 } from './render.mjs';
+
+async function unclaimedSharedDemos(sources) {
+  const byFile = new Map();
+  sources.forEach((source) => {
+    if (typeof source.data.axe !== 'string') {
+      return;
+    }
+    const group = byFile.get(source.data.axe) ?? [];
+    group.push(source);
+    byFile.set(source.data.axe, group);
+  });
+
+  // A component without `axeDemos` reads every demo, so none of that file's demos go unclaimed.
+  const claimed = [...byFile.entries()].filter(([, group]) =>
+    group.every((source) => Array.isArray(source.data.axeDemos)),
+  );
+  const namesByFile = await Promise.all(claimed.map(async ([ref]) => [ref, await demoNames(ref)]));
+  const violations = [];
+  namesByFile.forEach(([ref, names]) => {
+    const group = byFile.get(ref);
+    const who = group.map((source) => source.component).join(', ');
+    unclaimedDemoNames(
+      names,
+      group.map((source) => source.data.axeDemos),
+    ).forEach((name) => {
+      violations.push(`axe: demo "${name}" in ${ref} is not claimed by ${who}`);
+    });
+  });
+  return violations;
+}
 
 async function run(argv) {
   const check = argv.includes('--check');
@@ -53,6 +91,7 @@ async function run(argv) {
   }
 
   const defaults = await readDefaults();
+  const knownGaps = await readJson(knownGapsPath);
 
   const fail = (violations) => {
     if (violations.length > 0) {
@@ -64,6 +103,7 @@ async function run(argv) {
   fail([
     ...validateDefaults(defaults, check),
     ...(await Promise.all(sources.map((source) => validateSource(source, defaults)))).flat(),
+    ...(await unclaimedSharedDemos(sources)),
   ]);
 
   // A conformance report is a statement about one release, so each report names the version.
@@ -73,7 +113,10 @@ async function run(argv) {
     version,
     summary: summarize(report.criteria),
   }));
-  fail(reports.flatMap((report) => validateReport(report, check)));
+  fail([
+    ...reports.flatMap((report) => validateReport(report, check)),
+    ...validateKnownGaps(knownGaps, reports, check),
+  ]);
   const criteria = rollUpCriteria(reports);
   const totals = summarizeRollup(criteria);
 
@@ -137,6 +180,7 @@ async function run(argv) {
         page = replaceBlock(page, renderDocsTable(reports), docsPagePath);
         page = replaceBlock(page, renderDocsAbout(version), docsPagePath, 'scorecard-about');
         page = replaceBlock(page, renderDocsRollup(totals), docsPagePath, 'scorecard-rollup');
+        page = replaceBlock(page, renderKnownGaps(knownGaps), docsPagePath, 'scorecard-gaps');
         return page;
       },
     },

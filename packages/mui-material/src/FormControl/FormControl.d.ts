@@ -100,7 +100,7 @@ export interface FormControlTypeMap<
  * * Input
  * * InputLabel
  *
- * You can find one composition example below and more going to [the demos](https://mui.com/material-ui/react-text-field/#components).
+ * You can find one composition example below and more going to [the demos](https://next.mui.com/material-ui/react-text-field/#components).
  *
  * ```jsx
  * <FormControl>
@@ -115,15 +115,15 @@ export interface FormControlTypeMap<
  *
  * Demos:
  *
- * - [Checkbox](https://mui.com/material-ui/react-checkbox/)
- * - [Number Field](https://mui.com/material-ui/react-number-field/)
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
- * - [Switch](https://mui.com/material-ui/react-switch/)
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Checkbox](https://next.mui.com/material-ui/react-checkbox/)
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
+ * - [Switch](https://next.mui.com/material-ui/react-switch/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [FormControl API](https://mui.com/material-ui/api/form-control/)
+ * - [FormControl API](https://next.mui.com/material-ui/api/form-control/)
  */
 declare const FormControl: OverridableComponent<FormControlTypeMap>;
 

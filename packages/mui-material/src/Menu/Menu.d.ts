@@ -90,7 +90,7 @@ export type MenuSlotsAndSlotProps = CreateSlotsAndSlotProps<
 >;
 
 export interface MenuProps
-  extends StandardProps<Omit<PopoverProps, 'slots' | 'slotProps'>>, MenuSlotsAndSlotProps {
+  extends StandardProps<PopoverProps, 'slots' | 'slotProps'>, MenuSlotsAndSlotProps {
   /**
    * An HTML element, or a function that returns one.
    * It's used to set the position of the menu.
@@ -126,7 +126,11 @@ export interface MenuProps
    * @param {object} event The event source of the callback.
    * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`, `"tabKeyDown"`.
    */
-  onClose?: PopoverProps['onClose'] | undefined;
+  onClose?:
+    | {
+        bivarianceHack(event: {}, reason: 'backdropClick' | 'escapeKeyDown' | 'tabKeyDown'): void;
+      }['bivarianceHack']
+    | undefined;
   /**
    * If `true`, the component is shown.
    */
@@ -159,12 +163,12 @@ export declare const MenuPaper: React.FC<PaperProps>;
  *
  * Demos:
  *
- * - [App Bar](https://mui.com/material-ui/react-app-bar/)
- * - [Menu](https://mui.com/material-ui/react-menu/)
+ * - [App Bar](https://next.mui.com/material-ui/react-app-bar/)
+ * - [Menu](https://next.mui.com/material-ui/react-menu/)
  *
  * API:
  *
- * - [Menu API](https://mui.com/material-ui/api/menu/)
- * - inherits [Popover API](https://mui.com/material-ui/api/popover/)
+ * - [Menu API](https://next.mui.com/material-ui/api/menu/)
+ * - inherits [Popover API](https://next.mui.com/material-ui/api/popover/)
  */
 export default function Menu(props: MenuProps): React.JSX.Element;

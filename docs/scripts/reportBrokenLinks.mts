@@ -25,19 +25,23 @@ async function main() {
     ],
     // CSS selectors for content to ignore during link checking
     ignoredContent: [
-      // Links used in demos under MemoryRouter
-      // TODO: Create an easier way to identify content under MemoryRouter
-      // (e.g. a class or an option on the demo)
-      '[id^="demo-"] a[href^="/inbox"]',
-      '[id^="demo-"] a[href^="/trash"]',
-      '[id^="demo-"] a[href^="/spam"]',
-      '[id^="demo-"] a[href^="/drafts"]',
-      '[id^="demo-"] a[href^="#simple-list"]',
-      '[id^="demo-"] a[href^="#customized-list"]',
-      '[id^="demo-"] a[href^="#text-buttons"]',
-      '[id^="demo-"] a[href^="#contained-buttons"]',
-      '[id^="demo-"] a[href^="#outlined-buttons"]',
-      '[id^="demo-"] a[href^="#foo"]',
+      // Links that only resolve inside a demo, not as real site navigation: the
+      // MemoryRouter email-app routes (`/inbox`, `/trash`, …) and self-referential
+      // or placeholder anchors shown by demo examples (`#text-buttons`, `#foo`, …).
+      // Scoped to the stable `.demo-preview` wrapper rather than the per-demo
+      // container id, which is content-derived and changes. These are intentional
+      // demo content, so ignoring them does not hide user-facing broken links.
+      // TODO: Create an easier way to identify this content (e.g. an option on the demo).
+      '.demo-preview a[href^="/inbox"]',
+      '.demo-preview a[href^="/trash"]',
+      '.demo-preview a[href^="/spam"]',
+      '.demo-preview a[href^="/drafts"]',
+      '.demo-preview a[href^="#simple-list"]',
+      '.demo-preview a[href^="#customized-list"]',
+      '.demo-preview a[href^="#text-buttons"]',
+      '.demo-preview a[href^="#contained-buttons"]',
+      '.demo-preview a[href^="#outlined-buttons"]',
+      '.demo-preview a[href^="#foo"]',
     ],
     htmlValidate: [
       // Default — applies to every page. `mui:recommended` is applied once

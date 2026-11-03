@@ -5,9 +5,10 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled, useThemeProps } from '@mui/material/styles';
 import TimelineContext from './TimelineContext';
-import { TimelineClassKey, getTimelineUtilityClass } from './timelineClasses';
+import type { TimelineClassKey } from './timelineClasses';
+import { getTimelineUtilityClass } from './timelineClasses';
 import convertTimelinePositionToClass from '../internal/convertTimelinePositionToClass';
-import { TimelineProps } from './Timeline.types';
+import type { TimelineProps } from './Timeline.types';
 
 type OwnerState = TimelineProps;
 
@@ -43,11 +44,11 @@ const TimelineRoot = styled('ul', {
  *
  * Demos:
  *
- * - [Timeline](https://mui.com/material-ui/react-timeline/)
+ * - [Timeline](https://next.mui.com/material-ui/react-timeline/)
  *
  * API:
  *
- * - [Timeline API](https://mui.com/material-ui/api/timeline/)
+ * - [Timeline API](https://next.mui.com/material-ui/api/timeline/)
  */
 const Timeline = React.forwardRef<HTMLUListElement, TimelineProps>(function Timeline(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiTimeline' });

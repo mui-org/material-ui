@@ -1,7 +1,7 @@
 {
   "name": "@mui/lab",
   "//": "version should be 'alpha' at all time",
-  "version": "9.0.0-beta.9",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Laboratory for new Material UI modules.",
   "license": "MIT",
@@ -34,9 +34,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.29.7 || ^8.0.5",
-    "@mui/system": "workspace:^",
+    "@mui/system": "workspace:*",
     "@mui/types": "workspace:^",
-    "@mui/utils": "workspace:^",
+    "@mui/utils": "workspace:*",
     "clsx": "^2.1.1",
     "prop-types": "^15.8.1"
   },
@@ -45,9 +45,9 @@
     "@types/prop-types": "15.7.15",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@types/sinon": "22.0.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
+    "@types/sinon": "22.0.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "sinon": "22.1.0"
   },
   "peerDependencies": {
@@ -77,9 +77,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts",

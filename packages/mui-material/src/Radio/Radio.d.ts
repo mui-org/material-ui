@@ -103,11 +103,11 @@ export interface RadioOwnerState extends Omit<RadioProps, 'slots' | 'slotProps'>
  *
  * Demos:
  *
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
  *
  * API:
  *
- * - [Radio API](https://mui.com/material-ui/api/radio/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [Radio API](https://next.mui.com/material-ui/api/radio/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 export default function Radio(props: RadioProps): React.JSX.Element;

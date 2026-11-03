@@ -1,6 +1,6 @@
-import { ComponentsProps } from './props';
-import { ComponentsOverrides } from './overrides';
-import { ComponentsVariants } from './variants';
+import type { ComponentsProps } from './props';
+import type { ComponentsOverrides } from './overrides';
+import type { ComponentsVariants } from './variants';
 
 export interface Components<Theme = unknown> {
   /**
@@ -780,6 +780,13 @@ export interface Components<Theme = unknown> {
         defaultProps?: ComponentsProps['MuiTabs'] | undefined;
         styleOverrides?: ComponentsOverrides<Theme>['MuiTabs'] | undefined;
         variants?: ComponentsVariants<Theme>['MuiTabs'] | undefined;
+      }
+    | undefined;
+  MuiTabScrollButton?:
+    | {
+        defaultProps?: ComponentsProps['MuiTabScrollButton'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTabScrollButton'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiTabScrollButton'] | undefined;
       }
     | undefined;
   MuiTextField?:

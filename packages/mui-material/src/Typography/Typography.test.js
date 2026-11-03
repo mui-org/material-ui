@@ -52,12 +52,10 @@ describe('<Typography />', () => {
     'overline',
   ].forEach((variant) => {
     it(`should render ${variant} text`, () => {
-      // @ts-ignore literal/tuple type widening
       const { container } = render(<Typography variant={variant}>Hello</Typography>);
 
       expect(classes).to.have.property(variant);
 
-      // @ts-ignore
       expect(container.firstChild).to.have.class(classes[variant]);
     });
   });
@@ -107,7 +105,6 @@ describe('<Typography />', () => {
   it('applies system properties via the sx prop', () => {
     const { container } = render(<Typography sx={{ mt: 2, marginRight: 5, mb: 2 }} />);
 
-    // @ts-ignore issue with typings on `toHaveComputedStyle`
     expect(container.firstChild).toHaveComputedStyle({
       marginTop: '16px',
       marginRight: '40px',

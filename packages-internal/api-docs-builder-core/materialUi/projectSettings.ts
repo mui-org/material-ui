@@ -1,6 +1,7 @@
 import path from 'path';
 import { LANGUAGES } from '@mui/internal-core-docs/constants';
-import { ProjectSettings, findApiPages } from '@mui/internal-api-docs-builder';
+import type { ProjectSettings } from '@mui/internal-api-docs-builder';
+import { findApiPages } from '@mui/internal-api-docs-builder';
 import generateUtilityClass, { isGlobalState } from '@mui/utils/generateUtilityClass';
 import { getMaterialUiComponentInfo } from './getMaterialUiComponentInfo';
 
@@ -47,7 +48,7 @@ export const projectSettings: ProjectSettings = {
   generateClassName,
   isGlobalClassName: isGlobalState,
   // #host-reference
-  baseApiUrl: 'https://mui.com',
+  baseApiUrl: 'https://next.mui.com',
   pagesManifestPath: path.join(process.cwd(), 'docs/data/material/pages.ts'),
   nonComponentFolders: [
     'material/getting-started',

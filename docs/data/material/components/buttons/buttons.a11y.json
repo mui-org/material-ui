@@ -173,10 +173,6 @@
         "status": "pass",
         "tags": ["wcag2a"]
       },
-      "avoid-inline-spacing": {
-        "status": "pass",
-        "tags": ["wcag21aa"]
-      },
       "button-name": {
         "status": "pass",
         "tags": ["wcag2a"]

@@ -35,5 +35,5 @@ const theme = createTheme({
 <Typography variant="poster">poster</Typography>;
 
 /* This variant is no longer supported */
-// @ts-expect-error
+// @ts-expect-error: This module augmentation explicitly disables the h3 variant.
 <Typography variant="h3">h3</Typography>;

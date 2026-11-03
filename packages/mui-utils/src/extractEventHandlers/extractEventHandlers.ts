@@ -1,5 +1,5 @@
 import isEventHandler from '@mui/utils/isEventHandler';
-import { EventHandlers } from '../types';
+import type { EventHandlers } from '../types';
 
 /**
  * Extracts event handlers from a given object.

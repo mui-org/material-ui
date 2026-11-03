@@ -44,11 +44,11 @@ export interface ToolbarTypeMap<
  *
  * Demos:
  *
- * - [App Bar](https://mui.com/material-ui/react-app-bar/)
+ * - [App Bar](https://next.mui.com/material-ui/react-app-bar/)
  *
  * API:
  *
- * - [Toolbar API](https://mui.com/material-ui/api/toolbar/)
+ * - [Toolbar API](https://next.mui.com/material-ui/api/toolbar/)
  */
 declare const Toolbar: OverridableComponent<ToolbarTypeMap>;
 

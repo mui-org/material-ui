@@ -6,6 +6,9 @@ import { Theme } from '../styles';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { ChipClasses } from './chipClasses';
 
+export interface ChipRootSlotPropsOverrides {}
+export interface ChipLabelSlotPropsOverrides {}
+
 export interface ChipSlots {
   /**
    * The component that renders the root.
@@ -26,12 +29,12 @@ export type ChipSlotsAndSlotProps = CreateSlotsAndSlotProps<
      * Props forwarded to the root slot.
      * By default, the available props are based on the div element.
      */
-    root: SlotProps<'div', {}, ChipOwnerState>;
+    root: SlotProps<'div', ChipRootSlotPropsOverrides, ChipOwnerState>;
     /**
      * Props forwarded to the label slot.
      * By default, the available props are based on the span element.
      */
-    label: SlotProps<'span', {}, ChipOwnerState>;
+    label: SlotProps<'span', ChipLabelSlotPropsOverrides, ChipOwnerState>;
   }
 >;
 
@@ -146,11 +149,11 @@ export interface ChipTypeMap<
  *
  * Demos:
  *
- * - [Chip](https://mui.com/material-ui/react-chip/)
+ * - [Chip](https://next.mui.com/material-ui/react-chip/)
  *
  * API:
  *
- * - [Chip API](https://mui.com/material-ui/api/chip/)
+ * - [Chip API](https://next.mui.com/material-ui/api/chip/)
  */
 declare const Chip: OverridableComponent<ChipTypeMap>;
 

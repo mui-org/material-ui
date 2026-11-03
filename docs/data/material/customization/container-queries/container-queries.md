@@ -11,7 +11,7 @@ The value can be unitless (in which case it'll be rendered in pixels), a string,
 theme.containerQueries.up('sm'); // => '@container (min-width: 600px)'
 ```
 
-{{"demo": "BasicContainerQueries.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 :::info
 One of the ancestors must have the CSS container type specified.
@@ -32,7 +32,7 @@ When adding styles using the `sx` prop, use the `@<size>` or `@<size>/<name>` no
 - `<size>`: a width or a breakpoint key.
 - `<name>` (optional): a named containment context.
 
-{{"demo": "SxPropContainerQueries.js"}}
+{{"component": "file://./demos/sx-prop/index.ts"}}
 
 ### Caveats
 

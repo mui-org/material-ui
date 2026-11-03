@@ -1,8 +1,0 @@
-{addFruitButton}
-<List sx={{ mt: 1 }}>
-  <TransitionGroup>
-    {fruitsInBasket.map((item) => (
-      <Collapse key={item}>{renderItem({ item, handleRemoveFruit })}</Collapse>
-    ))}
-  </TransitionGroup>
-</List>

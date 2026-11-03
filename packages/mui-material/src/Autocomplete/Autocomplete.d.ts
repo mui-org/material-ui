@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SxProps } from '@mui/system';
-import { OverridableStringUnion } from '@mui/types';
+import { OverridableStringUnion, PartiallyRequired } from '@mui/types';
 import { Theme } from '../styles';
 import { InternalStandardProps as StandardProps } from '../internal';
 import { IconButtonProps } from '../IconButton';
@@ -12,15 +12,22 @@ import useAutocomplete, {
   AutocompleteChangeReason,
   AutocompleteCloseReason,
   AutocompleteInputChangeReason,
+  AutocompleteMappedValue,
   AutocompleteValue,
   createFilterOptions,
   UseAutocompleteProps,
   AutocompleteFreeSoloValueMapping,
   AutocompleteValueOrFreeSoloValueMapping,
 } from '../useAutocomplete';
+import { AutocompleteResolvedValue } from '../useAutocomplete/useAutocomplete';
 import { AutocompleteClasses } from './autocompleteClasses';
 import { CreateSlotsAndSlotProps, SlotProps } from '../utils/types';
 
+export interface AutocompleteRootSlotPropsOverrides {}
+export interface AutocompleteChipSlotPropsOverrides {}
+export interface AutocompleteClearIndicatorSlotPropsOverrides {}
+export interface AutocompleteListboxSlotPropsOverrides {}
+export interface AutocompletePopupIndicatorSlotPropsOverrides {}
 export interface AutocompletePaperSlotPropsOverrides {}
 export interface AutocompletePopperSlotPropsOverrides {}
 export interface AutocompleteStatusSlotPropsOverrides {}
@@ -30,17 +37,20 @@ export {
   AutocompleteChangeReason,
   AutocompleteCloseReason,
   AutocompleteInputChangeReason,
+  AutocompleteMappedValue,
   AutocompleteValue,
   createFilterOptions,
 };
 
+/** Value describes list items; MappedValue, when supplied, describes the mapped selections. */
 export type AutocompleteOwnerState<
   Value,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
   ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
-> = AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent> & {
+  MappedValue extends AutocompleteMappedValue | undefined = undefined,
+> = AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent, MappedValue> & {
   disablePortal: boolean;
   expanded: boolean;
   focused: boolean;
@@ -123,20 +133,31 @@ export interface AutocompleteSlots {
    */
   root: React.ElementType;
   /**
+   * The component used to render the selected values when `multiple` is `true`.
+   * @default Chip
+   */
+  chip: React.JSXElementConstructor<ChipProps>;
+  /**
    * The component used to render the clear indicator element.
    * @default IconButton
    */
-  clearIndicator: React.JSXElementConstructor<IconButtonProps>;
+  clearIndicator: React.JSXElementConstructor<
+    IconButtonProps & AutocompleteClearIndicatorSlotPropsOverrides
+  >;
   /**
    * The component used to render the popup indicator element.
    * @default IconButton
    */
-  popupIndicator: React.JSXElementConstructor<IconButtonProps>;
+  popupIndicator: React.JSXElementConstructor<
+    IconButtonProps & AutocompletePopupIndicatorSlotPropsOverrides
+  >;
   /**
    * The component used to render the listbox.
    * @default 'ul'
    */
-  listbox: React.JSXElementConstructor<React.HTMLAttributes<HTMLElement>>;
+  listbox: React.JSXElementConstructor<
+    React.HTMLAttributes<HTMLElement> & AutocompleteListboxSlotPropsOverrides
+  >;
   /**
    * The component used to render the status message container.
    * @default 'div'
@@ -160,23 +181,45 @@ export type AutocompleteSlotsAndSlotProps<
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
   ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
+  MappedValue extends AutocompleteMappedValue | undefined = undefined,
 > = CreateSlotsAndSlotProps<
   AutocompleteSlots,
   {
     root: SlotProps<
       'div',
-      {},
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteRootSlotPropsOverrides,
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     chip: SlotProps<
       React.ElementType<Partial<ChipProps<ChipComponent>>>,
-      {},
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteChipSlotPropsOverrides,
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     clearIndicator: SlotProps<
       React.ElementType<Partial<IconButtonProps>>,
-      {},
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteClearIndicatorSlotPropsOverrides,
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     /**
      * Props applied to the Listbox element.
@@ -188,43 +231,90 @@ export type AutocompleteSlotsAndSlotProps<
           ref?: React.Ref<Element> | undefined;
         }
       >,
-      {},
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteListboxSlotPropsOverrides,
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     status: SlotProps<
       'div',
       AutocompleteStatusSlotPropsOverrides,
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     paper: SlotProps<
       React.ElementType<Partial<PaperProps>>,
       AutocompletePaperSlotPropsOverrides,
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     popper: SlotProps<
       React.ElementType<Partial<PopperProps>>,
       AutocompletePopperSlotPropsOverrides,
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
     popupIndicator: SlotProps<
       React.ElementType<Partial<IconButtonProps>>,
-      {},
-      AutocompleteOwnerState<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>
+      AutocompletePopupIndicatorSlotPropsOverrides,
+      AutocompleteOwnerState<
+        Value,
+        Multiple,
+        DisableClearable,
+        FreeSolo,
+        ChipComponent,
+        MappedValue
+      >
     >;
   }
 >;
 
+/**
+ * Value retains the original option type and generic name for module augmentation.
+ * MappedValue is the type returned by getOptionValue; omitting it keeps selections as options.
+ */
 export interface AutocompleteProps<
   Value,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
   ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
+  MappedValue extends AutocompleteMappedValue | undefined = undefined,
 >
   extends
-    UseAutocompleteProps<Value, Multiple, DisableClearable, FreeSolo>,
+    UseAutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, MappedValue>,
     StandardProps<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange' | 'children'>,
-    AutocompleteSlotsAndSlotProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent> {
+    AutocompleteSlotsAndSlotProps<
+      Value,
+      Multiple,
+      DisableClearable,
+      FreeSolo,
+      ChipComponent,
+      MappedValue
+    > {
   /**
    * Override or extend the styles applied to the component.
    */
@@ -368,28 +458,35 @@ export interface AutocompleteProps<
           Multiple,
           DisableClearable,
           FreeSolo,
-          ChipComponent
+          ChipComponent,
+          MappedValue
         >,
       ) => React.ReactNode)
     | undefined;
   /**
    * Renders the selected value(s) as rich content in the input for both single and multiple selections.
    *
-   * @param {AutocompleteRenderValue<Value, Multiple, FreeSolo>} value The `value` provided to the component.
+   * @param {AutocompleteRenderValue<Value|MappedValue, Multiple, FreeSolo>} value The `value` provided to the component.
+   * When `getOptionValue` is provided, this contains mapped values.
    * @param {function} getItemProps The value item props.
    * @param {object} ownerState The state of the Autocomplete component.
    * @returns {ReactNode}
    */
   renderValue?:
     | ((
-        value: AutocompleteRenderValue<Value, Multiple, FreeSolo>,
+        value: AutocompleteRenderValue<
+          AutocompleteResolvedValue<Value, MappedValue>,
+          Multiple,
+          FreeSolo
+        >,
         getItemProps: AutocompleteRenderValueGetItemProps<Multiple>,
         ownerState: AutocompleteOwnerState<
           Value,
           Multiple,
           DisableClearable,
           FreeSolo,
-          ChipComponent
+          ChipComponent,
+          MappedValue
         >,
       ) => React.ReactNode)
     | undefined;
@@ -408,6 +505,30 @@ export interface AutocompleteProps<
  *
  * Demos:
  *
+ * - [Autocomplete](https://next.mui.com/material-ui/react-autocomplete/)
+ *
+ * API:
+ *
+ * - [Autocomplete API](https://next.mui.com/material-ui/api/autocomplete/)
+ */
+export default function Autocomplete<
+  Value,
+  Multiple extends boolean | undefined = false,
+  DisableClearable extends boolean | undefined = false,
+  FreeSolo extends boolean | undefined = false,
+  ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
+  MappedValue extends AutocompleteMappedValue<FreeSolo> = AutocompleteMappedValue<FreeSolo>,
+>(
+  // With getOptionValue: selections use mapped values; option callbacks receive original options.
+  props: PartiallyRequired<
+    AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent, MappedValue>,
+    'getOptionValue'
+  >,
+): React.JSX.Element;
+/**
+ *
+ * Demos:
+ *
  * - [Autocomplete](https://mui.com/material-ui/react-autocomplete/)
  *
  * API:
@@ -421,5 +542,47 @@ export default function Autocomplete<
   FreeSolo extends boolean | undefined = false,
   ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
 >(
+  // Without getOptionValue: selections use original options.
+  // Preserve existing option inference, including from value/defaultValue.
   props: AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent>,
+): React.JSX.Element;
+/**
+ *
+ * Demos:
+ *
+ * - [Autocomplete](https://next.mui.com/material-ui/react-autocomplete/)
+ *
+ * API:
+ *
+ * - [Autocomplete API](https://next.mui.com/material-ui/api/autocomplete/)
+ */
+export default function Autocomplete<
+  Value,
+  Multiple extends boolean | undefined = false,
+  DisableClearable extends boolean | undefined = false,
+  FreeSolo extends boolean | undefined = false,
+  ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
+  MappedValue extends AutocompleteMappedValue | undefined = undefined,
+>(
+  // For styled, memo, and createElement: exposes both prop modes through the last overload they infer from.
+  props: AutocompleteProps<
+    Value,
+    Multiple,
+    DisableClearable,
+    FreeSolo,
+    ChipComponent,
+    MappedValue
+  > &
+    // Explicit mapped types require a mapper; raw and erased types allow it to be absent.
+    (undefined extends MappedValue ? {} : { getOptionValue: (option: Value) => MappedValue }) &
+    // Share callback types while checking each freeSolo/mapper combination separately.
+    (FreeSolo extends unknown
+      ? {
+          freeSolo?: FreeSolo | undefined;
+          // Keep undefined so erased props (React.ComponentProps) re-infer both prop modes.
+          getOptionValue?:
+            | ((option: Value) => MappedValue & (AutocompleteMappedValue<FreeSolo> | undefined))
+            | undefined;
+        }
+      : never),
 ): React.JSX.Element;

@@ -177,6 +177,17 @@ describe('<TextField />', () => {
       );
     });
 
+    it.skipIf(isJsdom())(
+      'should set shrink prop on outline from a label slotProps callback',
+      () => {
+        const { container } = render(
+          <TextField label="label" slotProps={{ inputLabel: () => ({ shrink: true }) }} />,
+        );
+
+        expect(container.querySelector('legend')).toHaveComputedStyle({ maxWidth: '100%' });
+      },
+    );
+
     it('should render `0` label properly', () => {
       const { container } = render(
         <TextField

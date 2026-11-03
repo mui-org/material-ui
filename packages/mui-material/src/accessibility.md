@@ -116,6 +116,7 @@ A claim has three parts, and a person writes only what needs judgment:
   | `criteria`      | `{ "<number>": { … } }`, the fields that differ from the default. Keying a default not-applicable criterion rates it. |
   | `notApplicable` | Criteria that do not apply to this component, beyond the defaults.                                                    |
   | `axe`           | The committed axe results for the component's demos.                                                                  |
+  | `axeDemos`      | Demo names, or `*` globs, that count when several components share that file. Absent means every demo counts.         |
   | `tests`         | Other components whose test files also test this one, such as `ButtonBase`.                                           |
   | `inherits`      | For a group component: the parent whose ratings it inherits. The group rates only the criteria it keys in `criteria`. |
   | `title`         | The display name, when it differs from the folder name.                                                               |
@@ -138,7 +139,7 @@ Three kinds of test, none of which writes anything into a report. The scorecard 
 
 - **Unit tests** count as evidence for a criterion when a test title starts with its number and WCAG name, such as `'2.1.1 Keyboard: …'` or `describe('4.1.2 Name, Role, Value')`. A title that names a criterion with the wrong name fails the check.
 - **Playwright suites** are listed per component in `criteriaSuites.mjs`, which the regression tests also read.
-- **axe results** are written to `docs/data/material/components/{slug}/{slug}.a11y.json` and committed, so a change that alters them fails CI. The WCAG tags that axe-core ships with each rule (for example, `color-contrast` has `wcag143`) map each rule to its criteria. A failing rule rates its criterion ⚠️ Partially Supports unless the component's JSON file sets another rating.
+- **axe results** are written to `docs/data/material/components/{slug}/{slug}.a11y.json` and committed, so a change that alters them fails CI. When two components share that file, `axeDemos` selects which demos count for each one. If every component reading a file sets `axeDemos`, each demo in it must match at least one of them. The WCAG tags that axe-core ships with each rule (for example, `color-contrast` has `wcag143`) map each rule to its criteria. A failing rule rates its criterion ⚠️ Partially Supports unless the component's JSON file sets another rating.
 
 ### The rollup
 
@@ -148,6 +149,7 @@ Three kinds of test, none of which writes anything into a report. The scorecard 
 - the [Reports](#reports) table below, and the [not applicable by default](#not-applicable-by-default) list above
 - the [manual checklist](./manual-testing.md)
 - the summary table on the public [accessibility conformance page](../../../docs/data/material/getting-started/accessibility/accessibility.md), between its `scorecard` markers
+- the Known gaps table on the same page, from the gap and workaround text in `knownGaps.json`. Each ⚠️ or ❌ rating must have a row, and each row must match a rating.
 - `docs/data/material/getting-started/accessibility/scorecard.json`, the machine-readable rollup
 
 None of those numbers are typed by hand. Edit the JSON files or the prose regions, and re-run the command.
@@ -186,6 +188,7 @@ Edit the JSON files, not this table.
 | [Avatar](./Avatar/accessibility.md)                       | 9           | 2                     | 0                   | 44                | —           | 5/11       |
 | [Button](./Button/accessibility.md)                       | 24          | 3                     | 0                   | 28                | —           | 7/27       |
 | [Checkbox](./Checkbox/accessibility.md)                   | 24          | 1                     | 0                   | 30                | —           | 3/25       |
+| [CircularProgress](./CircularProgress/accessibility.md)   | 8           | 3                     | 0                   | 44                | —           | 5/11       |
 | [LinearProgress](./LinearProgress/accessibility.md)       | 8           | 3                     | 0                   | 44                | —           | 5/11       |
 | [Radio](./Radio/accessibility.md)                         | 24          | 1                     | 0                   | 30                | —           | 2/25       |
 | [RadioGroup](./RadioGroup/accessibility.md)               | 7           | 0                     | 0                   | 30                | 18          | 3/7        |

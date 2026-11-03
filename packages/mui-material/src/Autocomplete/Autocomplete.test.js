@@ -20,6 +20,7 @@ import Autocomplete, {
 } from '@mui/material/Autocomplete';
 import Grow from '@mui/material/Grow';
 import InputAdornment from '@mui/material/InputAdornment';
+import { paperClasses } from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Tooltip from '@mui/material/Tooltip';
 import describeConformance from '../../test/describeConformance';
@@ -119,9 +120,30 @@ describe('<Autocomplete />', () => {
       slots: {
         chip: {},
       },
-      only: ['slotPropsProp'],
+      only: ['slotPropsProp', 'slotPropsCallback'],
     }),
   );
+
+  it('should render the chips with slots.chip and merge the className', () => {
+    function CustomChip(props) {
+      return <Chip data-testid="custom-chip" {...props} />;
+    }
+
+    render(
+      <Autocomplete
+        multiple
+        defaultValue={['one']}
+        options={['one', 'two']}
+        slots={{ chip: CustomChip }}
+        slotProps={{ chip: { className: 'custom' } }}
+        renderInput={(params) => <TextField {...params} />}
+      />,
+    );
+
+    const chip = screen.getByTestId('custom-chip');
+    expect(chip).to.have.class(classes.tag);
+    expect(chip).to.have.class('custom');
+  });
 
   it('should be customizable in the theme', () => {
     const theme = createTheme({
@@ -144,6 +166,18 @@ describe('<Autocomplete />', () => {
     expect(document.querySelector(`.${classes.paper}`)).to.toHaveComputedStyle({
       mixBlendMode: 'darken',
     });
+  });
+
+  it('should have an elevation of 8 by default that can be overridden', () => {
+    const { setProps } = render(
+      <Autocomplete options={[]} open renderInput={(params) => <TextField {...params} />} />,
+    );
+
+    expect(document.querySelector(`.${classes.paper}`)).to.have.class(paperClasses.elevation8);
+
+    setProps({ slotProps: { paper: { elevation: 16 } } });
+
+    expect(document.querySelector(`.${classes.paper}`)).to.have.class(paperClasses.elevation16);
   });
 
   it('should not throw error when accessing ownerState in styleOverrides', () => {
@@ -1398,6 +1432,28 @@ describe('<Autocomplete />', () => {
       expect(handleChange.callCount).to.equal(1);
     });
 
+    it('should use isOptionEqualToValue to deduplicate multiple freeSolo values without getOptionValue', async () => {
+      const handleChange = spy();
+      const { user } = render(
+        <Autocomplete
+          multiple
+          freeSolo
+          defaultValue={['Foo']}
+          options={[]}
+          isOptionEqualToValue={(option, value) => option.toLowerCase() === value.toLowerCase()}
+          onChange={handleChange}
+          renderInput={(params) => <TextField {...params} />}
+        />,
+      );
+
+      await user.type(screen.getByRole('combobox'), 'foo');
+      await user.keyboard('{Enter}');
+
+      expect(handleChange.callCount).to.equal(0);
+      expect(screen.getAllByRole('button', { name: /^foo$/i })).to.have.lengthOf(1);
+      expect(screen.getByRole('button', { name: 'Foo' })).to.have.text('Foo');
+    });
+
     it('has no textbox value', () => {
       render(
         <Autocomplete
@@ -2623,6 +2679,26 @@ describe('<Autocomplete />', () => {
       );
     });
 
+    it('warns if isOptionEqualToValue matches multiple freeSolo values without getOptionValue', async () => {
+      const { user } = render(
+        <Autocomplete
+          multiple
+          freeSolo
+          options={[]}
+          defaultValue={['Foo', 'foo']}
+          isOptionEqualToValue={(option, value) => option.toLowerCase() === value.toLowerCase()}
+          renderInput={(params) => <TextField {...params} />}
+        />,
+      );
+
+      await user.type(screen.getByRole('combobox'), 'FOO');
+
+      await expect(() => user.keyboard('{Enter}')).toErrorDev(
+        'MUI: The `isOptionEqualToValue` method of Autocomplete does not handle the arguments correctly.\n' +
+          'The component expects a single value to match a given option but found 2 matches.',
+      );
+    });
+
     it('warn if groups options are not sorted', () => {
       const data = [
         { group: 1, value: 'A' },
@@ -2927,6 +3003,51 @@ describe('<Autocomplete />', () => {
   });
 
   describe('prop: autoComplete', () => {
+    it('should add a completion string for the auto highlighted option while typing', async () => {
+      const { user } = render(
+        <Autocomplete
+          autoComplete
+          autoHighlight
+          options={['one', 'two']}
+          renderInput={(params) => <TextField {...params} />}
+        />,
+      );
+      const textbox = screen.getByRole('combobox');
+
+      await user.type(textbox, 'o');
+
+      expect(textbox.value).to.equal('one');
+      expect(textbox.selectionStart).to.equal(1);
+      expect(textbox.selectionEnd).to.equal(3);
+
+      await user.keyboard('n');
+
+      expect(textbox.value).to.equal('one');
+      expect(textbox.selectionStart).to.equal(2);
+      expect(textbox.selectionEnd).to.equal(3);
+    });
+
+    it('should not add a completion string when deleting', async () => {
+      const { user } = render(
+        <Autocomplete
+          autoComplete
+          autoHighlight
+          options={['one', 'two']}
+          renderInput={(params) => <TextField {...params} />}
+        />,
+      );
+      const textbox = screen.getByRole('combobox');
+
+      await user.type(textbox, 'on');
+      expect(textbox.value).to.equal('one');
+
+      await user.keyboard('{Backspace}');
+      expect(textbox.value).to.equal('on');
+
+      await user.keyboard('{Backspace}');
+      expect(textbox.value).to.equal('o');
+    });
+
     it('add a completion string', () => {
       render(
         <Autocomplete
@@ -4022,6 +4143,20 @@ describe('<Autocomplete />', () => {
   });
 
   describe('prop: getOptionLabel', () => {
+    it.each([null, undefined])('preserves the chip label for a raw %s option', (value) => {
+      render(
+        <Autocomplete
+          multiple
+          options={[value, 'Other']}
+          value={[value]}
+          getOptionLabel={(option) => (option == null ? 'Any' : option)}
+          renderInput={(params) => <TextField {...params} />}
+        />,
+      );
+
+      expect(screen.getByRole('button', { name: 'Any' })).to.have.text('Any');
+    });
+
     it('is considered for falsy values when filtering the list of options', () => {
       render(
         <Autocomplete
@@ -4108,6 +4243,645 @@ describe('<Autocomplete />', () => {
         fireEvent.focus(screen.getByRole('combobox'));
       }).not.to.throw();
     });
+  });
+
+  describe('prop: getOptionValue', () => {
+    const options = [
+      { id: 'foo', label: 'Foo' },
+      { id: 'bar', label: 'Bar' },
+    ];
+
+    function Test(props) {
+      return (
+        <Autocomplete
+          options={options}
+          getOptionLabel={(option) => option.label}
+          getOptionValue={(option) => option.id}
+          renderInput={(params) => <TextField {...params} />}
+          {...props}
+        />
+      );
+    }
+
+    it('uses option labels for mapped values', () => {
+      render(<Test multiple value={['foo', 'bar']} />);
+
+      expect(screen.getByText('Foo')).not.to.equal(null);
+      expect(screen.getByText('Bar')).not.to.equal(null);
+    });
+
+    it('commits the mapped value and original option on autoSelect blur', async () => {
+      const onChange = spy();
+      const { user } = render(<Test autoSelect openOnFocus onChange={onChange} />);
+      const textbox = screen.getByRole('combobox');
+
+      await user.click(textbox);
+      await user.keyboard('{ArrowDown}');
+      expect(textbox).to.have.attribute(
+        'aria-activedescendant',
+        screen.getByRole('option', { name: 'Foo' }).id,
+      );
+      await user.tab();
+
+      expect(onChange.callCount).to.equal(1);
+      expect(onChange.firstCall.args.slice(1)).to.deep.equal([
+        'foo',
+        'blur',
+        { option: options[0] },
+      ]);
+      expect(textbox).to.have.value('Foo');
+    });
+
+    describe.each([null, undefined])('nullable mapped option: %s', (nullableOption) => {
+      const nullableOptions = [nullableOption, 'Other'];
+      const getOptionValue = (option) => (option == null ? 0 : 1);
+      const getOptionLabel = (option) => (option == null ? 'Any' : option);
+
+      describe.each([false, true])('custom equality: %s', (customEquality) => {
+        const isOptionEqualToValue = customEquality
+          ? (option, value) => getOptionValue(option) === value
+          : undefined;
+
+        function NullableOptionTest(props) {
+          return (
+            <Test
+              options={nullableOptions}
+              getOptionValue={getOptionValue}
+              getOptionLabel={getOptionLabel}
+              isOptionEqualToValue={isOptionEqualToValue}
+              {...props}
+            />
+          );
+        }
+
+        it('uses the label for initial and newly selected single values', async () => {
+          const handleChange = spy();
+          const { user } = render(<NullableOptionTest defaultValue={0} onChange={handleChange} />);
+          const textbox = screen.getByRole('combobox');
+
+          expect(textbox).to.have.value('Any');
+          await user.click(screen.getByLabelText('Open'));
+          expect(screen.getByRole('option', { name: 'Any' })).to.have.attribute(
+            'aria-selected',
+            'true',
+          );
+          await user.click(screen.getByRole('option', { name: 'Other' }));
+          expect(textbox).to.have.value('Other');
+
+          await user.click(screen.getByLabelText('Open'));
+          await user.click(screen.getByRole('option', { name: 'Any' }));
+          expect(textbox).to.have.value('Any');
+          expect(handleChange.lastCall.args.slice(1)).to.deep.equal([
+            0,
+            'selectOption',
+            { option: nullableOption },
+          ]);
+
+          await user.click(screen.getByLabelText('Clear'));
+          expect(textbox).to.have.value('');
+        });
+
+        it.each(['delete icon', 'Backspace'])(
+          'labels the chip and includes the nullable option when removing with %s',
+          async (method) => {
+            const handleChange = spy();
+            const { user } = render(
+              <NullableOptionTest multiple defaultValue={[0]} onChange={handleChange} />,
+            );
+
+            expect(screen.getByRole('button', { name: 'Any' })).to.have.text('Any');
+            if (method === 'delete icon') {
+              await user.click(screen.getByTestId('CancelIcon'));
+            } else {
+              await user.click(screen.getByRole('combobox'));
+              await user.keyboard('{Backspace}');
+            }
+
+            expect(handleChange.callCount).to.equal(1);
+            expect(handleChange.firstCall.args.slice(1)).to.deep.equal([
+              [],
+              'removeOption',
+              { option: nullableOption },
+            ]);
+            expect(screen.queryByRole('button', { name: 'Any' })).to.equal(null);
+          },
+        );
+
+        it.each([
+          { multiple: false, freeSolo: false, focused: false },
+          { multiple: true, freeSolo: false, focused: false },
+          { multiple: false, freeSolo: true, focused: false },
+          { multiple: false, freeSolo: true, focused: true },
+        ])(
+          'updates labels when options arrive with multiple=$multiple, freeSolo=$freeSolo, focused=$focused',
+          async ({ multiple, freeSolo, focused }) => {
+            const props = { multiple, freeSolo, value: multiple ? [0] : 0 };
+            const { rerender, user } = render(<NullableOptionTest {...props} options={[]} />);
+            const selection = multiple
+              ? screen.getByRole('button', { name: '' })
+              : screen.getByRole('combobox');
+
+            if (multiple) {
+              expect(selection).to.have.text('');
+            } else {
+              expect(selection).to.have.value('');
+            }
+            if (focused) {
+              await user.click(screen.getByRole('combobox'));
+            }
+
+            rerender(<NullableOptionTest {...props} />);
+
+            if (multiple) {
+              expect(selection).to.have.text('Any');
+            } else {
+              expect(selection).to.have.value('Any');
+            }
+          },
+        );
+
+        it('retains nullable options created by filterOptions for labels and removal', async () => {
+          const handleChange = spy();
+          const { user } = render(
+            <NullableOptionTest
+              multiple
+              options={['Other']}
+              filterOptions={(optionsToFilter, { inputValue }) =>
+                inputValue === 'Any' ? [nullableOption] : optionsToFilter
+              }
+              onChange={handleChange}
+            />,
+          );
+          const textbox = screen.getByRole('combobox');
+
+          await user.type(textbox, 'Any');
+          await user.click(screen.getByRole('option', { name: 'Any' }));
+          expect(screen.getByRole('button', { name: 'Any' })).to.have.text('Any');
+
+          await user.type(textbox, 'Other');
+          await user.click(screen.getByRole('option', { name: 'Other' }));
+          expect(screen.getByRole('button', { name: 'Any' })).to.have.text('Any');
+          await user.click(screen.getAllByTestId('CancelIcon')[0]);
+
+          expect(handleChange.lastCall.args.slice(1)).to.deep.equal([
+            [1],
+            'removeOption',
+            { option: nullableOption },
+          ]);
+        });
+      });
+    });
+
+    describe('options created by filterOptions', () => {
+      const filterOptions = (optionsToFilter, { inputValue }) =>
+        inputValue ? [{ id: inputValue.toLowerCase(), label: inputValue }] : optionsToFilter;
+
+      it.each([false, true])(
+        'keeps the selected label after closing the popup with controlled=%s',
+        async (controlled) => {
+          const handleChange = spy();
+
+          function GeneratedOptionTest() {
+            const [value, setValue] = React.useState(null);
+
+            return (
+              <Test
+                filterOptions={filterOptions}
+                value={controlled ? value : undefined}
+                onChange={(event, newValue, reason, details) => {
+                  handleChange(event, newValue, reason, details);
+                  if (controlled) {
+                    setValue(newValue);
+                  }
+                }}
+              />
+            );
+          }
+
+          const { user } = render(<GeneratedOptionTest />);
+          const textbox = screen.getByRole('combobox');
+
+          await user.type(textbox, 'Baz');
+          await user.click(screen.getByRole('option', { name: 'Baz' }));
+
+          expect(handleChange.callCount).to.equal(1);
+          expect(handleChange.firstCall.args.slice(1)).to.deep.equal([
+            'baz',
+            'selectOption',
+            { option: { id: 'baz', label: 'Baz' } },
+          ]);
+          expect(screen.queryByRole('listbox')).to.equal(null);
+          expect(textbox).to.have.value('Baz');
+
+          await user.tab();
+
+          expect(textbox).to.have.value('Baz');
+        },
+      );
+
+      it('keeps generated chip labels across searches and exposes the option on removal', async () => {
+        const handleChange = spy();
+        const { user } = render(
+          <Test
+            multiple
+            defaultValue={['foo']}
+            filterOptions={filterOptions}
+            onChange={handleChange}
+          />,
+        );
+        const textbox = screen.getByRole('combobox');
+
+        await user.type(textbox, 'Baz');
+        await user.click(screen.getByRole('option', { name: 'Baz' }));
+
+        expect(screen.getAllByRole('button')[1]).to.have.text('Baz');
+        expect(screen.queryByRole('listbox')).to.equal(null);
+
+        await user.type(textbox, 'Qux');
+
+        expect(screen.getAllByRole('button')[1]).to.have.text('Baz');
+        await user.click(screen.getByRole('option', { name: 'Qux' }));
+
+        expect(screen.getAllByRole('button')[0]).to.have.text('Foo');
+        expect(screen.getAllByRole('button')[1]).to.have.text('Baz');
+        expect(screen.getAllByRole('button')[2]).to.have.text('Qux');
+        expect(handleChange.lastCall.args[1]).to.deep.equal(['foo', 'baz', 'qux']);
+
+        await user.keyboard('{Backspace}');
+
+        expect(handleChange.lastCall.args.slice(1)).to.deep.equal([
+          ['foo', 'baz'],
+          'removeOption',
+          { option: { id: 'qux', label: 'Qux' } },
+        ]);
+        expect(screen.queryByRole('button', { name: 'Qux' })).to.equal(null);
+        expect(screen.getAllByRole('button')[1]).to.have.text('Baz');
+      });
+    });
+
+    describe('unresolved mapped chips', () => {
+      it('leaves chip labels empty until their options arrive', () => {
+        const props = { multiple: true, value: ['foo', 'missing'] };
+        const { rerender } = render(<Test {...props} options={[]} />);
+        const [loadingChip, staleChip] = screen.getAllByRole('button');
+
+        expect(loadingChip).to.have.text('');
+        expect(staleChip).to.have.text('');
+
+        rerender(<Test {...props} options={options} />);
+
+        expect(loadingChip).to.have.text('Foo');
+        expect(staleChip).to.have.text('');
+      });
+
+      it('does not expose unresolved numeric or boolean values as chip labels', () => {
+        render(<Test multiple value={[42, 87, 0, false]} options={[]} />);
+
+        const chips = screen.getAllByRole('button', { name: '' });
+        expect(chips).to.have.length(4);
+      });
+
+      it('removes an unresolved chip at its original index among resolved chips', async () => {
+        const handleChange = spy();
+        const { user } = render(
+          <Test multiple defaultValue={['foo', 'missing', 'bar']} onChange={handleChange} />,
+        );
+        const staleChip = screen.getByRole('button', { name: '' });
+
+        expect(staleChip).to.have.attribute('data-item-index', '1');
+        await user.click(screen.getAllByTestId('CancelIcon')[1]);
+
+        expect(handleChange.callCount).to.equal(1);
+        expect(handleChange.firstCall.args.slice(1)).to.deep.equal([
+          ['foo', 'bar'],
+          'removeOption',
+          undefined,
+        ]);
+        expect(screen.queryByRole('button', { name: '' })).to.equal(null);
+        expect(screen.getAllByRole('button')[0]).to.have.text('Foo');
+        expect(screen.getAllByRole('button')[1]).to.have.text('Bar');
+      });
+    });
+
+    describe('async options in freeSolo mode', () => {
+      const loadedOptions = [{ id: 2, label: 'Bar' }];
+
+      it.each([false, true])(
+        'resolves the selected label when options arrive with focused=%s',
+        async (focused) => {
+          const handleInputChange = spy();
+          const handleChange = spy();
+          const props = {
+            freeSolo: true,
+            value: 2,
+            onInputChange: handleInputChange,
+            onChange: handleChange,
+          };
+          const { rerender, user } = render(<Test {...props} options={[]} />);
+          const textbox = screen.getByRole('combobox');
+
+          expect(textbox).to.have.value('');
+          if (focused) {
+            await user.click(textbox);
+          }
+
+          rerender(<Test {...props} options={loadedOptions} />);
+
+          expect(textbox).to.have.value('Bar');
+          expect(handleInputChange.callCount).to.equal(1);
+          expect(handleInputChange.firstCall.args).to.deep.equal([null, 'Bar', 'reset']);
+          expect(handleChange.callCount).to.equal(0);
+        },
+      );
+
+      it('resolves an uncontrolled default value when options arrive', () => {
+        const { rerender } = render(<Test freeSolo defaultValue={2} options={[]} />);
+
+        expect(screen.getByRole('combobox')).to.have.value('');
+
+        rerender(<Test freeSolo defaultValue={2} options={loadedOptions} />);
+
+        expect(screen.getByRole('combobox')).to.have.value('Bar');
+      });
+
+      it.each(['draft', ''])(
+        'preserves edited input "%s" when options arrive after blur',
+        async (draft) => {
+          const handleInputChange = spy();
+          const props = { freeSolo: true, value: 2, onInputChange: handleInputChange };
+          const { rerender, user } = render(<Test {...props} options={[]} />);
+          const textbox = screen.getByRole('combobox');
+
+          await user.type(textbox, 'draft');
+          if (draft === '') {
+            await user.clear(textbox);
+          }
+          await user.keyboard('{Escape}{ArrowDown}');
+          await user.tab();
+          handleInputChange.resetHistory();
+
+          rerender(<Test {...props} options={loadedOptions} />);
+
+          expect(textbox).to.have.value(draft);
+          expect(handleInputChange.callCount).to.equal(0);
+        },
+      );
+
+      it('preserves a controlled input value when options arrive', () => {
+        const props = { freeSolo: true, value: 2, inputValue: 'Custom label' };
+        const { rerender } = render(<Test {...props} options={[]} />);
+
+        rerender(<Test {...props} options={loadedOptions} />);
+
+        expect(screen.getByRole('combobox')).to.have.value('Custom label');
+      });
+
+      it('keeps the input empty when the controlled value becomes null before options arrive', () => {
+        const { rerender } = render(<Test freeSolo value={2} options={[]} />);
+
+        rerender(<Test freeSolo value={null} options={[]} />);
+        rerender(<Test freeSolo value={null} options={loadedOptions} />);
+
+        expect(screen.getByRole('combobox')).to.have.value('');
+      });
+
+      it('keeps the input empty after clicking Clear before options arrive', async () => {
+        const onChange = spy();
+        const onInputChange = spy();
+        // Keep the controlled selection unchanged so the Clear action alone prevents label sync.
+        const props = { freeSolo: true, value: 2, onChange, onInputChange };
+        const { rerender, user } = render(<Test {...props} options={[]} />);
+        const textbox = screen.getByRole('combobox');
+
+        await user.click(textbox);
+        await user.click(screen.getByRole('button', { name: 'Clear' }));
+
+        expect(textbox).to.have.value('');
+        expect(onChange.callCount).to.equal(1);
+        expect(onChange.firstCall.args.slice(1)).to.deep.equal([null, 'clear', undefined]);
+        expect(onInputChange.lastCall.args.slice(1)).to.deep.equal(['', 'clear']);
+        onInputChange.resetHistory();
+
+        rerender(<Test {...props} options={loadedOptions} />);
+
+        expect(textbox).to.have.value('');
+        expect(onInputChange.callCount).to.equal(0);
+        expect(onChange.callCount).to.equal(1);
+      });
+    });
+
+    it('uses freeSolo text for a chip when it collides with a mapped option value', () => {
+      const collidingOptions = [{ id: 'draft', label: 'Published' }];
+      const expectedError =
+        'MUI: The `getOptionValue` method of useAutocomplete returned the string value "draft" while `freeSolo` is enabled.\n' +
+        'useAutocomplete cannot distinguish string option values from free-solo values. ' +
+        'Return a number or boolean from `getOptionValue`, or disable `freeSolo`.';
+
+      expect(() => {
+        render(
+          <Test
+            options={collidingOptions}
+            multiple
+            freeSolo
+            value={['draft']}
+            getOptionLabel={(option) => (typeof option === 'string' ? option : option.label)}
+          />,
+          { strict: false },
+        );
+      }).toErrorDev(expectedError);
+
+      expect(screen.getByRole('button', { name: 'draft' })).not.to.equal(null);
+    });
+
+    it('uses custom equality when resolving mapped values to options', () => {
+      render(
+        <Test
+          multiple
+          value={['FOO']}
+          isOptionEqualToValue={(option, value) => option.id.toUpperCase() === value}
+        />,
+      );
+
+      expect(screen.getByText('Foo')).not.to.equal(null);
+    });
+
+    it('reuses the mapped value lookup while the mapper identity is stable', async () => {
+      const getValue = spy((option) => option.id);
+
+      const { user } = render(
+        <Test multiple open={false} defaultValue={['foo']} getOptionValue={getValue} />,
+      );
+      getValue.resetHistory();
+
+      await user.type(screen.getByRole('combobox'), 'search');
+
+      expect(screen.getByRole('button', { name: 'Foo' })).to.have.text('Foo');
+      expect(getValue.callCount).to.equal(0);
+    });
+
+    it('rebuilds the mapped value lookup when typing rerenders the parent with a fresh inline mapper', async () => {
+      const mapperOptions = [
+        { id: 'foo', alternateId: 'bar', label: 'Foo' },
+        { id: 'bar', alternateId: 'foo', label: 'Bar' },
+      ];
+      const getValue = spy((option, inputValue) => (inputValue ? option.alternateId : option.id));
+
+      function InlineMapperTest() {
+        const [inputValue, setInputValue] = React.useState('');
+
+        return (
+          <Test
+            multiple
+            open={false}
+            options={mapperOptions}
+            defaultValue={['foo']}
+            inputValue={inputValue}
+            onInputChange={(event, nextInputValue) => setInputValue(nextInputValue)}
+            getOptionValue={(option) => getValue(option, inputValue)}
+          />
+        );
+      }
+
+      const { user } = render(<InlineMapperTest />);
+      expect(screen.getByRole('button', { name: 'Foo' })).to.have.text('Foo');
+      getValue.resetHistory();
+
+      await user.type(screen.getByRole('combobox'), 'search');
+
+      mapperOptions.forEach((option) => {
+        expect(getValue.calledWithExactly(option, 'search')).to.equal(true);
+      });
+      // A changed label proves the lookup refreshed, beyond the mapper calls made by validation.
+      expect(screen.getByRole('button', { name: 'Bar' })).to.have.text('Bar');
+      expect(screen.queryByRole('button', { name: 'Foo' })).to.equal(null);
+    });
+
+    it('reuses custom chip resolutions while typing with the popup closed', async () => {
+      const getOptionValue = (option) => option.id;
+      const isOptionEqualToValue = spy((option, value) => option.id.toUpperCase() === value);
+      const { user } = render(
+        <Test
+          multiple
+          open={false}
+          value={['FOO', 'missing', 'BAR']}
+          getOptionValue={getOptionValue}
+          isOptionEqualToValue={isOptionEqualToValue}
+        />,
+      );
+      isOptionEqualToValue.resetHistory();
+
+      await user.type(screen.getByRole('combobox'), 'search');
+
+      expect(screen.getByRole('button', { name: 'Foo' })).to.have.text('Foo');
+      expect(screen.getByRole('button', { name: '' })).to.have.text('');
+      expect(screen.getByRole('button', { name: 'Bar' })).to.have.text('Bar');
+      expect(isOptionEqualToValue.callCount).to.equal(0);
+    });
+
+    it('passes mapped values to renderValue', () => {
+      const renderValue = spy((value) => <span>{value}</span>);
+
+      render(<Test value="foo" renderValue={renderValue} />);
+
+      expect(renderValue.lastCall.args[0]).to.equal('foo');
+      expect(screen.getByText('foo')).not.to.equal(null);
+    });
+
+    it('passes the mapped array to renderValue for multiple selections', () => {
+      const renderValue = spy((value) => <span>{value.join(', ')}</span>);
+
+      render(<Test multiple value={['foo', 'bar']} renderValue={renderValue} />);
+
+      expect(renderValue.lastCall.args[0]).to.deep.equal(['foo', 'bar']);
+      expect(screen.getByText('foo, bar')).not.to.equal(null);
+    });
+
+    it('provides the raw option when deleting a mapped chip', async () => {
+      const handleChange = spy();
+      const { user } = render(<Test multiple value={['foo', 'bar']} onChange={handleChange} />);
+
+      await user.click(screen.getAllByTestId('CancelIcon')[0]);
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.deep.equal(['bar']);
+      expect(handleChange.args[0][2]).to.equal('removeOption');
+      expect(handleChange.args[0][3]).to.deep.equal({ option: options[0] });
+    });
+
+    it('provides the raw option when removing a mapped value with Backspace', async () => {
+      const handleChange = spy();
+      const { user } = render(<Test multiple value={['foo', 'bar']} onChange={handleChange} />);
+      const textbox = screen.getByRole('combobox');
+
+      await user.tab();
+      expect(textbox).toHaveFocus();
+      await user.keyboard('{Backspace}');
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.deep.equal(['foo']);
+      expect(handleChange.args[0][2]).to.equal('removeOption');
+      expect(handleChange.args[0][3]).to.deep.equal({ option: options[1] });
+    });
+
+    it('provides the raw option when removing a focused mapped value with Delete', async () => {
+      const handleChange = spy();
+      const { user } = render(<Test multiple value={['foo', 'bar']} onChange={handleChange} />);
+      const textbox = screen.getByRole('combobox');
+      const firstChip = screen.getByRole('button', { name: 'Foo' });
+
+      await user.tab();
+      expect(textbox).toHaveFocus();
+      await user.keyboard('{ArrowLeft}{ArrowLeft}');
+      expect(firstChip).toHaveFocus();
+      await user.keyboard('{Delete}');
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.deep.equal(['bar']);
+      expect(handleChange.args[0][2]).to.equal('removeOption');
+      expect(handleChange.args[0][3]).to.deep.equal({ option: options[0] });
+    });
+
+    it('provides the raw option when deleting a mapped single-value item', async () => {
+      const handleChange = spy();
+      const { user } = render(
+        <Test
+          value="foo"
+          onChange={handleChange}
+          renderValue={(value, getItemProps) => <Chip label={value} {...getItemProps()} />}
+        />,
+      );
+
+      await user.click(screen.getByTestId('CancelIcon'));
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(null);
+      expect(handleChange.args[0][2]).to.equal('removeOption');
+      expect(handleChange.args[0][3]).to.deep.equal({ option: options[0] });
+    });
+
+    it.each(['Backspace', 'Delete'])(
+      'provides the raw option when removing a mapped single value with %s',
+      async (key) => {
+        const handleChange = spy();
+        const { user } = render(
+          <Test
+            value="foo"
+            onChange={handleChange}
+            renderValue={(value, getItemProps) => <Chip label={value} {...getItemProps()} />}
+          />,
+        );
+        const textbox = screen.getByRole('combobox');
+
+        await user.tab();
+        expect(textbox).toHaveFocus();
+        await user.keyboard(`{${key}}`);
+
+        expect(handleChange.callCount).to.equal(1);
+        expect(handleChange.args[0][1]).to.equal(null);
+        expect(handleChange.args[0][2]).to.equal('removeOption');
+        expect(handleChange.args[0][3]).to.deep.equal({ option: options[0] });
+      },
+    );
   });
 
   it('should specify option key for duplicate options', () => {

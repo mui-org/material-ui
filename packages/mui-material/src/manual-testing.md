@@ -93,6 +93,19 @@ Run the rows matching what you touched, for the component you touched.
 - [ ] 🔁 **3.3.2 Labels or Instructions** — every checkbox has a label or instruction presented to all users, via `FormControlLabel`, adjacent text, or clear context.
 - [ ] 🔁 **4.1.2 Name, Role, Value** — the role, the checked/unchecked/mixed/disabled state with change notification, and an author-supplied accessible name are all programmatically determinable.
 
+## CircularProgress
+
+8 checks · full procedures in [`CircularProgress/accessibility.md`](./CircularProgress/accessibility.md)
+
+- [ ] 🔁 **1.3.1 Info and Relationships** — role and value match the variant.
+- [ ] 🔍 **1.4.1 Use of Color** — the value can be understood without color.
+- [ ] 🔍 **1.4.11 Non-text Contrast** — the arc is at least `3:1` against the page, and against the track when `enableTrackSlot` is set. Every default palette color clears the page. Light-mode `warning` against the track is the known failure, about `2.72:1`.
+- [ ] 🔍 **2.2.2 Pause, Stop, Hide** — the user can pause, stop, or hide the motion, or it stops within five seconds. The component supplies no such control; a full-viewport (essential) loader, or a spinner removed once loading finishes, is what keeps it conformant.
+- [ ] 🔍 **2.3.1 Three Flashes or Below Threshold** — no part flashes more than three times per second.
+- [ ] 🔁 **2.4.6 Headings and Labels** — every name describes its operation.
+- [ ] 🔁 **4.1.2 Name, Role, Value** — name, role, and value are correct for every variant, and the track is silent.
+- [ ] 🔍 **4.1.3 Status Messages** — the change is announced without the user moving focus to it. It is not by default; add a polite live region in the application to convey it.
+
 ## LinearProgress
 
 8 checks · full procedures in [`LinearProgress/accessibility.md`](./LinearProgress/accessibility.md)

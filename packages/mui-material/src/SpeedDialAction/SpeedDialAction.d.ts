@@ -79,7 +79,7 @@ export type SpeedDialActionSlotsAndSlotProps = CreateSlotsAndSlotProps<
 
 export interface SpeedDialActionProps
   extends
-    Omit<StandardProps<Partial<TooltipProps>, 'children'>, 'slotProps' | 'slots'>,
+    StandardProps<Partial<TooltipProps>, 'children' | 'slots' | 'slotProps'>,
     SpeedDialActionSlotsAndSlotProps {
   /**
    * Override or extend the styles applied to the component.
@@ -104,12 +104,12 @@ export interface SpeedDialActionProps
  *
  * Demos:
  *
- * - [Speed Dial](https://mui.com/material-ui/react-speed-dial/)
+ * - [Speed Dial](https://next.mui.com/material-ui/react-speed-dial/)
  *
  * API:
  *
- * - [SpeedDialAction API](https://mui.com/material-ui/api/speed-dial-action/)
- * - inherits [Tooltip API](https://mui.com/material-ui/api/tooltip/)
+ * - [SpeedDialAction API](https://next.mui.com/material-ui/api/speed-dial-action/)
+ * - inherits [Tooltip API](https://next.mui.com/material-ui/api/tooltip/)
  */
 export default function SpeedDialAction(props: SpeedDialActionProps): React.JSX.Element;
 

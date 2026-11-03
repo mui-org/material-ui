@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import NoSsr from '@mui/material/NoSsr';
 
 const createComponent = (defaultComponent) => {
@@ -8,10 +7,6 @@ const createComponent = (defaultComponent) => {
 
     return <Component ref={ref} {...other} />;
   });
-
-  MyComponent.propTypes = {
-    component: PropTypes.elementType,
-  };
 
   return MyComponent;
 };

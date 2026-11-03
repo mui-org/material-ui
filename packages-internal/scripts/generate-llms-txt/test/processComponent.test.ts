@@ -144,7 +144,7 @@ Some text in between.
   });
 
   describe('processMarkdownFile', () => {
-    it('should process a markdown file correctly', () => {
+    it('should process a markdown file correctly', async () => {
       const markdownPath = path.join(tempDir, 'test.md');
       const markdown = `# Test
 
@@ -153,13 +153,13 @@ Some text in between.
       fs.writeFileSync(markdownPath, markdown);
       fs.writeFileSync(path.join(tempDir, 'Demo.js'), 'Demo content');
 
-      const result = processMarkdownFile(markdownPath);
+      const result = await processMarkdownFile(markdownPath);
 
       expect(result).to.include('```jsx');
       expect(result).to.include('Demo content');
     });
 
-    it('should handle nested directory structures', () => {
+    it('should handle nested directory structures', async () => {
       const subDir = path.join(tempDir, 'components', 'buttons');
       fs.mkdirSync(subDir, { recursive: true });
 
@@ -169,9 +169,74 @@ Some text in between.
       fs.writeFileSync(markdownPath, markdown);
       fs.writeFileSync(path.join(subDir, 'BasicButton.js'), 'Button component');
 
-      const result = processMarkdownFile(markdownPath);
+      const result = await processMarkdownFile(markdownPath);
 
       expect(result).to.include('Button component');
+    });
+
+    // Writes a two-file demo (entry `Button.tsx` importing helper `data.ts`)
+    // referenced by `buttons.md`, and returns the markdown file path.
+    function writeFileComponentDemo(): string {
+      const demoDir = path.join(tempDir, 'demos', 'basic');
+      fs.mkdirSync(demoDir, { recursive: true });
+      fs.writeFileSync(path.join(demoDir, 'data.ts'), "export const label = 'Click';\n");
+      fs.writeFileSync(
+        path.join(demoDir, 'Button.tsx'),
+        [
+          "import { label } from './data';",
+          '',
+          'export default function Button() {',
+          '  // @highlight',
+          '  return label;',
+          '}',
+          '',
+        ].join('\n'),
+      );
+      fs.writeFileSync(
+        path.join(demoDir, 'index.ts'),
+        [
+          "import { createDemo } from '@mui/internal-core-docs/utils/createDemo';",
+          "import Button from './Button';",
+          '',
+          'export default createDemo(import.meta.url, Button);',
+          '',
+        ].join('\n'),
+      );
+
+      const markdownPath = path.join(tempDir, 'buttons.md');
+      fs.writeFileSync(
+        markdownPath,
+        '# Buttons\n\n{{"component": "file://./demos/basic/index.ts"}}\n',
+      );
+      return markdownPath;
+    }
+
+    it('should expand a `file://` demo to its entry file only, by default', async () => {
+      const markdownPath = writeFileComponentDemo();
+
+      const result = await processMarkdownFile(markdownPath);
+
+      // Entry file shown; the marker is gone.
+      expect(result).to.include('```tsx');
+      expect(result).to.include('export default function Button()');
+      expect(result).to.not.include('file://');
+      // No filename comment and no extra files by default.
+      expect(result).to.not.include('/* Button.tsx */');
+      expect(result).to.not.include('/* data.ts */');
+      expect(result).to.not.include('export const label');
+      // Emphasis annotation comments are stripped from the source.
+      expect(result).to.not.include('@highlight');
+    });
+
+    it('should include extra files with filename comments when includeExtraFiles is set', async () => {
+      const markdownPath = writeFileComponentDemo();
+
+      const result = await processMarkdownFile(markdownPath, { includeExtraFiles: true });
+
+      expect(result).to.include('/* Button.tsx */');
+      expect(result).to.include('/* data.ts */');
+      expect(result).to.include("export const label = 'Click'");
+      expect(result).to.not.include('@highlight');
     });
   });
 });

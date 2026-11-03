@@ -4,7 +4,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { brandingDarkTheme as darkTheme, brandingLightTheme as lightTheme } from '../../branding';
 import { useTranslate } from '../../i18n';
 import { StyledTableContainer } from './StyledTableContainer';
-import { type ClassDefinition } from '../definitions/types';
+import type { ClassDefinition } from '../definitions/types';
 import { ApiWarningAlert } from '../ApiWarningAlert';
 
 const StyledTable = styled('table')(

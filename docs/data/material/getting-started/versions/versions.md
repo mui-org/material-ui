@@ -6,14 +6,14 @@
 
 The most recent stable version (✓) is recommended for use in production.
 
-{{"demo": "ReleasedVersions.js", "hideToolbar": true, "bg": "inline"}}
+{{"component": "file://./demos/released/index.ts", "hideToolbar": true, "bg": "inline"}}
 
 ## Latest versions
 
 Here you can find the latest unreleased documentation and code.
 You can use it to see what changes are coming and provide better feedback to contributors.
 
-{{"demo": "LatestVersions.js", "hideToolbar": true, "bg": "inline"}}
+{{"component": "file://./demos/latest/index.ts", "hideToolbar": true, "bg": "inline"}}
 
 ## Versioning strategy
 

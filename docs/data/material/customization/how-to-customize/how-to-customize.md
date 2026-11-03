@@ -27,7 +27,7 @@ To change the styles of _one single instance_ of a component, you can use one of
 The [`sx` prop](/system/getting-started/the-sx-prop/) is the best option for adding style overrides to a single instance of a component in most cases.
 It can be used with all Material UI components.
 
-{{"demo": "SxProp.js"}}
+{{"component": "file://./demos/sx-prop/index.ts"}}
 
 ### Overriding nested component styles
 
@@ -42,7 +42,7 @@ In this case, the styles are applied with `.css-ae2u5c-MuiSlider-thumb` but you 
 
 <img src="/static/images/customization/dev-tools.png" alt="dev-tools" style="margin-bottom: 16px;" width="2400" height="800" />
 
-{{"demo": "DevTools.js"}}
+{{"component": "file://./demos/dev-tools/index.ts"}}
 
 :::warning
 These class names can't be used as CSS selectors because they are unstable.
@@ -141,7 +141,7 @@ Never apply styles directly to state class names. This will impact all component
 
 To reuse the same overrides in different locations across your application, create a reusable component using the [`styled()`](/system/styled/) utility:
 
-{{"demo": "StyledCustomization.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/styled-customization/index.ts", "initialExpanded": true}}
 
 ### Dynamic overrides
 
@@ -154,7 +154,7 @@ You can do this with **dynamic CSS** or **CSS variables**.
 If you are using TypeScript, you will need to update the prop's types of the new component.
 :::
 
-{{"demo": "DynamicCSS.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/dynamic-css/index.ts", "collapseToEmpty": true}}
 
 ```tsx
 import * as React from 'react';
@@ -177,7 +177,7 @@ const StyledSlider = styled(Slider, {
 
 #### CSS variables
 
-{{"demo": "DynamicCSSVariables.js"}}
+{{"component": "file://./demos/dynamic-css-variables/index.ts"}}
 
 ## 3. Global theme overrides
 
@@ -189,11 +189,11 @@ Visit the [Component theming customization](/material-ui/customization/theme-com
 To add global baseline styles for some of the HTML elements, use the `GlobalStyles` component.
 Here is an example of how you can override styles for the `h1` elements:
 
-{{"demo": "GlobalCssOverride.js", "iframe": true, "height": 100}}
+{{"component": "file://./demos/global-css-override/index.ts", "iframe": true, "height": 100}}
 
 The `styles` prop in the `GlobalStyles` component supports a callback in case you need to access the theme.
 
-{{"demo": "GlobalCssOverrideTheme.js", "iframe": true, "height": 100}}
+{{"component": "file://./demos/global-css-override-theme/index.ts", "iframe": true, "height": 100}}
 
 :::warning
 Values in `GlobalStyles` are written into the stylesheet as they are.
@@ -202,11 +202,11 @@ If one comes from user input, validate it first, see [dynamic values in `sx`](/s
 
 If you are already using the [CssBaseline](/material-ui/react-css-baseline/) component for setting baseline styles, you can also add these global styles as overrides for this component. Here is how you can achieve the same by using this approach.
 
-{{"demo": "OverrideCssBaseline.js", "iframe": true, "height": 100}}
+{{"component": "file://./demos/override-css-baseline/index.ts", "iframe": true, "height": 100}}
 
 The `styleOverrides` key in the `MuiCssBaseline` component slot also supports callback from which you can access the theme. Here is how you can achieve the same by using this approach.
 
-{{"demo": "OverrideCallbackCssBaseline.js", "iframe": true, "height": 100}}
+{{"component": "file://./demos/override-callback-css-baseline/index.ts", "iframe": true, "height": 100}}
 
 :::success
 It is a good practice to hoist the `<GlobalStyles />` to a static constant, to avoid rerendering. This will ensure that the `<style>` tag generated would not recalculate on each render.

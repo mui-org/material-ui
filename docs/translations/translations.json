@@ -27,6 +27,7 @@
     "/system/react-grid": "Grid",
     "/system/react-stack": "Stack",
     "/system/migration": "Migration",
+    "/system/migration/upgrade-to-v10": "Upgrade to v10",
     "/system/migration/upgrade-to-v9": "Upgrade to v9",
     "/system/migration/upgrade-to-v7": "Upgrade to v7",
     "/system/migration/migrating-to-v6": "Upgrade to v6",

@@ -759,6 +759,37 @@ describe('<InputBase />', () => {
     });
   });
 
+  describe('prop: slotProps.input', () => {
+    it('should call the event handlers and forward the ref', () => {
+      const inputRef = React.createRef();
+      const handleFocus = spy();
+      const handleBlur = spy();
+      const handleChange = spy();
+      const { container } = render(
+        <InputBase
+          slotProps={{
+            input: {
+              ref: inputRef,
+              onFocus: handleFocus,
+              onBlur: handleBlur,
+              onChange: handleChange,
+            },
+          }}
+        />,
+      );
+      const input = container.querySelector('input');
+
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'a' } });
+      fireEvent.blur(input);
+
+      expect(inputRef.current).to.equal(input);
+      expect(handleFocus.callCount).to.equal(1);
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleBlur.callCount).to.equal(1);
+    });
+  });
+
   describe('autofill', () => {
     it.skipIf(isJsdom())(
       'does not animate display during autofill detection',

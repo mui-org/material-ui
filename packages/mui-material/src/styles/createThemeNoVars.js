@@ -7,6 +7,9 @@ import {
   alpha as systemAlpha,
   lighten as systemLighten,
   darken as systemDarken,
+  colorChannel,
+  private_safeColorChannel as safeColorChannel,
+  hslToRgb,
 } from '@mui/system/colorManipulator';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import createMixins from './createMixins';
@@ -42,6 +45,33 @@ const parseAddition = (str) => {
   return sum;
 };
 
+// `rgba()` takes rgb channels, so `hsl()` is converted like the theme's `*Channel` tokens.
+function toRgb(color) {
+  return color.startsWith('hsl') ? hslToRgb(color) : color;
+}
+
+// Replaces the `var()` matches in `alpha()`: `var(--x, #1976d2)` -> `var(--xChannel, 25 118 210)`.
+// The fallback keeps the color valid when the CSS variables aren't defined (no `ThemeProvider`).
+// It's dropped when it isn't a color `colorChannel()` parses, for example `currentColor` or a nested `var()`,
+// or when it's a `color()`, whose channels aren't sRGB.
+// More than one level of nested parentheses isn't supported: the match ends at the first run of `)`,
+// so the rest of the fallback stays in the output.
+function toChannelVar(match, name, fallback = '') {
+  const color = fallback.trim();
+  if (color && !color.startsWith('color(')) {
+    try {
+      const channel = colorChannel(toRgb(color));
+      // Space-separated syntax like `rgb(0 0 0)` doesn't throw but gives a single value, or `NaN`s for `hsl()`.
+      if (channel.split(' ').length === 3 && !channel.includes('NaN')) {
+        return `var(--${name}Channel, ${channel})`;
+      }
+    } catch {
+      // Not a supported color.
+    }
+  }
+  return `var(--${name}Channel)`;
+}
+
 function attachColorManipulators(theme) {
   Object.assign(theme, {
     alpha(color, coefficient) {
@@ -52,7 +82,21 @@ function attachColorManipulators(theme) {
       if (obj.vars) {
         // To preserve the behavior of the CSS theme variables
         // In the future, this could be replaced by `color-mix` (when https://caniuse.com/?search=color-mix reaches 95%).
-        return `rgba(${color.replace(/var\(--([^,\s)]+)(?:,[^)]+)?\)+/g, 'var(--$1Channel)')} / ${typeof coefficient === 'string' ? `calc(${coefficient})` : coefficient})`;
+        // Raw colors (for example, `theme.palette.*`) have no channel tokens,
+        // so they are converted to channels the same way the theme generates `*Channel` tokens,
+        // which keeps a CSS coefficient (for example, `theme.vars.palette.action.hoverOpacity`) in `calc()`.
+        const alphaValue = typeof coefficient === 'string' ? `calc(${coefficient})` : coefficient;
+        // `color()` channels are not sRGB, so only the alpha is replaced to keep any color space and unit.
+        if (color.startsWith('color(')) {
+          return color.replace(/\s*(?:\/[^)]*)?\)$/, ` / ${alphaValue})`);
+        }
+        const channels = color.includes('var(')
+          ? color.replace(
+              /var\(--([^,\s)]+)(?:,((?:[^()]|\([^()]*\))+)\)|(?:,[^)]+)?\)+)/g,
+              toChannelVar,
+            )
+          : safeColorChannel(toRgb(color));
+        return `rgba(${channels} / ${alphaValue})`;
       }
       return systemAlpha(color, parseAddition(coefficient));
     },
@@ -96,7 +140,7 @@ function createThemeNoVars(options = {}, ...args) {
     throw /* minify-error */ new Error(
       'MUI: `vars` is a private field used for CSS variables support.\n' +
         // #host-reference
-        'Please use another name or follow the [docs](https://mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.',
+        'Please use another name or follow the [docs](https://next.mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.',
     );
   }
 

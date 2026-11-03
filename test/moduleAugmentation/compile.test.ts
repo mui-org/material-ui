@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { afterAll, afterEach, beforeAll, describe, it, expect, vi } from 'vitest';
+import type * as compileModule from './compile';
 
 const execute = vi.hoisted(() => vi.fn<() => Promise<{ stdout: string; stderr: string }>>());
 
@@ -9,7 +10,7 @@ vi.mock('node:child_process', async () => {
 });
 
 describe('module augmentation compiler', () => {
-  let compile: typeof import('./compile').default;
+  let compile: typeof compileModule.default;
   const declaration = path.resolve(
     import.meta.dirname,
     '../../packages/mui-material/build/index.d.ts',
@@ -58,7 +59,7 @@ describe.each([
   { name: 'Windows', paths: path.win32, root: 'C:\\repo\\material-ui' },
 ])('module augmentation file guard on $name', ({ paths, root }) => {
   const fixtureRoot = paths.join(root, 'test/moduleAugmentation/material');
-  let assertBuiltDeclarations: typeof import('./compile').assertBuiltDeclarations;
+  let assertBuiltDeclarations: typeof compileModule.assertBuiltDeclarations;
 
   beforeAll(async () => {
     vi.resetModules();

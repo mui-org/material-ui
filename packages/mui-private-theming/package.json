@@ -1,6 +1,6 @@
 {
   "name": "@mui/private-theming",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Private - The React theme context to be shared between `@mui/styles` and `@mui/material`.",
   "license": "MIT",
@@ -31,14 +31,14 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.29.7 || ^8.0.5",
-    "@mui/utils": "workspace:^",
+    "@mui/utils": "workspace:*",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@mui/types": "workspace:^",
     "@types/prop-types": "15.7.15",
     "@types/react": "19.3.0",
-    "react": "19.3.0"
+    "react": "19.3.1"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",
@@ -53,9 +53,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "build"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "exports": {
     ".": "./src/index.ts",

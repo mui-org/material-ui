@@ -54,17 +54,17 @@ It aims to solve the same problem, but also provides the following benefits:
 
 ## Basic usage
 
-{{"demo": "BasicUsage.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/basic-usage/index.ts", "initialExpanded": true}}
 
 ## Using the theme
 
-{{"demo": "ThemeUsage.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/theme-usage/index.ts", "initialExpanded": true}}
 
 ## Custom components
 
 This example demonstrates how you can use the `styled` API to create custom components, with the same capabilities as the core components:
 
-{{"demo": "UsingOptions.js", "defaultCodeOpen": true }}
+{{"component": "file://./demos/using-options/index.ts", "initialExpanded": true }}
 
 If you inspect this element with the browser DevTools in development mode, you will notice that the class of the component now ends with the `MyThemeComponent-root`, which comes from the `name` and `slot` options that were provided.
 
@@ -218,7 +218,7 @@ const MyStyledButton = (props) => (
 
 If you prefer the `sx` syntax and want to use it in both the `sx` prop and the `styled()` utility, you can use the `unstable_sx` utility from the `theme`:
 
-{{"demo": "UsingWithSx.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/using-with-sx/index.ts", "initialExpanded": true}}
 
 The overhead added by using the `unstable_sx` utility is the same as if you were to use the `sx` prop on the component.
 

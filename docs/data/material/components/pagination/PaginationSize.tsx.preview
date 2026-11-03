@@ -1,3 +1,0 @@
-<Pagination count={10} size="small" />
-<Pagination count={10} />
-<Pagination count={10} size="large" />

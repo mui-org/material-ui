@@ -44,7 +44,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=22.23.3"
+    "node": ">=22.23.4"
   },
   "type": "commonjs",
   "exports": {

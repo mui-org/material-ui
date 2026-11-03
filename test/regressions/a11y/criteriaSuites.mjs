@@ -23,6 +23,12 @@ export const CSS_LAYOUT_SUITES = [
   { component: 'Button', route: '/docs-components-buttons/BasicButtons' },
   { component: 'Checkbox', route: '/docs-components-checkboxes/Checkboxes' },
   {
+    component: 'CircularProgress',
+    route: '/docs-components-progress/CircularDeterminate',
+    // The spinner renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.
+    skipCriteria: ['1.4.4', '1.4.12'],
+  },
+  {
     component: 'LinearProgress',
     route: '/docs-components-progress/LinearDeterminate',
     // The bar renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.

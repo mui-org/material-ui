@@ -5,6 +5,7 @@ import {
   fetchCommitsBetweenRefs,
   findLatestTaggedVersion,
 } from '@mui/internal-code-infra/changelog';
+import { getRateLimitRetryTime } from '@mui/internal-code-infra/github';
 import yargs from 'yargs';
 
 /**
@@ -15,6 +16,25 @@ import yargs from 'yargs';
  */
 function isBot(login) {
   return login.endsWith('[bot]') && !login.includes('copilot');
+}
+
+/**
+ * @param {import('@mui/internal-code-infra/changelog').FetchedCommitDetails} commit
+ * @returns {string | null}
+ */
+function getCommitAuthor(commit) {
+  if (!commit.author) {
+    return null;
+  }
+
+  if (commit.labels.includes('cherry-pick') && isBot(commit.author.login)) {
+    const originalAuthorMatch = commit.prTitle.match(/\(@([\w-]+)\)$/);
+    if (originalAuthorMatch) {
+      return originalAuthorMatch[1];
+    }
+  }
+
+  return commit.author.login;
 }
 
 /**
@@ -48,15 +68,7 @@ const prLinkRegEx = /\(#[0-9]+\)$/;
  * @returns {string[]}
  */
 function getAllContributors(commits) {
-  const authors = Array.from(
-    new Set(
-      commits
-        .filter((commit) => !!commit.author?.login)
-        .map((commit) => {
-          return commit.author.login;
-        }),
-    ),
-  );
+  const authors = Array.from(new Set(commits.map(getCommitAuthor).filter((author) => !!author)));
 
   return authors.sort((a, b) => a.localeCompare(b)).map((author) => `@${author}`);
 }
@@ -82,16 +94,38 @@ async function main(argv) {
     );
   }
 
-  const commitsItems = (
-    await fetchCommitsBetweenRefs({
+  /** @type {string | undefined} */
+  let currentPhase;
+  /** @type {import('@mui/internal-code-infra/changelog').FetchedCommitDetails[]} */
+  let fetchedCommits;
+  try {
+    fetchedCommits = await fetchCommitsBetweenRefs({
       lastRelease: previousRelease,
       release,
       repo: 'material-ui',
       octokit: process.env.GITHUB_TOKEN
         ? new Octokit({ auth: process.env.GITHUB_TOKEN })
         : undefined,
-    })
-  ).filter((commit) => !isBot(commit.author.login) && !commit.message.startsWith('[website]'));
+      onProgress: process.stderr.isTTY
+        ? ({ phase, count, total }) => {
+            if (currentPhase !== undefined && currentPhase !== phase) {
+              process.stderr.write('\n');
+            }
+            currentPhase = phase;
+            process.stderr.write(`\r${phase} ${count}/${total}`);
+          }
+        : undefined,
+    });
+  } finally {
+    if (currentPhase !== undefined) {
+      process.stderr.write('\n');
+    }
+  }
+  const commitsItems = fetchedCommits.filter(
+    (commit) =>
+      (!commit.author || !isBot(commit.author.login) || commit.labels.includes('cherry-pick')) &&
+      !commit.message.startsWith('[website]'),
+  );
 
   const contributorHandles = getAllContributors(commitsItems);
 
@@ -110,13 +144,22 @@ async function main(argv) {
   });
   const changes = commitsItems.map((commitsItem) => {
     let shortMessage = commitsItem.message.split('\n')[0];
+    const isCherryPickByBot =
+      commitsItem.labels.includes('cherry-pick') &&
+      commitsItem.author &&
+      isBot(commitsItem.author.login);
+
+    if (isCherryPickByBot) {
+      shortMessage = shortMessage.replace(/\s+\(@[\w-]+\)(?=\s+\(#[0-9]+\)$)/, '');
+    }
 
     // If the commit message doesn't have an associated PR, add the commit sha for reference.
     if (!prLinkRegEx.test(shortMessage)) {
       shortMessage += ` (${commitsItem.sha.substring(0, 7)})`;
     }
 
-    return `- ${shortMessage} @${commitsItem.author.login}`;
+    const author = getCommitAuthor(commitsItem);
+    return `- ${shortMessage} ${author ? `@${author}` : "TODO INSERT AUTHOR'S USERNAME"}`;
   });
   const generationDate = new Date().toLocaleDateString('en-US', {
     month: 'short',
@@ -165,6 +208,23 @@ yargs(process.argv.slice(2))
           type: 'string',
         }),
     handler: main,
+  })
+  .fail((message, error, cli) => {
+    if (!error) {
+      cli.showHelp();
+      console.error(`\n${message}`);
+    } else {
+      const retryAt = getRateLimitRetryTime(error);
+      if (retryAt) {
+        const minutes = Math.ceil((retryAt.getTime() - Date.now()) / 60_000);
+        console.error(
+          `GitHub API rate limit exceeded. Try again after ${retryAt.toLocaleTimeString()} (in about ${minutes} minute${minutes === 1 ? '' : 's'}).`,
+        );
+      } else {
+        console.error(error);
+      }
+    }
+    process.exit(1);
   })
   .help()
   .strict(true)

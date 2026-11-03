@@ -36,8 +36,8 @@ const theme = createTheme({
 
 <Badge variant="action" color="success" badgeContent={123} />;
 
-// @ts-expect-error typo
+// @ts-expect-error: Variant names are case-sensitive: the augmented variant is action.
 <Badge variant="Action" />;
 
-// @ts-expect-error typo
+// @ts-expect-error: Color names are case-sensitive: the augmented color is success.
 <Badge color="Success" />;

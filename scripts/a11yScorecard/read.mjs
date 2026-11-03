@@ -10,7 +10,7 @@ import {
 } from './files.mjs';
 import { readAxeResults } from './axe.mjs';
 
-async function readJson(filepath) {
+export async function readJson(filepath) {
   const source = await readOptional(filepath);
   if (source === null) {
     return null;
@@ -85,7 +85,9 @@ export default async function readReports() {
           data,
           regions: readRegions(await readOptional(reportPath)),
           axe:
-            typeof data.axe === 'string' ? await readAxeResults(data.axe).catch(() => null) : null,
+            typeof data.axe === 'string'
+              ? await readAxeResults(data.axe, data.axeDemos).catch(() => null)
+              : null,
           ownTests: await scanTests(entry.name),
           extraTests: await Promise.all(extraTests.map(scanTests)),
         };

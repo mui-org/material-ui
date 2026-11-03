@@ -78,15 +78,15 @@ export interface SwipeableDrawerProps
   /**
    * Callback fired when the component requests to be closed.
    *
-   * @param {React.SyntheticEvent<{}>} event The event source of the callback.
+   * @param {React.SyntheticEvent<{}> | Event} event The event source of the callback.
    */
-  onClose: React.ReactEventHandler<{}>;
+  onClose: { bivarianceHack(event: React.SyntheticEvent<{}> | Event): void }['bivarianceHack'];
   /**
    * Callback fired when the component requests to be opened.
    *
-   * @param {React.SyntheticEvent<{}>} event The event source of the callback.
+   * @param {React.SyntheticEvent<{}> | Event} event The event source of the callback.
    */
-  onOpen: React.ReactEventHandler<{}>;
+  onOpen: { bivarianceHack(event: React.SyntheticEvent<{}> | Event): void }['bivarianceHack'];
   /**
    * If `true`, the component is shown.
    * @default false
@@ -104,12 +104,12 @@ export interface SwipeableDrawerProps
  *
  * Demos:
  *
- * - [Drawer](https://mui.com/material-ui/react-drawer/)
+ * - [Drawer](https://next.mui.com/material-ui/react-drawer/)
  *
  * API:
  *
- * - [SwipeableDrawer API](https://mui.com/material-ui/api/swipeable-drawer/)
- * - inherits [Drawer API](https://mui.com/material-ui/api/drawer/)
+ * - [SwipeableDrawer API](https://next.mui.com/material-ui/api/swipeable-drawer/)
+ * - inherits [Drawer API](https://next.mui.com/material-ui/api/drawer/)
  */
 declare const SwipeableDrawer: React.JSXElementConstructor<SwipeableDrawerProps>;
 

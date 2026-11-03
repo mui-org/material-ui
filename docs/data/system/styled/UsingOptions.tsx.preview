@@ -1,8 +1,0 @@
-<ThemeProvider theme={customTheme}>
-  <MyThemeComponent sx={{ m: 1 }} color="primary" variant="dashed">
-    Primary
-  </MyThemeComponent>
-  <MyThemeComponent sx={{ m: 1 }} color="secondary">
-    Secondary
-  </MyThemeComponent>
-</ThemeProvider>

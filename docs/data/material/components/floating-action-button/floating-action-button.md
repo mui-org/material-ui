@@ -21,15 +21,15 @@ Only one component is recommended per screen to represent the most common action
 
 ## Basic FAB
 
-{{"demo": "FloatingActionButtons.js"}}
+{{"component": "file://./demos/floating-action-buttons/index.ts"}}
 
 ## Size
 
 By default, the size is `large`. Use the `size` prop for smaller floating action buttons.
 
-{{"demo": "FloatingActionButtonSize.js"}}
+{{"component": "file://./demos/size/index.ts"}}
 
-{{"demo": "FloatingActionButtonExtendedSize.js"}}
+{{"component": "file://./demos/extended-size/index.ts"}}
 
 ## Animation
 
@@ -42,4 +42,4 @@ The Zoom transition can be used to achieve this. Note that since both the exitin
 animations are triggered at the same time, we use `enterDelay` to allow the outgoing Floating Action Button's
 animation to finish before the new one enters.
 
-{{"demo": "FloatingActionButtonZoom.js", "bg": true}}
+{{"component": "file://./demos/zoom/index.ts", "bg": true}}

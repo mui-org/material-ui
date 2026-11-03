@@ -83,11 +83,11 @@ export function getPanelId(context: TabContextValue, value: string): string {
  *
  * Demos:
  *
- * - [Tabs](https://mui.com/material-ui/react-tabs/)
+ * - [Tabs](https://next.mui.com/material-ui/react-tabs/)
  *
  * API:
  *
- * - [TabContext API](https://mui.com/material-ui/api/tab-context/)
+ * - [TabContext API](https://next.mui.com/material-ui/api/tab-context/)
  */
 export function getTabId(context: TabContextValue, value: string): string {
   const { idPrefix } = context;

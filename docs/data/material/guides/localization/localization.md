@@ -28,7 +28,7 @@ const theme = createTheme(
 
 ### Example
 
-{{"demo": "Locales.js"}}
+{{"component": "file://./demos/locales/index.ts"}}
 
 :::warning
 The [Data Grid and Data Grid Pro](/x/react-data-grid/) components have their own [localization](/x/react-data-grid/localization/).
@@ -67,7 +67,7 @@ The [Data Grid and Data Grid Pro](/x/react-data-grid/) components have their own
 | Indonesian              | id-ID               | `idID`      |
 | Italian                 | it-IT               | `itIT`      |
 | Japanese                | ja-JP               | `jaJP`      |
-| Khmer                   | kh-KH               | `khKH`      |
+| Khmer                   | km-KH               | `kmKH`      |
 | Kazakh                  | kk-KZ               | `kkKZ`      |
 | Korean                  | ko-KR               | `koKR`      |
 | Kurdish (Central)       | ku-CKB              | `kuCKB`     |

@@ -6,6 +6,10 @@ import { StepIconProps } from '../StepIcon';
 import { StepLabelClasses } from './stepLabelClasses';
 import { CreateSlotsAndSlotProps, SlotProps } from '../utils/types';
 
+export interface StepLabelRootSlotPropsOverrides {}
+export interface StepLabelLabelSlotPropsOverrides {}
+export interface StepLabelStepIconSlotPropsOverrides {}
+
 export interface StepLabelSlots {
   /**
    * The component that renders the root.
@@ -30,17 +34,21 @@ export type StepLabelSlotsAndSlotProps = CreateSlotsAndSlotProps<
      * Props forwarded to the root slot.
      * By default, the available props are based on the span element.
      */
-    root: SlotProps<'span', {}, StepLabelOwnerState>;
+    root: SlotProps<'span', StepLabelRootSlotPropsOverrides, StepLabelOwnerState>;
     /**
      * Props forwarded to the label slot.
      * By default, the available props are based on the span element.
      */
-    label: SlotProps<'span', {}, StepLabelOwnerState>;
+    label: SlotProps<'span', StepLabelLabelSlotPropsOverrides, StepLabelOwnerState>;
     /**
      * Props forwarded to the stepIcon slot.
      * By default, the available props are based on the div element.
      */
-    stepIcon: SlotProps<React.ElementType<StepIconProps>, {}, StepLabelOwnerState>;
+    stepIcon: SlotProps<
+      React.ElementType<StepIconProps>,
+      StepLabelStepIconSlotPropsOverrides,
+      StepLabelOwnerState
+    >;
   }
 >;
 
@@ -81,11 +89,11 @@ export type StepLabelClasskey = keyof NonNullable<StepLabelProps['classes']>;
  *
  * Demos:
  *
- * - [Stepper](https://mui.com/material-ui/react-stepper/)
+ * - [Stepper](https://next.mui.com/material-ui/react-stepper/)
  *
  * API:
  *
- * - [StepLabel API](https://mui.com/material-ui/api/step-label/)
+ * - [StepLabel API](https://next.mui.com/material-ui/api/step-label/)
  */
 declare const StepLabel: ((props: StepLabelProps) => React.JSX.Element) & {
   muiName: string;

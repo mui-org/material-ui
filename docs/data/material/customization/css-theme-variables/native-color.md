@@ -30,7 +30,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "NativeCssColors.js"}}
+{{"component": "file://./demos/native-css-colors/index.ts"}}
 
 ## Modern color spaces
 
@@ -47,7 +47,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "ModernColorSpaces.js"}}
+{{"component": "file://./demos/modern-color-spaces/index.ts"}}
 
 ## Aliasing color variables
 
@@ -66,7 +66,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "AliasColorVariables.js"}}
+{{"component": "file://./demos/alias-color-variables/index.ts"}}
 
 ## Theme color functions
 
@@ -74,7 +74,7 @@ The theme object contains these color utilities: `alpha()`, `lighten()`, and `da
 
 When native color is enabled, these functions use CSS `color-mix()` and relative color instead of the JavaScript color manipulation.
 
-{{"demo": "ThemeColorFunctions.js"}}
+{{"component": "file://./demos/theme-color-functions/index.ts"}}
 
 :::info
 The theme color functions are backward compatible.
@@ -86,7 +86,7 @@ If native color is not enabled, they will fall back to the JavaScript color mani
 The `theme.palette.getContrastText()` function produces the contrast color.
 The demo below shows the result of the `theme.palette.getContrastText()` function, which produces the text color based on the selected background.
 
-{{"demo": "ContrastTextDemo.js"}}
+{{"component": "file://./demos/contrast-text-demo/index.ts"}}
 
 :::info
 The CSS variables `--__l` and `--__a` are internal variables set globally by Material UI.

@@ -1,8 +1,0 @@
-<Chip label="Clickable Link" component="a" href="#basic-chip" clickable />
-<Chip
-  label="Clickable Link"
-  component="a"
-  href="#basic-chip"
-  variant="outlined"
-  clickable
-/>

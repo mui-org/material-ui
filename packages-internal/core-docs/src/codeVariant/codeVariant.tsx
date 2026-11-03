@@ -25,35 +25,34 @@ function useFirstRender() {
   return firstRenderRef.current;
 }
 
+export function resolveInitialCodeVariant(urlHash: string, cookie: string | undefined) {
+  const sourceExtension = urlHash.match(/\.(js|jsx|ts|tsx)$/)?.[1];
+  if (sourceExtension) {
+    return sourceExtension === 'js' || sourceExtension === 'jsx'
+      ? CODE_VARIANTS.JS
+      : CODE_VARIANTS.TS;
+  }
+  if (cookie === CODE_VARIANTS.JS || cookie === CODE_VARIANTS.TS) {
+    return cookie;
+  }
+  return CODE_VARIANTS.TS;
+}
+
 export function CodeVariantProvider(props: { children: React.ReactNode }) {
   const { children } = props;
 
   const [codeVariant, setCodeVariant] = React.useState(CODE_VARIANTS.TS);
 
-  const navigatedCodeVariant = React.useMemo(() => {
-    const navigatedCodeVariantMatch =
-      typeof window !== 'undefined' ? window.location.hash.match(/\.(js|tsx)$/) : null;
-
-    if (navigatedCodeVariantMatch === null) {
-      return undefined;
-    }
-
-    return navigatedCodeVariantMatch[1] === 'tsx' ? CODE_VARIANTS.TS : CODE_VARIANTS.JS;
-  }, []);
-
-  const persistedCodeVariant = React.useMemo(() => {
+  const initialCodeVariant = React.useMemo(() => {
     if (typeof window === 'undefined') {
-      return undefined;
+      return CODE_VARIANTS.TS;
     }
-    return getCookie('codeVariant');
+    return resolveInitialCodeVariant(window.location.hash, getCookie('codeVariant'));
   }, []);
   const isFirstRender = useFirstRender();
 
-  // We initialize from navigation or cookies. on subsequent renders the store is the truth
-  const noSsrCodeVariant =
-    isFirstRender === true
-      ? navigatedCodeVariant || persistedCodeVariant || codeVariant
-      : codeVariant;
+  // Initialize from navigation or cookies. On subsequent renders the store is the truth.
+  const noSsrCodeVariant = isFirstRender ? initialCodeVariant : codeVariant;
 
   React.useEffect(() => {
     if (codeVariant !== noSsrCodeVariant) {

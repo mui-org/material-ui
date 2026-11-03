@@ -133,6 +133,10 @@ export function ThemeProvider(props: React.PropsWithChildren) {
   const { direction, paletteMode } = themeOptions;
 
   useLazyCSS('/static/styles/prism-okaidia.css', '#prismjs');
+  // `syntax.css` ships with this package and is emitted as a hashed asset by the
+  // bundler (resolved relative to this module), rather than relying on a file
+  // copied into the consuming app's public folder.
+  useLazyCSS(new URL('./syntax.css', import.meta.url).href, '#syntax');
 
   // TODO replace with useColorScheme once all pages support css vars
   const { mode, systemMode } = useColorSchemeShim();

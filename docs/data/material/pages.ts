@@ -1,6 +1,6 @@
 import { standardNavIcons } from '@mui/internal-core-docs/AppLayout';
 import pagesApi from 'docs/data/material/pagesApi';
-import { MuiPage } from '@mui/internal-core-docs/MuiPage';
+import type { MuiPage } from '@mui/internal-core-docs/MuiPage';
 
 const pages: MuiPage[] = [
   {
@@ -315,6 +315,16 @@ const pages: MuiPage[] = [
       {
         pathname: '/material-ui/migration/pickers-migration',
         title: 'Migration from @material-ui/pickers',
+      },
+      {
+        pathname: '/material-ui/migration/v10',
+        subheader: 'Upgrade to v10',
+        children: [
+          {
+            pathname: '/material-ui/migration/upgrade-to-v10',
+            title: 'Upgrade to v10: getting started',
+          },
+        ],
       },
       {
         pathname: '/material-ui/migration/v9',

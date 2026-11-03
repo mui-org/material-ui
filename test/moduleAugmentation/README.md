@@ -9,7 +9,7 @@ pnpm typescript:module-augmentation
 You can also use the workspace command:
 
 ```bash
-pnpm -F @mui-internal/test-module-augmentation typescript:module-augmentation
+pnpm -F ./test/moduleAugmentation typescript:module-augmentation
 ```
 
 The package script uses pnpm to build the workspace dependencies before it tests

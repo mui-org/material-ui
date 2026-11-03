@@ -32,7 +32,7 @@ describe('setRef', () => {
   });
 
   it('throws on legacy string refs', () => {
-    // @ts-expect-error
+    // @ts-expect-error: Legacy string refs are not supported; refs must be callbacks or ref objects.
     expect(() => setRef('stringRef1', 'proxy')).to.throw();
   });
 });

@@ -1,4 +1,0 @@
-<Input defaultValue="Hello world" inputProps={ariaLabel} />
-<Input placeholder="Placeholder" inputProps={ariaLabel} />
-<Input disabled defaultValue="Disabled" inputProps={ariaLabel} />
-<Input defaultValue="Error" error inputProps={ariaLabel} />

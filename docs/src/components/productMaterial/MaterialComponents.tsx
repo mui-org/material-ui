@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -143,7 +143,7 @@ export default function MaterialComponents() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Frame sx={{ height: '100%' }}>
             <Frame.Demo className="mui-default-theme" sx={{ flexGrow: 1 }}>
-              <CssVarsProvider theme={customized ? customTheme : defaultTheme}>
+              <ThemeProvider theme={customized ? customTheme : defaultTheme}>
                 {demo === 'Button' && (
                   <Box
                     sx={{
@@ -282,7 +282,7 @@ export default function MaterialComponents() {
                     </Tooltip>
                   </Stack>
                 )}
-              </CssVarsProvider>
+              </ThemeProvider>
             </Frame.Demo>
             <Frame.Info data-mui-color-scheme="dark" sx={{ p: 0 }}>
               <MaterialVsCustomToggle customized={customized} setCustomized={setCustomized} />

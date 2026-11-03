@@ -15,40 +15,40 @@ githubSource: packages/mui-material/src/Rating
 
 ## Basic rating
 
-{{"demo": "BasicRating.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Rating precision
 
 The rating can display any float number with the `value` prop.
 Use the `precision` prop to define the minimum increment value change allowed.
 
-{{"demo": "HalfRating.js"}}
+{{"component": "file://./demos/half/index.ts"}}
 
 ## Hover feedback
 
 You can display a label on hover to help the user pick the correct rating value.
 The demo uses the `onChangeActive` prop.
 
-{{"demo": "HoverRating.js"}}
+{{"component": "file://./demos/hover/index.ts"}}
 
 ## Sizes
 
 For larger or smaller ratings use the `size` prop.
 
-{{"demo": "RatingSize.js"}}
+{{"component": "file://./demos/size/index.ts"}}
 
 ## Customization
 
 Here are some examples of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedRating.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 ## Radio group
 
 The rating is implemented with a radio group, set `highlightSelectedOnly` to restore the natural behavior.
 
-{{"demo": "RadioGroupRating.js"}}
+{{"component": "file://./demos/radio-group/index.ts"}}
 
 ## Accessibility
 
@@ -63,7 +63,7 @@ The accessibility of this component relies on:
 - A visually distinct appearance for the rating icons.
   By default, the rating component uses both a difference of color and shape (filled and empty icons) to indicate the value. In the event that you are using color as the only means to indicate the value, the information should also be also displayed as text, as in this demo. This is important to meet [WCAG 2.2 Success Criterion 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html).
 
-{{"demo": "TextRating.js"}}
+{{"component": "file://./demos/text/index.ts"}}
 
 ### ARIA
 

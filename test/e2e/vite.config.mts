@@ -1,6 +1,5 @@
 import { defineConfig, transformWithOxc } from 'vite';
 import react from '@vitejs/plugin-react';
-// eslint-disable-next-line import/no-relative-packages
 import { alias } from '../../vitest.shared.mts';
 
 // https://vite.dev/config/

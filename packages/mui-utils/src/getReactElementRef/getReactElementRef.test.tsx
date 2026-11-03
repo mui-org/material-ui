@@ -4,15 +4,15 @@ import * as React from 'react';
 
 describe('getReactElementRef', () => {
   it('should return undefined when not used correctly', () => {
-    // @ts-expect-error
+    // @ts-expect-error: A boolean is not a React element.
     expect(getReactElementRef(false)).to.equal(null);
-    // @ts-expect-error
+    // @ts-expect-error: A React element argument is required.
     expect(getReactElementRef()).to.equal(null);
-    // @ts-expect-error
+    // @ts-expect-error: A number is not a React element.
     expect(getReactElementRef(1)).to.equal(null);
 
     const children = [<div key="1" />, <div key="2" />];
-    // @ts-expect-error
+    // @ts-expect-error: An array of elements is not a single React element.
     expect(getReactElementRef(children)).to.equal(null);
   });
 

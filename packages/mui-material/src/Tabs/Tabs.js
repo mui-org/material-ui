@@ -240,6 +240,13 @@ function resolveScrollPadding(value, scrollportSize) {
   return value.endsWith('%') ? (number / 100) * scrollportSize : number;
 }
 
+function getScrollerScale(renderedSize, layoutSize) {
+  if (!renderedSize || Math.abs(renderedSize - layoutSize) < 1) {
+    return 1;
+  }
+  return renderedSize / layoutSize;
+}
+
 // Dev-only: tracks per-`Tabs` instance (keyed by its ref) whether the invalid-value warning was
 // already logged, so it isn't repeated across the several effects that call `getTabsMeta`.
 // Only referenced from `process.env.NODE_ENV !== 'production'` blocks; the `@__PURE__` annotation
@@ -281,6 +288,7 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
   const start = vertical ? 'top' : 'left';
   const end = vertical ? 'bottom' : 'right';
   const clientSize = vertical ? 'clientHeight' : 'clientWidth';
+  const offsetSize = vertical ? 'offsetHeight' : 'offsetWidth';
   const size = vertical ? 'height' : 'width';
 
   const ownerState = {
@@ -325,7 +333,6 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
     }
   }
 
-  const [mounted, setMounted] = React.useState(false);
   const [indicatorStyle, setIndicatorStyle] = React.useState(defaultIndicatorStyle);
   const [displayStartScroll, setDisplayStartScroll] = React.useState(false);
   const [displayEndScroll, setDisplayEndScroll] = React.useState(false);
@@ -343,6 +350,8 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
   const valueToIndex = new Map();
   const tabsRef = React.useRef(null);
   const tabListRef = React.useRef(null);
+
+  const mounted = indicatorStyle !== defaultIndicatorStyle;
 
   const externalForwardedProps = {
     slots,
@@ -365,6 +374,7 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
         bottom: rect.bottom,
         left: rect.left,
         right: rect.right,
+        scale: getScrollerScale(rect[size], tabsNode[offsetSize]),
       };
     }
 
@@ -424,25 +434,26 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
     const { tabsMeta, tabMeta } = getTabsMeta();
     let startValue = 0;
     let startIndicator;
+    const scale = tabsMeta?.scale ?? 1;
 
     if (vertical) {
       startIndicator = 'top';
       if (tabMeta && tabsMeta) {
-        startValue = tabMeta.top - tabsMeta.top + tabsMeta.scrollTop;
+        startValue = (tabMeta.top - tabsMeta.top) / scale + tabsMeta.scrollTop;
       }
     } else {
       startIndicator = isRtl ? 'right' : 'left';
       if (tabMeta && tabsMeta) {
         startValue =
           (isRtl ? -1 : 1) *
-          (tabMeta[startIndicator] - tabsMeta[startIndicator] + tabsMeta.scrollLeft);
+          ((tabMeta[startIndicator] - tabsMeta[startIndicator]) / scale + tabsMeta.scrollLeft);
       }
     }
 
     const newIndicatorStyle = {
       [startIndicator]: startValue,
       // May be wrong until the font is loaded.
-      [size]: tabMeta ? tabMeta[size] : 0,
+      [size]: tabMeta ? tabMeta[size] / scale : 0,
     };
 
     if (
@@ -604,9 +615,10 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
     );
 
     // The edges the tab has to sit between: the scrollport shrunk by its scroll-padding.
-    const scrollportStart = tabsMeta[start] + scrollPaddingStart;
-    const scrollportEnd = tabsMeta[end] - scrollPaddingEnd;
-    const startAlignedScroll = tabsMeta[scrollStart] + (tabMeta[start] - scrollportStart);
+    const { scale } = tabsMeta;
+    const scrollportStart = tabsMeta[start] + scrollPaddingStart * scale;
+    const scrollportEnd = tabsMeta[end] - scrollPaddingEnd * scale;
+    const startAlignedScroll = tabsMeta[scrollStart] + (tabMeta[start] - scrollportStart) / scale;
 
     if (tabMeta[start] < scrollportStart) {
       // start edge is out of view, or covered by the scroll-padding
@@ -620,7 +632,7 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
         scroll(startAlignedScroll, { animation });
       } else {
         // end edge is out of view, or covered by the scroll-padding
-        scroll(tabsMeta[scrollStart] + (tabMeta[end] - scrollportEnd), { animation });
+        scroll(tabsMeta[scrollStart] + (tabMeta[end] - scrollportEnd) / scale, { animation });
       }
     }
   });
@@ -730,11 +742,6 @@ const Tabs = React.forwardRef(function Tabs(inProps, ref) {
 
     return undefined;
   }, [scrollable, scrollButtons, updateScrollObserver, childrenProp?.length]);
-
-  React.useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
 
   React.useEffect(() => {
     updateIndicatorState();

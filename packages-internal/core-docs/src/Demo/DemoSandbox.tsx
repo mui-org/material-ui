@@ -7,13 +7,14 @@ import { ThemeProvider as SystemThemeProvider } from '@mui/system';
 import { createTheme, useTheme, styled } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/utils';
+import type * as StylisPluginRtl from '@mui/stylis-plugin-rtl';
 import { useTranslate } from '../i18n';
 import { ThemeOptionsContext } from '../ThemeContext/ThemeContext';
 import { useDemoContext } from '../DemoContext/DemoContext';
 import { DemoErrorBoundary } from './DemoErrorBoundary';
 import { DemoInstanceThemeProvider } from './DemoThemeProviders';
 
-type RtlModule = typeof import('@mui/stylis-plugin-rtl');
+type RtlModule = typeof StylisPluginRtl;
 
 let rtlModulePromise: Promise<RtlModule> | undefined;
 function loadRtlModule() {

@@ -774,7 +774,7 @@ function getNextIndex(
     return currentIndex + 1;
   }
 
-  if (currentIndex === 0) {
+  if (currentIndex <= 0) {
     return wrap ? lastIndex : -1;
   }
 

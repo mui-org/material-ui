@@ -1,7 +1,8 @@
 import type { CSSObject } from '@mui/system';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import ArrowDropDownRounded from '@mui/icons-material/ArrowDropDownRounded';
-import { createTheme, type ThemeOptions, type Theme, alpha } from '@mui/material/styles';
+import { createTheme, alpha } from '@mui/material/styles';
+import type { ThemeOptions, Theme } from '@mui/material/styles';
 
 interface ApplyDarkStyles {
   (scheme: CSSObject): CSSObject;
@@ -43,6 +44,7 @@ declare module '@mui/material/styles' {
     fontWeightSemiBold?: number;
     fontWeightExtraBold?: number;
     fontFamilyCode?: string;
+    fontFamilyTagline?: string;
     fontFamilySystem?: string;
   }
 
@@ -50,6 +52,7 @@ declare module '@mui/material/styles' {
     fontWeightSemiBold: number;
     fontWeightExtraBold: number;
     fontFamilyCode: string;
+    fontFamilyTagline: string;
     fontFamilySystem: string;
   }
 }
@@ -175,6 +178,22 @@ const systemFont = [
   '"Segoe UI Symbol"',
 ];
 
+// The variables come from `next/font` and add its metric-matched fallback faces.
+// They are only set on the docs `<body>`, hence the `var()` fallbacks. The
+// `--muidocs-font-*` theme variables resolve on `:root`, so they don't get the
+// fallback faces. The family name goes first because Turbopack sets the variables
+// to a different family name (https://github.com/vercel/next.js/issues/88894).
+const fontFamilyIbmPlexSans = [
+  '"IBM Plex Sans"',
+  'var(--font-ibm-plex-sans, "IBM Plex Sans")',
+  ...systemFont,
+].join(',');
+const fontFamilyGeneralSans = [
+  '"General Sans"',
+  'var(--font-general-sans, "General Sans")',
+  ...systemFont,
+].join(',');
+
 export const getMetaThemeColor = (mode: 'light' | 'dark') => {
   const themeColor = {
     light: blue[600],
@@ -265,7 +284,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') =>
     },
     spacing: 8,
     typography: {
-      fontFamily: ['"IBM Plex Sans"', ...systemFont].join(','),
+      fontFamily: fontFamilyIbmPlexSans,
       // Match VS Code
       // https://github.com/microsoft/vscode/blob/b38691f611d1ce3ef437c67a1b047c757b7b4e53/src/vs/editor/common/config/editorOptions.ts#L4578-L4580
       // https://github.com/microsoft/vscode/blob/d950552131d7350a45dac8b59bf179469c36c2ac/src/vs/editor/standalone/browser/standalone-tokens.css#L10
@@ -275,12 +294,12 @@ export const getDesignTokens = (mode: 'light' | 'dark') =>
         '"Droid Sans Mono"', // Linux
         'monospace', // fallback
       ].join(','),
-      fontFamilyTagline: ['"General Sans"', ...systemFont].join(','),
+      fontFamilyTagline: fontFamilyGeneralSans,
       fontFamilySystem: systemFont.join(','),
       fontWeightSemiBold: 600,
       fontWeightExtraBold: 800,
       h1: {
-        fontFamily: ['"General Sans"', ...systemFont].join(','),
+        fontFamily: fontFamilyGeneralSans,
         fontSize: 'clamp(2.5rem, 1.125rem + 3.5vw, 3.5em)',
         fontWeight: 600,
         lineHeight: 78 / 70,
@@ -290,7 +309,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') =>
         }),
       },
       h2: {
-        fontFamily: ['"General Sans"', ...systemFont].join(','),
+        fontFamily: fontFamilyGeneralSans,
         fontSize: 'clamp(1.5rem, 0.9643rem + 1.4286vw, 2.25rem)',
         fontWeight: 600,
         lineHeight: 44 / 36,
@@ -298,13 +317,13 @@ export const getDesignTokens = (mode: 'light' | 'dark') =>
         color: mode === 'dark' ? grey[100] : blueDark[700],
       },
       h3: {
-        fontFamily: ['"General Sans"', ...systemFont].join(','),
+        fontFamily: fontFamilyGeneralSans,
         fontSize: defaultTheme.typography.pxToRem(36),
         lineHeight: 44 / 36,
         letterSpacing: 0.2,
       },
       h4: {
-        fontFamily: ['"General Sans"', ...systemFont].join(','),
+        fontFamily: fontFamilyGeneralSans,
         fontSize: defaultTheme.typography.pxToRem(30),
         lineHeight: 42 / 28,
         letterSpacing: 0.2,
@@ -738,7 +757,7 @@ export function getThemedComponents(): ThemeOptions {
         },
         variants: [
           {
-            // @ts-ignore internal repo module augmentation issue
+            // @ts-expect-error: The branding theme defines the code variant without global Button variant augmentation.
             props: { variant: 'code' },
             style: ({ theme }) => [
               {
@@ -790,7 +809,7 @@ export function getThemedComponents(): ThemeOptions {
             ],
           },
           {
-            // @ts-ignore internal repo module augmentation issue
+            // @ts-expect-error: The branding theme defines codeOutlined without global Button variant augmentation.
             props: { variant: 'codeOutlined' },
             style: ({ theme }) => [
               {
@@ -850,7 +869,7 @@ export function getThemedComponents(): ThemeOptions {
             ],
           },
           {
-            // @ts-ignore internal repo module augmentation issue
+            // @ts-expect-error: The branding theme defines the link variant without global Button variant augmentation.
             props: { variant: 'link' },
             style: ({ theme }) => ({
               marginBottom: 1,
@@ -1182,7 +1201,7 @@ export function getThemedComponents(): ThemeOptions {
               }),
             }),
             // for labelling product in the search
-            // @ts-ignore internal repo module augmentation issue
+            // @ts-expect-error: The branding theme defines light without global Chip variant augmentation.
             ...(variant === 'light' && {
               ...(color === 'default' && {
                 color: (theme.vars || theme).palette.primary[700],

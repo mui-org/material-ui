@@ -2,16 +2,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
-import Typography, { type TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
+import type { TypographyProps } from '@mui/material/Typography';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
 import TimelineContext from '../Timeline/TimelineContext';
-import {
-  getTimelineOppositeContentUtilityClass,
-  type TimelineOppositeContentClasses,
-  type TimelineOppositeContentClassKey,
+import { getTimelineOppositeContentUtilityClass } from './timelineOppositeContentClasses';
+import type {
+  TimelineOppositeContentClasses,
+  TimelineOppositeContentClassKey,
 } from './timelineOppositeContentClasses';
 import convertTimelinePositionToClass from '../internal/convertTimelinePositionToClass';
 
@@ -68,12 +70,12 @@ const TimelineOppositeContentRoot = styled(Typography, {
  *
  * Demos:
  *
- * - [Timeline](https://mui.com/material-ui/react-timeline/)
+ * - [Timeline](https://next.mui.com/material-ui/react-timeline/)
  *
  * API:
  *
- * - [TimelineOppositeContent API](https://mui.com/material-ui/api/timeline-opposite-content/)
- * - inherits [Typography API](https://mui.com/material-ui/api/typography/)
+ * - [TimelineOppositeContent API](https://next.mui.com/material-ui/api/timeline-opposite-content/)
+ * - inherits [Typography API](https://next.mui.com/material-ui/api/typography/)
  */
 const TimelineOppositeContent = React.forwardRef(function TimelineOppositeContent(
   inProps: TimelineOppositeContentProps,

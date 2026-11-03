@@ -4,9 +4,10 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
-import { Plugin, transformWithOxc } from 'vite';
+import type { Plugin } from 'vite';
+import { transformWithOxc } from 'vite';
 import { playwright } from '@vitest/browser-playwright';
-import { BrowserInstanceOption } from 'vitest/node';
+import type { BrowserInstanceOption } from 'vitest/node';
 
 function forceJsxForJsFiles(): Plugin {
   return {
@@ -88,7 +89,9 @@ export default async function create(
   const pkgJson = path.resolve(file, '../package.json');
   const pkg = await fs.readFile(pkgJson, 'utf8').then((content) => JSON.parse(content));
 
-  const name = `${testEnv}:${pkg.name}`;
+  const packageName =
+    pkg.name ?? path.relative(MONOREPO_ROOT, path.dirname(pkgJson)).split(path.sep).join('/');
+  const name = `${testEnv}:${packageName}`;
 
   const ignore = await fs.readFile(path.resolve(MONOREPO_ROOT, './.gitignore'), 'utf8');
   const excludes = ignore

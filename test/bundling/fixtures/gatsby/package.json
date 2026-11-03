@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "prestart": "node ../../scripts/createFixture.js gatsby",
     "start": "pnpm gatsby build && concurrently --success first --kill-others \"pnpm gatsby serve\" \"node testGatsbyIntegration\""

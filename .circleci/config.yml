@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  code-infra: https://raw.githubusercontent.com/mui/mui-public/342a1159c5c25a48c8ed853893146aa8701574a6/.circleci/orbs/code-infra.yml
+  code-infra: https://raw.githubusercontent.com/mui/mui-public/7be938414716e74df30e861271c65d7885da8c98/.circleci/orbs/code-infra.yml
 
 parameters:
   workflow:
@@ -28,13 +28,14 @@ default-job: &default-job
       default: << pipeline.parameters.e2e-base-url >>
   environment: &default-environment
     BASE_BRANCH: master # #target-branch-reference
+    ARGOS_REFERENCE_BRANCH: master # #target-branch-reference
     AWS_REGION_ARTIFACTS: eu-central-1
     COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
     DANGER_DISABLE_TRANSPILATION: 'true'
   working_directory: /tmp/material-ui
   executor:
     name: code-infra/mui-node
-    node-version: '22.23.3'
+    node-version: '22.23.4'
   resource_class: medium.gen2
 
 default-context: &default-context
@@ -110,14 +111,23 @@ jobs:
     steps:
       - checkout
       - code-infra/install-deps
-      - code-infra/check-generated:
-          command: pnpm docs:typescript:formatted
       - run:
           name: Tests TypeScript definitions
           command: pnpm typescript:ci
       - run:
           name: Test module augmentation
           command: pnpm typescript:module-augmentation
+  test_types_minimum:
+    <<: *default-job
+    steps:
+      - checkout
+      - code-infra/install-deps
+      - run:
+          name: Build @mui packages
+          command: pnpm release:build
+      - run:
+          name: Test minimum TypeScript version
+          command: pnpm -F ./test/typescriptMinimum test
   test_types_next:
     <<: *default-job
     resource_class: xlarge.gen2
@@ -148,17 +158,14 @@ jobs:
     steps:
       - checkout
       # The legacy Playwright image (pinned for older browser engines) ships Node 22.12,
-      # which is below pnpm 11.5's minimum of Node 22.13. Install a newer Node into
-      # /usr/local (ahead of the image's /usr/bin on PATH) without changing the browsers.
+      # which fails the root package.json#engines.node check under engineStrict. Install the
+      # repo's Node into /usr/local (ahead of the image's /usr/bin on PATH) without changing
+      # the browsers.
       - run:
-          name: Upgrade Node.js for pnpm 11
+          name: Upgrade Node.js to match engines.node
           command: |
-            curl -fsSL https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-x64.tar.gz | tar -xz -C /usr/local --strip-components=1
+            curl -fsSL https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-x64.tar.gz | tar -xz -C /usr/local --strip-components=1
             node --version
-      - code-infra/install-pnpm
-      - run:
-          name: Configure pnpm engine-strict
-          command: pnpm config set --location project engine-strict false
       - code-infra/install-deps:
           react-version: << parameters.react-version >>
           playwright-version: '1.49.1'
@@ -202,6 +209,47 @@ jobs:
           command: pnpm test:browser --no-isolate --no-file-parallelism
       - store_test_results:
           path: test-results
+  test_benchmark:
+    <<: *default-job
+    # 2 vCPUs starve V8's background compilers, which makes the same code's speed vary from sample to
+    # sample; see the @mui/internal-benchmark README.
+    resource_class: medium+.gen2
+    executor:
+      name: code-infra/mui-node-browser
+      playwright-img-version: v1.63.0-noble
+    steps:
+      - checkout
+      - code-infra/install-deps
+      - run:
+          name: Build packages
+          command: pnpm release:build
+      - run:
+          name: Resolve the baseline commit
+          command: |
+            set -e
+            BASE_SHA=$(pnpm code-infra baseline --base-branch master)
+            echo "Baseline commit: $BASE_SHA"
+            echo "$BASE_SHA" > .benchmark-baseline-sha
+      - restore_cache:
+          name: Restore the packed-baseline cache
+          keys:
+            - benchmark-cache-v1-{{ checksum ".benchmark-baseline-sha" }}
+      - run:
+          name: Run the benchmarks
+          no_output_timeout: 30m
+          # Only the smoke benchmarks, to keep a pull request's check short; the other benchmark files
+          # are left to manual runs.
+          command: pnpm test:benchmark smoke --baseline "$(cat .benchmark-baseline-sha)"
+      - run:
+          name: Upload the benchmark report
+          # Also after a failed run, so the comment says what happened.
+          when: always
+          command: pnpm test:benchmark upload
+      - save_cache:
+          name: Save the packed-baseline cache
+          key: benchmark-cache-v1-{{ checksum ".benchmark-baseline-sha" }}
+          paths:
+            - test/benchmark/.benchmark/packed
   test_e2e:
     <<: *default-job
     resource_class: medium
@@ -241,15 +289,8 @@ jobs:
       - code-infra/install-deps:
           react-version: << parameters.react-version >>
       - run:
-          name: Host CPU
-          command: |
-            grep -m1 'model name' /proc/cpuinfo
-            grep -m1 '^flags' /proc/cpuinfo | grep -ow 'avx2\|avx512[a-z_0-9]*\|fma\|f16c' | sort -u | tr '\n' ' '
-            echo
-            nproc
-      - run:
           name: Run visual regression tests
-          command: xvfb-run pnpm test:regressions
+          command: pnpm test:regressions
       - run:
           name: A11y results committed?
           # The react@17/18/next jobs pin React via `package-overrides`, which rewrites
@@ -448,7 +489,7 @@ jobs:
           command: node scripts/testBuiltTypes.mjs
       - run:
           name: test exported typescript
-          command: pnpm --filter @mui-internal/test-module-resolution typescript:all
+          command: pnpm --filter ./test/moduleResolution typescript:all
       - store_artifacts:
           name: Persist size snapshot as pipeline artifact
           path: size-snapshot.json
@@ -468,6 +509,8 @@ workflows:
       - test_types:
           <<: *default-context
       - test_browser:
+          <<: *default-context
+      - test_benchmark:
           <<: *default-context
       - test_browser_legacy:
           <<: *default-context
@@ -578,8 +621,8 @@ workflows:
   #         react-version: ^17.0.0
   #         name: test_e2e-react@17
 
-  # Manually-triggered counterpart of nightly-cron — runs the full canary
-  # suite (react@18, react@next, typescript@next) on the current PR branch.
+  # Manually-triggered counterpart of nightly-cron — runs the compatibility
+  # suite (react@18, react@next, typescript@next, minimum TypeScript) on the current PR branch.
   nightly:
     when:
       equal: [nightly, << pipeline.parameters.workflow >>]
@@ -616,6 +659,8 @@ workflows:
           <<: *default-context
           react-version: next
           name: test_e2e-react@next
+      - test_types_minimum:
+          <<: *default-context
       - test_types_next:
           <<: *default-context
           typescript-version: next
@@ -679,6 +724,8 @@ workflows:
           filters:
             branches:
               ignore: v5.x
+      - test_types_minimum:
+          <<: *default-context
       - test_types_next:
           <<: *default-context
           typescript-version: next

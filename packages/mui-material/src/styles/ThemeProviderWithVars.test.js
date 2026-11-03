@@ -304,7 +304,6 @@ describe('[Material UI] ThemeProviderWithVars', () => {
     it('should not contain `variants` in theme.vars', () => {
       function Consumer() {
         const theme = useTheme();
-        // @ts-expect-error
         return <div>{theme.vars.variants ? 'variants' : ''}</div>;
       }
 
@@ -320,7 +319,6 @@ describe('[Material UI] ThemeProviderWithVars', () => {
     it('should not contain `focus` in theme.vars', () => {
       function Consumer() {
         const theme = useTheme();
-        // @ts-expect-error
         return <div>{theme.vars.focus ? 'focus' : ''}</div>;
       }
 
@@ -385,7 +383,7 @@ describe('[Material UI] ThemeProviderWithVars', () => {
     expect(() => {
       fireEvent.click(screen.getByText('Dark'));
     }).toErrorDev([
-      'MUI: The `setMode` function has no effect if `colorSchemeSelector` is `media` (`media` is the default value).\nTo toggle the mode manually, please configure `colorSchemeSelector` to use a class or data attribute.\nTo learn more, visit https://mui.com/material-ui/customization/css-theme-variables/configuration/#toggling-dark-mode-manually',
+      'MUI: The `setMode` function has no effect if `colorSchemeSelector` is `media` (`media` is the default value).\nTo toggle the mode manually, please configure `colorSchemeSelector` to use a class or data attribute.\nTo learn more, visit https://next.mui.com/material-ui/customization/css-theme-variables/configuration/#toggling-dark-mode-manually',
     ]);
   });
 

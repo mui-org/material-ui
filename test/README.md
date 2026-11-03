@@ -242,14 +242,22 @@ For example, in https://app.circleci.com/pipelines/github/mui/material-ui/32796/
 You can check integration of different versions of React (for example different [release channels](https://react.dev/community/versioning-policy) or PRs to React) by running:
 
 ```bash
-pnpm use-react-version <version>
+pnpm code-infra set-version-overrides --pkg react@<version>
 ```
 
 Possible values for `version`:
 
-- default: `stable` (minimum supported React version)
 - a tag on npm, for example `next`, `experimental` or `latest`
 - an older version, for example `^17.0.0`
+
+The command pins `react`, `react-dom` and `react-is` in the `overrides` field of `pnpm-workspace.yaml`, then runs `pnpm dedupe`.
+
+To go back to the React version from the lockfile, revert those changes and reinstall:
+
+```bash
+git checkout pnpm-workspace.yaml pnpm-lock.yaml
+pnpm install
+```
 
 #### CI
 
@@ -257,8 +265,8 @@ Possible values for `version`:
 
 There are two workflows that can be triggered for any given PR manually in the CircleCI web interface:
 
-- `react-next`
-- `react-17`
+- `nightly`: runs the tests against React 18 and `react@next`, and the type tests against `typescript@next` and the minimum supported TypeScript version
+- `react-17`: runs the tests against React 17
 
 Follow these steps:
 
@@ -266,23 +274,21 @@ Follow these steps:
 2. Click `Trigger Pipeline` button.
 3. Expand `Add parameters (optional)` and add the following parameter:
 
-   | Parameter type | Name       | Value                      |
-   | :------------- | :--------- | :------------------------- |
-   | `string`       | `workflow` | `react-next` or `react-17` |
+   | Parameter type | Name       | Value                   |
+   | :------------- | :--------- | :---------------------- |
+   | `string`       | `workflow` | `nightly` or `react-17` |
 
 4. Click `Trigger Pipeline` button.
 
 ##### API request
 
-You can pass the same `version` to our CircleCI pipeline as well:
-
-With the following API request we're triggering a run of the default workflow in
-PR #24289 for `react@next`
+You can trigger the same workflows with an API request.
+The following API request triggers a run of the `nightly` workflow in PR #24289:
 
 ```bash
 curl --request POST \
   --url https://circleci.com/api/v2/project/gh/mui/material-ui/pipeline \
   --header 'content-type: application/json' \
   --header 'Circle-Token: $CIRCLE_TOKEN' \
-  --data-raw '{"branch":"pull/24289/head","parameters":{"react-version":"next"}}'
+  --data-raw '{"branch":"pull/24289/head","parameters":{"workflow":"nightly"}}'
 ```

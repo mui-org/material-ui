@@ -1,6 +1,7 @@
 import path from 'path';
+import { unmatchedAxeDemos } from './axe.mjs';
 import { componentsDirectory, exists } from './files.mjs';
-import { renderDefaultReasons, renderReport } from './render.mjs';
+import { normalizeAffected, renderDefaultReasons, renderReport } from './render.mjs';
 import { RATING_KEYS } from './rollup.mjs';
 import {
   CONFORMANCE_SYMBOLS,
@@ -96,6 +97,7 @@ export function validateDefaults(defaults, check) {
 const COMPONENT_KEYS = {
   title: (value) => typeof value === 'string',
   axe: (value) => typeof value === 'string',
+  axeDemos: isStrings,
   tests: isStrings,
   inherits: (value) => typeof value === 'string',
   criteria: isObject,
@@ -108,6 +110,7 @@ const COMPONENT_KEYS = {
  *
  * - `title` (optional): the display name, when it differs from the folder name.
  * - `axe` (optional): the committed `*.a11y.json` for the component's demos.
+ * - `axeDemos` (optional): demo names or `*` globs in that file that count for this component.
  * - `tests` (optional): other components whose test files also test this one.
  * - `inherits` (optional): the component whose ratings this one inherits.
  * - `criteria`: `{ <number>: { conformance?, responsibility?, group?, flagged? } }`.
@@ -132,6 +135,18 @@ export async function validateSource(source, defaults) {
 
   if (data.axe !== undefined && !source.axe) {
     violations.push(`axe: "${data.axe}" does not exist`);
+  }
+  if (data.axeDemos !== undefined && data.axe === undefined) {
+    violations.push('axeDemos: set without "axe"');
+  }
+  if (Array.isArray(data.axeDemos) && data.axeDemos.length === 0) {
+    violations.push('axeDemos: must list at least one demo');
+  }
+  if (source.axe && Array.isArray(data.axeDemos)) {
+    const unmatched = await unmatchedAxeDemos(data.axe, data.axeDemos);
+    unmatched.forEach((pattern) => {
+      violations.push(`axeDemos: "${pattern}" matches no demo in ${data.axe}`);
+    });
   }
   (data.tests ?? []).forEach((name, index) => {
     if (!source.extraTests[index]) {
@@ -200,6 +215,90 @@ function checkCriterion(criterion, override, where, violations) {
   if (criterion.group === 'Manual' && tested) {
     violations.push(`${where}: rated Manual but a unit or Playwright test covers it`);
   }
+}
+
+const isAffected = (value) =>
+  Array.isArray(value) &&
+  value.every(
+    (entry) =>
+      (typeof entry === 'string' && entry !== '') ||
+      (isObject(entry) &&
+        typeof entry.component === 'string' &&
+        (entry.note === undefined || typeof entry.note === 'string') &&
+        Object.keys(entry).every((key) => key === 'component' || key === 'note')),
+  );
+
+const KNOWN_GAP_KEYS = {
+  gap: (value) => typeof value === 'string',
+  criteria: isStrings,
+  affected: isAffected,
+  workaround: (value) => typeof value === 'string',
+};
+
+/**
+ * Returns every problem in `knownGaps.json`. Both modes check the shape of the
+ * rows. With `check`, the rows must also explain every ⚠️ and ❌ rating, and
+ * must not name a component that has no such rating for the row's criteria.
+ */
+export function validateKnownGaps(knownGaps, reports, check) {
+  const violations = [];
+  if (!Array.isArray(knownGaps)) {
+    return ['knownGaps.json: must be an array'];
+  }
+
+  const failing = new Set();
+  for (const { component, criteria } of reports) {
+    for (const criterion of criteria) {
+      if (criterion.conformance !== 'Supports') {
+        failing.add(`${component} ${criterion.number}`);
+      }
+    }
+  }
+
+  const covered = new Set();
+  knownGaps.forEach((row, index) => {
+    const where = `knownGaps.json[${index}]`;
+    if (!isObject(row)) {
+      violations.push(`${where}: must be an object`);
+      return;
+    }
+    for (const [key, value] of Object.entries(row)) {
+      if (!KNOWN_GAP_KEYS[key]) {
+        violations.push(`${where}: unknown key "${key}"`);
+      } else if (!KNOWN_GAP_KEYS[key](value)) {
+        violations.push(`${where}: "${key}" has the wrong type`);
+      }
+    }
+    for (const key of Object.keys(KNOWN_GAP_KEYS)) {
+      if (row[key] === undefined) {
+        violations.push(`${where}: missing "${key}"`);
+      }
+    }
+    const criteria = isStrings(row.criteria) ? row.criteria : [];
+    criteria
+      .filter((number) => !WCAG_BY_NUMBER.has(number))
+      .forEach((number) =>
+        violations.push(`${where}: ${number} is not a WCAG 2.2 Level A or AA criterion`),
+      );
+
+    const affected = isAffected(row.affected) ? row.affected : [];
+    for (const entry of affected.map(normalizeAffected)) {
+      const matches = criteria.filter((number) => failing.has(`${entry.component} ${number}`));
+      if (check && matches.length === 0) {
+        violations.push(
+          `${where}: ${entry.component} has no ⚠️ or ❌ rating for ${criteria.join(', ')}`,
+        );
+      }
+      matches.forEach((number) => covered.add(`${entry.component} ${number}`));
+    }
+  });
+
+  for (const key of failing) {
+    if (check && !covered.has(key)) {
+      violations.push(`knownGaps.json: ${key} is rated ⚠️ or ❌ but no row lists it`);
+    }
+  }
+  return violations;
 }
 
 /**

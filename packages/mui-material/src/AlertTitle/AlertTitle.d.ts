@@ -23,11 +23,11 @@ export interface AlertTitleProps extends TypographyProps<'div'> {
  *
  * Demos:
  *
- * - [Alert](https://mui.com/material-ui/react-alert/)
+ * - [Alert](https://next.mui.com/material-ui/react-alert/)
  *
  * API:
  *
- * - [AlertTitle API](https://mui.com/material-ui/api/alert-title/)
- * - inherits [Typography API](https://mui.com/material-ui/api/typography/)
+ * - [AlertTitle API](https://next.mui.com/material-ui/api/alert-title/)
+ * - inherits [Typography API](https://next.mui.com/material-ui/api/typography/)
  */
 export default function AlertTitle(props: AlertTitleProps): React.JSX.Element;

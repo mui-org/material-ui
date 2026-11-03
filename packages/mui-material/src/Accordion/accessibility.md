@@ -369,7 +369,7 @@ These item-level criteria are rated on the header button. See [AccordionSummary]
 ## Scope and test environment
 
 - **Standard.** WCAG 2.2, Level A and AA.
-- **Component version.** `@mui/material` 9.4.0.
+- **Component version.** `@mui/material` 10.0.0-alpha.0.
 
 <!-- scope:start -->
 

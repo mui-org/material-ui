@@ -7,7 +7,7 @@
 After [installation](/material-ui/getting-started/installation/), you can import any Material UI component and start playing around.
 For example, try changing the `variant` on the [Button](/material-ui/react-button/) to `outlined` to see how the style changes:
 
-{{"demo": "ButtonUsage.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/button/index.ts", "initialExpanded": true}}
 
 ## Globals
 

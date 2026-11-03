@@ -3,13 +3,12 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
-import {
-  getTimelineSeparatorUtilityClass,
-  type TimelineSeparatorClasses,
-} from './timelineSeparatorClasses';
+import { getTimelineSeparatorUtilityClass } from './timelineSeparatorClasses';
+import type { TimelineSeparatorClasses } from './timelineSeparatorClasses';
 
 export interface TimelineSeparatorProps extends StandardProps<React.ComponentPropsWithRef<'div'>> {
   /**
@@ -52,11 +51,11 @@ const TimelineSeparatorRoot = styled('div', {
  *
  * Demos:
  *
- * - [Timeline](https://mui.com/material-ui/react-timeline/)
+ * - [Timeline](https://next.mui.com/material-ui/react-timeline/)
  *
  * API:
  *
- * - [TimelineSeparator API](https://mui.com/material-ui/api/timeline-separator/)
+ * - [TimelineSeparator API](https://next.mui.com/material-ui/api/timeline-separator/)
  */
 const TimelineSeparator = React.forwardRef(function TimelineSeparator(
   inProps: TimelineSeparatorProps,

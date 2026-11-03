@@ -33,7 +33,7 @@ theme.transitions.create(['background-color', 'transform']);
 
 #### Example
 
-{{"demo": "TransitionHover.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/hover/index.ts", "collapseToEmpty": true}}
 
 ### `theme.transitions.getAutoHeightDuration(height) => duration`
 

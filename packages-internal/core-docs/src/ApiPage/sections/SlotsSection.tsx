@@ -1,17 +1,14 @@
 /* eslint-disable react/no-danger */
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { type ComponentApiContent } from '@mui/internal-api-docs-builder';
+import type { ComponentApiContent } from '@mui/internal-api-docs-builder';
 import { useTranslate } from '../../i18n';
 import { SectionTitle } from '../../SectionTitle';
 import SlotsList from '../list/SlotsList';
 import SlotsTable from '../table/SlotsTable';
-import { type SlotDefinition } from '../definitions/types';
-import {
-  type ApiDisplayLayout,
-  ToggleDisplayOption,
-  useApiPageOption,
-} from './ToggleDisplayOption';
+import type { SlotDefinition } from '../definitions/types';
+import { ToggleDisplayOption, useApiPageOption } from './ToggleDisplayOption';
+import type { ApiDisplayLayout } from './ToggleDisplayOption';
 import { getSlotsApiDefinitions } from '../definitions/slots';
 
 export type SlotsSectionProps = (

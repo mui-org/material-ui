@@ -8,8 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@mui/material": "latest",
-    "@mui/material-pigment-css": "latest",
+    "@mui/material": "next",
+    "@mui/material-pigment-css": "next",
     "@pigment-css/react": "latest",
     "next": "latest",
     "react": "latest",

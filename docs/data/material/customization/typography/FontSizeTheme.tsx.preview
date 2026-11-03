@@ -1,3 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Typography>body1</Typography>
-</ThemeProvider>

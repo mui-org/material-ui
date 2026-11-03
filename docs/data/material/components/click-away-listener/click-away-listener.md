@@ -20,7 +20,7 @@ Click-Away Listener also supports the [Portal](/material-ui/react-portal/) compo
 
 The demo below shows how to hide a menu dropdown when users click anywhere else on the page:
 
-{{"demo": "ClickAway.js"}}
+{{"component": "file://./demos/click-away/index.ts"}}
 
 ## Basics
 
@@ -36,7 +36,7 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 The following demo uses the [Portal](/material-ui/react-portal/) component to render the dropdown into a new subtree outside of the current DOM hierarchy:
 
-{{"demo": "PortalClickAway.js"}}
+{{"component": "file://./demos/portal-click-away/index.ts"}}
 
 ### Listening for leading events
 
@@ -48,7 +48,7 @@ You can set the component to listen for **leading events** (the start of a click
 When the component is set to listen for leading events, interactions with the scrollbar are ignored.
 :::
 
-{{"demo": "LeadingClickAway.js"}}
+{{"component": "file://./demos/leading-click-away/index.ts"}}
 
 ## Accessibility
 

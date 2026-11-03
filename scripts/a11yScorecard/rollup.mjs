@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-relative-packages
 import { playwrightCriteria } from '../../test/regressions/a11y/criteriaSuites.mjs';
 import { axeRulesFor } from './axe.mjs';
 import { WCAG_CRITERIA } from './wcag.mjs';

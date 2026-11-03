@@ -5,7 +5,6 @@
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "disabled": { "type": { "name": "bool" } },
     "disableTypography": { "type": { "name": "bool" } },
-    "inputRef": { "type": { "name": "custom", "description": "ref" } },
     "label": { "type": { "name": "node" } },
     "labelPlacement": {
       "type": {

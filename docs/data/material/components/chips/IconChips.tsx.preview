@@ -1,2 +1,0 @@
-<Chip icon={<FaceIcon />} label="With Icon" />
-<Chip icon={<FaceIcon />} label="With Icon" variant="outlined" />

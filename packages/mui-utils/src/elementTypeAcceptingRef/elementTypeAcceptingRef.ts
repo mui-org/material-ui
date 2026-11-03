@@ -54,7 +54,7 @@ function elementTypeAcceptingRef(
     return new Error(
       `Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. ` +
         `Expected an element type that can hold a ref. ${warningHint} ` +
-        'For more information see https://mui.com/r/caveat-with-refs-guide',
+        'For more information see https://next.mui.com/r/caveat-with-refs-guide',
     );
   }
 

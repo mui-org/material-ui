@@ -69,12 +69,12 @@ export interface FormHelperTextTypeMap<
  *
  * Demos:
  *
- * - [Number Field](https://mui.com/material-ui/react-number-field/)
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [FormHelperText API](https://mui.com/material-ui/api/form-helper-text/)
+ * - [FormHelperText API](https://next.mui.com/material-ui/api/form-helper-text/)
  */
 declare const FormHelperText: OverridableComponent<FormHelperTextTypeMap>;
 

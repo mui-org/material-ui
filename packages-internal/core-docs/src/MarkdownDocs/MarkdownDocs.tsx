@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Ad, AdGuest } from '../Ad';
+import DemoContext, { useDemoContext } from '../DemoContext';
 import { RichMarkdownElement } from './RichMarkdownElement';
 import { AppLayoutDocs } from '../AppLayout';
 import { useUserLanguage } from '../i18n';
@@ -28,7 +29,17 @@ export function MarkdownDocs(props: MarkdownDocsProps) {
   const userLanguage = useUserLanguage();
   const localizedDoc = docs[userLanguage] || docs.en;
 
-  return (
+  // Propagate the page-level `disableAd` killswitch into `DemoContext` so the
+  // inline Carbon ad rendered inside demos respects pages that opt out of ads
+  // (e.g. the Getting Started > Usage page). Without this, demos on ad-free
+  // pages would still show inline Carbon ads once the source viewer is opened.
+  const parentDemoContext = useDemoContext();
+  const demoContextValue = React.useMemo(
+    () => ({ ...parentDemoContext, disableAd: disableAd || parentDemoContext.disableAd }),
+    [parentDemoContext, disableAd],
+  );
+
+  const content = (
     <AppLayoutDocs
       cardOptions={{
         description: localizedDoc.headers.cardDescription,
@@ -60,4 +71,6 @@ export function MarkdownDocs(props: MarkdownDocsProps) {
       ))}
     </AppLayoutDocs>
   );
+
+  return <DemoContext.Provider value={demoContextValue}>{content}</DemoContext.Provider>;
 }

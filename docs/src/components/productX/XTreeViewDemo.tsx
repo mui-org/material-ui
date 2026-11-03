@@ -2,7 +2,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { animated, useSpring } from '@react-spring/web';
 import { styled } from '@mui/material/styles';
-import { TransitionProps } from '@mui/material/transitions';
+import type { TransitionProps } from '@mui/material/transitions';
 import { HighlightedCode } from '@mui/internal-core-docs/HighlightedCode';
 import { Frame } from '@mui/internal-core-docs/AppLayout';
 import Box from '@mui/material/Box';
@@ -15,7 +15,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
-import { useTreeItem, UseTreeItemParameters } from '@mui/x-tree-view/useTreeItem';
+import type { UseTreeItemParameters } from '@mui/x-tree-view/useTreeItem';
+import { useTreeItem } from '@mui/x-tree-view/useTreeItem';
 import {
   TreeItemContent,
   TreeItemIconContainer,

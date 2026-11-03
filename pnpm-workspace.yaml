@@ -7,7 +7,6 @@ packages:
   - test/*
 
 engineStrict: true
-enablePrePostScripts: true
 updateNotifier: false
 autoDedupe: true
 blockExoticSubdeps: true
@@ -33,20 +32,22 @@ trustPolicyIgnoreAfter: 525600
 catalogs:
   docs:
     stylis: '4.2.0'
-    '@base-ui/react': '^1.8.0'
-    '@docsearch/react': '^4.7.0'
+    '@base-ui/react': '^1.9.0'
+    '@docsearch/react': '^5.0.1'
     '@emotion/cache': '^11.14.0'
     '@emotion/react': '^11.14.0'
     '@emotion/server': '^11.11.0'
     '@emotion/styled': '^11.14.1'
+    '@mui/internal-docs-infra': '0.13.1-canary.19'
 
 overrides:
+  '@mui/internal-docs-infra': '0.13.1-canary.19'
   # Both were bundled twice in the docs build
   'docs>stylis': '4.2.0'
-  'docs>react-is': '19.3.0'
+  'docs>react-is': '19.3.1'
   # Migrated from package.json "resolutions" (pnpm 11 ignores that field).
-  caniuse-lite: '^1.0.30001812'
-  '@types/node': '22.20.4'
+  caniuse-lite: '^1.0.30001820'
+  '@types/node': '22.20.5'
   cross-fetch: '^4.1.0'
   '@pigment-css/react': '0.0.31'
   '@pigment-css/unplugin': '0.0.31'
@@ -62,3 +63,6 @@ allowBuilds:
   '@mui/x-telemetry': false
   core-js: false
   core-js-pure: false
+
+lockfile:
+  includeResolutionSettings: true

@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import * as React from 'react';
 import { createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import NativeSelect, { nativeSelectClasses as classes } from '@mui/material/NativeSelect';
@@ -100,5 +101,17 @@ describe('<NativeSelect />', () => {
 
     expect(screen.getByTestId('root')).to.have.class('foo');
     expect(screen.getByTestId('root')).to.have.class('bar');
+  });
+
+  it('should forward the ref of the input element', () => {
+    const inputRef = React.createRef();
+    const ref = React.createRef();
+    const { container } = render(
+      <NativeSelect {...defaultProps} ref={ref} input={<Input ref={inputRef} />} />,
+    );
+
+    const inputRoot = container.querySelector(`.${inputClasses.root}`);
+    expect(inputRef.current).to.equal(inputRoot);
+    expect(ref.current).to.equal(inputRoot);
   });
 });

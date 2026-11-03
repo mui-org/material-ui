@@ -611,7 +611,7 @@ describe('<ButtonBase />', () => {
       );
       await ripple.startTouch(screen.getByRole('button'));
       await ripple.stopTouch(screen.getByRole('button'));
-      // @ts-ignore
+      // @ts-expect-error: querySelector can return null, which prevents Sinon from inferring the element's methods.
       stub(container.querySelector('.touch-ripple'), 'getBoundingClientRect').callsFake(() => ({
         width: 100,
         height: 100,
@@ -638,7 +638,7 @@ describe('<ButtonBase />', () => {
       );
       await ripple.startTouch(screen.getByRole('button'));
       await ripple.stopTouch(screen.getByRole('button'));
-      // @ts-ignore
+      // @ts-expect-error: querySelector can return null, which prevents Sinon from inferring the element's methods.
       stub(container.querySelector('.touch-ripple'), 'getBoundingClientRect').callsFake(() => ({
         width: 100,
         height: 100,

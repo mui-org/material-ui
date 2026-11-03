@@ -84,8 +84,7 @@ export default function XDataGrid() {
             '#data-grid-demo div[role="cell"][data-field="name"]',
           );
           if (cell) {
-            const clickEvent = document.createEvent('MouseEvents');
-            clickEvent.initEvent('dblclick', true, true);
+            const clickEvent = new MouseEvent('dblclick', { bubbles: true, cancelable: true });
             cell.dispatchEvent(clickEvent);
           }
         }, 120);

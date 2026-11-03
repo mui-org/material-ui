@@ -1,7 +1,0 @@
-<Box
-  sx={{ display: 'flex', p: 1, bgcolor: 'background.paper', borderRadius: 1 }}
->
-  <Item sx={{ order: 2 }}>Item 1</Item>
-  <Item sx={{ order: 3 }}>Item 2</Item>
-  <Item sx={{ order: 1 }}>Item 3</Item>
-</Box>

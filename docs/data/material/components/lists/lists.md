@@ -30,7 +30,7 @@ Material UI Lists are implemented using a collection of related components:
 - List Divider: a separator between list items.
 - List Subheader: a label for a nested list.
 
-{{"demo": "BasicList.js", "bg": true}}
+{{"component": "file://./demos/basic/index.ts", "bg": true}}
 
 The last item of the previous demo shows how you can render a link:
 
@@ -51,28 +51,28 @@ import ListItem from '@mui/material/ListItem';
 
 ## Nested List
 
-{{"demo": "NestedList.js", "bg": true}}
+{{"component": "file://./demos/nested/index.ts", "bg": true}}
 
 ## Folder List
 
-{{"demo": "FolderList.js", "bg": true}}
+{{"component": "file://./demos/folder/index.ts", "bg": true}}
 
 ## Interactive
 
 Below is an interactive demo that lets you explore the visual results of the different settings:
 
-{{"demo": "InteractiveList.js", "bg": true}}
+{{"component": "file://./demos/interactive/index.ts", "bg": true}}
 
 ## Selected ListItem
 
-{{"demo": "SelectedListItem.js", "bg": true}}
+{{"component": "file://./demos/selected-item/index.ts", "bg": true}}
 
 ## Align list items
 
 When displaying three lines or more, the avatar is not aligned at the top.
 You should set the `alignItems="flex-start"` prop to align the avatar at the top, following the Material Design guidelines:
 
-{{"demo": "AlignItemsList.js", "bg": true}}
+{{"component": "file://./demos/align-items/index.ts", "bg": true}}
 
 ## List Controls
 
@@ -85,36 +85,36 @@ The `CheckBox` and `CheckBoxOutlineBlank` icons display its checked state.
 Click the row or press <kbd>Space</kbd> while it is focused to toggle its state.
 The comment button is a secondary action and a separate target.
 
-{{"demo": "CheckboxList.js", "bg": true}}
+{{"component": "file://./demos/checkbox/index.ts", "bg": true}}
 
 The checkbox is the secondary action for the list item and a separate target.
 
-{{"demo": "CheckboxListSecondary.js", "bg": true}}
+{{"component": "file://./demos/checkbox-secondary/index.ts", "bg": true}}
 
 ### Switch
 
 The switch is the secondary action and a separate target.
 
-{{"demo": "SwitchListSecondary.js", "bg": true}}
+{{"component": "file://./demos/switch-secondary/index.ts", "bg": true}}
 
 ## Sticky subheader
 
 Upon scrolling, subheaders remain pinned to the top of the screen until pushed off screen by the next subheader.
 This feature relies on CSS sticky positioning.
 
-{{"demo": "PinnedSubheaderList.js", "bg": true}}
+{{"component": "file://./demos/pinned-subheader/index.ts", "bg": true}}
 
 ## Inset List Item
 
 The `inset` prop enables a list item that does not have a leading icon or avatar to align correctly with items that do.
 
-{{"demo": "InsetList.js", "bg": true}}
+{{"component": "file://./demos/inset/index.ts", "bg": true}}
 
 ## Gutterless list
 
 When rendering a list within a component that defines its own gutters, `ListItem` gutters can be disabled with `disableGutters`.
 
-{{"demo": "GutterlessList.js", "bg": true}}
+{{"component": "file://./demos/gutterless/index.ts", "bg": true}}
 
 ## Virtualized List
 
@@ -122,7 +122,7 @@ In the following example, we demonstrate how to use [react-window](https://githu
 It renders 200 rows and can easily handle more.
 Virtualization helps with performance issues.
 
-{{"demo": "VirtualizedList.js", "bg": true}}
+{{"component": "file://./demos/virtualized/index.ts", "bg": true}}
 
 The use of [react-window](https://github.com/bvaughn/react-window) when possible is encouraged.
 If this library doesn't cover your use case, you should consider using alternatives like [react-virtuoso](https://github.com/petyosi/react-virtuoso).
@@ -133,4 +133,4 @@ Here are some examples of customizing the component.
 You can learn more about this in the
 [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedList.js"}}
+{{"component": "file://./demos/customized/index.ts"}}

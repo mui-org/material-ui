@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { debounce } from '@mui/material/utils';
 
@@ -14,7 +15,7 @@ export const withPointer = <T extends React.ElementType>(
     const handleMouseOver = React.useContext(PointerContext);
     return (
       <React.Fragment>
-        {/* @ts-ignore */}
+        {/* @ts-expect-error: The generic element type cannot prove support for the injected ref and mouse handler. */}
         <Component
           ref={root}
           {...props}

@@ -16,15 +16,14 @@ import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import ResetFocusIcon from '@mui/icons-material/CenterFocusWeak';
-import { useRouter } from 'next/router';
 import { CODE_VARIANTS, stylingSolutionMapping } from '../constants';
 import { useSetCodeVariant } from '../codeVariant';
 import { useTranslate } from '../i18n';
 import { OpenInMUIChatButton } from './OpenInMUIChatButton';
 import { useDemoContext } from '../DemoContext';
-import * as codeSandbox from './sandbox/CodeSandbox';
-import * as stackBlitz from './sandbox/StackBlitz';
-import type { DemoData as SandboxDemoData } from './sandbox/types';
+import * as codeSandbox from '../sandbox/CodeSandbox';
+import * as stackBlitz from '../sandbox/StackBlitz';
+import type { DemoData as SandboxDemoData } from '../sandbox/types';
 import type { DemoToolbarProps } from './Demo';
 
 const Root = styled('div')(({ theme }) => [
@@ -365,73 +364,6 @@ export function DemoToolbar(props: DemoToolbarProps) {
     isFocusableControl,
   });
 
-  const devMenuItems: React.ReactNode[] = [];
-  if (process.env.DEPLOY_ENV === 'staging' || process.env.DEPLOY_ENV === 'pull-request') {
-    // TODO: uncomment once we enable eslint-plugin-react-compiler // eslint-disable-next-line react-compiler/react-compiler -- valid reason to disable rules of hooks
-    // eslint-disable-next-line react-hooks/rules-of-hooks -- process.env never changes
-    const router = useRouter();
-
-    if (process.env.PULL_REQUEST_ID) {
-      devMenuItems.push(
-        <MDMenuItem
-          key="link-deploy-preview"
-          data-ga-event-category="demo"
-          data-ga-event-label={demo.gaLabel}
-          data-ga-event-action="link-deploy-preview"
-          component="a"
-          href={`https://deploy-preview-${process.env.PULL_REQUEST_ID}--${process.env.NETLIFY_SITE_NAME}.netlify.app${router.route}/#${demoName}`}
-          target="_blank"
-          rel="noopener nofollow"
-          onClick={handleMoreClose}
-        >
-          demo on PR #{process.env.PULL_REQUEST_ID}
-        </MDMenuItem>,
-      );
-    }
-
-    devMenuItems.push(
-      <MDMenuItem
-        key="link-next"
-        data-ga-event-category="demo"
-        data-ga-event-label={demo.gaLabel}
-        data-ga-event-action="link-next"
-        component="a"
-        href={`https://next--${process.env.NETLIFY_SITE_NAME}.netlify.app${router.route}/#${demoName}`}
-        target="_blank"
-        rel="noopener nofollow"
-        onClick={handleMoreClose}
-      >
-        demo on&#160;<code>next</code>
-      </MDMenuItem>,
-      <MDMenuItem
-        key="permalink"
-        data-ga-event-category="demo"
-        data-ga-event-label={demo.gaLabel}
-        data-ga-event-action="permalink"
-        component="a"
-        href={`${process.env.NETLIFY_DEPLOY_URL}${router.route}#${demoName}`}
-        target="_blank"
-        rel="noopener nofollow"
-        onClick={handleMoreClose}
-      >
-        demo permalink
-      </MDMenuItem>,
-      <MDMenuItem
-        key="link-master"
-        data-ga-event-category="demo"
-        data-ga-event-label={demo.gaLabel}
-        data-ga-event-action="link-master"
-        component="a"
-        href={`https://master--${process.env.NETLIFY_SITE_NAME}.netlify.app${router.route}/#${demoName}`}
-        target="_blank"
-        rel="noopener nofollow"
-        onClick={handleMoreClose}
-      >
-        demo on&#160;<code>master</code>
-      </MDMenuItem>,
-    );
-  }
-
   return (
     <React.Fragment>
       <Root aria-label={t('demoToolbarLabel')} {...toolbarProps}>
@@ -442,7 +374,7 @@ export function DemoToolbar(props: DemoToolbarProps) {
           demoData={demoData as unknown as SandboxDemoData}
         />
         <Fade in={codeOpen}>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', ml: 1 }}>
             {hasNonSystemDemos && (
               <Divider orientation="vertical" variant="middle" sx={{ mx: 1, height: '24px' }} />
             )}
@@ -619,7 +551,6 @@ export function DemoToolbar(props: DemoToolbarProps) {
         >
           {t('copySourceLinkTS')}
         </MenuItem>
-        {devMenuItems}
       </Menu>
       <Snackbar
         open={snackbarOpen}

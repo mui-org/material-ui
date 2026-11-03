@@ -2,15 +2,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent, OverrideProps } from '@mui/types';
-// @ts-ignore
+import type { OverridableComponent, OverrideProps } from '@mui/types';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- The peer is resolvable only after its build.
+// @ts-ignore: material-pigment-css links to its build directory, which is absent in a fresh checkout.
 import Container from '@mui/material-pigment-css/Container';
 import capitalize from '@mui/utils/capitalize';
 import composeClasses from '@mui/utils/composeClasses';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
-import { SxProps, Breakpoint } from '@mui/system';
-import { Theme } from '../styles';
-import { ContainerClasses } from '../Container/containerClasses';
+import type { SxProps, Breakpoint } from '@mui/system';
+import type { Theme } from '../styles';
+import type { ContainerClasses } from '../Container/containerClasses';
 
 export interface PigmentContainerOwnProps {
   children?: React.ReactNode;
@@ -77,11 +78,11 @@ const useUtilityClasses = (ownerState: PigmentContainerOwnProps) => {
  *
  * Demos:
  *
- * - [Container](https://mui.com/material-ui/react-container/)
+ * - [Container](https://next.mui.com/material-ui/react-container/)
  *
  * API:
  *
- * - [PigmentContainer API](https://mui.com/material-ui/api/pigment-container/)
+ * - [PigmentContainer API](https://next.mui.com/material-ui/api/pigment-container/)
  */
 const PigmentContainer = React.forwardRef(function PigmentContainer(
   { className, disableGutters = false, fixed = false, maxWidth = 'lg', ...props },

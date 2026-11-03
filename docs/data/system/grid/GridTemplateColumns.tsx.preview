@@ -1,5 +1,0 @@
-<Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-  <Item>1</Item>
-  <Item>2</Item>
-  <Item>3</Item>
-</Box>

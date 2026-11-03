@@ -1,5 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Typography variant="subtitle1">subtitle</Typography>
-  <Typography>body1</Typography>
-  <Button>Button</Button>
-</ThemeProvider>

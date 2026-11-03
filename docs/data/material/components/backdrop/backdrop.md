@@ -21,7 +21,7 @@ Most apps should not use Backdrop directly. Reach for it only when you need a cu
 The demo below shows a basic Backdrop with a Circular Progress component in the foreground to indicate a loading state.
 After clicking **Show Backdrop**, you can click anywhere on the page to close it.
 
-{{"demo": "SimpleBackdrop.js"}}
+{{"component": "file://./demos/simple/index.ts"}}
 
 ## Transitions
 

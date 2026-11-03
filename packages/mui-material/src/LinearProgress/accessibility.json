@@ -1,5 +1,6 @@
 {
   "axe": "docs/data/material/components/progress/progress.a11y.json",
+  "axeDemos": ["Linear*"],
   "criteria": {
     "1.3.1": { "responsibility": "Component" },
     "1.4.1": { "responsibility": "Component", "group": "Manual" },

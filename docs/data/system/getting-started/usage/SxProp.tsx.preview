@@ -1,7 +1,0 @@
-<NoSsr>
-  <ThemeProvider theme={theme}>
-    <Box color="white" sx={{ bgcolor: 'palevioletred', p: 1, textTransform: 'uppercase' }}>
-      CssProp
-    </Box>
-  </ThemeProvider>
-</NoSsr>

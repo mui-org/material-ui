@@ -20,7 +20,7 @@ Text fields allow users to enter text into a UI. They typically appear in forms 
 The `TextField` wrapper component is a complete form control including a label, input, and help text.
 It comes with three variants: outlined (default), filled, and standard.
 
-{{"demo": "BasicTextFields.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 :::info
 The standard variant of the Text Field is no longer documented in the [Material Design guidelines](https://m2.material.io/)
@@ -32,7 +32,7 @@ but Material UI will continue to support it.
 
 Standard form attributes are supported, for example `required`, `disabled`, `type`, etc. as well as a `helperText` which is used to give context about a field's input, such as how the input will be used.
 
-{{"demo": "FormPropsTextFields.js"}}
+{{"component": "file://./demos/form-props/index.ts"}}
 
 ## Controlling the HTML input
 
@@ -63,7 +63,7 @@ The rendered HTML input will look like this:
 
 Use the `error` prop to toggle a visual error state, and pair it with a `helperText` message describing the error.
 
-{{"demo": "ValidationTextFields.js"}}
+{{"component": "file://./demos/validation/index.ts"}}
 
 ## Multiline
 
@@ -71,19 +71,19 @@ The `multiline` prop transforms the Text Field into a [Textarea Autosize](/mater
 Unless the `rows` prop is set, the height of the text field dynamically matches its content.
 You can use the `minRows` and `maxRows` props to bound it.
 
-{{"demo": "MultilineTextFields.js"}}
+{{"component": "file://./demos/multiline/index.ts"}}
 
 ## Select
 
 The `select` prop makes the text field use the [Select](/material-ui/react-select/) component internally.
 
-{{"demo": "SelectTextFields.js"}}
+{{"component": "file://./demos/select/index.ts"}}
 
 ## Icons
 
 There are multiple ways to display an icon with a text field.
 
-{{"demo": "InputWithIcon.js"}}
+{{"component": "file://./demos/input-with-icon/index.ts"}}
 
 ### Input Adornments
 
@@ -91,37 +91,37 @@ The main way is with an `InputAdornment`.
 This can be used to add a prefix, a suffix, or an action to an input.
 For instance, you can use an icon button to hide or reveal the password.
 
-{{"demo": "InputAdornments.js"}}
+{{"component": "file://./demos/input-adornments/index.ts"}}
 
 #### Customizing adornments
 
 You can apply custom styles to adornments, and trigger changes to one based on attributes from another.
 For example, the demo below uses the label's `[data-shrink=true]` attribute to make the suffix visible (via opacity) when the label is in its shrunken state.
 
-{{"demo": "InputSuffixShrink.js"}}
+{{"component": "file://./demos/input-suffix-shrink/index.ts"}}
 
 ## Sizes
 
 Fancy smaller inputs? Use the `size` prop.
 
-{{"demo": "TextFieldSizes.js"}}
+{{"component": "file://./demos/sizes/index.ts"}}
 
 The `filled` variant input height can be further reduced by rendering the label outside of it.
 
-{{"demo": "TextFieldHiddenLabel.js"}}
+{{"component": "file://./demos/hidden-label/index.ts"}}
 
 ## Margin
 
 The `margin` prop can be used to alter the vertical spacing of the text field.
 Using `none` (default) doesn't apply margins to the `FormControl` whereas `dense` and `normal` do.
 
-{{"demo": "LayoutTextFields.js"}}
+{{"component": "file://./demos/layout/index.ts"}}
 
 ## Full width
 
 `fullWidth` can be used to make the input take up the full width of its container.
 
-{{"demo": "FullWidthTextField.js"}}
+{{"component": "file://./demos/full-width/index.ts"}}
 
 ## Uncontrolled vs. Controlled
 
@@ -135,7 +135,7 @@ The component can be controlled or uncontrolled.
 Learn more about controlled and uncontrolled components in the [React documentation](https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components).
 :::
 
-{{"demo": "StateTextFields.js"}}
+{{"component": "file://./demos/state/index.ts"}}
 
 ## Components
 
@@ -153,17 +153,17 @@ This is on purpose.
 The component takes care of the most used properties.
 Then, it's up to the user to use the underlying component shown in the following demo. Still, you can use `slotProps.htmlInput` (and `slotProps.input`, `slotProps.inputLabel` properties) if you want to avoid some boilerplate.
 
-{{"demo": "ComposedTextField.js"}}
+{{"component": "file://./demos/composed/index.ts"}}
 
 ## Inputs
 
-{{"demo": "Inputs.js"}}
+{{"component": "file://./demos/inputs/index.ts"}}
 
 ## Color
 
 The `color` prop changes the highlight color of the text field when focused.
 
-{{"demo": "ColorTextFields.js"}}
+{{"component": "file://./demos/color/index.ts"}}
 
 ## Customization
 
@@ -172,20 +172,20 @@ You can learn more about this in the [overrides documentation page](/material-ui
 
 ### Using the styled API
 
-{{"demo": "CustomizedInputsStyled.js"}}
+{{"component": "file://./demos/customized-inputs-styled/index.ts"}}
 
 ### Using the theme style overrides API
 
 Use the `styleOverrides` key to change any style injected by Material UI into the DOM.
 See the [theme style overrides](/material-ui/customization/theme-components/#theme-style-overrides) documentation for further details.
 
-{{"demo": "CustomizedInputsStyleOverrides.js"}}
+{{"component": "file://./demos/customized-inputs-style-overrides/index.ts"}}
 
 Customization does not stop at CSS.
 You can use composition to build custom components and give your app a unique feel.
 Below is an example using the [`InputBase`](/material-ui/api/input-base/) component, inspired by Google Maps.
 
-{{"demo": "CustomizedInputBase.js", "bg": true}}
+{{"component": "file://./demos/customized-input-base/index.ts", "bg": true}}
 
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/primitive/text-field).
 
@@ -223,7 +223,7 @@ import { useFormControl } from '@mui/material/FormControl';
 
 **Example**
 
-{{"demo": "UseFormControl.js"}}
+{{"component": "file://./demos/use-form-control/index.ts"}}
 
 ## Performance
 
@@ -306,11 +306,11 @@ If you need a text field with number validation, you can use [Number Field](/mat
 
 The helper text prop affects the height of the text field. If two text fields are placed side by side, one with a helper text and one without, they will have different heights. For example:
 
-{{"demo": "HelperTextMisaligned.js"}}
+{{"component": "file://./demos/helper-text-misaligned/index.ts"}}
 
 This can be fixed by passing a space character to the `helperText` prop:
 
-{{"demo": "HelperTextAligned.js"}}
+{{"component": "file://./demos/helper-text-aligned/index.ts"}}
 
 ## Integration with 3rd party input libraries
 
@@ -319,7 +319,7 @@ You have to provide a custom implementation of the `<input>` element with the `i
 
 The following demo uses the [react-imask](https://github.com/uNmAnNeR/imaskjs) and [react-number-format](https://github.com/s-yadav/react-number-format) libraries. The same concept could be applied to, for example [react-stripe-element](https://github.com/mui/material-ui/issues/16037).
 
-{{"demo": "FormattedInputs.js"}}
+{{"component": "file://./demos/formatted-inputs/index.ts"}}
 
 The provided input component should expose a ref with a value that implements the following interface:
 

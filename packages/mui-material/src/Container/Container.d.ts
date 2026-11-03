@@ -47,11 +47,11 @@ export interface ContainerTypeMap<
  *
  * Demos:
  *
- * - [Container](https://mui.com/material-ui/react-container/)
+ * - [Container](https://next.mui.com/material-ui/react-container/)
  *
  * API:
  *
- * - [Container API](https://mui.com/material-ui/api/container/)
+ * - [Container API](https://next.mui.com/material-ui/api/container/)
  */
 declare const Container: OverridableComponent<ContainerTypeMap>;
 

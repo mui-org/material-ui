@@ -1,13 +1,13 @@
 'use client';
-import { SxProps } from '@mui/system';
+import type { SxProps } from '@mui/system';
 import { useRtl } from '@mui/system/RtlProvider';
 import refType from '@mui/utils/refType';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import BasePopper from './BasePopper';
-import { PopperProps as BasePopperProps } from './BasePopper.types';
-import { Theme } from '../styles';
+import type { PopperProps as BasePopperProps } from './BasePopper.types';
+import type { Theme } from '../styles';
 import { styled } from '../zero-styled';
 import { useDefaultProps } from '../DefaultPropsProvider';
 
@@ -32,13 +32,13 @@ const PopperRoot = styled(BasePopper, {
  *
  * Demos:
  *
- * - [Autocomplete](https://mui.com/material-ui/react-autocomplete/)
- * - [Menu](https://mui.com/material-ui/react-menu/)
- * - [Popper](https://mui.com/material-ui/react-popper/)
+ * - [Autocomplete](https://next.mui.com/material-ui/react-autocomplete/)
+ * - [Menu](https://next.mui.com/material-ui/react-menu/)
+ * - [Popper](https://next.mui.com/material-ui/react-popper/)
  *
  * API:
  *
- * - [Popper API](https://mui.com/material-ui/api/popper/)
+ * - [Popper API](https://next.mui.com/material-ui/api/popper/)
  */
 const Popper = React.forwardRef(function Popper(
   inProps: PopperProps,

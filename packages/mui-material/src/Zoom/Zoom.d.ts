@@ -49,15 +49,15 @@ export interface ZoomProps extends TransitionProps {
 
 /**
  * The Zoom transition can be used for the floating variant of the
- * [Button](https://mui.com/material-ui/react-floating-action-button/#animation) component.
+ * [Button](https://next.mui.com/material-ui/react-floating-action-button/#animation) component.
  *
  * Demos:
  *
- * - [Transitions](https://mui.com/material-ui/transitions/)
+ * - [Transitions](https://next.mui.com/material-ui/transitions/)
  *
  * API:
  *
- * - [Zoom API](https://mui.com/material-ui/api/zoom/)
+ * - [Zoom API](https://next.mui.com/material-ui/api/zoom/)
  * - inherits [Transition API](https://reactcommunity.org/react-transition-group/transition/#Transition-props)
  */
 export default function Zoom(props: ZoomProps): React.JSX.Element;

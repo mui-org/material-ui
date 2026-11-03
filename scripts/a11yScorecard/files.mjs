@@ -16,6 +16,10 @@ export const docsPagePath = path.join(
   rootDirectory,
   'docs/data/material/getting-started/accessibility/accessibility.md',
 );
+export const knownGapsPath = path.join(
+  rootDirectory,
+  'docs/data/material/getting-started/accessibility/knownGaps.json',
+);
 export const packageJsonPath = path.join(rootDirectory, 'packages/mui-material/package.json');
 
 export const relative = (filepath) => path.relative(rootDirectory, filepath);

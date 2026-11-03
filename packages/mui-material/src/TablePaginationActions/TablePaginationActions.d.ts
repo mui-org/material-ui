@@ -1,13 +1,18 @@
 import * as React from 'react';
+import { SxProps } from '@mui/system';
 import { IconButtonProps } from '../IconButton/IconButton';
 import { SvgIconProps } from '../SvgIcon';
+import { InternalStandardProps as StandardProps } from '../internal';
+import { Theme } from '../styles';
+import { TablePaginationActionsClasses } from './tablePaginationActionsClasses';
 
-export interface TablePaginationActionsProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TablePaginationActionsProps extends StandardProps<
+  React.HTMLAttributes<HTMLDivElement>
+> {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: {} | undefined;
-  className?: string | undefined;
+  classes?: Partial<TablePaginationActionsClasses> | undefined;
   count: number;
   /**
    * If `true`, the component is disabled.
@@ -25,6 +30,7 @@ export interface TablePaginationActionsProps extends React.HTMLAttributes<HTMLDi
   getItemAriaLabel: (type: 'first' | 'last' | 'next' | 'previous') => string;
   onPageChange: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
   page: number;
+  ref?: React.Ref<HTMLDivElement> | undefined;
   rowsPerPage: number;
   showFirstButton: boolean;
   showLastButton: boolean;
@@ -41,6 +47,10 @@ export interface TablePaginationActionsProps extends React.HTMLAttributes<HTMLDi
       }
     | undefined;
   slots?: TablePaginationActionsSlots | undefined;
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface TablePaginationActionsSlots {
@@ -89,11 +99,11 @@ export interface TablePaginationActionsSlots {
  *
  * Demos:
  *
- * - [Pagination](https://mui.com/material-ui/react-pagination/)
+ * - [Pagination](https://next.mui.com/material-ui/react-pagination/)
  *
  * API:
  *
- * - [TablePaginationActions API](https://mui.com/material-ui/api/table-pagination-actions/)
+ * - [TablePaginationActions API](https://next.mui.com/material-ui/api/table-pagination-actions/)
  */
 declare const TablePaginationActions: React.JSXElementConstructor<TablePaginationActionsProps>;
 

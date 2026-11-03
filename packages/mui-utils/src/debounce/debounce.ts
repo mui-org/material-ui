@@ -8,7 +8,7 @@ export default function debounce<T extends (...args: any[]) => any>(func: T, wai
   let timeout: ReturnType<typeof setTimeout>;
   function debounced(...args: Parameters<T>) {
     const later = () => {
-      // @ts-ignore
+      // @ts-expect-error: The debounced function has no explicit this parameter annotation.
       func.apply(this, args);
     };
     clearTimeout(timeout);

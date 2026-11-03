@@ -4,6 +4,7 @@ import {
   CONFORMANCE_SYMBOLS,
   GROUP_HEADINGS,
   RESPONSIBILITY_SYMBOLS,
+  WCAG_BY_NUMBER,
   WCAG_CRITERIA,
 } from './wcag.mjs';
 
@@ -260,6 +261,43 @@ export function renderDocsTable(reports) {
     return `| ${link} | ${summary.levelA} | ${summary.levelAA} | ${summary.rated} | ${summary.supports} | ${summary.partiallySupports} | ${summary.verified}/${summary.rated} | ${summary.automated} |`;
   });
 
+  return [...header, ...rows].join('\n');
+}
+
+/** `"Button"` or `{ "component": "Button", "note": "`loading`" }` */
+export const normalizeAffected = (entry) =>
+  typeof entry === 'string' ? { component: entry } : entry;
+
+/** W3C slugs are the criterion name in kebab case: "Contrast (Minimum)" → `contrast-minimum`. */
+function criterionLink(number) {
+  const { name } = WCAG_BY_NUMBER.get(number);
+  const slug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  return `[${number} ${name}](https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html)`;
+}
+
+/**
+ * The Known gaps table on the public page. The gap and workaround wording is
+ * editorial, so it lives in `knownGaps.json`. It is rendered here so that it
+ * can be checked against the ratings.
+ */
+export function renderKnownGaps(knownGaps) {
+  const header = [
+    '| Gap | Criteria | Affected | Workaround |',
+    '| :-- | :------- | :------- | :--------- |',
+  ];
+  const rows = knownGaps.map(({ gap, criteria, affected, workaround }) => {
+    const components = affected
+      .map(normalizeAffected)
+      .map(({ component, note }) => {
+        const link = `[${component}](${REPORT_BASE}/${component}/accessibility.md)`;
+        return note ? `${link} (${note})` : link;
+      })
+      .join('<br />');
+    return `| **${gap}** | ${criteria.map(criterionLink).join('<br />')} | ${components} | ${workaround} |`;
+  });
   return [...header, ...rows].join('\n');
 }
 

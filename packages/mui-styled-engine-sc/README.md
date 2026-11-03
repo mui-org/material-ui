@@ -7,4 +7,4 @@ It's designed for developers who would like to use `styled-components` as the ma
 
 <!-- #host-reference -->
 
-Visit [https://mui.com/material-ui/integrations/styled-components/](https://mui.com/material-ui/integrations/styled-components/) to view the full documentation.
+Visit [https://next.mui.com/material-ui/integrations/styled-components/](https://next.mui.com/material-ui/integrations/styled-components/) to view the full documentation.

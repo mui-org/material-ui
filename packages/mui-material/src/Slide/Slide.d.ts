@@ -62,16 +62,16 @@ export interface SlideProps extends TransitionProps {
 }
 
 /**
- * The Slide transition is used by the [Drawer](https://mui.com/material-ui/react-drawer/) component.
+ * The Slide transition is used by the [Drawer](https://next.mui.com/material-ui/react-drawer/) component.
  *
  * Demos:
  *
- * - [Dialog](https://mui.com/material-ui/react-dialog/)
- * - [Transitions](https://mui.com/material-ui/transitions/)
+ * - [Dialog](https://next.mui.com/material-ui/react-dialog/)
+ * - [Transitions](https://next.mui.com/material-ui/transitions/)
  *
  * API:
  *
- * - [Slide API](https://mui.com/material-ui/api/slide/)
+ * - [Slide API](https://next.mui.com/material-ui/api/slide/)
  * - inherits [Transition API](https://reactcommunity.org/react-transition-group/transition/#Transition-props)
  */
 export default function Slide(props: SlideProps): React.JSX.Element;

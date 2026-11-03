@@ -3,11 +3,17 @@ import path from 'path';
 import fs from 'node:fs';
 import fetch from 'cross-fetch';
 import * as mui from '@mui/icons-material';
-import synonyms from 'docs/data/material/components/material-icons/synonyms';
+import synonyms from 'docs/data/material/components/material-icons/demos/search-icons/synonyms';
 // eslint-disable-next-line import/no-relative-packages
 import myDestRewriter from '../../packages/mui-icons-material/renameFilters/material-design-icons';
 // eslint-disable-next-line import/no-relative-packages, import/extensions
 import { LEGACY_OUTLINE_ICONS } from '../../packages/mui-icons-material/builder.test.mjs';
+
+// The search-icons demo owns the synonyms list since the demos migration.
+const SYNONYMS_FILE = path.join(
+  __dirname,
+  '../data/material/components/material-icons/demos/search-icons/synonyms.js',
+);
 
 function not(a, b) {
   return a.filter((value) => !b.includes(value));
@@ -84,10 +90,7 @@ async function run() {
     });
     newSynonyms += '};\n\nexport default synonyms;\n';
 
-    fs.writeFileSync(
-      path.join(__dirname, `../../docs/data/material/components/material-icons/synonyms.js`),
-      newSynonyms,
-    );
+    fs.writeFileSync(SYNONYMS_FILE, newSynonyms);
 
     console.log('Stats:');
     console.log(`${iconList.length} synonyms icons in the generated file`);

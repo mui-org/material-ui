@@ -1,6 +1,6 @@
-import ts from '@typescript/typescript6';
+import type ts from '@typescript/typescript6';
 import { uniqBy } from 'es-toolkit/array';
-import {
+import type {
   PropType,
   ArrayType,
   LiteralType,

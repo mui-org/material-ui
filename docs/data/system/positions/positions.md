@@ -4,7 +4,7 @@
 
 ## z-index
 
-{{"demo": "ZIndex.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/z-index/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ zIndex: 'tooltip' }}>

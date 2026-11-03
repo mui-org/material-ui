@@ -7,7 +7,7 @@
 The visually hidden style utility provides a common mechanism for hidings elements visually, but making them available for assistive technology.
 It's a simple style object of type `React.CSSProperties`.
 
-{{"demo": "VisuallyHiddenUsage.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/visually-hidden-usage/index.ts", "initialExpanded": true}}
 
 If you don't have a strict CSP policy in place, you can also do:
 

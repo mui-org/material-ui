@@ -1,6 +1,6 @@
 {
   "name": "@mui/codemod",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Codemod scripts for Material UI.",
   "license": "MIT",
@@ -30,11 +30,11 @@
   "dependencies": {
     "@babel/core": "^7.29.7",
     "@babel/runtime": "^7.29.7 || ^8.0.5",
-    "@babel/traverse": "^7.29.8",
+    "@babel/traverse": "^7.29.12",
     "@mui/material-v5": "npm:@mui/material@5.18.0",
     "jscodeshift": "^17.4.0",
     "jscodeshift-add-imports": "^1.0.11",
-    "postcss": "^8.5.28",
+    "postcss": "^8.5.32",
     "postcss-cli": "^12.0.0",
     "yargs": "^18.2.0"
   },

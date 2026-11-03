@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import { defineConfig, transformWithOxc } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-// eslint-disable-next-line import/no-relative-packages
 import { alias } from '../../vitest.shared.mts';
 import { INDEX_NAME } from './docsearchFixtureData';
 

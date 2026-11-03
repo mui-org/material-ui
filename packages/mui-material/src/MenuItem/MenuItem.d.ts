@@ -61,12 +61,12 @@ export type MenuItemTypeMap<
  *
  * Demos:
  *
- * - [Menu](https://mui.com/material-ui/react-menu/)
+ * - [Menu](https://next.mui.com/material-ui/react-menu/)
  *
  * API:
  *
- * - [MenuItem API](https://mui.com/material-ui/api/menu-item/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [MenuItem API](https://next.mui.com/material-ui/api/menu-item/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const MenuItem: ExtendButtonBase<MenuItemTypeMap>;
 

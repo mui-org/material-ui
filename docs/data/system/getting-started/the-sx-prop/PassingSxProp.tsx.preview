@@ -1,8 +1,0 @@
-<ListHeader
-  sx={(theme) => ({
-    color: 'info.main',
-    ...theme.typography.overline,
-  })}
->
-  Header
-</ListHeader>

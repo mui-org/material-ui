@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
-import { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
+import type { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
 
 interface MyOverrideProps {
   className: string;
@@ -100,17 +100,17 @@ declare const Foo: OverridableComponent<{
 />;
 
 // ... but for an arbitrary ComponentType
-// @ts-expect-error
+// @ts-expect-error: A plain function component does not accept a ref.
 <Foo<typeof MyOverrideComponent> component={MyOverrideComponent} ref={() => {}} />;
 
 <Foo
   numberProp={3}
-  // @ts-expect-error
+  // @ts-expect-error: Foo does not declare a bad prop.
   bad="hi" // invalid prop
 />;
 
 <Foo
-  // @ts-expect-error
+  // @ts-expect-error: MyOverrideComponent requires myString to be a string.
   component={MyOverrideComponent}
   myString={4} // should be a string
   numberProp={3}
@@ -126,7 +126,7 @@ declare const Foo: OverridableComponent<{
 
 <Foo<typeof MyOverrideComponent>
   component={MyOverrideComponent}
-  // @ts-expect-error
+  // @ts-expect-error: MyOverrideComponent requires myString to be a string.
   myString={4} // should be a string
   myCallback={(n) => {
     expectType<number, typeof n>(n);
@@ -146,7 +146,7 @@ declare const Foo: OverridableComponent<{
   component="div"
   numberProp={3}
   // event type doesn't match component type
-  // @ts-expect-error
+  // @ts-expect-error: The div root cannot use a mouse handler restricted to HTMLButtonElement.
   onClick={(event: React.MouseEvent<HTMLButtonElement>) => event.currentTarget.checkValidity()}
 />;
 

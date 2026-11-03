@@ -1,4 +1,0 @@
-<ThemeProvider theme={theme}>
-  <CssBaseline />
-  <h1>h1 element</h1>
-</ThemeProvider>

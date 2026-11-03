@@ -48,15 +48,15 @@ export interface FadeProps extends Omit<TransitionProps, 'children'> {
 }
 
 /**
- * The Fade transition is used by the [Modal](https://mui.com/material-ui/react-modal/) component.
+ * The Fade transition is used by the [Modal](https://next.mui.com/material-ui/react-modal/) component.
  *
  * Demos:
  *
- * - [Transitions](https://mui.com/material-ui/transitions/)
+ * - [Transitions](https://next.mui.com/material-ui/transitions/)
  *
  * API:
  *
- * - [Fade API](https://mui.com/material-ui/api/fade/)
+ * - [Fade API](https://next.mui.com/material-ui/api/fade/)
  * - inherits [Transition API](https://reactcommunity.org/react-transition-group/transition/#Transition-props)
  */
 export default function Fade(props: FadeProps): React.JSX.Element;

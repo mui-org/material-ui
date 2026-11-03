@@ -566,6 +566,39 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
       expect(slider).to.have.attribute('aria-valuenow', '0.4');
     });
 
+    it('should round value to step precision when using the keyboard', () => {
+      render(<Slider defaultValue={0.2} min={0} max={1} step={0.1} shiftStep={0.2} />);
+      const slider = screen.getByRole('slider');
+
+      act(() => {
+        slider.focus();
+      });
+
+      fireEvent.keyDown(slider, { key: 'ArrowRight' });
+      expect(slider).to.have.attribute('aria-valuenow', '0.3');
+
+      fireEvent.keyDown(slider, { key: 'ArrowLeft' });
+      expect(slider).to.have.attribute('aria-valuenow', '0.2');
+
+      fireEvent.keyDown(slider, { key: 'ArrowLeft' });
+      expect(slider).to.have.attribute('aria-valuenow', '0.1');
+
+      fireEvent.keyDown(slider, { key: 'PageUp' });
+      expect(slider).to.have.attribute('aria-valuenow', '0.3');
+    });
+
+    it('should step from 0 with a decimal step when using the keyboard', () => {
+      render(<Slider defaultValue={0} min={0} max={1} step={0.1} />);
+      const slider = screen.getByRole('slider');
+
+      act(() => {
+        slider.focus();
+      });
+
+      fireEvent.keyDown(slider, { key: 'ArrowRight' });
+      expect(slider).to.have.attribute('aria-valuenow', '0.1');
+    });
+
     it('should not fail to round value to step precision when step is very small', () => {
       const { container } = render(
         <Slider defaultValue={0.00000002} min={0} max={0.0000001} step={0.00000001} />,
@@ -1556,6 +1589,87 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
       fireEvent.touchEnd(document.body, createTouches([{ identifier: 1 }]));
       expect(container.firstChild).not.to.have.class(classes.dragging);
     });
+  });
+
+  describe('position while dragging', () => {
+    // These listeners run right after the slider's own listener, before the browser
+    // gets a chance to paint, so they see what the next frame will show.
+    it('should move the thumb and the track within the touchmove event', () => {
+      const { container } = render(
+        <Slider
+          defaultValue={0}
+          slotProps={{ thumb: { 'data-testid': 'thumb' }, track: { 'data-testid': 'track' } }}
+        />,
+      );
+      stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+        width: 100,
+        height: 10,
+        bottom: 10,
+        left: 0,
+      }));
+      const thumb = screen.getByTestId('thumb');
+      const track = screen.getByTestId('track');
+
+      fireEvent.touchStart(
+        container.firstChild,
+        createTouches([{ identifier: 1, clientX: 10, clientY: 0 }]),
+      );
+
+      const positions = [];
+      const handleTouchMove = () => {
+        positions.push([thumb.style.left, track.style.width]);
+      };
+      document.addEventListener('touchmove', handleTouchMove);
+      try {
+        fireEvent.touchMove(
+          document.body,
+          createTouches([{ identifier: 1, clientX: 42, clientY: 0 }]),
+        );
+      } finally {
+        document.removeEventListener('touchmove', handleTouchMove);
+      }
+
+      expect(positions).to.deep.equal([['42%', '42%']]);
+    });
+
+    it.skipIf(isJsdom())(
+      'should move the thumb within the pointermove event when controlled',
+      () => {
+        function ControlledSlider() {
+          const [value, setValue] = React.useState(0);
+          return (
+            <Slider
+              value={value}
+              onChange={(event, newValue) => setValue(newValue)}
+              slotProps={{ thumb: { 'data-testid': 'thumb' } }}
+            />
+          );
+        }
+        const { container } = render(<ControlledSlider />);
+        stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+          width: 100,
+          height: 10,
+          bottom: 10,
+          left: 0,
+        }));
+        const thumb = screen.getByTestId('thumb');
+
+        fireEvent.pointerDown(container.firstChild, { buttons: 1, clientX: 10, pointerId: 1 });
+
+        const positions = [];
+        const handlePointerMove = () => {
+          positions.push(thumb.style.left);
+        };
+        document.addEventListener('pointermove', handlePointerMove);
+        try {
+          fireEvent.pointerMove(document.body, { buttons: 1, clientX: 42, pointerId: 1 });
+        } finally {
+          document.removeEventListener('pointermove', handlePointerMove);
+        }
+
+        expect(positions).to.deep.equal(['42%']);
+      },
+    );
   });
 
   it('should remove the slider from the tab sequence', () => {

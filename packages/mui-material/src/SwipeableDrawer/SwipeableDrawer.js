@@ -290,7 +290,7 @@ const SwipeableDrawer = React.forwardRef(function SwipeableDrawer(inProps, ref) 
 
     if (open) {
       if (swipeInstance.current.velocity > minFlingVelocity || translateRatio > hysteresis) {
-        onClose();
+        onClose(nativeEvent);
       } else {
         // Reset the position, the swipe was aborted.
         setPosition(0, {
@@ -302,7 +302,7 @@ const SwipeableDrawer = React.forwardRef(function SwipeableDrawer(inProps, ref) 
     }
 
     if (swipeInstance.current.velocity < -minFlingVelocity || 1 - translateRatio > hysteresis) {
-      onOpen();
+      onOpen(nativeEvent);
     } else {
       // Reset the position, the swipe was aborted.
       setPosition(getMaxTranslate(horizontal, paperRef.current), {
@@ -716,13 +716,13 @@ SwipeableDrawer.propTypes /* remove-proptypes */ = {
   /**
    * Callback fired when the component requests to be closed.
    *
-   * @param {React.SyntheticEvent<{}>} event The event source of the callback.
+   * @param {React.SyntheticEvent<{}> | Event} event The event source of the callback.
    */
   onClose: PropTypes.func.isRequired,
   /**
    * Callback fired when the component requests to be opened.
    *
-   * @param {React.SyntheticEvent<{}>} event The event source of the callback.
+   * @param {React.SyntheticEvent<{}> | Event} event The event source of the callback.
    */
   onOpen: PropTypes.func.isRequired,
   /**

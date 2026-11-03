@@ -6,7 +6,7 @@ import useForkRef from '@mui/utils/useForkRef';
 import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import useEventCallback from '@mui/utils/useEventCallback';
 import ownerWindow from '@mui/utils/ownerWindow';
-import { TextareaAutosizeProps } from './TextareaAutosize.types';
+import type { TextareaAutosizeProps } from './TextareaAutosize.types';
 
 function getStyleValue(value: string) {
   return parseInt(value, 10) || 0;
@@ -51,11 +51,11 @@ function isEmpty(obj: TextareaStyles) {
  *
  * Demos:
  *
- * - [Textarea Autosize](https://mui.com/material-ui/react-textarea-autosize/)
+ * - [Textarea Autosize](https://next.mui.com/material-ui/react-textarea-autosize/)
  *
  * API:
  *
- * - [TextareaAutosize API](https://mui.com/material-ui/api/textarea-autosize/)
+ * - [TextareaAutosize API](https://next.mui.com/material-ui/api/textarea-autosize/)
  */
 const TextareaAutosize = React.forwardRef(function TextareaAutosize(
   props: TextareaAutosizeProps,

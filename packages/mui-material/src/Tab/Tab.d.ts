@@ -66,12 +66,12 @@ export type TabTypeMap<
  *
  * Demos:
  *
- * - [Tabs](https://mui.com/material-ui/react-tabs/)
+ * - [Tabs](https://next.mui.com/material-ui/react-tabs/)
  *
  * API:
  *
- * - [Tab API](https://mui.com/material-ui/api/tab/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [Tab API](https://next.mui.com/material-ui/api/tab/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const Tab: ExtendButtonBase<TabTypeMap>;
 

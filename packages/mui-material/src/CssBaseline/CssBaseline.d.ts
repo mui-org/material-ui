@@ -20,10 +20,10 @@ export interface CssBaselineProps extends StyledComponentProps<never> {
  *
  * Demos:
  *
- * - [CSS Baseline](https://mui.com/material-ui/react-css-baseline/)
+ * - [CSS Baseline](https://next.mui.com/material-ui/react-css-baseline/)
  *
  * API:
  *
- * - [CssBaseline API](https://mui.com/material-ui/api/css-baseline/)
+ * - [CssBaseline API](https://next.mui.com/material-ui/api/css-baseline/)
  */
 export default function CssBaseline(props: CssBaselineProps): React.JSX.Element;

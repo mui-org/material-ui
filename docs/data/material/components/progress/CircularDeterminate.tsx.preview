@@ -1,9 +1,0 @@
-<CircularProgress variant="determinate" value={25} aria-label="Export data" />
-<CircularProgress variant="determinate" value={50} aria-label="Export data" />
-<CircularProgress variant="determinate" value={75} aria-label="Export data" />
-<CircularProgress variant="determinate" value={100} aria-label="Export data" />
-<CircularProgress
-  variant="determinate"
-  value={progress}
-  aria-label="Export data"
-/>

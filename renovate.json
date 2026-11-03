@@ -53,10 +53,9 @@
       "matchPackageNames": ["@mui/x-*"]
     },
     {
-      "groupName": "nx",
-      "description": "FIXME: Seems to cause never-ending windows builds in CI (e.g. https://github.com/mui/material-ui/actions/runs/16268045027/job/45928292854)",
-      "matchPackageNames": ["nx"],
-      "allowedVersions": "<= 20"
+      "groupName": "lerna",
+      "description": "Keep the root nx pin (needed by nx.json) on the version lerna depends on, so pnpm installs a single copy of nx.",
+      "matchPackageNames": ["lerna", "nx"]
     },
     {
       "groupName": "bundling fixtures",
@@ -102,6 +101,12 @@
       "matchPackageNames": ["mcr.microsoft.com/playwright"],
       "matchCurrentVersion": "v1.49.1-noble",
       "enabled": false
+    },
+    {
+      "description": "Keep the consumer test on the latest stable release of TypeScript 5.",
+      "matchFileNames": ["test/typescriptMinimum/package.json"],
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": ">=5.0.0 <6.0.0"
     }
   ]
 }

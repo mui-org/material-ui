@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { OverrideProps, PartiallyRequired } from '@mui/types';
-import { SxProps } from '../styleFunctionSx';
-import { Theme, Breakpoint } from '../createTheme';
+import type * as React from 'react';
+import type { OverrideProps, PartiallyRequired } from '@mui/types';
+import type { SxProps } from '../styleFunctionSx';
+import type { Theme, Breakpoint } from '../createTheme';
 
-type ResponsiveStyleValue<T> = T | Array<T | null> | { [key in Breakpoint]?: T | null };
+type ResponsiveStyleValue<T> = T | ReadonlyArray<T | null> | { [key in Breakpoint]?: T | null };
 
 export type GridDirection = 'row' | 'row-reverse';
 

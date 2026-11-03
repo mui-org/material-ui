@@ -141,6 +141,11 @@ export function internal_serializeStyles<P>(styles: Interpolation<P>): object {
   return styles as object;
 }
 
+// styled-components has no cache that holds a nonce.
+export function internal_useNonce(): string | undefined {
+  return undefined;
+}
+
 export { ThemeContext, keyframes, css } from 'styled-components';
 export { default as StyledEngineProvider } from './StyledEngineProvider';
 export { default as GlobalStyles } from './GlobalStyles';

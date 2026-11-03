@@ -18,14 +18,14 @@ const InputLabelTest = () => {
         }}
       />
 
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: Anchor elements do not support incorrectAttribute. */}
       <InputLabel component="a" incorrectAttribute="url" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: The div root does not support href. */}
       <InputLabel component="div" href="url" />
       <InputLabel component={CustomComponent} prop1="1" prop2={12} />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: CustomComponent requires prop2. */}
       <InputLabel component={CustomComponent} prop1="1" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: CustomComponent requires a numeric prop2. */}
       <InputLabel component={CustomComponent} prop1="1" prop2="12" />
     </div>
   );

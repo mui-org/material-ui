@@ -1,8 +1,9 @@
 {
   "name": "@mui/internal-docs-utils",
-  "version": "3.0.7",
+  "version": "4.0.0",
   "author": "MUI Team",
   "description": "Utilities for MUI docs. This is an internal package not meant for general use.",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/material-ui.git",

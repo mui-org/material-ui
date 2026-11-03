@@ -18,7 +18,7 @@ Its height automatically adjusts as a response to keyboard inputs and window res
 
 By default, an empty Textarea Autosize component renders as a single row, as shown in the following demo:
 
-{{"demo": "EmptyTextarea.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/empty-textarea/index.ts", "collapseToEmpty": true}}
 
 ## Basics
 
@@ -32,10 +32,10 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 Use the `minRows` prop to define the minimum height of the component:
 
-{{"demo": "MinHeightTextarea.js"}}
+{{"component": "file://./demos/min-height-textarea/index.ts"}}
 
 ### Maximum height
 
 Use the `maxRows` prop to define the maximum height of the component:
 
-{{"demo": "MaxHeightTextarea.js"}}
+{{"component": "file://./demos/max-height-textarea/index.ts"}}

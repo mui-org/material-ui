@@ -30,11 +30,11 @@ export interface TableFooterTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableFooter API](https://mui.com/material-ui/api/table-footer/)
+ * - [TableFooter API](https://next.mui.com/material-ui/api/table-footer/)
  */
 declare const TableFooter: OverridableComponent<TableFooterTypeMap>;
 

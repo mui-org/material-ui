@@ -12,4 +12,4 @@ If you wish to add support for a component or feature not highlighted
 here, please search for the relevant [GitHub Issue](https://github.com/mui/material-ui/issues?q=is%3Aopen+is%3Aclosed), or create a new one
 to discuss the approach before submitting a pull request.
 
-{{"demo": "MaterialUIComponents.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/material-ui-components/index.ts", "hideToolbar": true, "bg": true}}

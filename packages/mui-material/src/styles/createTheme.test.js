@@ -9,7 +9,9 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import OutlinedInput, { outlinedInputClasses } from '@mui/material/OutlinedInput';
+import SystemThemeProvider from '@mui/system/ThemeProvider';
+import { ThemeProvider, THEME_ID, createTheme, styled } from '@mui/material/styles';
 import { deepOrange, green, grey } from '@mui/material/colors';
 import createPalette from './createPalette';
 
@@ -243,6 +245,73 @@ describe('createTheme', () => {
         },
       });
       expect(theme.palette.primary.main).to.equal('#4caf50');
+    });
+
+    it('should include the `text.primaryChannel` value in the Skeleton background fallback', () => {
+      const theme = createTheme({
+        cssVariables: true,
+        colorSchemes: { light: true, dark: true },
+      });
+      expect(theme.vars.palette.Skeleton.bg).to.equal(
+        'var(--mui-palette-Skeleton-bg, rgba(var(--mui-palette-text-primaryChannel, 0 0 0) / 0.11))',
+      );
+      expect(theme.colorSchemes.dark.palette.Skeleton.bg).to.equal(
+        'rgba(var(--mui-palette-text-primaryChannel, 255 255 255) / 0.13)',
+      );
+    });
+
+    it('should generate variables for a palette color added in a second call', () => {
+      let theme = createTheme({ cssVariables: true });
+      // `cssVariables` isn't stored on the theme, so it's passed again
+      theme = createTheme(
+        { ...theme, cssVariables: true },
+        {
+          palette: {
+            salmon: theme.palette.augmentColor({ color: { main: '#FF5733' }, name: 'salmon' }),
+          },
+        },
+      );
+
+      expect(theme.palette.salmon.main).to.equal('#FF5733');
+      expect(theme.vars.palette.salmon.main).to.equal('var(--mui-palette-salmon-main, #FF5733)');
+      expect(theme.vars.palette.salmon.mainChannel).to.equal(
+        'var(--mui-palette-salmon-mainChannel, 255 87 51)',
+      );
+
+      expect(() =>
+        render(
+          <ThemeProvider theme={theme}>
+            <Button color="salmon">Salmon</Button>
+          </ThemeProvider>,
+        ),
+      ).not.to.throw();
+    });
+
+    it('should add a palette color from a second call to the default color scheme', () => {
+      let theme = createTheme({ cssVariables: true, colorSchemes: { light: true, dark: true } });
+      theme = createTheme(
+        { ...theme, cssVariables: true },
+        {
+          palette: {
+            salmon: theme.palette.augmentColor({ color: { main: '#FF5733' }, name: 'salmon' }),
+          },
+        },
+      );
+
+      // Like the `palette` option, it goes to the default color scheme only
+      expect(theme.colorSchemes.light.palette.salmon.main).to.equal('#FF5733');
+      expect(theme.colorSchemes.dark.palette.salmon).to.equal(undefined);
+    });
+
+    it('should generate the channels of palette colors replaced in a second call', () => {
+      let theme = createTheme({ cssVariables: true });
+      theme = createTheme(
+        { ...theme, cssVariables: true },
+        { palette: { primary: { main: '#ff0000' }, divider: '#00ff00' } },
+      );
+
+      expect(theme.palette.primary.mainChannel).to.equal('255 0 0');
+      expect(theme.palette.dividerChannel).to.equal('0 255 0');
     });
 
     describe('spacing', () => {
@@ -874,7 +943,7 @@ describe('createTheme', () => {
     } catch (error) {
       expect(error.message).to.equal(
         'MUI: `vars` is a private field used for CSS variables support.\n' +
-          'Please use another name or follow the [docs](https://mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.',
+          'Please use another name or follow the [docs](https://next.mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.',
       );
     }
   });
@@ -994,10 +1063,10 @@ describe('createTheme', () => {
     it('[CSS variables] `alpha()` should work with string and number coefficient', () => {
       const theme = createTheme({ cssVariables: true });
       expect(theme.alpha(theme.vars.palette.primary.main, 0.5)).to.equal(
-        'rgba(var(--mui-palette-primary-mainChannel) / 0.5)',
+        'rgba(var(--mui-palette-primary-mainChannel, 25 118 210) / 0.5)',
       );
       expect(theme.alpha(theme.vars.palette.primary.main, '0.5 + 0.3')).to.equal(
-        'rgba(var(--mui-palette-primary-mainChannel) / calc(0.5 + 0.3))',
+        'rgba(var(--mui-palette-primary-mainChannel, 25 118 210) / calc(0.5 + 0.3))',
       );
       expect(
         theme.alpha(
@@ -1005,14 +1074,34 @@ describe('createTheme', () => {
           `${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}`,
         ),
       ).to.equal(
-        'rgba(var(--mui-palette-primary-mainChannel) / calc(var(--mui-palette-action-selectedOpacity, 0.08) + var(--mui-palette-action-hoverOpacity, 0.04)))',
+        'rgba(var(--mui-palette-primary-mainChannel, 25 118 210) / calc(var(--mui-palette-action-selectedOpacity, 0.08) + var(--mui-palette-action-hoverOpacity, 0.04)))',
       );
     });
 
     it('[CSS variables] `alpha()` should work with fallbacks', () => {
       const theme = createTheme({ cssVariables: true });
+      const hslTheme = createTheme({
+        cssVariables: true,
+        palette: { primary: { main: 'hsl(210, 79%, 46%)' } },
+      });
+      expect(hslTheme.alpha(hslTheme.vars.palette.primary.main, 0.5)).to.equal(
+        `rgba(${hslTheme.vars.palette.primary.mainChannel} / 0.5)`,
+      );
+      expect(theme.alpha(theme.vars.palette.text.primary, 0.5)).to.equal(
+        'rgba(var(--mui-palette-text-primaryChannel, 0 0 0) / 0.5)',
+      );
+      expect(theme.alpha('var(--brand)', 0.5)).to.equal('rgba(var(--brandChannel) / 0.5)');
+      // `color()` channels aren't sRGB, so the fallback is dropped.
+      expect(theme.alpha('var(--x, color(display-p3 0.1 0.46 0.82))', 0.5)).to.equal(
+        'rgba(var(--xChannel) / 0.5)',
+      );
+      // Fallbacks that `colorChannel()` can't parse are dropped.
+      expect(theme.alpha('var(--x, currentColor)', 0.5)).to.equal('rgba(var(--xChannel) / 0.5)');
       expect(theme.alpha('var(--mui-palette-text-primary, rgba(0 0 0 / 0.87))', 0.5)).to.equal(
         'rgba(var(--mui-palette-text-primaryChannel) / 0.5)',
+      );
+      expect(theme.alpha('var(--x, hsl(0 0% 0% / 0.87))', 0.5)).to.equal(
+        'rgba(var(--xChannel) / 0.5)',
       );
       expect(theme.alpha('var(--mui-palette-text-primary, var(--foo))', 0.5)).to.equal(
         'rgba(var(--mui-palette-text-primaryChannel) / 0.5)',
@@ -1020,6 +1109,45 @@ describe('createTheme', () => {
       expect(
         theme.alpha('var(--mui-palette-text-primary, var(--foo, hsl(0 0 0 / 100%)))', 0.5),
       ).to.equal('rgba(var(--mui-palette-text-primaryChannel) / 0.5)');
+    });
+
+    it('[CSS variables] `alpha()` should convert raw colors to channels', () => {
+      const theme = createTheme({ cssVariables: true });
+      expect(theme.alpha('#1976d2', 0.5)).to.equal('rgba(25 118 210 / 0.5)');
+      expect(theme.alpha('rgb(25, 118, 210)', 0.5)).to.equal('rgba(25 118 210 / 0.5)');
+      expect(theme.alpha('hsl(210, 79%, 46%)', 0.5)).to.equal('rgba(25 117 210 / 0.5)');
+      expect(theme.alpha(theme.palette.primary.main, '0.3 + 0.2')).to.equal(
+        'rgba(25 118 210 / calc(0.3 + 0.2))',
+      );
+      expect(
+        theme.alpha(theme.palette.primary.main, theme.vars.palette.action.hoverOpacity),
+      ).to.equal('rgba(25 118 210 / calc(var(--mui-palette-action-hoverOpacity, 0.04)))');
+    });
+
+    it('[CSS variables] `alpha()` should keep raw channel strings', () => {
+      const theme = createTheme({ cssVariables: true });
+      expect(theme.alpha(theme.palette.primary.mainChannel, 0.4)).to.equal(
+        'rgba(25 118 210 / 0.4)',
+      );
+    });
+
+    it('[CSS variables] `alpha()` should keep `color()` inputs in their color space', () => {
+      const theme = createTheme({ cssVariables: true });
+      expect(theme.alpha('color(display-p3 0.1 0.4 0.8)', 0.5)).to.equal(
+        'color(display-p3 0.1 0.4 0.8 / 0.5)',
+      );
+      expect(
+        theme.alpha('color(display-p3 0.1 0.4 0.8)', theme.vars.palette.action.hoverOpacity),
+      ).to.equal(
+        'color(display-p3 0.1 0.4 0.8 / calc(var(--mui-palette-action-hoverOpacity, 0.04)))',
+      );
+      expect(theme.alpha('color(xyz 0.1 0.2 0.3)', 0.5)).to.equal('color(xyz 0.1 0.2 0.3 / 0.5)');
+      expect(theme.alpha('color(display-p3 10% 40% 80%)', 0.5)).to.equal(
+        'color(display-p3 10% 40% 80% / 0.5)',
+      );
+      expect(theme.alpha('color(display-p3 0.1 0.4 0.8 / 0.9)', 0.5)).to.equal(
+        'color(display-p3 0.1 0.4 0.8 / 0.5)',
+      );
     });
 
     it('[color space with CSS variables] should use CSS for manipulating colors', () => {
@@ -1108,6 +1236,29 @@ describe('createTheme', () => {
         }),
       ).not.toWarnDev();
     });
+
+    it.skipIf(isJSDOM)(
+      '[CSS variables] `alpha()` colors should render without the CSS variables stylesheet',
+      () => {
+        // Provide the theme as is, like the default theme without a `ThemeProvider`.
+        // The CSS variables aren't defined, so the `var()` fallbacks are used.
+        const { container } = render(
+          <SystemThemeProvider themeId={THEME_ID} theme={createTheme({ cssVariables: true })}>
+            <OutlinedInput />
+          </SystemThemeProvider>,
+        );
+
+        expect(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            '--mui-palette-common-onBackgroundChannel',
+          ),
+        ).to.equal('');
+        // `theme.alpha(theme.vars.palette.common.onBackground, 0.23)` instead of the text color
+        expect(
+          container.querySelector(`.${outlinedInputClasses.notchedOutline}`),
+        ).toHaveComputedStyle({ borderTopColor: 'rgba(0, 0, 0, 0.23)' });
+      },
+    );
   });
 
   // Skip WebKit and firefox because they have a slightly different value

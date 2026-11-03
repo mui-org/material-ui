@@ -68,11 +68,11 @@ export type StepClasskey = keyof NonNullable<StepProps['classes']>;
  *
  * Demos:
  *
- * - [Stepper](https://mui.com/material-ui/react-stepper/)
+ * - [Stepper](https://next.mui.com/material-ui/react-stepper/)
  *
  * API:
  *
- * - [Step API](https://mui.com/material-ui/api/step/)
+ * - [Step API](https://next.mui.com/material-ui/api/step/)
  */
 declare const Step: OverridableComponent<StepTypeMap>;
 

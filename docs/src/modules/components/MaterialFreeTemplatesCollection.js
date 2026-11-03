@@ -13,7 +13,7 @@ import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import { useTranslate } from '@mui/internal-core-docs/i18n';
 import { pascalCase } from '@mui/internal-core-docs/helpers';
 import sourceMaterialTemplates from 'docs/src/modules/material/sourceMaterialTemplates';
-import { codeSandbox, stackBlitz } from '@mui/internal-core-docs/Demo';
+import { codeSandbox, stackBlitz } from '@mui/internal-core-docs/sandbox';
 
 const sourcePrefix = `${process.env.SOURCE_CODE_REPO}/tree/v${process.env.LIB_VERSION}`;
 

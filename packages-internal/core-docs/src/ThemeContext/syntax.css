@@ -1,0 +1,326 @@
+/* Syntax highlighting theme using prettylights classes.
+ * Color values from prism-okaidia (with AA contrast overrides). */
+:root {
+  /* Core syntax colors (from prism-okaidia) */
+  --color-prettylights-syntax-comment: #b2b2b2;
+  --color-prettylights-syntax-constant: #f8f8f2;
+  --color-prettylights-syntax-constant-other-reference-link: #a6e22e;
+  --color-prettylights-syntax-entity: #a6e22e;
+  --color-prettylights-syntax-entity-name: #e6db74;
+  --color-prettylights-syntax-entity-tag: #fc929e;
+  --color-prettylights-syntax-keyword: #66d9ef;
+  --color-prettylights-syntax-string: #a6e22e;
+  --color-prettylights-syntax-string-regexp: #fd971f;
+  --color-prettylights-syntax-variable: #f8f8f2;
+  --color-prettylights-syntax-storage-modifier-import: #f8f8f2;
+  --color-prettylights-syntax-brackethighlighter-angle: #f8f8f2;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #fc929e;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #b2b2b2;
+
+  /* Invalid/error states */
+  --color-prettylights-syntax-invalid-illegal-bg: #fc929e;
+  --color-prettylights-syntax-invalid-illegal-text: #f8f8f2;
+  --color-prettylights-syntax-carriage-return-bg: #fc929e;
+  --color-prettylights-syntax-carriage-return-text: #f8f8f2;
+
+  /* Markup/markdown */
+  --color-prettylights-syntax-markup-heading: #66d9ef;
+  --color-prettylights-syntax-markup-bold: #f8f8f2;
+  --color-prettylights-syntax-markup-italic: #f8f8f2;
+  --color-prettylights-syntax-markup-list: #fc929e;
+  --color-prettylights-syntax-markup-changed-bg: transparent;
+  --color-prettylights-syntax-markup-changed-text: #e6db74;
+  --color-prettylights-syntax-markup-deleted-bg: transparent;
+  --color-prettylights-syntax-markup-deleted-text: #fc929e;
+  --color-prettylights-syntax-markup-inserted-bg: transparent;
+  --color-prettylights-syntax-markup-inserted-text: #a6e22e;
+  --color-prettylights-syntax-markup-ignored-bg: transparent;
+  --color-prettylights-syntax-markup-ignored-text: #b2b2b2;
+  --color-prettylights-syntax-meta-diff-range: #b78eff;
+
+  /* Docs-infra extensions */
+  --color-docs-infra-syntax-number: #b78eff;
+  --color-docs-infra-syntax-boolean: #b78eff;
+  --color-docs-infra-syntax-nullish: #b2b2b2;
+  --color-docs-infra-syntax-attr-key: #a6e22e;
+  --color-docs-infra-syntax-attr-value: #e6db74;
+  --color-docs-infra-syntax-attr-value-quote: #f8f8f2;
+  --color-docs-infra-syntax-attr-equals: #f8f8f2;
+  --color-docs-infra-syntax-data-attr: #a6e22e;
+  --color-docs-infra-syntax-css-property: #fc929e;
+  --color-docs-infra-syntax-css-value: #f8f8f2;
+  --color-docs-infra-syntax-this: #66d9ef;
+  --color-docs-infra-syntax-builtin-type: #66d9ef;
+  --color-docs-infra-syntax-jsx: #e6db74;
+  --color-docs-infra-syntax-jsx-variable: #fc929e;
+  --color-docs-infra-syntax-html-tag: #fc929e;
+  --color-docs-infra-syntax-jsx-tag: #fc929e;
+  --color-docs-infra-syntax-property-string: #fc929e;
+  /* Matches prism-okaidia `.token.property` so object keys keep their shipped color. */
+  --color-docs-infra-syntax-object-property: #fc929e;
+  --color-docs-infra-syntax-punctuation: #f8f8f2;
+
+  /* Rendered line height used to reserve space for off-screen code blocks. */
+  --docs-infra-syntax-line-height: 19.5px;
+}
+
+.pl-c {
+  color: var(--color-prettylights-syntax-comment);
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.pl-e {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.pl-en {
+  color: var(--color-prettylights-syntax-entity-name);
+}
+
+.pl-smi,
+.pl-s .pl-s1 {
+  color: var(--color-prettylights-syntax-storage-modifier-import);
+}
+
+.pl-ent {
+  color: var(--color-prettylights-syntax-entity-tag);
+}
+
+.pl-k {
+  color: var(--color-prettylights-syntax-keyword);
+}
+
+.pl-s,
+.pl-pds,
+.pl-s .pl-pse .pl-s1 {
+  color: var(--color-prettylights-syntax-string);
+}
+
+.pl-v,
+.pl-smw {
+  color: var(--color-prettylights-syntax-variable);
+}
+
+.pl-bu {
+  color: var(--color-prettylights-syntax-brackethighlighter-unmatched);
+}
+
+.pl-ii {
+  color: var(--color-prettylights-syntax-invalid-illegal-text);
+  background-color: var(--color-prettylights-syntax-invalid-illegal-bg);
+}
+
+.pl-c2 {
+  color: var(--color-prettylights-syntax-carriage-return-text);
+  background-color: var(--color-prettylights-syntax-carriage-return-bg);
+}
+
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sre,
+.pl-sr .pl-sra {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-string-regexp);
+}
+
+.pl-ml {
+  color: var(--color-prettylights-syntax-markup-list);
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-markup-heading);
+}
+
+.pl-mi {
+  font-style: italic;
+  color: var(--color-prettylights-syntax-markup-italic);
+}
+
+.pl-mb {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-markup-bold);
+}
+
+.pl-md {
+  color: var(--color-prettylights-syntax-markup-deleted-text);
+  background-color: var(--color-prettylights-syntax-markup-deleted-bg);
+}
+
+.pl-mi1 {
+  color: var(--color-prettylights-syntax-markup-inserted-text);
+  background-color: var(--color-prettylights-syntax-markup-inserted-bg);
+}
+
+.pl-mc {
+  color: var(--color-prettylights-syntax-markup-changed-text);
+  background-color: var(--color-prettylights-syntax-markup-changed-bg);
+}
+
+.pl-mi2 {
+  color: var(--color-prettylights-syntax-markup-ignored-text);
+  background-color: var(--color-prettylights-syntax-markup-ignored-bg);
+}
+
+.pl-mdr {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-meta-diff-range);
+}
+
+.pl-ba {
+  color: var(--color-prettylights-syntax-brackethighlighter-angle);
+}
+
+.pl-sg {
+  color: var(--color-prettylights-syntax-sublimelinter-gutter-mark);
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: var(--color-prettylights-syntax-constant-other-reference-link);
+}
+
+/* Docs-infra extensions (.di-* classes) */
+
+.di-num {
+  color: var(--color-docs-infra-syntax-number);
+}
+
+.di-bool {
+  color: var(--color-docs-infra-syntax-boolean);
+}
+
+.di-n {
+  color: var(--color-docs-infra-syntax-nullish);
+}
+
+.di-ak {
+  color: var(--color-docs-infra-syntax-attr-key);
+}
+
+.di-av {
+  color: var(--color-docs-infra-syntax-attr-value);
+}
+
+.di-av .pl-pds {
+  color: var(--color-docs-infra-syntax-attr-value-quote);
+}
+
+.di-ae {
+  color: var(--color-docs-infra-syntax-attr-equals);
+}
+
+.di-da {
+  color: var(--color-docs-infra-syntax-data-attr);
+}
+
+.di-cp {
+  color: var(--color-docs-infra-syntax-css-property);
+}
+
+.di-cv {
+  color: var(--color-docs-infra-syntax-css-value);
+}
+
+.di-this {
+  color: var(--color-docs-infra-syntax-this);
+}
+
+.di-bt {
+  color: var(--color-docs-infra-syntax-builtin-type);
+}
+
+.di-op {
+  color: var(--color-docs-infra-syntax-object-property);
+}
+
+.di-jsx {
+  color: var(--color-docs-infra-syntax-jsx);
+}
+
+.di-jv {
+  color: var(--color-docs-infra-syntax-jsx-variable);
+}
+
+.di-ht {
+  color: var(--color-docs-infra-syntax-html-tag);
+}
+
+.di-jt {
+  color: var(--color-docs-infra-syntax-jsx-tag);
+}
+
+.di-ps {
+  color: var(--color-docs-infra-syntax-property-string);
+}
+
+.di-jv .pl-pds,
+.di-ps .pl-pds {
+  color: inherit;
+}
+
+.di-pu {
+  color: var(--color-docs-infra-syntax-punctuation);
+}
+
+/* ----------------------------------------------------------------------
+ * Off-screen code skipping (progressive enhancement)
+ *
+ * `content-visibility: auto` lets the browser skip laying out and painting a
+ * code block's highlighted spans while it sits far from the viewport — a large
+ * saving on docs pages stacked with demos. For a skipped block to still
+ * reserve the correct vertical space (so the scrollbar doesn't jump as blocks
+ * are skipped and un-skipped), `contain-intrinsic-size` must match the rendered
+ * height. That height is `lines * line-height`, and `<Pre>` carries the line
+ * counts on the `<code>` as data attributes:
+ *   - `data-total-lines`    every line  (expanded / non-collapsible height)
+ *   - `data-focused-lines`  the focus window (collapsed height)
+ *
+ * The `<code>` has no padding of its own (the `<pre>` owns it), so its height
+ * is exactly `lines * --docs-infra-syntax-line-height`. The leading `auto`
+ * keyword uses that line-count estimate only until the block has rendered once,
+ * then remembers the real measured size.
+ *
+ * Gated behind `@supports` for typed `attr()` (Chromium 133+): without it the
+ * `calc()` is invalid, and turning on `content-visibility: auto` with no usable
+ * intrinsic size would collapse every off-screen block to 0 height and jump the
+ * scrollbar. Browsers without typed `attr()` just skip the optimisation and
+ * render code blocks as before.
+ * ------------------------------------------------------------------- */
+@supports (contain-intrinsic-size: calc(attr(data-total-lines type(<number>), 0) * 1px)) {
+  pre > code[data-total-lines] {
+    content-visibility: auto;
+
+    /* Expanded / non-collapsible: reserve every line. */
+    contain-intrinsic-height: auto
+      calc(attr(data-total-lines type(<number>), 0) * var(--docs-infra-syntax-line-height));
+
+    /* Paint containment is implied by `content-visibility: auto`. Without this,
+     * it would clip the 6px rounded bleed of the frame/line highlight
+     * backgrounds (and the description badges) at the bare `<code>` box edge —
+     * let them paint just past it. */
+    overflow-clip-margin: 16px;
+  }
+
+  /* Collapsed: a collapsible block the host hasn't expanded shows only its
+   * focus window, so reserve that height instead. */
+  pre > code[data-collapsible][data-focused-lines] {
+    contain-intrinsic-height: auto
+      calc(attr(data-focused-lines type(<number>), 0) * var(--docs-infra-syntax-line-height));
+  }
+
+  /* Expanded (`data-code-expanded` on the demo root reveals the full source):
+   * reserve every line again. Same specificity as the collapsed rule above but
+   * later in source order, so it wins while the source is expanded. Not
+   * `data-code-open` — that is also set for the collapsed focus window. */
+  [data-code-expanded] pre > code[data-collapsible] {
+    contain-intrinsic-height: auto
+      calc(attr(data-total-lines type(<number>), 0) * var(--docs-infra-syntax-line-height));
+  }
+}

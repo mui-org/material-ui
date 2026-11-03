@@ -9,7 +9,8 @@ import CustomizedDataGrid from './CustomizedDataGrid';
 import HighlightedCard from './HighlightedCard';
 import PageViewsBarChart from './PageViewsBarChart';
 import SessionsChart from './SessionsChart';
-import StatCard, { StatCardProps } from './StatCard';
+import type { StatCardProps } from './StatCard';
+import StatCard from './StatCard';
 
 const data: StatCardProps[] = [
   {

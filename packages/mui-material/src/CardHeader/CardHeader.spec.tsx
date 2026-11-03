@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import CardHeader, { CardHeaderProps, CardHeaderTypeMap } from '@mui/material/CardHeader';
+import type { CardHeaderProps, CardHeaderTypeMap } from '@mui/material/CardHeader';
+import CardHeader from '@mui/material/CardHeader';
 
 const CustomComponent: React.FC<{ stringProp: string; numberProp: number }> =
   function CustomComponent() {
@@ -61,7 +62,7 @@ function createElementTypographyTest() {
   React.createElement<CardHeaderProps>(CardHeader, {
     slotProps: {
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: incorrectAlign is not a supported Typography alignment.
         align: 'incorrectAlign',
       },
     },
@@ -76,7 +77,7 @@ function createElementTypographyTest() {
   React.createElement<CardHeaderProps>(CardHeader, {
     slotProps: {
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: Typography variant must be a variant name, not a number.
         variant: 123,
       },
     },
@@ -127,7 +128,7 @@ function createElementTypographyTest() {
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
     slotProps: {
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: incorrectComponent is not a valid intrinsic element.
         component: 'incorrectComponent',
       },
     },
@@ -140,9 +141,9 @@ function createElementTypographyTest() {
 function componentPropTest() {
   <CardHeader component="div" />;
   <CardHeader component={CustomComponent} stringProp="string" numberProp={1} />;
-  // @ts-expect-error
+  // @ts-expect-error: incorrectComponent is not a valid intrinsic element.
   <CardHeader component="incorrectComponent" />;
-  // @ts-expect-error
+  // @ts-expect-error: CustomComponent requires both stringProp and numberProp.
   <CardHeader component={CustomComponent} />;
 }
 
@@ -168,16 +169,16 @@ function mixedCardHeaderComponentAndTypographyTest() {
       },
     }}
   />;
-  // @ts-expect-error
+  // @ts-expect-error: incorrectComponent is not a valid intrinsic element.
   <CardHeader component="incorrectComponent" />;
-  // @ts-expect-error
+  // @ts-expect-error: CustomComponent requires both stringProp and numberProp.
   <CardHeader component={CustomComponent} />;
   <CardHeader
     component={CustomComponent}
     stringProp="string"
     numberProp={1}
     slotProps={{
-      // @ts-expect-error
+      // @ts-expect-error: The custom title component requires numberProp.
       title: { component: CustomComponent, stringProp: 'stringProp' },
       subheader: {
         // @ts-expect-error Before tsgo, this error was merged with line 180 ignore
@@ -192,10 +193,10 @@ function mixedCardHeaderComponentAndTypographyTest() {
     stringProp="string"
     numberProp={1}
     slotProps={{
-      // @ts-expect-error
+      // @ts-expect-error: The custom title component requires numberProp.
       title: { component: CustomComponent, stringProp: 'stringProp' },
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom subheader component requires numberProp.
         component: CustomComponent,
         stringProp: 'stringProp',
       },
@@ -206,10 +207,10 @@ function mixedCardHeaderComponentAndTypographyTest() {
     stringProp="string"
     numberProp={1}
     slotProps={{
-      // @ts-expect-error
+      // @ts-expect-error: The invalid root component prevents inferring the custom title component props.
       title: { component: CustomComponent, stringProp: 'stringProp', numberProp: 2 },
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: The invalid root component prevents inferring the custom subheader component props.
         component: CustomComponent,
         stringProp: 'stringProp',
         numberProp: 2,
@@ -219,7 +220,7 @@ function mixedCardHeaderComponentAndTypographyTest() {
 }
 
 function titleTypographyPropsTest() {
-  // @ts-expect-error
+  // @ts-expect-error: incorrectComponent is not a valid title element.
   <CardHeader slotProps={{ title: { component: 'incorrectComponent' } }} />;
   <CardHeader slotProps={{ title: { component: 'a', href: 'href' } }} />;
   <CardHeader
@@ -241,14 +242,14 @@ function titleTypographyPropsTest() {
   <CardHeader
     slotProps={{
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom title component requires a numeric numberProp.
         component: CustomComponent,
         stringProp: 'stringProp',
         numberProp: '',
       },
     }}
   />;
-  // @ts-expect-error
+  // @ts-expect-error: The custom title component requires stringProp.
   <CardHeader slotProps={{ title: { component: CustomComponent, numberProp: 2 } }} />;
   <CardHeader
     slotProps={{
@@ -303,7 +304,7 @@ function subheaderTypographyPropsTest() {
   <CardHeader
     slotProps={{
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: incorrectComponent is not a valid subheader element.
         component: 'incorrectComponent',
       },
     }}
@@ -311,7 +312,7 @@ function subheaderTypographyPropsTest() {
   <CardHeader
     slotProps={{
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom subheader component requires stringProp.
         component: CustomComponent,
         numberProp: 2,
       },
@@ -338,10 +339,10 @@ function mixedTypographyPropsTest() {
   />;
   <CardHeader
     slotProps={{
-      // @ts-expect-error
+      // @ts-expect-error: incorrectComponent is not a valid title element.
       title: { component: 'incorrectComponent' },
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: incorrectComponent is not a valid subheader element.
         component: 'incorrectComponent',
       },
     }}
@@ -363,12 +364,12 @@ function mixedTypographyPropsTest() {
   <CardHeader
     slotProps={{
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom title component requires stringProp.
         component: CustomComponent,
         numberProp: 2,
       },
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom subheader component requires stringProp.
         component: CustomComponent,
         numberProp: 2,
       },
@@ -377,12 +378,12 @@ function mixedTypographyPropsTest() {
   <CardHeader
     slotProps={{
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom title component requires stringProp.
         component: CustomComponent,
         numberProp: 2,
       },
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: The invalid title props prevent inferring the custom subheader component.
         component: CustomComponent,
         numberProp: 2,
         stringProp: 'yada',
@@ -392,13 +393,13 @@ function mixedTypographyPropsTest() {
   <CardHeader
     slotProps={{
       title: {
-        // @ts-expect-error
+        // @ts-expect-error: The invalid subheader props prevent inferring the custom title component.
         component: CustomComponent,
         numberProp: 2,
         stringProp: 'yada',
       },
       subheader: {
-        // @ts-expect-error
+        // @ts-expect-error: The custom subheader component requires stringProp.
         component: CustomComponent,
         numberProp: 2,
       },

@@ -10,6 +10,7 @@ import focusWithVisible from '../utils/focusWithVisible';
 import useEventCallback from '../utils/useEventCallback';
 import useForkRef from '../utils/useForkRef';
 import useEnhancedEffect from '../utils/useEnhancedEffect';
+import { useDefaultProps } from '../DefaultPropsProvider';
 import { RovingTabIndexContext, useRovingTabIndexRoot } from '../utils/useRovingTabIndex';
 import ownerWindow from '../utils/ownerWindow';
 import List from '../List';
@@ -75,7 +76,8 @@ function focusInitialItem(element, focusSource) {
  * use it separately you need to move focus into the component manually. Once
  * the focus is placed inside the component it is fully keyboard accessible.
  */
-const MenuList = React.forwardRef(function MenuList(props, ref) {
+const MenuList = React.forwardRef(function MenuList(inProps, ref) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiMenuList' });
   const {
     // private
     // eslint-disable-next-line react/prop-types

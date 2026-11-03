@@ -42,7 +42,7 @@
     }
   ],
   "spread": true,
-  "themeDefaultProps": false,
+  "themeDefaultProps": true,
   "muiName": "MuiMenuList",
   "forwardsRefTo": "HTMLUListElement",
   "filename": "/packages/mui-material/src/MenuList/MenuList.js",

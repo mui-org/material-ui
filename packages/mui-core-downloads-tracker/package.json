@@ -1,6 +1,6 @@
 {
   "name": "@mui/core-downloads-tracker",
-  "version": "9.4.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Internal package to track number of downloads of our design system libraries.",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mui/material-ui.git",
-    "directory": "packages/core-downloads-tracker"
+    "directory": "packages/mui-core-downloads-tracker"
   },
   "bugs": {
     "url": "https://github.com/mui/material-ui/issues"

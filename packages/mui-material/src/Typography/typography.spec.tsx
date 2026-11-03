@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Typography, TypographyProps } from '@mui/material';
+import type { TypographyProps } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const typographyTest = () => {
   const CustomComponent: React.FC<{ prop1: string; prop2: number }> = function CustomComponent() {
@@ -38,20 +39,20 @@ const typographyTest = () => {
       <Typography sx={{ display: 'block' }} />
       <Typography component="a" href="url" sx={{ display: 'block' }} />
       <Typography component="label" htmlFor="html" sx={{ display: 'block' }} />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: Anchor elements do not support incorrectAttribute. */}
       <Typography component="a" incorrectAttribute="url" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: incorrectComponent is not a valid intrinsic element. */}
       <Typography component="incorrectComponent" href="url" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: The div root does not support href. */}
       <Typography component="div" href="url" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: The default root does not support href. */}
       <Typography href="url" />
       <Typography component={CustomComponent} prop1="1" prop2={12} />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: CustomComponent does not declare an id prop. */}
       <Typography component={CustomComponent} prop1="1" prop2={12} id="1" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: CustomComponent requires prop2. */}
       <Typography component={CustomComponent} prop1="1" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: CustomComponent requires a numeric prop2. */}
       <Typography component={CustomComponent} prop1="1" prop2="12" />
     </div>
   );

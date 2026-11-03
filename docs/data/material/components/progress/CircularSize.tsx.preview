@@ -1,3 +1,0 @@
-<CircularProgress size="30px" aria-label="Loading…" />
-<CircularProgress size={40} aria-label="Loading…" />
-<CircularProgress size="3rem" aria-label="Loading…" />

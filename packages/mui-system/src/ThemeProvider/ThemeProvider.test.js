@@ -79,7 +79,6 @@ describe('ThemeProvider', () => {
     expect(privateTheme).to.deep.equal({
       foo: 'foo',
       bar: 'bar',
-      [Symbol.for('mui.nested')]: true,
     });
     expect(engineTheme).to.deep.equal({
       foo: 'foo',
@@ -107,8 +106,7 @@ describe('ThemeProvider', () => {
       </ThemeProvider>,
     );
     expect(privateTheme).to.deep.equal({
-      bar: { foo: 'foo', [Symbol.for('mui.nested')]: false },
-      [Symbol.for('mui.nested')]: true,
+      bar: { foo: 'foo' },
     });
     expect(engineTheme).to.deep.equal({
       bar: { foo: 'foo' },
@@ -132,7 +130,7 @@ describe('ThemeProvider', () => {
         <Test />
       </ThemeProvider>,
     );
-    expect(privateTheme).to.deep.equal({ mui: { foo: 'foo' }, [Symbol.for('mui.nested')]: false });
+    expect(privateTheme).to.deep.equal({ mui: { foo: 'foo' } });
     expect(engineTheme).to.deep.equal({ mui: { foo: 'foo' } });
   });
 
@@ -158,7 +156,6 @@ describe('ThemeProvider', () => {
     expect(privateTheme).to.deep.equal({
       foo: 'foo',
       mui: { bar: 'bar' },
-      [Symbol.for('mui.nested')]: true,
     });
     expect(engineTheme).to.deep.equal({
       foo: 'foo',
@@ -190,7 +187,6 @@ describe('ThemeProvider', () => {
     expect(privateTheme).to.deep.equal({
       foo: 'foo',
       mui: { baz: { bar: 'bar' } },
-      [Symbol.for('mui.nested')]: true,
     });
     expect(engineTheme).to.deep.equal({
       foo: 'foo',
@@ -222,7 +218,6 @@ describe('ThemeProvider', () => {
     expect(privateTheme).to.deep.equal({
       foo: 'foo',
       mui: { baz: { bar: 'bar' } },
-      [Symbol.for('mui.nested')]: true,
     });
     expect(engineTheme).to.deep.equal({
       foo: 'foo',
@@ -267,12 +262,10 @@ describe('ThemeProvider', () => {
     expect(privateTheme).to.deep.equal({
       mui: { bar: 'bar' },
       joy: { foo: 'foo' },
-      [Symbol.for('mui.nested')]: true,
     });
     expect(privateTheme2).to.deep.equal({
       mui: { baz: { bar: 'bar' } },
       joy: { baz: { foo: 'foo' } },
-      [Symbol.for('mui.nested')]: true,
     });
 
     expect(engineTheme).to.deep.equal({
