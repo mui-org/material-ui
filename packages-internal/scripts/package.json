@@ -40,14 +40,14 @@
     "es-toolkit": "^1.52.0"
   },
   "devDependencies": {
-    "@babel/register": "7.29.7",
-    "@types/babel__core": "7.20.5",
-    "@types/doctrine": "0.0.9",
-    "@types/node": "22.20.5",
-    "@types/react": "19.3.0",
-    "fast-glob": "3.3.3",
-    "prettier": "3.9.10",
-    "rimraf": "6.1.3",
+    "@babel/register": "^7.29.7",
+    "@types/babel__core": "^7.20.5",
+    "@types/doctrine": "^0.0.9",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "fast-glob": "^3.3.3",
+    "prettier": "^3.9.10",
+    "rimraf": "^6.1.3",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "publishConfig": {

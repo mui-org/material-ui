@@ -39,7 +39,6 @@ catalogs:
     '@emotion/server': '^11.11.0'
     '@emotion/styled': '^11.14.1'
     '@mui/internal-docs-infra': '0.13.1-canary.19'
-    react-window: '^2.3.4'
 
 overrides:
   '@mui/internal-docs-infra': '0.13.1-canary.19'

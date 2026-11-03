@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@material-ui/core": "^4.12.4",
-    "@types/jscodeshift": "17.3.0"
+    "@types/jscodeshift": "^17.3.0"
   },
   "sideEffects": false,
   "publishConfig": {

@@ -186,9 +186,6 @@ catalogs:
     '@emotion/styled':
       specifier: ^11.14.1
       version: 11.14.1
-    react-window:
-      specifier: ^2.3.4
-      version: 2.3.4
     stylis:
       specifier: 4.2.0
       version: 4.2.0
@@ -220,19 +217,19 @@ importers:
         version: 10.2.1
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: 0.18.5
+        specifier: ^0.18.5
         version: 0.18.5
       '@babel/core':
-        specifier: 8.0.10
+        specifier: ^8.0.10
         version: 8.0.10
       '@babel/node':
-        specifier: 8.0.6
+        specifier: ^8.0.6
         version: 8.0.6(@babel/core@8.0.10)
       '@babel/plugin-transform-react-constant-elements':
-        specifier: 8.0.5
+        specifier: ^8.0.5
         version: 8.0.5(@babel/core@8.0.10)
       '@eslint/compat':
-        specifier: 2.1.1
+        specifier: ^2.1.1
         version: 2.1.1(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))
       '@mui/internal-babel-plugin-minify-errors':
         specifier: 3.0.1-canary.2
@@ -265,37 +262,37 @@ importers:
         specifier: workspace:^
         version: link:packages/mui-utils/build
       '@next/eslint-plugin-next':
-        specifier: 16.4.3
+        specifier: ^16.4.3
         version: 16.4.3(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))
       '@octokit/rest':
-        specifier: 22.0.1
+        specifier: ^22.0.1
         version: 22.0.1
       '@pigment-css/react':
         specifier: 0.0.31
         version: 0.0.31(@types/react@19.3.0)(@typescript/typescript6@6.0.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
       '@playwright/test':
-        specifier: 1.63.0
+        specifier: ^1.63.0
         version: 1.63.0
       '@pnpm/find-workspace-dir':
-        specifier: 1000.1.5
+        specifier: ^1000.1.5
         version: 1000.1.5
       '@types/babel__core':
-        specifier: 7.20.5
+        specifier: ^7.20.5
         version: 7.20.5
       '@types/babel__register':
-        specifier: 7.17.3
+        specifier: ^7.17.3
         version: 7.17.3
       '@types/ip':
-        specifier: 1.1.3
+        specifier: ^1.1.3
         version: 1.1.3
       '@types/node':
         specifier: 22.20.5
         version: 22.20.5
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/yargs':
-        specifier: 17.0.35
+        specifier: ^17.0.35
         version: 17.0.35
       '@typescript/native':
         specifier: npm:typescript@7.0.2
@@ -310,94 +307,94 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(@vitest/browser@5.0.0)(vitest@5.0.0)
       '@vitest/eslint-plugin':
-        specifier: 1.6.28
+        specifier: ^1.6.28
         version: 1.6.28(@typescript-eslint/eslint-plugin@8.71.2(@typescript-eslint/parser@8.71.2(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0))(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0))(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(vitest@5.0.0)
       axe-core:
-        specifier: 4.14.0
+        specifier: ^4.14.0
         version: 4.14.0
       babel-plugin-module-resolver:
-        specifier: 5.0.3
+        specifier: ^5.0.3
         version: 5.0.3
       chalk:
-        specifier: 6.0.1
+        specifier: ^6.0.1
         version: 6.0.1
       concurrently:
-        specifier: 10.0.6
+        specifier: ^10.0.6
         version: 10.0.6
       cpy-cli:
-        specifier: 7.0.0
+        specifier: ^7.0.0
         version: 7.0.0
       cross-env:
-        specifier: 10.1.0
+        specifier: ^10.1.0
         version: 10.1.0
       dotenv:
-        specifier: 18.0.8
+        specifier: ^18.0.8
         version: 18.0.8
       es-toolkit:
-        specifier: 1.52.0
+        specifier: ^1.52.0
         version: 1.52.0
       eslint:
-        specifier: 10.13.0
+        specifier: ^10.13.0
         version: 10.13.0(jiti@2.7.0)(supports-color@11.0.0)
       eslint-plugin-consistent-default-export-name:
-        specifier: 0.0.15
+        specifier: ^0.0.15
         version: 0.0.15
       fast-glob:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       git-url-parse:
-        specifier: 16.1.0
+        specifier: ^16.1.0
         version: 16.1.0
       globby:
-        specifier: 16.2.4
+        specifier: ^16.2.4
         version: 16.2.4
       jsdom:
-        specifier: 30.1.3
+        specifier: ^30.1.3
         version: 30.1.3
       lerna:
-        specifier: 10.1.1
+        specifier: ^10.1.1
         version: 10.1.1(@types/node@22.20.5)(@typescript/typescript6@6.0.2)(babel-plugin-macros@3.1.0)(supports-color@11.0.0)
       minimatch:
-        specifier: 11.0.3
+        specifier: ^11.0.3
         version: 11.0.3
       nx:
-        specifier: 23.3.1
+        specifier: ^23.3.1
         version: 23.3.1
       pkg-pr-new:
-        specifier: 0.0.91
+        specifier: ^0.0.91
         version: 0.0.91
       playwright:
-        specifier: 1.63.0
+        specifier: ^1.63.0
         version: 1.63.0
       prettier:
-        specifier: 3.9.10
+        specifier: ^3.9.10
         version: 3.9.10
       pretty-quick:
-        specifier: 4.2.2
+        specifier: ^4.2.2
         version: 4.2.2(prettier@3.9.10)
       process:
-        specifier: 0.11.10
+        specifier: ^0.11.10
         version: 0.11.10
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
       rimraf:
-        specifier: 6.1.3
+        specifier: ^6.1.3
         version: 6.1.3
       serve:
-        specifier: 14.2.6
+        specifier: ^14.2.6
         version: 14.2.6(supports-color@11.0.0)
       stylelint:
-        specifier: 17.16.0
+        specifier: ^17.16.0
         version: 17.16.0(@typescript/typescript6@6.0.2)(supports-color@11.0.0)
       supports-color:
-        specifier: 11.0.0
+        specifier: ^11.0.0
         version: 11.0.0
       tsx:
-        specifier: 4.23.15
+        specifier: ^4.23.15
         version: 4.23.15
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
@@ -409,10 +406,10 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(@types/node@22.20.5)(@vitest/browser-playwright@5.0.0)(@vitest/coverage-v8@5.0.0)(@vitest/ui@5.0.0)(happy-dom@20.11.2)(jsdom@30.1.3)(vite@8.3.4(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.0))
       vitest-fail-on-console:
-        specifier: 0.10.1
+        specifier: ^0.10.1
         version: 0.10.1(@vitest/utils@5.0.0)(vite@8.3.4(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.0))(vitest@5.0.0)
       yargs:
-        specifier: 18.2.0
+        specifier: ^18.2.0
         version: 18.2.0
 
   docs:
@@ -640,7 +637,7 @@ importers:
         specifier: ^4.18.20
         version: 4.18.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-window:
-        specifier: catalog:docs
+        specifier: ^2.3.4
         version: 2.3.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       rimraf:
         specifier: ^6.1.3
@@ -659,10 +656,10 @@ importers:
         version: 3.0.1(react@19.3.1)
     devDependencies:
       '@babel/plugin-transform-react-constant-elements':
-        specifier: 7.29.7
+        specifier: ^7.29.7
         version: 7.29.7(@babel/core@7.29.7(supports-color@11.0.0))
       '@babel/preset-typescript':
-        specifier: 7.29.7
+        specifier: ^7.29.7
         version: 7.29.7(@babel/core@7.29.7(supports-color@11.0.0))(supports-color@11.0.0)
       '@mui/internal-api-docs-builder':
         specifier: workspace:^
@@ -674,73 +671,73 @@ importers:
         specifier: workspace:^
         version: link:../packages-internal/scripts
       '@playwright/test':
-        specifier: 1.63.0
+        specifier: ^1.63.0
         version: 1.63.0
       '@types/autosuggest-highlight':
-        specifier: 3.2.4
+        specifier: ^3.2.4
         version: 3.2.4
       '@types/chance':
-        specifier: 1.1.8
+        specifier: ^1.1.8
         version: 1.1.8
       '@types/css-mediaquery':
-        specifier: 0.1.4
+        specifier: ^0.1.4
         version: 0.1.4
       '@types/fg-loadcss':
-        specifier: 3.1.3
+        specifier: ^3.1.3
         version: 3.1.3
       '@types/gtag.js':
-        specifier: 0.0.20
+        specifier: ^0.0.20
         version: 0.0.20
       '@types/json2mq':
-        specifier: 0.2.2
+        specifier: ^0.2.2
         version: 0.2.2
       '@types/node':
         specifier: 22.20.5
         version: 22.20.5
       '@types/nprogress':
-        specifier: 0.2.3
+        specifier: ^0.2.3
         version: 0.2.3
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@types/react-swipeable-views':
-        specifier: 0.13.6
+        specifier: ^0.13.6
         version: 0.13.6
       '@types/react-transition-group':
-        specifier: 4.4.12
+        specifier: ^4.4.12
         version: 4.4.12(@types/react@19.3.0)
       '@types/semver':
-        specifier: 7.8.0
+        specifier: ^7.8.0
         version: 7.8.0
       '@types/stylis':
-        specifier: 4.2.7
+        specifier: ^4.2.7
         version: 4.2.7
       cross-fetch:
         specifier: ^4.1.0
         version: 4.1.0(encoding@0.1.13)
       prettier:
-        specifier: 3.9.10
+        specifier: ^3.9.10
         version: 3.9.10
       raw-loader:
-        specifier: 4.0.2
+        specifier: ^4.0.2
         version: 4.0.2(webpack@5.109.2(csso@5.0.5)(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32)(uglify-js@3.19.3))
       sharp:
-        specifier: 0.35.5
+        specifier: ^0.35.5
         version: 0.35.5(@types/node@22.20.5)
       tailwindcss:
-        specifier: 4.3.3
+        specifier: ^4.3.3
         version: 4.3.3
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
         version: '@typescript/typescript6@6.0.2'
       yargs:
-        specifier: 18.2.0
+        specifier: ^18.2.0
         version: 18.2.0
 
   packages-internal/api-docs-builder:
@@ -792,25 +789,25 @@ importers:
         version: 5.2.0
     devDependencies:
       '@types/babel__core':
-        specifier: 7.20.5
+        specifier: ^7.20.5
         version: 7.20.5
       '@types/babel__traverse':
-        specifier: 7.28.0
+        specifier: ^7.28.0
         version: 7.28.0
       '@types/doctrine':
-        specifier: 0.0.9
+        specifier: ^0.0.9
         version: 0.0.9
       '@types/mdast':
-        specifier: 4.0.4
+        specifier: ^4.0.4
         version: 4.0.4
       '@types/node':
         specifier: 22.20.5
         version: 22.20.5
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
     publishDirectory: build
 
@@ -836,10 +833,10 @@ importers:
         specifier: 22.20.5
         version: 22.20.5
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
@@ -933,28 +930,28 @@ importers:
         specifier: workspace:*
         version: link:../../packages/mui-system/build
       '@types/fg-loadcss':
-        specifier: 3.1.3
+        specifier: ^3.1.3
         version: 3.1.3
       '@types/gtag.js':
-        specifier: 0.0.20
+        specifier: ^0.0.20
         version: 0.0.20
       '@types/node':
         specifier: 22.20.5
         version: 22.20.5
       '@types/nprogress':
-        specifier: 0.2.3
+        specifier: ^0.2.3
         version: 0.2.3
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       next:
-        specifier: 16.4.3
+        specifier: ^16.4.3
         version: 16.4.3(@babel/core@8.0.10)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
@@ -1020,28 +1017,28 @@ importers:
         version: 1.52.0
     devDependencies:
       '@babel/register':
-        specifier: 7.29.7
+        specifier: ^7.29.7
         version: 7.29.7(@babel/core@7.29.7(supports-color@11.0.0))
       '@types/babel__core':
-        specifier: 7.20.5
+        specifier: ^7.20.5
         version: 7.20.5
       '@types/doctrine':
-        specifier: 0.0.9
+        specifier: ^0.0.9
         version: 0.0.9
       '@types/node':
         specifier: 22.20.5
         version: 22.20.5
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       fast-glob:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       prettier:
-        specifier: 3.9.10
+        specifier: ^3.9.10
         version: 3.9.10
       rimraf:
-        specifier: 6.1.3
+        specifier: ^6.1.3
         version: 6.1.3
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
@@ -1081,7 +1078,7 @@ importers:
         specifier: ^4.12.4
         version: 4.12.4(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@types/jscodeshift':
-        specifier: 17.3.0
+        specifier: ^17.3.0
         version: 17.3.0
     publishDirectory: build
 
@@ -1113,7 +1110,7 @@ importers:
         version: 19.3.1(react@19.3.1)
     devDependencies:
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
 
   packages/mui-icons-material:
@@ -1129,37 +1126,37 @@ importers:
         specifier: workspace:^
         version: link:../mui-material/build
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       chalk:
-        specifier: 6.0.1
+        specifier: ^6.0.1
         version: 6.0.1
       cross-fetch:
         specifier: ^4.1.0
         version: 4.1.0(encoding@0.1.13)
       es-toolkit:
-        specifier: 1.52.0
+        specifier: ^1.52.0
         version: 1.52.0
       fast-glob:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       mustache:
-        specifier: 4.2.0
+        specifier: ^4.2.0
         version: 4.2.0
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       rimraf:
-        specifier: 6.1.3
+        specifier: ^6.1.3
         version: 6.1.3
       shx:
-        specifier: 0.4.0
+        specifier: ^0.4.0
         version: 0.4.0
       svgo:
-        specifier: 4.1.0
+        specifier: ^4.1.0
         version: 4.1.0
       yargs:
-        specifier: 18.2.0
+        specifier: ^18.2.0
         version: 18.2.0
     publishDirectory: build
 
@@ -1197,25 +1194,25 @@ importers:
         specifier: workspace:^
         version: link:../mui-material/build
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
     publishDirectory: build
 
@@ -1268,34 +1265,34 @@ importers:
         version: 4.4.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     devDependencies:
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       css-mediaquery:
-        specifier: 0.1.2
+        specifier: ^0.1.2
         version: 0.1.2
       es-toolkit:
-        specifier: 1.52.0
+        specifier: ^1.52.0
         version: 1.52.0
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
       react-router:
-        specifier: 8.5.1
+        specifier: ^8.5.1
         version: 8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
     publishDirectory: build
 
@@ -1306,22 +1303,22 @@ importers:
         version: 8.0.10
     devDependencies:
       '@emotion/cache':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@emotion/server':
-        specifier: 11.11.0
+        specifier: ^11.11.0
         version: 11.11.0(@emotion/css@11.13.5(supports-color@11.0.0))
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       next:
-        specifier: 16.4.3
+        specifier: ^16.4.3
         version: 16.4.3(@babel/core@8.0.10)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
     publishDirectory: build
 
@@ -1338,7 +1335,7 @@ importers:
         version: 0.0.31(@types/react@19.3.0)(@typescript/typescript6@6.0.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
     devDependencies:
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
     publishDirectory: build
 
@@ -1358,13 +1355,13 @@ importers:
         specifier: workspace:^
         version: link:../mui-types/build
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
     publishDirectory: build
 
@@ -1390,22 +1387,22 @@ importers:
         version: 15.8.1
     devDependencies:
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@emotion/styled':
-        specifier: 11.14.1
+        specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0))(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@mui/styled-engine':
         specifier: workspace:*
         version: link:build
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
     publishDirectory: build
 
@@ -1428,16 +1425,16 @@ importers:
         version: 15.8.1
     devDependencies:
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       styled-components:
-        specifier: 6.6.0
+        specifier: ^6.6.0
         version: 6.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     publishDirectory: build
 
@@ -1454,10 +1451,10 @@ importers:
         specifier: 22.20.5
         version: 22.20.5
       '@types/stylis':
-        specifier: 4.2.7
+        specifier: ^4.2.7
         version: 4.2.7
       stylis:
-        specifier: 4.4.0
+        specifier: ^4.4.0
         version: 4.4.0
     publishDirectory: build
 
@@ -1489,34 +1486,34 @@ importers:
         version: 15.8.1
     devDependencies:
       '@emotion/cache':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@emotion/styled':
-        specifier: 11.14.1
+        specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0))(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@mui/system':
         specifier: workspace:*
         version: link:build
       '@types/prop-types':
-        specifier: 15.7.15
+        specifier: ^15.7.15
         version: 15.7.15
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
       styled-components:
-        specifier: 6.6.0
+        specifier: ^6.6.0
         version: 6.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     publishDirectory: build
 
@@ -1530,7 +1527,7 @@ importers:
         specifier: workspace:*
         version: link:build
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
     publishDirectory: build
 
@@ -1559,25 +1556,25 @@ importers:
         specifier: 22.20.5
         version: 22.20.5
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@types/react-is':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
     publishDirectory: build
 
@@ -1588,22 +1585,22 @@ importers:
         version: 10.1.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     devDependencies:
       '@babel/runtime':
-        specifier: 8.0.10
+        specifier: ^8.0.10
         version: 8.0.10
       '@emotion/cache':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@fontsource/inter':
-        specifier: 5.3.0
+        specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/material-icons':
-        specifier: 5.3.0
+        specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/roboto':
-        specifier: 5.3.0
+        specifier: ^5.3.0
         version: 5.3.0
       '@mui/icons-material':
         specifier: workspace:^
@@ -1624,61 +1621,61 @@ importers:
         specifier: workspace:^
         version: link:../packages/mui-utils/build
       '@tailwindcss/vite':
-        specifier: 4.3.3
+        specifier: ^4.3.3
         version: 4.3.3(vite@8.3.4(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.0))
       '@testing-library/dom':
-        specifier: 10.4.2
+        specifier: ^10.4.2
         version: 10.4.2
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-is':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/sinon':
-        specifier: 22.0.2
+        specifier: ^22.0.2
         version: 22.0.2
       docs:
         specifier: workspace:^
         version: link:../docs
       es-toolkit:
-        specifier: 1.52.0
+        specifier: ^1.52.0
         version: 1.52.0
       fast-glob:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       prop-types:
-        specifier: 15.8.1
+        specifier: ^15.8.1
         version: 15.8.1
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
       react-is:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       react-router:
-        specifier: 8.5.1
+        specifier: ^8.5.1
         version: 8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-window:
-        specifier: catalog:docs
+        specifier: ^2.3.4
         version: 2.3.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       sinon:
-        specifier: 22.1.0
+        specifier: ^22.1.0
         version: 22.1.0
       styled-components:
-        specifier: 6.6.0
+        specifier: ^6.6.0
         version: 6.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       stylis:
-        specifier: 4.4.0
+        specifier: ^4.4.0
         version: 4.4.0
       tailwindcss:
-        specifier: 4.3.3
+        specifier: ^4.3.3
         version: 4.3.3
       yargs:
-        specifier: 18.2.0
+        specifier: ^18.2.0
         version: 18.2.0
 
   test/benchmark:
@@ -1703,13 +1700,13 @@ importers:
         specifier: 0.1.1-canary.9
         version: 0.1.1-canary.9(@playwright/test@1.63.0)(@vitest/browser-playwright@5.0.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(vite@8.3.4(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.0)
       '@playwright/test':
-        specifier: 1.63.0
+        specifier: ^1.63.0
         version: 1.63.0
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       vite:
         specifier: ^8.0.0
@@ -1737,10 +1734,10 @@ importers:
         version: link:../../packages/mui-utils/build
     devDependencies:
       fast-glob:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       path:
-        specifier: 0.12.7
+        specifier: ^0.12.7
         version: 0.12.7
 
   test/e2e: {}
@@ -1748,10 +1745,10 @@ importers:
   test/moduleAugmentation:
     devDependencies:
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@emotion/styled':
-        specifier: 11.14.1
+        specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0))(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@mui/material':
         specifier: workspace:^
@@ -1763,16 +1760,16 @@ importers:
         specifier: workspace:^
         version: link:../../packages/mui-types/build
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       es-toolkit:
-        specifier: 1.52.0
+        specifier: ^1.52.0
         version: 1.52.0
       fast-glob:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
 
   test/moduleResolution:
@@ -1787,22 +1784,22 @@ importers:
   test/typescriptMinimum:
     devDependencies:
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@emotion/styled':
-        specifier: 11.14.1
+        specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0))(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@mui/material':
         specifier: workspace:^
         version: link:../../packages/mui-material/build
       '@types/react':
-        specifier: 19.3.0
+        specifier: ^19.3.0
         version: 19.3.0
       react:
-        specifier: 19.3.1
+        specifier: ^19.3.1
         version: 19.3.1
       typescript:
-        specifier: 5.9.3
+        specifier: ^5.9.3
         version: 5.9.3
 
 packages:

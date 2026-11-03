@@ -8,6 +8,6 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@types/react": "19.3.0"
+    "@types/react": "^19.3.0"
   }
 }
