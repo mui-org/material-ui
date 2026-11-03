@@ -1928,7 +1928,7 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
     );
   });
 
-  it('should not pass a stale value to onChangeCommitted after the value changed externally', () => {
+  it('should not pass a stale value to onChangeCommitted on touch after an external change', () => {
     const handleChange = spy();
     const handleChangeCommitted = spy();
     const { container, setProps } = render(
@@ -1940,7 +1940,6 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
       bottom: 10,
       left: 0,
     }));
-    const slider = screen.getByRole('slider');
 
     fireEvent.touchStart(container.firstChild, createTouches([{ identifier: 1, clientX: 30 }]));
     fireEvent.touchEnd(document.body, createTouches([{ identifier: 1, clientX: 30 }]));
@@ -1953,19 +1952,28 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
     expect(handleChange.callCount).to.equal(1);
     expect(handleChangeCommitted.callCount).to.equal(2);
     expect(handleChangeCommitted.args[1][1]).to.equal(0);
+  });
 
+  it('should not pass a stale value to onChangeCommitted on key press after an external change', () => {
+    const handleChange = spy();
+    const handleChangeCommitted = spy();
+    const { setProps } = render(
+      <Slider onChange={handleChange} onChangeCommitted={handleChangeCommitted} value={0} />,
+    );
+    const slider = screen.getByRole('slider');
     act(() => {
       slider.focus();
     });
+
     fireEvent.keyDown(slider, { key: 'ArrowRight' });
-    expect(handleChangeCommitted.args[2][1]).to.equal(1);
+    expect(handleChangeCommitted.args[0][1]).to.equal(1);
     setProps({ value: 1 });
     setProps({ value: 0 });
 
     fireEvent.keyDown(slider, { key: 'Home' });
-    expect(handleChange.callCount).to.equal(2);
-    expect(handleChangeCommitted.callCount).to.equal(4);
-    expect(handleChangeCommitted.args[3][1]).to.equal(0);
+    expect(handleChange.callCount).to.equal(1);
+    expect(handleChangeCommitted.callCount).to.equal(2);
+    expect(handleChangeCommitted.args[1][1]).to.equal(0);
   });
 
   it('should not pass a stale value to onChangeCommitted after a drag interrupted by disabling', () => {
