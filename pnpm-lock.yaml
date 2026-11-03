@@ -172,8 +172,8 @@ catalogs:
       specifier: ^1.9.0
       version: 1.9.0
     '@docsearch/react':
-      specifier: ^5.0.1
-      version: 5.0.1
+      specifier: ^5.2.0
+      version: 5.2.0
     '@emotion/cache':
       specifier: ^11.14.0
       version: 11.14.0
@@ -191,7 +191,7 @@ catalogs:
       version: 4.2.0
 
 overrides:
-  '@mui/internal-docs-infra': 0.13.1-canary.19
+  '@mui/internal-docs-infra': 0.13.1-canary.29
   docs>stylis: 4.2.0
   docs>react-is: 19.3.1
   caniuse-lite: ^1.0.30001820
@@ -241,8 +241,8 @@ importers:
         specifier: 0.1.1-canary.27
         version: 0.1.1-canary.27(@next/eslint-plugin-next@16.4.3(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0)))(@octokit/core@7.0.7)(@types/node@22.20.5)(@typescript-eslint/eslint-plugin@8.72.1(@typescript-eslint/parser@8.72.1(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0))(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0))(@typescript-eslint/parser@8.72.1(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0))(@typescript/typescript6@6.0.2)(@vitest/expect@4.1.10)(eslint-import-resolver-node@0.3.10(supports-color@11.0.0))(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(postcss@8.5.32)(prettier@3.9.10)(stylelint@17.16.0(@typescript/typescript6@6.0.2)(supports-color@11.0.0))(supports-color@11.0.0)(vitest@5.0.0)
       '@mui/internal-docs-infra':
-        specifier: 0.13.1-canary.19
-        version: 0.13.1-canary.19(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
+        specifier: 0.13.1-canary.29
+        version: 0.13.1-canary.29(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
       '@mui/internal-docs-utils':
         specifier: workspace:^
         version: link:packages-internal/docs-utils/build
@@ -425,7 +425,7 @@ importers:
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@docsearch/react':
         specifier: catalog:docs
-        version: 5.0.1(@algolia/client-search@5.56.0)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)
+        version: 5.2.0(@algolia/client-search@5.56.0)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)
       '@emotion/cache':
         specifier: catalog:docs
         version: 11.14.0
@@ -445,8 +445,8 @@ importers:
         specifier: workspace:^
         version: link:../packages-internal/core-docs/build
       '@mui/internal-docs-infra':
-        specifier: 0.13.1-canary.19
-        version: 0.13.1-canary.19(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7(supports-color@11.0.0))(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
+        specifier: 0.13.1-canary.29
+        version: 0.13.1-canary.29(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7(supports-color@11.0.0))(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
       '@mui/internal-markdown':
         specifier: workspace:^
         version: link:../packages-internal/markdown
@@ -852,7 +852,7 @@ importers:
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@docsearch/react':
         specifier: catalog:docs
-        version: 5.0.1(@algolia/client-search@5.56.0)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)
+        version: 5.2.0(@algolia/client-search@5.56.0)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)
       '@emotion/cache':
         specifier: catalog:docs
         version: 11.14.0
@@ -863,8 +863,8 @@ importers:
         specifier: catalog:docs
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0))(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
       '@mui/internal-docs-infra':
-        specifier: 0.13.1-canary.19
-        version: 0.13.1-canary.19(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
+        specifier: 0.13.1-canary.29
+        version: 0.13.1-canary.29(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
       '@mui/internal-markdown':
         specifier: workspace:^
         version: link:../markdown
@@ -1001,8 +1001,8 @@ importers:
         specifier: ^7.29.11
         version: 7.29.11
       '@mui/internal-docs-infra':
-        specifier: 0.13.1-canary.19
-        version: 0.13.1-canary.19(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7(supports-color@11.0.0))(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
+        specifier: 0.13.1-canary.29
+        version: 0.13.1-canary.29(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7(supports-color@11.0.0))(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)
       '@mui/internal-docs-utils':
         specifier: workspace:^
         version: link:../docs-utils/build
@@ -1804,31 +1804,27 @@ importers:
 
 packages:
 
-  '@ai-sdk/gateway@2.0.173':
-    resolution: {integrity: sha512-1WNKbnZm//oWVSFC4GXpE4Mwkk01uyyycirqgVbpgrVGF+JevjMej0JDuTaf09xX9e9ZOOfbLQtK46Vgb10Buw==}
+  '@ai-sdk/gateway@3.0.226':
+    resolution: {integrity: sha512-8lSJyyWqzpzEgUWZwY7miqIsl9NZv6qtlaioK7GSnQTbQkX5T8PEVz8IxCCRAwFYpria5O0YqKaukuIgZemfpA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider-utils@3.0.42':
-    resolution: {integrity: sha512-5DMgJ2HD4rR6mvoc7mqeW5roLHTTqDKNkGuLOWnF0+UCOu96xqPFMy3RbGKYAYDh5YhkwGBdbV7f6xSkLxzGXw==}
-    engines: {node: '>=18'}
+  '@ai-sdk/provider-utils@4.0.63':
+    resolution: {integrity: sha512-QSrfUn7pnb+2EZLLtpkcY6208ZZVi15QEJFyp/1jAYEH2UecthgAsyYWOJbpMSLtraviCByd6ii2meISIhkTZA==}
+    engines: {node: '>=18.17'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider@2.0.5':
-    resolution: {integrity: sha512-cmG40u10QFEUrYXWYom6Lo6DLR+pND3wWABTTT9Nf7zg9F7BD46KNj+STekndp9Kg5ZAIPA0WxmTI0IwRvKvvQ==}
+  '@ai-sdk/provider@3.0.19':
+    resolution: {integrity: sha512-5lWq7zSfRaU5ylDESn3sDQjgGl2AI1vjZKO/6JY3aFW70ct4zcP1kN+ZUYOuTXr28fVsYbyu2YFhddLdIgQFZQ==}
     engines: {node: '>=18'}
 
-  '@ai-sdk/react@2.0.285':
-    resolution: {integrity: sha512-Ok7tVIGlkwOYIpxvgMtIHQMhBR2fKR3K4MazJ6CR6ywcX00cG+pnw4cF9o/6YLkXDvEVqLbTrs5QOI/qk7b27Q==}
+  '@ai-sdk/react@3.0.323':
+    resolution: {integrity: sha512-Db0dYmxOHo7/R6CAK954JEDqlWvq8aiIcKmWPONGMUY4P9ho2MJSF5Lxhl5CspEnuJC43ADeyZa4B1b3BnBp+w==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18 || ~19.0.1 || ~19.1.2 || ^19.2.1
-      zod: ^3.25.76 || ^4.1.8
-    peerDependenciesMeta:
-      zod:
-        optional: true
 
   '@algolia/abtesting@1.22.0':
     resolution: {integrity: sha512-BFR6zNowNKcY7Ou7TaJc9QWexES4YKPbmf/OTFofpdsdhz4x6q0lbxp3duO0EHnyrN7rE4ba/TSXuY+BDGu4+g==}
@@ -3242,8 +3238,8 @@ packages:
   '@dmsnell/diff-match-patch@1.1.0':
     resolution: {integrity: sha512-yejLPmM5pjsGvxS9gXablUSbInW7H976c/FJ4iQxWIm7/38xBySRemTPDe34lhg1gVLbJntX0+sH0jYfU+PN9A==}
 
-  '@docsearch/core@5.0.1':
-    resolution: {integrity: sha512-2iQ8m9eqGhiSvxt+CotLLqCNxE36K3ks0ALXiirTdr09HKBzt2RKi+m9bMA911rXxWO2NCq9Ug8LJxCCB3XmNQ==}
+  '@docsearch/core@5.2.0':
+    resolution: {integrity: sha512-vLFEkAnN+kt8C3P5XRKE7ZouMBgCbDT+ihLAI/uWbRU4A0xUJiAns/GSdKOLAnyxNKK3K2mt1WepINi+7AS2IQ==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 20.0.0'
       react: '>= 16.8.0 < 20.0.0'
@@ -3256,11 +3252,11 @@ packages:
       react-dom:
         optional: true
 
-  '@docsearch/css@5.0.1':
-    resolution: {integrity: sha512-q1HdKMkROnZIIN+/eSa2f6qtIn9VcBtXelVMScFuWTWPQwIMBt0evl/TJku0HsssMJkuT6jKzY6Yfet/RMG2Tg==}
+  '@docsearch/css@5.2.0':
+    resolution: {integrity: sha512-KqJjLYMniiiKgZFdK+f7LTy3ZTL5r13buvxagNjDnYVGfa0NR+bb9BnjZq3FTl3VvsmkeW3aSr9AGIZsiQXY/A==}
 
-  '@docsearch/react@5.0.1':
-    resolution: {integrity: sha512-0gP+NZxQDNltW72LQiqTjmKMf0lffOY7UJndll8js9zhRvgfucs7iGaBJyQdP/wZL+4jeUskjyWspjSO1KbVbg==}
+  '@docsearch/react@5.2.0':
+    resolution: {integrity: sha512-ZJrYePS2+UK7M3X5xWmKsm8VJ0GuslnAk8jcIcjPfd20GoCEjce9e+3X/8UH0lAtWokesAm2ERUJzlwr/9YCpg==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 20.0.0'
       react: '>= 16.8.0 < 20.0.0'
@@ -3599,10 +3595,6 @@ packages:
 
   '@fast-csv/parse@5.0.7':
     resolution: {integrity: sha512-MeuDeQj0DVmIGWky8STaKtvj232Gpq8kjrOGplHJ99Os7OO5CetVfXvUGqX/3GHYFOUsz6FK8isWtDY2XTFNWw==}
-
-  '@fastify/busboy@2.1.1':
-    resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
-    engines: {node: '>=14'}
 
   '@fingerprintjs/fingerprintjs@3.4.2':
     resolution: {integrity: sha512-3Ncze6JsJpB7BpYhqIgvBpfvEX1jsEKrad5hQBpyRQxtoAp6hx3+R46zqfsuQG4D9egQZ+xftQ0u4LPFMB7Wmg==}
@@ -4143,8 +4135,8 @@ packages:
       typescript:
         optional: true
 
-  '@mui/internal-docs-infra@0.13.1-canary.19':
-    resolution: {integrity: sha512-8A8ate7dVzvlSy+zkI33HLzpAhd4ZMVUSlvBNo9gqk7buREqkKQ4XromTxjGYBDlWSqPMa2CgdiaE8QPbCPf/Q==}
+  '@mui/internal-docs-infra@0.13.1-canary.29':
+    resolution: {integrity: sha512-w3BDyjFcW7j7DXJFhsZ7QEdfjS6X891zLqvze6CpHsWprhPt97JXNSIV33+GhPVjHlsljldULpHhUNjpQ+ua3g==}
     engines: {node: '>=22.18.0'}
     hasBin: true
     peerDependencies:
@@ -4178,6 +4170,12 @@ packages:
         optional: true
       '@emotion/react':
         optional: true
+
+  '@mui/internal-typescript-api-extractor@0.1.1-canary.1':
+    resolution: {integrity: sha512-qO14IwkNvZw9fi6YT4DbDJlX+Yq0ZHHmIP42P8tyO5W2EQoyAyfq/jRgf7orfqVzbk9XOzBRR/FSAV0lmVhZsw==}
+    engines: {node: '>=22.12.0'}
+    peerDependencies:
+      typescript: ^5.8 || ^6.0
 
   '@mui/material-nextjs@9.3.0':
     resolution: {integrity: sha512-wtI2u7+Sb+xsbn0aPOofYKD2kGD3BreAaLDEFTuf1gQl+IB8kqcTn+UU6OvJ+hAVbFlTXpvD2oVDkOTeCzjVmQ==}
@@ -6145,8 +6143,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vercel/oidc@3.1.0':
-    resolution: {integrity: sha512-Fw28YZpRnA3cAHHDlkt7xQHiJ0fcL+NRcIqsocZQUSmbzeIKRpwttJjik5ZGanXP+vlA4SbTg+AbA3bP363l+w==}
+  '@vercel/oidc@3.2.0':
+    resolution: {integrity: sha512-UycprH3T6n3jH0k44NHMa7pnFHGu/N05MjojYr+Mc6I7obkoLIJujSWwin1pCvdy/eOxrI/l3uDLQsmcrOb4ug==}
     engines: {node: '>= 20'}
 
   '@vitejs/plugin-react@6.1.2':
@@ -6348,8 +6346,8 @@ packages:
     resolution: {integrity: sha512-TQf59BsZnytt8GdJKLPfUZ54g/iaUL2OWDSFCCvMOhsHduDQxO8xC4PNeyIkVcA5KwL2phPSv0douC0fgWzmnA==}
     engines: {node: '>= 20'}
 
-  ai@5.0.282:
-    resolution: {integrity: sha512-YLUIx4AxWcFlJTb2GEmLbO7I9Yt7Vfrf5kpYiAUfHFtuwVIGu9Bb6yRZRbEgG5CJ70T3dKKNoYy8boaiaKuWEA==}
+  ai@6.0.320:
+    resolution: {integrity: sha512-TYPfDbhIDMJKMpMGFUmr5dxmerEWPODDAmcARyhlA1392Ru8p+hkWB67FnsC7yC9/T+jlilRZTEZHe/6yJAF2Q==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -11493,10 +11491,6 @@ packages:
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
-  typescript-api-extractor@1.0.0-beta.7:
-    resolution: {integrity: sha512-aM4Nsec9X76xXOnz9RJ+B5rATt6rPlGbfnxJn+QHvicM8lQTeGap3W8Hztq2x6HKtfiRBhiPsyYZBuM00pllMg==}
-    engines: {node: '>=22'}
-
   typescript-eslint@8.72.1:
     resolution: {integrity: sha512-3Li9FfPmQp45nxEtFD1ZCrYFI3cYK5kpyNtmm1H7lMagm8u9sy6PTjy3ytwQZs7KNukOyKFHAZ6z6GjYFeaeXw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -11539,9 +11533,9 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  undici@5.29.0:
-    resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
-    engines: {node: '>=14.0'}
+  undici@6.29.1:
+    resolution: {integrity: sha512-EvRlUt/QqAEvXdQeRMYUfwOQsfzpDztykrG2owGEE/rBOBoYv9uF39ZzsNDh4lTFHhTr2XOZjKkYgueD12ZmGA==}
+    engines: {node: '>=18.17'}
 
   undici@7.29.0:
     resolution: {integrity: sha512-IDxfleLmmbSskfWSUATiN1nfn2rDuvnMOqb5CWR92iIfojA0Ud+ulOAAEQ57LPr9rWmsreUyf5lwyao+7GNNVw==}
@@ -12092,34 +12086,34 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/gateway@2.0.173(zod@4.6.7)':
+  '@ai-sdk/gateway@3.0.226(zod@4.6.7)':
     dependencies:
-      '@ai-sdk/provider': 2.0.5
-      '@ai-sdk/provider-utils': 3.0.42(zod@4.6.7)
-      '@vercel/oidc': 3.1.0
+      '@ai-sdk/provider': 3.0.19
+      '@ai-sdk/provider-utils': 4.0.63(zod@4.6.7)
+      '@vercel/oidc': 3.2.0
       zod: 4.6.7
 
-  '@ai-sdk/provider-utils@3.0.42(zod@4.6.7)':
+  '@ai-sdk/provider-utils@4.0.63(zod@4.6.7)':
     dependencies:
-      '@ai-sdk/provider': 2.0.5
+      '@ai-sdk/provider': 3.0.19
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.1.1
-      undici: 5.29.0
+      undici: 6.29.1
       zod: 4.6.7
 
-  '@ai-sdk/provider@2.0.5':
+  '@ai-sdk/provider@3.0.19':
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@2.0.285(react@19.3.1)(zod@4.6.7)':
+  '@ai-sdk/react@3.0.323(react@19.3.1)(zod@4.6.7)':
     dependencies:
-      '@ai-sdk/provider-utils': 3.0.42(zod@4.6.7)
-      ai: 5.0.282(zod@4.6.7)
+      '@ai-sdk/provider-utils': 4.0.63(zod@4.6.7)
+      ai: 6.0.320(zod@4.6.7)
       react: 19.3.1
       swr: 2.5.1(react@19.3.1)
       throttleit: 2.1.0
-    optionalDependencies:
-      zod: 4.6.7
+    transitivePeerDependencies:
+      - zod
 
   '@algolia/abtesting@1.22.0':
     dependencies:
@@ -13910,22 +13904,22 @@ snapshots:
 
   '@dmsnell/diff-match-patch@1.1.0': {}
 
-  '@docsearch/core@5.0.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@docsearch/core@5.2.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     optionalDependencies:
       '@types/react': 19.3.0
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  '@docsearch/css@5.0.1': {}
+  '@docsearch/css@5.2.0': {}
 
-  '@docsearch/react@5.0.1(@algolia/client-search@5.56.0)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)':
+  '@docsearch/react@5.2.0(@algolia/client-search@5.56.0)(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)':
     dependencies:
-      '@ai-sdk/react': 2.0.285(react@19.3.1)(zod@4.6.7)
+      '@ai-sdk/react': 3.0.323(react@19.3.1)(zod@4.6.7)
       '@algolia/autocomplete-core': 1.19.2(@algolia/client-search@5.56.0)(algoliasearch@5.56.0)(search-insights@2.17.3)
       '@base-ui/react': 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@docsearch/core': 5.0.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@docsearch/css': 5.0.1
-      ai: 5.0.282(zod@4.6.7)
+      '@docsearch/core': 5.2.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@docsearch/css': 5.2.0
+      ai: 6.0.320(zod@4.6.7)
       algoliasearch: 5.56.0
       marked: 16.4.2
       zod: 4.6.7
@@ -14222,8 +14216,6 @@ snapshots:
       lodash.escaperegexp: 4.1.2
       lodash.groupby: 4.6.0
       lodash.uniq: 4.5.0
-
-  '@fastify/busboy@2.1.1': {}
 
   '@fingerprintjs/fingerprintjs@3.4.2':
     dependencies:
@@ -14835,12 +14827,13 @@ snapshots:
       - ts-declaration-location
       - vitest
 
-  '@mui/internal-docs-infra@0.13.1-canary.19(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7(supports-color@11.0.0))(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)':
+  '@mui/internal-docs-infra@0.13.1-canary.29(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7(supports-color@11.0.0))(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)':
     dependencies:
       '@babel/runtime': 8.0.10
       '@csstools/postcss-light-dark-function': 3.0.7(postcss@8.5.32)
       '@csstools/postcss-relative-color-syntax': 4.0.15(postcss@8.5.32)
       '@csstools/postcss-stepped-value-functions': 5.0.9(postcss@8.5.32)
+      '@mui/internal-typescript-api-extractor': 0.1.1-canary.1(@typescript/typescript6@6.0.2)
       '@orama/orama': 3.1.18
       '@orama/plugin-qps': 3.1.18
       '@orama/stemmers': 3.1.18
@@ -14874,7 +14867,6 @@ snapshots:
       remark-typography: 0.8.10
       sucrase: 3.35.1
       typescript: '@typescript/typescript6@6.0.2'
-      typescript-api-extractor: 1.0.0-beta.7
       uint8-to-base64: 0.2.1
       unified: 11.0.5
       unist-util-visit: 5.2.0
@@ -14888,12 +14880,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mui/internal-docs-infra@0.13.1-canary.19(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)':
+  '@mui/internal-docs-infra@0.13.1-canary.29(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(prettier@3.9.10)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@11.0.0)':
     dependencies:
       '@babel/runtime': 8.0.10
       '@csstools/postcss-light-dark-function': 3.0.7(postcss@8.5.32)
       '@csstools/postcss-relative-color-syntax': 4.0.15(postcss@8.5.32)
       '@csstools/postcss-stepped-value-functions': 5.0.9(postcss@8.5.32)
+      '@mui/internal-typescript-api-extractor': 0.1.1-canary.1(@typescript/typescript6@6.0.2)
       '@orama/orama': 3.1.18
       '@orama/plugin-qps': 3.1.18
       '@orama/stemmers': 3.1.18
@@ -14927,7 +14920,6 @@ snapshots:
       remark-typography: 0.8.10
       sucrase: 3.35.1
       typescript: '@typescript/typescript6@6.0.2'
-      typescript-api-extractor: 1.0.0-beta.7
       uint8-to-base64: 0.2.1
       unified: 11.0.5
       unist-util-visit: 5.2.0
@@ -14970,6 +14962,11 @@ snapshots:
       - '@vitest/utils'
       - vite
       - vitest
+
+  '@mui/internal-typescript-api-extractor@0.1.1-canary.1(@typescript/typescript6@6.0.2)':
+    dependencies:
+      '@babel/runtime': 8.0.10
+      typescript: '@typescript/typescript6@6.0.2'
 
   '@mui/material-nextjs@9.3.0(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0))(@emotion/server@11.11.0(@emotion/css@11.13.5(supports-color@11.0.0)))(@types/react@19.3.0)(next@16.4.3(@babel/core@8.0.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.63.0)(@types/node@22.20.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)':
     dependencies:
@@ -16871,7 +16868,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vercel/oidc@3.1.0': {}
+  '@vercel/oidc@3.2.0': {}
 
   '@vitejs/plugin-react@6.1.2(babel-plugin-react-compiler@1.0.0)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.0))':
     dependencies:
@@ -17196,11 +17193,11 @@ snapshots:
 
   agent-base@9.0.0: {}
 
-  ai@5.0.282(zod@4.6.7):
+  ai@6.0.320(zod@4.6.7):
     dependencies:
-      '@ai-sdk/gateway': 2.0.173(zod@4.6.7)
-      '@ai-sdk/provider': 2.0.5
-      '@ai-sdk/provider-utils': 3.0.42(zod@4.6.7)
+      '@ai-sdk/gateway': 3.0.226(zod@4.6.7)
+      '@ai-sdk/provider': 3.0.19
+      '@ai-sdk/provider-utils': 4.0.63(zod@4.6.7)
       '@opentelemetry/api': 1.9.0
       zod: 4.6.7
 
@@ -23405,11 +23402,6 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typescript-api-extractor@1.0.0-beta.7:
-    dependencies:
-      es-toolkit: 1.52.0
-      typescript: 5.9.3
-
   typescript-eslint@8.72.1(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0):
     dependencies:
       '@typescript-eslint/eslint-plugin': 8.72.1(@typescript-eslint/parser@8.72.1(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0))(@typescript/typescript6@6.0.2)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
@@ -23464,9 +23456,7 @@ snapshots:
 
   undici-types@6.21.0: {}
 
-  undici@5.29.0:
-    dependencies:
-      '@fastify/busboy': 2.1.1
+  undici@6.29.1: {}
 
   undici@7.29.0: {}
 
