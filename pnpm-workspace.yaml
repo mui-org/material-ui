@@ -33,7 +33,7 @@ catalogs:
   docs:
     stylis: '4.2.0'
     '@base-ui/react': '^1.9.0'
-    '@docsearch/react': '^4.7.1'
+    '@docsearch/react': '^5.0.1'
     '@emotion/cache': '^11.14.0'
     '@emotion/react': '^11.14.0'
     '@emotion/server': '^11.11.0'
@@ -46,7 +46,7 @@ overrides:
   'docs>stylis': '4.2.0'
   'docs>react-is': '19.3.1'
   # Migrated from package.json "resolutions" (pnpm 11 ignores that field).
-  caniuse-lite: '^1.0.30001819'
+  caniuse-lite: '^1.0.30001820'
   '@types/node': '22.20.5'
   cross-fetch: '^4.1.0'
   '@pigment-css/react': '0.0.31'

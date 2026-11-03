@@ -4,6 +4,7 @@ const childProcess = require('child_process');
 const { promises: fs } = require('fs');
 const path = require('path');
 const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers');
 const jscodeshiftPackage = require('jscodeshift/package.json');
 const postcssCliPackage = require('postcss-cli/package.json');
 
@@ -165,7 +166,7 @@ function run(argv) {
   runPostcssTransform(codemod, files);
 }
 
-yargs
+yargs(hideBin(process.argv))
   .command({
     command: '$0 <codemod> <paths...>',
     describe: 'Applies a `@mui/codemod` to the specified paths',

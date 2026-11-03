@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { createRenderer, screen, simulateKeyboardDevice, isJsdom } from '@mui/internal-test-utils';
+import {
+  act,
+  createRenderer,
+  screen,
+  simulateKeyboardDevice,
+  isJsdom,
+} from '@mui/internal-test-utils';
 import ButtonGroup, { buttonGroupClasses as classes } from '@mui/material/ButtonGroup';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Button, { buttonClasses } from '@mui/material/Button';
@@ -363,6 +369,28 @@ describe('<ButtonGroup />', () => {
       expect(button).not.to.have.class(classes.firstButton);
       expect(button).not.to.have.class(classes.middleButton);
       expect(button).not.to.have.class(classes.lastButton);
+    });
+
+    it('should keep a button mounted when the button before it is removed', async () => {
+      function Toolbar({ showUndo }) {
+        return (
+          <ButtonGroup>
+            {showUndo && <Button>Undo</Button>}
+            <Button>Save</Button>
+            <Button>Delete</Button>
+          </ButtonGroup>
+        );
+      }
+      const { setProps } = render(<Toolbar showUndo />);
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await act(async () => {
+        saveButton.focus();
+      });
+
+      setProps({ showUndo: false });
+
+      expect(screen.getByRole('button', { name: 'Save' })).to.equal(saveButton);
+      expect(saveButton).toHaveFocus();
     });
   });
 });
