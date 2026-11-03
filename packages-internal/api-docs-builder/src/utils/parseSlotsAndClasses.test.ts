@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as ts from 'typescript';
+import * as ts from '@typescript/typescript6';
 import parseSlotsAndClasses from './parseSlotsAndClasses';
 import type { TypeScriptProject } from './createTypeScriptProject';
 import type { ProjectSettings } from '../ProjectSettings';
@@ -50,6 +50,12 @@ export declare function Shelf(props: { slots?: ShelfSlots }): React.ReactElement
 export interface TraySlots extends Omit<BoxSlots, 'list'> {}
 
 export declare function Tray(props: { slots?: TraySlots }): React.ReactElement;
+
+type CartBase = MessageSlots & Pick<BoxSlots, 'group' | 'box'>;
+
+export interface CartSlots extends CartBase {}
+
+export declare function Cart(props: { slots?: CartSlots }): React.ReactElement;
 
 export type Warmup = 'avatar' | 'indicator';
 `;
@@ -104,6 +110,10 @@ describe('parseSlotsAndClasses', () => {
   it('lists `Pick` and `Omit` slots in the order of the source interface', () => {
     expect(getSlotNames('Shelf')).to.deep.equal(['box', 'group']);
     expect(getSlotNames('Tray')).to.deep.equal(['box', 'group', 'indicator', 'root', 'avatar']);
+  });
+
+  it('lists `Pick` slots in an intersection in the order of the source interface', () => {
+    expect(getSlotNames('Cart')).to.deep.equal(['root', 'avatar', 'box', 'group']);
   });
 
   it('lists `Pick` slots in the same order regardless of checker state', () => {

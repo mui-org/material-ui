@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import * as ts from 'typescript';
+import * as ts from '@typescript/typescript6';
 
 const MEMBER_FLAGS = ts.SymbolFlags.Property | ts.SymbolFlags.Method | ts.SymbolFlags.Accessor;
 
@@ -59,8 +59,6 @@ function hasUnstableKeyOrder(type: ts.Type): boolean {
   );
 }
 
-// The type a `Pick<T, K>` or `Omit<T, K>` takes its members from: the first alias type argument
-// that has all of them.
 function getSourceType(type: ts.Type, properties: ts.Symbol[]): ts.Type | undefined {
   return type.aliasTypeArguments?.find(
     (argument) =>
@@ -69,35 +67,50 @@ function getSourceType(type: ts.Type, properties: ts.Symbol[]): ts.Type | undefi
   );
 }
 
-function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>) {
+function collectNamesOfParts(checker: ts.TypeChecker, parts: ts.Type[], names: Set<string>) {
+  let unstable = false;
+  parts.forEach((part) => {
+    if (collectNames(checker, part, names)) {
+      unstable = true;
+    }
+  });
+  return unstable;
+}
+
+// Adds the property names of `type` to `names` in the checker order, except for members of a
+// mapped type with an unstable key order. Returns whether there were any of those.
+function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>): boolean {
   const interfaceType = getInterfaceTarget(type);
-  if (!interfaceType) {
-    const properties = type.getProperties();
-    if (!hasUnstableKeyOrder(type)) {
-      properties.forEach((symbol) => names.add(symbol.name));
-      return;
-    }
-    const sourceType = getSourceType(type, properties);
-    if (sourceType) {
-      const sourceNames = new Set<string>();
-      collectNames(checker, sourceType, sourceNames);
-      sourceNames.forEach((name) => {
-        if (type.getProperty(name)) {
-          names.add(name);
-        }
-      });
-    }
-    [...properties].sort(compareByDeclaration).forEach((symbol) => names.add(symbol.name));
-    return;
+  if (interfaceType) {
+    interfaceType.symbol.members?.forEach((member) => {
+      if (member.flags & MEMBER_FLAGS) {
+        names.add(member.name);
+      }
+    });
+    return collectNamesOfParts(checker, checker.getBaseTypes(interfaceType), names);
   }
-  interfaceType.symbol.members?.forEach((member) => {
-    if (member.flags & MEMBER_FLAGS) {
-      names.add(member.name);
-    }
-  });
-  checker.getBaseTypes(interfaceType).forEach((baseType) => {
-    collectNames(checker, baseType, names);
-  });
+  if (type.isIntersection()) {
+    return collectNamesOfParts(checker, type.types, names);
+  }
+
+  const properties = type.getProperties();
+  if (!hasUnstableKeyOrder(type)) {
+    properties.forEach((symbol) => names.add(symbol.name));
+    return false;
+  }
+  const sourceType = getSourceType(type, properties);
+  if (sourceType) {
+    const sourceNames = new Set<string>();
+    collectNames(checker, sourceType, sourceNames);
+    sourceNames.forEach((name) => {
+      if (type.getProperty(name)) {
+        names.add(name);
+      }
+    });
+  } else {
+    [...properties].sort(compareByDeclaration).forEach((symbol) => names.add(symbol.name));
+  }
+  return true;
 }
 
 /**
@@ -105,16 +118,19 @@ function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>
  *
  * `type.getProperties()` lists the members of a mapped type such as `Pick<T, 'a' | 'b'>` in
  * the internal order of the key union, which depends on which literal types the checker
- * created first. Those members follow the order of the source type `T`, or declaration
- * position when there is no source type. Everything else keeps the checker order.
+ * created first. Those members follow the order of the source type `T` (the first alias type
+ * argument that has all of them), or declaration position when there is none. Interfaces and
+ * intersections are walked to find such members. Without any, `type.getProperties()` is
+ * returned as is.
  */
 export function getOrderedProperties(checker: ts.TypeChecker, type: ts.Type): ts.Symbol[] {
-  const names = new Set<string>();
-  collectNames(checker, type, names);
-
   const properties = type.getProperties();
+  const names = new Set<string>();
+  if (!collectNames(checker, type, names)) {
+    return properties;
+  }
   const byName = new Map(properties.map((symbol) => [symbol.name, symbol]));
   const ordered = [...names].flatMap((name) => byName.get(name) ?? []);
-  const missing = properties.filter((symbol) => !names.has(symbol.name));
-  return [...ordered, ...missing.sort(compareByDeclaration)];
+  // Members the walk can't name, such as computed keys, keep the checker order at the end.
+  return [...ordered, ...properties.filter((symbol) => !names.has(symbol.name))];
 }
