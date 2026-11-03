@@ -116,13 +116,13 @@ export default function cssContainerQueries<T extends { breakpoints: Breakpoints
           .replace('not all and ', '')
           .replace('min-width:', 'width<')
           .replace('max-width:', 'width>')
-          .replace('and', 'or');
+          .replace(') and (', ') or (');
       }
       return result;
     };
   }
-  const node = {};
   const containerQueries = ((name: string) => {
+    const node = {};
     attachCq(node, name);
     return node;
   }) as CssContainerQueries['containerQueries'];
