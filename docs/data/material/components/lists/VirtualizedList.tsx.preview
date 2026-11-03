@@ -1,10 +1,7 @@
 <List
   rowHeight={46}
   rowCount={200}
-  style={{
-    height: 400,
-    width: 360,
-  }}
+  style={{ height: 400 }}
   rowProps={{}}
   overscanCount={5}
   rowComponent={renderRow}
