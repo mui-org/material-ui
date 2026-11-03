@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { spy } from 'sinon';
-import { createRenderer, screen } from '@mui/internal-test-utils';
+import { act, createRenderer, screen } from '@mui/internal-test-utils';
 import ToggleButtonGroup, {
   toggleButtonGroupClasses as classes,
 } from '@mui/material/ToggleButtonGroup';
@@ -447,6 +447,28 @@ describe('<ToggleButtonGroup />', () => {
       expect(button).not.to.have.class(classes.firstButton);
       expect(button).not.to.have.class(classes.middleButton);
       expect(button).not.to.have.class(classes.lastButton);
+    });
+
+    it('should keep a button mounted when the button before it is removed', async () => {
+      function Toolbar({ showLeft }) {
+        return (
+          <ToggleButtonGroup>
+            {showLeft && <ToggleButton value="left">Left</ToggleButton>}
+            <ToggleButton value="center">Center</ToggleButton>
+            <ToggleButton value="right">Right</ToggleButton>
+          </ToggleButtonGroup>
+        );
+      }
+      const { setProps } = render(<Toolbar showLeft />);
+      const centerButton = screen.getByRole('button', { name: 'Center' });
+      await act(async () => {
+        centerButton.focus();
+      });
+
+      setProps({ showLeft: false });
+
+      expect(screen.getByRole('button', { name: 'Center' })).to.equal(centerButton);
+      expect(centerButton).toHaveFocus();
     });
   });
 
