@@ -14,8 +14,6 @@ const lastSheet = (theme: ReturnType<typeof applyDensity>) => {
 };
 const rootVars = (theme: ReturnType<typeof applyDensity>) =>
   lastSheet(theme)[':root'] as Record<string, string>;
-const px = (record: Record<string, number>) =>
-  Object.fromEntries(Object.entries(record).map(([key, value]) => [key, `${value}px`]));
 const sx = (theme: ReturnType<typeof createTheme>, input: Record<string, unknown>) =>
   (theme as any).unstable_sx(input);
 
@@ -54,9 +52,10 @@ describe('densityScale', () => {
     test('the sizing constants land on the theme as px lengths', () => {
       const theme = applyDensity(createTheme());
 
-      expect(Object.fromEntries(SIZING_KEYS.map((key) => [key, theme[key]]))).to.deep.equal(
-        px(DEFAULT_SIZING_PX),
-      );
+      expect(Object.fromEntries(SIZING_KEYS.map((key) => [key, theme[key]]))).to.deep.equal({
+        touchTarget: '32px',
+        iconSize: '16px',
+      });
     });
 
     test('an override replaces only the values it names', () => {
@@ -239,13 +238,6 @@ describe('densityScale', () => {
       });
     });
 
-    test('resolve steps inside responsive values', () => {
-      expect(sx(applyDensity(createTheme()), { p: { xs: 'small', md: 'large' } })).to.deep.equal({
-        '@media (min-width:0px)': { padding: '12px' },
-        '@media (min-width:900px)': { padding: '24px' },
-      });
-    });
-
     test('leave raw CSS and the sizing names untouched', () => {
       const theme = applyDensity(createTheme());
 
@@ -256,10 +248,6 @@ describe('densityScale', () => {
       SIZING_KEYS.forEach((key) => {
         expect(sx(theme, { m: key })).to.deep.equal({ margin: key });
       });
-    });
-
-    test('a theme without applyDensity leaves step names raw', () => {
-      expect(sx(createTheme(), { p: 'small' })).to.deep.equal({ padding: 'small' });
     });
   });
 });

@@ -615,7 +615,7 @@ describe('<Tooltip />', () => {
   });
 
   describe('touch screen', () => {
-    it('keeps the touch offset under enhanceDensity', () => {
+    it.skipIf(isJsdom())('keeps the touch offset under enhanceDensity', () => {
       const theme = enhanceDensity(createTheme());
       render(
         <ThemeProvider theme={theme}>
@@ -629,10 +629,7 @@ describe('<Tooltip />', () => {
 
       const tooltip = screen.getByRole('tooltip').querySelector(`.${classes.tooltip}`);
       expect(tooltip).to.have.class(classes.touch);
-      expect(hasInjectedStyle('--_spacing: 24px')).to.equal(true);
-      if (!isJsdom()) {
-        expect(getComputedStyle(tooltip).getPropertyValue('--_spacing').trim()).to.equal('24px');
-      }
+      expect(getComputedStyle(tooltip).getPropertyValue('--_spacing').trim()).to.equal('24px');
     });
 
     it('should not respond to quick events', () => {

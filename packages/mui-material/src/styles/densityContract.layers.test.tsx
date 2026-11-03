@@ -3,21 +3,15 @@ import { describe, test, expect } from 'vitest';
 import { createRenderer, isJsdom } from '@mui/internal-test-utils';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
-import Select from '@mui/material/Select';
-import Table from '@mui/material/Table';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import { createTheme } from '@mui/material/styles';
 import enhanceDensity from './enhanceDensity';
 import {
   FIELDS,
   MEDIUM,
   SIZES,
+  TABLE_PAGINATION,
+  TITLED_DIALOG_CONTENT,
   USER_COMPONENTS,
   autocompleteField,
   byName,
@@ -26,47 +20,23 @@ import {
   grid,
   inTheme,
   overrideCases,
+  selectField,
   sideBySide,
   userWins,
   winsExcept,
   withUser,
 } from '../../test/densityContract';
 
-const pagination = (
-  <Table>
-    <TableFooter>
-      <TableRow>
-        <TablePagination
-          count={100}
-          page={0}
-          rowsPerPage={10}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
-        />
-      </TableRow>
-    </TableFooter>
-  </Table>
-);
-
 type Read = { node: React.ReactNode; selector: string; properties: string[] };
 
 const READS: Record<string, Read> = {
   'Select caret': {
-    node: (
-      <Select value="a" sx={{ width: 160 }}>
-        <MenuItem value="a">A long selected option</MenuItem>
-      </Select>
-    ),
+    node: selectField(undefined, 'plain', 'A long selected option', { sx: { width: 160 } }),
     selector: '.MuiSelect-select',
     properties: ['padding-right'],
   },
   'DialogContent under a DialogTitle': {
-    node: (
-      <div>
-        <DialogTitle>Title</DialogTitle>
-        <DialogContent>Body</DialogContent>
-      </div>
-    ),
+    node: TITLED_DIALOG_CONTENT,
     selector: '.MuiDialogContent-root',
     properties: ['padding-top'],
   },
@@ -94,7 +64,7 @@ const READS: Record<string, Read> = {
     ['root', 'toolbar'].map((slot) => [
       `TablePagination ${slot}`,
       {
-        node: pagination,
+        node: TABLE_PAGINATION,
         selector: `.MuiTablePagination-${slot}`,
         properties: ['padding-left', 'padding-right'],
       },

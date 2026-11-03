@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -18,6 +20,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Table from '@mui/material/Table';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
@@ -141,6 +147,45 @@ export const withUser = (options: Parameters<typeof createTheme>[0]) => ({
   enhanced: enhanceDensity(createTheme(options)),
 });
 
+export const TABLE_PAGINATION = (
+  <Table>
+    <TableFooter>
+      <TableRow>
+        <TablePagination
+          count={100}
+          page={0}
+          rowsPerPage={10}
+          onPageChange={() => {}}
+          onRowsPerPageChange={() => {}}
+        />
+      </TableRow>
+    </TableFooter>
+  </Table>
+);
+
+export const TITLED_DIALOG_CONTENT = (
+  <React.Fragment>
+    <DialogTitle>Title</DialogTitle>
+    <DialogContent>Body</DialogContent>
+  </React.Fragment>
+);
+
+export const selectField = (
+  variant: (typeof VARIANTS)[number] | undefined,
+  kind: 'plain' | 'adornment',
+  option = 'a',
+  props: Record<string, any> = {},
+) => (
+  <Select
+    variant={variant}
+    value="a"
+    endAdornment={kind === 'adornment' ? <InputAdornment position="end">x</InputAdornment> : null}
+    {...props}
+  >
+    <MenuItem value="a">{option}</MenuItem>
+  </Select>
+);
+
 export const FIELDS = [
   ...Object.keys(grid([VARIANTS, SIZES], () => null)),
   ...SIZES.map((size) => `filled ${size} hiddenLabel`),
@@ -237,17 +282,9 @@ export const OVERRIDE_CHECKS: Record<string, OverrideCheck> = {
   },
   ...Object.fromEntries(
     Object.entries(
-      grid([VARIANTS, ['plain', 'adornment']], (variant, kind) => (
-        <Select
-          variant={variant}
-          value="a"
-          endAdornment={
-            kind === 'adornment' ? <InputAdornment position="end">x</InputAdornment> : null
-          }
-        >
-          <MenuItem value="a">a</MenuItem>
-        </Select>
-      )),
+      grid([VARIANTS, ['plain', 'adornment']], (variant, kind) =>
+        selectField(variant, kind as 'plain' | 'adornment'),
+      ),
     ).map(([name, node]) => [
       `Select ${name}`,
       { node, reads: { select: ['.MuiSelect-select', 'padding-right', '80px'] } },

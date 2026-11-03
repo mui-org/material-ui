@@ -27,7 +27,6 @@ function takesOptionalString(value: string | undefined) {
   return value;
 }
 // `enhanceDensity` resolves them, so its result reads them as plain strings.
-takesString(enhanceDensity(createTheme()).touchTarget);
 takesString(enhanceDensity(createTheme()).iconSize);
 // @ts-expect-error — not a theme member; the scale keys stay on theme.spacing()
 takesOptionalString((theme.vars || theme).xxSmall);

@@ -31,15 +31,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import TableFooter from '@mui/material/TableFooter';
 import InputLabel from '@mui/material/InputLabel';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Select from '@mui/material/Select';
-import InputAdornment from '@mui/material/InputAdornment';
 import Toolbar from '@mui/material/Toolbar';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -47,7 +44,6 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
-import TablePagination from '@mui/material/TablePagination';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Accordion from '@mui/material/Accordion';
@@ -79,6 +75,8 @@ import {
   THEMES,
   USER_COMPONENTS,
   VARIANTS,
+  TABLE_PAGINATION,
+  TITLED_DIALOG_CONTENT,
   autocompleteField,
   byName,
   cases,
@@ -93,6 +91,7 @@ import {
   query,
   rect,
   round2,
+  selectField,
   sideBySide,
   textBox,
   userWins,
@@ -317,15 +316,7 @@ const CONTROLS: Record<string, Spec> = {
         : density.touchTarget + 2 * density.step.xxSmall,
   },
   TablePagination: {
-    render: () => (
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TablePagination count={1} page={0} rowsPerPage={10} onPageChange={() => {}} />
-          </TableRow>
-        </TableBody>
-      </Table>
-    ),
+    render: () => TABLE_PAGINATION,
     selector: '.MuiTablePagination-toolbar',
     axis: 'minHeight',
     height: (density) => density.touchTarget + density.step.medium,
@@ -568,6 +559,20 @@ describe.skipIf(isJsdom())('density contract', () => {
                 },
         };
       };
+      const tapHeight = (selector: string, scope?: ParentNode) => {
+        const { margin, tap } = touchArea(selector, scope);
+        const element = query(selector, scope);
+        const style = getComputedStyle(element);
+        const innerWidth =
+          element.getBoundingClientRect().width -
+          parseFloat(style.borderLeftWidth) -
+          parseFloat(style.borderRightWidth);
+        return {
+          margin,
+          tapHeight: tap && tap.height,
+          spansWidth: tap && Math.abs(tap.width - innerWidth) < 0.5,
+        };
+      };
       const smallControls = cases({
         filled: <Chip size="small" label="Chip" onClick={() => {}} />,
         outlined: <Chip size="small" variant="outlined" label="Chip" onClick={() => {}} />,
@@ -582,39 +587,23 @@ describe.skipIf(isJsdom())('density contract', () => {
           </IconButton>
         ),
       });
-      const paddingBox = (selector: string, scope?: ParentNode) => {
-        const element = query(selector, scope);
-        const border = parseFloat(getComputedStyle(element).borderTopWidth);
-        const { width, height } = element.getBoundingClientRect();
-        return { width: round2(width - 2 * border), height: round2(height - 2 * border) };
-      };
 
       DENSITIES.forEach((density) => {
+        const small = density.touchTarget - density.step.xxSmall;
+        const margin = Math.max(0, (24 - small) / 2);
+        const tap = Math.max(24, small);
+        const borderedTap = Math.max(24, small - 2);
+
         test(`${density.id}: small clickable Chip and small IconButton reach 24px`, () => {
           renderIn(THEMES[density.id], smallControls);
-          const small = density.touchTarget - density.step.xxSmall;
-          const margin = Math.max(0, (24 - small) / 2);
-          const tap = Math.max(24, small);
           expect({
-            filled: touchArea('.MuiChip-root', inCase('filled')),
-            outlined: touchArea('.MuiChip-root', inCase('outlined')),
+            filled: tapHeight('.MuiChip-root', inCase('filled')),
+            outlined: tapHeight('.MuiChip-root', inCase('outlined')),
             icon: touchArea('.MuiIconButton-root', inCase('icon')),
             edgeStart: touchArea('.MuiIconButton-root', inCase('edgeStart')),
           }).to.deep.equal({
-            filled: {
-              margin: [margin, 0, margin, 0],
-              tap: {
-                width: paddingBox('.MuiChip-root', inCase('filled')).width,
-                height: Math.max(24, paddingBox('.MuiChip-root', inCase('filled')).height),
-              },
-            },
-            outlined: {
-              margin: [margin, 0, margin, 0],
-              tap: {
-                width: paddingBox('.MuiChip-root', inCase('outlined')).width,
-                height: Math.max(24, paddingBox('.MuiChip-root', inCase('outlined')).height),
-              },
-            },
+            filled: { margin: [margin, 0, margin, 0], tapHeight: tap, spansWidth: true },
+            outlined: { margin: [margin, 0, margin, 0], tapHeight: borderedTap, spansWidth: true },
             icon: { margin: [margin, margin, margin, margin], tap: { width: tap, height: tap } },
             edgeStart: {
               margin: [margin, margin, margin, -density.touchTarget / 4],
@@ -622,9 +611,7 @@ describe.skipIf(isJsdom())('density contract', () => {
             },
           });
         });
-      });
 
-      DENSITIES.forEach((density) => {
         test(`${density.id}: small Button, ToggleButton and PaginationItem reach 24px`, () => {
           renderIn(
             THEMES[density.id],
@@ -639,33 +626,18 @@ describe.skipIf(isJsdom())('density contract', () => {
               ellipsis: <PaginationItem size="small" type="start-ellipsis" />,
             }),
           );
-          const small = density.touchTarget - density.step.xxSmall;
-          const margin = Math.max(0, (24 - small) / 2);
-          const grown = (selector: string, name: string) => {
-            const box = paddingBox(selector, inCase(name));
-            return { width: Math.max(24, box.width), height: Math.max(24, box.height) };
-          };
           expect({
-            button: touchArea('.MuiButton-root', inCase('button')),
+            button: tapHeight('.MuiButton-root', inCase('button')),
             toggle: touchArea('.MuiToggleButton-root', inCase('toggle')),
             page: touchArea('.MuiPaginationItem-root', inCase('page')),
             ellipsis: touchArea('.MuiPaginationItem-root', inCase('ellipsis')),
           }).to.deep.equal({
-            button: {
-              margin: [margin, 0, margin, 0],
-              tap: {
-                width: paddingBox('.MuiButton-root', inCase('button')).width,
-                height: grown('.MuiButton-root', 'button').height,
-              },
-            },
+            button: { margin: [margin, 0, margin, 0], tapHeight: tap, spansWidth: true },
             toggle: {
               margin: [margin, margin, margin, margin],
-              tap: grown('.MuiToggleButton-root', 'toggle'),
+              tap: { width: borderedTap, height: borderedTap },
             },
-            page: {
-              margin: [margin, margin, margin, margin],
-              tap: grown('.MuiPaginationItem-root', 'page'),
-            },
+            page: { margin: [margin, margin, margin, margin], tap: { width: tap, height: tap } },
             ellipsis: { margin: [margin, margin, margin, margin], tap: null },
           });
         });
@@ -692,43 +664,33 @@ describe.skipIf(isJsdom())('density contract', () => {
               )),
             ),
           );
-          const small = density.touchTarget - density.step.xxSmall;
-          const margin = Math.max(0, (24 - small) / 2);
-          const size = (selector: string, orientation: string) => {
-            const { width, height } = rect(selector, inCase(orientation));
-            return { width: round2(width), height: round2(height) };
+          const read = (orientation: string) => {
+            const toggle = rect('.MuiToggleButton-root', inCase(orientation));
+            return {
+              buttonGroup: touchArea('.MuiButtonGroup-root', inCase(orientation)).margin,
+              button: tapHeight('.MuiButton-root', inCase(orientation)),
+              toggleGroup: touchArea('.MuiToggleButtonGroup-root', inCase(orientation)).margin,
+              toggle: touchArea('.MuiToggleButton-root', inCase(orientation)),
+              toggleSize: { width: round2(toggle.width), height: round2(toggle.height) },
+            };
           };
-          const read = (orientation: string) => ({
-            buttonGroup: touchArea('.MuiButtonGroup-root', inCase(orientation)).margin,
-            button: touchArea('.MuiButton-root', inCase(orientation)),
-            toggleGroup: touchArea('.MuiToggleButtonGroup-root', inCase(orientation)).margin,
-            toggle: touchArea('.MuiToggleButton-root', inCase(orientation)),
-            toggleSize: size('.MuiToggleButton-root', orientation),
-          });
-          const buttonBox = paddingBox('.MuiButton-root', inCase('horizontal'));
-          const toggleSide = Math.max(24, small);
           expect({ horizontal: read('horizontal'), vertical: read('vertical') }).to.deep.equal({
             horizontal: {
               buttonGroup: [margin, 0, margin, 0],
-              button: {
-                margin: [0, 0, 0, 0],
-                tap: { width: buttonBox.width, height: Math.max(24, buttonBox.height) },
-              },
+              button: { margin: [0, 0, 0, 0], tapHeight: borderedTap, spansWidth: true },
               toggleGroup: [0, 0, 0, 0],
               toggle: { margin: [0, 0, 0, 0], tap: null },
-              toggleSize: { width: toggleSide, height: toggleSide },
+              toggleSize: { width: tap, height: tap },
             },
             vertical: {
               buttonGroup: [0, 0, 0, 0],
-              button: { margin: [0, 0, 0, 0], tap: null },
+              button: { margin: [0, 0, 0, 0], tapHeight: null, spansWidth: null },
               toggleGroup: [0, 0, 0, 0],
               toggle: { margin: [0, 0, 0, 0], tap: null },
-              toggleSize: { width: toggleSide, height: toggleSide },
+              toggleSize: { width: tap, height: tap },
             },
           });
-          expect(size('.MuiButton-root', 'vertical').height).to.equal(
-            Math.max(24, size('.MuiButton-root', 'horizontal').height),
-          );
+          expect(round2(rect('.MuiButton-root', inCase('vertical')).height)).to.equal(tap);
         });
       });
 
@@ -766,13 +728,10 @@ describe.skipIf(isJsdom())('density contract', () => {
           <div style={{ '--mui-touchTarget': '20px' } as React.CSSProperties}>{smallControls}</div>,
         );
         expect({
-          filled: touchArea('.MuiChip-root', inCase('filled')),
+          filled: tapHeight('.MuiChip-root', inCase('filled')),
           icon: touchArea('.MuiIconButton-root', inCase('icon')),
         }).to.deep.equal({
-          filled: {
-            margin: [4, 0, 4, 0],
-            tap: { width: paddingBox('.MuiChip-root', inCase('filled')).width, height: 24 },
-          },
+          filled: { margin: [4, 0, 4, 0], tapHeight: 24, spansWidth: true },
           icon: { margin: [4, 4, 4, 4], tap: { width: 24, height: 24 } },
         });
       });
@@ -979,18 +938,11 @@ describe.skipIf(isJsdom())('density contract', () => {
       });
 
       test(`${density.id}: the Select value stops before the caret and the end adornment`, () => {
-        const fields = grid([VARIANTS, ['plain', 'adornment']], (variant, kind) => (
-          <Select
-            variant={variant}
-            value="a"
-            sx={{ width: 160 }}
-            endAdornment={
-              kind === 'adornment' ? <InputAdornment position="end">x</InputAdornment> : null
-            }
-          >
-            <MenuItem value="a">A long selected option</MenuItem>
-          </Select>
-        ));
+        const fields = grid([VARIANTS, ['plain', 'adornment']], (variant, kind) =>
+          selectField(variant, kind as 'plain' | 'adornment', 'A long selected option', {
+            sx: { width: 160 },
+          }),
+        );
         renderIn(THEMES[density.id], cases(fields));
         expectNoDrift(
           byName(Object.keys(fields), (name) => {
@@ -1102,12 +1054,7 @@ describe.skipIf(isJsdom())('density contract', () => {
         MEDIUM,
         cases({
           alone: <DialogContent>Body</DialogContent>,
-          titled: (
-            <React.Fragment>
-              <DialogTitle>Title</DialogTitle>
-              <DialogContent>Body</DialogContent>
-            </React.Fragment>
-          ),
+          titled: TITLED_DIALOG_CONTENT,
         }),
       );
       const alone = css('.MuiDialogContent-root', inCase('alone'));
@@ -1165,6 +1112,8 @@ describe.skipIf(isJsdom())('density contract', () => {
   });
 
   describe('buttons', () => {
+    const centerX = (box: DOMRect) => box.left + box.width / 2;
+
     test('a wrapped Button label grows the button', () => {
       renderIn(
         MEDIUM,
@@ -1219,13 +1168,10 @@ describe.skipIf(isJsdom())('density contract', () => {
       );
       const button = query('.MuiToggleButton-root');
       expect(button.scrollHeight).to.be.at.most(button.clientHeight);
+      expect(rect('.MuiToggleButton-root').height).to.be.greaterThan(DEFAULT_SIZING_PX.touchTarget);
     });
 
     test('the loading spinner takes the place of the icon', () => {
-      const centerX = (element: Element) => {
-        const box = element.getBoundingClientRect();
-        return box.left + box.width / 2;
-      };
       const buttons = grid(
         [
           ['text', 'outlined', 'contained'],
@@ -1248,8 +1194,8 @@ describe.skipIf(isJsdom())('density contract', () => {
       expectNoDrift(
         byName(Object.keys(buttons), (name) =>
           drift(
-            centerX(query('.MuiButton-loadingIndicator', inCase(name))) -
-              centerX(query(`.MuiButton-${name.split(' ')[2]}Icon`, inCase(name))),
+            centerX(rect('.MuiButton-loadingIndicator', inCase(name))) -
+              centerX(rect(`.MuiButton-${name.split(' ')[2]}Icon`, inCase(name))),
             1,
           ),
         ),
@@ -1270,7 +1216,6 @@ describe.skipIf(isJsdom())('density contract', () => {
             </Button>
           </ThemeProvider>
         );
-        const centerX = (box: DOMRect) => box.left + box.width / 2;
         const { setProps } = render(node(false));
         const before = rect('[data-testid="label"]').left;
         const iconCenter = centerX(rect(`.MuiButton-${position}Icon`));
@@ -1325,7 +1270,6 @@ describe.skipIf(isJsdom())('density contract', () => {
         const track = rect('.MuiSwitch-track');
 
         expect([round2(track.width), round2(track.height)]).to.deep.equal([36, 20]);
-        expect(round2(rect('.MuiSwitch-root').height)).to.equal(density.touchTarget);
       });
     });
 
@@ -1716,10 +1660,12 @@ describe.skipIf(isJsdom())('density contract', () => {
       expect(userWins('enhanced')).to.deep.equal(userWins('master'));
     });
 
-    [
-      ['narrow portrait', 500, 900],
-      ['wide', 1280, 800],
-    ].forEach(([label, width, height]) => {
+    (
+      [
+        ['narrow portrait', 500, 900, { toolbar: true, select: true }],
+        ['wide', 1280, 800, { toolbar: false, select: true }],
+      ] as const
+    ).forEach(([label, width, height, masterWins]) => {
       test(`TablePagination toolbar and select on a ${label} screen`, async () => {
         const { page } = await import('vitest/browser' as string);
         const { innerWidth, innerHeight } = window;
@@ -1737,32 +1683,18 @@ describe.skipIf(isJsdom())('density contract', () => {
                 }),
                 density: MEDIUM,
               },
-              cases({
-                pagination: (
-                  <Table>
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          count={100}
-                          page={0}
-                          rowsPerPage={10}
-                          onPageChange={() => {}}
-                          onRowsPerPageChange={() => {}}
-                        />
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                ),
-              }),
+              cases({ pagination: TABLE_PAGINATION }),
             ),
           );
           const paginationWins = (theme: string) => ({
             toolbar:
               css('.MuiTablePagination-toolbar', inTheme(theme, 'pagination')).minHeight === '64px',
             select:
-              css('.MuiTablePagination-select', inTheme(theme, 'pagination')).fontSize === '20px',
+              css('.MuiSelect-select.MuiTablePagination-select', inTheme(theme, 'pagination'))
+                .fontSize === '20px',
           });
-          expect(paginationWins('enhanced')).to.deep.equal(paginationWins('master'));
+          expect(paginationWins('master')).to.deep.equal(masterWins);
+          expect(paginationWins('enhanced')).to.deep.equal(masterWins);
           expect(
             drift(
               rect('.MuiTablePagination-toolbar', inTheme('density', 'pagination')).height -

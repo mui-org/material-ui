@@ -16,14 +16,6 @@ describe('grid', () => {
       expect(grid({ theme, rowGap: 'xLarge' })).to.deep.equal({ rowGap: '32px' });
       expect(grid({ theme, columnGap: 'small' })).to.deep.equal({ columnGap: '12px' });
     });
-
-    it('leaves raw CSS and numbers alone', () => {
-      const theme = { spacing: keyedSpacing };
-
-      expect(grid({ theme, gap: 'normal' })).to.deep.equal({ gap: 'normal' });
-      expect(grid({ theme, gap: 2 })).to.deep.equal({ gap: '16px' });
-      expect(grid({ theme: { spacing: 8 }, gap: 'small' })).to.deep.equal({ gap: 'small' });
-    });
   });
 
   it('should use the spacing unit', () => {

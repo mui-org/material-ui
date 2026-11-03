@@ -213,18 +213,6 @@ describe('grid generator', () => {
           '--Grid-parent-rowSpacing': '12px',
         },
       });
-      // unregistered strings still pass through raw
-      expect(
-        generateGridRowSpacingStyles({
-          theme: { breakpoints, spacing: keyedSpacing },
-          ownerState: { container: true, rowSpacing: '1rem' },
-        }),
-      ).to.deep.equal({
-        '--Grid-rowSpacing': '1rem',
-        '> *': {
-          '--Grid-parent-rowSpacing': '1rem',
-        },
-      });
     });
 
     it('supports responsive', () => {

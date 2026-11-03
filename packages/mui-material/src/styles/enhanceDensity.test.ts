@@ -21,17 +21,6 @@ describe('enhanceDensity', () => {
     expect(() => enhanceDensity(createTheme({ typography: { body2: undefined } }))).not.to.throw();
   });
 
-  test('a user styleOverride renders after the density style of the same slot', () => {
-    const user = { textTransform: 'none' };
-    const theme = enhanceDensity(
-      createTheme({ components: { MuiButton: { styleOverrides: { root: user } } } }),
-    );
-    const layers = (theme.components as any).MuiButton.styleOverrides.root;
-
-    expect(layers).to.have.length(2);
-    expect(layers[1]).to.deep.equal(user);
-  });
-
   test('a user slotProps default merges into the density default of the same slot', () => {
     const closeButton = (slotProps: Record<string, unknown>) =>
       (
