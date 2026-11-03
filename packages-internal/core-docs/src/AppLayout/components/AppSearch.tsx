@@ -218,7 +218,7 @@ export interface AppSearchProps {
 
 export function AppSearch(props: AppSearchProps) {
   useLazyCSS(
-    'https://cdn.jsdelivr.net/npm/@docsearch/css@5.0.1/dist/style.min.css',
+    'https://cdn.jsdelivr.net/npm/@docsearch/css@5.2.0/dist/style.min.css',
     '#app-search',
     { layer: 'docsearch' },
   );
