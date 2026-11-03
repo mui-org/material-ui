@@ -59,16 +59,35 @@ function hasUnstableKeyOrder(type: ts.Type): boolean {
   );
 }
 
+// The type a `Pick<T, K>` or `Omit<T, K>` takes its members from: the first alias type argument
+// that has all of them.
+function getSourceType(type: ts.Type, properties: ts.Symbol[]): ts.Type | undefined {
+  return type.aliasTypeArguments?.find(
+    (argument) =>
+      argument.flags & ts.TypeFlags.Object &&
+      properties.every((symbol) => argument.getProperty(symbol.name)),
+  );
+}
+
 function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>) {
   const interfaceType = getInterfaceTarget(type);
   if (!interfaceType) {
     const properties = type.getProperties();
-    const ordered = hasUnstableKeyOrder(type)
-      ? [...properties].sort(compareByDeclaration)
-      : properties;
-    ordered.forEach((symbol) => {
-      names.add(symbol.name);
-    });
+    if (!hasUnstableKeyOrder(type)) {
+      properties.forEach((symbol) => names.add(symbol.name));
+      return;
+    }
+    const sourceType = getSourceType(type, properties);
+    if (sourceType) {
+      const sourceNames = new Set<string>();
+      collectNames(checker, sourceType, sourceNames);
+      sourceNames.forEach((name) => {
+        if (type.getProperty(name)) {
+          names.add(name);
+        }
+      });
+    }
+    [...properties].sort(compareByDeclaration).forEach((symbol) => names.add(symbol.name));
     return;
   }
   interfaceType.symbol.members?.forEach((member) => {
@@ -86,8 +105,8 @@ function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>
  *
  * `type.getProperties()` lists the members of a mapped type such as `Pick<T, 'a' | 'b'>` in
  * the internal order of the key union, which depends on which literal types the checker
- * created first. Those members are sorted by declaration position. Everything else keeps the
- * checker order.
+ * created first. Those members follow the order of the source type `T`, or declaration
+ * position when there is no source type. Everything else keeps the checker order.
  */
 export function getOrderedProperties(checker: ts.TypeChecker, type: ts.Type): ts.Symbol[] {
   const names = new Set<string>();

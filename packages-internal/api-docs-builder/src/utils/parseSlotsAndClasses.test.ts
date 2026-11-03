@@ -9,6 +9,8 @@ const FILE_NAME = '/virtual/index.ts';
 const SOURCE = `
 type Pick<T, K extends keyof T> = { [P in K]: T[P] };
 type Partial<T> = { [P in keyof T]?: T[P] };
+type Exclude<T, U> = T extends U ? never : T;
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
 declare namespace React {
   interface ReactElement {}
@@ -40,6 +42,14 @@ export declare function Group(props: { slots?: GroupSlots }): React.ReactElement
 export interface FeedSlots extends Partial<BoxSlots> {}
 
 export declare function Feed(props: { slots?: FeedSlots }): React.ReactElement;
+
+export interface ShelfSlots extends Pick<BoxSlots, 'group' | 'box'> {}
+
+export declare function Shelf(props: { slots?: ShelfSlots }): React.ReactElement;
+
+export interface TraySlots extends Omit<BoxSlots, 'list'> {}
+
+export declare function Tray(props: { slots?: TraySlots }): React.ReactElement;
 
 export type Warmup = 'avatar' | 'indicator';
 `;
@@ -89,6 +99,11 @@ describe('parseSlotsAndClasses', () => {
 
   it('lists `Partial` slots in the order of the source interface', () => {
     expect(getSlotNames('Feed')).to.deep.equal(getSlotNames('Box'));
+  });
+
+  it('lists `Pick` and `Omit` slots in the order of the source interface', () => {
+    expect(getSlotNames('Shelf')).to.deep.equal(['box', 'group']);
+    expect(getSlotNames('Tray')).to.deep.equal(['box', 'group', 'indicator', 'root', 'avatar']);
   });
 
   it('lists `Pick` slots in the same order regardless of checker state', () => {
