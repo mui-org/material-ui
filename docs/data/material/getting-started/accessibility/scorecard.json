@@ -1541,12 +1541,12 @@
     {
       "component": "FormControlLabel",
       "counts": {
-        "supports": 14,
+        "supports": 15,
         "partiallySupports": 0,
         "doesNotSupport": 0,
-        "notApplicable": 41,
+        "notApplicable": 40,
         "flagged": 1,
-        "rated": 14
+        "rated": 15
       },
       "gaps": [],
       "criteria": [
@@ -1565,7 +1565,7 @@
           "level": "A",
           "conformance": "Supports",
           "responsibility": "Shared",
-          "group": "Manual",
+          "group": "Hybrid",
           "flagged": false
         },
         {
@@ -1641,6 +1641,15 @@
           "flagged": false
         },
         {
+          "number": "2.5.2",
+          "name": "Pointer Cancellation",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
           "number": "2.5.3",
           "name": "Label in Name",
           "level": "A",
@@ -1678,14 +1687,14 @@
         }
       ],
       "summary": {
-        "rated": 14,
-        "levelA": 7,
+        "rated": 15,
+        "levelA": 8,
         "levelAA": 7,
-        "supports": 14,
+        "supports": 15,
         "partiallySupports": 0,
         "doesNotSupport": 0,
-        "verified": 13,
-        "automated": 5
+        "verified": 14,
+        "automated": 6
       }
     },
     {

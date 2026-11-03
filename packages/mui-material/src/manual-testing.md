@@ -111,7 +111,7 @@ Run the rows matching what you touched, for the component you touched.
 7 checks · full procedures in [`FormControlLabel/accessibility.md`](./FormControlLabel/accessibility.md)
 
 - [ ] 🔁 **1.3.1 Info and Relationships** — the control's accessible name comes from the associated label text, verifiable in the accessibility tree.
-- [ ] 🔍 **1.3.2 Meaningful Sequence** — reading order matches visual order for each control and across a group.
+- [ ] 🔁 **1.3.2 Meaningful Sequence** — reading order matches visual order for each control and its label.
 - [ ] 🔁 **1.4.1 Use of Color** — no information in the label is carried by color alone.
 - [ ] 🔁 **1.4.3 Contrast (Minimum)** — label text meets `4.5:1` against its actual background; disabled label text is exempt.
 - [ ] 🔁 **2.4.6 Headings and Labels** — each control has a label, and the label text describes its purpose.

@@ -6,17 +6,17 @@ Rated against WCAG 2.2 Level A and AA. See the [reports legend](../accessibility
 
 <!-- intro:start -->
 
-FormControlLabel attaches a visible, clickable label to a wrapped [Checkbox](../Checkbox/accessibility.md), [Radio](../Radio/accessibility.md), or [Switch](../Switch/accessibility.md), optionally placing it and marking it required. This report rates the criteria the label's own text, placement, and association are responsible for. The wrapped control's keyboard, focus, pointer, role, and value behavior is rated in those component reports and is marked Not Applicable here.
+FormControlLabel attaches a visible, clickable label to a wrapped [Checkbox](../Checkbox/accessibility.md), [Radio](../Radio/accessibility.md), or [Switch](../Switch/accessibility.md), optionally placing it and marking it required. This report rates the criteria the label's own text, placement, association, and activation are responsible for. The wrapped control's keyboard, focus, role, and value behavior is rated in those component reports and is marked Not Applicable here.
 
 <!-- intro:end -->
 
 | Result                | Count |
 | :-------------------- | :---- |
-| ✅ Supports           | 14    |
+| ✅ Supports           | 15    |
 | ⚠️ Partially Supports | 0     |
 | ❌ Does Not Support   | 0     |
-| ➖ Not Applicable     | 41    |
-| 🚩 Flagged            | 1/14  |
+| ➖ Not Applicable     | 40    |
+| 🚩 Flagged            | 1/15  |
 
 ## Known gaps
 
@@ -25,26 +25,6 @@ None.
 ## Success criteria
 
 ### 🔍 Manual
-
-#### 1.3.2 Meaningful Sequence · A
-
-`✅ Supports` · `◐ Shared`
-
-<!-- 1.3.2:start -->
-
-- The control is always rendered before the label in the DOM, so the default reading order is control then label.
-- `labelPlacement` changes only the visual order through flex direction: `start` is `row-reverse`, `top` is `column-reverse`, and `bottom` is `column`. The DOM order is unchanged, so the exposed reading order of a single control and its label still matches what is seen.
-- Order carries meaning only across several controls, which the surrounding layout sets.
-
-**Manual testing steps**
-
-1. Render a group of controls with `labelPlacement` `start`, `top`, and `bottom`, then inspect the DOM or accessibility tree order of each row.
-2. Compare that order to the visual order.
-3. Confirm no `labelPlacement` or flex layout reorders a row visually without changing the DOM.
-
-<!-- 1.3.2:end -->
-
-**Pass:** <!-- 1.3.2:pass:start -->reading order matches visual order for each control and across a group.<!-- 1.3.2:pass:end -->
 
 #### 1.3.3 Sensory Characteristics · A
 
@@ -103,6 +83,28 @@ Tested by: unit `FormControlLabel.test.js`
 
 **Pass:** <!-- 1.3.1:pass:start -->the control's accessible name comes from the associated label text, verifiable in the accessibility tree.<!-- 1.3.1:pass:end -->
 
+#### 1.3.2 Meaningful Sequence · A
+
+`✅ Supports` · `◐ Shared`
+
+Tested by: unit `FormControlLabel.test.js`
+
+<!-- 1.3.2:start -->
+
+- The control is always rendered before the label in the DOM, so the reading order is control then label.
+- `labelPlacement` changes only the visual order through flex direction: `start` is `row-reverse`, `top` is `column-reverse`, and `bottom` is `column`. The DOM order is unchanged, so the exposed reading order of a control and its label still matches what is seen.
+- Confirmed by a unit test in [`./FormControlLabel.test.js`](./FormControlLabel.test.js).
+
+**Manual testing steps**
+
+1. Render one control with `labelPlacement` `end`, `start`, `top`, and `bottom`, then inspect the DOM or accessibility tree order of the control and its label.
+2. Compare that order to the visual order.
+3. Confirm no `labelPlacement` reorders the control and its label visually without changing the DOM.
+
+<!-- 1.3.2:end -->
+
+**Pass:** <!-- 1.3.2:pass:start -->reading order matches visual order for each control and its label.<!-- 1.3.2:pass:end -->
+
 #### 1.4.1 Use of Color · A
 
 `🚩` · `✅ Supports` · `◐ Shared`
@@ -110,7 +112,7 @@ Tested by: unit `FormControlLabel.test.js`
 <!-- 1.4.1:start -->
 
 - The label conveys its meaning through text, not color.
-- The only color the component applies to the label is the disabled text color. The error state colors the required asterisk, which is decorative and `aria-hidden`. The required and error states are conveyed through native attributes and `FormHelperText`, not color alone.
+- The only color the component sets on the label text is the disabled color. The `error` class colors only the required asterisk, which is decorative and `aria-hidden`, so an optional field in error looks unchanged. The component forwards `disabled` and `required` to the control and never sets `aria-invalid`, so the error is not exposed. The author shows it in text, for example with `FormHelperText`.
 
 **Manual testing steps**
 
@@ -224,7 +226,7 @@ Tested by: Playwright
 
 <!-- 1.4.10:start -->
 
-- The label and control sit in a flex row that wraps, so at a 320 CSS pixel width the row reflows without horizontal scrolling. Covered by a Playwright reflow check at a 320px viewport.
+- The root is `inline-flex` and does not set `flex-wrap`, so the row itself does not wrap. At a 320 CSS pixel width the label text wraps inside its own box, which is what lets the content reflow without horizontal scrolling. Covered by a Playwright reflow check at a 320px viewport.
 
 <!-- 1.4.10:end -->
 
@@ -240,6 +242,19 @@ Tested by: Playwright
 
 <!-- 1.4.12:end -->
 
+#### 2.5.2 Pointer Cancellation · A
+
+`✅ Supports` · `◐ Shared`
+
+Tested by: unit `FormControlLabel.test.js`
+
+<!-- 2.5.2:start -->
+
+- The whole `<label>` is the activation target, the same target 2.5.8 rates for size. A native label activates the control on click, which fires on pointer up. A press on the label text does not toggle the control, and releasing away from the label cancels it.
+- Confirmed by a unit test in [`./FormControlLabel.test.js`](./FormControlLabel.test.js).
+
+<!-- 2.5.2:end -->
+
 #### 2.5.3 Label in Name · A
 
 `✅ Supports` · `◐ Shared`
@@ -250,7 +265,7 @@ Tested by: unit `FormControlLabel.test.js`
 
 - With a string label the accessible name equals the visible text, so the name contains the label.
 - The required `*` is decorative punctuation, excluded from the name; native `required` conveys that state.
-- A `slotProps.typography` or `aria-label` that diverges from the visible text would break this; keep the visible words in the name.
+- Only an `aria-label` on the control can override the label as its accessible name. If one is set, it must contain the visible words.
 - Confirmed by unit tests in [`./FormControlLabel.test.js`](./FormControlLabel.test.js).
 
 <!-- 2.5.3:end -->
@@ -277,7 +292,7 @@ Tested by: axe-core `target-size` ✅
 - **1.4.2 Audio Control (A).** Emits no audio.
 - **1.4.11 Non-text Contrast (AA).** <!-- 1.4.11:start -->The label renders no non-text user-interface component or graphic of its own; the required asterisk is decorative and `aria-hidden`, and the control's focus indicator and icons are rated with the control.<!-- 1.4.11:end -->
 - **1.4.13 Content on Hover or Focus (AA).** Shows no additional content on hover or focus; a `Tooltip` wrapper would own this.
-- **2.1.1 Keyboard (A), 2.1.2 No Keyboard Trap (A), 2.4.3 Focus Order (A), 2.4.7 Focus Visible (AA), 2.4.11 Focus Not Obscured (Minimum) (AA), 2.5.2 Pointer Cancellation (A), 3.2.1 On Focus (A), 3.2.2 On Input (A).** <!-- 2.1.1,2.1.2,2.4.3,2.4.7,2.4.11,2.5.2,3.2.1,3.2.2:start -->The `<label>` root is not focusable and has no role, `tabIndex`, or handlers; it forwards activation to the wrapped control. Keyboard, focus order, focus visibility, focus obscuring, pointer cancellation, on-focus, and on-input behavior belong to the `Checkbox`, `Radio`, or `Switch` and are rated in their reports.<!-- 2.1.1,2.1.2,2.4.3,2.4.7,2.4.11,2.5.2,3.2.1,3.2.2:end -->
+- **2.1.1 Keyboard (A), 2.1.2 No Keyboard Trap (A), 2.4.3 Focus Order (A), 2.4.7 Focus Visible (AA), 2.4.11 Focus Not Obscured (Minimum) (AA), 3.2.1 On Focus (A), 3.2.2 On Input (A).** <!-- 2.1.1,2.1.2,2.4.3,2.4.7,2.4.11,3.2.1,3.2.2:start -->The `<label>` root is not focusable and has no role, `tabIndex`, or handlers; it forwards activation to the wrapped control. Keyboard, focus order, focus visibility, focus obscuring, on-focus, and on-input behavior belong to the `Checkbox`, `Radio`, or `Switch` and are rated in their reports.<!-- 2.1.1,2.1.2,2.4.3,2.4.7,2.4.11,3.2.1,3.2.2:end -->
 - **2.1.4 Character Key Shortcuts (A).** Binds no single-character keyboard shortcut.
 - **2.2.1 Timing Adjustable (A).** Sets no time limit.
 - **2.2.2 Pause, Stop, Hide (A).** No auto-starting moving, blinking, or auto-updating content.

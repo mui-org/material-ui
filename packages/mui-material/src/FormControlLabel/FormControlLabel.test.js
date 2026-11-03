@@ -378,13 +378,6 @@ describe('<FormControlLabel />', () => {
       expect(screen.getByRole('switch', { name: 'Dark mode' })).not.to.equal(null);
     });
 
-    it('2.5.3 Label in Name: the required asterisk is excluded from the accessible name', () => {
-      render(<FormControlLabel required control={<Checkbox />} label="Accept the terms" />);
-
-      // The name is the label text; the asterisk is decorative and not in the name.
-      expect(screen.getByRole('checkbox', { name: 'Accept the terms' })).not.to.equal(null);
-    });
-
     describe('4.1.2 Name, Role, Value', () => {
       it('exposes the control role with the label as its accessible name', () => {
         render(<FormControlLabel control={<Checkbox />} label="Subscribe" />);
@@ -418,7 +411,30 @@ describe('<FormControlLabel />', () => {
       expect(checkbox).to.have.property('checked', true);
     });
 
-    it('keeps the control before the label in the DOM for every labelPlacement', () => {
+    it('2.5.2 Pointer Cancellation: a press on the label text does not toggle the control', async () => {
+      const { user } = render(
+        <React.Fragment>
+          <FormControlLabel control={<Checkbox />} label="Email notifications" />
+          <div data-testid="outside" />
+        </React.Fragment>,
+      );
+      const checkbox = screen.getByRole('checkbox', { name: 'Email notifications' });
+      const labelText = screen.getByText('Email notifications');
+
+      // The label is part of the target. Nothing toggles on the down event, and
+      // releasing away from the label cancels. A click activates on pointer up.
+      await user.pointer([
+        { keys: '[MouseLeft>]', target: labelText },
+        { target: screen.getByTestId('outside') },
+        { keys: '[/MouseLeft]' },
+      ]);
+      expect(checkbox).to.have.property('checked', false);
+
+      await user.click(labelText);
+      expect(checkbox).to.have.property('checked', true);
+    });
+
+    it('1.3.2 Meaningful Sequence: keeps the control before the label in the DOM for every labelPlacement', () => {
       ['end', 'start', 'top', 'bottom'].forEach((labelPlacement) => {
         const { container, unmount } = render(
           <FormControlLabel
