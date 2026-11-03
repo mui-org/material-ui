@@ -36,7 +36,7 @@ When adding styles using the `sx` prop, use the `@<size>` or `@<size>/<name>` no
 
 ### Caveats
 
-- The `@` prefix with a unitless value renders as `px`, so `@500` is equivalent to `500px`—but `@500px` is incorrect syntax and won't render correctly.
+- The `@` prefix with a unitless value renders as `px`, so `@500` is equivalent to `@500px`.
 - `@` with no number renders as `0px`.
 - Container queries must share the same units (the sizes can be defined in any order), as shown below:
 

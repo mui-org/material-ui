@@ -47,6 +47,10 @@ describe('createBreakpoints', () => {
     it('should work for custom breakpoints', () => {
       expect(customBreakpoints.up('laptop')).to.equal('@media (min-width:1024px)');
     });
+
+    it('should keep the unit of a string value', () => {
+      expect(breakpoints.up('40em')).to.equal('@media (min-width:40em)');
+    });
   });
 
   describe('down', () => {
