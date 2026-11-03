@@ -4,9 +4,9 @@
 
 ## Details of the role
 
-- **Location**: Remote (strong preference for UTC-6 to UTC+5).
-- **Type of work**: Full-time (contractor or employee [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
-- **Level**: [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
+- **Location:** Remote (strong preference for UTC-6 to UTC+5).
+- **Type of work:** Full-time (employee or contractor [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
+- **Level:** [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
 - We're a **remote** company, operating mostly asynchronously.
 
 ## The company
