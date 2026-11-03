@@ -1,28 +1,44 @@
 import type * as React from 'react';
 import deepmerge from '@mui/utils/deepmerge';
+import type { FocusVisibleOptions } from './createThemeNoVars';
 
-const focusVisibleOffsetVar = '--_focusVisible-offset';
-const focusVisibleBehaviorVar = '--_focusVisible-behavior';
 const focusVisibleShadowVar = '--_focusVisible-shadow';
-const focusVisibleInsetVar = '--_focusVisible-inset';
+const outlineOffsetVar = '--_focusVisible-outlineOffset';
+const boxShadowVar = '--_focusVisible-boxShadow';
+const insideOutlineOffsetVar = '--_focusVisible-inside-outlineOffset';
+const insideBoxShadowVar = '--_focusVisible-inside-boxShadow';
 
-const offsetValue = `var(${focusVisibleOffsetVar}, 1)`;
-const behaviorValue = `var(${focusVisibleBehaviorVar}, )`;
-const insetValue = `var(${focusVisibleInsetVar}, 0)`;
+const defaultOutlineOffset = 2;
 
-export function scaleFocusVisibleOffset(scale: number) {
+export type FocusVisiblePosition = 'inside' | 'outside';
+
+export function focusVisiblePosition(position: FocusVisiblePosition) {
+  if (position === 'inside') {
+    return {
+      [outlineOffsetVar]: `var(${insideOutlineOffsetVar})`,
+      [boxShadowVar]: `var(${insideBoxShadowVar})`,
+    };
+  }
   return {
-    [focusVisibleOffsetVar]: scale,
-    // `initial` reverts the var to guaranteed-invalid so `var(--_focusVisible-behavior, )` falls back to empty — there is no explicit `outset` keyword.
-    [focusVisibleBehaviorVar]: scale < 0 ? 'inset' : 'initial',
-    [focusVisibleInsetVar]: scale < 0 ? 1 : 0,
+    [outlineOffsetVar]: 'initial',
+    [boxShadowVar]: 'initial',
   };
 }
 
-export const outsetFocusRing = scaleFocusVisibleOffset(1);
+export const outsetFocusRing = focusVisiblePosition('outside');
 
-export function applyInsetFocusVisible(offset: number) {
-  return scaleFocusVisibleOffset(-offset);
+export function applyInsetFocusVisible(scale: number) {
+  const inside = focusVisiblePosition('inside');
+  return scale === 1
+    ? inside
+    : { ...inside, [outlineOffsetVar]: `calc(var(${insideOutlineOffsetVar}) * ${scale})` };
+}
+
+export function applyInsetFocusVisibleAtLeast(depth: number) {
+  return {
+    ...focusVisiblePosition('inside'),
+    [outlineOffsetVar]: `min(var(${insideOutlineOffsetVar}), ${-depth}px)`,
+  };
 }
 
 // Used by the colored-background surfaces (AppBar, Alert, SnackbarContent) to make the focus visible appear through box-shadow
@@ -32,7 +48,7 @@ export function applyChildrenFocusVisible(color: string) {
   };
 }
 
-export type FocusVisibleInput = boolean | React.CSSProperties | null | undefined;
+export type FocusVisibleInput = boolean | FocusVisibleOptions | null | undefined;
 
 // Merge the raw `focusVisible` input across `createTheme(options, ...args)` with the theme's own
 // deep-merge semantics. The single-key wrapper is load-bearing — a raw value hits deepmerge's
@@ -49,7 +65,7 @@ export function mergeFocusVisibleInput(
 }
 
 /**
- * Whether an input is this module's own output. Only `wireFocusVisibleVars` emits the offset calc,
+ * Whether an input is this module's own output. Only `wireFocusVisibleVars` emits the offset position var,
  * so it identifies a ring fed back in by `createTheme(existingTheme, …)`.
  */
 export function isResolvedFocusVisible(input: FocusVisibleInput): boolean {
@@ -57,7 +73,7 @@ export function isResolvedFocusVisible(input: FocusVisibleInput): boolean {
     input != null &&
     typeof input === 'object' &&
     typeof input.outlineOffset === 'string' &&
-    input.outlineOffset.includes(focusVisibleOffsetVar)
+    input.outlineOffset.includes(outlineOffsetVar)
   );
 }
 
@@ -66,14 +82,14 @@ export function isResolvedFocusVisible(input: FocusVisibleInput): boolean {
  * — a hex, the palette var, or a scheme's primary — overridden by a user-provided `outlineColor`.
  */
 export function resolveFocusVisible(
-  input: true | React.CSSProperties,
+  input: true | FocusVisibleOptions,
   outlineColor: string,
 ): React.CSSProperties {
   return wireFocusVisibleVars({
     outlineStyle: 'solid',
     outlineColor,
     outlineWidth: 2,
-    outlineOffset: 2,
+    outlineOffset: defaultOutlineOffset,
     // invisible shadow for parent component with solid background (AppBar, Snackbar, Alert) can control the ring color.
     boxShadow: `var(${focusVisibleShadowVar}, 0 0)`,
     ...(input === true ? null : input),
@@ -93,51 +109,57 @@ const outlineWidthKeywords = new Set([
   'revert-layer',
 ]);
 
-function getInsetWidthGap(
-  offset: string | number,
+const standaloneBoxShadows = new Set([
+  'none',
+  'initial',
+  'inherit',
+  'unset',
+  'revert',
+  'revert-layer',
+]);
+
+function deriveInsideOutlineOffset(
+  outside: string | number,
   width: React.CSSProperties['outlineWidth'],
-): string | null {
+): string | number {
+  if (typeof outside === 'number' && typeof width === 'number') {
+    return -Math.max(outside, width);
+  }
   if (width == null || (typeof width === 'string' && outlineWidthKeywords.has(width.trim()))) {
-    return null;
+    return typeof outside === 'number' ? -outside : `calc(-1 * ${outside})`;
   }
-  if (typeof width === 'number' && typeof offset === 'number') {
-    return width > offset ? `${width - offset}px` : null;
-  }
-  return `max(0px, ${toPx(width)} - (${toPx(offset)}))`;
+  return `calc(-1 * max(${toPx(outside)}, ${toPx(width)}))`;
 }
 
 /**
- * Wire the private inset vars into a resolved `theme.focusVisible` so a custom `outlineOffset` or
- * `boxShadow` insets automatically on clip-prone components. Mutates and returns the object.
+ * Wire the private position vars into a resolved `theme.focusVisible`: the outside values stay the
+ * declared defaults, and the inside values ride along as private custom properties that
+ * `focusVisiblePosition('inside')` switches to.
  */
-export function wireFocusVisibleVars(resolved: React.CSSProperties): React.CSSProperties {
-  // Multiply the offset by the sign var so it flips to inset on clip-prone components. Skip if
-  // already wired: re-composing a resolved theme must not wrap the calc twice and invert the sign.
-  const offset = resolved.outlineOffset ?? 0;
-  if (typeof offset !== 'string' || !offset.includes(focusVisibleOffsetVar)) {
-    const offsetPx = toPx(offset);
-    const widthGap = getInsetWidthGap(offset, resolved.outlineWidth);
-    resolved.outlineOffset = widthGap
-      ? `calc(${offsetValue} * (${offsetPx} + ${insetValue} * ${widthGap}))`
-      : `calc(${offsetValue} * ${offsetPx})`;
+export function wireFocusVisibleVars({
+  outlineOffset = defaultOutlineOffset,
+  ...ring
+}: FocusVisibleOptions): React.CSSProperties {
+  const wired: Record<string, unknown> = { ...ring };
+  if (typeof outlineOffset === 'string' && outlineOffset.includes(outlineOffsetVar)) {
+    wired.outlineOffset = outlineOffset;
+  } else {
+    const {
+      outside = defaultOutlineOffset,
+      inside = deriveInsideOutlineOffset(outside, ring.outlineWidth),
+    } = typeof outlineOffset === 'object' ? outlineOffset : { outside: outlineOffset };
+    wired[insideOutlineOffsetVar] = toPx(inside);
+    wired.outlineOffset = `var(${outlineOffsetVar}, ${toPx(outside)})`;
   }
-  // Prefix a box-shadow with the behavior var so it insets there too, unless it already opts in.
-  // Standalone keywords are complete values — prefixing would produce an invalid `inset none`.
-  const standaloneBoxShadows = new Set([
-    'none',
-    'initial',
-    'inherit',
-    'unset',
-    'revert',
-    'revert-layer',
-  ]);
+  const { boxShadow } = ring;
   if (
-    typeof resolved.boxShadow === 'string' &&
-    !standaloneBoxShadows.has(resolved.boxShadow.trim().toLowerCase()) &&
-    !/\binset\b/.test(resolved.boxShadow) &&
-    !resolved.boxShadow.includes(focusVisibleBehaviorVar)
+    typeof boxShadow === 'string' &&
+    !standaloneBoxShadows.has(boxShadow.trim().toLowerCase()) &&
+    !/\binset\b/.test(boxShadow) &&
+    !boxShadow.includes(boxShadowVar)
   ) {
-    resolved.boxShadow = `${behaviorValue} ${resolved.boxShadow}`;
+    wired[insideBoxShadowVar] = `inset ${boxShadow}`;
+    wired.boxShadow = `var(${boxShadowVar}, ${boxShadow})`;
   }
-  return resolved;
+  return wired as React.CSSProperties;
 }

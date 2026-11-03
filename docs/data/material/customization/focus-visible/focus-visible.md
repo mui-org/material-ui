@@ -99,21 +99,36 @@ createTheme({
 Hide the outline with `outlineColor: 'transparent'`, not `outline: 'none'`. In [forced-colors mode](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) the browser strips the box-shadow and forces the outline to a system color, so a transparent outline reappears as the indicator. `outline: 'none'` removes it, leaving no keyboard focus indicator at all.
 :::
 
-### Moving the indicator outside or inside
+### Setting the inside and outside offsets
 
-Starting from v9.6, use `theme.scaleFocusVisibleOffset(number)` to move the indicator of a component outside or inside its edge.
-For example, a menu with padding leaves room to draw the [inner focus indicator](#inner-focus-indicator) of `MenuItem` outside.
-The number multiplies the theme's `outlineOffset`, so it is not a pixel value:
+Starting from v9.6, `outlineOffset` also accepts an object with an `outside` and an `inside` value:
 
-- `1` keeps the indicator at the theme's offset, which is outside the edge by default.
-- `-1` moves it inside the edge.
-- `2` doubles its distance from the edge.
+```js
+createTheme({
+  focusVisible: {
+    outlineWidth: 2,
+    outlineOffset: { outside: 1, inside: -3 },
+    boxShadow: '0 0 0 1px #fff',
+  },
+});
+```
+
+- `outside` applies to most components and draws the indicator outside their edge.
+- `inside` applies to the [inner focus indicator](#inner-focus-indicator) components.
+
+When `outlineOffset` is a single value, it sets `outside`, and `inside` is `-max(outlineOffset, outlineWidth)` so that the whole outline stays inside the edge.
+With a keyword `outlineWidth` (`thin`, `medium`, or `thick`), `inside` is the negative `outlineOffset`.
+
+:::info
+`Tab` draws the indicator at least 6px inside its edge, so the indicator does not overlap the selected tab indicator.
+:::
+
+### Moving the indicator of a component
+
+Use `theme.focusVisiblePosition('outside')` or `theme.focusVisiblePosition('inside')` to choose which offset a component uses.
+For example, a menu with padding leaves room to draw the indicator of `MenuItem` outside:
 
 {{"component": "file://./demos/offset/index.ts"}}
-
-A negative number keeps the whole outline inside the component.
-It multiplies the larger of the theme's `outlineOffset` and `outlineWidth`, so a 2px outline with `outlineOffset: 1` moves to `-2px` with `-1`.
-With a keyword `outlineWidth` (`thin`, `medium`, or `thick`), only the `outlineOffset` is used.
 
 :::warning
 Move the indicator outside only when the container leaves room for it.

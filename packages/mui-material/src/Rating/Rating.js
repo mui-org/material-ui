@@ -92,7 +92,7 @@ const RatingRoot = styled('span', {
       ...(!theme.focusVisible && {
         outline: '1px solid #999',
       }),
-      ...(theme.focusVisible && { ...theme.scaleFocusVisibleOffset(1), ...theme.focusVisible }),
+      ...(theme.focusVisible && theme.focusVisible),
     },
     [`& .${ratingClasses.visuallyHidden}`]: visuallyHidden,
     variants: [
@@ -145,7 +145,7 @@ const RatingLabel = styled('label', {
           ...(!theme.focusVisible && {
             outline: '1px solid #999',
           }),
-          ...(theme.focusVisible && { ...theme.scaleFocusVisibleOffset(1), ...theme.focusVisible }),
+          ...(theme.focusVisible && theme.focusVisible),
         },
       },
     ],

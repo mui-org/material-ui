@@ -57,10 +57,7 @@ const LinkRoot = styled(Typography, {
   memoTheme(({ theme }) => {
     return {
       ...(theme.focusVisible && {
-        [`&.${linkClasses.focusVisible}`]: {
-          ...theme.scaleFocusVisibleOffset(1),
-          ...theme.focusVisible,
-        },
+        [`&.${linkClasses.focusVisible}`]: theme.focusVisible,
       }),
       variants: [
         {

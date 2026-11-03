@@ -282,10 +282,7 @@ export const SliderThumb = styled('span', {
       },
     },
     ...(theme.focusVisible && {
-      [`&.${sliderClasses.focusVisible}`]: {
-        ...theme.scaleFocusVisibleOffset(1),
-        ...theme.focusVisible,
-      },
+      [`&.${sliderClasses.focusVisible}`]: theme.focusVisible,
     }),
     variants: [
       {

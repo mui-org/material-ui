@@ -43,6 +43,21 @@ export interface CssThemeVariables {}
  */
 export type FocusVisible = React.CSSProperties;
 
+/**
+ * The `focusVisible` theme option. `outlineOffset` also takes `{ inside, outside }`: `outside`
+ * applies by default and `inside` on components that draw the ring inside their edge. With a single
+ * value, it is the `outside` offset and `inside` is `-max(outlineOffset, outlineWidth)`.
+ */
+export type FocusVisibleOptions = Omit<React.CSSProperties, 'outlineOffset'> & {
+  outlineOffset?:
+    | React.CSSProperties['outlineOffset']
+    | {
+        inside?: string | number | undefined;
+        outside?: string | number | undefined;
+      }
+    | undefined;
+};
+
 type CssVarsOptions = CssThemeVariables extends {
   enabled: true;
 }
@@ -60,7 +75,7 @@ export interface ThemeOptions extends Omit<SystemThemeOptions, 'zIndex'>, CssVar
   typography?:
     TypographyVariantsOptions | ((palette: Palette) => TypographyVariantsOptions) | undefined;
   zIndex?: ZIndexOptions | undefined;
-  focusVisible?: boolean | FocusVisible | undefined;
+  focusVisible?: boolean | FocusVisibleOptions | undefined;
   unstable_strictMode?: boolean | undefined;
   unstable_sxConfig?: SxConfig | undefined;
   modularCssLayers?: boolean | string | undefined;
@@ -79,23 +94,16 @@ export interface BaseTheme extends SystemTheme {
   unstable_strictMode?: boolean | undefined;
   applyStyles: ApplyStyles<SupportedColorScheme>;
   /**
-   * Scales the `theme.focusVisible` ring's `outlineOffset` on the element.
+   * Draws the `theme.focusVisible` ring outside or inside the element's edge, using the theme's
+   * `outlineOffset.outside` or `outlineOffset.inside`. `inside` also insets the ring's `boxShadow`.
    *
-   * - `1` keeps the ring at the theme's offset.
-   * - `-1` moves it inside the element's edge, and also insets the ring's `boxShadow`.
-   * - `2` doubles its distance from the edge.
-   *
-   * A positive value multiplies the theme's `outlineOffset`.
-   * A negative value multiplies the larger of `outlineOffset` and `outlineWidth`, so the whole outline stays inside.
-   * A keyword `outlineWidth` (`thin`, `medium`, `thick`) is ignored.
-   *
-   * @param scale A multiplier of the theme's `outlineOffset`, not a pixel value.
+   * @param position `'outside'` or `'inside'`.
    * @example
    * styleOverrides: {
-   *   root: ({ theme }) => theme.scaleFocusVisibleOffset(1),
+   *   root: ({ theme }) => theme.focusVisiblePosition('outside'),
    * }
    */
-  scaleFocusVisibleOffset: (scale: number) => CSSObject;
+  focusVisiblePosition: (position: 'inside' | 'outside') => CSSObject;
 }
 
 // shut off automatic exporting for the `BaseTheme` above

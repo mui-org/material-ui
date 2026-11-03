@@ -354,32 +354,44 @@ const theme = createTheme();
   });
 }
 
-// theme.scaleFocusVisibleOffset
+// focusVisible outlineOffset positions
 {
-  const offsetTheme = createTheme({ focusVisible: true });
-  // @ts-expect-error the scale is required
-  offsetTheme.scaleFocusVisibleOffset();
-  offsetTheme.scaleFocusVisibleOffset(1);
-  offsetTheme.scaleFocusVisibleOffset(-3);
-  createTheme({ cssVariables: true }).scaleFocusVisibleOffset(-1);
+  createTheme({ focusVisible: { outlineOffset: { outside: 1, inside: -3 } } });
+  createTheme({ focusVisible: { outlineOffset: { inside: '-0.25rem' } } });
+  createTheme({ focusVisible: { outlineOffset: { outside: 1 } } });
+
+  createTheme({
+    // @ts-expect-error positions take a number or a CSS length
+    focusVisible: { outlineOffset: { inside: true } },
+  });
+}
+
+// theme.focusVisiblePosition
+{
+  const positionTheme = createTheme({ focusVisible: true });
+  // @ts-expect-error the position is required
+  positionTheme.focusVisiblePosition();
+  positionTheme.focusVisiblePosition('inside');
+  positionTheme.focusVisiblePosition('outside');
+  createTheme({ cssVariables: true }).focusVisiblePosition('inside');
 
   createTheme({
     components: {
       MuiMenuItem: {
         styleOverrides: {
-          root: ({ theme: t }) => t.scaleFocusVisibleOffset(1),
+          root: ({ theme: t }) => t.focusVisiblePosition('outside'),
         },
       },
     },
   });
 
-  // @ts-expect-error the scale is a multiplier number, not a CSS length
-  offsetTheme.scaleFocusVisibleOffset('2px');
+  // @ts-expect-error the position is `inside` or `outside`, not a number
+  positionTheme.focusVisiblePosition(-1);
 
-  offsetTheme.components = {
+  positionTheme.components = {
     MuiMenuItem: {
       styleOverrides: {
-        root: ({ theme: t }) => t.scaleFocusVisibleOffset(1),
+        root: ({ theme: t }) => t.focusVisiblePosition('outside'),
       },
     },
   };

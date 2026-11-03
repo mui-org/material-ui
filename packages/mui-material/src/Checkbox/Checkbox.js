@@ -59,7 +59,6 @@ const CheckboxRoot = styled(SwitchBase, {
     color: (theme.vars || theme).palette.text.secondary,
     ...(theme.focusVisible && {
       [`&.${buttonBaseClasses.focusVisible} svg:first-of-type`]: {
-        ...theme.scaleFocusVisibleOffset(1),
         borderRadius: (theme.vars || theme).shape.borderRadius,
         ...theme.focusVisible,
       },

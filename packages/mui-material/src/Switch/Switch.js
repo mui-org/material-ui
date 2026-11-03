@@ -131,10 +131,7 @@ const SwitchSwitchBase = styled(SwitchBase, {
     ...(theme.focusVisible
       ? {
           // when focusVisible is enabled, the styles must not rely on `opacity` so that the ring is visible on the track slot.
-          [`&.${buttonBaseClasses.focusVisible} ~ .${switchClasses.track}`]: {
-            ...theme.scaleFocusVisibleOffset(1),
-            ...theme.focusVisible,
-          },
+          [`&.${buttonBaseClasses.focusVisible} ~ .${switchClasses.track}`]: theme.focusVisible,
           // mirrors the non-focusVisible `opacity: 0.5`; must stay BEFORE the disabled rule so
           // disabled wins the checked+disabled combination at equal specificity.
           [`&.${switchClasses.checked} + .${switchClasses.track}`]: {
