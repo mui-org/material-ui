@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { brandingDarkTheme as darkTheme, brandingLightTheme as lightTheme } from '../../branding';
 import { useTranslate } from '../../i18n';
 import { ApiItemContainer, ExpandableApiItem } from './ExpandableApiItem';
-import { type PropertyDefinition } from '../definitions';
+import type { PropertyDefinition } from '../definitions';
 import { ApiWarningAlert } from '../ApiWarningAlert';
 
 const StyledApiItem = styled(ExpandableApiItem)(

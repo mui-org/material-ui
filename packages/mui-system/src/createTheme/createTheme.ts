@@ -1,16 +1,18 @@
 import deepmerge from '@mui/utils/deepmerge';
-import { type CSSObject } from '@mui/styled-engine';
-import createBreakpoints, {
-  type Breakpoints,
-  type BreakpointsOptions,
-} from '../createBreakpoints/createBreakpoints';
-import cssContainerQueries, { type CssContainerQueries } from '../cssContainerQueries';
-import shape, { type Shape, type ShapeOptions } from './shape';
-import createSpacing, { type Spacing, type SpacingOptions } from './createSpacing';
+import type { CSSObject } from '@mui/styled-engine';
+import createBreakpoints from '../createBreakpoints/createBreakpoints';
+import type { Breakpoints, BreakpointsOptions } from '../createBreakpoints/createBreakpoints';
+import cssContainerQueries from '../cssContainerQueries';
+import type { CssContainerQueries } from '../cssContainerQueries';
+import shape from './shape';
+import type { Shape, ShapeOptions } from './shape';
+import createSpacing from './createSpacing';
+import type { Spacing, SpacingOptions } from './createSpacing';
 import styleFunctionSx from '../styleFunctionSx/styleFunctionSx';
 import defaultSxConfig from '../styleFunctionSx/defaultSxConfig';
-import applyStyles, { type ApplyStyles } from './applyStyles';
-import { type SxConfig, type SxProps } from '../styleFunctionSx';
+import applyStyles from './applyStyles';
+import type { ApplyStyles } from './applyStyles';
+import type { SxConfig, SxProps } from '../styleFunctionSx';
 
 export type {
   Breakpoint,

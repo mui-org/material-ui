@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import * as React from 'react';
 import { spy } from 'sinon';
-import { createRenderer, reactMajor, MuiRenderResult, screen } from '@mui/internal-test-utils';
+import type { MuiRenderResult } from '@mui/internal-test-utils';
+import { createRenderer, reactMajor, screen } from '@mui/internal-test-utils';
 import useForkRef from './useForkRef';
 import getReactElementRef from '../getReactElementRef';
 

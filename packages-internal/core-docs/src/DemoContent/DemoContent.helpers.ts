@@ -1,6 +1,7 @@
 import type { UseDemoOpts } from '@mui/internal-docs-infra/useDemo';
 import type { Code } from '@mui/internal-docs-infra/CodeHighlighter/types';
-import { buildExportConfig, codeSandboxTsconfigOverride } from './exportConfig';
+import type { buildExportConfig } from './exportConfig';
+import { codeSandboxTsconfigOverride } from './exportConfig';
 
 const JAVASCRIPT_EXTENSIONS = ['.js', '.mjs', '.jsx', '.ts', '.tsx'];
 

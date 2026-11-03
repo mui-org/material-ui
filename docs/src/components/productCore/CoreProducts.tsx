@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import Section from 'docs/src/layouts/Section';
 import { InfoCard } from '@mui/internal-core-docs/InfoCard';
-import { Theme } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import { MuiLogomarkIcon } from '@mui/internal-core-docs/svgIcons';
 import StyleRoundedIcon from '@mui/icons-material/StyleRounded';
 

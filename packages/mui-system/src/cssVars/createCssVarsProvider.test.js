@@ -1,5 +1,7 @@
 import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 import { spy } from 'sinon';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import { createRenderer, screen, fireEvent } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@mui/system';
 import createCssVarsTheme from './createCssVarsTheme';
@@ -289,6 +291,36 @@ describe('createCssVarsProvider', () => {
         expect(document.head.children[document.head.children.length - 1]?.textContent).not.to.equal(
           DISABLE_CSS_TRANSITION,
         );
+      });
+
+      it('sets the nonce of the Emotion cache on the style tag that disables transitions', () => {
+        const { CssVarsProvider, useColorScheme } = createCssVarsProvider({
+          theme: createCssVarsTheme({
+            colorSchemes: { light: {}, dark: {} },
+          }),
+          defaultColorScheme: {
+            light: 'light',
+            dark: 'dark',
+          },
+          disableTransitionOnChange: true,
+        });
+        function Consumer() {
+          const { setMode } = useColorScheme();
+          return <button onClick={() => setMode('dark')}>change to dark</button>;
+        }
+        const cache = createCache({ key: 'nonce-test', nonce: 'test-nonce' });
+        render(
+          <CacheProvider value={cache}>
+            <CssVarsProvider>
+              <Consumer />
+            </CssVarsProvider>
+          </CacheProvider>,
+        );
+        clock.runToLast();
+        fireEvent.click(screen.getByRole('button', { name: 'change to dark' }));
+        const styleElement = document.head.children[document.head.children.length - 1];
+        expect(styleElement.textContent).to.equal(DISABLE_CSS_TRANSITION);
+        expect(styleElement.nonce).to.equal('test-nonce');
       });
 
       it('disable all css transitions when switching between color schemes, given `disableTransitionOnChange` is true', () => {

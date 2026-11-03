@@ -33,6 +33,7 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import TablePagination from '@mui/material/TablePagination';
 import Slider from '@mui/material/Slider';
 import Link from '@mui/material/Link';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -427,6 +428,18 @@ export default function FullFocusVisibleDemo() {
               renderInput={(params) => (
                 <TextField {...params} label="Autocomplete" size="small" />
               )}
+            />
+          </Row>
+          <Row label="TablePagination">
+            <TablePagination
+              component="div"
+              count={24}
+              page={0}
+              onPageChange={noop}
+              rowsPerPage={5}
+              rowsPerPageOptions={[5, 10]}
+              onRowsPerPageChange={noop}
+              labelRowsPerPage="Rows:"
             />
           </Row>
         </Bucket>

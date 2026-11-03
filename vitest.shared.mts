@@ -4,9 +4,10 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
-import { Plugin, transformWithOxc } from 'vite';
+import type { Plugin } from 'vite';
+import { transformWithOxc } from 'vite';
 import { playwright } from '@vitest/browser-playwright';
-import { BrowserInstanceOption } from 'vitest/node';
+import type { BrowserInstanceOption } from 'vitest/node';
 
 function forceJsxForJsFiles(): Plugin {
   return {

@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
-import RadioGroupContext, { RadioGroupContextValue } from './RadioGroupContext';
+import type { RadioGroupContextValue } from './RadioGroupContext';
+import RadioGroupContext from './RadioGroupContext';
 
 export interface RadioGroupState extends RadioGroupContextValue {}
 

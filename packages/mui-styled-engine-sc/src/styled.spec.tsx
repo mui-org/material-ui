@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CreateMUIStyled, StyledComponent } from '@mui/styled-engine-sc';
+import type { CreateMUIStyled, StyledComponent } from '@mui/styled-engine-sc';
 
 interface Theme {
   palette: {
@@ -46,6 +46,15 @@ const FilteredExtendedButton = styled(StyledButton, {
 
 // @ts-expect-error invalid variant
 <FilteredExtendedButton variant="outline" />;
+
+const FilteredButtonWithUnknownKey = styled(Button, {
+  shouldForwardProp: (prop): prop is 'variant' | 'component' => prop !== 'color',
+})<{ color?: 'danger' }>({});
+
+<FilteredButtonWithUnknownKey color="danger" variant="outlined" />;
+
+// @ts-expect-error invalid variant
+<FilteredButtonWithUnknownKey variant="outline" />;
 
 declare const ButtonWithAttrs: StyledComponent<
   'button',

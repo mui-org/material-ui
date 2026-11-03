@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useTranslate, useUserLanguage } from '../i18n';
 import { HighlightedCodeWithTabs } from '../HighlightedCodeWithTabs';
 import { MarkdownElement } from './MarkdownElement';
-import { Demo, type DemoProps } from '../Demo/Demo';
+import { Demo } from '../Demo/Demo';
+import type { DemoProps } from '../Demo/Demo';
 import { DemoToolbar } from '../Demo/DemoToolbar';
 
 function noComponent(moduleID: string) {

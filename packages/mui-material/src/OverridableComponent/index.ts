@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { DistributiveOmit } from '@mui/types';
-import { StyledComponentProps } from '../styles';
+import type * as React from 'react';
+import type { DistributiveOmit } from '@mui/types';
+import type { StyledComponentProps } from '../styles';
 
 /**
  * A component whose root component can be controlled via a `component` prop.

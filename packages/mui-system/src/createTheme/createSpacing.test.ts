@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import createSpacing, { Spacing } from './createSpacing';
+import type { Spacing } from './createSpacing';
+import createSpacing from './createSpacing';
 
 describe('createSpacing', () => {
   it('should be configurable', () => {

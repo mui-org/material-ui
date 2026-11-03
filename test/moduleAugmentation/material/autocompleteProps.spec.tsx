@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import Autocomplete from '@mui/material/Autocomplete';
-import { ChipTypeMap } from '@mui/material/Chip';
+import type { ChipTypeMap } from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import useAutocomplete from '@mui/material/useAutocomplete';
 

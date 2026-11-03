@@ -1,4 +1,5 @@
-import { Page, Browser, chromium, expect } from '@playwright/test';
+import type { Page, Browser } from '@playwright/test';
+import { chromium, expect } from '@playwright/test';
 import { describe, it, beforeAll, afterAll } from 'vitest';
 import '@mui/internal-test-utils/initPlaywrightMatchers';
 

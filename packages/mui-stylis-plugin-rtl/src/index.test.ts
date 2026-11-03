@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { compile, Middleware, middleware, prefixer, serialize, stringify } from 'stylis';
+import type { Middleware } from 'stylis';
+import { compile, middleware, prefixer, serialize, stringify } from 'stylis';
 import muiRtlPlugin from '@mui/stylis-plugin-rtl';
 
 const stylis = (css: string, extraPlugins: Middleware[] = []) =>

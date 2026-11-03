@@ -5,7 +5,7 @@ import * as prettier from 'prettier';
 import { kebabCase } from 'es-toolkit/string';
 import { getLineFeed } from '@mui/internal-docs-utils';
 import { replaceComponentLinks } from './utils/replaceUrl';
-import { TypeScriptProject } from './utils/createTypeScriptProject';
+import type { TypeScriptProject } from './utils/createTypeScriptProject';
 
 export type { ComponentInfo, HookInfo } from './types/utils.types';
 

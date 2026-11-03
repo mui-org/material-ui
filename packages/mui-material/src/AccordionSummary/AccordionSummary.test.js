@@ -115,6 +115,22 @@ describe('<AccordionSummary />', () => {
     expect(handleChange.callCount).to.equal(1);
   });
 
+  it.skipIf(isJsdom())('inherits the font of its parent', () => {
+    render(
+      <div style={{ fontFamily: 'cursive', fontSize: '20px', lineHeight: '30px' }}>
+        <Accordion>
+          <AccordionSummary>Summary</AccordionSummary>
+        </Accordion>
+      </div>,
+    );
+
+    expect(screen.getByRole('button')).toHaveComputedStyle({
+      fontFamily: 'cursive',
+      fontSize: '20px',
+      lineHeight: '30px',
+    });
+  });
+
   describe('prop: nativeButton', () => {
     it('forwards nativeButton={false} through useSlot to ButtonBase', () => {
       const CustomSpan = React.forwardRef((props, ref) => <span ref={ref} {...props} />);

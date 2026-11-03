@@ -1,13 +1,11 @@
 'use client';
 /* eslint-disable no-underscore-dangle */
-import emStyled, {
-  type CreateStyled,
-  type StyledComponent,
-  type StyledOptions,
-} from '@emotion/styled';
+import emStyled from '@emotion/styled';
+import type { CreateStyled, StyledComponent, StyledOptions } from '@emotion/styled';
 import { serializeStyles as emSerializeStyles } from '@emotion/serialize';
 import type * as CSS from 'csstype';
-import { type PropsOf } from '@emotion/react';
+import { __unsafe_useEmotionCache } from '@emotion/react';
+import type { PropsOf } from '@emotion/react';
 
 // Re-export the public type surface of `@emotion/styled`. Explicit names rather
 // than `export type *`: an `export *` (even type-only) is disallowed by the
@@ -65,6 +63,15 @@ const wrapper: any[] = [];
 export function internal_serializeStyles<P>(styles: Interpolation<P>): object {
   wrapper[0] = styles;
   return emSerializeStyles(wrapper);
+}
+
+/**
+ * For internal usage in `@mui/system` package.
+ * Returns the nonce of the Emotion cache in context, for style tags created outside of Emotion.
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function internal_useNonce(): string | undefined {
+  return __unsafe_useEmotionCache()?.nonce;
 }
 
 export { ThemeContext, keyframes, css } from '@emotion/react';
@@ -178,7 +185,7 @@ export type Interpolation<Props> =
 export declare function shouldForwardProp(propName: PropertyKey): boolean;
 
 /** Same as StyledOptions but shouldForwardProp must be a type guard */
-export interface FilteringStyledOptions<Props, ForwardedProps extends keyof Props = keyof Props> {
+export interface FilteringStyledOptions<Props, ForwardedProps extends PropertyKey = keyof Props> {
   label?: string | undefined;
   shouldForwardProp?(propName: PropertyKey): propName is ForwardedProps;
   target?: string | undefined;
@@ -230,12 +237,12 @@ export interface CreateMUIStyled<
 > {
   <
     C extends React.ComponentClass<React.ComponentProps<C>>,
-    ForwardedProps extends keyof React.ComponentProps<C> = keyof React.ComponentProps<C>,
+    ForwardedProps extends PropertyKey = keyof React.ComponentProps<C>,
   >(
     component: C,
     options: FilteringStyledOptions<React.ComponentProps<C>, ForwardedProps> & MuiStyledOptions,
   ): CreateStyledComponent<
-    Pick<PropsOf<C>, ForwardedProps> & MUIStyledCommonProps,
+    Pick<PropsOf<C>, ForwardedProps & keyof PropsOf<C>> & MUIStyledCommonProps,
     {},
     {
       ref?: React.Ref<InstanceType<C>> | undefined;
@@ -257,11 +264,16 @@ export interface CreateMUIStyled<
 
   <
     C extends React.JSXElementConstructor<React.ComponentProps<C>>,
-    ForwardedProps extends keyof React.ComponentProps<C> = keyof React.ComponentProps<C>,
+    ForwardedProps extends PropertyKey = keyof React.ComponentProps<C>,
   >(
     component: C,
     options: FilteringStyledOptions<React.ComponentProps<C>, ForwardedProps> & MuiStyledOptions,
-  ): CreateStyledComponent<Pick<PropsOf<C>, ForwardedProps> & MUIStyledCommonProps, {}, {}, Theme>;
+  ): CreateStyledComponent<
+    Pick<PropsOf<C>, ForwardedProps & keyof PropsOf<C>> & MUIStyledCommonProps,
+    {},
+    {},
+    Theme
+  >;
 
   <C extends React.JSXElementConstructor<React.ComponentProps<C>>>(
     component: C,

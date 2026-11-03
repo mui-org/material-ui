@@ -173,7 +173,8 @@ export default function createThemeWithVars(options = {}, ...args) {
 
   if (!defaultScheme) {
     throw /* minify-error */ new Error(
-      `MUI: The \`colorSchemes.${defaultColorScheme}\` option is either missing or invalid.`,
+      `MUI: The \`colorSchemes.${defaultColorScheme}\` option is either missing or invalid. ` +
+        'Ensure the default color scheme is defined in colorSchemes with a valid palette configuration.',
     );
   }
 
