@@ -504,7 +504,7 @@ describe('createTheme', () => {
       expect(theme.focusVisible.outlineStyle).to.equal('solid');
     });
 
-    it('a boxShadow is additive on the outline and gets an inset copy for the inside position', () => {
+    it('a boxShadow is additive on the outline and gets an inset copy for the inside offset', () => {
       const theme = createTheme({
         cssVariables: false,
         focusVisible: { boxShadow: '0 0 0 4px #fff' },
@@ -519,7 +519,7 @@ describe('createTheme', () => {
       expect(theme.focusVisible.outlineColor).to.equal(theme.palette.primary.main);
     });
 
-    it('keeps a boxShadow that already opts into inset on both positions', () => {
+    it('keeps a boxShadow that already opts into inset on both offsets', () => {
       const theme = createTheme({
         cssVariables: false,
         focusVisible: { boxShadow: 'inset 0 0 0 4px #fff' },
@@ -528,7 +528,7 @@ describe('createTheme', () => {
       expect(theme.focusVisible).not.to.have.property('--_focusVisible-inside-boxShadow');
     });
 
-    it('keeps standalone box-shadow keywords on both positions', () => {
+    it('keeps standalone box-shadow keywords on both offsets', () => {
       ['none', 'inherit', 'unset'].forEach((keyword) => {
         const theme = createTheme({
           cssVariables: false,
@@ -546,7 +546,7 @@ describe('createTheme', () => {
       expect(createTheme({ cssVariables: false }).focusVisible).to.equal(undefined);
     });
 
-    describe('outlineOffset positions', () => {
+    describe('outlineOffset inside and outside', () => {
       const insideOffsetOf = (focusVisible) =>
         createTheme({ cssVariables: false, focusVisible }).focusVisible[
           '--_focusVisible-inside-outlineOffset'
@@ -594,7 +594,7 @@ describe('createTheme', () => {
           <ThemeProvider theme={theme}>
             <Box
               data-testid="inside"
-              sx={[theme.focusVisible, theme.focusVisiblePosition('inside')]}
+              sx={[theme.focusVisible, theme.applyFocusVisibleOffset('inside')]}
             />
           </ThemeProvider>,
         );
@@ -602,22 +602,22 @@ describe('createTheme', () => {
       });
     });
 
-    describe('theme.focusVisiblePosition', () => {
+    describe('theme.applyFocusVisibleOffset', () => {
       [false, true].forEach((cssVariables) => {
-        it(`switches the private position vars (cssVariables: ${cssVariables})`, () => {
+        it(`switches the private offset vars (cssVariables: ${cssVariables})`, () => {
           const theme = createTheme({ cssVariables, focusVisible: true });
-          expect(theme.focusVisiblePosition('inside')).to.deep.equal({
+          expect(theme.applyFocusVisibleOffset('inside')).to.deep.equal({
             '--_focusVisible-outlineOffset': 'var(--_focusVisible-inside-outlineOffset)',
             '--_focusVisible-boxShadow': 'var(--_focusVisible-inside-boxShadow)',
           });
-          expect(theme.focusVisiblePosition('outside')).to.deep.equal({
+          expect(theme.applyFocusVisibleOffset('outside')).to.deep.equal({
             '--_focusVisible-outlineOffset': 'initial',
             '--_focusVisible-boxShadow': 'initial',
           });
         });
       });
 
-      it.skipIf(isJSDOM)('draws the ring at the theme position offsets', () => {
+      it.skipIf(isJSDOM)('draws the ring at the theme inside and outside offsets', () => {
         const theme = createTheme({
           focusVisible: {
             boxShadow: '0 0 0 1px rgb(255, 255, 255)',
@@ -629,11 +629,11 @@ describe('createTheme', () => {
             <Box data-testid="default" sx={theme.focusVisible} />
             <Box
               data-testid="outside"
-              sx={[theme.focusVisible, theme.focusVisiblePosition('outside')]}
+              sx={[theme.focusVisible, theme.applyFocusVisibleOffset('outside')]}
             />
             <Box
               data-testid="inside"
-              sx={[theme.focusVisible, theme.focusVisiblePosition('inside')]}
+              sx={[theme.focusVisible, theme.applyFocusVisibleOffset('inside')]}
             />
           </ThemeProvider>,
         );
@@ -652,7 +652,7 @@ describe('createTheme', () => {
         const theme = createTheme({ focusVisible: true });
         render(
           <ThemeProvider theme={theme}>
-            <Box sx={theme.focusVisiblePosition('inside')}>
+            <Box sx={theme.applyFocusVisibleOffset('inside')}>
               <Box data-testid="descendant" sx={theme.focusVisible} />
             </Box>
           </ThemeProvider>,
@@ -667,7 +667,7 @@ describe('createTheme', () => {
           'var(--_focusVisible-outlineOffset, 1px)',
         );
         expect(theme.focusVisible['--_focusVisible-inside-outlineOffset']).to.equal('-3px');
-        expect(theme.focusVisiblePosition('inside')).to.deep.equal({
+        expect(theme.applyFocusVisibleOffset('inside')).to.deep.equal({
           '--_focusVisible-outlineOffset': 'var(--_focusVisible-inside-outlineOffset)',
           '--_focusVisible-boxShadow': 'var(--_focusVisible-inside-boxShadow)',
         });
@@ -679,7 +679,7 @@ describe('createTheme', () => {
           components: {
             MuiMenuItem: {
               styleOverrides: {
-                root: ({ theme: t }) => t.focusVisiblePosition('outside'),
+                root: ({ theme: t }) => t.applyFocusVisibleOffset('outside'),
               },
             },
           },

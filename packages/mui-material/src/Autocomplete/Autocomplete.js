@@ -372,7 +372,7 @@ const AutocompleteListbox = styled('ul', {
         ? {
             // Options are plain <li> (not ButtonBase), so add the ring here, keyed to the
             // keyboard-navigation state. It insets: the listbox scrolls and would clip an outset ring.
-            ...theme.focusVisiblePosition('inside'),
+            ...theme.applyFocusVisibleOffset('inside'),
             ...theme.focusVisible,
           }
         : {

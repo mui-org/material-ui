@@ -47,7 +47,7 @@ const BottomNavigationActionRoot = styled(ButtonBase, {
     [`&.${bottomNavigationActionClasses.selected}`]: {
       color: (theme.vars || theme).palette.primary.main,
     },
-    ...(theme.focusVisible && theme.focusVisiblePosition('inside')),
+    ...(theme.focusVisible && theme.applyFocusVisibleOffset('inside')),
     variants: [
       {
         props: ({ showLabel, selected }) => !showLabel && !selected,

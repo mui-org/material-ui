@@ -125,7 +125,7 @@ With a keyword `outlineWidth` (`thin`, `medium`, or `thick`), `inside` is the ne
 
 ### Moving the indicator of a component
 
-Use `theme.focusVisiblePosition('outside')` or `theme.focusVisiblePosition('inside')` to choose which offset a component uses.
+Use `theme.applyFocusVisibleOffset('outside')` or `theme.applyFocusVisibleOffset('inside')` to choose which offset a component uses.
 For example, a menu with padding leaves room to draw the indicator of `MenuItem` outside:
 
 {{"component": "file://./demos/offset/index.ts"}}

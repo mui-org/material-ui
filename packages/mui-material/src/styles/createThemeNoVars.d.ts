@@ -97,13 +97,13 @@ export interface BaseTheme extends SystemTheme {
    * Draws the `theme.focusVisible` ring outside or inside the element's edge, using the theme's
    * `outlineOffset.outside` or `outlineOffset.inside`. `inside` also insets the ring's `boxShadow`.
    *
-   * @param position `'outside'` or `'inside'`.
+   * @param offset `'outside'` or `'inside'`.
    * @example
    * styleOverrides: {
-   *   root: ({ theme }) => theme.focusVisiblePosition('outside'),
+   *   root: ({ theme }) => theme.applyFocusVisibleOffset('outside'),
    * }
    */
-  focusVisiblePosition: (position: 'inside' | 'outside') => CSSObject;
+  applyFocusVisibleOffset: (position: 'inside' | 'outside') => CSSObject;
 }
 
 // shut off automatic exporting for the `BaseTheme` above

@@ -20,7 +20,7 @@ import createTransitions from './createTransitions';
 import createMotion from './createMotion';
 import zIndex from './zIndex';
 import { stringifyTheme } from './stringifyTheme';
-import { resolveFocusVisible, focusVisiblePosition } from './focusVisible';
+import { resolveFocusVisible, applyFocusVisibleOffset } from './focusVisible';
 
 function coefficientToPercentage(coefficient) {
   if (typeof coefficient === 'number') {
@@ -245,7 +245,7 @@ function createThemeNoVars(options = {}, ...args) {
     });
   };
   muiTheme.toRuntimeSource = stringifyTheme; // for Pigment CSS integration
-  muiTheme.focusVisiblePosition = focusVisiblePosition;
+  muiTheme.applyFocusVisibleOffset = applyFocusVisibleOffset;
 
   attachColorManipulators(muiTheme);
 

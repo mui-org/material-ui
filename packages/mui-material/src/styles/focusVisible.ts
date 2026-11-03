@@ -10,10 +10,8 @@ const insideBoxShadowVar = '--_focusVisible-inside-boxShadow';
 
 const defaultOutlineOffset = 2;
 
-export type FocusVisiblePosition = 'inside' | 'outside';
-
-export function focusVisiblePosition(position: FocusVisiblePosition) {
-  if (position === 'inside') {
+export function applyFocusVisibleOffset(offset: 'inside' | 'outside') {
+  if (offset === 'inside') {
     return {
       [outlineOffsetVar]: `var(${insideOutlineOffsetVar})`,
       [boxShadowVar]: `var(${insideBoxShadowVar})`,
@@ -25,10 +23,10 @@ export function focusVisiblePosition(position: FocusVisiblePosition) {
   };
 }
 
-export const outsetFocusRing = focusVisiblePosition('outside');
+export const outsetFocusRing = applyFocusVisibleOffset('outside');
 
 export function applyInsetFocusVisible(scale: number) {
-  const inside = focusVisiblePosition('inside');
+  const inside = applyFocusVisibleOffset('inside');
   return scale === 1
     ? inside
     : { ...inside, [outlineOffsetVar]: `calc(var(${insideOutlineOffsetVar}) * ${scale})` };
@@ -36,7 +34,7 @@ export function applyInsetFocusVisible(scale: number) {
 
 export function applyInsetFocusVisibleAtLeast(depth: number) {
   return {
-    ...focusVisiblePosition('inside'),
+    ...applyFocusVisibleOffset('inside'),
     [outlineOffsetVar]: `min(var(${insideOutlineOffsetVar}), ${-depth}px)`,
   };
 }
@@ -65,7 +63,7 @@ export function mergeFocusVisibleInput(
 }
 
 /**
- * Whether an input is this module's own output. Only `wireFocusVisibleVars` emits the offset position var,
+ * Whether an input is this module's own output. Only `wireFocusVisibleVars` emits the offset switch var,
  * so it identifies a ring fed back in by `createTheme(existingTheme, …)`.
  */
 export function isResolvedFocusVisible(input: FocusVisibleInput): boolean {
@@ -132,9 +130,9 @@ function deriveInsideOutlineOffset(
 }
 
 /**
- * Wire the private position vars into a resolved `theme.focusVisible`: the outside values stay the
+ * Wire the private offset vars into a resolved `theme.focusVisible`: the outside values stay the
  * declared defaults, and the inside values ride along as private custom properties that
- * `focusVisiblePosition('inside')` switches to.
+ * `applyFocusVisibleOffset('inside')` switches to.
  */
 export function wireFocusVisibleVars({
   outlineOffset = defaultOutlineOffset,

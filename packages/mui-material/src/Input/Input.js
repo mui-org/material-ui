@@ -73,7 +73,7 @@ const InputRoot = styled(InputBaseRoot, {
           props: ({ ownerState }) => ownerState.disableUnderline && theme.focusVisible,
           style: {
             // prevent indicator too close to the label in TextField
-            ...theme.focusVisiblePosition('inside'),
+            ...theme.applyFocusVisibleOffset('inside'),
             paddingInline: 4,
           },
         },

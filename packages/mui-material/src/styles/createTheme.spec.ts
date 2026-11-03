@@ -354,44 +354,44 @@ const theme = createTheme();
   });
 }
 
-// focusVisible outlineOffset positions
+// focusVisible outlineOffset inside and outside
 {
   createTheme({ focusVisible: { outlineOffset: { outside: 1, inside: -3 } } });
   createTheme({ focusVisible: { outlineOffset: { inside: '-0.25rem' } } });
   createTheme({ focusVisible: { outlineOffset: { outside: 1 } } });
 
   createTheme({
-    // @ts-expect-error positions take a number or a CSS length
+    // @ts-expect-error inside and outside take a number or a CSS length
     focusVisible: { outlineOffset: { inside: true } },
   });
 }
 
-// theme.focusVisiblePosition
+// theme.applyFocusVisibleOffset
 {
-  const positionTheme = createTheme({ focusVisible: true });
-  // @ts-expect-error the position is required
-  positionTheme.focusVisiblePosition();
-  positionTheme.focusVisiblePosition('inside');
-  positionTheme.focusVisiblePosition('outside');
-  createTheme({ cssVariables: true }).focusVisiblePosition('inside');
+  const offsetTheme = createTheme({ focusVisible: true });
+  // @ts-expect-error the offset is required
+  offsetTheme.applyFocusVisibleOffset();
+  offsetTheme.applyFocusVisibleOffset('inside');
+  offsetTheme.applyFocusVisibleOffset('outside');
+  createTheme({ cssVariables: true }).applyFocusVisibleOffset('inside');
 
   createTheme({
     components: {
       MuiMenuItem: {
         styleOverrides: {
-          root: ({ theme: t }) => t.focusVisiblePosition('outside'),
+          root: ({ theme: t }) => t.applyFocusVisibleOffset('outside'),
         },
       },
     },
   });
 
-  // @ts-expect-error the position is `inside` or `outside`, not a number
-  positionTheme.focusVisiblePosition(-1);
+  // @ts-expect-error the offset is `inside` or `outside`, not a number
+  offsetTheme.applyFocusVisibleOffset(-1);
 
-  positionTheme.components = {
+  offsetTheme.components = {
     MuiMenuItem: {
       styleOverrides: {
-        root: ({ theme: t }) => t.focusVisiblePosition('outside'),
+        root: ({ theme: t }) => t.applyFocusVisibleOffset('outside'),
       },
     },
   };
