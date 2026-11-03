@@ -521,21 +521,33 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
       tabIndex: skipFocusWhenDisabled && disabled ? -1 : tabIndex,
       ...moreProps,
     },
-    getSlotProps: (handlers) => ({
-      ...handlers,
-      onClick: (event) => {
-        handlers.onClick?.(event);
-        onClick?.(event);
-      },
-      onKeyDown: (event) => {
-        handlers.onKeyDown?.(event);
-        handleKeyDown(event);
-      },
-      onKeyUp: (event) => {
-        handlers.onKeyUp?.(event);
-        handleKeyUp(event);
-      },
-    }),
+    getSlotProps: (handlers) => {
+      const isClickable = handlers.onClick || onClick;
+      const hasKeyDown = handlers.onKeyDown || onKeyDown || onDelete;
+      const hasKeyUp = handlers.onKeyUp || onKeyUp || onDelete;
+
+      return {
+        ...handlers,
+        ...(isClickable && {
+          onClick: (event) => {
+            handlers.onClick?.(event);
+            onClick?.(event);
+          },
+        }),
+        ...(hasKeyDown && {
+          onKeyDown: (event) => {
+            handlers.onKeyDown?.(event);
+            handleKeyDown(event);
+          },
+        }),
+        ...(hasKeyUp && {
+          onKeyUp: (event) => {
+            handlers.onKeyUp?.(event);
+            handleKeyUp(event);
+          },
+        }),
+      };
+    },
   });
 
   const [LabelSlot, labelProps] = useSlot('label', {

@@ -74,6 +74,19 @@ describe('<Chip />', () => {
         expect(chip).to.have.class(classes[`color${capitalize(color)}`]);
       });
     });
+
+    it('does not pass onClick, onKeyDown, or onKeyUp to the root slot when not interactive', () => {
+      let receivedProps;
+      const CustomRoot = React.forwardRef(({ ownerState, ...props }, ref) => {
+        receivedProps = props;
+        return <div ref={ref} {...props} />;
+      });
+
+      render(<Chip label="Static" slots={{ root: CustomRoot }} />);
+      expect(receivedProps.onClick).to.equal(undefined);
+      expect(receivedProps.onKeyDown).to.equal(undefined);
+      expect(receivedProps.onKeyUp).to.equal(undefined);
+    });
   });
 
   describe('clickable chip', () => {
