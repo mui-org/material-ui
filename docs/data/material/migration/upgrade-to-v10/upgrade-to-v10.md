@@ -32,12 +32,6 @@ yarn add react@<version> react-dom@<version>
 
 </codeblock>
 
-### Rating input ids
-
-The `Rating` radio inputs no longer use the `name` prop as the prefix of their `id`.
-The `id` now comes from `React.useId()` only.
-If your tests select a `Rating` input by its `id`, select it by its role and accessible name instead.
-
 ### Khmer locale renamed
 
 The Khmer locale is now exported as `kmKH` instead of `khKH`, to match the ISO 639-1 code for Khmer (`km`).

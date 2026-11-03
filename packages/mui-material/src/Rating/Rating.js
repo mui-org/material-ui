@@ -256,7 +256,7 @@ function RatingItem(props) {
   const isFocused = itemValue <= focus;
   const isChecked = itemValue === ratingValueRounded;
 
-  const id = useId();
+  const id = `${name}-${useId()}`;
 
   const externalForwardedProps = {
     slots,

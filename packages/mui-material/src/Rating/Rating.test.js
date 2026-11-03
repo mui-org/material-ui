@@ -252,17 +252,14 @@ describe('<Rating />', () => {
     expect(new Set(radios.map((radio) => radio.name))).to.have.length(1);
   });
 
-  it('should give input elements unique ids across instances', () => {
-    render(
-      <div>
-        <Rating name="rating-a" />
-        <Rating name="rating-b" />
-      </div>,
-    );
+  it('should use `name` as prefix of input element ids', () => {
+    render(<Rating name="rating-test" />);
 
-    const radios = Array.from(document.querySelectorAll('input[type="radio"]'));
+    const radios = document.querySelectorAll('input[type="radio"]');
 
-    expect(new Set(radios.map((radio) => radio.id))).to.have.length(radios.length);
+    for (let i = 0; i < radios.length; i += 1) {
+      expect(radios[i].getAttribute('id')).to.match(/^rating-test-/);
+    }
   });
 
   it('should not spread the `value` prop on the icon slot DOM element', () => {
