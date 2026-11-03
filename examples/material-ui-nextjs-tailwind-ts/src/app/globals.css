@@ -1,0 +1,6 @@
+/* `mui` sits after Tailwind preflight (`base`) and before `utilities`. */
+@layer theme, base, mui, components, utilities;
+@import 'tailwindcss';
+
+/* Follow Material UI's class color scheme (`html.dark` / `html.light`). */
+@custom-variant dark (&:where(.dark, .dark *));
