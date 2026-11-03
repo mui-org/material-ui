@@ -37,10 +37,36 @@ function getInterfaceTarget(type: ts.Type): ts.InterfaceType | null {
   return null;
 }
 
+// A mapped type over `keyof T` (`Partial`, `Required`, `Readonly`) lists its members in the
+// order of `T`. Any other mapped type (`Pick`, `Omit`) lists them in the internal order of
+// its key union.
+function hasUnstableKeyOrder(type: ts.Type): boolean {
+  if (!(type.flags & ts.TypeFlags.Object)) {
+    return false;
+  }
+  if (!((type as ts.ObjectType).objectFlags & ts.ObjectFlags.Mapped)) {
+    return false;
+  }
+  const declaration = type.symbol?.declarations?.[0];
+  const constraint =
+    declaration && ts.isMappedTypeNode(declaration)
+      ? declaration.typeParameter.constraint
+      : undefined;
+  return !(
+    constraint &&
+    ts.isTypeOperatorNode(constraint) &&
+    constraint.operator === ts.SyntaxKind.KeyOfKeyword
+  );
+}
+
 function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>) {
   const interfaceType = getInterfaceTarget(type);
   if (!interfaceType) {
-    [...type.getProperties()].sort(compareByDeclaration).forEach((symbol) => {
+    const properties = type.getProperties();
+    const ordered = hasUnstableKeyOrder(type)
+      ? [...properties].sort(compareByDeclaration)
+      : properties;
+    ordered.forEach((symbol) => {
       names.add(symbol.name);
     });
     return;
@@ -60,8 +86,8 @@ function collectNames(checker: ts.TypeChecker, type: ts.Type, names: Set<string>
  *
  * `type.getProperties()` lists the members of a mapped type such as `Pick<T, 'a' | 'b'>` in
  * the internal order of the key union, which depends on which literal types the checker
- * created first. Interface members keep the checker order (own members, then each base).
- * Members of any other type are sorted by declaration position.
+ * created first. Those members are sorted by declaration position. Everything else keeps the
+ * checker order.
  */
 export function getOrderedProperties(checker: ts.TypeChecker, type: ts.Type): ts.Symbol[] {
   const names = new Set<string>();

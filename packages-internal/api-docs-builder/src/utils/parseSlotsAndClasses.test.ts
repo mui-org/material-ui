@@ -8,6 +8,7 @@ const FILE_NAME = '/virtual/index.ts';
 
 const SOURCE = `
 type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+type Partial<T> = { [P in keyof T]?: T[P] };
 
 declare namespace React {
   interface ReactElement {}
@@ -35,6 +36,10 @@ export interface GroupSlots extends Pick<BoxSlots, 'group' | 'root' | 'avatar' |
 }
 
 export declare function Group(props: { slots?: GroupSlots }): React.ReactElement;
+
+export interface FeedSlots extends Partial<BoxSlots> {}
+
+export declare function Feed(props: { slots?: FeedSlots }): React.ReactElement;
 
 export type Warmup = 'avatar' | 'indicator';
 `;
@@ -80,6 +85,10 @@ describe('parseSlotsAndClasses', () => {
       'root',
       'avatar',
     ]);
+  });
+
+  it('lists `Partial` slots in the order of the source interface', () => {
+    expect(getSlotNames('Feed')).to.deep.equal(getSlotNames('Box'));
   });
 
   it('lists `Pick` slots in the same order regardless of checker state', () => {
