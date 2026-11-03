@@ -21,7 +21,7 @@ export default function TailwindDemo() {
       <div className="rounded-md bg-sky-100 p-4 text-sky-950 dark:bg-sky-950 dark:text-sky-100">
         Styled with Tailwind CSS utilities.
       </div>
-      <Button variant="contained" className="bg-violet-600">
+      <Button variant="contained" className="bg-violet-600 text-white">
         Contained button
       </Button>
       <Slider
