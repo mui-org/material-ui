@@ -4,9 +4,9 @@
 
 ## Details of the role
 
-- **Location**: Remote (preference for UTC-6 to UTC+5).
-- **Type of work**: Full-time (contractor or employee [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
-- **Level**: [IC5 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
+- **Location:** Remote (preference for UTC-6 to UTC+5).
+- **Type of work:** Full-time (employee or contractor [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
+- **Level:** [IC5 Staff and above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
 - We're a **remote** company, operating mostly asynchronously.
 
 ## The company
@@ -40,7 +40,7 @@ We need talented people to keep up with the demands of our exigent community!
 
 ### Why this is interesting
 
-Our products empower React developers to build awesome applications faster – we see millions of developers on MUI's docs every year, one million a month. We're planning to invest heavily in Base UI this year and into the future. Our goal is to make Base UI one the best unstyled UI libs available, and in the process, help millions of developers build more accessible products.
+Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries every year. We're planning to invest heavily in Base UI this year and into the future. Our goal is to make Base UI one the best unstyled UI libs available, and in the process, help millions of developers build more accessible products.
 
 ## The role
 
