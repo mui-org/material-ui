@@ -48,6 +48,12 @@ const examples = [
     src: '/static/images/examples/tailwindcss.svg',
   },
   {
+    name: 'Next.js App Router + Tailwind CSS',
+    label: 'View TypeScript',
+    link: 'https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-tailwind-ts',
+    src: '/static/images/examples/tailwindcss.svg',
+  },
+  {
     name: 'Preact',
     label: 'View JavaScript',
     link: 'https://github.com/mui/material-ui/tree/master/examples/material-ui-preact',
