@@ -299,10 +299,6 @@ export default withDocsInfra({
         ) {
           return;
         }
-        // getStaticPaths provides the concrete URLs for this dynamic page.
-        if (page.pathname === '/careers/roles/[slug]') {
-          return;
-        }
         if (!page.children) {
           // map api-docs to api
           // i: /api-docs/* > /api/* (old structure)

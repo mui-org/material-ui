@@ -1,0 +1,87 @@
+name: Sync team members
+
+on:
+  workflow_dispatch:
+    inputs:
+      reviewers:
+        description: 'Comma-separated team slugs or usernames'
+        required: false
+        default: 'admins'
+  schedule:
+    # Every Monday at 06:00 UTC
+    - cron: '0 6 * * 1'
+
+permissions: {}
+
+jobs:
+  sync:
+    if: github.repository == 'mui/material-ui'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22.23.2'
+          cache: 'pnpm' # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
+      - run: pnpm install
+      - name: Sync team members
+        id: sync
+        run: |
+          {
+            echo 'summary<<SYNC_SUMMARY_EOF'
+            pnpm --silent exec tsx ./docs/scripts/syncTeamMembers.ts
+            echo 'SYNC_SUMMARY_EOF'
+          } >> "$GITHUB_OUTPUT"
+          pnpm prettier
+      - name: Create or update pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SYNC_SUMMARY: ${{ steps.sync.outputs.summary }}
+          # Empty on scheduled runs, so fall back to the default reviewers.
+          REVIEWERS: ${{ inputs.reviewers || 'admins' }}
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo 'No team member changes. Skipping PR.'
+            exit 0
+          fi
+
+          # `cherry-pick-*` is exempt from branch creation restrictions and required
+          # status checks. `docs-*` is only exempt from the former.
+          BRANCH=cherry-pick-sync-team-members
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -C "$BRANCH"
+          git commit --all --message '[website] Sync about page team members'
+          git push --force origin "$BRANCH"
+
+          BODY="$(printf 'Automated sync of the About page team members from the [mui-about API](https://frontend-public.mui.com/api/mui-about).\n\n%s' "$SYNC_SUMMARY")"
+
+          PR_NUMBER="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')"
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr edit "$PR_NUMBER" --body "$BODY"
+          else
+            gh pr create \
+              --base master \
+              --head "$BRANCH" \
+              --title '[website] Sync about page team members' \
+              --body "$BODY" \
+              --label website
+            PR_NUMBER="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')"
+          fi
+
+          REVIEWS_URL="repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/requested_reviewers"
+          IFS=',' read -ra REQUESTED_REVIEWERS <<< "$REVIEWERS"
+          for reviewer in "${REQUESTED_REVIEWERS[@]}"; do
+            reviewer="${reviewer//[[:space:]]/}"
+            [ -z "$reviewer" ] && continue
+            if ! gh api --method POST "$REVIEWS_URL" -f "team_reviewers[]=$reviewer" >/dev/null 2>&1; then
+              gh api --method POST "$REVIEWS_URL" -f "reviewers[]=$reviewer" >/dev/null
+            fi
+          done
