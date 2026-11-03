@@ -699,9 +699,15 @@ export function AppSearch(props: AppSearchProps) {
                 margin: 0,
               },
             },
+            // v5 dropped the `svg` from its own hide rule, so `.DocSearch-Hit-action svg` now
+            // outranks it and the arrow shows on every hit instead of the selected one.
             '& .DocSearch-Hit-Select-Icon': {
               height: '14px',
               width: '14px',
+              display: 'none',
+            },
+            '& .DocSearch-Hit[aria-selected="true"] .DocSearch-Hit-Select-Icon': {
+              display: 'block',
             },
             '& .DocSearch-Hit[aria-selected="true"] a': {
               backgroundColor: (theme.vars || theme).palette.primary[50],
@@ -719,6 +725,8 @@ export function AppSearch(props: AppSearchProps) {
               color: 'var(--docsearch-hit-active-color)',
               '& .DocSearch-Hit-action-button': {
                 display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 width: '24px',
                 borderRadius: '6px',
                 border: '1px solid transparent',
@@ -729,6 +737,11 @@ export function AppSearch(props: AppSearchProps) {
                   backgroundColor: (theme.vars || theme).palette.primary[100],
                   borderColor: (theme.vars || theme).palette.primary[300],
                 },
+              },
+              // v5 shrinks the pin to 14px while the remove X stays 18px; match them.
+              '& .DocSearch-Hit-action-button--pin svg': {
+                width: '18px',
+                height: '18px',
               },
             },
             '& .DocSearch-Footer': {
