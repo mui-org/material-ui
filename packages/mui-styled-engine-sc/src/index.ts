@@ -373,7 +373,7 @@ export interface StyledConfig<O extends object = {}> {
 }
 
 /** Same as StyledConfig but shouldForwardProp must be a type guard */
-export interface FilteringStyledOptions<Props, ForwardedProps extends keyof Props = keyof Props> {
+export interface FilteringStyledOptions<Props, ForwardedProps extends PropertyKey = keyof Props> {
   componentId?: string | undefined;
   displayName?: string | undefined;
   label?: string | undefined;
@@ -417,12 +417,12 @@ export interface ThemedBaseStyledInterface<
 
   <
     C extends React.ComponentClass<React.ComponentProps<C>>,
-    ForwardedProps extends keyof React.ComponentProps<C> = keyof React.ComponentProps<C>,
+    ForwardedProps extends PropertyKey = keyof React.ComponentProps<C>,
   >(
     component: C,
     options: FilteringStyledOptions<React.ComponentProps<C>, ForwardedProps> & MuiStyledOptions,
   ): CreateStyledComponent<
-    Pick<PropsOf<C>, ForwardedProps> & MUIStyledCommonProps,
+    Pick<PropsOf<C>, ForwardedProps & keyof PropsOf<C>> & MUIStyledCommonProps,
     {},
     {
       ref?: React.Ref<InstanceType<C>> | undefined;
@@ -444,11 +444,16 @@ export interface ThemedBaseStyledInterface<
 
   <
     C extends React.JSXElementConstructor<React.ComponentProps<C>>,
-    ForwardedProps extends keyof React.ComponentProps<C> = keyof React.ComponentProps<C>,
+    ForwardedProps extends PropertyKey = keyof React.ComponentProps<C>,
   >(
     component: C,
     options: FilteringStyledOptions<React.ComponentProps<C>, ForwardedProps> & MuiStyledOptions,
-  ): CreateStyledComponent<Pick<PropsOf<C>, ForwardedProps> & MUIStyledCommonProps, {}, {}, Theme>;
+  ): CreateStyledComponent<
+    Pick<PropsOf<C>, ForwardedProps & keyof PropsOf<C>> & MUIStyledCommonProps,
+    {},
+    {},
+    Theme
+  >;
 
   <C extends React.JSXElementConstructor<React.ComponentProps<C>>>(
     component: C,

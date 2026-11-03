@@ -12,8 +12,8 @@
     "@emotion/react": "catalog:docs",
     "@emotion/styled": "catalog:docs",
     "@mui/material": "workspace:*",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@mui/internal-benchmark": "0.1.1-canary.9",
