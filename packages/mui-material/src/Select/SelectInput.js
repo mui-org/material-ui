@@ -103,7 +103,16 @@ const SelectIcon = styled(StyledSelectIcon, {
     const { ownerState } = props;
     return [styles.icon, ownerState.open && styles.iconOpen];
   },
-})({});
+})({
+  variants: [
+    {
+      props: ({ ownerState }) => ownerState.open,
+      style: {
+        transform: 'rotate(180deg)',
+      },
+    },
+  ],
+});
 
 const SelectNativeInput = styled('input', {
   shouldForwardProp: (prop) => slotShouldForwardProp(prop) && prop !== 'classes',
@@ -452,21 +461,6 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
 
   const childrenArray = React.Children.toArray(children);
 
-  // Support autofill.
-  const handleChange = (event) => {
-    const child = childrenArray.find((childItem) => childItem.props.value === event.target.value);
-
-    if (child === undefined) {
-      return;
-    }
-
-    setValueState(child.props.value);
-
-    if (onChange) {
-      onChange(event, child);
-    }
-  };
-
   const handleValueChange = (event, child, newValue) => {
     setValueState(newValue);
 
@@ -487,6 +481,19 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
     }
   };
 
+  // Support autofill.
+  const handleChange = (event) => {
+    const child = childrenArray.find((childItem) =>
+      areEqualValues(event.target.value, childItem.props.value),
+    );
+
+    if (child === undefined) {
+      return;
+    }
+
+    handleValueChange(event, child, multiple ? [child.props.value] : child.props.value);
+  };
+
   const handleItemClick = (child) => (event) => {
     didPointerDownOnItemRef.current = false;
 
@@ -499,7 +506,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
 
     if (multiple) {
       newValue = Array.isArray(value) ? value.slice() : [];
-      const itemIndex = value.indexOf(child.props.value);
+      const itemIndex = value.findIndex((v) => areEqualValues(v, child.props.value));
       if (itemIndex === -1) {
         newValue.push(child.props.value);
       } else {

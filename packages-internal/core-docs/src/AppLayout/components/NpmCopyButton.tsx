@@ -3,7 +3,8 @@ import * as React from 'react';
 import copy from 'clipboard-copy';
 import { visuallyHidden } from '@mui/utils';
 import type { SxProps } from '@mui/system';
-import { styled, alpha, type Theme } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import ContentCopyRounded from '@mui/icons-material/ContentCopyRounded';
 import CheckRounded from '@mui/icons-material/CheckRounded';
 

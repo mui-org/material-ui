@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import {
   ThemeProvider as MuiThemeProvider,
   useTheme as usePrivateTheme,
-  type DefaultTheme,
 } from '@mui/private-theming';
+import type { DefaultTheme } from '@mui/private-theming';
 import exactProp from '@mui/utils/exactProp';
 import { ThemeContext as StyledEngineThemeContext } from '@mui/styled-engine';
 import useThemeWithoutDefault from '../useThemeWithoutDefault';

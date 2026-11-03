@@ -1,4 +1,4 @@
-import { ComponentsPropsList } from '../../styles/props';
+import type { ComponentsPropsList } from '../../styles/props';
 
 export interface Localization {
   components?:

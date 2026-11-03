@@ -3,18 +3,16 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { isMuiElement } from '@mui/material/utils';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
 import { timelineContentClasses } from '../TimelineContent';
 import { timelineOppositeContentClasses } from '../TimelineOppositeContent';
 import TimelineContext from '../Timeline/TimelineContext';
-import {
-  getTimelineItemUtilityClass,
-  type TimelineItemClasses,
-  type TimelineItemClassKey,
-} from './timelineItemClasses';
+import { getTimelineItemUtilityClass } from './timelineItemClasses';
+import type { TimelineItemClasses, TimelineItemClassKey } from './timelineItemClasses';
 import convertTimelinePositionToClass from '../internal/convertTimelinePositionToClass';
 
 export interface TimelineItemProps extends StandardProps<React.ComponentPropsWithRef<'li'>> {

@@ -6,15 +6,18 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
-import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton';
+import type { ListItemButtonProps } from '@mui/material/ListItemButton';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader, { ListSubheaderProps } from '@mui/material/ListSubheader';
+import type { ListSubheaderProps } from '@mui/material/ListSubheader';
+import ListSubheader from '@mui/material/ListSubheader';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CheckIcon from '@mui/icons-material/Check';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import Divider, { DividerProps } from '@mui/material/Divider';
+import type { DividerProps } from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 const StyledMenubar = styled('div')(({ theme }) => ({

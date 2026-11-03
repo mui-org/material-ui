@@ -2,7 +2,7 @@ import * as React from 'react';
 import { expectType } from '@mui/types';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { FormHelperTextProps } from '@mui/material/FormHelperText';
 
 {
   // https://github.com/mui/material-ui/issues/12999

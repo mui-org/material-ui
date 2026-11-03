@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ButtonProps } from '@mui/material/Button';
+import type { ButtonProps } from '@mui/material/Button';
 import Button from '../components/Button';
 import defer from './defer';
 

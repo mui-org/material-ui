@@ -1,5 +1,7 @@
 import { describe, afterEach, it, expect } from 'vitest';
 import { ThemeContext } from '@mui/styled-engine';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import { createRenderer } from '@mui/internal-test-utils';
 import useLayerOrder from './useLayerOrder';
 
@@ -39,6 +41,18 @@ describe('useLayerOrder', () => {
     expect(document.head.firstChild?.textContent).to.contain(
       '@layer theme, base, mui.unknown, utilities;',
     );
+  });
+
+  it('sets the nonce of the Emotion cache on the layer order style tag', () => {
+    const cache = createCache({ key: 'nonce-test', nonce: 'test-nonce' });
+    render(
+      <CacheProvider value={cache}>
+        <TestComponent theme={{ modularCssLayers: true }} />
+      </CacheProvider>,
+    );
+    const styleElement = document.head.firstChild as HTMLStyleElement;
+    expect(styleElement.hasAttribute('data-mui-layer-order')).to.equal(true);
+    expect(styleElement.nonce).to.equal('test-nonce');
   });
 
   it('returns null if modularCssLayers is falsy', () => {

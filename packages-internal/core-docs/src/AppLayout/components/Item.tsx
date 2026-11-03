@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import Box, { type BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 export function Group({

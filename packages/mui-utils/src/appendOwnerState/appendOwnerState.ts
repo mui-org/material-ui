@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Simplify } from '@mui/types';
+import type * as React from 'react';
+import type { Simplify } from '@mui/types';
 import isHostComponent from '../isHostComponent';
 
 /**

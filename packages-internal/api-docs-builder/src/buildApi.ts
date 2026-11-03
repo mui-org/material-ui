@@ -6,13 +6,13 @@ import findHooks from './utils/findHooks';
 import { writePrettifiedFile } from './buildApiUtils';
 import generateComponentApi from './ApiBuilders/ComponentApiBuilder';
 import { generateHookApi } from './ApiBuilders/HookApiBuilder';
-import {
+import type {
   CreateTypeScriptProjectOptions,
   TypeScriptProjectBuilder,
-  createTypeScriptProjectBuilder,
 } from './utils/createTypeScriptProject';
-import { ProjectSettings } from './ProjectSettings';
-import { ComponentReactApi } from './types/ApiBuilder.types';
+import { createTypeScriptProjectBuilder } from './utils/createTypeScriptProject';
+import type { ProjectSettings } from './ProjectSettings';
+import type { ComponentReactApi } from './types/ApiBuilder.types';
 import _escapeCell from './utils/escapeCell';
 import _escapeEntities from './utils/escapeEntities';
 

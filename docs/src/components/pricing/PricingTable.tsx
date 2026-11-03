@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { alpha, styled, ThemeProvider } from '@mui/material/styles';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Collapse from '@mui/material/Collapse';
@@ -18,7 +19,8 @@ import { useLicenseModel } from 'docs/src/components/pricing/LicenseModelContext
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { MultiAppSwitchTable } from 'docs/src/components/pricing/MultiAppSwitch';
 import InfoPrioritySupport from 'docs/src/components/pricing/InfoPrioritySupport';
-import { PlanName, planInfo } from './PricingCards';
+import type { PlanName } from './PricingCards';
+import { planInfo } from './PricingCards';
 
 // TODO: Collapse should expose an API to customize the duration based on the height.
 function transitionTheme(theme: any) {

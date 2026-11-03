@@ -1,5 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import type * as React from 'react';
+import type PropTypes from 'prop-types';
 
 export default function requirePropFactory(
   componentNameInError: string,
