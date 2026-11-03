@@ -1,12 +1,12 @@
-import glob from 'fast-glob';
-import fse from 'fs-extra';
+import { globby } from 'globby';
+import fs from 'node:fs/promises';
 import path from 'path';
-import { getWorkspaceRoot } from './utils.mjs';
+import { findWorkspaceDir } from '@pnpm/find-workspace-dir';
 
 async function main() {
-  const workspaceRoot = getWorkspaceRoot();
+  const workspaceRoot = await findWorkspaceDir(process.cwd());
 
-  const declarationFiles = await glob('**/build/**/*.d.ts', {
+  const declarationFiles = await globby('**/build/**/*.d.ts', {
     absolute: true,
     cwd: workspaceRoot,
     ignore: ['node_modules'],
@@ -15,7 +15,7 @@ async function main() {
 
   await Promise.all(
     declarationFiles.map(async (declarationFilePath) => {
-      const declarationFile = await fse.readFile(declarationFilePath, { encoding: 'utf8' });
+      const declarationFile = await fs.readFile(declarationFilePath, { encoding: 'utf8' });
       // find occurrences of e.g. `import("../../mui-*/src/...")`
       const typeImportsRelativeToWorkspace = declarationFile.match(/import\(("|')(\.\.\/)+mui/g);
 

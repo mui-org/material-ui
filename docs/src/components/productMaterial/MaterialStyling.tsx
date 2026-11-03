@@ -6,13 +6,11 @@ import DevicesOtherRoundedIcon from '@mui/icons-material/DevicesOtherRounded';
 import SwitchAccessShortcutRoundedIcon from '@mui/icons-material/SwitchAccessShortcutRounded';
 import DragHandleRounded from '@mui/icons-material/DragHandleRounded';
 import StyleRoundedIcon from '@mui/icons-material/StyleRounded';
-import { HighlightedCode } from '@mui/docs/HighlightedCode';
+import { HighlightedCode } from '@mui/internal-core-docs/HighlightedCode';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import Frame from 'docs/src/components/action/Frame';
+import { Item, Group, Highlighter, Frame } from '@mui/internal-core-docs/AppLayout';
 import RealEstateCard from 'docs/src/components/showcase/RealEstateCard';
 import FlashCode from 'docs/src/components/animation/FlashCode';
 import useResizeHandle from 'docs/src/modules/utils/useResizeHandle';
@@ -34,10 +32,10 @@ const code = `
     }}
   />
   <Box sx={{ alignSelf: 'center', ml: 2 }}>
-    <Typography variant="body2" color="text.secondary" fontWeight="regular">
+    <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'regular' }}>
       123 Main St, Phoenix, AZ, USA
     </Typography>
-    <Typography fontWeight="bold" noWrap gutterBottom>
+    <Typography sx={{ fontWeight: 'bold' }} noWrap gutterBottom>
       $280k - $310k
     </Typography>
     <Chip
@@ -79,7 +77,11 @@ export default function MaterialStyling() {
     // 18px line-height
     // 16px margin-top
     // 1px border-width
-    infoRef.current!.scroll({ top: scrollTo[index] * 18 + 16 - 1, behavior: 'smooth' });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    infoRef.current!.scroll({
+      top: scrollTo[index] * 18 + 16 - 1,
+      behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+    });
 
     objectRef.current!.style.setProperty('width', '100%');
   }, [index]);

@@ -1,4 +1,0 @@
-{
-  "extends": "../../../../../tsconfig.json",
-  "files": ["responsiveFontSizes.spec.ts"]
-}

@@ -1,4 +1,0 @@
-<Link href="#basics">Link</Link>
-<Link href="#basics" disabled>
-  Disabled
-</Link>

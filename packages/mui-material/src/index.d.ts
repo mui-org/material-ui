@@ -154,9 +154,6 @@ export * from './FormHelperText';
 export { default as FormLabel } from './FormLabel';
 export * from './FormLabel';
 
-export { default as GridLegacy } from './GridLegacy';
-export { GridLegacyProps, GridLegacyTypeMap } from './GridLegacy';
-
 export { default as Grid } from './Grid';
 export * from './Grid';
 
@@ -396,6 +393,9 @@ export * from './Typography';
 
 export { default as useMediaQuery } from './useMediaQuery';
 export * from './useMediaQuery';
+
+export { default as usePagination } from './usePagination';
+export * from './usePagination';
 
 export { default as useScrollTrigger } from './useScrollTrigger';
 export * from './useScrollTrigger';

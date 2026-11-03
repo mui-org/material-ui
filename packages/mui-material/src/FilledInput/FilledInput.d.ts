@@ -8,35 +8,39 @@ export interface FilledInputProps extends StandardProps<InputBaseProps> {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<FilledInputClasses>;
+  classes?: Partial<FilledInputClasses> | undefined;
   /**
    * If `true`, the label is hidden.
    * This is used to increase density for a `FilledInput`.
    * Be sure to add `aria-label` to the `input` element.
    * @default false
    */
-  hiddenLabel?: boolean;
+  hiddenLabel?: boolean | undefined;
   /**
    * If `true`, the input will not have an underline.
    * @default false
    */
-  disableUnderline?: boolean;
+  disableUnderline?: boolean | undefined;
+  /**
+   * @internal
+   */
+  notched?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [FilledInput API](https://mui.com/material-ui/api/filled-input/)
- * - inherits [InputBase API](https://mui.com/material-ui/api/input-base/)
+ * - [FilledInput API](https://next.mui.com/material-ui/api/filled-input/)
+ * - inherits [InputBase API](https://next.mui.com/material-ui/api/input-base/)
  */
 declare const FilledInput: ((props: FilledInputProps) => React.JSX.Element) & { muiName: string };
 

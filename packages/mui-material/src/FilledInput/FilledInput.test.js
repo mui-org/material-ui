@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
-import { styled } from '@mui/material/styles';
+import { describe, it, expect } from 'vitest';
+import { act, createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import FilledInput, { filledInputClasses as classes } from '@mui/material/FilledInput';
 import InputBase from '@mui/material/InputBase';
 import describeConformance from '../../test/describeConformance';
@@ -18,7 +17,6 @@ describe('<FilledInput />', () => {
     testDeepOverrides: { slotName: 'input', slotClassName: classes.input },
     testVariantProps: { variant: 'contained', fullWidth: true },
     testStateOverrides: { prop: 'size', value: 'small', styleKey: 'sizeSmall' },
-    testLegacyComponentsProp: true,
     slots: {
       // can't test with DOM element as Input places an ownerState prop on it unconditionally.
       root: { expectedClassName: classes.root, testWithElement: null },
@@ -26,7 +24,6 @@ describe('<FilledInput />', () => {
     },
     skip: [
       'componentProp',
-      'componentsProp',
       'slotPropsCallback', // not supported yet
       'slotPropsCallbackWithPropsAsOwnerState', // not supported yet
     ],
@@ -55,8 +52,8 @@ describe('<FilledInput />', () => {
     expect(document.querySelector('.error')).not.to.equal(null);
   });
 
-  it('should respects the componentsProps if passed', () => {
-    render(<FilledInput componentsProps={{ root: { 'data-test': 'test' } }} />);
+  it('should respect the slotProps if passed', () => {
+    render(<FilledInput slotProps={{ root: { 'data-test': 'test' } }} />);
     expect(document.querySelector('[data-test=test]')).not.to.equal(null);
   });
 
@@ -105,5 +102,50 @@ describe('<FilledInput />', () => {
     expect(root).to.have.class(classes.sizeSmall);
     expect(root).to.have.class(classes.adornedEnd);
     expect(root).to.have.class(classes.adornedStart);
+  });
+
+  it('should not forward the notched prop to the DOM', () => {
+    render(<FilledInput notched data-testid="root" />);
+    expect(screen.getByTestId('root')).not.to.have.attribute('notched');
+  });
+
+  describe('theme.focusVisible', () => {
+    const theme = createTheme({ focusVisible: true });
+
+    it.skipIf(isJsdom())('renders the ring on focus when the underline is disabled', async () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <FilledInput disableUnderline data-testid="root" />
+        </ThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({
+        outlineStyle: 'solid',
+        outlineWidth: '2px',
+        outlineOffset: '2px',
+      });
+    });
+
+    it.skipIf(isJsdom())('does not render the ring when the underline is shown', async () => {
+      render(
+        <ThemeProvider theme={theme}>
+          <FilledInput data-testid="root" />
+        </ThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+    });
   });
 });

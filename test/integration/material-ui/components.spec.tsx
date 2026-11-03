@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link as ReactRouterLink, LinkProps as ReactRouterLinkProps } from 'react-router';
+import type { LinkProps as ReactRouterLinkProps } from 'react-router';
+import { Link as ReactRouterLink } from 'react-router';
 import { expectType } from '@mui/types';
 import {
   AppBar,
@@ -34,7 +35,6 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
-  GridLegacy,
   ImageList,
   ImageListItem,
   Grow,
@@ -48,7 +48,6 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemIcon,
-  ListItemSecondaryAction,
   ListItemText,
   Menu,
   MenuItem,
@@ -76,8 +75,8 @@ import {
   ListItemButton,
 } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import { ButtonBaseActions } from '@mui/material/ButtonBase';
-import { IconButtonProps } from '@mui/material/IconButton';
+import type { ButtonBaseActions } from '@mui/material/ButtonBase';
+import type { IconButtonProps } from '@mui/material/IconButton';
 import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 
 const log = console.log;
@@ -96,7 +95,7 @@ function AppBarTest() {
         <IconButton color="inherit" aria-label="menu">
           <FakeIcon />
         </IconButton>
-        <Typography variant="h6" color="inherit">
+        <Typography variant="h6" sx={{ color: 'inherit' }}>
           Title
         </Typography>
         <Button color="inherit">Login</Button>
@@ -400,7 +399,6 @@ function DividerTest() {
   return (
     <div>
       <Divider />
-      <Divider light />
     </div>
   );
 }
@@ -530,25 +528,6 @@ function AccordionTest() {
   );
 }
 
-function GridLegacyTest() {
-  return (
-    <GridLegacy component={Paper} container>
-      <GridLegacy item xs={12}>
-        ...
-      </GridLegacy>
-      <GridLegacy item sm={12}>
-        ...
-      </GridLegacy>
-      <GridLegacy item xl>
-        ...
-      </GridLegacy>
-      <GridLegacy item style={{ color: 'red' }}>
-        ...
-      </GridLegacy>
-    </GridLegacy>
-  );
-}
-
 function GridTest() {
   return (
     <Grid component={Paper} container>
@@ -587,19 +566,22 @@ function ListTest() {
   return (
     <List>
       {[0, 1, 2, 3].map((value) => (
-        <ListItemButton dense selected={false} key={value} onClick={(event) => log(event)}>
-          <Checkbox checked tabIndex={-1} disableRipple />
-          <ListItemText primary={`Line item ${value + 1}`} />
-          <ListItemSecondaryAction>
+        <ListItem
+          dense
+          key={value}
+          secondaryAction={
             <IconButton aria-label="comments">
               <FakeIcon />
             </IconButton>
-          </ListItemSecondaryAction>
-        </ListItemButton>
+          }
+        >
+          <ListItemButton selected={false} onClick={(event) => log(event)}>
+            <Checkbox checked tabIndex={-1} disableRipple />
+            <ListItemText primary={`Line item ${value + 1}`} />
+          </ListItemButton>
+        </ListItem>
       ))}
-      <ListItem ContainerComponent="div" ContainerProps={{ className: 'demo' }}>
-        an item
-      </ListItem>
+      <ListItem>an item</ListItem>
     </List>
   );
 }
@@ -787,12 +769,11 @@ function SnackbarTest() {
         open
         autoHideDuration={6000}
         onClose={(event) => log(event)}
-        ContentProps={
-          {
-            // 'aria-describedby': 'message-id',
-            // ^ will work once https://github.com/DefinitelyTyped/DefinitelyTyped/pull/22582 is merged.
-          }
-        }
+        slotProps={{
+          content: {
+            'aria-describedby': 'message-id',
+          },
+        }}
         message={<span id="message-id">Note archived</span>}
         action={[
           <Button key="undo" color="secondary" size="small" onClick={(event) => log(event)}>
@@ -890,16 +871,23 @@ function TextFieldTest() {
         value="Alice"
         onChange={(event) => log({ name: event.currentTarget.value })}
       />
-      <TextField id="name" label="Name" value="Alice" InputProps={{ classes: { root: 'foo' } }} />
+      <TextField
+        id="name"
+        label="Name"
+        value="Alice"
+        slotProps={{ input: { classes: { root: 'foo' } } }}
+      />
       <TextField
         type="number"
-        inputProps={{
-          min: '0',
-          max: '10',
-          step: '1',
-          style: {
-            // just a long CSS property to test autocompletion
-            WebkitAnimationIterationCount: 0,
+        slotProps={{
+          htmlInput: {
+            min: '0',
+            max: '10',
+            step: '1',
+            style: {
+              // just a long CSS property to test autocompletion
+              WebkitAnimationIterationCount: 0,
+            },
           },
         }}
       />

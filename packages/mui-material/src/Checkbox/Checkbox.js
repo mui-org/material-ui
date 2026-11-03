@@ -3,6 +3,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
+import buttonBaseClasses from '../ButtonBase/buttonBaseClasses';
+import { outsetFocusRing } from '../styles/focusVisible';
 import SwitchBase from '../internal/SwitchBase';
 import CheckBoxOutlineBlankIcon from '../internal/svg-icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '../internal/svg-icons/CheckBox';
@@ -15,6 +17,8 @@ import memoTheme from '../utils/memoTheme';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import { mergeSlotProps } from '../utils';
+import useEnhancedEffect from '../utils/useEnhancedEffect';
+import useForkRef from '../utils/useForkRef';
 import useSlot from '../utils/useSlot';
 
 const useUtilityClasses = (ownerState) => {
@@ -54,6 +58,13 @@ const CheckboxRoot = styled(SwitchBase, {
 })(
   memoTheme(({ theme }) => ({
     color: (theme.vars || theme).palette.text.secondary,
+    ...(theme.focusVisible && {
+      [`&.${buttonBaseClasses.focusVisible} svg:first-of-type`]: {
+        ...outsetFocusRing,
+        borderRadius: (theme.vars || theme).shape.borderRadius,
+        ...theme.focusVisible,
+      },
+    }),
     variants: [
       {
         props: { color: 'default', disableRipple: false },
@@ -120,7 +131,6 @@ const Checkbox = React.forwardRef(function Checkbox(inProps, ref) {
     icon: iconProp = defaultIcon,
     indeterminate = false,
     indeterminateIcon: indeterminateIconProp = defaultIndeterminateIcon,
-    inputProps,
     size = 'medium',
     disableRipple = false,
     className,
@@ -142,7 +152,17 @@ const Checkbox = React.forwardRef(function Checkbox(inProps, ref) {
 
   const classes = useUtilityClasses(ownerState);
 
-  const externalInputProps = slotProps.input ?? inputProps;
+  const externalInputProps =
+    typeof slotProps.input === 'function' ? slotProps.input(ownerState) : slotProps.input;
+
+  const inputRef = React.useRef(null);
+  const handleInputRef = useForkRef(inputRef, externalInputProps?.ref);
+
+  useEnhancedEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.indeterminate = indeterminate;
+    }
+  });
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
     ref,
@@ -163,17 +183,21 @@ const Checkbox = React.forwardRef(function Checkbox(inProps, ref) {
       checkedIcon: React.cloneElement(indeterminateIcon, {
         fontSize: indeterminateIcon.props.fontSize ?? size,
       }),
-      disableRipple,
+      // Forward the raw prop so an unset value stays `undefined` and ButtonBase resolves its
+      // own default — letting a global `MuiButtonBase.defaultProps.disableRipple` apply here.
+      disableRipple: props.disableRipple,
       slots,
       slotProps: {
-        input: mergeSlotProps(
-          typeof externalInputProps === 'function'
-            ? externalInputProps(ownerState)
-            : externalInputProps,
-          {
+        input: {
+          ...mergeSlotProps(externalInputProps, {
             'data-indeterminate': indeterminate,
-          },
-        ),
+            // Activating a checkbox clears its native indeterminate state, restore it.
+            onChange: (event) => {
+              event.target.indeterminate = indeterminate;
+            },
+          }),
+          ref: handleInputRef,
+        },
       },
     },
   });
@@ -238,9 +262,8 @@ Checkbox.propTypes /* remove-proptypes */ = {
   id: PropTypes.string,
   /**
    * If `true`, the component appears indeterminate.
-   * This does not set the native input element to indeterminate due
-   * to inconsistent behavior across browsers.
-   * However, we set a `data-indeterminate` attribute on the `input`.
+   * This sets the native input element to indeterminate,
+   * and we also set a `data-indeterminate` attribute on the `input`.
    * @default false
    */
   indeterminate: PropTypes.bool,
@@ -249,11 +272,6 @@ Checkbox.propTypes /* remove-proptypes */ = {
    * @default <IndeterminateCheckBoxIcon />
    */
   indeterminateIcon: PropTypes.node,
-  /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes) applied to the `input` element.
-   * @deprecated Use `slotProps.input` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputProps: PropTypes.object,
   /**
    * Callback fired when the state is changed.
    *

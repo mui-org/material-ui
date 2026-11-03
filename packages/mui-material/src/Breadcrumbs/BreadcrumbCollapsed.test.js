@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { spy } from 'sinon';
-import { fireEvent, createRenderer } from '@mui/internal-test-utils';
+import { fireEvent, createRenderer, screen } from '@mui/internal-test-utils';
 import BreadcrumbCollapsed from './BreadcrumbCollapsed';
 
 describe('<BreadcrumbCollapsed />', () => {
@@ -14,16 +13,16 @@ describe('<BreadcrumbCollapsed />', () => {
   });
 
   it('renders a native <button>', () => {
-    const { getByRole } = render(<BreadcrumbCollapsed />);
+    render(<BreadcrumbCollapsed />);
 
-    expect(getByRole('button')).to.have.property('nodeName', 'BUTTON');
+    expect(screen.getByRole('button')).to.have.property('nodeName', 'BUTTON');
   });
 
   describe('prop: onClick', () => {
     it(`should be called when clicked`, () => {
       const handleClick = spy();
-      const { getByRole } = render(<BreadcrumbCollapsed onClick={handleClick} />);
-      const expand = getByRole('button');
+      render(<BreadcrumbCollapsed onClick={handleClick} />);
+      const expand = screen.getByRole('button');
 
       fireEvent.click(expand);
 

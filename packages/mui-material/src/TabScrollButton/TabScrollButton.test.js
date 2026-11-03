@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import TabScrollButton, { tabScrollButtonClasses as classes } from '@mui/material/TabScrollButton';
 import { createSvgIcon } from '@mui/material/utils';
 import describeConformance from '../../test/describeConformance';
@@ -22,7 +21,7 @@ describe('<TabScrollButton />', () => {
     muiName: 'MuiTabScrollButton',
     testVariantProps: { orientation: 'vertical' },
     refInstanceof: window.HTMLDivElement,
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   it('should render as a button with the root class', () => {
@@ -41,22 +40,20 @@ describe('<TabScrollButton />', () => {
 
   describe('prop: direction', () => {
     it('should render with the left icon', () => {
-      const { getAllByTestId } = render(
-        <TabScrollButton {...defaultProps} {...defaultProps} direction="left" disabled />,
-      );
-      expect(getAllByTestId('KeyboardArrowLeftIcon').length).to.equal(1);
+      render(<TabScrollButton {...defaultProps} {...defaultProps} direction="left" disabled />);
+
+      expect(screen.getAllByTestId('KeyboardArrowLeftIcon').length).to.equal(1);
     });
 
     it('should render with the right icon', () => {
-      const { getAllByTestId } = render(
-        <TabScrollButton {...defaultProps} {...defaultProps} direction="right" disabled />,
-      );
-      expect(getAllByTestId('KeyboardArrowRightIcon').length).to.equal(1);
+      render(<TabScrollButton {...defaultProps} {...defaultProps} direction="right" disabled />);
+
+      expect(screen.getAllByTestId('KeyboardArrowRightIcon').length).to.equal(1);
     });
   });
 
   it('should render with the custom start icon', () => {
-    const { getAllByTestId } = render(
+    render(
       <TabScrollButton
         {...defaultProps}
         direction="left"
@@ -67,11 +64,11 @@ describe('<TabScrollButton />', () => {
       />,
     );
 
-    expect(getAllByTestId('ArrowBackIcon')).to.have.lengthOf(1);
+    expect(screen.getAllByTestId('ArrowBackIcon')).to.have.lengthOf(1);
   });
 
   it('should render with the custom end icon', () => {
-    const { getAllByTestId } = render(
+    render(
       <TabScrollButton
         {...defaultProps}
         direction="right"
@@ -82,6 +79,6 @@ describe('<TabScrollButton />', () => {
       />,
     );
 
-    expect(getAllByTestId('ArrowForwardIcon')).to.have.lengthOf(1);
+    expect(screen.getAllByTestId('ArrowForwardIcon')).to.have.lengthOf(1);
   });
 });

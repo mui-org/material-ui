@@ -1,6 +1,6 @@
 # Docs
 
-This is the website of the company (MUI), the documentation of Material UI, MUI Base, MUI System, and Joy UI.
+This is the website of the company MUI and the documentation for Material UI.
 
 To start the docs site in development mode, from the project root, run:
 
@@ -14,7 +14,7 @@ Package managers other than pnpm (like npm or Yarn) are not supported and will n
 
 ## How can I add a new demo to the documentation?
 
-[You can follow this guide](https://github.com/mui/material-ui/blob/HEAD/CONTRIBUTING.md)
+[You can follow this guide](../CONTRIBUTING.md)
 on how to get started contributing to MUI.
 
 ## How do I help to improve the translations?

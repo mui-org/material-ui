@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, beforeEach, it, expect } from 'vitest';
 import PropTypes from 'prop-types';
 import exactProp from './exactProp';
 

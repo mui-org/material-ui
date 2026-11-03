@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Typography from '@material-ui/core/Typography';
+import { styled } from '@mui/material/styles';
 import Container from 'modules/components/Container';
 import Button from 'modules/components/Button';
 import Link from 'modules/components/Link';
@@ -39,7 +38,7 @@ const Root = styled('div')((
     flexDirection: 'column',
     position: 'relative',
     alignItems: 'center',
-    // Fix IE11 issue
+    // Fix IE 11 issue
     marginRight: 0,
     marginLeft: 0,
     padding: `0 ${theme.spacing(2)}`,
@@ -63,7 +62,7 @@ function AffiliatesHero() {
 
 
   return (
-    (<Root className={classes.root}>
+    <Root className={classes.root}>
       <Container className={classes.container}>
         <Typography variant="h1" align="center" color="textPrimary" className={classes.title}>
           Affiliate Program
@@ -85,7 +84,7 @@ function AffiliatesHero() {
           </Button>
         </div>
       </Container>
-    </Root>)
+    </Root>
   );
 }
 

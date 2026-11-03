@@ -1,4 +1,0 @@
-<FacebookCircularProgress />
-<GradientCircularProgress />
-<br />
-<BorderLinearProgress variant="determinate" value={50} />

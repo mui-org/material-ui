@@ -43,11 +43,13 @@ export default function InfoMobile({ totalPrice }: InfoProps) {
         open={open}
         anchor="top"
         onClose={toggleDrawer(false)}
-        PaperProps={{
-          sx: {
-            top: 'var(--template-frame-height, 0px)',
-            backgroundImage: 'none',
-            backgroundColor: 'background.paper',
+        slotProps={{
+          paper: {
+            sx: {
+              top: 'var(--template-frame-height, 0px)',
+              backgroundImage: 'none',
+              backgroundColor: 'background.paper',
+            },
           },
         }}
       >

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
-import Paper, { PaperProps } from '@mui/material/Paper';
+import type { PaperProps } from '@mui/material/Paper';
+import Paper from '@mui/material/Paper';
 
 const CustomComponent: React.FC<{ stringProp: string; numberProp: number }> =
   function CustomComponent() {
@@ -10,13 +11,13 @@ const CustomComponent: React.FC<{ stringProp: string; numberProp: number }> =
 const props1: PaperProps<'div'> = {
   component: 'div',
   onChange: (event) => {
-    expectType<React.FormEvent<HTMLDivElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLDivElement>, typeof event>(event);
   },
 };
 
 const props2: PaperProps = {
   onChange: (event) => {
-    expectType<React.FormEvent<HTMLDivElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLDivElement>, typeof event>(event);
   },
 };
 

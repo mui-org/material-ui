@@ -9,6 +9,10 @@ import usePagination from '../usePagination';
 import PaginationItem from '../PaginationItem';
 import { styled } from '../zero-styled';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import { useForkRef } from '../utils';
+import getActiveElement from '../utils/getActiveElement';
+import ownerDocument from '../utils/ownerDocument';
+import useEnhancedEffect from '../utils/useEnhancedEffect';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, variant } = ownerState;
@@ -97,12 +101,64 @@ const Pagination = React.forwardRef(function Pagination(inProps, ref) {
 
   const classes = useUtilityClasses(ownerState);
 
+  const paginationRef = React.useRef(null);
+  const pendingFocusRef = React.useRef(null);
+  const handleRef = useForkRef(ref, paginationRef);
+
+  const selectedPage = items.find((item) => item.selected)?.page;
+
+  const handleItemClick = React.useCallback(
+    (item, event) => {
+      pendingFocusRef.current = null;
+
+      const willBecomeDisabled =
+        ((item.type === 'first' || item.type === 'previous') && item.page === 1) ||
+        ((item.type === 'next' || item.type === 'last') && item.page === count);
+
+      if (
+        willBecomeDisabled &&
+        getActiveElement(ownerDocument(event.currentTarget)) === event.currentTarget
+      ) {
+        pendingFocusRef.current = {
+          page: item.page,
+          trigger: event.currentTarget,
+        };
+      }
+
+      item.onClick(event);
+    },
+    [count],
+  );
+
+  useEnhancedEffect(() => {
+    const pending = pendingFocusRef.current;
+
+    if (!pending || pending.page !== selectedPage) {
+      return;
+    }
+
+    const document = ownerDocument(paginationRef.current);
+    const activeElement = getActiveElement(document);
+
+    // if focus was lost to the body or to the disabled button, restore it to the selected page
+    if (
+      activeElement === document.body ||
+      activeElement === document.documentElement ||
+      activeElement === pending.trigger ||
+      activeElement == null
+    ) {
+      paginationRef.current.querySelector('[aria-current="page"]')?.focus();
+    }
+
+    pendingFocusRef.current = null;
+  }, [selectedPage]);
+
   return (
     <PaginationRoot
       aria-label="pagination navigation"
       className={clsx(classes.root, className)}
       ownerState={ownerState}
-      ref={ref}
+      ref={handleRef}
       {...other}
     >
       <PaginationUl className={classes.ul} ownerState={ownerState}>
@@ -115,6 +171,7 @@ const Pagination = React.forwardRef(function Pagination(inProps, ref) {
               shape,
               size,
               variant,
+              onClick: (event) => handleItemClick(item, event),
             })}
           </li>
         ))}

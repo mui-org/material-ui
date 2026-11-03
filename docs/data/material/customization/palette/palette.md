@@ -41,7 +41,7 @@ See Material Design's [Color System](https://m2.material.io/design/color/the-col
 
 You can explore the default palette values using [the theme explorer](/material-ui/customization/default-theme/?expand-path=$.palette), or by opening the dev tools console on this page (`window.theme.palette`).
 
-{{"demo": "Intentions.js", "bg": "inline", "hideToolbar": true}}
+{{"component": "file://./demos/intentions/index.ts", "bg": "inline", "hideToolbar": true}}
 
 The default palette uses the shades prefixed with `A` (`A200`, etc.) for the secondary palette color,
 and the un-prefixed shades for the other palette colors.
@@ -66,7 +66,7 @@ This can be achieved by either using a color object or by providing the colors d
 
 The most direct way to customize a palette color is to import and apply one or more [color objects](/material-ui/customization/color/#2014-material-design-color-palettes), as shown below:
 
-{{"demo": "UsingColorObject.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/using-color-object/index.ts", "initialExpanded": true}}
 
 #### Providing the colors directly
 
@@ -94,7 +94,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "ManuallyProvidePaletteColor.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/manually-provide-color/index.ts", "collapseToEmpty": true}}
 
 ### Contrast threshold
 
@@ -103,7 +103,7 @@ The `contrastText` token is calculated using the `contrastThreshold` value, to m
 A higher contrast threshold value increases the point at which a background color is considered light, and thus given a dark `contrastText`.
 Note that the contrast threshold follows a non-linear curve, and defaults to a value of 3 which indicates a minimum contrast ratio of 3:1.
 
-{{"demo": "ContrastThreshold.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/contrast-threshold/index.ts", "collapseToEmpty": true}}
 
 ### Tonal offset
 
@@ -111,14 +111,14 @@ The `light` and `dark` tokens are calculated using the `tonalOffset` value, to s
 A higher tonal offset value will make `light` tokens lighter, and `dark` tokens darker.
 
 :::warning
-This only applies when working with custom colors—it won't have any effect on the [default values](#default-values).
+This only applies when working with custom colors—it won't have any effect on the [default values](#default-colors).
 :::
 
 For example, the tonal offset default value `0.2` shifts the luminance by approximately two indexes, so if the `main` token is `blue[500]`, then the `light` token would be `blue[300]` and `dark` would be `blue[700]`.
 
 The tonal offset value can be either a number between 0 and 1 (which would apply to both `light` and `dark` tokens) or an object with `light` and `dark` keys specified:
 
-{{"demo": "TonalOffset.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/tonal-offset/index.ts", "collapseToEmpty": true}}
 
 ## Custom colors
 
@@ -147,7 +147,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "ManuallyProvideCustomColor.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/manually-provide-custom-color/index.ts", "collapseToEmpty": true}}
 
 :::info
 The supported color formats are `hex`, `rgb`, and `hsl`.
@@ -177,7 +177,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "UsingStylesUtils.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/using-styles-utils/index.ts", "collapseToEmpty": true}}
 
 ### Generate tokens using augmentColor utility
 
@@ -205,7 +205,7 @@ theme = createTheme(theme, {
 });
 ```
 
-{{"demo": "UsingAugmentColor.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/using-augment-color/index.ts", "collapseToEmpty": true}}
 
 The [contrast threshold](#contrast-threshold) and [tonal offset](#tonal-offset) values will apply for the colors defined using this utility.
 
@@ -270,7 +270,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "AddingColorTokens.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/adding-color-tokens/index.ts", "collapseToEmpty": true}}
 
 ### TypeScript
 
@@ -296,7 +296,7 @@ To learn how to add colors outside of `theme.palette`, see [Theming—Custom var
 
 ## Accessibility
 
-To meet the minimum contrast of at least 4.5:1 as defined in [WCAG 2.1 Rule 1.4.3](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html), create a custom theme with a [contrast threshold](#contrast-threshold) value of 4.5 as follows:
+To meet the minimum contrast of at least 4.5:1 as defined in [WCAG 2.2 Success Criterion 1.4.3](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), create a custom theme with a [contrast threshold](#contrast-threshold) value of 4.5 as follows:
 
 ```js
 import { createTheme } from '@mui/material/styles';
@@ -312,6 +312,35 @@ const theme = createTheme({
 The `contrastThreshold` parameter can produce counterproductive results.\
 Please verify that the [APCA](https://contrast.tools/?tab=apca) color contrast is improved (WCAG 3 [will use](https://typefully.com/DanHollick/wcag-3-and-apca-sle13GMW2Brp) this new algorithm).
 :::
+
+### Windows High Contrast mode
+
+To improve component visibility in Windows High Contrast mode (also known as [Forced Colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors)), use the `enhanceHighContrast` theme enhancer, starting from v9.1.0.
+It accepts a fully-created theme and returns an enhanced version of it with `@media (forced-colors: active)` overrides applied to the affected components.
+
+```js
+import { createTheme, enhanceHighContrast } from '@mui/material/styles';
+
+const theme = enhanceHighContrast(createTheme());
+```
+
+By default, it uses the [CSS system color keywords](https://www.w3.org/TR/css-color-4/#css-system-colors) (`Highlight`, `HighlightText`, `ButtonBorder`, etc.).
+You can override individual tokens with other [system colors](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/system-color) to match your brand or design requirements.
+When overriding paired tokens, choose values that the browser guarantees to contrast with each other — for example `SelectedItem` is always paired with `SelectedItemText`, and `Highlight` with `HighlightText`:
+
+```js
+import { createTheme, enhanceHighContrast } from '@mui/material/styles';
+
+const theme = enhanceHighContrast(createTheme(), {
+  // Use the system's selection colors for active or toggled controls.
+  activeBackground: 'SelectedItem',
+  activeText: 'SelectedItemText',
+});
+```
+
+The following tokens are available, showing how your browser resolves each system color keyword in the current environment:
+
+{{"component": "file://./demos/high-contrast-tokens/index.ts", "bg": "inline", "hideToolbar": true}}
 
 ## Picking colors
 

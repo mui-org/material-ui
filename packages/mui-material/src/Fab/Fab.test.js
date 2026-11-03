@@ -1,9 +1,16 @@
+import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import {
+  createRenderer,
+  screen,
+  isJsdom,
+  focusVisible,
+  simulatePointerDevice,
+} from '@mui/internal-test-utils';
 import Fab, { fabClasses as classes } from '@mui/material/Fab';
 import ButtonBase, { touchRippleClasses } from '@mui/material/ButtonBase';
 import Icon from '@mui/material/Icon';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 import * as ripple from '../../test/ripple';
 
@@ -18,12 +25,11 @@ describe('<Fab />', () => {
     testVariantProps: { variant: 'extended' },
     testStateOverrides: { prop: 'size', value: 'small', styleKey: 'sizeSmall' },
     refInstanceof: window.HTMLButtonElement,
-    skip: ['componentsProp'],
   }));
 
   it('should render with the root class but no others', () => {
-    const { getByRole } = render(<Fab>Fab</Fab>);
-    const button = getByRole('button');
+    render(<Fab>Fab</Fab>);
+    const button = screen.getByRole('button');
 
     expect(button).to.have.class(classes.root);
     expect(button).not.to.have.class(classes.primary);
@@ -38,16 +44,16 @@ describe('<Fab />', () => {
   });
 
   it('should render an extended floating action button', () => {
-    const { getByRole } = render(<Fab variant="extended">Fab</Fab>);
-    const button = getByRole('button');
+    render(<Fab variant="extended">Fab</Fab>);
+    const button = screen.getByRole('button');
 
     expect(button).to.have.class(classes.root);
     expect(button).to.have.class(classes.extended);
   });
 
   it('should render a primary floating action button', () => {
-    const { getByRole } = render(<Fab color="primary">Fab</Fab>);
-    const button = getByRole('button');
+    render(<Fab color="primary">Fab</Fab>);
+    const button = screen.getByRole('button');
 
     expect(button).to.have.class(classes.root);
     expect(button).to.have.class(classes.primary);
@@ -55,8 +61,8 @@ describe('<Fab />', () => {
   });
 
   it('should render a secondary floating action button', () => {
-    const { getByRole } = render(<Fab color="secondary">Fab</Fab>);
-    const button = getByRole('button');
+    render(<Fab color="secondary">Fab</Fab>);
+    const button = screen.getByRole('button');
 
     expect(button).to.have.class(classes.root);
     expect(button).not.to.have.class(classes.primary);
@@ -64,8 +70,8 @@ describe('<Fab />', () => {
   });
   ['info', 'error', 'warning', 'success'].forEach((color) => {
     it(`should render a ${color} floating action button`, () => {
-      const { getByRole } = render(<Fab color={color}>Fab</Fab>);
-      const button = getByRole('button');
+      render(<Fab color={color}>Fab</Fab>);
+      const button = screen.getByRole('button');
 
       expect(button).to.have.class(classes.root);
       expect(button).not.to.have.class(classes.primary);
@@ -74,8 +80,8 @@ describe('<Fab />', () => {
   });
 
   it('should render a small floating action button', () => {
-    const { getByRole } = render(<Fab size="small">Fab</Fab>);
-    const button = getByRole('button');
+    render(<Fab size="small">Fab</Fab>);
+    const button = screen.getByRole('button');
 
     expect(button).to.have.class(classes.root);
     expect(button).to.have.class(classes.sizeSmall);
@@ -83,8 +89,8 @@ describe('<Fab />', () => {
   });
 
   it('should render a medium floating action button', () => {
-    const { getByRole } = render(<Fab size="medium">Fab</Fab>);
-    const button = getByRole('button');
+    render(<Fab size="medium">Fab</Fab>);
+    const button = screen.getByRole('button');
 
     expect(button).to.have.class(classes.root);
     expect(button).not.to.have.class(classes.sizeSmall);
@@ -92,24 +98,20 @@ describe('<Fab />', () => {
   });
 
   it('should have a ripple', async () => {
-    const { container, getByRole } = render(<Fab>Fab</Fab>);
-    await ripple.startTouch(getByRole('button'));
+    const { container } = render(<Fab>Fab</Fab>);
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector(`.${touchRippleClasses.root}`)).not.to.equal(null);
   });
 
   it('should pass disableRipple to ButtonBase', async () => {
-    const { container, getByRole } = render(<Fab disableRipple>Fab</Fab>);
-    await ripple.startTouch(getByRole('button'));
+    const { container } = render(<Fab disableRipple>Fab</Fab>);
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector(`.${touchRippleClasses.root}`)).to.equal(null);
   });
 
-  it('should have a focusRipple', async function test() {
-    if (/jsdom/.test(window.navigator.userAgent)) {
-      // JSDOM doesn't support :focus-visible
-      this.skip();
-    }
-
-    const { getByRole } = render(
+  // JSDOM doesn't support :focus-visible
+  it.skipIf(isJsdom())('should have a focusRipple', async function test() {
+    render(
       <Fab
         TouchRippleProps={{
           classes: { ripplePulsate: 'pulsate-focus-visible' },
@@ -118,7 +120,8 @@ describe('<Fab />', () => {
         Fab
       </Fab>,
     );
-    const button = getByRole('button');
+
+    const button = screen.getByRole('button');
 
     await ripple.startFocus(button);
 
@@ -126,7 +129,7 @@ describe('<Fab />', () => {
   });
 
   it('should pass disableFocusRipple to ButtonBase', async () => {
-    const { getByRole } = render(
+    render(
       <Fab
         TouchRippleProps={{
           classes: { ripplePulsate: 'pulsate-focus-visible' },
@@ -136,7 +139,8 @@ describe('<Fab />', () => {
         Fab
       </Fab>,
     );
-    const button = getByRole('button');
+
+    const button = screen.getByRole('button');
 
     await ripple.startFocus(button);
 
@@ -150,27 +154,99 @@ describe('<Fab />', () => {
     expect(container.querySelector('button')).to.have.class(disabledClassName);
   });
 
+  it('does not pass classes.root to ButtonBase classes', () => {
+    render(<Fab classes={{ root: 'my-root-class' }}>Fab</Fab>);
+    const button = screen.getByRole('button');
+    const classList = button.className.split(' ');
+    expect(classList.filter((c) => c === 'my-root-class')).to.have.length(1);
+  });
+
   it('should render Icon children with right classes', () => {
     const childClassName = 'child-woof';
     const iconChild = <Icon data-testid="icon" className={childClassName} />;
-    const { getByTestId } = render(<Fab>{iconChild}</Fab>);
-    const renderedIconChild = getByTestId('icon');
+    render(<Fab>{iconChild}</Fab>);
+    const renderedIconChild = screen.getByTestId('icon');
 
     expect(renderedIconChild).not.to.equal(null);
     expect(renderedIconChild).to.have.class(childClassName);
   });
 
-  describe('server-side', () => {
-    before(function beforeHook() {
-      // Only run the test on node.
-      if (!/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-    });
+  describe('prop: nativeButton', () => {
+    it('forwards nativeButton={false} to ButtonBase with a custom component', () => {
+      const CustomSpan = React.forwardRef((props, ref) => <span ref={ref} {...props} />);
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
+      render(
+        <Fab component={CustomSpan} nativeButton={false}>
+          Fab
+        </Fab>,
+      );
+
+      const fab = screen.getByRole('button');
+      expect(fab).to.have.tagName('SPAN');
+      expect(fab).not.to.have.attribute('type');
+
+      // Proves nativeButton={false} was forwarded — without it, ButtonBase
+      // would warn about a non-button host with nativeButton omitted.
+      expect(errorSpy.mock.calls.length).to.equal(0);
+      errorSpy.mockRestore();
+    });
+  });
+
+  describe.skipIf(!isJsdom())('server-side', () => {
     it('should server-side render', () => {
       const { container } = renderToString(<Fab>Fab</Fab>);
       expect(container.firstChild).to.have.text('Fab');
+    });
+  });
+
+  describe('theme.focusVisible', () => {
+    // The effective box-shadow is the last matching rule in source order (equal specificity here).
+    // Read it from the CSSOM rather than getComputedStyle, which returns a mid-transition value.
+    function effectiveBoxShadow(el) {
+      let shadow = '';
+      for (const sheet of Array.from(document.styleSheets)) {
+        let rules;
+        try {
+          rules = sheet.cssRules;
+        } catch {
+          continue;
+        }
+        for (const rule of Array.from(rules)) {
+          if (!rule.style || !rule.style.boxShadow || !rule.selectorText) {
+            continue;
+          }
+          const matches = rule.selectorText.split(',').some((selector) => {
+            try {
+              return el.matches(selector.trim());
+            } catch {
+              return false;
+            }
+          });
+          if (matches) {
+            shadow = rule.style.boxShadow;
+          }
+        }
+      }
+      return shadow;
+    }
+
+    it.skipIf(isJsdom())('a user box-shadow wins over the focus elevation', () => {
+      render(
+        <ThemeProvider
+          theme={createTheme({
+            focusVisible: { boxShadow: '0 0 0 4px rgb(255, 0, 0)' },
+            components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
+          })}
+        >
+          <Fab>Fab</Fab>
+        </ThemeProvider>,
+      );
+      const fab = screen.getByRole('button');
+      simulatePointerDevice();
+      focusVisible(fab);
+      expect(fab).to.have.class(classes.focusVisible);
+      expect(effectiveBoxShadow(fab)).to.contain('rgb(255, 0, 0)');
     });
   });
 });

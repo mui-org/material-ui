@@ -2,17 +2,6 @@ import { dirname } from 'path';
 import addImports from 'jscodeshift-add-imports';
 import getJSExports from '../util/getJSExports';
 
-// istanbul ignore next
-if (process.env.NODE_ENV === 'test') {
-  const resolve = require.resolve;
-  require.resolve = (source) =>
-    resolve(
-      source
-        .replace(/^@material-ui\/core\/es/, '../../../mui-material/src')
-        .replace(/^@material-ui\/core\/modern/, '../../../mui-material/src'),
-    );
-}
-
 export default function transformer(fileInfo, api, options) {
   const j = api.jscodeshift;
   const importModule = options.importModule || '@material-ui/core';

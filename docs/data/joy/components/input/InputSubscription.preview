@@ -1,8 +1,0 @@
-<Input
-  placeholder="mail@mui.com"
-  endDecorator={
-    <Button variant="solid" color="primary" sx={{ ml: 1 }}>
-      Subscribe
-    </Button>
-  }
-/>

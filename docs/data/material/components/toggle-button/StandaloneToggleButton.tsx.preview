@@ -1,7 +1,0 @@
-<ToggleButton
-  value="check"
-  selected={selected}
-  onChange={() => setSelected((prevSelected) => !prevSelected)}
->
-  <CheckIcon />
-</ToggleButton>

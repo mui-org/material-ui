@@ -1,0 +1,48 @@
+[
+  {
+    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, with untested contrast",
+    "criteria": ["1.4.11"],
+    "affected": ["AccordionSummary", "Button", "Checkbox", "Radio", "Switch", "ToggleButton"],
+    "workaround": "Enable `focusVisible` in your theme — see below"
+  },
+  {
+    "gap": "Some default palette colors fall short of contrast minimums",
+    "criteria": ["1.4.3", "1.4.11"],
+    "affected": [
+      "Avatar",
+      "Button",
+      { "component": "CircularProgress", "note": "`warning` with `enableTrackSlot`" },
+      "LinearProgress",
+      "Switch",
+      "TextField",
+      "ToggleButton"
+    ],
+    "workaround": "Override the affected palette entries"
+  },
+  {
+    "gap": "The selected state of colored Toggle Buttons is conveyed almost entirely by hue",
+    "criteria": ["1.4.1"],
+    "affected": [{ "component": "ToggleButton", "note": "`primary`, `error`, `info`, `success`" }],
+    "workaround": "Add a non-color cue to the selected state, such as an icon"
+  },
+  {
+    "gap": "Dynamic state changes are not announced",
+    "criteria": ["4.1.3"],
+    "affected": [
+      { "component": "Button", "note": "`loading`" },
+      "CircularProgress",
+      "LinearProgress",
+      { "component": "TextField", "note": "error" }
+    ],
+    "workaround": "Render your own `aria-live` region alongside"
+  },
+  {
+    "gap": "Indefinite animation cannot be paused",
+    "criteria": ["2.2.2"],
+    "affected": [
+      { "component": "CircularProgress", "note": "`indeterminate`" },
+      { "component": "LinearProgress", "note": "`indeterminate`, `query`, `buffer`" }
+    ],
+    "workaround": "Show it only while an operation is in flight"
+  }
+]

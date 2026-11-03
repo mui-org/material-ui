@@ -18,8 +18,8 @@ import useNotifications from '../hooks/useNotifications/useNotifications';
 import {
   deleteOne as deleteEmployee,
   getOne as getEmployee,
-  type Employee,
 } from '../data/employees';
+import type { Employee } from '../data/employees';
 import PageContainer from './PageContainer';
 
 export default function EmployeeShow() {
@@ -169,7 +169,7 @@ export default function EmployeeShow() {
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
-        <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Button
             variant="contained"
             startIcon={<ArrowBackIcon />}

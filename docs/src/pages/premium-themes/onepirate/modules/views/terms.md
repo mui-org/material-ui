@@ -1,9 +1,6 @@
-<!-- markdownlint-capture -->
-<!-- markdownlint-disable -->
+<!-- lint disable mui-first-block-heading -->
 
 Last modified: October 7th, 2018.
-
-<!-- markdownlint-restore -->
 
 ## 1. Services
 
@@ -19,7 +16,7 @@ Last modified: October 7th, 2018.
 
 ## 2. Privacy
 
-Please see MUI' privacy policy at www.mui.com/privacy for information about how we collect, use, and disclose information about users of the Site and the Services. By using the Site and the Services, you consent to our collection, use, and disclosure of information as set forth in our privacy policy, as we may update that policy from time to time.
+Please see MUI' privacy policy at [www.mui.com/legal/privacy](https://mui.com/legal/privacy/) for information about how we collect, use, and disclose information about users of the Site and the Services. By using the Site and the Services, you consent to our collection, use, and disclosure of information as set forth in our privacy policy, as we may update that policy from time to time.
 
 ## 3. Registration
 

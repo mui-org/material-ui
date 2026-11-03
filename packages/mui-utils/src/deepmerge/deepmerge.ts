@@ -18,7 +18,7 @@ export function isPlainObject(item: unknown): item is Record<keyof any, unknown>
 }
 
 export interface DeepmergeOptions {
-  clone?: boolean;
+  clone?: boolean | undefined;
 }
 
 function deepClone<T>(source: T): T | Record<keyof any, unknown> {

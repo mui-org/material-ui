@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 export interface FocusTrapProps {
   /**
@@ -10,7 +10,7 @@ export interface FocusTrapProps {
    * For instance, you can provide the "tabbable" npm dependency.
    * @param {HTMLElement} root
    */
-  getTabbable?: (root: HTMLElement) => ReadonlyArray<HTMLElement>;
+  getTabbable?: ((root: HTMLElement) => ReadonlyArray<HTMLElement>) | undefined;
   /**
    * This prop extends the `open` prop.
    * It allows to toggle the open state without having to wait for a rerender when changing the `open` prop.
@@ -20,13 +20,13 @@ export interface FocusTrapProps {
    *   return true;
    * }
    */
-  isEnabled?: () => boolean;
+  isEnabled?: (() => boolean) | undefined;
   /**
    * A single child content element.
    */
   children: React.ReactElement<{
-    onFocus?: React.FocusEventHandler;
-    ref?: React.RefCallback<any> | null;
+    onFocus?: React.FocusEventHandler | undefined;
+    ref?: React.RefCallback<any> | null | undefined;
   }>;
   /**
    * If `true`, the focus trap will not automatically shift focus to itself when it opens, and
@@ -37,7 +37,7 @@ export interface FocusTrapProps {
    * accessible to assistive technologies, like screen readers.
    * @default false
    */
-  disableAutoFocus?: boolean;
+  disableAutoFocus?: boolean | undefined;
   /**
    * If `true`, the focus trap will not prevent focus from leaving the focus trap while open.
    *
@@ -45,11 +45,11 @@ export interface FocusTrapProps {
    * accessible to assistive technologies, like screen readers.
    * @default false
    */
-  disableEnforceFocus?: boolean;
+  disableEnforceFocus?: boolean | undefined;
   /**
    * If `true`, the focus trap will not restore focus to previously focused element once
    * focus trap is hidden or unmounted.
    * @default false
    */
-  disableRestoreFocus?: boolean;
+  disableRestoreFocus?: boolean | undefined;
 }

@@ -6,14 +6,8 @@
     "aria-modal": {
       "description": "Informs assistive technologies that the element is modal. It&#39;s added on the element with role=&quot;dialog&quot;."
     },
-    "BackdropComponent": {
-      "description": "A backdrop component. This prop enables custom backdrop rendering."
-    },
     "children": { "description": "Dialog children, usually the included sub-components." },
     "classes": { "description": "Override or extend the styles applied to the component." },
-    "disableEscapeKeyDown": {
-      "description": "If <code>true</code>, hitting escape will not fire the <code>onClose</code> callback."
-    },
     "fullScreen": { "description": "If <code>true</code>, the dialog is full-screen." },
     "fullWidth": {
       "description": "If <code>true</code>, the dialog stretches to <code>maxWidth</code>.<br>Notice that the dialog width grow is limited by the default margin."
@@ -33,8 +27,8 @@
     },
     "open": { "description": "If <code>true</code>, the component is shown." },
     "PaperComponent": { "description": "The component used to render the body of the dialog." },
-    "PaperProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/paper/\"><code>Paper</code></a> element."
+    "role": {
+      "description": "The ARIA role for the dialog element. The main dialog role is <code>dialog</code>, but <code>alertdialog</code> can be used if the content of the dialog requires immediate attention. See <a href=\"https://www.w3.org/TR/wai-aria-1.2/#dialog\">https://www.w3.org/TR/wai-aria-1.2/#dialog</a> and <a href=\"https://www.w3.org/TR/wai-aria-1.2/#alertdialog\">https://www.w3.org/TR/wai-aria-1.2/#alertdialog</a> for more details."
     },
     "scroll": { "description": "Determine the container for scrolling the dialog." },
     "slotProps": { "description": "The props used for each slot inside." },
@@ -42,14 +36,8 @@
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },
-    "TransitionComponent": {
-      "description": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
-    },
     "transitionDuration": {
       "description": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object."
-    },
-    "TransitionProps": {
-      "description": "Props applied to the transition element. By default, the element is based on this <a href=\"https://reactcommunity.org/react-transition-group/transition/\"><code>Transition</code></a> component."
     }
   },
   "classDescriptions": {
@@ -62,18 +50,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the Paper component",
       "conditions": "<code>fullWidth={true}</code>"
-    },
-    "paperScrollBody": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>scroll=\"body\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/dialog/#dialog-classes-paper\">.MuiDialog-paper</a> and <a href=\"/material-ui/api/dialog/#dialog-classes-scrollBody\">.MuiDialog-scrollBody</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "paperScrollPaper": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>scroll=\"paper\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/dialog/#dialog-classes-paper\">.MuiDialog-paper</a> and <a href=\"/material-ui/api/dialog/#dialog-classes-scrollPaper\">.MuiDialog-scrollPaper</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "paperWidthFalse": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -121,6 +97,6 @@
     "container": "The component that renders the container.",
     "paper": "The component that renders the paper.",
     "root": "The component that renders the root.",
-    "transition": "The component that renders the transition. <a href=\"/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
+    "transition": "The component that renders the transition. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
 }

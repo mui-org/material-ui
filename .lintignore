@@ -30,6 +30,8 @@ dist
 node_modules
 .nyc_output
 pnpm-lock.yaml
+.claude/worktrees
+.nx
 
 # These come from crowdin.
 # If we would commit changes crowdin would immediately try to revert.
@@ -37,3 +39,8 @@ pnpm-lock.yaml
 docs/**/*-pt.md
 docs/**/*-zh.md
 __fixtures__
+
+# TODO: fix lint violations and remove these ignores
+/CHANGELOG.md
+/CHANGELOG.old.md
+/packages-internal/scripts/typescript-to-proptypes/CHANGELOG.old.md

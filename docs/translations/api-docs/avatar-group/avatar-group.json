@@ -6,9 +6,6 @@
     "component": {
       "description": "The component used for the root node. Either a string to use a HTML element or a component."
     },
-    "componentsProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones.<br>This prop is an alias for the <code>slotProps</code> prop."
-    },
     "max": { "description": "Max avatars to show before +x." },
     "renderSurplus": {
       "description": "custom renderer of extraAvatars",

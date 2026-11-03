@@ -23,7 +23,7 @@ function acceptingRef(
     // When server-side rendering React doesn't warn either.
     // This is not an accurate check for SSR.
     // This is only in place for Emotion compat.
-    // TODO: Revisit once https://github.com/facebook/react/issues/20047 is resolved.
+    // TODO: Revisit once https://github.com/react/react/issues/20047 is resolved.
     typeof window === 'undefined'
   ) {
     return null;

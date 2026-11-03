@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './emotion-prepend-cache';
 import readFile from '../util/readFile';
@@ -57,9 +57,7 @@ describe('@mui/codemod', () => {
         const actual = transform(
           {
             source: read('./emotion-prepend-cache.test/replace-existing-prepend.actual.js'),
-            path: require.resolve(
-              './emotion-prepend-cache.test/replace-existing-prepend.actual.js',
-            ),
+            path: require.resolve('./emotion-prepend-cache.test/replace-existing-prepend.actual.js'),
           },
           { jscodeshift },
           {},

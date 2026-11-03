@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Box, styled } from '@mui/system';
 
 interface TestProps {
@@ -50,7 +49,7 @@ function ThemeCallbackTest() {
   <Box sx={{ background: (theme) => theme.palette.primary.main }} />;
   <Box sx={{ '&:hover': (theme) => ({ background: theme.palette.primary.main }) }} />;
   <Box sx={{ '& .some-class': (theme) => ({ background: theme.palette.primary.main }) }} />;
-  <Box maxWidth={(theme) => theme.breakpoints.values.sm} />;
+  <Box sx={{ maxWidth: (theme) => theme.breakpoints.values.sm }} />;
 }
 
 function CssVariablesWithNestedSelectors() {
@@ -105,7 +104,7 @@ function TestFillPropCallback() {
   />;
 }
 
-// eslint-disable-next-line material-ui/no-styled-box
+// eslint-disable-next-line mui/material-ui-no-styled-box
 const StyledBox = styled(Box)`
   color: white;
 ` as typeof Box;
@@ -119,5 +118,5 @@ function StyledBoxWithSx() {
 }
 
 function LogicalPropertiesTest() {
-  <Box marginInline={1} paddingBlockEnd="10px" />;
+  <Box sx={{ marginInline: 1, paddingBlockEnd: '10px' }} />;
 }

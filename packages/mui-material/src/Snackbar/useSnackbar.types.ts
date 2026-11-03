@@ -8,12 +8,12 @@ export interface UseSnackbarParameters {
    * the `null` value.
    * @default null
    */
-  autoHideDuration?: number | null;
+  autoHideDuration?: number | null | undefined;
   /**
    * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
    * @default false
    */
-  disableWindowBlurListener?: boolean;
+  disableWindowBlurListener?: boolean | undefined;
   /**
    * Callback fired when the component requests to be closed.
    * Typically `onClose` is used to set state in the parent component,
@@ -24,18 +24,20 @@ export interface UseSnackbarParameters {
    * @param {React.SyntheticEvent<any> | Event} event The event source of the callback.
    * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`, or `"escapeKeyDown"`.
    */
-  onClose?: (event: React.SyntheticEvent<any> | Event | null, reason: SnackbarCloseReason) => void;
+  onClose?:
+    | ((event: React.SyntheticEvent<any> | Event | null, reason: SnackbarCloseReason) => void)
+    | undefined;
   /**
    * If `true`, the component is shown.
    */
-  open?: boolean;
+  open?: boolean | undefined;
   /**
    * The number of milliseconds to wait before dismissing after user interaction.
    * If `autoHideDuration` prop isn't specified, it does nothing.
    * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
    * we default to `autoHideDuration / 2` ms.
    */
-  resumeHideDuration?: number;
+  resumeHideDuration?: number | undefined;
 }
 
 export type UseSnackbarRootSlotProps<ExternalProps = {}> = ExternalProps &
@@ -46,7 +48,7 @@ export interface UseSnackbarRootSlotOwnProps {
   onFocus: React.FocusEventHandler;
   onMouseEnter: React.MouseEventHandler;
   onMouseLeave: React.MouseEventHandler;
-  ref?: React.RefCallback<Element>;
+  ref?: React.RefCallback<Element> | undefined;
   role: React.AriaRole;
 }
 

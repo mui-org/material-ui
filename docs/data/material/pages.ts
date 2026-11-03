@@ -1,6 +1,6 @@
-import standardNavIcons from 'docs/src/modules/components/AppNavIcons';
+import { standardNavIcons } from '@mui/internal-core-docs/AppLayout';
 import pagesApi from 'docs/data/material/pagesApi';
-import { MuiPage } from 'docs/src/MuiPage';
+import type { MuiPage } from '@mui/internal-core-docs/MuiPage';
 
 const pages: MuiPage[] = [
   {
@@ -11,14 +11,17 @@ const pages: MuiPage[] = [
       { pathname: '/material-ui/getting-started/installation' },
       { pathname: '/material-ui/getting-started/usage' },
       { pathname: '/material-ui/getting-started/mcp', newFeature: true, title: 'MCP' },
+      { pathname: '/material-ui/llms.txt', newFeature: true, title: 'llms.txt' },
       { pathname: '/material-ui/getting-started/example-projects' },
       { pathname: '/material-ui/getting-started/templates' },
       { pathname: '/material-ui/getting-started/learn' },
       { pathname: '/material-ui/getting-started/design-resources' },
       { pathname: '/material-ui/getting-started/faq', title: 'FAQs' },
+      { pathname: '/material-ui/getting-started/accessibility' },
       { pathname: '/material-ui/getting-started/supported-components' },
       { pathname: '/material-ui/getting-started/supported-platforms' },
       { pathname: '/material-ui/getting-started/support' },
+      { pathname: '/material-ui/getting-started/versions' },
     ],
   },
   {
@@ -38,6 +41,7 @@ const pages: MuiPage[] = [
             pathname: '/material-ui/react-floating-action-button',
             title: 'Floating Action Button',
           },
+          { pathname: '/material-ui/react-number-field', title: 'Number Field', newFeature: true },
           { pathname: '/material-ui/react-radio-button', title: 'Radio Group' },
           { pathname: '/material-ui/react-rating' },
           { pathname: '/material-ui/react-select' },
@@ -69,7 +73,6 @@ const pages: MuiPage[] = [
         subheader: 'feedback',
         children: [
           { pathname: '/material-ui/react-alert' },
-          { pathname: '/material-ui/react-backdrop' },
           { pathname: '/material-ui/react-dialog' },
           { pathname: '/material-ui/react-progress' },
           { pathname: '/material-ui/react-skeleton' },
@@ -95,6 +98,7 @@ const pages: MuiPage[] = [
           { pathname: '/material-ui/react-drawer' },
           { pathname: '/material-ui/react-link' },
           { pathname: '/material-ui/react-menu' },
+          { pathname: '/material-ui/react-menubar', newFeature: true },
           { pathname: '/material-ui/react-pagination' },
           { pathname: '/material-ui/react-speed-dial', title: 'Speed Dial' },
           { pathname: '/material-ui/react-stepper' },
@@ -108,7 +112,6 @@ const pages: MuiPage[] = [
           { pathname: '/material-ui/react-box' },
           { pathname: '/material-ui/react-container' },
           { pathname: '/material-ui/react-grid' },
-          { pathname: '/material-ui/react-grid-legacy', deprecated: true, title: 'GridLegacy' },
           { pathname: '/material-ui/react-stack' },
           { pathname: '/material-ui/react-image-list', title: 'Image List' },
         ],
@@ -117,6 +120,7 @@ const pages: MuiPage[] = [
         pathname: '/material-ui/components/utils',
         subheader: 'utils',
         children: [
+          { pathname: '/material-ui/react-backdrop' },
           {
             pathname: '/material-ui/react-click-away-listener',
             title: 'Click-Away Listener',
@@ -194,12 +198,18 @@ const pages: MuiPage[] = [
           { pathname: '/material-ui/customization/palette' },
           { pathname: '/material-ui/customization/typography' },
           { pathname: '/material-ui/customization/spacing' },
+          { pathname: '/material-ui/customization/shape' },
           { pathname: '/material-ui/customization/breakpoints' },
           {
             pathname: '/material-ui/customization/container-queries',
             newFeature: true,
           },
           { pathname: '/material-ui/customization/density' },
+          {
+            pathname: '/material-ui/customization/focus-visible',
+            title: 'Focus visible',
+            newFeature: true,
+          },
           { pathname: '/material-ui/customization/z-index', title: 'z-index' },
           { pathname: '/material-ui/customization/transitions' },
         ],
@@ -242,6 +252,7 @@ const pages: MuiPage[] = [
     pathname: '/material-ui/guides',
     title: 'How-to guides',
     children: [
+      { pathname: '/material-ui/guides/building-extensible-themes' },
       { pathname: '/material-ui/guides/minimizing-bundle-size' },
       { pathname: '/material-ui/guides/server-rendering' },
       { pathname: '/material-ui/guides/responsive-ui', title: 'Responsive UI' },
@@ -306,12 +317,36 @@ const pages: MuiPage[] = [
         title: 'Migration from @material-ui/pickers',
       },
       {
+        pathname: '/material-ui/migration/v10',
+        subheader: 'Upgrade to v10',
+        children: [
+          {
+            pathname: '/material-ui/migration/upgrade-to-v10',
+            title: 'Upgrade to v10: getting started',
+          },
+        ],
+      },
+      {
+        pathname: '/material-ui/migration/v9',
+        subheader: 'Upgrade to v9',
+        children: [
+          {
+            pathname: '/material-ui/migration/upgrade-to-v9',
+            title: 'Upgrade to v9: getting started',
+          },
+        ],
+      },
+      {
         pathname: '/material-ui/migration/v7',
         subheader: 'Upgrade to v7',
         children: [
           {
             pathname: '/material-ui/migration/upgrade-to-v7',
             title: 'Upgrade to v7: getting started',
+          },
+          {
+            pathname: '/material-ui/migration/v7/migrating-from-deprecated-apis',
+            title: 'Migrating from deprecated APIs',
           },
           {
             pathname: '/material-ui/migration/upgrade-to-native-color',
@@ -395,7 +430,7 @@ const pages: MuiPage[] = [
       {
         pathname: '/material-ui/design-resources/material-ui-sync',
         title: 'Figma Sync plugin',
-        unstable: true,
+        deprecated: true,
       },
     ],
   },

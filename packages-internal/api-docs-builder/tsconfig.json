@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noUnusedLocals": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "target": "ES2020",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "paths": {
+      "@mui/internal-docs-utils": ["../docs-utils/src/index.ts"]
+    }
+  },
+  "include": ["./**/*.ts", "./**/*.js"],
+  "exclude": ["node_modules"]
+}

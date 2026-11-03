@@ -162,7 +162,7 @@ It's sorted descending, with the most important concerns first:
 </figure>
 <br />
 <figure style="margin-inline-start: 0;">
-<img style="display: block; margin: 0 auto;" src="/static/blog/2019-developer-survey-results/5b.png" style="display: block; margin: 0 auto;" alt="Pie chart: 70.6% promoters, 24.8% neutrals, 4.6% detractors" />
+<img style="display: block; margin: 0 auto;" src="/static/blog/2019-developer-survey-results/5b.png" alt="Pie chart: 70.6% promoters, 24.8% neutrals, 4.6% detractors" />
   <figcaption style="font-style: italic; text-align: center;">Result.</figcaption>
 </figure>
 

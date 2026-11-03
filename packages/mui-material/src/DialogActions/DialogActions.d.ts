@@ -12,26 +12,26 @@ export interface DialogActionsProps extends StandardProps<React.HTMLAttributes<H
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<DialogActionsClasses>;
+  classes?: Partial<DialogActionsClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * If `true`, the actions do not have additional margin.
    * @default false
    */
-  disableSpacing?: boolean;
+  disableSpacing?: boolean | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Dialog](https://mui.com/material-ui/react-dialog/)
+ * - [Dialog](https://next.mui.com/material-ui/react-dialog/)
  *
  * API:
  *
- * - [DialogActions API](https://mui.com/material-ui/api/dialog-actions/)
+ * - [DialogActions API](https://next.mui.com/material-ui/api/dialog-actions/)
  */
 export default function DialogActions(props: DialogActionsProps): React.JSX.Element;

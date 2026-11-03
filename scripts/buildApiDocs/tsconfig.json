@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "node16",
+    "target": "es2022",
+    "moduleResolution": "node16",
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+
+    "noEmit": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "jsx": "react",
+
+    "types": ["node"],
+    "paths": {
+      "@mui/types": ["../../packages/mui-types"],
+      "@mui/utils": ["../../packages/mui-utils/src"],
+      "@mui/utils/*": ["../../packages/mui-utils/src/*"],
+      "@mui/internal-api-docs-builder": ["../../packages-internal/api-docs-builder/src/index.ts"]
+    }
+  },
+  "include": ["./**/*.ts", "./**/*.mts"]
+}

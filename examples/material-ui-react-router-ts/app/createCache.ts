@@ -5,7 +5,7 @@ export default function createEmotionCache(options?: Parameters<typeof createCac
   const prevInsert = emotionCache.insert;
   emotionCache.insert = (...args) => {
     // ignore styles that contain layer order (`@layer ...` without `{`)
-    if (!args[1].styles.match(/^@layer\s+[^{]*$/)) {
+    if (!args[1].styles.match(/^@layer\s[^{]*$/)) {
       args[1].styles = `@layer mui {${args[1].styles}}`;
     }
     return prevInsert(...args);

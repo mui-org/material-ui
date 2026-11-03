@@ -42,6 +42,7 @@ const ListItemTextRoot = styled('div', {
   minWidth: 0,
   marginTop: 4,
   marginBottom: 4,
+  // Combine this and the below selector once https://github.com/emotion-js/emotion/issues/3366 is solved
   [`.${typographyClasses.root}:where(& .${listItemTextClasses.primary})`]: {
     display: 'block',
   },
@@ -73,9 +74,7 @@ const ListItemText = React.forwardRef(function ListItemText(inProps, ref) {
     disableTypography = false,
     inset = false,
     primary: primaryProp,
-    primaryTypographyProps,
     secondary: secondaryProp,
-    secondaryTypographyProps,
     slots = {},
     slotProps = {},
     ...other
@@ -98,11 +97,7 @@ const ListItemText = React.forwardRef(function ListItemText(inProps, ref) {
 
   const externalForwardedProps = {
     slots,
-    slotProps: {
-      primary: primaryTypographyProps,
-      secondary: secondaryTypographyProps,
-      ...slotProps,
-    },
+    slotProps,
   };
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
@@ -193,26 +188,14 @@ ListItemText.propTypes /* remove-proptypes */ = {
    */
   primary: PropTypes.node,
   /**
-   * These props will be forwarded to the primary typography component
-   * (as long as disableTypography is not `true`).
-   * @deprecated Use `slotProps.primary` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  primaryTypographyProps: PropTypes.object,
-  /**
    * The secondary content element.
    */
   secondary: PropTypes.node,
   /**
-   * These props will be forwarded to the secondary typography component
-   * (as long as disableTypography is not `true`).
-   * @deprecated Use `slotProps.secondary` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  secondaryTypographyProps: PropTypes.object,
-  /**
    * The props used for each slot inside.
    * @default {}
    */
-  slotProps: PropTypes.shape({
+  slotProps: PropTypes /* @typescript-to-proptypes-ignore */.shape({
     primary: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     secondary: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),

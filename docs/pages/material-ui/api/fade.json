@@ -1,8 +1,15 @@
 {
   "props": {
     "children": { "type": { "name": "custom", "description": "element" }, "required": true },
-    "addEndListener": { "type": { "name": "func" } },
+    "addEndListener": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(node: HTMLElement, done: Function) => void",
+        "describedArgs": ["node", "done"]
+      }
+    },
     "appear": { "type": { "name": "bool" }, "default": "true" },
+    "disablePrefersReducedMotion": { "type": { "name": "bool" }, "default": "false" },
     "easing": {
       "type": {
         "name": "union",
@@ -30,6 +37,5 @@
     "component": "Transition",
     "pathname": "https://reactcommunity.org/react-transition-group/transition/#Transition-props"
   },
-  "demos": "<ul><li><a href=\"/material-ui/transitions/\">Transitions</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/transitions/\">Transitions</a></li></ul>"
 }

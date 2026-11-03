@@ -1,5 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Box sx={{ borderRadius: 'sm', border: 1, p: 4 }} />
-  <Box sx={{ borderRadius: 'md', border: 1, p: 4 }} />
-  <Box sx={{ borderRadius: 'lg', border: 1, p: 4 }} />
-</ThemeProvider>

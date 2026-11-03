@@ -2,20 +2,13 @@ import { dirname } from 'path';
 import addImports from 'jscodeshift-add-imports';
 import getJSExports from '../util/getJSExports';
 
-// istanbul ignore next
-if (process.env.NODE_ENV === 'test') {
-  const resolve = require.resolve;
-  require.resolve = (source) =>
-    resolve(source.replace(/^@mui\/material\/modern/, '../../../mui-material/src'));
-}
-
 export default function transformer(fileInfo, api, options) {
   const j = api.jscodeshift;
   const importModule = options.importModule || '@mui/material';
   const targetModule = options.targetModule || '@mui/material';
 
   const whitelist = getJSExports(
-    require.resolve(`${importModule}/modern`, {
+    require.resolve(`@mui/material-v5/modern`, {
       paths: [dirname(fileInfo.path)],
     }),
   );

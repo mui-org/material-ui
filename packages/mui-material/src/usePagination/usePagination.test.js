@@ -1,6 +1,6 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
 import { createRenderer } from '@mui/internal-test-utils';
-import { expect } from 'chai';
 import usePagination from '@mui/material/usePagination';
 
 describe('usePagination', () => {
@@ -177,5 +177,71 @@ describe('usePagination', () => {
       'end-ellipsis',
       'next',
     ]);
+  });
+
+  it('keeps ellipses when boundary and sibling counts are zero', () => {
+    const expectedByPage = [
+      [1, ['previous', 1, 2, 'end-ellipsis', 'next']],
+      [2, ['previous', 1, 2, 'end-ellipsis', 'next']],
+      [5, ['previous', 'start-ellipsis', 5, 'end-ellipsis', 'next']],
+      [7, ['previous', 'start-ellipsis', 7, 'end-ellipsis', 'next']],
+      [9, ['previous', 'start-ellipsis', 9, 10, 'next']],
+      [10, ['previous', 'start-ellipsis', 9, 10, 'next']],
+    ];
+
+    expectedByPage.forEach(([page, expected]) => {
+      const items = renderHook(() =>
+        usePagination({ count: 10, page, boundaryCount: 0, siblingCount: 0 }),
+      ).result.current.items;
+      expect(serialize(items), `page=${page}`).to.deep.equal(expected);
+    });
+  });
+
+  it('should never render a page item outside of the count range', () => {
+    [0, 1, 2, 3, 4, 5, 11].forEach((count) => {
+      [1, 3, 7].forEach((page) => {
+        const items = renderHook(() =>
+          usePagination({ count, page, boundaryCount: 0, siblingCount: 0 }),
+        ).result.current.items;
+        serialize(items)
+          .filter((item) => typeof item === 'number')
+          .forEach((item) => {
+            expect(item).to.be.within(1, count);
+          });
+      });
+    });
+  });
+
+  it('should keep every page reachable when they all fit', () => {
+    let items;
+
+    items = renderHook(() =>
+      usePagination({ count: 2, page: 1, boundaryCount: 0, siblingCount: 0 }),
+    ).result.current.items;
+    expect(serialize(items)).to.deep.equal(['previous', 1, 2, 'next']);
+
+    items = renderHook(() =>
+      usePagination({ count: 3, page: 2, boundaryCount: 0, siblingCount: 0 }),
+    ).result.current.items;
+    expect(serialize(items)).to.deep.equal(['previous', 1, 2, 3, 'next']);
+
+    items = renderHook(() =>
+      usePagination({ count: 4, page: 1, boundaryCount: 0, siblingCount: 0 }),
+    ).result.current.items;
+    expect(serialize(items)).to.deep.equal(['previous', 1, 2, 'end-ellipsis', 'next']);
+  });
+
+  it('should stay navigable without previous & next buttons', () => {
+    const items = renderHook(() =>
+      usePagination({
+        count: 3,
+        page: 2,
+        boundaryCount: 0,
+        siblingCount: 0,
+        hidePrevButton: true,
+        hideNextButton: true,
+      }),
+    ).result.current.items;
+    expect(serialize(items)).to.deep.equal([1, 2, 3]);
   });
 });

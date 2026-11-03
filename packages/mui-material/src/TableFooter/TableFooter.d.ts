@@ -12,11 +12,11 @@ export interface TableFooterOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TableFooterClasses>;
+  classes?: Partial<TableFooterClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface TableFooterTypeMap<
@@ -30,11 +30,11 @@ export interface TableFooterTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableFooter API](https://mui.com/material-ui/api/table-footer/)
+ * - [TableFooter API](https://next.mui.com/material-ui/api/table-footer/)
  */
 declare const TableFooter: OverridableComponent<TableFooterTypeMap>;
 
@@ -42,7 +42,7 @@ export type TableFooterProps<
   RootComponent extends React.ElementType = TableFooterTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<TableFooterTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default TableFooter;

@@ -14,14 +14,6 @@
       "nodeName": "the tablist element",
       "conditions": "<code>!variant=\"scrollable\"</code>\b\b\b"
     },
-    "flexContainer": {
-      "description": "",
-      "deprecationInfo": "use <code>list</code> instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "flexContainerVertical": {
-      "description": "",
-      "deprecationInfo": "use a combination of <code>list</code> and <code>vertical</code> instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "hideScrollbar": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the tablist element",

@@ -1,8 +1,0 @@
-<Grid container spacing={8}>
-  <Grid size="grow">
-    <SkeletonChildrenDemo loading />
-  </Grid>
-  <Grid size="grow">
-    <SkeletonChildrenDemo />
-  </Grid>
-</Grid>

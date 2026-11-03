@@ -1,9 +1,0 @@
-<Tooltip title={longText}>
-  <Button sx={{ m: 1 }}>Default Width [300px]</Button>
-</Tooltip>
-<CustomWidthTooltip title={longText}>
-  <Button sx={{ m: 1 }}>Custom Width [500px]</Button>
-</CustomWidthTooltip>
-<NoMaxWidthTooltip title={longText}>
-  <Button sx={{ m: 1 }}>No wrapping</Button>
-</NoMaxWidthTooltip>

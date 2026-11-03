@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, beforeAll, afterAll, it, expect, beforeEach, afterEach } from 'vitest';
 import getScrollbarSize from '@mui/utils/getScrollbarSize';
 import { ModalManager } from './ModalManager';
 
@@ -18,7 +18,7 @@ describe('ModalManager', () => {
   let modalManager: ModalManager;
   let container1: HTMLDivElement;
 
-  before(() => {
+  beforeAll(() => {
     modalManager = new ModalManager();
     container1 = document.createElement('div');
     container1.style.paddingRight = '20px';
@@ -33,7 +33,7 @@ describe('ModalManager', () => {
     document.body.appendChild(container1);
   });
 
-  after(() => {
+  afterAll(() => {
     document.body.removeChild(container1);
   });
 
@@ -51,7 +51,7 @@ describe('ModalManager', () => {
     let modal2: Modal;
     let modal3: Modal;
 
-    before(() => {
+    beforeAll(() => {
       modal1 = getDummyModal();
       modal2 = getDummyModal();
       modal3 = getDummyModal();
@@ -129,18 +129,18 @@ describe('ModalManager', () => {
     });
 
     it('should handle the scroll', () => {
-      fixedNode.style.paddingRight = '14px';
+      fixedNode.style.paddingRight = '14.4px';
 
       const modal = getDummyModal();
       modalManager.add(modal, container1);
       modalManager.mount(modal, {});
       expect(container1.style.overflow).to.equal('hidden');
       expect(container1.style.paddingRight).to.equal(`${20 + getScrollbarSize(window)}px`);
-      expect(fixedNode.style.paddingRight).to.equal(`${14 + getScrollbarSize(window)}px`);
+      expect(fixedNode.style.paddingRight).to.equal(`${14.4 + getScrollbarSize(window)}px`);
       modalManager.remove(modal);
       expect(container1.style.overflow).to.equal('');
       expect(container1.style.paddingRight).to.equal('20px');
-      expect(fixedNode.style.paddingRight).to.equal('14px');
+      expect(fixedNode.style.paddingRight).to.equal('14.4px');
     });
 
     it('should disable the scroll even when not overflowing', () => {
@@ -194,21 +194,28 @@ describe('ModalManager', () => {
         document.body.removeChild(shadowContainer);
       });
 
-      it('should scroll body when parent is shadow root', () => {
+      it('should lock body scrolling and compensate for its scrollbar when the container is in a shadow root', () => {
         const modal = getDummyModal();
+        const initialBodyPaddingRight = document.body.style.paddingRight;
 
         container2.style.overflow = 'scroll';
+        document.body.style.paddingRight = '20px';
 
         document.body.appendChild(shadowContainer);
         modalManager.add(modal, container2);
         modalManager.mount(modal, {});
 
         expect(container2.style.overflow).to.equal('scroll');
+        expect(container2.style.paddingRight).to.equal('');
         expect(document.body.style.overflow).to.equal('hidden');
+        expect(document.body.style.paddingRight).to.equal(`${20 + getScrollbarSize(window)}px`);
         modalManager.remove(modal);
 
         expect(container2.style.overflow).to.equal('scroll');
         expect(document.body.style.overflow).to.equal('');
+        expect(document.body.style.paddingRight).to.equal('20px');
+
+        document.body.style.paddingRight = initialBodyPaddingRight;
       });
     });
 
@@ -317,7 +324,7 @@ describe('ModalManager', () => {
   });
 
   describe('container aria-hidden', () => {
-    let modalRef1;
+    let modalRef1: HTMLDivElement;
     let container2: HTMLDivElement;
 
     beforeEach(() => {
@@ -430,6 +437,129 @@ describe('ModalManager', () => {
       expect(container2.children[0]).toBeInaccessible();
       expect(container2.children[1]).toBeInaccessible();
       expect(container2.children[2]).not.toBeInaccessible();
+    });
+
+    it('should hide the siblings of a non-portaled modal at every level', () => {
+      // container2 > nestedParent > [appContent, modalRef]
+      const nestedParent = document.createElement('div');
+      const appContent = document.createElement('div');
+      const modalRef = document.createElement('div');
+      nestedParent.appendChild(appContent);
+      nestedParent.appendChild(modalRef);
+      container2.appendChild(nestedParent);
+
+      modalManager.add({ ...getDummyModal(), modalRef }, container2);
+
+      // The modal and its ancestor stay readable.
+      expect(nestedParent).not.toBeInaccessible();
+      expect(modalRef).not.toBeInaccessible();
+      // Everything beside the modal is hidden - inside the ancestor and above it.
+      expect(appContent).toBeInaccessible();
+      expect(modalRef1).toBeInaccessible();
+    });
+
+    it('should restore aria-hidden at every level when the modal is removed', () => {
+      const nestedParent = document.createElement('div');
+      const appContent = document.createElement('div');
+      const modalRef = document.createElement('div');
+      nestedParent.appendChild(appContent);
+      nestedParent.appendChild(modalRef);
+      container2.appendChild(nestedParent);
+
+      const modal = { ...getDummyModal(), modalRef };
+      modalManager.add(modal, container2);
+      modalManager.mount(modal, {});
+      expect(appContent).toBeInaccessible();
+
+      modalManager.remove(modal);
+      expect(appContent).not.toBeInaccessible();
+      expect(modalRef1).not.toBeInaccessible();
+      expect(nestedParent).not.toBeInaccessible();
+    });
+
+    it('should not restore aria-hidden that the app set itself, at any depth', () => {
+      const nestedParent = document.createElement('div');
+      const appHidden = document.createElement('div');
+      appHidden.setAttribute('aria-hidden', 'true');
+      const modalRef = document.createElement('div');
+      nestedParent.appendChild(appHidden);
+      nestedParent.appendChild(modalRef);
+      container2.appendChild(nestedParent);
+
+      const modal = { ...getDummyModal(), modalRef };
+      modalManager.add(modal, container2);
+      modalManager.mount(modal, {});
+      modalManager.remove(modal);
+
+      // The manager never owned this attribute, so it must survive.
+      expect(appHidden).toBeInaccessible();
+    });
+
+    // Two modals
+    it('should unhide the modal below when the top modal is removed', () => {
+      const lowerRef = document.createElement('div');
+      const upperRef = document.createElement('div');
+      container2.appendChild(lowerRef);
+      container2.appendChild(upperRef);
+
+      const lower = { ...getDummyModal(), modalRef: lowerRef };
+      const upper = { ...getDummyModal(), modalRef: upperRef };
+
+      modalManager.add(lower, container2);
+      expect(lowerRef).not.toBeInaccessible();
+
+      modalManager.add(upper, container2);
+      expect(lowerRef).toBeInaccessible();
+      expect(upperRef).not.toBeInaccessible();
+
+      modalManager.remove(upper);
+      expect(lowerRef).not.toBeInaccessible();
+      expect(modalRef1).toBeInaccessible();
+    });
+
+    // Three modals
+    it('should keep only the new top modal readable when one of three is removed', () => {
+      const first = document.createElement('div');
+      const second = document.createElement('div');
+      const third = document.createElement('div');
+      container2.appendChild(first);
+      container2.appendChild(second);
+      container2.appendChild(third);
+
+      modalManager.add({ ...getDummyModal(), modalRef: first }, container2);
+      modalManager.add({ ...getDummyModal(), modalRef: second }, container2);
+      const top = { ...getDummyModal(), modalRef: third };
+      modalManager.add(top, container2);
+      expect(third).not.toBeInaccessible();
+
+      modalManager.remove(top);
+      expect(second).not.toBeInaccessible();
+      expect(first).toBeInaccessible();
+      expect(third).toBeInaccessible();
+    });
+
+    it('should release deep aria-hidden when a shallower modal takes the top', () => {
+      const wrapper = document.createElement('div');
+      const appContent = document.createElement('div');
+      const inlineRef = document.createElement('div');
+      wrapper.appendChild(appContent);
+      wrapper.appendChild(inlineRef);
+      container2.appendChild(wrapper);
+
+      const portalRef = document.createElement('div');
+      container2.appendChild(portalRef);
+
+      modalManager.add({ ...getDummyModal(), modalRef: inlineRef }, container2);
+      expect(appContent).toBeInaccessible();
+      expect(wrapper).not.toBeInaccessible();
+
+      modalManager.add({ ...getDummyModal(), modalRef: portalRef }, container2);
+      // `wrapper` is hidden as a whole now, so the deep attribute inside it is
+      // redundant and must be released. Assert the attribute directly. The
+      // accessibility check would report it inaccessible via its hidden ancestor.
+      expect(wrapper).toBeInaccessible();
+      expect(appContent.getAttribute('aria-hidden')).to.equal(null);
+      expect(portalRef).not.toBeInaccessible();
     });
   });
 });

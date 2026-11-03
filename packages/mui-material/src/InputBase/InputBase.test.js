@@ -1,19 +1,26 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
 import { spy } from 'sinon';
-import { act, createRenderer, fireEvent, screen, reactMajor } from '@mui/internal-test-utils';
+import {
+  act,
+  createRenderer,
+  fireEvent,
+  screen,
+  reactMajor,
+  isJsdom,
+} from '@mui/internal-test-utils';
 import { ThemeProvider } from '@emotion/react';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import InputBase, { inputBaseClasses as classes } from '@mui/material/InputBase';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 
 describe('<InputBase />', () => {
-  const { render } = createRenderer();
+  const { render, renderToString } = createRenderer();
 
   describeConformance(<InputBase />, () => ({
     classes,
@@ -22,7 +29,6 @@ describe('<InputBase />', () => {
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiInputBase',
     testVariantProps: { size: 'small' },
-    testLegacyComponentsProp: true,
     slots: {
       // can't test with DOM element as InputBase places an ownerState prop on it unconditionally.
       root: { expectedClassName: classes.root, testWithElement: null },
@@ -41,6 +47,20 @@ describe('<InputBase />', () => {
     expect(input).to.have.attribute('type', 'text');
     expect(input).to.have.class(classes.input);
     expect(input).not.to.have.attribute('required');
+  });
+
+  it('should be aria-labelled and aria-describedby if props are provided', () => {
+    render(
+      <div>
+        <InputBase aria-label="label" aria-describedby="helper-text" />
+        <p id="helper-text">Helper text</p>
+      </div>,
+    );
+
+    const input = screen.getByRole('textbox');
+
+    expect(input).toHaveAccessibleName('label');
+    expect(input).toHaveAccessibleDescription('Helper text');
   });
 
   it('should add the right class when size is small', () => {
@@ -113,8 +133,8 @@ describe('<InputBase />', () => {
 
     it('fires the click event when the <input /> is disabled', () => {
       const handleClick = spy();
-      const { getByRole } = render(<InputBase disabled onClick={handleClick} />);
-      const input = getByRole('textbox');
+      render(<InputBase disabled onClick={handleClick} />);
+      const input = screen.getByRole('textbox');
       fireEvent.click(input);
       expect(handleClick.callCount).to.equal(1);
     });
@@ -122,8 +142,8 @@ describe('<InputBase />', () => {
 
   describe('prop: readonly', () => {
     it('should render a readonly <input />', () => {
-      const { getByRole } = render(<InputBase readOnly />);
-      const input = getByRole('textbox');
+      render(<InputBase readOnly />);
+      const input = screen.getByRole('textbox');
       expect(input).to.have.class(classes.input);
       expect(input).to.have.class(classes.readOnly);
       expect(input).to.have.property('readOnly');
@@ -136,7 +156,8 @@ describe('<InputBase />', () => {
     const handleBlur = spy();
     const handleKeyUp = spy();
     const handleKeyDown = spy();
-    const { getByRole } = render(
+
+    render(
       <InputBase
         onChange={handleChange}
         onFocus={handleFocus}
@@ -145,7 +166,8 @@ describe('<InputBase />', () => {
         onKeyDown={handleKeyDown}
       />,
     );
-    const input = getByRole('textbox');
+
+    const input = screen.getByRole('textbox');
 
     // simulating user input: gain focus, key input (keydown, (input), change, keyup), blur
 
@@ -171,8 +193,8 @@ describe('<InputBase />', () => {
 
   describe('controlled', () => {
     it('should considered [] as controlled', () => {
-      const { getByRole } = render(<InputBase value={[]} />);
-      const input = getByRole('textbox');
+      render(<InputBase value={[]} />);
+      const input = screen.getByRole('textbox');
 
       expect(input).to.have.property('value', '');
       fireEvent.change(input, { target: { value: 'do not work' } });
@@ -182,10 +204,9 @@ describe('<InputBase />', () => {
 
   describe('prop: inputComponent', () => {
     it('should accept any html component', () => {
-      const { getByTestId } = render(
-        <InputBase inputComponent="span" inputProps={{ 'data-testid': 'input-component' }} />,
-      );
-      expect(getByTestId('input-component')).to.have.property('nodeName', 'SPAN');
+      render(<InputBase inputComponent="span" inputProps={{ 'data-testid': 'input-component' }} />);
+
+      expect(screen.getByTestId('input-component')).to.have.property('nodeName', 'SPAN');
     });
 
     it('should inject onBlur and onFocus', () => {
@@ -218,16 +239,17 @@ describe('<InputBase />', () => {
           return <span {...props}>filled: {String(filled)}</span>;
         }
 
-        const { getByRole, getByTestId } = render(
+        render(
           <FormControl>
             <FilledState data-testid="filled" />
             <InputBase inputComponent={MockedValue} />
           </FormControl>,
         );
-        expect(getByTestId('filled')).to.have.text('filled: false');
 
-        fireEvent.change(getByRole('textbox'), { target: { value: 1 } });
-        expect(getByTestId('filled')).to.have.text('filled: true');
+        expect(screen.getByTestId('filled')).to.have.text('filled: false');
+
+        fireEvent.change(screen.getByRole('textbox'), { target: { value: 1 } });
+        expect(screen.getByTestId('filled')).to.have.text('filled: true');
       });
 
       it("can expose the input component's ref through the inputComponent prop", () => {
@@ -240,16 +262,17 @@ describe('<InputBase />', () => {
           return <span {...props}>filled: {String(filled)}</span>;
         }
 
-        const { getByRole, getByTestId } = render(
+        render(
           <FormControl>
             <FilledState data-testid="filled" />
             <InputBase inputComponent={FullTarget} />
           </FormControl>,
         );
-        expect(getByTestId('filled')).to.have.text('filled: false');
 
-        fireEvent.change(getByRole('textbox'), { target: { value: 1 } });
-        expect(getByTestId('filled')).to.have.text('filled: true');
+        expect(screen.getByTestId('filled')).to.have.text('filled: false');
+
+        fireEvent.change(screen.getByRole('textbox'), { target: { value: 1 } });
+        expect(screen.getByTestId('filled')).to.have.text('filled: true');
       });
     });
 
@@ -297,25 +320,27 @@ describe('<InputBase />', () => {
 
   describe('with FormControl', () => {
     it('should have the formControl class', () => {
-      const { getByTestId } = render(
+      render(
         <FormControl>
           <InputBase data-testid="root" />
         </FormControl>,
       );
-      expect(getByTestId('root')).to.have.class(classes.formControl);
+
+      expect(screen.getByTestId('root')).to.have.class(classes.formControl);
     });
 
     describe('callbacks', () => {
       it('should fire the onClick prop', () => {
         const handleClick = spy();
         const handleFocus = spy();
-        const { getByTestId } = render(
+
+        render(
           <FormControl>
             <InputBase data-testid="root" onClick={handleClick} onFocus={handleFocus} />
           </FormControl>,
         );
 
-        fireEvent.click(getByTestId('root'));
+        fireEvent.click(screen.getByTestId('root'));
         expect(handleClick.callCount).to.equal(1);
         expect(handleFocus.callCount).to.equal(1);
       });
@@ -331,50 +356,53 @@ describe('<InputBase />', () => {
           );
         }
 
-        const { getByTestId, setProps } = render(<InputBaseInErrorForm />);
-        expect(getByTestId('root')).to.have.class(classes.error);
+        const { setProps } = render(<InputBaseInErrorForm />);
+        expect(screen.getByTestId('root')).to.have.class(classes.error);
 
         setProps({ error: false });
-        expect(getByTestId('root')).not.to.have.class(classes.error);
+        expect(screen.getByTestId('root')).not.to.have.class(classes.error);
 
         setProps({ error: true });
-        expect(getByTestId('root')).to.have.class(classes.error);
+        expect(screen.getByTestId('root')).to.have.class(classes.error);
       });
     });
 
     describe('size', () => {
-      it('should have the inputSizeSmall class in a dense context', () => {
-        const { container } = render(
+      it('should have the sizeSmall class in a dense context', () => {
+        render(
           <FormControl size="small">
-            <InputBase />
+            <InputBase data-testid="root" />
           </FormControl>,
         );
-        expect(container.querySelector('input')).to.have.class(classes.inputSizeSmall);
+        expect(screen.getByTestId('root')).to.have.class(classes.sizeSmall);
+        expect(screen.getByRole('textbox')).to.have.class(classes.input);
       });
 
       it('should be overridden by props', () => {
         function InputBaseInFormWithMargin(props) {
           return (
             <FormControl size="medium">
-              <InputBase {...props} />
+              <InputBase data-testid="root" {...props} />
             </FormControl>
           );
         }
-        const { container, setProps } = render(<InputBaseInFormWithMargin />);
-        expect(container.querySelector('input')).not.to.have.class(classes.inputSizeSmall);
+        const { setProps } = render(<InputBaseInFormWithMargin />);
+        expect(screen.getByTestId('root')).not.to.have.class(classes.sizeSmall);
 
         setProps({ size: 'small' });
-        expect(container.querySelector('input')).to.have.class(classes.inputSizeSmall);
+        expect(screen.getByTestId('root')).to.have.class(classes.sizeSmall);
+        expect(screen.getByRole('textbox')).to.have.class(classes.input);
       });
 
-      it('has an inputHiddenLabel class to further reduce margin', () => {
-        const { getByRole } = render(
+      it('has a hiddenLabel class to further reduce margin', () => {
+        render(
           <FormControl hiddenLabel margin="dense">
-            <InputBase />
+            <InputBase data-testid="root" />
           </FormControl>,
         );
 
-        expect(getByRole('textbox')).to.have.class(classes.inputHiddenLabel);
+        expect(screen.getByTestId('root')).to.have.class(classes.hiddenLabel);
+        expect(screen.getByRole('textbox')).to.have.class(classes.input);
       });
     });
 
@@ -400,7 +428,8 @@ describe('<InputBase />', () => {
           return null;
         });
         const controlRef = React.createRef();
-        const { getByRole, getByTestId } = render(
+
+        render(
           <FormControl>
             <FormController ref={controlRef} />
             <InputBase data-testid="root" />
@@ -408,21 +437,21 @@ describe('<InputBase />', () => {
         );
 
         act(() => {
-          getByRole('textbox').focus();
+          screen.getByRole('textbox').focus();
         });
-        expect(getByTestId('root')).to.have.class(classes.focused);
+        expect(screen.getByTestId('root')).to.have.class(classes.focused);
 
         act(() => {
           controlRef.current.onBlur();
         });
 
-        expect(getByTestId('root')).not.to.have.class(classes.focused);
+        expect(screen.getByTestId('root')).not.to.have.class(classes.focused);
 
         act(() => {
           controlRef.current.onFocus();
         });
 
-        expect(getByTestId('root')).to.have.class(classes.focused);
+        expect(screen.getByTestId('root')).to.have.class(classes.focused);
       });
 
       it('propagates focused state', () => {
@@ -430,24 +459,166 @@ describe('<InputBase />', () => {
           const { focused } = useFormControl();
           return <label {...props}>focused: {String(focused)}</label>;
         }
-        const { getByRole, getByTestId } = render(
+
+        render(
           <FormControl>
             <FocusedStateLabel data-testid="label" htmlFor="input" />
             <InputBase id="input" />
           </FormControl>,
         );
-        expect(getByTestId('label')).to.have.text('focused: false');
+
+        expect(screen.getByTestId('label')).to.have.text('focused: false');
 
         act(() => {
-          getByRole('textbox').focus();
+          screen.getByRole('textbox').focus();
         });
-        expect(getByTestId('label')).to.have.text('focused: true');
+        expect(screen.getByTestId('label')).to.have.text('focused: true');
 
         act(() => {
-          getByRole('textbox').blur();
+          screen.getByRole('textbox').blur();
         });
-        expect(getByTestId('label')).to.have.text('focused: false');
+        expect(screen.getByTestId('label')).to.have.text('focused: false');
       });
+
+      it.skipIf(isJsdom())(
+        'should sync focused state when autoFocus is used with SSR (with FormControl)',
+        function test() {
+          let input;
+
+          try {
+            function App() {
+              return (
+                <FormControl>
+                  <InputBase autoFocus data-testid="root" />
+                </FormControl>
+              );
+            }
+
+            const { hydrate } = renderToString(<App />);
+
+            input = screen.getByRole('textbox');
+            expect(input).to.have.attribute('autofocus');
+
+            // Simulate the browser focusing the element before hydration
+            act(() => {
+              input.focus();
+            });
+            expect(input).to.equal(document.activeElement);
+
+            act(() => {
+              hydrate();
+            });
+
+            expect(screen.getByTestId('root')).to.have.class(classes.focused);
+          } finally {
+            if (input === document.activeElement) {
+              act(() => {
+                input.blur();
+              });
+            }
+          }
+        },
+      );
+
+      it.skipIf(isJsdom())(
+        'should sync focused state when autoFocus is used with SSR (standalone)',
+        function test() {
+          let input;
+
+          try {
+            function App() {
+              return <InputBase autoFocus data-testid="root" />;
+            }
+
+            const { hydrate } = renderToString(<App />);
+
+            input = screen.getByRole('textbox');
+
+            // Simulate the browser focusing the element before hydration
+            act(() => {
+              input.focus();
+            });
+            expect(input).to.equal(document.activeElement);
+
+            act(() => {
+              hydrate();
+            });
+
+            expect(screen.getByTestId('root')).to.have.class(classes.focused);
+          } finally {
+            if (input === document.activeElement) {
+              act(() => {
+                input.blur();
+              });
+            }
+          }
+        },
+      );
+
+      it.skipIf(isJsdom())(
+        'should focus and sync focused state when autoFocus is used with SSR',
+        function test() {
+          let input;
+
+          try {
+            function App() {
+              return (
+                <FormControl>
+                  <InputBase autoFocus data-testid="root" />
+                </FormControl>
+              );
+            }
+
+            const { hydrate } = renderToString(<App />);
+
+            input = screen.getByRole('textbox');
+            expect(input).to.have.attribute('autofocus');
+            expect(input).not.to.equal(document.activeElement);
+
+            act(() => {
+              hydrate();
+            });
+
+            expect(input).to.equal(document.activeElement);
+            expect(screen.getByTestId('root')).to.have.class(classes.focused);
+          } finally {
+            if (input === document.activeElement) {
+              act(() => {
+                input.blur();
+              });
+            }
+          }
+        },
+      );
+
+      it.skipIf(isJsdom())(
+        'should not sync focused state when autoFocus is not set (regression guard)',
+        function test() {
+          function App() {
+            return (
+              <FormControl>
+                <InputBase data-testid="root" />
+              </FormControl>
+            );
+          }
+
+          const { hydrate } = renderToString(<App />);
+
+          const input = screen.getByRole('textbox');
+
+          // Manually focus the element before hydration (without autoFocus)
+          act(() => {
+            input.focus();
+          });
+          expect(input).to.equal(document.activeElement);
+
+          act(() => {
+            hydrate();
+          });
+
+          expect(screen.getByTestId('root')).not.to.have.class(classes.focused);
+        },
+      );
     });
 
     it('propagates filled state when uncontrolled', () => {
@@ -455,23 +626,25 @@ describe('<InputBase />', () => {
         const { filled } = useFormControl();
         return <label {...props}>filled: {String(filled)}</label>;
       }
-      const { getByRole, getByTestId } = render(
+
+      render(
         <FormControl>
           <FilledStateLabel data-testid="label" />
           <InputBase />
         </FormControl>,
       );
-      expect(getByTestId('label')).to.have.text('filled: false');
-      const textbox = getByRole('textbox');
+
+      expect(screen.getByTestId('label')).to.have.text('filled: false');
+      const textbox = screen.getByRole('textbox');
 
       fireEvent.change(textbox, { target: { value: 'material' } });
-      expect(getByTestId('label')).to.have.text('filled: true');
+      expect(screen.getByTestId('label')).to.have.text('filled: true');
 
       fireEvent.change(textbox, { target: { value: '0' } });
-      expect(getByTestId('label')).to.have.text('filled: true');
+      expect(screen.getByTestId('label')).to.have.text('filled: true');
 
       fireEvent.change(textbox, { target: { value: '' } });
-      expect(getByTestId('label')).to.have.text('filled: false');
+      expect(screen.getByTestId('label')).to.have.text('filled: false');
     });
 
     it('propagates filled state when controlled', () => {
@@ -487,17 +660,17 @@ describe('<InputBase />', () => {
           </FormControl>
         );
       }
-      const { getByTestId, setProps } = render(<ControlledInputBase value="" />);
-      expect(getByTestId('label')).to.have.text('filled: false');
+      const { setProps } = render(<ControlledInputBase value="" />);
+      expect(screen.getByTestId('label')).to.have.text('filled: false');
 
       setProps({ value: 'material' });
-      expect(getByTestId('label')).to.have.text('filled: true');
+      expect(screen.getByTestId('label')).to.have.text('filled: true');
 
       setProps({ value: 0 });
-      expect(getByTestId('label')).to.have.text('filled: true');
+      expect(screen.getByTestId('label')).to.have.text('filled: true');
 
       setProps({ value: '' });
-      expect(getByTestId('label')).to.have.text('filled: false');
+      expect(screen.getByTestId('label')).to.have.text('filled: false');
     });
 
     describe('registering input', () => {
@@ -554,9 +727,9 @@ describe('<InputBase />', () => {
           );
         }
 
-        const { getByText } = render(<ToggleFormInputs />);
+        render(<ToggleFormInputs />);
         expect(() => {
-          fireEvent.click(getByText('toggle'));
+          fireEvent.click(screen.getByText('toggle'));
         }).not.toErrorDev();
       });
     });
@@ -586,6 +759,97 @@ describe('<InputBase />', () => {
     });
   });
 
+  describe('prop: slotProps.input', () => {
+    it('should call the event handlers and forward the ref', () => {
+      const inputRef = React.createRef();
+      const handleFocus = spy();
+      const handleBlur = spy();
+      const handleChange = spy();
+      const { container } = render(
+        <InputBase
+          slotProps={{
+            input: {
+              ref: inputRef,
+              onFocus: handleFocus,
+              onBlur: handleBlur,
+              onChange: handleChange,
+            },
+          }}
+        />,
+      );
+      const input = container.querySelector('input');
+
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'a' } });
+      fireEvent.blur(input);
+
+      expect(inputRef.current).to.equal(input);
+      expect(handleFocus.callCount).to.equal(1);
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleBlur.callCount).to.equal(1);
+    });
+  });
+
+  describe('autofill', () => {
+    it.skipIf(isJsdom())(
+      'does not animate display during autofill detection',
+      async function test() {
+        render(<InputBase inputProps={{ className: 'autofill-layout-test' }} />);
+
+        // Simulate an input styled as flex, then start MUI's autofill-cancel animation manually.
+        const style = document.createElement('style');
+        style.textContent = `
+        .${classes.input}.autofill-layout-test {
+          animation-duration: 1000s;
+          animation-name: none;
+          display: flex;
+        }
+
+        .${classes.input}.autofill-layout-test.autofill-layout-test--animated {
+          animation-name: mui-auto-fill-cancel;
+        }
+      `;
+        document.head.appendChild(style);
+
+        try {
+          // Confirm the real MUI keyframes are present and no longer animate display.
+          const keyframesRules = Array.from(document.styleSheets).flatMap((sheet) =>
+            Array.from(sheet.cssRules).filter((rule) => rule.type === CSSRule.KEYFRAMES_RULE),
+          );
+          const autofillRule = keyframesRules.find((rule) => rule.name === 'mui-auto-fill');
+          const autofillCancelRule = keyframesRules.find(
+            (rule) => rule.name === 'mui-auto-fill-cancel',
+          );
+
+          expect(autofillRule).not.to.equal(undefined);
+          expect(autofillCancelRule).not.to.equal(undefined);
+          expect(autofillRule.cssText).not.to.include('display');
+          expect(autofillCancelRule.cssText).not.to.include('display');
+
+          const input = screen.getByRole('textbox');
+
+          expect(getComputedStyle(input).display).to.equal('flex');
+
+          // Starting the animation must not let its first keyframe override display.
+          input.classList.add('autofill-layout-test--animated');
+
+          expect(getComputedStyle(input).display).to.equal('flex');
+
+          // Check one frame later too, when Chrome's visible layout jump used to happen.
+          await act(async () => {
+            await new Promise((resolve) => {
+              requestAnimationFrame(resolve);
+            });
+          });
+
+          expect(getComputedStyle(input).display).to.equal('flex');
+        } finally {
+          document.head.removeChild(style);
+        }
+      },
+    );
+  });
+
   describe('prop: inputComponent with prop: inputProps', () => {
     it('should call onChange inputProp callback with all params sent from custom inputComponent', () => {
       const INPUT_VALUE = 'material';
@@ -610,10 +874,11 @@ describe('<InputBase />', () => {
         outputArguments = args;
       }
 
-      const { getByRole } = render(
+      render(
         <InputBase inputComponent={MyInputBase} inputProps={{ onChange: parentHandleChange }} />,
       );
-      const textbox = getByRole('textbox');
+
+      const textbox = screen.getByRole('textbox');
       fireEvent.change(textbox, { target: { value: INPUT_VALUE } });
 
       expect(outputArguments.length).to.equal(2);
@@ -624,7 +889,7 @@ describe('<InputBase />', () => {
 
   describe('prop: startAdornment, prop: endAdornment', () => {
     it('should render adornment before input', () => {
-      const { getByTestId } = render(
+      render(
         <InputBase
           startAdornment={
             <InputAdornment data-testid="adornment" position="start">
@@ -634,11 +899,11 @@ describe('<InputBase />', () => {
         />,
       );
 
-      expect(getByTestId('adornment')).not.to.equal(null);
+      expect(screen.getByTestId('adornment')).not.to.equal(null);
     });
 
     it('should render adornment after input', () => {
-      const { getByTestId } = render(
+      render(
         <InputBase
           endAdornment={
             <InputAdornment data-testid="adornment" position="end">
@@ -648,7 +913,7 @@ describe('<InputBase />', () => {
         />,
       );
 
-      expect(getByTestId('adornment')).not.to.equal(null);
+      expect(screen.getByTestId('adornment')).not.to.equal(null);
     });
 
     it('should allow a Select as an adornment', () => {
@@ -656,14 +921,16 @@ describe('<InputBase />', () => {
         <TextField
           value=""
           name="text"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Select value="" name="suffix" />
-              </InputAdornment>
-            ),
-          }}
           variant="standard"
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Select value="" name="suffix" />
+                </InputAdornment>
+              ),
+            },
+          }}
         />,
       );
     });
@@ -684,29 +951,75 @@ describe('<InputBase />', () => {
   });
 
   describe('prop: focused', () => {
-    it('should render correct border color with `ThemeProvider` imported from `@emotion/react`', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-      const theme = createTheme({
-        palette: {
-          primary: {
-            main: 'rgb(0, 191, 165)',
+    it.skipIf(isJsdom())(
+      'should render correct border color with `ThemeProvider` imported from `@emotion/react`',
+      function test() {
+        const theme = createTheme({
+          palette: {
+            primary: {
+              main: 'rgb(0, 191, 165)',
+            },
           },
-        },
-      });
-      const { getByRole } = render(
-        <ThemeProvider theme={theme}>
-          <TextField focused label="Your email" />
-        </ThemeProvider>,
+        });
+
+        render(
+          <ThemeProvider theme={theme}>
+            <TextField focused label="Your email" />
+          </ThemeProvider>,
+        );
+
+        const fieldset = screen.getByRole('textbox').nextSibling;
+        expect(fieldset).toHaveComputedStyle({
+          borderTopColor: 'rgb(0, 191, 165)',
+          borderRightColor: 'rgb(0, 191, 165)',
+          borderBottomColor: 'rgb(0, 191, 165)',
+          borderLeftColor: 'rgb(0, 191, 165)',
+        });
+      },
+    );
+  });
+  describe('theme.focusVisible', () => {
+    const focusVisibleTheme = createTheme({ focusVisible: true });
+
+    it.skipIf(isJsdom())('renders the ring on focus', async () => {
+      render(
+        <MuiThemeProvider theme={focusVisibleTheme}>
+          <InputBase data-testid="root" />
+        </MuiThemeProvider>,
       );
-      const fieldset = getByRole('textbox').nextSibling;
-      expect(fieldset).toHaveComputedStyle({
-        borderTopColor: 'rgb(0, 191, 165)',
-        borderRightColor: 'rgb(0, 191, 165)',
-        borderBottomColor: 'rgb(0, 191, 165)',
-        borderLeftColor: 'rgb(0, 191, 165)',
+      const root = screen.getByTestId('root');
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+
+      await act(async () => {
+        root.querySelector('input').focus();
       });
+
+      expect(root).toHaveComputedStyle({
+        outlineStyle: 'solid',
+        outlineWidth: '2px',
+        outlineOffset: '2px',
+      });
+    });
+
+    it.skipIf(isJsdom())('lets a wrapper opt out and draw its own indicator', async () => {
+      render(
+        <MuiThemeProvider theme={focusVisibleTheme}>
+          <InputBase internalDisabledThemeFocusVisible data-testid="root" />
+        </MuiThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+    });
+
+    it('does not forward the private opt-out prop to the DOM', () => {
+      render(<InputBase internalDisabledThemeFocusVisible data-testid="root" />);
+      expect(screen.getByTestId('root')).not.to.have.attribute('internalDisabledThemeFocusVisible');
     });
   });
 });

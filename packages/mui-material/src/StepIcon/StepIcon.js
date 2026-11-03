@@ -10,6 +10,7 @@ import CheckCircle from '../internal/svg-icons/CheckCircle';
 import Warning from '../internal/svg-icons/Warning';
 import SvgIcon from '../SvgIcon';
 import stepIconClasses, { getStepIconUtilityClass } from './stepIconClasses';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, active, completed, error } = ownerState;
@@ -28,14 +29,11 @@ const StepIconRoot = styled(SvgIcon, {
 })(
   memoTheme(({ theme }) => ({
     display: 'block',
-    transition: theme.transitions.create('color', {
+    ...getTransitionStyles(theme, 'color', {
       duration: theme.transitions.duration.shortest,
     }),
     color: (theme.vars || theme).palette.text.disabled,
-    [`&.${stepIconClasses.completed}`]: {
-      color: (theme.vars || theme).palette.primary.main,
-    },
-    [`&.${stepIconClasses.active}`]: {
+    [`&.${stepIconClasses.completed}, &.${stepIconClasses.active}`]: {
       color: (theme.vars || theme).palette.primary.main,
     },
     [`&.${stepIconClasses.error}`]: {

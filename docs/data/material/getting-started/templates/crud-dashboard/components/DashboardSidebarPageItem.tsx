@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type Theme, SxProps } from '@mui/material/styles';
+import type { SxProps, Theme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -70,16 +70,15 @@ export default function DashboardSidebarPageItem({
       transform: 'translateY(-50%) rotate(-90deg)',
     };
   } else if (!mini && fullyExpanded) {
-    nestedNavigationCollapseSx = {
+    nestedNavigationCollapseSx = (theme: Theme) => ({
       ml: 0.5,
       fontSize: 20,
       transform: `rotate(${expanded ? 0 : -90}deg)`,
-      transition: (theme: Theme) =>
-        theme.transitions.create('transform', {
-          easing: theme.transitions.easing.sharp,
-          duration: 100,
-        }),
-    };
+      transition: theme.transitions.create('transform', {
+        easing: theme.transitions.easing.sharp,
+        duration: 100,
+      }),
+    });
   }
 
   const hasExternalHref = href

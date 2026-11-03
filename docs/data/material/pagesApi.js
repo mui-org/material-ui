@@ -48,7 +48,6 @@ export default [
   { pathname: '/material-ui/api/form-label' },
   { pathname: '/material-ui/api/global-styles' },
   { pathname: '/material-ui/api/grid' },
-  { pathname: '/material-ui/api/grid-legacy' },
   { pathname: '/material-ui/api/grow' },
   { pathname: '/material-ui/api/icon' },
   { pathname: '/material-ui/api/icon-button' },

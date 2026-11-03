@@ -1,5 +1,5 @@
-import { PortalProps } from '../Portal';
-import { EventHandlers } from '../utils/types';
+import type { PortalProps } from '../Portal';
+import type { EventHandlers } from '../utils/types';
 
 export interface UseModalRootSlotOwnProps {
   role: React.AriaRole;
@@ -10,7 +10,7 @@ export interface UseModalRootSlotOwnProps {
 export interface UseModalBackdropSlotOwnProps {
   'aria-hidden': React.AriaAttributes['aria-hidden'];
   onClick: React.MouseEventHandler;
-  open?: boolean;
+  open?: boolean | undefined;
 }
 
 export type UseModalBackdropSlotProps<TOther = {}> = TOther & UseModalBackdropSlotOwnProps;
@@ -18,15 +18,15 @@ export type UseModalBackdropSlotProps<TOther = {}> = TOther & UseModalBackdropSl
 export type UseModalRootSlotProps<TOther = {}> = TOther & UseModalRootSlotOwnProps;
 
 export type UseModalParameters = {
-  'aria-hidden'?: React.AriaAttributes['aria-hidden'];
+  'aria-hidden'?: React.AriaAttributes['aria-hidden'] | undefined;
   /**
    * A single child content element.
    */
   children:
     | React.ReactElement<{
-        in?: boolean;
-        onEnter?: (this: unknown) => void;
-        onExited?: (this: unknown) => void;
+        in?: boolean | undefined;
+        onEnter?: ((this: unknown) => void) | undefined;
+        onExited?: ((this: unknown) => void) | undefined;
       }>
     | undefined
     | null;
@@ -34,7 +34,7 @@ export type UseModalParameters = {
    * When set to true the Modal waits until a nested Transition is completed before closing.
    * @default false
    */
-  closeAfterTransition?: boolean;
+  closeAfterTransition?: boolean | undefined;
   /**
    * An HTML element or function that returns one.
    * The `container` will have the portal children appended to it.
@@ -45,17 +45,12 @@ export type UseModalParameters = {
    * By default, it uses the body of the top-level document object,
    * so it's simply `document.body` most of the time.
    */
-  container?: PortalProps['container'];
-  /**
-   * If `true`, hitting escape will not fire the `onClose` callback.
-   * @default false
-   */
-  disableEscapeKeyDown?: boolean;
+  container?: PortalProps['container'] | undefined;
   /**
    * Disable the scroll lock behavior.
    * @default false
    */
-  disableScrollLock?: boolean;
+  disableScrollLock?: boolean | undefined;
   /**
    * Callback fired when the component requests to be closed.
    * The `reason` parameter can optionally be used to control the response to `onClose`.
@@ -63,18 +58,20 @@ export type UseModalParameters = {
    * @param {object} event The event source of the callback.
    * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
    */
-  onClose?: {
-    bivarianceHack(event: {}, reason: 'backdropClick' | 'escapeKeyDown'): void;
-  }['bivarianceHack'];
-  onKeyDown?: React.KeyboardEventHandler;
+  onClose?:
+    | {
+        bivarianceHack(event: {}, reason: 'backdropClick' | 'escapeKeyDown'): void;
+      }['bivarianceHack']
+    | undefined;
+  onKeyDown?: React.KeyboardEventHandler | undefined;
   /**
    * A function called when a transition enters.
    */
-  onTransitionEnter?: () => void;
+  onTransitionEnter?: (() => void) | undefined;
   /**
    * A function called when a transition has exited.
    */
-  onTransitionExited?: () => void;
+  onTransitionExited?: (() => void) | undefined;
   /**
    * If `true`, the component is shown.
    */
@@ -115,6 +112,11 @@ export interface UseModalReturnValue {
    * A ref to the component's portal DOM element.
    */
   portalRef: React.RefCallback<Element> | null;
+  /**
+   * The container used by the portal. While a transition is exiting, this remains the last
+   * resolved mount node so changing containers does not remount the transition.
+   */
+  portalContainer: PortalProps['container'];
   /**
    * If `true`, the modal is the top most one.
    */

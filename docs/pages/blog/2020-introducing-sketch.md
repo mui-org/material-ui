@@ -55,7 +55,7 @@ The UI kit was created specifically for Material UI, a popular React UI library
 
 The following video demonstrates how the symbols can be used to design an invoice page.
 
-<iframe style="width: 100%; max-width: 648px;" height="364" src="https://www.youtube.com/embed/DTU6r_VE2C4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe height="364" style="aspect-ratio: 16 / 9; width: 100% !important; max-width: 648px; border: 0" src="https://www.youtube.com/embed/DTU6r_VE2C4" title="Designing an invoice page with the Material UI Sketch symbols" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Sketch Cloud preview: https://mui.com/store/previews/sketch-react/.
 

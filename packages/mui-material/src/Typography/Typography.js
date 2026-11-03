@@ -3,29 +3,15 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import { styled, internal_createExtendSxProp } from '../zero-styled';
+import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import capitalize from '../utils/capitalize';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
 import { getTypographyUtilityClass } from './typographyClasses';
 
-const v6Colors = {
-  primary: true,
-  secondary: true,
-  error: true,
-  info: true,
-  success: true,
-  warning: true,
-  textPrimary: true,
-  textSecondary: true,
-  textDisabled: true,
-};
-
-const extendSxProp = internal_createExtendSxProp();
-
 const useUtilityClasses = (ownerState) => {
-  const { align, gutterBottom, noWrap, paragraph, variant, classes } = ownerState;
+  const { align, gutterBottom, noWrap, variant, classes } = ownerState;
 
   const slots = {
     root: [
@@ -34,7 +20,6 @@ const useUtilityClasses = (ownerState) => {
       ownerState.align !== 'inherit' && `align${capitalize(align)}`,
       gutterBottom && 'gutterBottom',
       noWrap && 'noWrap',
-      paragraph && 'paragraph',
     ],
   };
 
@@ -53,7 +38,6 @@ export const TypographyRoot = styled('span', {
       ownerState.align !== 'inherit' && styles[`align${capitalize(ownerState.align)}`],
       ownerState.noWrap && styles.noWrap,
       ownerState.gutterBottom && styles.gutterBottom,
-      ownerState.paragraph && styles.paragraph,
     ];
   },
 })(
@@ -113,12 +97,6 @@ export const TypographyRoot = styled('span', {
           marginBottom: '0.35em',
         },
       },
-      {
-        props: ({ ownerState }) => ownerState.paragraph,
-        style: {
-          marginBottom: 16,
-        },
-      },
     ],
   })),
 );
@@ -138,21 +116,15 @@ const defaultVariantMapping = {
 };
 
 const Typography = React.forwardRef(function Typography(inProps, ref) {
-  const { color, ...themeProps } = useDefaultProps({ props: inProps, name: 'MuiTypography' });
-  const isSxColor = !v6Colors[color];
-  // TODO: Remove `extendSxProp` in v7
-  const props = extendSxProp({
-    ...themeProps,
-    ...(isSxColor && { color }),
-  });
+  const props = useDefaultProps({ props: inProps, name: 'MuiTypography' });
 
   const {
+    color,
     align = 'inherit',
     className,
     component,
     gutterBottom = false,
     noWrap = false,
-    paragraph = false,
     variant = 'body1',
     variantMapping = defaultVariantMapping,
     ...other
@@ -166,15 +138,12 @@ const Typography = React.forwardRef(function Typography(inProps, ref) {
     component,
     gutterBottom,
     noWrap,
-    paragraph,
     variant,
     variantMapping,
   };
 
   const Component =
-    component ||
-    (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) ||
-    'span';
+    component || variantMapping[variant] || defaultVariantMapping[variant] || 'span';
 
   const classes = useUtilityClasses(ownerState);
 
@@ -252,12 +221,6 @@ Typography.propTypes /* remove-proptypes */ = {
    * @default false
    */
   noWrap: PropTypes.bool,
-  /**
-   * If `true`, the element will be a paragraph element.
-   * @default false
-   * @deprecated Use the `component` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  paragraph: PropTypes.bool,
   /**
    * @ignore
    */

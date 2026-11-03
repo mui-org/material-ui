@@ -1,4 +1,0 @@
-<FormControl>
-  <Checkbox label="Label" />
-  <FormHelperText>A description for the Checkbox.</FormHelperText>
-</FormControl>

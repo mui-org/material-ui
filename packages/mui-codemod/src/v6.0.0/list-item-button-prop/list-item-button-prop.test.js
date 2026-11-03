@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import { jscodeshift } from '../../../testUtils';
 import transform from './list-item-button-prop';
 import readFile from '../../util/readFile';
@@ -28,7 +28,7 @@ describe('@mui/codemod', () => {
       it('actual.js should not be equal to expected.js', () => {
         const actual = read('./test-cases/actual.js');
         const expected = read('./test-cases/expected.js');
-        expect(actual).to.not.equal(expected);
+        expect(actual).not.to.equal(expected);
       });
     });
 
@@ -58,7 +58,7 @@ describe('@mui/codemod', () => {
       it('theme.actual.js should not be equal to theme.expected.js', () => {
         const actual = read('./test-cases/theme.actual.js');
         const expected = read('./test-cases/theme.expected.js');
-        expect(actual).to.not.equal(expected);
+        expect(actual).not.to.equal(expected);
       });
     });
 

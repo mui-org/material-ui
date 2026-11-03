@@ -1,0 +1,92 @@
+name: Publish packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Commit SHA to release from'
+        required: true
+        type: string
+      dry-run:
+        description: 'Run in dry-run mode without actually publishing packages'
+        required: false
+        type: boolean
+        default: false
+      github-release:
+        description: 'Create a GitHub release after publishing'
+        required: false
+        type: boolean
+        default: true
+      dist-tag:
+        description: 'npm dist tag to publish to'
+        required: false
+        type: string
+        default: 'latest'
+      internal-packages:
+        description: 'Whether to publish only the internal packages'
+        required: false
+        type: boolean
+        default: false
+
+permissions: {}
+
+jobs:
+  publish-internal:
+    # Keeping it manual trigger only for now. Will update to also include ` || (github.event_name == 'push' && github.event.head_commit.author.name != 'renovate[bot]')` once we are ready to publish internal packages on push as well.
+    if: (github.event_name == 'workflow_dispatch' && inputs.internal-packages == true)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for pushing tags and creating releases
+      id-token: write # Required for provenance
+    environment:
+      name: npm-publish-internal
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event_name == 'push' && github.sha || inputs.sha }}
+          fetch-depth: 0 # Fetch full history for proper git operations
+      - name: Prepare for publishing
+        uses: mui/mui-public/.github/actions/publish-prepare@139de498efb5493689bd7982f18f2862b679c981 # master
+        with:
+          node-version: '22.23.4'
+      - name: Publish packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm code-infra publish-canary --filter "./packages-internal/*"
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.internal-packages != true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for pushing tags and creating releases
+      id-token: write # Required for provenance
+    environment:
+      name: npm-publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.sha }}
+          fetch-depth: 0 # Fetch full history for proper git operations
+      - name: Prepare for publishing
+        uses: mui/mui-public/.github/actions/publish-prepare@139de498efb5493689bd7982f18f2862b679c981 # master
+        with:
+          node-version: '22.23.4'
+      - name: Publish packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Build common flags
+          ARGS=""
+          if [ "${{ inputs.dry-run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ "${{ inputs.github-release }}" = "true" ]; then
+            ARGS="$ARGS --github-release"
+          fi
+          if [ -n "${{ inputs.dist-tag }}" ]; then
+            ARGS="$ARGS --tag ${{ inputs.dist-tag }}"
+          fi
+
+          pnpm code-infra publish --ci $ARGS --filter "./packages/*"

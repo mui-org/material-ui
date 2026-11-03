@@ -4,10 +4,6 @@
     "arrow": { "description": "If <code>true</code>, adds an arrow to the tooltip." },
     "children": { "description": "Tooltip reference element.", "requiresRef": true },
     "classes": { "description": "Override or extend the styles applied to the component." },
-    "components": { "description": "The components used for each slot inside." },
-    "componentsProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones."
-    },
     "describeChild": {
       "description": "Set to <code>true</code> if the <code>title</code> acts as an accessible description. By default the <code>title</code> acts as an accessible label for the child."
     },
@@ -52,10 +48,6 @@
     },
     "open": { "description": "If <code>true</code>, the component is shown." },
     "placement": { "description": "Tooltip placement." },
-    "PopperComponent": { "description": "The component used for the popper." },
-    "PopperProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/popper/\"><code>Popper</code></a> element."
-    },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
     "sx": {
@@ -63,12 +55,6 @@
     },
     "title": {
       "description": "Tooltip title. Zero-length titles string, undefined, null and false are never displayed."
-    },
-    "TransitionComponent": {
-      "description": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
-    },
-    "TransitionProps": {
-      "description": "Props applied to the transition element. By default, the element is based on this <a href=\"https://reactcommunity.org/react-transition-group/transition/\"><code>Transition</code></a> component."
     }
   },
   "classDescriptions": {
@@ -122,6 +108,6 @@
     "arrow": "The component used for the arrow.",
     "popper": "The component used for the popper.",
     "tooltip": "The component used for the tooltip.",
-    "transition": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
+    "transition": "The component used for the transition. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
 }

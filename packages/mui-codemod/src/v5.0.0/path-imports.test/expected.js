@@ -1,11 +1,20 @@
-import * as React from 'react';
 import { withStyles } from '@mui/styles';
 
 import { grey, blue } from '@mui/material/colors';
 import { grey as grey2 } from '@mui/material/colors';
 import { blue as blue2 } from '@mui/material/colors';
 
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+  ThemeProvider,
+  createTheme,
+  alpha,
+  darken as darken2,
+  useTheme,
+  styled,
+  responsiveFontSizes,
+  withStyles as MuiWithStyles,
+} from '@mui/material/styles';
+
 import MenuItem from '@mui/material/MenuItem';
 import Tab from '@mui/material/Tab';
 import MuiTabs from '@mui/material/Tabs';

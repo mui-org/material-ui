@@ -9,16 +9,8 @@
       "default": "'standard'"
     },
     "component": { "type": { "name": "elementType" } },
-    "components": {
-      "type": {
-        "name": "shape",
-        "description": "{ first?: elementType, last?: elementType, next?: elementType, previous?: elementType }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "nativeButton": { "type": { "name": "bool" } },
     "page": { "type": { "name": "node" } },
     "selected": { "type": { "name": "bool" }, "default": "false" },
     "shape": {
@@ -149,20 +141,6 @@
       "isGlobal": false
     },
     {
-      "key": "outlinedPrimary",
-      "className": "MuiPaginationItem-outlinedPrimary",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "outlinedSecondary",
-      "className": "MuiPaginationItem-outlinedSecondary",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "page",
       "className": "MuiPaginationItem-page",
       "description": "Styles applied to the root element if `type=\"page\"`.",
@@ -209,20 +187,6 @@
       "className": "MuiPaginationItem-text",
       "description": "Styles applied to the root element if `variant=\"text\"`.",
       "isGlobal": false
-    },
-    {
-      "key": "textPrimary",
-      "className": "MuiPaginationItem-textPrimary",
-      "description": "Styles applied to the root element if `variant=\"text\"` and `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "textSecondary",
-      "className": "MuiPaginationItem-textSecondary",
-      "description": "Styles applied to the root element if `variant=\"text\"` and `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     }
   ],
   "spread": true,
@@ -231,6 +195,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/PaginationItem/PaginationItem.js",
   "inheritance": { "component": "ButtonBase", "pathname": "/material-ui/api/button-base/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-pagination/\">Pagination</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-pagination/\">Pagination</a></li></ul>"
 }

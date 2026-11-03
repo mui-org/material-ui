@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import ownerDocument from '@mui/utils/ownerDocument';
 import useControlled from '@mui/utils/useControlled';
 import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
@@ -9,7 +10,7 @@ import isFocusVisible from '@mui/utils/isFocusVisible';
 import visuallyHidden from '@mui/utils/visuallyHidden';
 import clamp from '@mui/utils/clamp';
 import extractEventHandlers from '@mui/utils/extractEventHandlers';
-import {
+import type {
   Mark,
   UseSliderHiddenInputProps,
   UseSliderParameters,
@@ -17,10 +18,14 @@ import {
   UseSliderRootSlotProps,
   UseSliderThumbSlotProps,
 } from './useSlider.types';
-import { EventHandlers } from '../utils/types';
+import type { EventHandlers } from '../utils/types';
 import areArraysEqual from '../utils/areArraysEqual';
+import contains from '../utils/contains';
+import getActiveElement from '../utils/getActiveElement';
 
 const INTENTIONAL_DRAG_COUNT_THRESHOLD = 2;
+const EMPTY_MARKS: readonly Mark[] = [];
+const EMPTY_OBJ = {};
 
 function getNewValue(
   currentValue: number,
@@ -29,20 +34,22 @@ function getNewValue(
   min: number,
   max: number,
 ): number {
-  return direction === 1 ? Math.min(currentValue + step, max) : Math.max(currentValue - step, min);
+  const precision = Math.max(getDecimalPrecision(currentValue), getDecimalPrecision(step));
+  const newValue = Number((currentValue + direction * step).toFixed(precision));
+  return direction === 1 ? Math.min(newValue, max) : Math.max(newValue, min);
 }
 
 function asc(a: number, b: number) {
   return a - b;
 }
 
-function findClosest(values: number[], currentValue: number) {
-  const { index: closestIndex } =
+function findClosest(values: number[], currentValue: number, preferredIndex = -1) {
+  const closestValue =
     values.reduce<{ distance: number; index: number } | null>(
       (acc, value: number, index: number) => {
         const distance = Math.abs(currentValue - value);
 
-        if (acc === null || distance < acc.distance || distance === acc.distance) {
+        if (acc == null || distance <= acc.distance) {
           return {
             distance,
             index,
@@ -52,20 +59,30 @@ function findClosest(values: number[], currentValue: number) {
         return acc;
       },
       null,
-    ) ?? {};
+    ) ?? (EMPTY_OBJ as { index?: number | undefined });
+  const { index: closestIndex } = closestValue;
+
+  if (closestIndex == null) {
+    return closestIndex;
+  }
+
+  if (preferredIndex >= 0 && values[preferredIndex] === values[closestIndex]) {
+    return preferredIndex;
+  }
+
   return closestIndex;
 }
 
 function trackFinger(
-  event: TouchEvent | MouseEvent | React.MouseEvent,
-  touchId: React.RefObject<any>,
+  event: TouchEvent | PointerEvent | React.PointerEvent,
+  touchIdRef: React.RefObject<number | undefined>,
 ) {
   // The event is TouchEvent
-  if (touchId.current !== undefined && (event as TouchEvent).changedTouches) {
+  if (touchIdRef.current != null && (event as TouchEvent).changedTouches) {
     const touchEvent = event as TouchEvent;
     for (let i = 0; i < touchEvent.changedTouches.length; i += 1) {
       const touch = touchEvent.changedTouches[i];
-      if (touch.identifier === touchId.current) {
+      if (touch.identifier === touchIdRef.current) {
         return {
           x: touch.clientX,
           y: touch.clientY,
@@ -76,7 +93,7 @@ function trackFinger(
     return false;
   }
 
-  // The event is MouseEvent
+  // The event is PointerEvent or MouseEvent
   return {
     x: (event as MouseEvent).clientX,
     y: (event as MouseEvent).clientY,
@@ -94,7 +111,8 @@ function percentToValue(percent: number, min: number, max: number) {
 function getDecimalPrecision(num: number) {
   // This handles the case when num is very small (0.00000001), js will turn this into 1e-8.
   // When num is bigger than 1 or less than -1 it won't get converted to this notation so it's fine.
-  if (Math.abs(num) < 1) {
+  // 0 is excluded because its exponential notation (0e+0) has no negative exponent.
+  if (num !== 0 && Math.abs(num) < 1) {
     const parts = num.toExponential().split('e-');
     const matissaDecimalPart = parts[0].split('.')[1];
     return (matissaDecimalPart ? matissaDecimalPart.length : 0) + parseInt(parts[1], 10);
@@ -109,35 +127,40 @@ function roundValueToStep(value: number, step: number, min: number) {
   return Number(nearest.toFixed(getDecimalPrecision(step)));
 }
 
-function setValueIndex({
-  values,
-  newValue,
-  index,
-}: {
-  values: number[];
-  newValue: number;
-  index: number;
-}) {
+function setValueIndex(values: number[], newValue: number, index: number) {
   const output = values.slice();
   output[index] = newValue;
   return output.sort(asc);
 }
 
-function focusThumb({
-  sliderRef,
-  activeIndex,
-  setActive,
-}: {
-  sliderRef: React.RefObject<any>;
-  activeIndex: number;
-  setActive?: (num: number) => void;
-}) {
+function focusThumb(
+  sliderRef: React.RefObject<HTMLSpanElement | null>,
+  activeIndex: number,
+  setActive?: ((num: number) => void) | undefined,
+  focusVisible?: boolean | undefined,
+) {
   const doc = ownerDocument(sliderRef.current);
+  const activeElement = getActiveElement(doc);
   if (
-    !sliderRef.current?.contains(doc.activeElement) ||
-    Number(doc?.activeElement?.getAttribute('data-index')) !== activeIndex
+    !contains(sliderRef.current, activeElement) ||
+    Number(activeElement?.getAttribute('data-index')) !== activeIndex
   ) {
-    sliderRef.current?.querySelector(`[type="range"][data-index="${activeIndex}"]`).focus();
+    const input = sliderRef.current?.querySelector(
+      `[type="range"][data-index="${activeIndex}"]`,
+    ) as HTMLInputElement | null;
+    if (input != null) {
+      if (focusVisible == null) {
+        input.focus({ preventScroll: true });
+      } else {
+        input.focus({
+          preventScroll: true,
+          // Prevent pointer-driven focus rings in browsers that support this option.
+          // Chrome 144+ supports `focusVisible` in `HTMLElement.focus()` options.
+          focusVisible,
+          // Cast can be removed once TypeScript >= 6.0 (added `focusVisible` to lib.dom FocusOptions).
+        } as FocusOptions & { focusVisible?: boolean | undefined });
+      }
+    }
   }
 
   if (setActive) {
@@ -173,29 +196,7 @@ const axisProps = {
   },
 };
 
-export const Identity = (x: any) => x;
-
-// TODO: remove support for Safari < 13.
-// https://caniuse.com/#search=touch-action
-//
-// Safari, on iOS, supports touch action since v13.
-// Over 80% of the iOS phones are compatible
-// in August 2020.
-// Utilizing the CSS.supports method to check if touch-action is supported.
-// Since CSS.supports is supported on all but Edge@12 and IE and touch-action
-// is supported on both Edge@12 and IE if CSS.supports is not available that means that
-// touch-action will be supported
-let cachedSupportsTouchActionNone: any;
-function doesSupportTouchActionNone() {
-  if (cachedSupportsTouchActionNone === undefined) {
-    if (typeof CSS !== 'undefined' && typeof CSS.supports === 'function') {
-      cachedSupportsTouchActionNone = CSS.supports('touch-action', 'none');
-    } else {
-      cachedSupportsTouchActionNone = true;
-    }
-  }
-  return cachedSupportsTouchActionNone;
-}
+export const Identity = (x: number) => x;
 
 export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue {
   const {
@@ -219,16 +220,31 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     value: valueProp,
   } = parameters;
 
-  const touchId = React.useRef<number>(undefined);
+  const touchIdRef = React.useRef<number | undefined>(undefined);
+  const focusFrameRef = React.useRef<number | null>(null);
   // We can't use the :active browser pseudo-classes.
   // - The active state isn't triggered when clicking on the rail.
   // - The active state isn't transferred when inversing a range slider.
   const [active, setActive] = React.useState(-1);
   const [open, setOpen] = React.useState(-1);
   const [dragging, setDragging] = React.useState(false);
-  const moveCount = React.useRef(0);
-  // lastChangedValue is updated whenever onChange is triggered.
-  const lastChangedValue = React.useRef<number | number[] | null>(null);
+  const moveCountRef = React.useRef(0);
+  // Ref (not state) because setActive() always accompanies updates, providing the re-render.
+  const lastUsedThumbIndexRef = React.useRef(-1);
+  // Prevents duplicate listener registration when both pointer and touch events fire
+  // for the same physical touch interaction.
+  const pointerDownHandledRef = React.useRef(false);
+  // Tracks which pointer owns the current drag session, so stray pointerup/pointermove
+  // events from a second pointer don't interfere.
+  const activePointerIdRef = React.useRef<number>(-1);
+  const cancelFocusFrame = useEventCallback(() => {
+    if (focusFrameRef.current != null) {
+      cancelAnimationFrame(focusFrameRef.current);
+      focusFrameRef.current = null;
+    }
+  });
+  // lastChangedValueRef is updated whenever onChange is triggered.
+  const lastChangedValueRef = React.useRef<number | number[] | null>(null);
 
   const [valueDerived, setValueState] = useControlled({
     controlled: valueProp,
@@ -236,38 +252,66 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     name: 'Slider',
   });
 
-  const handleChange =
-    onChange &&
-    ((event: Event | React.SyntheticEvent, value: number | number[], thumbIndex: number) => {
+  const handleChange = useEventCallback(
+    (event: Event | React.SyntheticEvent, value: number | number[], thumbIndex: number) => {
       // Redefine target to allow name and value to be read.
       // This allows seamless integration with the most popular form libraries.
       // https://github.com/mui/material-ui/issues/13485#issuecomment-676048492
       // Clone the event to not override `target` of the original event.
-      const nativeEvent = (event as React.SyntheticEvent).nativeEvent || event;
-      // @ts-ignore The nativeEvent is function, not object
-      const clonedEvent = new nativeEvent.constructor(nativeEvent.type, nativeEvent);
+      const nativeEvent = 'nativeEvent' in event ? event.nativeEvent : event;
+      const clonedEvent = new (nativeEvent.constructor as typeof Event)(
+        nativeEvent.type,
+        nativeEvent as EventInit,
+      );
 
       Object.defineProperty(clonedEvent, 'target', {
         writable: true,
         value: { value, name },
       });
 
-      lastChangedValue.current = value;
-      onChange(clonedEvent, value, thumbIndex);
-    });
+      lastChangedValueRef.current = value;
+      onChange?.(clonedEvent, value, thumbIndex);
+    },
+  );
 
   const range = Array.isArray(valueDerived);
-  let values = range ? valueDerived.slice().sort(asc) : [valueDerived];
-  values = values.map((value) => (value == null ? min : clamp(value, min, max)));
+  const values = React.useMemo(() => {
+    if (typeof valueDerived === 'number') {
+      return [clamp(valueDerived, min, max)];
+    }
 
-  const marks =
-    marksProp === true && step !== null
-      ? [...Array(Math.floor((max - min) / step) + 1)].map((_, index) => ({
-          value: min + step * index,
-        }))
-      : marksProp || [];
+    if (valueDerived == null) {
+      return [min];
+    }
 
-  const marksValues = (marks as Mark[]).map((mark: Mark) => mark.value);
+    const sortedValues = valueDerived.slice().sort(asc);
+    for (let i = 0; i < sortedValues.length; i += 1) {
+      const value = sortedValues[i];
+      sortedValues[i] = value == null ? min : clamp(value, min, max);
+    }
+
+    return sortedValues;
+  }, [valueDerived, min, max]);
+
+  const marks = React.useMemo<readonly Mark[]>(() => {
+    if (marksProp === true && step != null) {
+      const generatedMarks = new Array<Mark>(Math.floor((max - min) / step) + 1);
+      for (let i = 0; i < generatedMarks.length; i += 1) {
+        generatedMarks[i] = { value: min + step * i };
+      }
+      return generatedMarks;
+    }
+
+    return Array.isArray(marksProp) ? marksProp : EMPTY_MARKS;
+  }, [marksProp, step, min, max]);
+
+  const marksValues = React.useMemo(() => {
+    const markValues = new Array<number>(marks.length);
+    for (let i = 0; i < marks.length; i += 1) {
+      markValues[i] = marks[i].value;
+    }
+    return markValues;
+  }, [marks]);
 
   const [focusedThumbIndex, setFocusedThumbIndex] = React.useState(-1);
 
@@ -314,15 +358,11 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     if (range) {
       // Bound the new value to the thumb's neighbours.
       if (disableSwap) {
-        newValue = clamp(newValue, values[index - 1] || -Infinity, values[index + 1] || Infinity);
+        newValue = clamp(newValue, values[index - 1] ?? -Infinity, values[index + 1] ?? Infinity);
       }
 
       const previousValue = newValue;
-      newValue = setValueIndex({
-        values,
-        newValue,
-        index,
-      });
+      newValue = setValueIndex(values, newValue, index);
 
       let activeIndex = index;
 
@@ -331,18 +371,18 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
         activeIndex = newValue.indexOf(previousValue);
       }
 
-      focusThumb({ sliderRef, activeIndex });
+      focusThumb(sliderRef, activeIndex);
     }
 
     setValueState(newValue);
     setFocusedThumbIndex(index);
 
-    if (handleChange && !areValuesEqual(newValue, valueDerived)) {
+    if (onChange && !areValuesEqual(newValue, valueDerived)) {
       handleChange(event, newValue, index);
     }
 
     if (onChangeCommitted) {
-      onChangeCommitted(event, lastChangedValue.current ?? newValue);
+      onChangeCommitted(event, lastChangedValueRef.current ?? newValue);
     }
   };
 
@@ -433,12 +473,14 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     };
 
   useEnhancedEffect(() => {
-    if (disabled && sliderRef.current!.contains(document.activeElement)) {
+    const activeElement = getActiveElement(ownerDocument(sliderRef.current));
+    if (disabled && contains(sliderRef.current, activeElement)) {
       // This is necessary because Firefox and Safari will keep focus
       // on a disabled element:
       // https://codesandbox.io/p/sandbox/mui-pr-22247-forked-h151h?file=/src/App.js
-      // @ts-ignore
-      document.activeElement?.blur();
+      if (activeElement != null && 'blur' in activeElement) {
+        (activeElement as HTMLElement).blur();
+      }
     }
   }, [disabled]);
 
@@ -450,28 +492,29 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
   }
 
   const createHandleHiddenInputChange =
-    (otherHandlers: EventHandlers) => (event: React.ChangeEvent) => {
+    (otherHandlers: EventHandlers) => (event: React.ChangeEvent<HTMLInputElement>) => {
       otherHandlers.onChange?.(event);
-      // this handles value change by Pointer or Touch events
-      // @ts-ignore
-      changeValue(event, event.target.valueAsNumber);
+      // Handles value changes reported through the hidden range input.
+      changeValue(event, event.currentTarget.valueAsNumber);
     };
 
-  const previousIndex = React.useRef<number>(undefined);
+  const previousIndexRef = React.useRef<number>(undefined);
   let axis = orientation;
   if (isRtl && orientation === 'horizontal') {
     axis += '-reverse';
   }
 
-  const getFingerNewValue = ({
-    finger,
-    move = false,
-  }: {
-    finger: { x: number; y: number };
-    move?: boolean;
-  }) => {
+  // Converts finger coordinates to a slider value and determines the active thumb.
+  // For range sliders, reads `previousIndexRef.current` to decide which thumb is active:
+  //   -1 = initial press → find closest thumb
+  //   ≥0 = drag in progress → keep same thumb
+  // Callers must reset `previousIndexRef.current = -1` before calling on a new interaction.
+  const getValueAtFinger = (finger: { x: number; y: number }) => {
     const { current: slider } = sliderRef;
-    const { width, height, bottom, left } = slider!.getBoundingClientRect();
+    if (!slider) {
+      return null;
+    }
+    const { width, height, bottom, left } = slider.getBoundingClientRect();
     let percent;
 
     if (axis.startsWith('vertical')) {
@@ -497,92 +540,112 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     let activeIndex = 0;
 
     if (range) {
-      if (!move) {
-        activeIndex = findClosest(values, newValue)!;
-      } else {
-        activeIndex = previousIndex.current!;
-      }
+      const isDragging = previousIndexRef.current !== -1;
+      activeIndex = isDragging
+        ? previousIndexRef.current!
+        : findClosest(values, newValue, lastUsedThumbIndexRef.current)!;
 
       // Bound the new value to the thumb's neighbours.
       if (disableSwap) {
         newValue = clamp(
           newValue,
-          values[activeIndex - 1] || -Infinity,
-          values[activeIndex + 1] || Infinity,
+          values[activeIndex - 1] ?? -Infinity,
+          values[activeIndex + 1] ?? Infinity,
         );
       }
 
       const previousValue = newValue;
-      newValue = setValueIndex({
-        values,
-        newValue,
-        index: activeIndex,
-      });
+      newValue = setValueIndex(values, newValue, activeIndex);
 
       // Potentially swap the index if needed.
-      if (!(disableSwap && move)) {
+      if (!(disableSwap && isDragging)) {
         activeIndex = newValue.indexOf(previousValue);
-        previousIndex.current = activeIndex;
+        previousIndexRef.current = activeIndex;
       }
     }
 
     return { newValue, activeIndex };
   };
 
-  const handleTouchMove = useEventCallback((nativeEvent: TouchEvent | MouseEvent) => {
-    const finger = trackFinger(nativeEvent, touchId);
+  const handleTouchMove = useEventCallback((nativeEvent: TouchEvent | PointerEvent) => {
+    // Ignore pointer events from a different pointer than the one that started the drag.
+    if ('pointerId' in nativeEvent && nativeEvent.pointerId !== activePointerIdRef.current) {
+      return;
+    }
+
+    const finger = trackFinger(nativeEvent, touchIdRef);
 
     if (!finger) {
       return;
     }
 
-    moveCount.current += 1;
+    moveCountRef.current += 1;
 
-    // Cancel move in case some other element consumed a mouseup event and it was not fired.
-    // @ts-ignore buttons doesn't not exists on touch event
-    if (nativeEvent.type === 'mousemove' && nativeEvent.buttons === 0) {
+    // Cancel move in case some other element consumed a pointerup event and it was not fired.
+    if (nativeEvent.type === 'pointermove' && (nativeEvent as PointerEvent).buttons === 0) {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       handleTouchEnd(nativeEvent);
       return;
     }
 
-    const { newValue, activeIndex } = getFingerNewValue({
-      finger,
-      move: true,
+    const newFingerValue = getValueAtFinger(finger);
+
+    if (!newFingerValue) {
+      return;
+    }
+
+    // React defers updates from continuous events like pointermove to a later task,
+    // so the browser paints the frame with the thumb still at its previous position.
+    // Flush them synchronously to move the thumb in the same frame as the pointer.
+    ReactDOM.flushSync(() => {
+      focusThumb(sliderRef, newFingerValue.activeIndex, setActive, false);
+      lastUsedThumbIndexRef.current = newFingerValue.activeIndex;
+      setValueState(newFingerValue.newValue);
+
+      if (!dragging && moveCountRef.current > INTENTIONAL_DRAG_COUNT_THRESHOLD) {
+        setDragging(true);
+      }
+
+      if (onChange && !areValuesEqual(newFingerValue.newValue, valueDerived)) {
+        handleChange(nativeEvent, newFingerValue.newValue, newFingerValue.activeIndex);
+      }
     });
-
-    focusThumb({ sliderRef, activeIndex, setActive });
-    setValueState(newValue);
-
-    if (!dragging && moveCount.current > INTENTIONAL_DRAG_COUNT_THRESHOLD) {
-      setDragging(true);
-    }
-
-    if (handleChange && !areValuesEqual(newValue, valueDerived)) {
-      handleChange(nativeEvent, newValue, activeIndex);
-    }
   });
 
-  const handleTouchEnd = useEventCallback((nativeEvent: TouchEvent | MouseEvent) => {
-    const finger = trackFinger(nativeEvent, touchId);
+  const handleTouchEnd = useEventCallback((nativeEvent: TouchEvent | PointerEvent) => {
+    // Ignore pointer events from a different pointer than the one that started the drag.
+    if ('pointerId' in nativeEvent && nativeEvent.pointerId !== activePointerIdRef.current) {
+      return;
+    }
+
+    const finger = trackFinger(nativeEvent, touchIdRef);
     setDragging(false);
 
     if (!finger) {
       return;
     }
 
-    const { newValue } = getFingerNewValue({ finger, move: true });
+    const newFingerValue = getValueAtFinger(finger);
 
     setActive(-1);
     if (nativeEvent.type === 'touchend') {
       setOpen(-1);
     }
 
-    if (onChangeCommitted) {
-      onChangeCommitted(nativeEvent, lastChangedValue.current ?? newValue);
+    if (newFingerValue && onChangeCommitted) {
+      onChangeCommitted(nativeEvent, lastChangedValueRef.current ?? newFingerValue.newValue);
     }
 
-    touchId.current = undefined;
+    // Release pointer capture if applicable
+    if (
+      'pointerType' in nativeEvent &&
+      sliderRef.current?.hasPointerCapture(nativeEvent.pointerId)
+    ) {
+      sliderRef.current.releasePointerCapture(nativeEvent.pointerId);
+    }
+
+    touchIdRef.current = undefined;
+    activePointerIdRef.current = -1;
 
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopListening();
@@ -592,29 +655,40 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     if (disabled) {
       return;
     }
-    // If touch-action: none; is not supported we need to prevent the scroll manually.
-    if (!doesSupportTouchActionNone()) {
-      nativeEvent.preventDefault();
+
+    // If the pointer path already handled this interaction,
+    // only record the touch identifier and skip duplicate listener registration.
+    if (pointerDownHandledRef.current) {
+      pointerDownHandledRef.current = false;
+      const touch = nativeEvent.changedTouches[0];
+      if (touch != null) {
+        touchIdRef.current = touch.identifier;
+      }
+      return;
     }
 
     const touch = nativeEvent.changedTouches[0];
     if (touch != null) {
       // A number that uniquely identifies the current finger in the touch session.
-      touchId.current = touch.identifier;
+      touchIdRef.current = touch.identifier;
     }
-    const finger = trackFinger(nativeEvent, touchId);
+    const finger = trackFinger(nativeEvent, touchIdRef);
     if (finger !== false) {
-      const { newValue, activeIndex } = getFingerNewValue({ finger });
-      focusThumb({ sliderRef, activeIndex, setActive });
+      previousIndexRef.current = -1;
+      const newFingerValue = getValueAtFinger(finger);
+      if (newFingerValue) {
+        focusThumb(sliderRef, newFingerValue.activeIndex, setActive, false);
+        lastUsedThumbIndexRef.current = newFingerValue.activeIndex;
 
-      setValueState(newValue);
+        setValueState(newFingerValue.newValue);
 
-      if (handleChange && !areValuesEqual(newValue, valueDerived)) {
-        handleChange(nativeEvent, newValue, activeIndex);
+        if (onChange && !areValuesEqual(newFingerValue.newValue, valueDerived)) {
+          handleChange(nativeEvent, newFingerValue.newValue, newFingerValue.activeIndex);
+        }
       }
     }
 
-    moveCount.current = 0;
+    moveCountRef.current = 0;
     const doc = ownerDocument(sliderRef.current);
     doc.addEventListener('touchmove', handleTouchMove, { passive: true });
     doc.addEventListener('touchend', handleTouchEnd, { passive: true });
@@ -622,77 +696,111 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
 
   const stopListening = React.useCallback(() => {
     const doc = ownerDocument(sliderRef.current);
-    doc.removeEventListener('mousemove', handleTouchMove);
-    doc.removeEventListener('mouseup', handleTouchEnd);
+    doc.removeEventListener('pointermove', handleTouchMove);
+    doc.removeEventListener('pointerup', handleTouchEnd);
     doc.removeEventListener('touchmove', handleTouchMove);
     doc.removeEventListener('touchend', handleTouchEnd);
   }, [handleTouchEnd, handleTouchMove]);
 
   React.useEffect(() => {
-    const { current: slider } = sliderRef;
-    slider!.addEventListener('touchstart', handleTouchStart, {
-      passive: doesSupportTouchActionNone(),
+    const slider = sliderRef.current;
+    if (!slider) {
+      return undefined;
+    }
+    slider.addEventListener('touchstart', handleTouchStart, {
+      passive: true,
     });
 
     return () => {
-      slider!.removeEventListener('touchstart', handleTouchStart);
+      slider.removeEventListener('touchstart', handleTouchStart);
 
+      cancelFocusFrame();
       stopListening();
     };
-  }, [stopListening, handleTouchStart]);
+  }, [stopListening, handleTouchStart, cancelFocusFrame]);
 
   React.useEffect(() => {
     if (disabled) {
       stopListening();
+      cancelFocusFrame();
     }
-  }, [disabled, stopListening]);
+  }, [disabled, stopListening, cancelFocusFrame]);
 
-  const createHandleMouseDown =
-    (otherHandlers: EventHandlers) => (event: React.MouseEvent<HTMLSpanElement>) => {
-      otherHandlers.onMouseDown?.(event);
-      if (disabled) {
+  const createHandlePointerDown =
+    (otherHandlers: EventHandlers) => (event: React.PointerEvent<HTMLSpanElement>) => {
+      otherHandlers.onPointerDown?.(event);
+
+      // On touch devices, the browser fires both pointerdown and touchstart for the
+      // same physical touch. Mark this BEFORE early returns so handleTouchStart always
+      // knows the pointer path saw this interaction — even if it was prevented or disabled.
+      if (event.pointerType === 'touch') {
+        pointerDownHandledRef.current = true;
+      }
+
+      if (disabled || event.defaultPrevented || event.button !== 0) {
         return;
       }
 
-      if (event.defaultPrevented) {
-        return;
-      }
-
-      // Only handle left clicks
-      if (event.button !== 0) {
-        return;
-      }
-
-      // Avoid text selection
-      event.preventDefault();
-      const finger = trackFinger(event, touchId);
+      const finger = trackFinger(event, touchIdRef);
       if (finger !== false) {
-        const { newValue, activeIndex } = getFingerNewValue({ finger });
-        focusThumb({ sliderRef, activeIndex, setActive });
+        previousIndexRef.current = -1;
+        const newFingerValue = getValueAtFinger(finger);
+        if (newFingerValue) {
+          const thumbInput = sliderRef.current?.querySelector(
+            `input[type="range"][data-index="${newFingerValue.activeIndex}"]`,
+          );
+          const doc = ownerDocument(sliderRef.current);
+          const pressedOnFocusedThumb = thumbInput != null && thumbInput === getActiveElement(doc);
 
-        setValueState(newValue);
+          setActive(newFingerValue.activeIndex);
+          lastUsedThumbIndexRef.current = newFingerValue.activeIndex;
 
-        if (handleChange && !areValuesEqual(newValue, valueDerived)) {
-          handleChange(event, newValue, activeIndex);
+          if (pressedOnFocusedThumb) {
+            event.preventDefault();
+          } else {
+            cancelFocusFrame();
+            focusFrameRef.current = requestAnimationFrame(() => {
+              focusFrameRef.current = null;
+              focusThumb(sliderRef, newFingerValue.activeIndex, undefined, false);
+            });
+          }
+
+          setValueState(newFingerValue.newValue);
+
+          if (onChange && !areValuesEqual(newFingerValue.newValue, valueDerived)) {
+            handleChange(event, newFingerValue.newValue, newFingerValue.activeIndex);
+          }
         }
       }
 
-      moveCount.current = 0;
+      moveCountRef.current = 0;
+      activePointerIdRef.current = event.pointerId;
       const doc = ownerDocument(sliderRef.current);
-      doc.addEventListener('mousemove', handleTouchMove, { passive: true });
-      doc.addEventListener('mouseup', handleTouchEnd);
+
+      // Use pointer capture for reliable drag tracking
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // setPointerCapture can throw if the pointerId is invalid (e.g. synthetic
+        // events in tests, or the pointer was already released). The slider still
+        // works via document-level listeners; pointer capture is a progressive
+        // enhancement for reliable drag tracking.
+      }
+
+      doc.addEventListener('pointermove', handleTouchMove, { passive: true });
+      doc.addEventListener('pointerup', handleTouchEnd);
     };
 
   const trackOffset = valueToPercent(range ? values[0] : min, min, max);
   const trackLeap = valueToPercent(values[values.length - 1], min, max) - trackOffset;
 
   const getRootProps = <ExternalProps extends Record<string, unknown> = {}>(
-    externalProps: ExternalProps = {} as ExternalProps,
+    externalProps: ExternalProps = EMPTY_OBJ as ExternalProps,
   ): UseSliderRootSlotProps<ExternalProps> => {
     const externalHandlers = extractEventHandlers(externalProps);
 
     const ownEventHandlers = {
-      onMouseDown: createHandleMouseDown(externalHandlers || {}),
+      onPointerDown: createHandlePointerDown(externalHandlers),
     };
 
     const mergedEventHandlers = {
@@ -723,13 +831,13 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     };
 
   const getThumbProps = <ExternalProps extends Record<string, unknown> = {}>(
-    externalProps: ExternalProps = {} as ExternalProps,
+    externalProps: ExternalProps = EMPTY_OBJ as ExternalProps,
   ): UseSliderThumbSlotProps<ExternalProps> => {
     const externalHandlers = extractEventHandlers(externalProps);
 
     const ownEventHandlers = {
-      onMouseOver: createHandleMouseOver(externalHandlers || {}),
-      onMouseLeave: createHandleMouseLeave(externalHandlers || {}),
+      onMouseOver: createHandleMouseOver(externalHandlers),
+      onMouseLeave: createHandleMouseLeave(externalHandlers),
     };
 
     return {
@@ -740,9 +848,21 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
   };
 
   const getThumbStyle = (index: number) => {
+    let zIndex: number | undefined;
+    if (range) {
+      if (active === index) {
+        zIndex = 2;
+      } else if (lastUsedThumbIndexRef.current === index) {
+        zIndex = 1;
+      }
+    } else if (active === index) {
+      zIndex = 1;
+    }
+
     return {
       // So the non active thumb doesn't show its label on hover.
       pointerEvents: active !== -1 && active !== index ? 'none' : undefined,
+      zIndex,
     };
   };
 
@@ -752,15 +872,15 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
   }
 
   const getHiddenInputProps = <ExternalProps extends Record<string, unknown> = {}>(
-    externalProps: ExternalProps = {} as ExternalProps,
+    externalProps: ExternalProps = EMPTY_OBJ as ExternalProps,
   ): UseSliderHiddenInputProps<ExternalProps> => {
     const externalHandlers = extractEventHandlers(externalProps);
 
     const ownEventHandlers = {
-      onChange: createHandleHiddenInputChange(externalHandlers || {}),
-      onFocus: createHandleHiddenInputFocus(externalHandlers || {}),
-      onBlur: createHandleHiddenInputBlur(externalHandlers || {}),
-      onKeyDown: createHandleHiddenInputKeyDown(externalHandlers || {}),
+      onChange: createHandleHiddenInputChange(externalHandlers),
+      onFocus: createHandleHiddenInputFocus(externalHandlers),
+      onBlur: createHandleHiddenInputBlur(externalHandlers),
+      onKeyDown: createHandleHiddenInputKeyDown(externalHandlers),
     };
 
     const mergedEventHandlers = {
@@ -802,7 +922,7 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     getHiddenInputProps,
     getRootProps,
     getThumbProps,
-    marks: marks as Mark[],
+    marks,
     open,
     range,
     rootRef: handleRef,

@@ -12,11 +12,11 @@ export interface TableContainerOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TableContainerClasses>;
+  classes?: Partial<TableContainerClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface TableContainerTypeMap<
@@ -30,11 +30,11 @@ export interface TableContainerTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableContainer API](https://mui.com/material-ui/api/table-container/)
+ * - [TableContainer API](https://next.mui.com/material-ui/api/table-container/)
  */
 declare const TableContainer: OverridableComponent<TableContainerTypeMap>;
 
@@ -42,7 +42,7 @@ export type TableContainerProps<
   RootComponent extends React.ElementType = TableContainerTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<TableContainerTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default TableContainer;

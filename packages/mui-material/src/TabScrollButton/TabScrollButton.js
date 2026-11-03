@@ -65,6 +65,7 @@ const TabScrollButton = React.forwardRef(function TabScrollButton(inProps, ref) 
     disabled,
     ...other
   } = props;
+  const { nativeButton, ...buttonBaseProps } = other;
 
   const isRtl = useRtl();
 
@@ -101,9 +102,9 @@ const TabScrollButton = React.forwardRef(function TabScrollButton(inProps, ref) 
       role={null}
       ownerState={ownerState}
       tabIndex={null}
-      {...other}
+      {...buttonBaseProps}
       style={{
-        ...other.style,
+        ...buttonBaseProps.style,
         ...(orientation === 'vertical' && {
           '--TabScrollButton-svgRotate': `rotate(${isRtl ? -90 : 90}deg)`,
         }),

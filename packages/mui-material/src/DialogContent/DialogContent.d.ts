@@ -12,26 +12,26 @@ export interface DialogContentProps extends StandardProps<React.HTMLAttributes<H
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<DialogContentClasses>;
+  classes?: Partial<DialogContentClasses> | undefined;
   /**
    * Display the top and bottom dividers.
    * @default false
    */
-  dividers?: boolean;
+  dividers?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Dialog](https://mui.com/material-ui/react-dialog/)
+ * - [Dialog](https://next.mui.com/material-ui/react-dialog/)
  *
  * API:
  *
- * - [DialogContent API](https://mui.com/material-ui/api/dialog-content/)
+ * - [DialogContent API](https://next.mui.com/material-ui/api/dialog-content/)
  */
 export default function DialogContent(props: DialogContentProps): React.JSX.Element;

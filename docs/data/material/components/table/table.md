@@ -18,7 +18,7 @@ Tables display information in a way that's easy to scan, so that users can look 
 - Navigation
 - Tools to query and manipulate data
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Introduction
 
@@ -31,14 +31,14 @@ Tables are implemented using a collection of related components:
 - `<TableRow />`: A row in a table. Can be used in `<TableHead />`, `<TableBody />`, or `<TableFooter />`. Renders as a `<tr>` by default.
 - `<TableCell />`: A cell in a table. Can be used in `<TableRow />` . Renders as a `<th>` in `<TableHead />` and `<td>` in `<TableBody />` by default.
 - `<TableFooter />`: An optional container for the footer row(s) of the table. Renders as a `<tfoot>` by default.
-- `<TablePagination />`: A component that provides controls for paginating table data. See the ['Sorting & selecting' example](#sorting-amp-selecting) and ['Custom Table Pagination Action' example](#custom-pagination-actions).
-- `<TableSortLabel />`: A component used to display sorting controls for column headers, allowing users to sort data in ascending or descending order. See the ['Sorting & selecting' example](#sorting-amp-selecting).
+- `<TablePagination />`: A component that provides controls for paginating table data. See the ['Sorting & selecting' example](#sorting-selecting) and ['Custom Table Pagination Action' example](#custom-pagination-actions).
+- `<TableSortLabel />`: A component used to display sorting controls for column headers, allowing users to sort data in ascending or descending order. See the ['Sorting & selecting' example](#sorting-selecting).
 
 ## Basic table
 
 A simple example with no frills.
 
-{{"demo": "BasicTable.js", "bg": true}}
+{{"component": "file://./demos/basic/index.ts", "bg": true}}
 
 ## Data table
 
@@ -48,13 +48,13 @@ This constraint makes building rich data tables challenging.
 The [`DataGrid` component](/x/react-data-grid/) is designed for use-cases that are focused on handling large amounts of tabular data.
 While it comes with a more rigid structure, in exchange, you gain more powerful features.
 
-{{"demo": "DataTable.js", "bg": true}}
+{{"component": "file://./demos/data/index.ts", "bg": true}}
 
 ## Dense table
 
 A simple example of a dense table with no frills.
 
-{{"demo": "DenseTable.js", "bg": true}}
+{{"component": "file://./demos/dense/index.ts", "bg": true}}
 
 ## Sorting & selecting
 
@@ -62,14 +62,14 @@ This example demonstrates the use of `Checkbox` and clickable rows for selection
 
 The Table has been given a fixed width to demonstrate horizontal scrolling. In order to prevent the pagination controls from scrolling, the TablePagination component is used outside of the Table. (The ['Custom Table Pagination Action' example](#custom-pagination-actions) below shows the pagination within the TableFooter.)
 
-{{"demo": "EnhancedTable.js", "bg": true}}
+{{"component": "file://./demos/enhanced/index.ts", "bg": true}}
 
 ## Customization
 
 Here is an example of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedTables.js", "bg": true}}
+{{"component": "file://./demos/customized/index.ts", "bg": true}}
 
 ### Custom pagination options
 
@@ -91,15 +91,32 @@ You should either provide an array of:
 ### Custom pagination actions
 
 The `ActionsComponent` prop of the `TablePagination` component allows the implementation of custom actions.
+A replacement action component is responsible for its own tooltips and focus management, unless it composes the built-in `TablePaginationActions` component.
 
-{{"demo": "CustomPaginationActionsTable.js", "bg": true}}
+{{"component": "file://./demos/custom-pagination-actions/index.ts", "bg": true}}
+
+#### Customizing individual action buttons
+
+To customize individual buttons while keeping the built-in `TablePaginationActions`, use `slots.actions` and `slotProps.actions` on `TablePagination`.
+The default buttons include tooltips.
+When replacing `firstButton`, `previousButton`, `nextButton`, or `lastButton` through `slots.actions`, the custom component receives a `title` prop and is responsible for rendering its own tooltip.
+
+When an update to pagination props or action slot props disables the focused action, `TablePaginationActions` moves focus to the next enabled action in DOM order, or searches backward if none follows.
+Actions with `tabIndex={-1}` are skipped.
+Focus stays where it is if no action is available or your application has already moved focus elsewhere.
+
+Custom button slots participate in focus restoration by forwarding the supplied `data-mui-pagination-action` prop to their focusable element.
+Forward the `disabled` prop to native buttons, or use `aria-disabled` for other elements.
+You don't need to forward a ref.
+Custom slots that omit the data attribute continue to work, but don't participate in focus restoration.
+If a custom slot disables itself through its own state without re-rendering `TablePaginationActions`, it must handle focus restoration itself.
 
 ## Sticky header
 
 Here is an example of a table with scrollable rows and fixed column headers.
 It leverages the `stickyHeader` prop.
 
-{{"demo": "StickyHeadTable.js", "bg": true}}
+{{"component": "file://./demos/sticky-head/index.ts", "bg": true}}
 
 ## Column grouping
 
@@ -112,20 +129,20 @@ You can group column headers by rendering multiple table rows inside a table hea
 </TableHead>
 ```
 
-{{"demo": "ColumnGroupingTable.js", "bg": true}}
+{{"component": "file://./demos/column-grouping/index.ts", "bg": true}}
 
 ## Collapsible table
 
 An example of a table with expandable rows, revealing more information.
 It utilizes the [`Collapse`](/material-ui/api/collapse/) component.
 
-{{"demo": "CollapsibleTable.js", "bg": true}}
+{{"component": "file://./demos/collapsible/index.ts", "bg": true}}
 
 ## Spanning table
 
 A simple example with spanning rows & columns.
 
-{{"demo": "SpanningTable.js", "bg": true}}
+{{"component": "file://./demos/spanning/index.ts", "bg": true}}
 
 ## Virtualized table
 
@@ -133,19 +150,36 @@ In the following example, we demonstrate how to use [react-virtuoso](https://git
 It renders 200 rows and can easily handle more.
 Virtualization helps with performance issues.
 
-{{"demo": "ReactVirtualizedTable.js", "bg": true}}
+{{"component": "file://./demos/react-virtualized/index.ts", "bg": true}}
 
 ## Accessibility
 
 (WAI tutorial: <https://www.w3.org/WAI/tutorials/tables/>)
 
+### Row and column headers
+
+Header cells identify the data in each row or column.
+Screen readers use these associations to provide context as users navigate the table.
+
+`TableCell` renders as a `<th>` automatically when it is placed inside a `TableHead`, but it renders as a `<td>` inside a `TableBody`.
+When a body cell contains the label that identifies its row, render it as a row header with `component="th"` and `scope="row"`:
+
+```jsx
+<TableRow>
+  <TableCell component="th" scope="row">
+    {row.name}
+  </TableCell>
+  <TableCell>{row.calories}</TableCell>
+</TableRow>
+```
+
+Choose a meaningful value for the row header, such as a person's name or a product name, rather than an arbitrary index. Multiple cells could be marked as row headers, for example when the table contains both first name and last name columns.
+
+The Data Grid uses ARIA roles instead of native table elements.
+See the [Data Grid row headers guide](/x/react-data-grid/accessibility/#row-headers) to learn how to identify its row header columns.
+
 ### Caption
 
 A caption functions like a heading for a table. Most screen readers announce the content of captions. Captions help users to find a table and understand what it's about and decide if they want to read it.
 
-{{"demo": "AccessibleTable.js", "bg": true}}
-
-## Unstyled
-
-If you would like to use an unstyled Table, you can use the primitive HTML elements and enhance the table with the TablePaginationUnstyled component.
-See the demos in the [unstyled table pagination docs](https://v6.mui.com/base-ui/react-table-pagination/)
+{{"component": "file://./demos/accessible/index.ts", "bg": true}}

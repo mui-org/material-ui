@@ -2,7 +2,7 @@ import * as React from 'react';
 import Divider from '@mui/material/Divider';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import DashboardSidebarContext from '../context/DashboardSidebarContext';
-import { getDrawerSxTransitionMixin } from '../mixins';
+import getDrawerSxTransitionMixin from '../mixins';
 
 export default function DashboardSidebarDividerItem() {
   const sidebarContext = React.useContext(DashboardSidebarContext);
@@ -14,14 +14,16 @@ export default function DashboardSidebarDividerItem() {
   return (
     <li>
       <Divider
-        sx={{
-          borderBottomWidth: 1,
-          my: 1,
-          mx: -0.5,
-          ...(hasDrawerTransitions
+        sx={[
+          {
+            borderBottomWidth: 1,
+            my: 1,
+            mx: -0.5,
+          },
+          hasDrawerTransitions
             ? getDrawerSxTransitionMixin(fullyExpanded, 'margin')
-            : {}),
-        }}
+            : null,
+        ]}
       />
     </li>
   );

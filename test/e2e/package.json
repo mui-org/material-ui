@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "cross-env NODE_ENV=production pnpm build && concurrently --success first --kill-others \"pnpm run test\" \"pnpm run server\"",
+    "build": "vite build",
+    "dev": "vite --port 5001",
+    "test": "vitest run",
+    "server": "vite preview --port 5001"
+  }
+}

@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './fade-rename-alpha';
 import readFile from '../util/readFile';

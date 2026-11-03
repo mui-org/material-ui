@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import sinon from 'sinon';
 import createSpacing from '../createTheme/createSpacing';
 import createBreakpoints from '../createBreakpoints/createBreakpoints';

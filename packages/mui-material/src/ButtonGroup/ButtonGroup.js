@@ -12,24 +12,13 @@ import { useDefaultProps } from '../DefaultPropsProvider';
 import buttonGroupClasses, { getButtonGroupUtilityClass } from './buttonGroupClasses';
 import ButtonGroupContext from './ButtonGroupContext';
 import ButtonGroupButtonContext from './ButtonGroupButtonContext';
+import buttonClasses from '../Button/buttonClasses';
 
 const overridesResolver = (props, styles) => {
   const { ownerState } = props;
 
   return [
     { [`& .${buttonGroupClasses.grouped}`]: styles.grouped },
-    {
-      [`& .${buttonGroupClasses.grouped}`]: styles[`grouped${capitalize(ownerState.orientation)}`],
-    },
-    { [`& .${buttonGroupClasses.grouped}`]: styles[`grouped${capitalize(ownerState.variant)}`] },
-    {
-      [`& .${buttonGroupClasses.grouped}`]:
-        styles[`grouped${capitalize(ownerState.variant)}${capitalize(ownerState.orientation)}`],
-    },
-    {
-      [`& .${buttonGroupClasses.grouped}`]:
-        styles[`grouped${capitalize(ownerState.variant)}${capitalize(ownerState.color)}`],
-    },
     {
       [`& .${buttonGroupClasses.firstButton}`]: styles.firstButton,
     },
@@ -60,14 +49,7 @@ const useUtilityClasses = (ownerState) => {
       disableElevation && 'disableElevation',
       `color${capitalize(color)}`,
     ],
-    grouped: [
-      'grouped',
-      `grouped${capitalize(orientation)}`,
-      `grouped${capitalize(variant)}`,
-      `grouped${capitalize(variant)}${capitalize(orientation)}`,
-      `grouped${capitalize(variant)}${capitalize(color)}`,
-      disabled && 'disabled',
-    ],
+    grouped: ['grouped', disabled && 'disabled'],
     firstButton: ['firstButton'],
     lastButton: ['lastButton'],
     middleButton: ['middleButton'],
@@ -84,11 +66,28 @@ const ButtonGroupRoot = styled('div', {
   memoTheme(({ theme }) => ({
     display: 'inline-flex',
     borderRadius: (theme.vars || theme).shape.borderRadius,
+    ...(theme.focusVisible && {
+      // paint the focused item above its siblings so they cannot cover the ring edges
+      [`& .${buttonGroupClasses.grouped}.${buttonClasses.focusVisible}`]: {
+        zIndex: 1,
+      },
+    }),
     variants: [
       {
         props: { variant: 'contained' },
         style: {
           boxShadow: (theme.vars || theme).shadows[2],
+          [`& .${buttonGroupClasses.grouped}`]: {
+            boxShadow: 'none',
+            '&:hover': {
+              boxShadow: 'none',
+            },
+          },
+          ...(theme.focusVisible && {
+            [`& .${buttonGroupClasses.grouped}.${buttonClasses.focusVisible}`]: {
+              boxShadow: theme.focusVisible.boxShadow,
+            },
+          }),
         },
       },
       {
@@ -181,8 +180,10 @@ const ButtonGroupRoot = styled('div', {
         style: {
           [`& .${buttonGroupClasses.firstButton},& .${buttonGroupClasses.middleButton}`]: {
             borderRightColor: 'transparent',
-            '&:hover': {
-              borderRightColor: 'currentColor',
+            '@media (hover: hover)': {
+              '&:hover': {
+                borderRightColor: 'currentColor',
+              },
             },
           },
           [`& .${buttonGroupClasses.lastButton},& .${buttonGroupClasses.middleButton}`]: {
@@ -195,8 +196,10 @@ const ButtonGroupRoot = styled('div', {
         style: {
           [`& .${buttonGroupClasses.firstButton},& .${buttonGroupClasses.middleButton}`]: {
             borderBottomColor: 'transparent',
-            '&:hover': {
-              borderBottomColor: 'currentColor',
+            '@media (hover: hover)': {
+              '&:hover': {
+                borderBottomColor: 'currentColor',
+              },
             },
           },
           [`& .${buttonGroupClasses.lastButton},& .${buttonGroupClasses.middleButton}`]: {
@@ -239,13 +242,6 @@ const ButtonGroupRoot = styled('div', {
     ],
     [`& .${buttonGroupClasses.grouped}`]: {
       minWidth: 40,
-      boxShadow: 'none',
-      props: { variant: 'contained' },
-      style: {
-        '&:hover': {
-          boxShadow: 'none',
-        },
-      },
     },
   })),
 );
@@ -290,8 +286,8 @@ const ButtonGroup = React.forwardRef(function ButtonGroup(inProps, ref) {
       color,
       disabled,
       disableElevation,
-      disableFocusRipple,
-      disableRipple,
+      disableFocusRipple: props.disableFocusRipple,
+      disableRipple: props.disableRipple,
       fullWidth,
       size,
       variant,
@@ -300,8 +296,8 @@ const ButtonGroup = React.forwardRef(function ButtonGroup(inProps, ref) {
       color,
       disabled,
       disableElevation,
-      disableFocusRipple,
-      disableRipple,
+      props.disableFocusRipple,
+      props.disableRipple,
       fullWidth,
       size,
       variant,
@@ -341,7 +337,7 @@ const ButtonGroup = React.forwardRef(function ButtonGroup(inProps, ref) {
         {validChildren.map((child, index) => {
           return (
             <ButtonGroupButtonContext.Provider
-              key={index}
+              key={child.key}
               value={getButtonPositionClassName(index)}
             >
               {child}

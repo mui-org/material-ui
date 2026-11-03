@@ -13,7 +13,7 @@ export interface TabScrollButtonOwnerState extends TabScrollButtonProps {
   isRtl: boolean;
 }
 
-export interface TabScrollButtonProps extends ButtonBaseProps {
+export interface TabScrollButtonProps extends Omit<ButtonBaseProps, 'nativeButton'> {
   /**
    * The content of the component.
    */
@@ -21,32 +21,40 @@ export interface TabScrollButtonProps extends ButtonBaseProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TabScrollButtonClasses>;
+  classes?: Partial<TabScrollButtonClasses> | undefined;
   /**
    * The components used for each slot inside.
    * @default {}
    */
-  slots?: {
-    StartScrollButtonIcon?: React.ElementType;
-    EndScrollButtonIcon?: React.ElementType;
-  };
+  slots?:
+    | {
+        StartScrollButtonIcon?: React.ElementType | undefined;
+        EndScrollButtonIcon?: React.ElementType | undefined;
+      }
+    | undefined;
   /**
    * The extra props for the slot components.
    * You can override the existing props or add new ones.
    * @default {}
    */
-  slotProps?: {
-    startScrollButtonIcon?: SlotComponentProps<
-      typeof SvgIcon,
-      TabScrollButtonStartIconSlotPropsOverrides,
-      TabScrollButtonOwnerState
-    >;
-    endScrollButtonIcon?: SlotComponentProps<
-      typeof SvgIcon,
-      TabScrollButtonEndIconSlotPropsOverrides,
-      TabScrollButtonOwnerState
-    >;
-  };
+  slotProps?:
+    | {
+        startScrollButtonIcon?:
+          | SlotComponentProps<
+              typeof SvgIcon,
+              TabScrollButtonStartIconSlotPropsOverrides,
+              TabScrollButtonOwnerState
+            >
+          | undefined;
+        endScrollButtonIcon?:
+          | SlotComponentProps<
+              typeof SvgIcon,
+              TabScrollButtonEndIconSlotPropsOverrides,
+              TabScrollButtonOwnerState
+            >
+          | undefined;
+      }
+    | undefined;
   /**
    * The direction the button should indicate.
    */
@@ -55,7 +63,7 @@ export interface TabScrollButtonProps extends ButtonBaseProps {
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * The component orientation (layout flow direction).
    */
@@ -63,17 +71,17 @@ export interface TabScrollButtonProps extends ButtonBaseProps {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Tabs](https://mui.com/material-ui/react-tabs/)
+ * - [Tabs](https://next.mui.com/material-ui/react-tabs/)
  *
  * API:
  *
- * - [TabScrollButton API](https://mui.com/material-ui/api/tab-scroll-button/)
+ * - [TabScrollButton API](https://next.mui.com/material-ui/api/tab-scroll-button/)
  */
 export default function TabScrollButton(props: TabScrollButtonProps): React.JSX.Element;

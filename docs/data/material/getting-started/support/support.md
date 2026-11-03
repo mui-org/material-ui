@@ -54,7 +54,7 @@ If you can't find your answer, [ask a new question](https://stackoverflow.com/qu
 
 :::success
 If you're using an older version of Material UI, you may find answers on SO with links to content that no longer exists in the latest version of the documentation.
-Visit the [Material UI Versions](https://mui.com/versions/) page to find the archived documentation that corresponds to your version.
+Visit the [Material UI Versions](https://mui.com/material-ui/getting-started/versions/) page to find the archived documentation that corresponds to your version.
 :::
 
 ## Technical support
@@ -74,14 +74,16 @@ This includes issues introduced by external sources, like browser upgrades or ch
 
 | Material UI version | Release    | Supported                                                          |
 | ------------------: | :--------- | :----------------------------------------------------------------- |
-|              ^7.0.0 | 2025-03-26 | ✅ Stable major (Continuous support)                               |
-|              ^6.0.0 | 2024-08-26 | ⚠️ Long-term support (Support for security issues and regressions) |
+|             ^10.0.0 | April 2027 | 🚧 Pre-release (Continuous support)                                |
+|              ^9.0.0 | 2026-04-08 | ✅ Current stable major (Continuous support)                       |
+|              ^7.0.0 | 2025-03-26 | ⚠️ Long-term support (Support for security issues and regressions) |
+|              ^6.0.0 | 2024-08-26 | ❌                                                                 |
 |              ^5.0.0 | 2021-09-16 | ❌                                                                 |
 |              ^4.0.0 | 2019-06-23 | ❌                                                                 |
 |              ^3.0.0 | 2018-08-27 | ❌                                                                 |
 |              ^2.0.0 | /          | ❌                                                                 |
 |              ^1.0.0 | 2018-06-18 | ❌                                                                 |
-|             <=1.0.0 | 2014-10-05 | ❌                                                                 |
+|          &lt;=1.0.0 | 2014-10-05 | ❌                                                                 |
 
 ## Community
 
@@ -89,17 +91,6 @@ This includes issues introduced by external sources, like browser upgrades or ch
 
 The Material UI community is active on both [X/Twitter](https://x.com/MaterialUI) and [LinkedIn](https://www.linkedin.com/company/mui/).
 These are great platforms to share what you're working on and connect with other developers.
-
-### Discord
-
-We have a [Discord Server](https://mui.com/r/discord/) to bring the Material UI community together.
-Our tools are used by thousands of developers and teams all around the world, many of whom actively engage with the community.
-
-You can join Discord to engage in lively discussions, share your projects, and interact with developers just like you from all around the world. We'd love for you to join us!
-
-:::warning
-How-to questions are not accepted on Discord, they should be asked on [Stack Overflow](#stack-overflow).
-:::
 
 ## Custom work
 
@@ -123,10 +114,10 @@ That means less time grappling with esoteric open-source trivia, and more time b
 <a
   data-ga-event-category="support"
   data-ga-event-action="tidelift"
-  href="https://tidelift.com/?utm_source=npm-material-ui&utm_medium=referral&utm_campaign=enterprise">
+  href="https://tidelift.com/">
 Learn more about Tidelift</a>
 and
 <a
   data-ga-event-category="support"
   data-ga-event-action="tidelift"
-  href="https://www.sonarsource.com/tidelift-request-demo/?utm_source=npm-material-ui&utm_medium=referral&utm_campaign=enterprise">request a demo today</a>.
+  href="https://www.sonarsource.com/tidelift-request-demo/">request a demo today</a>.

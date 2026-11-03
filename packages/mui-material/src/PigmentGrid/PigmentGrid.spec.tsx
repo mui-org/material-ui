@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Grid from '@mui/material/PigmentGrid';
 
 <Grid size={2} />;

@@ -1,7 +1,7 @@
+import { describe, expect, it } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
-import { spy } from 'sinon';
-import { createRenderer, screen } from '@mui/internal-test-utils';
+import { spy, stub } from 'sinon';
+import { act, createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Drawer, { drawerClasses as classes } from '@mui/material/Drawer';
 import { modalClasses } from '@mui/material/Modal';
@@ -58,7 +58,7 @@ describe('<Drawer />', () => {
           testWithElement: CustomTransition,
         },
       },
-      skip: ['componentProp', 'componentsProp', 'themeVariants'],
+      skip: ['componentProp', 'themeVariants'],
     }),
   );
 
@@ -79,7 +79,7 @@ describe('<Drawer />', () => {
           expectedClassName: classes.docked,
         },
       },
-      skip: ['componentProp', 'componentsProp'],
+      skip: ['componentProp'],
     }),
   );
 
@@ -90,48 +90,48 @@ describe('<Drawer />', () => {
         exit: 2967,
       };
 
-      it('should delay the slide transition to complete using default theme values by default', function test() {
-        if (/jsdom/.test(window.navigator.userAgent)) {
-          this.skip();
-        }
-        const theme = createTheme();
-        const enteringScreenDurationInSeconds = theme.transitions.duration.enteringScreen / 1000;
-        render(
-          <Drawer open>
-            <div />
-          </Drawer>,
-        );
-
-        const container = document.querySelector(`.${classes.root}`);
-        const backdropRoot = container.firstChild;
-        expect(backdropRoot).toHaveComputedStyle({
-          transitionDuration: `${enteringScreenDurationInSeconds}s`,
-        });
-      });
-
-      it('should delay the slide transition to complete using custom theme values', function test() {
-        if (/jsdom/.test(window.navigator.userAgent)) {
-          this.skip();
-        }
-        const theme = createTheme({
-          transitions: {
-            duration: {
-              enteringScreen: 1,
-            },
-          },
-        });
-        render(
-          <ThemeProvider theme={theme}>
+      it.skipIf(isJsdom())(
+        'should delay the slide transition to complete using default theme values by default',
+        function test() {
+          const theme = createTheme();
+          const enteringScreenDurationInSeconds = theme.transitions.duration.enteringScreen / 1000;
+          render(
             <Drawer open>
               <div />
-            </Drawer>
-          </ThemeProvider>,
-        );
+            </Drawer>,
+          );
 
-        const container = document.querySelector(`.${classes.root}`);
-        const backdropRoot = container.firstChild;
-        expect(backdropRoot).toHaveComputedStyle({ transitionDuration: '0.001s' });
-      });
+          const container = document.querySelector(`.${classes.root}`);
+          const backdropRoot = container.firstChild;
+          expect(backdropRoot).toHaveComputedStyle({
+            transitionDuration: `${enteringScreenDurationInSeconds}s`,
+          });
+        },
+      );
+
+      it.skipIf(isJsdom())(
+        'should delay the slide transition to complete using custom theme values',
+        function test() {
+          const theme = createTheme({
+            transitions: {
+              duration: {
+                enteringScreen: 1,
+              },
+            },
+          });
+          render(
+            <ThemeProvider theme={theme}>
+              <Drawer open>
+                <div />
+              </Drawer>
+            </ThemeProvider>,
+          );
+
+          const container = document.querySelector(`.${classes.root}`);
+          const backdropRoot = container.firstChild;
+          expect(backdropRoot).toHaveComputedStyle({ transitionDuration: '0.001s' });
+        },
+      );
 
       it('delay the slide transition to complete using values provided via prop', () => {
         const handleEntered = spy();
@@ -139,7 +139,7 @@ describe('<Drawer />', () => {
           <Drawer
             open={false}
             transitionDuration={transitionDuration}
-            SlideProps={{ onEntered: handleEntered }}
+            slotProps={{ transition: { onEntered: handleEntered } }}
           >
             <div />
           </Drawer>,
@@ -152,6 +152,133 @@ describe('<Drawer />', () => {
         clock.tick(transitionDuration.enter);
 
         expect(handleEntered.callCount).to.equal(1);
+      });
+
+      it('opens on the next task when reduced motion is always', () => {
+        const handleEntered = spy();
+        const theme = createTheme({
+          motion: {
+            reducedMotion: 'always',
+          },
+        });
+
+        function Test(props) {
+          return (
+            <ThemeProvider theme={theme}>
+              <Drawer
+                open={props.open}
+                transitionDuration={transitionDuration}
+                slotProps={{ transition: { onEntered: handleEntered } }}
+              >
+                <div />
+              </Drawer>
+            </ThemeProvider>
+          );
+        }
+
+        const { setProps } = render(<Test open={false} />);
+
+        setProps({ open: true });
+
+        expect(handleEntered.callCount).to.equal(0);
+        clock.tick(0);
+        expect(handleEntered.callCount).to.equal(1);
+        expect(screen.getByRole('dialog')).not.to.equal(null);
+      });
+    });
+
+    describe('scroll lock', () => {
+      it('should keep the scroll locked until the exit transition completes by default', () => {
+        const transitionDuration = 123;
+        const { setProps } = render(
+          <Drawer open={false} transitionDuration={transitionDuration}>
+            <div />
+          </Drawer>,
+        );
+
+        expect(document.body.style.overflow).to.equal('');
+
+        setProps({ open: true });
+        clock.runToLast();
+
+        expect(document.body.style.overflow).to.equal('hidden');
+
+        setProps({ open: false });
+
+        expect(document.body.style.overflow).to.equal('hidden');
+
+        act(() => {
+          clock.runToLast();
+        });
+
+        expect(document.body.style.overflow).to.equal('');
+      });
+
+      it('should allow opting out of waiting for the exit transition before unlocking scroll', () => {
+        const transitionDuration = 123;
+        const { setProps } = render(
+          <Drawer open={false} transitionDuration={transitionDuration} closeAfterTransition={false}>
+            <div />
+          </Drawer>,
+        );
+
+        setProps({ open: true });
+        clock.runToLast();
+
+        expect(document.body.style.overflow).to.equal('hidden');
+
+        setProps({ open: false });
+
+        expect(document.body.style.overflow).to.equal('');
+      });
+    });
+
+    describe('transition container', () => {
+      it.skipIf(isJsdom())('should slide relative to the drawer root by default', function test() {
+        let nodeExitingTransformStyle;
+        const { setProps } = render(
+          <Drawer
+            open
+            anchor="right"
+            slotProps={{
+              transition: {
+                onExit: (node) => {
+                  nodeExitingTransformStyle = node.style.transform;
+                },
+              },
+            }}
+          >
+            <div />
+          </Drawer>,
+        );
+
+        const root = document.querySelector(`.${classes.root}`);
+        const paper = document.querySelector(`.${classes.paper}`);
+
+        const rootRectStub = stub(root, 'getBoundingClientRect').callsFake(() => ({
+          width: 1000,
+          height: 500,
+          left: 0,
+          right: 1000,
+          top: 0,
+          bottom: 500,
+        }));
+        const paperRectStub = stub(paper, 'getBoundingClientRect').callsFake(() => ({
+          width: 200,
+          height: 500,
+          left: 800,
+          right: 1000,
+          top: 0,
+          bottom: 500,
+        }));
+
+        try {
+          setProps({ open: false });
+          expect(nodeExitingTransformStyle).to.equal('translateX(200px)');
+        } finally {
+          rootRectStub.restore();
+          paperRectStub.restore();
+        }
       });
     });
 
@@ -166,6 +293,29 @@ describe('<Drawer />', () => {
         const paper = document.querySelector(`.${classes.paper}`);
         expect(paper).to.have.attribute('role', 'dialog');
         expect(paper).to.have.attribute('aria-modal', 'true');
+      });
+
+      it('should focus the Paper element on open when variant is temporary', () => {
+        render(
+          <Drawer open variant="temporary">
+            <div data-testid="child" />
+          </Drawer>,
+        );
+
+        const paper = document.querySelector(`.${classes.paper}`);
+        expect(paper).to.have.attribute('tabindex', '-1');
+        expect(paper).toHaveFocus();
+      });
+
+      it('should not have tabIndex on Paper when variant is permanent', () => {
+        render(
+          <Drawer variant="permanent">
+            <div data-testid="child" />
+          </Drawer>,
+        );
+
+        const paper = document.querySelector(`.${classes.paper}`);
+        expect(paper).not.to.have.attribute('tabindex');
       });
 
       it('should not have role="dialog" and aria-modal="true" when variant is permanent', () => {
@@ -265,7 +415,7 @@ describe('<Drawer />', () => {
         <Drawer
           open={false}
           transitionDuration={transitionDuration}
-          SlideProps={{ onEntered: handleEntered }}
+          slotProps={{ transition: { onEntered: handleEntered } }}
           variant="persistent"
         >
           <div />
@@ -300,10 +450,10 @@ describe('<Drawer />', () => {
     });
   });
 
-  describe('prop: PaperProps', () => {
+  describe('prop: slotProps.paper', () => {
     it('should merge class names', () => {
       const { container } = render(
-        <Drawer PaperProps={{ className: 'my-class' }} variant="permanent">
+        <Drawer slotProps={{ paper: { className: 'my-class' } }} variant="permanent">
           <div />
         </Drawer>,
       );
@@ -328,7 +478,7 @@ describe('<Drawer />', () => {
       });
 
       const { setProps } = render(
-        <Drawer open TransitionComponent={MockedSlide}>
+        <Drawer open slots={{ transition: MockedSlide }}>
           <div />
         </Drawer>,
       );
@@ -365,9 +515,9 @@ describe('<Drawer />', () => {
       const theme = createTheme({
         direction: 'rtl',
       });
-      const { rerender } = render(
+      const view = render(
         <ThemeProvider theme={theme}>
-          <Drawer open anchor="left" TransitionComponent={MockedSlide}>
+          <Drawer open anchor="left" slots={{ transition: MockedSlide }}>
             <div />
           </Drawer>
         </ThemeProvider>,
@@ -375,9 +525,9 @@ describe('<Drawer />', () => {
       // slide direction for left is right, if left is switched to right, we should get left
       expect(screen.getByTestId('slide')).to.have.attribute('data-direction', 'left');
 
-      rerender(
+      view.rerender(
         <ThemeProvider theme={theme}>
-          <Drawer open anchor="right" TransitionComponent={MockedSlide}>
+          <Drawer open anchor="right" slots={{ transition: MockedSlide }}>
             <div />
           </Drawer>
         </ThemeProvider>,
@@ -449,5 +599,37 @@ describe('<Drawer />', () => {
       setProps({ anchor: 'bottom' });
       expect(document.querySelector(`.${classes.root}`)).to.have.class(classes.anchorBottom);
     });
+  });
+
+  ['permanent', 'persistent'].forEach((variant) => {
+    it.skipIf(isJsdom())(
+      `should not apply modal styles from theme styleOverrides for variant=${variant}`,
+      () => {
+        const theme = createTheme({
+          components: {
+            MuiDrawer: {
+              styleOverrides: {
+                modal: {
+                  backgroundColor: 'rgb(0, 0, 255)',
+                },
+              },
+            },
+          },
+        });
+
+        const { container } = render(
+          <ThemeProvider theme={theme}>
+            <Drawer variant={variant}>
+              <div />
+            </Drawer>
+          </ThemeProvider>,
+        );
+
+        const root = container.querySelector(`.${classes.root}`);
+        expect(root).not.toHaveComputedStyle({
+          backgroundColor: 'rgb(0, 0, 255)',
+        });
+      },
+    );
   });
 });

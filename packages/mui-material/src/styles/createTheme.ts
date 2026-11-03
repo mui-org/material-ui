@@ -1,16 +1,44 @@
 import createPalette from './createPalette';
-import createThemeWithVars, {
-  CssVarsThemeOptions,
-  ColorSystem,
-  DefaultColorScheme,
-} from './createThemeWithVars';
-import createThemeNoVars, { Theme, ThemeOptions } from './createThemeNoVars';
+import type { PaletteOptions } from './createPalette';
+import {
+  resolveFocusVisible,
+  mergeFocusVisibleInput,
+  isResolvedFocusVisible,
+} from './focusVisible';
+import type { ColorSystemOptions } from './createThemeFoundation';
+import type { CssVarsThemeOptions, ColorSystem, DefaultColorScheme } from './createThemeWithVars';
+import createThemeWithVars from './createThemeWithVars';
+import type {
+  Theme,
+  CssThemeVariables,
+  ThemeOptions as ThemeNoVarsOptions,
+} from './createThemeNoVars';
+import createThemeNoVars from './createThemeNoVars';
 
-export type { ThemeOptions, Theme, CssThemeVariables } from './createThemeNoVars';
+export type { Theme, CssThemeVariables, FocusVisible } from './createThemeNoVars';
+
+type CssVarsOptions = CssThemeVariables extends {
+  enabled: true;
+}
+  ? ColorSystemOptions
+  : {};
+
+type CssVarsConfigList =
+  | 'colorSchemeSelector'
+  | 'rootSelector'
+  | 'disableCssColorScheme'
+  | 'cssVarPrefix'
+  | 'shouldSkipGeneratingVar'
+  | 'nativeColor';
+
+export interface ThemeOptions extends CssVarsOptions, Omit<CssVarsThemeOptions, CssVarsConfigList> {
+  cssVariables?: boolean | Pick<CssVarsThemeOptions, CssVarsConfigList> | undefined;
+  palette?: PaletteOptions | undefined;
+}
 
 // eslint-disable-next-line consistent-return
 function attachColorScheme(
-  theme: { colorSchemes?: Partial<Record<string, any>> },
+  theme: { colorSchemes?: Partial<Record<string, any>> | undefined },
   scheme: 'light' | 'dark',
   colorScheme: boolean | Record<string, any> | undefined,
 ) {
@@ -35,20 +63,7 @@ function attachColorScheme(
  * @returns A complete, ready-to-use theme object.
  */
 export default function createTheme(
-  options: Omit<ThemeOptions, 'components'> &
-    Pick<CssVarsThemeOptions, 'defaultColorScheme' | 'colorSchemes' | 'components'> & {
-      cssVariables?:
-        | boolean
-        | Pick<
-            CssVarsThemeOptions,
-            | 'colorSchemeSelector'
-            | 'rootSelector'
-            | 'disableCssColorScheme'
-            | 'cssVarPrefix'
-            | 'shouldSkipGeneratingVar'
-            | 'nativeColor'
-          >;
-    } = {} as any, // cast type to skip module augmentation test
+  options: ThemeOptions = {} as any, // cast type to skip module augmentation test
   ...args: object[]
 ): Theme {
   const {
@@ -56,7 +71,7 @@ export default function createTheme(
     cssVariables = false,
     colorSchemes: initialColorSchemes = !palette ? { light: true } : undefined,
     defaultColorScheme: initialDefaultColorScheme = palette?.mode,
-    ...rest
+    ...other
   } = options;
   const defaultColorSchemeInput = (initialDefaultColorScheme as DefaultColorScheme) || 'light';
   const defaultScheme = initialColorSchemes?.[defaultColorSchemeInput];
@@ -75,7 +90,7 @@ export default function createTheme(
   if (cssVariables === false) {
     if (!('colorSchemes' in options)) {
       // Behaves exactly as v5
-      return createThemeNoVars(options as ThemeOptions, ...args);
+      return createThemeNoVars(options as ThemeNoVarsOptions, ...args);
     }
 
     let paletteOptions = palette;
@@ -84,18 +99,17 @@ export default function createTheme(
         if (colorSchemesInput[defaultColorSchemeInput] !== true) {
           paletteOptions = colorSchemesInput[defaultColorSchemeInput].palette;
         } else if (defaultColorSchemeInput === 'dark') {
-          // @ts-ignore to prevent the module augmentation test from failing
           paletteOptions = { mode: 'dark' };
         }
       }
     }
 
     const theme = createThemeNoVars(
-      { ...options, palette: paletteOptions } as ThemeOptions,
+      { ...options, palette: paletteOptions } as ThemeNoVarsOptions,
       ...args,
     ) as unknown as Theme & {
-      defaultColorScheme?: 'light' | 'dark';
-      colorSchemes?: Partial<Record<string, any>>;
+      defaultColorScheme?: 'light' | 'dark' | undefined;
+      colorSchemes?: Partial<Record<string, any>> | undefined;
     };
 
     theme.defaultColorScheme = defaultColorSchemeInput;
@@ -116,6 +130,33 @@ export default function createTheme(
       attachColorScheme(theme, 'light', colorSchemesInput.light);
     }
 
+    if (theme.focusVisible != null && theme.focusVisible !== false) {
+      let focusVisibleInput = theme.focusVisible;
+      const rawFocusVisible = mergeFocusVisibleInput(options.focusVisible, args);
+      const authoredColor =
+        rawFocusVisible && typeof rawFocusVisible === 'object'
+          ? rawFocusVisible.outlineColor
+          : undefined;
+      // A re-composed theme carries a baked default that looks authored, so it falls back to value
+      // equality — the one case where a pinned `primary.main` is indistinguishable and gets reset.
+      if (
+        !authoredColor ||
+        (isResolvedFocusVisible(rawFocusVisible) && authoredColor === theme.palette.primary.main)
+      ) {
+        const { outlineColor, ...rest } = focusVisibleInput;
+        focusVisibleInput = rest;
+      }
+      Object.keys(theme.colorSchemes).forEach((scheme) => {
+        const schemePalette = theme.colorSchemes?.[scheme]?.palette;
+        if (schemePalette?.primary) {
+          theme.colorSchemes![scheme].focusVisible = resolveFocusVisible(
+            focusVisibleInput,
+            schemePalette.primary.main,
+          );
+        }
+      });
+    }
+
     return theme;
   }
 
@@ -125,7 +166,7 @@ export default function createTheme(
 
   return createThemeWithVars(
     {
-      ...rest,
+      ...other,
       colorSchemes: colorSchemesInput,
       defaultColorScheme: defaultColorSchemeInput,
       ...(typeof cssVariables !== 'boolean' && cssVariables),

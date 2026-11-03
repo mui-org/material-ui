@@ -1,2 +1,0 @@
-<Slider defaultValue={30} />
-<SliderCustomized defaultValue={30} />

@@ -16,6 +16,7 @@ import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFil
 import buttonClasses, { getButtonUtilityClass } from './buttonClasses';
 import ButtonGroupContext from '../ButtonGroup/ButtonGroupContext';
 import ButtonGroupButtonContext from '../ButtonGroup/ButtonGroupButtonContext';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { color, disableElevation, fullWidth, size, variant, loading, loadingPosition, classes } =
@@ -26,16 +27,14 @@ const useUtilityClasses = (ownerState) => {
       'root',
       loading && 'loading',
       variant,
-      `${variant}${capitalize(color)}`,
       `size${capitalize(size)}`,
-      `${variant}Size${capitalize(size)}`,
       `color${capitalize(color)}`,
       disableElevation && 'disableElevation',
       fullWidth && 'fullWidth',
       loading && `loadingPosition${capitalize(loadingPosition)}`,
     ],
-    startIcon: ['icon', 'startIcon', `iconSize${capitalize(size)}`],
-    endIcon: ['icon', 'endIcon', `iconSize${capitalize(size)}`],
+    startIcon: ['icon', 'startIcon'],
+    endIcon: ['icon', 'endIcon'],
     loadingIndicator: ['loadingIndicator'],
     loadingWrapper: ['loadingWrapper'],
   };
@@ -85,9 +84,7 @@ const ButtonRoot = styled(ButtonBase, {
     return [
       styles.root,
       styles[ownerState.variant],
-      styles[`${ownerState.variant}${capitalize(ownerState.color)}`],
       styles[`size${capitalize(ownerState.size)}`],
-      styles[`${ownerState.variant}Size${capitalize(ownerState.size)}`],
       ownerState.color === 'inherit' && styles.colorInherit,
       ownerState.disableElevation && styles.disableElevation,
       ownerState.fullWidth && styles.fullWidth,
@@ -107,12 +104,9 @@ const ButtonRoot = styled(ButtonBase, {
       padding: '6px 16px',
       border: 0,
       borderRadius: (theme.vars || theme).shape.borderRadius,
-      transition: theme.transitions.create(
-        ['background-color', 'box-shadow', 'border-color', 'color'],
-        {
-          duration: theme.transitions.duration.short,
-        },
-      ),
+      ...getTransitionStyles(theme, ['background-color', 'box-shadow', 'border-color', 'color'], {
+        duration: theme.transitions.duration.short,
+      }),
       '&:hover': {
         textDecoration: 'none',
       },
@@ -137,7 +131,10 @@ const ButtonRoot = styled(ButtonBase, {
               boxShadow: (theme.vars || theme).shadows[8],
             },
             [`&.${buttonClasses.focusVisible}`]: {
-              boxShadow: (theme.vars || theme).shadows[6],
+              ...theme.focusVisible,
+              boxShadow: theme.focusVisible?.boxShadow
+                ? `${(theme.vars || theme).shadows[6]}, ${theme.focusVisible.boxShadow}`
+                : (theme.vars || theme).shadows[6],
             },
             [`&.${buttonClasses.disabled}`]: {
               color: (theme.vars || theme).palette.action.disabled,
@@ -293,7 +290,7 @@ const ButtonRoot = styled(ButtonBase, {
               boxShadow: 'none',
             },
             [`&.${buttonClasses.focusVisible}`]: {
-              boxShadow: 'none',
+              boxShadow: theme.focusVisible?.boxShadow ?? 'none',
             },
             '&:active': {
               boxShadow: 'none',
@@ -309,15 +306,13 @@ const ButtonRoot = styled(ButtonBase, {
         },
         {
           props: {
+            loading: true,
             loadingPosition: 'center',
           },
           style: {
-            transition: theme.transitions.create(
-              ['background-color', 'box-shadow', 'border-color'],
-              {
-                duration: theme.transitions.duration.short,
-              },
-            ),
+            ...getTransitionStyles(theme, ['background-color', 'box-shadow', 'border-color'], {
+              duration: theme.transitions.duration.short,
+            }),
             [`&.${buttonClasses.loading}`]: {
               color: 'transparent',
             },
@@ -334,16 +329,18 @@ const ButtonStartIcon = styled('span', {
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
 
-    return [
-      styles.startIcon,
-      ownerState.loading && styles.startIconLoadingStart,
-      styles[`iconSize${capitalize(ownerState.size)}`],
-    ];
+    return [styles.startIcon, ownerState.loading && styles.startIconLoadingStart];
   },
 })(({ theme }) => ({
   display: 'inherit',
+  alignItems: 'center',
   marginRight: 8,
   marginLeft: -4,
+  '&::before': {
+    content: '"\\200b"',
+    width: 0,
+    overflow: 'hidden',
+  },
   variants: [
     {
       props: { size: 'small' },
@@ -354,7 +351,7 @@ const ButtonStartIcon = styled('span', {
     {
       props: { loadingPosition: 'start', loading: true },
       style: {
-        transition: theme.transitions.create(['opacity'], {
+        ...getTransitionStyles(theme, ['opacity'], {
           duration: theme.transitions.duration.short,
         }),
         opacity: 0,
@@ -376,11 +373,7 @@ const ButtonEndIcon = styled('span', {
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
 
-    return [
-      styles.endIcon,
-      ownerState.loading && styles.endIconLoadingEnd,
-      styles[`iconSize${capitalize(ownerState.size)}`],
-    ];
+    return [styles.endIcon, ownerState.loading && styles.endIconLoadingEnd];
   },
 })(({ theme }) => ({
   display: 'inherit',
@@ -396,7 +389,7 @@ const ButtonEndIcon = styled('span', {
     {
       props: { loadingPosition: 'end', loading: true },
       style: {
-        transition: theme.transitions.create(['opacity'], {
+        ...getTransitionStyles(theme, ['opacity'], {
           duration: theme.transitions.duration.short,
         }),
         opacity: 0,
@@ -592,6 +585,9 @@ const Button = React.forwardRef(function Button(inProps, ref) {
       </span>
     ) : null;
 
+  // Don't forward the 'root' classes to the ButtonBase, as they will get duplicated with the one passed to the className prop.
+  const { root, ...forwardedClasses } = classes;
+
   return (
     <ButtonRoot
       ownerState={ownerState}
@@ -601,10 +597,11 @@ const Button = React.forwardRef(function Button(inProps, ref) {
       focusRipple={!disableFocusRipple}
       focusVisibleClassName={clsx(classes.focusVisible, focusVisibleClassName)}
       ref={ref}
+      internalNativeButton
       type={type}
       id={loading ? loadingId : idProp}
       {...other}
-      classes={classes}
+      classes={forwardedClasses}
     >
       {startIcon}
       {loadingPosition !== 'end' && loader}
@@ -734,7 +731,7 @@ Button.propTypes /* remove-proptypes */ = {
   /**
    * @ignore
    */
-  type: PropTypes.oneOfType([PropTypes.oneOf(['button', 'reset', 'submit']), PropTypes.string]),
+  type: PropTypes.string,
   /**
    * The variant to use.
    * @default 'text'

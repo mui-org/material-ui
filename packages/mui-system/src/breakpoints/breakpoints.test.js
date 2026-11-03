@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import breakpoints, {
   computeBreakpointsBase,
   resolveBreakpointValues,
@@ -245,7 +245,13 @@ describe('breakpoints', () => {
   describe('function: removeUnusedBreakpoints', () => {
     it('allow value to be null', () => {
       const result = removeUnusedBreakpoints(
-        ['@media (min-width:0px)', '@media (min-width:600px)', '@media (min-width:960px)'],
+        {
+          internal_mediaKeys: [
+            '@media (min-width:0px)',
+            '@media (min-width:600px)',
+            '@media (min-width:960px)',
+          ],
+        },
         {
           '@media (min-width:0px)': {
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',

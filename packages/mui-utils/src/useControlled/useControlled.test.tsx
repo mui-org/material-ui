@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { act, createRenderer } from '@mui/internal-test-utils';
 import useControlled from './useControlled';
 
@@ -17,14 +17,14 @@ type TestComponentProps<T> = TestProps<T> & {
 
 type SetProps = <T>(props: TestProps<T>) => void;
 
-const TestComponent = <T,>({ value: valueProp, defaultValue, children }: TestComponentProps<T>) => {
+function TestComponent<T>({ value: valueProp, defaultValue, children }: TestComponentProps<T>) {
   const [value, setValue] = useControlled({
     controlled: valueProp,
     default: defaultValue,
     name: 'TestComponent',
   });
   return children({ value, setValue });
-};
+}
 
 describe('useControlled', () => {
   const { render } = createRenderer();
@@ -90,39 +90,56 @@ describe('useControlled', () => {
     );
   });
 
-  it('warns when changing the defaultValue prop after initial rendering', () => {
-    let setProps: SetProps;
+  describe('warns when changing the defaultValue prop after initial rendering', () => {
+    it('should detect changes', () => {
+      let setProps: SetProps;
 
-    expect(() => {
-      ({ setProps } = render(<TestComponent>{() => null}</TestComponent>));
-    }).not.toErrorDev();
+      expect(() => {
+        ({ setProps } = render(<TestComponent>{() => null}</TestComponent>));
+      }).not.toErrorDev();
 
-    expect(() => {
-      setProps({ defaultValue: 1 });
-    }).toErrorDev(
-      'MUI: A component is changing the default value state of an uncontrolled TestComponent after being initialized.',
-    );
-  });
+      expect(() => {
+        setProps({ defaultValue: 1 });
+      }).toErrorDev(
+        'MUI: A component is changing the default value state of an uncontrolled TestComponent after being initialized.',
+      );
+    });
 
-  it('should not raise a warning if changing the defaultValue when controlled', () => {
-    let setProps: SetProps;
+    it('should not warn when controlled', () => {
+      let setProps: SetProps;
 
-    expect(() => {
-      ({ setProps } = render(
-        <TestComponent value={1} defaultValue={0}>
-          {() => null}
-        </TestComponent>,
-      ));
-    }).not.toErrorDev();
+      expect(() => {
+        ({ setProps } = render(
+          <TestComponent value={1} defaultValue={0}>
+            {() => null}
+          </TestComponent>,
+        ));
+      }).not.toErrorDev();
 
-    expect(() => {
-      setProps({ defaultValue: 1 });
-    }).not.toErrorDev();
-  });
+      expect(() => {
+        setProps({ defaultValue: 1 });
+      }).not.toErrorDev();
+    });
 
-  it('should not raise a warning if setting NaN as the defaultValue when uncontrolled', () => {
-    expect(() => {
-      render(<TestComponent defaultValue={NaN}>{() => null}</TestComponent>);
-    }).not.toErrorDev();
+    it('should not warn when NaN', () => {
+      expect(() => {
+        render(<TestComponent defaultValue={NaN}>{() => null}</TestComponent>);
+      }).not.toErrorDev();
+    });
+
+    it('should not warn when an array', () => {
+      function TestComponentArray() {
+        useControlled({
+          controlled: undefined,
+          default: [],
+          name: 'TestComponent',
+        });
+        return null;
+      }
+
+      expect(() => {
+        render(<TestComponentArray />);
+      }).not.toErrorDev();
+    });
   });
 });

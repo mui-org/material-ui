@@ -4,7 +4,7 @@
       "type": { "name": "func" },
       "required": true,
       "signature": {
-        "type": "function(event: React.SyntheticEvent<{}>) => void",
+        "type": "function(event: React.SyntheticEvent<{}> | Event) => void",
         "describedArgs": ["event"]
       }
     },
@@ -12,7 +12,7 @@
       "type": { "name": "func" },
       "required": true,
       "signature": {
-        "type": "function(event: React.SyntheticEvent<{}>) => void",
+        "type": "function(event: React.SyntheticEvent<{}> | Event) => void",
         "describedArgs": ["event"]
       }
     },
@@ -43,11 +43,6 @@
         "description": "{ backdrop?: elementType, docked?: elementType, paper?: elementType, root?: elementType, swipeArea?: elementType, transition?: elementType }"
       },
       "default": "{}"
-    },
-    "SwipeAreaProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.swipeArea</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "swipeAreaWidth": { "type": { "name": "number" }, "default": "20" },
     "transitionDuration": {
@@ -115,62 +110,6 @@
       "isGlobal": false
     },
     {
-      "key": "paperAnchorBottom",
-      "className": "MuiDrawer-paperAnchorBottom",
-      "description": "Styles applied to the Paper component if `anchor=\"bottom\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedBottom",
-      "className": "MuiDrawer-paperAnchorDockedBottom",
-      "description": "Styles applied to the Paper component if `anchor=\"bottom\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedLeft",
-      "className": "MuiDrawer-paperAnchorDockedLeft",
-      "description": "Styles applied to the Paper component if `anchor=\"left\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedRight",
-      "className": "MuiDrawer-paperAnchorDockedRight",
-      "description": "Styles applied to the Paper component if `anchor=\"right\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedTop",
-      "className": "MuiDrawer-paperAnchorDockedTop",
-      "description": "Styles applied to the Paper component if `anchor=\"top\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorLeft",
-      "className": "MuiDrawer-paperAnchorLeft",
-      "description": "Styles applied to the Paper component if `anchor=\"left\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorRight",
-      "className": "MuiDrawer-paperAnchorRight",
-      "description": "Styles applied to the Paper component if `anchor=\"right\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorTop",
-      "className": "MuiDrawer-paperAnchorTop",
-      "description": "Styles applied to the Paper component if `anchor=\"top\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "root",
       "className": "MuiDrawer-root",
       "description": "Styles applied to the root element.",
@@ -183,6 +122,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/SwipeableDrawer/SwipeableDrawer.js",
   "inheritance": { "component": "Drawer", "pathname": "/material-ui/api/drawer/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-drawer/\">Drawer</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-drawer/\">Drawer</a></li></ul>"
 }

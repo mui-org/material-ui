@@ -3,21 +3,29 @@ import { Tabs as MyTabs } from '@mui/material';
 
 <Tabs
   slots={{
-    scrollButton: CustomScrollButton
+    scrollButtons: CustomScrollButton
   }}
   slotProps={{
-    scrollButton: { disableRipple: true },
+    scrollButtons: { disableRipple: true },
     indicator: { className: 'indicator' }
   }} />;
 
 <MyTabs
   slots={{
-    scrollButton: CustomScrollButton
+    scrollButtons: CustomScrollButton
   }}
   slotProps={{
-    scrollButton: { disableRipple: true },
+    scrollButtons: { disableRipple: true },
     indicator: { className: 'indicator' }
   }} />;
+
+<Tabs
+  slots={{ startScrollButtonIcon: CustomIcon, endScrollButtonIcon: CustomIcon2 }}
+/>;
+
+<MyTabs
+  slots={{ startScrollButtonIcon: CustomIcon }}
+/>;
 
 <CustomTabs
   ScrollButtonComponent={CustomScrollButton}

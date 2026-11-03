@@ -1,8 +1,0 @@
-<Autocomplete
-  open
-  options={['🆘 Need help', '✨ Improvement', '🚀 New feature', '🐛 Bug fix']}
-  renderInput={(params) => <TextField {...params} />}
-  slots={{
-    popper: PopperComponent,
-  }}
-/>

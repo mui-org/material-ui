@@ -11,23 +11,13 @@
     "autoHideDuration": { "type": { "name": "number" }, "default": "null" },
     "children": { "type": { "name": "element" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
-    "ClickAwayListenerProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.clickAwayListener</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "ContentProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.content</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "disableWindowBlurListener": { "type": { "name": "bool" }, "default": "false" },
     "key": { "type": { "name": "custom", "description": "any" } },
     "message": { "type": { "name": "node" } },
     "onClose": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(event: React.SyntheticEvent<any> | Event, reason: string) => void",
+        "type": "function(event: React.SyntheticEvent<any> | Event | null, reason: string) => void",
         "describedArgs": ["event", "reason"]
       }
     },
@@ -54,24 +44,12 @@
       },
       "additionalInfo": { "sx": true }
     },
-    "TransitionComponent": {
-      "type": { "name": "elementType" },
-      "default": "Grow",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.transition</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "transitionDuration": {
       "type": {
         "name": "union",
         "description": "number<br>&#124;&nbsp;{ appear?: number, enter?: number, exit?: number }"
       },
       "default": "{\n  enter: theme.transitions.duration.enteringScreen,\n  exit: theme.transitions.duration.leavingScreen,\n}"
-    },
-    "TransitionProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.transition</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   },
   "name": "Snackbar",
@@ -100,7 +78,7 @@
     },
     {
       "name": "transition",
-      "description": "The component that renders the transition.\n[Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.",
+      "description": "The component that renders the transition.\n[Follow this guide](/material-ui/transitions/#transition-slots) to learn more about the requirements for this component.",
       "default": "Grow",
       "class": null
     }
@@ -149,6 +127,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Snackbar/Snackbar.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-snackbar/\">Snackbar</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-snackbar/\">Snackbar</a></li></ul>"
 }

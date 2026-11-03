@@ -10,8 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import { alpha } from '@mui/material/styles';
-import { Link } from '@mui/docs/Link';
-import { useTranslate } from '@mui/docs/i18n';
+import { Link } from '@mui/internal-core-docs/Link';
+import { useTranslate } from '@mui/internal-core-docs/i18n';
 
 /**
  * The app structure:
@@ -83,7 +83,7 @@ const appList = [
     title: 'BARKS',
     description: 'Japan Music Network. 🇯🇵',
     image: 'barks.jpg',
-    link: 'https://www.barks.jp/',
+    link: 'https://barks.jp/',
     similarWebVisits: 3000,
     dateAdded: '2019-01-01',
   },

@@ -5,8 +5,8 @@ import { TouchRippleClasses, TouchRippleClassKey } from './touchRippleClasses';
 export { TouchRippleClassKey };
 
 export interface StartActionOptions {
-  pulsate?: boolean;
-  center?: boolean;
+  pulsate?: boolean | undefined;
+  center?: boolean | undefined;
 }
 
 export interface TouchRippleActions {
@@ -20,11 +20,11 @@ export interface TouchRippleActions {
 }
 
 export type TouchRippleProps = StandardProps<React.HTMLAttributes<HTMLElement>> & {
-  center?: boolean;
+  center?: boolean | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TouchRippleClasses>;
+  classes?: Partial<TouchRippleClasses> | undefined;
 };
 
 declare const TouchRipple: React.ForwardRefRenderFunction<TouchRippleActions, TouchRippleProps>;

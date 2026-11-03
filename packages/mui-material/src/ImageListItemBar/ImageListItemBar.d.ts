@@ -4,8 +4,10 @@ import { Theme } from '../styles';
 import { InternalStandardProps as StandardProps } from '../internal';
 import { ImageListItemBarClasses } from './imageListItemBarClasses';
 
-export interface ImageListItemBarProps
-  extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface ImageListItemBarProps extends StandardProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  'title'
+> {
   /**
    * An IconButton element to be used as secondary action target
    * (primary action target is the item itself).
@@ -15,16 +17,16 @@ export interface ImageListItemBarProps
    * Position of secondary action IconButton.
    * @default 'right'
    */
-  actionPosition?: 'left' | 'right';
+  actionPosition?: 'left' | 'right' | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ImageListItemBarClasses>;
+  classes?: Partial<ImageListItemBarClasses> | undefined;
   /**
    * Position of the title bar.
    * @default 'bottom'
    */
-  position?: 'below' | 'top' | 'bottom';
+  position?: 'below' | 'top' | 'bottom' | undefined;
   /**
    * String or element serving as subtitle (support text).
    */
@@ -32,7 +34,7 @@ export interface ImageListItemBarProps
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * Title to be displayed.
    */
@@ -43,10 +45,10 @@ export interface ImageListItemBarProps
  *
  * Demos:
  *
- * - [Image List](https://mui.com/material-ui/react-image-list/)
+ * - [Image List](https://next.mui.com/material-ui/react-image-list/)
  *
  * API:
  *
- * - [ImageListItemBar API](https://mui.com/material-ui/api/image-list-item-bar/)
+ * - [ImageListItemBar API](https://next.mui.com/material-ui/api/image-list-item-bar/)
  */
 export default function ImageListItemBar(props: ImageListItemBarProps): React.JSX.Element;

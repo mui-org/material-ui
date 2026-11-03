@@ -17,7 +17,7 @@
       "description": "If given, uses a negative margin to counteract the padding on one side (this is often helpful for aligning the left or right side of the icon with content above or below, without ruining the border size and shape)."
     },
     "loading": {
-      "description": "If <code>true</code>, the loading indicator is visible and the button is disabled. If <code>true \\| false</code>, the loading wrapper is always rendered before the children to prevent <a href=\"https://github.com/mui/material-ui/issues/27853\">Google Translation Crash</a>."
+      "description": "If <code>true</code>, the loading indicator is visible and the button is disabled. If <code>true | false</code>, the loading wrapper is always rendered before the children to prevent <a href=\"https://github.com/mui/material-ui/issues/27853\">Google Translation Crash</a>."
     },
     "loadingIndicator": {
       "description": "Element placed before the children if the button is in loading state. The node should contain an element with <code>role=&quot;progressbar&quot;</code> with an accessible name. By default, it renders a <code>CircularProgress</code> that is labeled by the button itself."

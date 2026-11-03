@@ -17,7 +17,7 @@ Steppers may display a transient feedback message after a step is saved.
 - **Types of Steps**: Editable, Non-editable, Mobile, Optional
 - **Types of Steppers**: Horizontal, Vertical, Linear, Non-linear
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 :::info
 This component is no longer documented in the [Material Design guidelines](https://m2.material.io/), but Material UI will continue to support it.
@@ -60,7 +60,7 @@ The `Stepper` can be controlled by passing the current step index (zero-based) a
 
 This example also shows the use of an optional step by placing the `optional` prop on the second `Step` component. Note that it's up to you to manage when an optional step is skipped. Once you've determined this for a particular step you must set `completed={false}` to signify that even though the active step index has gone beyond the optional step, it's not actually complete.
 
-{{"demo": "HorizontalLinearStepper.js"}}
+{{"component": "file://./demos/horizontal-linear/index.ts"}}
 
 ### Non-linear
 
@@ -72,38 +72,51 @@ The use of the `StepButton` here demonstrates clickable step labels, as well as 
 flag. However because steps can be accessed in a non-linear fashion, it's up to your own implementation to
 determine when all steps are completed (or even if they need to be completed).
 
-{{"demo": "HorizontalNonLinearStepper.js"}}
+Actionable steps mean that they control the content update of a section. From an accessibility standpoint, this means that each `StepButton` requires an `aria-controls` attribute pointing at the content section element.
+
+{{"component": "file://./demos/horizontal-non-linear/index.ts"}}
 
 ### Alternative label
 
 Labels can be placed below the step icon by setting the `alternativeLabel` prop on the `Stepper` component.
 
-{{"demo": "HorizontalLinearAlternativeLabelStepper.js"}}
+{{"component": "file://./demos/horizontal-linear-alternative-label/index.ts"}}
 
 ### Error step
 
-{{"demo": "HorizontalStepperWithError.js"}}
+{{"component": "file://./demos/horizontal-with-error/index.ts"}}
 
 ### Customized horizontal stepper
 
 Here is an example of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedSteppers.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 ## Vertical stepper
 
 Vertical steppers are designed for narrow screen sizes. They are ideal for mobile. All the features of the horizontal stepper can be implemented.
 
-{{"demo": "VerticalLinearStepper.js"}}
+{{"component": "file://./demos/vertical-linear/index.ts"}}
 
-### Performance
+### Alternative label
+
+Use `alternativeLabel` prop on the vertical `Stepper` component to reverse the placement of the label and content.
+
+{{"component": "file://./demos/vertical-linear-alternative-label/index.ts"}}
+
+## Transition
+
+`StepContent` uses [Collapse](/material-ui/transitions/#collapse) by default.
+Use `slots.transition` and `slotProps.transition` to replace it with another transition or to pass transition props.
+
+## Performance
 
 The content of a step is unmounted when closed.
 If you need to make the content available to search engines or render expensive component trees inside your modal while optimizing for interaction responsiveness it might be a good idea to keep the step mounted with:
 
 ```jsx
-<StepContent TransitionProps={{ unmountOnExit: false }} />
+<StepContent slotProps={{ transition: { unmountOnExit: false } }} />
 ```
 
 ## Mobile stepper
@@ -116,16 +129,16 @@ The mobile stepper supports three variants to display progress through the avail
 
 The current step and total number of steps are displayed as text.
 
-{{"demo": "TextMobileStepper.js", "bg": true}}
+{{"component": "file://./demos/text-mobile/index.ts", "bg": true}}
 
 ### Dots
 
 Use dots when the number of steps is small.
 
-{{"demo": "DotsMobileStepper.js", "bg": true}}
+{{"component": "file://./demos/dots-mobile/index.ts", "bg": true}}
 
 ### Progress
 
 Use a progress bar when there are many steps, or if there are steps that need to be inserted during the process (based on responses to earlier steps).
 
-{{"demo": "ProgressMobileStepper.js", "bg": true}}
+{{"component": "file://./demos/progress-mobile/index.ts", "bg": true}}

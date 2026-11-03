@@ -1,0 +1,22 @@
+# Thin caller stub for the shared Claude PR review workflow in mui/mui-public. A
+# maintainer comments "@claude review" on a PR; the reusable workflow gates on team
+# membership, then reviews the diff and posts a comment. All the logic (and its
+# security model) lives in the called workflow; here we only wire up the trigger and
+# pass Material UI's own local review skill. See mui/mui-public/.github/workflows/claude-review.yml.
+name: Claude review
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+permissions: {}
+
+jobs:
+  claude-review:
+    uses: mui/mui-public/.github/workflows/claude-review.yml@139de498efb5493689bd7982f18f2862b679c981 # master
+    permissions:
+      contents: read # read the repo (checkout + git diff)
+      id-token: write # mint the GitHub OIDC token exchanged for a Claude token via WIF
+      pull-requests: write # the reusable workflow posts the review comment (commenting on a PR needs pull-requests: write)
+    with:
+      review-skill: material-ui-review

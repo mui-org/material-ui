@@ -12,14 +12,6 @@ export interface TableSortLabelClasses {
   active: string;
   /** Styles applied to the icon component. */
   icon: string;
-  /** Styles applied to the icon component if `direction="desc"`.
-   * @deprecated Combine the [.MuiTableSortLabel-icon](/material-ui/api/table-sort-label/#table-sort-label-classes-icon) and [.MuiTableSortLabel-directionDesc](/material-ui/api/table-sort-label/#table-sort-label-classes-direction-desc) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  iconDirectionDesc: string;
-  /** Styles applied to the icon component if `direction="asc"`.
-   * @deprecated Combine the [.MuiTableSortLabel-icon](/material-ui/api/table-sort-label/#table-sort-label-classes-icon) and [.MuiTableSortLabel-directionAsc](/material-ui/api/table-sort-label/#table-sort-label-classes-direction-asc) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  iconDirectionAsc: string;
 }
 
 export type TableSortLabelClassKey = keyof TableSortLabelClasses;
@@ -32,8 +24,6 @@ const tableSortLabelClasses: TableSortLabelClasses = generateUtilityClasses('Mui
   'root',
   'active',
   'icon',
-  'iconDirectionDesc',
-  'iconDirectionAsc',
   'directionDesc',
   'directionAsc',
 ]);

@@ -5,18 +5,11 @@
       "description": "In most cases will simply be a string containing a title for the label."
     },
     "classes": { "description": "Override or extend the styles applied to the component." },
-    "componentsProps": { "description": "The props used for each slot inside." },
     "error": { "description": "If <code>true</code>, the step is marked as failed." },
     "icon": { "description": "Override the default label of the step icon." },
     "optional": { "description": "The optional node to display." },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
-    "StepIconComponent": {
-      "description": "The component to render in place of the <a href=\"https://mui.com/material-ui/api/step-icon/\"><code>StepIcon</code></a>."
-    },
-    "StepIconProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/step-icon/\"><code>StepIcon</code></a> element."
-    },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     }

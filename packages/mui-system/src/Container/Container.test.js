@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createRenderer } from '@mui/internal-test-utils';
 import { Container, containerClasses as classes } from '@mui/system';
 import describeConformance from '../../test/describeConformance';
@@ -17,7 +16,6 @@ describe('<Container />', () => {
     render,
     refInstanceof: window.HTMLElement,
     muiName: 'MuiContainer',
-    skip: ['componentsProp'],
     testVariantProps: { fixed: true },
   }));
 

@@ -10,6 +10,7 @@ const styles = {
   position: 'absolute',
   top: -9999,
   overflow: 'scroll',
+  pointerEvents: 'none',
 };
 
 /**

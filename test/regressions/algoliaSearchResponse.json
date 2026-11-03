@@ -1,0 +1,338 @@
+{
+  "results": [
+    {
+      "hits": [
+        {
+          "url": "https://mui.com/material-ui/customization/container-queries/",
+          "content": null,
+          "type": "lvl1",
+          "hierarchy": {
+            "lvl0": "Customization",
+            "lvl1": "Container queries",
+            "lvl2": null,
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "0-https://mui.com/material-ui/customization/container-queries/",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": { "value": "Customization", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full",
+                "fullyHighlighted": true,
+                "matchedWords": ["container", "query"]
+              }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/customization/container-queries/#usage",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "Customization",
+            "lvl1": "Container queries",
+            "lvl2": "Usage",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "2-https://mui.com/material-ui/customization/container-queries/",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full"
+              },
+              "lvl2": { "value": "Usage", "matchLevel": "none" }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": { "value": "Customization", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full",
+                "fullyHighlighted": true,
+                "matchedWords": ["container", "query"]
+              },
+              "lvl2": { "value": "Usage", "matchLevel": "none", "matchedWords": [] }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/customization/container-queries/#shorthand-syntax",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "Customization",
+            "lvl1": "Container queries",
+            "lvl2": "Shorthand syntax",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "6-https://mui.com/material-ui/customization/container-queries/",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full"
+              },
+              "lvl2": { "value": "Shorthand syntax", "matchLevel": "none" }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": { "value": "Customization", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full",
+                "fullyHighlighted": true,
+                "matchedWords": ["container", "query"]
+              },
+              "lvl2": { "value": "Shorthand syntax", "matchLevel": "none", "matchedWords": [] }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/customization/container-queries/#api",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "Customization",
+            "lvl1": "Container queries",
+            "lvl2": "API",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "10-https://mui.com/material-ui/customization/container-queries/",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full"
+              },
+              "lvl2": { "value": "API", "matchLevel": "none" }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": { "value": "Customization", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full",
+                "fullyHighlighted": true,
+                "matchedWords": ["container", "query"]
+              },
+              "lvl2": { "value": "API", "matchLevel": "none", "matchedWords": [] }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/customization/container-queries/#named-containment-contexts",
+          "content": null,
+          "type": "lvl3",
+          "hierarchy": {
+            "lvl0": "Customization",
+            "lvl1": "Container queries",
+            "lvl2": "Usage",
+            "lvl3": "Named containment contexts",
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "4-https://mui.com/material-ui/customization/container-queries/",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full"
+              },
+              "lvl2": { "value": "Usage", "matchLevel": "none" },
+              "lvl3": { "value": "Named containment contexts", "matchLevel": "none" }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": { "value": "Customization", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full",
+                "fullyHighlighted": true,
+                "matchedWords": ["container", "query"]
+              },
+              "lvl2": { "value": "Usage", "matchLevel": "none", "matchedWords": [] },
+              "lvl3": {
+                "value": "Named containment contexts",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/customization/container-queries/#caveats",
+          "content": null,
+          "type": "lvl3",
+          "hierarchy": {
+            "lvl0": "Customization",
+            "lvl1": "Container queries",
+            "lvl2": "Shorthand syntax",
+            "lvl3": "Caveats",
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "8-https://mui.com/material-ui/customization/container-queries/",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full"
+              },
+              "lvl2": { "value": "Shorthand syntax", "matchLevel": "none" },
+              "lvl3": { "value": "Caveats", "matchLevel": "none" }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": { "value": "Customization", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": {
+                "value": "<mark>Container</mark> <mark>queries</mark>",
+                "matchLevel": "full",
+                "fullyHighlighted": true,
+                "matchedWords": ["container", "query"]
+              },
+              "lvl2": { "value": "Shorthand syntax", "matchLevel": "none", "matchedWords": [] },
+              "lvl3": { "value": "Caveats", "matchLevel": "none", "matchedWords": [] }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/migration/upgrade-to-v6/#quality-of-life-improvements",
+          "content": "Material UI v6 features several other quality-of-life improvements, including:\r\nThemeProvider now supports all of the CssVarsProvider features\r\nsupport for container queries\r\na new theme utility for adding styles to specific color modes\r\nIf you're using any of these packages, you can also change their version to \"6.0.0\":\r\n@mui/icons-material\r\n@mui/system\r\n@mui/lab\r\n@mui/material-nextjs\r\n@mui/styled-engine-sc\r\n@mui/utils\r\nNote that MUI X packages do not follow the same versioning strategy as Material UI.\nIf you're using any of the following packages, they should remain unchanged during the upgrade process:\r\n@mui/x-data-grid\r\n@mui/x-data-grid-pro\r\n@mui/x-data-grid-premium\r\n@mui/x-date-pickers\r\n@mui/x-date-pickers-pro\r\n@mui/x-charts\r\n@mui/x-tree-view\r\n@mui/x-tree-view-pro",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "Migration",
+            "lvl1": "Upgrade to v6",
+            "lvl2": "Why you should upgrade to Material UI v6",
+            "lvl3": "Quality-of-life improvements",
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "6-https://mui.com/material-ui/migration/upgrade-to-v6/",
+          "_snippetResult": {
+            "content": {
+              "value": "… the CssVarsProvider features\r\nsupport for <mark>container</mark> <mark>queries</mark>\r\na new theme utility for adding …",
+              "matchLevel": "full"
+            },
+            "hierarchy": {
+              "lvl1": { "value": "Upgrade to v6", "matchLevel": "none" },
+              "lvl2": { "value": "Why you should upgrade to Material UI v6", "matchLevel": "none" },
+              "lvl3": { "value": "Quality-of-life improvements", "matchLevel": "none" }
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "Material UI v6 features several other quality-of-life improvements, including:\r\nThemeProvider now supports all of the CssVarsProvider features\r\nsupport for <mark>container</mark> <mark>queries</mark>\r\na new theme utility for adding styles to specific color modes\r\nIf you're using any of these packages, you can also change their version to \"6.0.0\":\r\n@mui/icons-material\r\n@mui/system\r\n@mui/lab\r\n@mui/material-nextjs\r\n@mui/styled-engine-sc\r\n@mui/utils\r\nNote that MUI X packages do not follow the same versioning strategy as Material UI.\nIf you're using any of the following packages, they should remain unchanged during the upgrade process:\r\n@mui/x-data-grid\r\n@mui/x-data-grid-pro\r\n@mui/x-data-grid-premium\r\n@mui/x-date-pickers\r\n@mui/x-date-pickers-pro\r\n@mui/x-charts\r\n@mui/x-tree-view\r\n@mui/x-tree-view-pro",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["container", "query"]
+            },
+            "hierarchy": {
+              "lvl0": { "value": "Migration", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": { "value": "Upgrade to v6", "matchLevel": "none", "matchedWords": [] },
+              "lvl2": {
+                "value": "Why you should upgrade to Material UI v6",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl3": {
+                "value": "Quality-of-life improvements",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://mui.com/material-ui/guides/responsive-ui/",
+          "content": "Material Design layouts encourage consistency across platforms, environments, and screen sizes by using uniform elements and spacing.\r\nResponsive layouts in Material Design adapt to any possible screen size.\nWe provide the following helpers to make the UI responsive:\r\nGrid: The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.\r\nContainer: The container centers your content horizontally. It's the most basic layout element.\r\nBreakpoints: API that enables the use of breakpoints in a wide variety of contexts.\r\nuseMediaQuery: This is a CSS media query hook for React. It listens for matches to a CSS media query.",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "How-to guides",
+            "lvl1": "Responsive UI",
+            "lvl2": null,
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null
+          },
+          "productId": "material-ui",
+          "productCategoryId": "core",
+          "objectID": "1-https://mui.com/material-ui/guides/responsive-ui/",
+          "_snippetResult": {
+            "content": {
+              "value": "… size and orientation, ensuring consistency across layouts.\r\n<mark>Container</mark>: The <mark>container</mark> centers your content horizontally. It …",
+              "matchLevel": "partial"
+            },
+            "hierarchy": { "lvl1": { "value": "Responsive UI", "matchLevel": "none" } }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "Material Design layouts encourage consistency across platforms, environments, and screen sizes by using uniform elements and spacing.\r\nResponsive layouts in Material Design adapt to any possible screen size.\nWe provide the following helpers to make the UI responsive:\r\nGrid: The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.\r\n<mark>Container</mark>: The <mark>container</mark> centers your content horizontally. It's the most basic layout element.\r\nBreakpoints: API that enables the use of breakpoints in a wide variety of contexts.\r\nuseMedia<mark>Query</mark>: This is a CSS media <mark>query</mark> hook for React. It listens for matches to a CSS media <mark>query</mark>.",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["container", "query"]
+            },
+            "hierarchy": {
+              "lvl0": { "value": "How-to guides", "matchLevel": "none", "matchedWords": [] },
+              "lvl1": { "value": "Responsive UI", "matchLevel": "none", "matchedWords": [] }
+            }
+          }
+        }
+      ],
+      "nbHits": 14,
+      "page": 0,
+      "nbPages": 2,
+      "hitsPerPage": 8,
+      "exhaustiveNbHits": true,
+      "exhaustiveTypo": true,
+      "exhaustive": { "nbHits": true, "typo": true },
+      "query": "container query",
+      "params": "query=container+query&hitsPerPage=8&facetFilters=%5B%22version%3Amaster%22%2C%22language%3Aen%22%5D&filters=NOT+productId%3Abase-ui&optionalFilters=%5B%22productId%3Amaterial-ui%22%5D&attributesToRetrieve=%5B%22hierarchy.lvl0%22%2C%22hierarchy.lvl1%22%2C%22hierarchy.lvl2%22%2C%22hierarchy.lvl3%22%2C%22hierarchy.lvl4%22%2C%22hierarchy.lvl5%22%2C%22content%22%2C%22type%22%2C%22url%22%2C%22productId%22%2C%22productCategoryId%22%5D&attributesToSnippet=%5B%22hierarchy.lvl1%3A15%22%2C%22hierarchy.lvl2%3A15%22%2C%22hierarchy.lvl3%3A15%22%2C%22hierarchy.lvl4%3A15%22%2C%22hierarchy.lvl5%3A15%22%2C%22content%3A15%22%5D&snippetEllipsisText=%E2%80%A6&highlightPreTag=%3Cmark%3E&highlightPostTag=%3C%2Fmark%3E",
+      "index": "material-ui-v9",
+      "renderingContent": {},
+      "processingTimeMS": 1,
+      "processingTimingsMS": {
+        "_request": { "roundTrip": 45 },
+        "fetch": { "total": 1 },
+        "total": 1
+      },
+      "serverTimeMS": 2
+    }
+  ]
+}

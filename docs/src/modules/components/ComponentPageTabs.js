@@ -1,10 +1,9 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { useTranslate } from '@mui/docs/i18n';
-import { Link } from '@mui/docs/Link';
+import { useTranslate } from '@mui/internal-core-docs/i18n';
+import { Link } from '@mui/internal-core-docs/Link';
 
 export const HEIGHT = 50;
 

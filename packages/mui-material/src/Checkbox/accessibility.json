@@ -1,0 +1,4 @@
+{
+  "axe": "docs/data/material/components/checkboxes/checkboxes.a11y.json",
+  "criteria": { "2.5.8": { "responsibility": "Shared" }, "3.3.2": { "flagged": true } }
+}

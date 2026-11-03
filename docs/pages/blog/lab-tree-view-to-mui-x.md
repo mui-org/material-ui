@@ -85,6 +85,4 @@ Our next goal is to work on the stability and API consistency of its components 
 
 Please feel free to try out the component and provide any feedback you may have.
 
-We also have a dedicated channel in our [Discord Server](https://mui.com/r/discord/) for you to provide any feedback or concerns you have with Tree View.
-
 Happy building!

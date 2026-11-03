@@ -7,7 +7,6 @@ import {
   TablePaginationActionsSlots,
 } from '../TablePaginationActions';
 import { TableCellProps } from '../TableCell';
-import { IconButtonProps } from '../IconButton';
 import { SelectProps } from '../Select';
 import { TablePaginationClasses } from './tablePaginationClasses';
 import { CreateSlotsAndSlotProps, SlotProps } from '../utils/types';
@@ -88,7 +87,7 @@ export type TablePaginationSlotsAndSlotProps = CreateSlotsAndSlotProps<
   {
     /**
      * Props forwarded to the root slot.
-     * By default, the avaible props are based on the [TableCell](https://mui.com/material-ui/api/table-cell/#props) component.
+     * By default, the available props are based on the [TableCell](https://mui.com/material-ui/api/table-cell/#props) component.
      */
     root: SlotProps<
       React.ElementType<TableCellProps>,
@@ -97,7 +96,7 @@ export type TablePaginationSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the toolbar slot.
-     * By default, the avaible props are based on the [Toolbar](https://mui.com/material-ui/api/toolbar/#props) component.
+     * By default, the available props are based on the [Toolbar](https://mui.com/material-ui/api/toolbar/#props) component.
      */
     toolbar: SlotProps<
       React.ElementType<ToolbarProps>,
@@ -106,12 +105,12 @@ export type TablePaginationSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the spacer slot.
-     * By default, the avaible props are based on the div element.
+     * By default, the available props are based on the div element.
      */
     spacer: SlotProps<'div', TablePaginationSpacerSlotPropsOverrides, TablePaginationOwnerState>;
     /**
      * Props forwarded to the selectLabel slot.
-     * By default, the avaible props are based on the paragraph element.
+     * By default, the available props are based on the paragraph element.
      */
     selectLabel: SlotProps<
       'p',
@@ -120,12 +119,12 @@ export type TablePaginationSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the select slot.
-     * By default, the avaible props are based on the [Select](https://mui.com/material-ui/api/select/#props) component.
+     * By default, the available props are based on the [Select](https://mui.com/material-ui/api/select/#props) component.
      */
     select: Partial<SelectProps> & TablePaginationSelectSlotPropsOverrides;
     /**
      * Props forwarded to the menuItem slot.
-     * By default, the avaible props are based on the [MenuItem](https://mui.com/material-ui/api/menu-item/#props) component.
+     * By default, the available props are based on the [MenuItem](https://mui.com/material-ui/api/menu-item/#props) component.
      */
     menuItem: SlotProps<
       React.ElementType<MenuItemProps>,
@@ -134,7 +133,7 @@ export type TablePaginationSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the displayedRows slot.
-     * By default, the avaible props are based on the paragraph element.
+     * By default, the available props are based on the paragraph element.
      */
     displayedRows: SlotProps<
       'p',
@@ -159,18 +158,11 @@ export interface TablePaginationOwnProps extends TablePaginationBaseProps {
    * Either a string to use a HTML element or a component.
    * @default TablePaginationActions
    */
-  ActionsComponent?: React.ElementType<TablePaginationActionsProps>;
-  /**
-   * Props applied to the back arrow [`IconButton`](https://mui.com/material-ui/api/icon-button/) component.
-   *
-   * This prop is an alias for `slotProps.actions.previousButton` and will be overriden by it if both are used.
-   * @deprecated Use `slotProps.actions.previousButton` instead.
-   */
-  backIconButtonProps?: Partial<IconButtonProps>;
+  ActionsComponent?: React.ElementType<TablePaginationActionsProps> | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TablePaginationClasses>;
+  classes?: Partial<TablePaginationClasses> | undefined;
   /**
    * The total number of rows.
    *
@@ -181,7 +173,7 @@ export interface TablePaginationOwnProps extends TablePaginationBaseProps {
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Accepts a function which returns a string value that provides a user-friendly name for the current page.
    * This is important for screen reader users.
@@ -193,17 +185,17 @@ export interface TablePaginationOwnProps extends TablePaginationBaseProps {
    *   return `Go to ${type} page`;
    * }
    */
-  getItemAriaLabel?: (type: 'first' | 'last' | 'next' | 'previous') => string;
+  getItemAriaLabel?: ((type: 'first' | 'last' | 'next' | 'previous') => string) | undefined;
   /**
    * Customize the displayed rows label. Invoked with a `{ from, to, count, page }`
    * object.
    *
    * For localization purposes, you can use the provided [translations](https://mui.com/material-ui/guides/localization/).
    * @default function defaultLabelDisplayedRows({ from, to, count }) {
-   *   return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
+   *   return `${formatNumber(from)}–${formatNumber(to)} of ${count !== -1 ? formatNumber(count) : `more than ${formatNumber(to)}`}`;
    * }
    */
-  labelDisplayedRows?: (paginationInfo: LabelDisplayedRowsArgs) => React.ReactNode;
+  labelDisplayedRows?: ((paginationInfo: LabelDisplayedRowsArgs) => React.ReactNode) | undefined;
   /**
    * Customize the rows per page label.
    *
@@ -211,13 +203,6 @@ export interface TablePaginationOwnProps extends TablePaginationBaseProps {
    * @default 'Rows per page:'
    */
   labelRowsPerPage?: React.ReactNode;
-  /**
-   * Props applied to the next arrow [`IconButton`](https://mui.com/material-ui/api/icon-button/) element.
-   *
-   * This prop is an alias for `slotProps.actions.nextButton` and will be overriden by it if both are used.
-   * @deprecated Use `slotProps.actions.nextButton` instead.
-   */
-  nextIconButtonProps?: Partial<IconButtonProps>;
   /**
    * Callback fired when the page is changed.
    *
@@ -230,7 +215,8 @@ export interface TablePaginationOwnProps extends TablePaginationBaseProps {
    *
    * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
    */
-  onRowsPerPageChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  onRowsPerPageChange?:
+    React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> | undefined;
   /**
    * The zero-based index of the current page.
    */
@@ -247,30 +233,21 @@ export interface TablePaginationOwnProps extends TablePaginationBaseProps {
    * Use -1 for the value with a custom label to show all the rows.
    * @default [10, 25, 50, 100]
    */
-  rowsPerPageOptions?: ReadonlyArray<number | { value: number; label: string }>;
-  /**
-   * Props applied to the rows per page [`Select`](https://mui.com/material-ui/api/select/) element.
-   *
-   * This prop is an alias for `slotProps.select` and will be overriden by it if both are used.
-   * @deprecated Use `slotProps.select` instead.
-   *
-   * @default {}
-   */
-  SelectProps?: Partial<SelectProps>;
+  rowsPerPageOptions?: ReadonlyArray<number | { value: number; label: string }> | undefined;
   /**
    * If `true`, show the first-page button.
    * @default false
    */
-  showFirstButton?: boolean;
+  showFirstButton?: boolean | undefined;
   /**
    * If `true`, show the last-page button.
    * @default false
    */
-  showLastButton?: boolean;
+  showLastButton?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface TablePaginationOwnerState extends TablePaginationOwnProps {}
@@ -285,13 +262,13 @@ export interface TablePaginationTypeMap<AdditionalProps, RootComponent extends R
  *
  * Demos:
  *
- * - [Pagination](https://mui.com/material-ui/react-pagination/)
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Pagination](https://next.mui.com/material-ui/react-pagination/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TablePagination API](https://mui.com/material-ui/api/table-pagination/)
- * - inherits [TableCell API](https://mui.com/material-ui/api/table-cell/)
+ * - [TablePagination API](https://next.mui.com/material-ui/api/table-pagination/)
+ * - inherits [TableCell API](https://next.mui.com/material-ui/api/table-cell/)
  */
 declare const TablePagination: OverridableComponent<
   TablePaginationTypeMap<{}, React.JSXElementConstructor<TablePaginationBaseProps>>
@@ -301,7 +278,7 @@ export type TablePaginationProps<
   RootComponent extends React.ElementType = React.JSXElementConstructor<TablePaginationBaseProps>,
   AdditionalProps = {},
 > = OverrideProps<TablePaginationTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default TablePagination;

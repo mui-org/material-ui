@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 Object.defineProperty(exports, "default", {
   enumerable: true,
   get: function () {
-    return _utils.createSvgIcon;
+    return _SvgIcon.createSvgIcon;
   }
 });
-var _utils = require("@mui/material/utils");
+var _SvgIcon = require("@mui/material/SvgIcon");

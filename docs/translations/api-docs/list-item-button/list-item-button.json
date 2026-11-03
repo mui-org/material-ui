@@ -5,9 +5,7 @@
     "autoFocus": {
       "description": "If <code>true</code>, the list item is focused during the first mount. Focus will also be triggered if the value changes from false to true."
     },
-    "children": {
-      "description": "The content of the component if a <code>ListItemSecondaryAction</code> is used it must be the last child."
-    },
+    "children": { "description": "The content of the component." },
     "classes": { "description": "Override or extend the styles applied to the component." },
     "component": {
       "description": "The component used for the root node. Either a string to use a HTML element or a component."

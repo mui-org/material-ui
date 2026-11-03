@@ -14,7 +14,7 @@ githubSource: packages/mui-material/src/Grid
 The `Grid` component works well for a layout with a known number of columns.
 The columns can be configured with multiple breakpoints to specify the column span of each child.
 
-{{"component": "@mui/docs/ComponentLinkHeader", "design": false}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader", "design": false}}
 
 ## How it works
 
@@ -25,9 +25,9 @@ The grid system is implemented with the `Grid` component:
 - Item widths are set in percentages, so they're always fluid and sized relative to their parent element.
 - There are five default grid breakpoints: xs, sm, md, lg, and xl. If you need custom breakpoints, check out [custom breakpoints grid](#custom-breakpoints).
 - You can give integer values for each breakpoint, to indicate how many of the 12 available columns are occupied by the component when the viewport width satisfies the [breakpoint constraints](/material-ui/customization/breakpoints/#default-breakpoints).
-- It uses [the `gap` CSS property](https://developer.mozilla.org/en-US/docs/Web/CSS/gap) to add spacing between items.
-- It does _not_ support row spanning. Children elements cannot span multiple rows. We recommend using [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout) if you need this functionality.
-- It does _not_ automatically place children. It will try to fit the children one by one, and if there is not enough space, the rest of the children will start on the next line, and so on. If you need auto-placement, we recommend using [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout/Auto-placement_in_grid_layout) instead.
+- It uses [the `gap` CSS property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/gap) to add spacing between items.
+- It does _not_ support row spanning. Children elements cannot span multiple rows. We recommend using [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout) if you need this functionality.
+- It does _not_ automatically place children. It will try to fit the children one by one, and if there is not enough space, the rest of the children will start on the next line, and so on. If you need auto-placement, we recommend using [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Auto-placement) instead.
 
 :::warning
 The `Grid` component is a _layout_ grid, not a _data_ grid.
@@ -46,7 +46,7 @@ Use the `container` prop to create a grid container that wraps the grid items (t
 Column widths are integer values between 1 and 12.
 For example, an item with `size={6}` occupies half of the grid container's width.
 
-{{"demo": "BasicGrid.js", "bg": true}}
+{{"component": "file://./demos/basic/index.ts", "bg": true}}
 
 ### Multiple breakpoints
 
@@ -56,7 +56,7 @@ Width values apply to all wider breakpoints, and larger breakpoints override tho
 For example, a component with `size={{ xs: 12, sm: 6 }}` occupies the entire viewport width when the viewport is [less than 600 pixels wide](/material-ui/customization/breakpoints/#default-breakpoints).
 When the viewport grows beyond this size, the component occupies half of the total width—six columns rather than 12.
 
-{{"demo": "FullWidthGrid.js", "bg": true}}
+{{"component": "file://./demos/full-width/index.ts", "bg": true}}
 
 ## Spacing
 
@@ -66,21 +66,21 @@ The prop is converted into a CSS property using the [`theme.spacing()`](/materia
 
 The following demo illustrates the use of the `spacing` prop:
 
-{{"demo": "SpacingGrid.js", "bg": true, "hideToolbar": true}}
+{{"component": "file://./demos/spacing/index.ts", "bg": true, "hideToolbar": true}}
 
 ### Row and column spacing
 
 The `rowSpacing` and `columnSpacing` props let you specify row and column gaps independently of one another.
-They behave similarly to the `row-gap` and `column-gap` properties of [CSS Grid](/system/grid/#row-gap-amp-column-gap).
+They behave similarly to the `row-gap` and `column-gap` properties of [CSS Grid](/system/grid/#row-gap-column-gap).
 
-{{"demo": "RowAndColumnSpacing.js", "bg": true}}
+{{"component": "file://./demos/row-and-column-spacing/index.ts", "bg": true}}
 
 ## Responsive values
 
 You can set prop values to change when a given breakpoint is active.
 For instance, we can implement Material Design's [recommended](https://m2.material.io/design/layout/responsive-layout-grid.html) responsive layout grid, as seen in the following demo:
 
-{{"demo": "ResponsiveGrid.js", "bg": true}}
+{{"component": "file://./demos/responsive/index.ts", "bg": true}}
 
 Responsive values are supported by:
 
@@ -96,21 +96,21 @@ Responsive values are supported by:
 
 Below is an interactive demo that lets you explore the visual results of the different settings:
 
-{{"demo": "InteractiveGrid.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/interactive/index.ts", "hideToolbar": true, "bg": true}}
 
 ## Auto-layout
 
 The auto-layout feature gives equal space to all items present.
 When you set the width of one item, the others will automatically resize to match it.
 
-{{"demo": "AutoGrid.js", "bg": true}}
+{{"component": "file://./demos/auto/index.ts", "bg": true}}
 
 ### Variable width content
 
 When a breakpoint's value is given as `"auto"`, then a column's size will automatically adjust to match the width of its content.
 The demo below shows how this works:
 
-{{"demo": "VariableWidthGrid.js", "bg": true}}
+{{"component": "file://./demos/variable-width/index.ts", "bg": true}}
 
 ## Nested grid
 
@@ -134,19 +134,19 @@ Note that a nested grid container should be a direct child of another grid conta
 
 A nested grid container inherits the row and column spacing from its parent unless the `spacing` prop is specified to the instance.
 
-{{"demo": "NestedGrid.js", "bg": true}}
+{{"component": "file://./demos/nested/index.ts", "bg": true}}
 
 ### Inheriting columns
 
 A nested grid container inherits the columns from its parent unless the `columns` prop is specified to the instance.
 
-{{"demo": "NestedGridColumns.js", "bg": true}}
+{{"component": "file://./demos/nested-columns/index.ts", "bg": true}}
 
 ## Columns
 
 Use the `columns` prop to change the default number of columns (12) in the grid, as shown below:
 
-{{"demo": "ColumnsGrid.js", "bg": true}}
+{{"component": "file://./demos/columns/index.ts", "bg": true}}
 
 ## Offset
 
@@ -158,7 +158,7 @@ This props accepts:
 
 The demo below illustrates how to use the offset props:
 
-{{"demo": "OffsetGrid.js", "bg": true}}
+{{"component": "file://./demos/offset/index.ts", "bg": true}}
 
 ## Custom breakpoints
 
@@ -226,7 +226,7 @@ declare module '@mui/system' {
 To center a grid item's content, specify `display="flex"` directly on the item.
 Then use `justifyContent` and/or `alignItems` to adjust the position of the content, as shown below:
 
-{{"demo": "CenteredElementGrid.js", "bg": true}}
+{{"component": "file://./demos/centered-element/index.ts", "bg": true}}
 
 :::warning
 Using the `container` prop does not work in this situation because the grid container is designed exclusively to wrap grid items.
@@ -235,11 +235,11 @@ It cannot wrap other elements.
 
 ### Full border
 
-{{"demo": "FullBorderedGrid.js"}}
+{{"component": "file://./demos/full-bordered/index.ts"}}
 
 ### Half border
 
-{{"demo": "HalfBorderedGrid.js"}}
+{{"component": "file://./demos/half-bordered/index.ts"}}
 
 ## Limitations
 
@@ -250,4 +250,4 @@ The Grid component is specifically designed to subdivide a layout into columns, 
 You should not use the Grid component on its own to stack layout elements vertically.
 Instead, you should use the [Stack component](/material-ui/react-stack/) inside of a Grid to create vertical layouts as shown below:
 
-{{"demo": "ColumnLayoutInsideGrid.js"}}
+{{"component": "file://./demos/column-layout-inside/index.ts"}}

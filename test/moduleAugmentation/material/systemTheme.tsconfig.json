@@ -1,0 +1,4 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["systemTheme.spec.tsx"]
+}

@@ -32,7 +32,7 @@ ReactDOM.createRoot(shadowRootElement).render(
 
 ### 2. Theme
 
-Material UI components like Menu, Dialog, Popover, and others use the [MUI Base Portal](https://v6.mui.com/base-ui/react-portal/) component to render a new "subtree" in a container outside of current DOM hierarchy.
+Material UI components like Menu, Dialog, Popover, and others use the [Portal](/material-ui/react-portal/) component to render a new "subtree" in a container outside of current DOM hierarchy.
 By default, this container is `document.body`.
 But since the styles are applied only inside of the Shadow DOM, we need to render portals inside the Shadow DOM container as well:
 
@@ -63,6 +63,8 @@ const theme = createTheme({
   <App />
 </ThemeProvider>;
 ```
+
+The `container` prop only needs to be set on the base components that render directly through the `Portal`: `Modal`, `Popover`, and `Popper`. Higher-level components (like `Dialog`, `Menu`, `Tooltip` etc.) render these base components internally and inherit the `container` prop automatically.
 
 ### 3. CSS theme variables (optional)
 
@@ -97,4 +99,4 @@ Finally, set the `colorSchemeNode` prop using `shadowRootElement`, from step 1, 
 
 In the example below you can see that the component outside of the shadow DOM is affected by global styles, while the component inside of the shadow DOM is not:
 
-{{"demo": "ShadowDOMDemoNoSnap.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/demo-no-snap/index.ts", "hideToolbar": true, "bg": true}}

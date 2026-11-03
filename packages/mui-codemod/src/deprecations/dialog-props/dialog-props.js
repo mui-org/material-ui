@@ -14,6 +14,22 @@ export default function transformer(file, api, options) {
     root,
     packageName: options.packageName,
     componentName: 'Dialog',
+    propName: 'BackdropComponent',
+    slotName: 'backdrop',
+  });
+
+  movePropIntoSlotProps(j, {
+    root,
+    packageName: options.packageName,
+    componentName: 'Dialog',
+    propName: 'BackdropProps',
+    slotName: 'backdrop',
+  });
+
+  movePropIntoSlots(j, {
+    root,
+    packageName: options.packageName,
+    componentName: 'Dialog',
     propName: 'TransitionComponent',
     slotName: 'transition',
   });

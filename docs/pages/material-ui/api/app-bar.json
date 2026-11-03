@@ -9,6 +9,7 @@
       },
       "default": "'primary'"
     },
+    "elevation": { "type": { "name": "number" }, "default": "4" },
     "enableColorOnDark": { "type": { "name": "bool" }, "default": "false" },
     "position": {
       "type": {
@@ -17,6 +18,7 @@
       },
       "default": "'fixed'"
     },
+    "square": { "type": { "name": "bool" }, "default": "true" },
     "sx": {
       "type": {
         "name": "union",
@@ -128,6 +130,5 @@
   "forwardsRefTo": "HTMLElement",
   "filename": "/packages/mui-material/src/AppBar/AppBar.js",
   "inheritance": { "component": "Paper", "pathname": "/material-ui/api/paper/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-app-bar/\">App Bar</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-app-bar/\">App Bar</a></li></ul>"
 }

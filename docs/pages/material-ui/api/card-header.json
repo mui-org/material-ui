@@ -20,11 +20,6 @@
       "default": "{}"
     },
     "subheader": { "type": { "name": "node" } },
-    "subheaderTypographyProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.subheader</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "sx": {
       "type": {
         "name": "union",
@@ -32,12 +27,7 @@
       },
       "additionalInfo": { "sx": true }
     },
-    "title": { "type": { "name": "node" } },
-    "titleTypographyProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.title</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    }
+    "title": { "type": { "name": "node" } }
   },
   "name": "CardHeader",
   "imports": [
@@ -89,6 +79,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/CardHeader/CardHeader.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li></ul>"
 }

@@ -2,3 +2,5 @@
 
 User-agent: *
 Allow: /
+
+Disallow: /experiments/

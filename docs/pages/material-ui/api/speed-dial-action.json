@@ -2,12 +2,6 @@
   "props": {
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "delay": { "type": { "name": "number" }, "default": "0" },
-    "FabProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.fab</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "icon": { "type": { "name": "node" } },
     "id": { "type": { "name": "string" } },
     "open": { "type": { "name": "bool" } },
@@ -31,31 +25,6 @@
         "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
       },
       "additionalInfo": { "sx": true }
-    },
-    "TooltipClasses": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.tooltip.classes</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "tooltipOpen": {
-      "type": { "name": "bool" },
-      "default": "false",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.tooltip.open</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "tooltipPlacement": {
-      "type": {
-        "name": "enum",
-        "description": "'auto-end'<br>&#124;&nbsp;'auto-start'<br>&#124;&nbsp;'auto'<br>&#124;&nbsp;'bottom-end'<br>&#124;&nbsp;'bottom-start'<br>&#124;&nbsp;'bottom'<br>&#124;&nbsp;'left-end'<br>&#124;&nbsp;'left-start'<br>&#124;&nbsp;'left'<br>&#124;&nbsp;'right-end'<br>&#124;&nbsp;'right-start'<br>&#124;&nbsp;'right'<br>&#124;&nbsp;'top-end'<br>&#124;&nbsp;'top-start'<br>&#124;&nbsp;'top'"
-      },
-      "default": "'left'",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.tooltip.placement</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "tooltipTitle": {
-      "type": { "name": "node" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.tooltip.title</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   },
   "name": "SpeedDialAction",
@@ -99,19 +68,31 @@
     {
       "key": "staticTooltipClosed",
       "className": "MuiSpeedDialAction-staticTooltipClosed",
-      "description": "Styles applied to the root element if `tooltipOpen={true}` and `open={false}`.",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `open` is `false`.",
+      "isGlobal": false
+    },
+    {
+      "key": "tooltipPlacementBottom",
+      "className": "MuiSpeedDialAction-tooltipPlacementBottom",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"bottom\".",
       "isGlobal": false
     },
     {
       "key": "tooltipPlacementLeft",
       "className": "MuiSpeedDialAction-tooltipPlacementLeft",
-      "description": "Styles applied to the root element if `tooltipOpen={true}` and `tooltipPlacement=\"left\"``",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"left\".",
       "isGlobal": false
     },
     {
       "key": "tooltipPlacementRight",
       "className": "MuiSpeedDialAction-tooltipPlacementRight",
-      "description": "Styles applied to the root element if `tooltipOpen={true}` and `tooltipPlacement=\"right\"``",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"right\".",
+      "isGlobal": false
+    },
+    {
+      "key": "tooltipPlacementTop",
+      "className": "MuiSpeedDialAction-tooltipPlacementTop",
+      "description": "Styles applied to the root element if `slotProps.tooltip.open` is `true` and `slotProps.tooltip.placement` contains \"top\".",
       "isGlobal": false
     }
   ],
@@ -121,6 +102,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/SpeedDialAction/SpeedDialAction.js",
   "inheritance": { "component": "Tooltip", "pathname": "/material-ui/api/tooltip/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-speed-dial/\">Speed Dial</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-speed-dial/\">Speed Dial</a></li></ul>"
 }

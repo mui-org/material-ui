@@ -8,6 +8,15 @@
     "disableShrink": {
       "description": "If <code>true</code>, the shrink animation is disabled. This only works if variant is <code>indeterminate</code>."
     },
+    "enableTrackSlot": {
+      "description": "If <code>true</code>, a track circle slot is mounted to show a subtle background for the progress. The <code>size</code> and <code>thickness</code> apply to the track slot to be consistent with the progress circle."
+    },
+    "max": {
+      "description": "The maximum value for the progress indicator for the determinate variant."
+    },
+    "min": {
+      "description": "The minimum value for the progress indicator for the determinate variant."
+    },
     "size": {
       "description": "The size of the component. If using a number, the pixel unit is assumed. If using a string, you need to provide the CSS unit, for example &#39;3rem&#39;."
     },
@@ -16,7 +25,7 @@
     },
     "thickness": { "description": "The thickness of the circle." },
     "value": {
-      "description": "The value of the progress indicator for the determinate variant. Value between 0 and 100."
+      "description": "The value of the progress indicator for the determinate variant. Value between <code>min</code> and <code>max</code>."
     },
     "variant": {
       "description": "The variant to use. Use indeterminate when there is no progress value."
@@ -27,22 +36,10 @@
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the <code>circle</code> svg path"
     },
-    "circleDeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the <code>circle</code> svg path",
-      "conditions": "<code>variant=\"determinate\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/circular-progress/#circular-progress-classes-circle\">.MuiCircularProgress-circle</a> and <a href=\"/material-ui/api/circular-progress/#circular-progress-classes-determinate\">.MuiCircularProgress-determinate</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "circleDisableShrink": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the <code>circle</code> svg path",
       "conditions": "<code>disableShrink={true}</code>"
-    },
-    "circleIndeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the <code>circle</code> svg path",
-      "conditions": "<code>variant=\"indeterminate\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/circular-progress/#circular-progress-classes-circle\">.MuiCircularProgress-circle</a> and <a href=\"/material-ui/api/circular-progress/#circular-progress-classes-indeterminate\">.MuiCircularProgress-indeterminate</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "colorPrimary": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -65,6 +62,11 @@
       "conditions": "<code>variant=\"indeterminate\"</code>"
     },
     "root": { "description": "Styles applied to the root element." },
-    "svg": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the svg element" }
+    "svg": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the svg element" },
+    "track": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the track slot",
+      "conditions": "<code>enableTrackSlot={true}</code>"
+    }
   }
 }

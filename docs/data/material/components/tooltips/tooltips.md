@@ -14,41 +14,59 @@ githubSource: packages/mui-material/src/Tooltip
 
 When activated, Tooltips display a text label identifying an element, such as a description of its function.
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Basic tooltip
 
-{{"demo": "BasicTooltip.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
+
+## Labels and descriptions
+
+By default, the tooltip only labels its child element.
+This is notably different from `title` which can either label or describe its child depending on whether the child already has a label.
+For example, in the element below, the `title` acts as an accessible description:
+
+```html
+<button title="some more information">A button</button>
+```
+
+If you want the tooltip to act as an accessible description, you can pass the `describeChild` prop.
+You shouldn't use `describeChild` if the tooltip provides the only visual label.
+In that case, the child would have no accessible name and the tooltip would violate [WCAG 2.2 Success Criterion 2.5.3](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html).
+If the trigger already has either visible text or an `aria-label`, use the tooltip as a description and pass the `describeChild` prop.
+Otherwise, you can use the default behavior and let the tooltip label the trigger.
+
+{{"component": "file://./demos/accessibility/index.ts"}}
 
 ## Positioned tooltips
 
 The `Tooltip` has 12 **placement** choices.
 They don't have directional arrows; instead, they rely on motion emanating from the source to convey direction.
 
-{{"demo": "PositionedTooltips.js"}}
+{{"component": "file://./demos/positioned/index.ts"}}
 
 ## Customization
 
 Here are some examples of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedTooltips.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 ## Arrow tooltips
 
 You can use the `arrow` prop to give your tooltip an arrow indicating which element it refers to.
 
-{{"demo": "ArrowTooltips.js"}}
+{{"component": "file://./demos/arrow/index.ts"}}
 
 ## Distance from anchor
 
-To adjust the distance between the tooltip and its anchor, you can use the `slotProps` prop to modify the [offset](https://popper.js.org/docs/v2/modifiers/offset/) of the popper.
+To adjust the distance between the tooltip and its anchor, you can use the `slotProps` prop to modify the [offset](https://github.com/floating-ui/popper-docs/blob/main/docs/v2/modifiers/offset.md) of the popper.
 
-{{"demo": "TooltipOffset.js"}}
+{{"component": "file://./demos/offset/index.ts"}}
 
 Alternatively, you can use the `slotProps` prop to customize the margin of the popper.
 
-{{"demo": "TooltipMargin.js"}}
+{{"component": "file://./demos/margin/index.ts"}}
 
 ## Custom child element
 
@@ -105,27 +123,27 @@ You can define the types of events that cause a tooltip to show.
 
 The touch action requires a long press due to the `enterTouchDelay` prop being set to `700`ms by default.
 
-{{"demo": "TriggersTooltips.js"}}
+{{"component": "file://./demos/triggers/index.ts"}}
 
 ## Controlled tooltips
 
 You can use the `open`, `onOpen` and `onClose` props to control the behavior of the tooltip.
 
-{{"demo": "ControlledTooltips.js"}}
+{{"component": "file://./demos/controlled/index.ts"}}
 
 ## Variable width
 
 The `Tooltip` wraps long text by default to make it readable.
 
-{{"demo": "VariableWidth.js"}}
+{{"component": "file://./demos/variable-width/index.ts"}}
 
 ## Interactive
 
-Tooltips are interactive by default (to pass [WCAG 2.1 success criterion 1.4.13](https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus)).
+Tooltips are interactive by default (to pass [WCAG 2.2 Success Criterion 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)).
 It won't close when the user hovers over the tooltip before the `leaveDelay` is expired.
-You can disable this behavior (thus failing the success criterion which is required to reach level AA) by passing `disableInteractive`.
+You can disable this behavior (thus failing the success criterion which is required to reach Level AA) by passing `disableInteractive`.
 
-{{"demo": "NonInteractiveTooltips.js"}}
+{{"component": "file://./demos/non-interactive/index.ts"}}
 
 ## Disabled elements
 
@@ -135,14 +153,14 @@ By default disabled elements like `<button>` do not trigger user interactions so
 In order to work with Safari, you need at least one display block or flex item below the tooltip wrapper.
 :::
 
-{{"demo": "DisabledTooltips.js"}}
+{{"component": "file://./demos/disabled/index.ts"}}
 
 :::warning
 If you're not wrapping a Material UI component that inherits from `ButtonBase`, for instance, a native `<button>` element, you should also add the CSS property _pointer-events: none;_ to your element when disabled:
 :::
 
 ```jsx
-<Tooltip title="You don't have permission to do this">
+<Tooltip describeChild title="You don't have permission to do this">
   <span>
     <button disabled={disabled} style={disabled ? { pointerEvents: 'none' } : {}}>
       A disabled button
@@ -153,23 +171,23 @@ If you're not wrapping a Material UI component that inherits from `ButtonBase`,
 
 ## Transitions
 
-Use a different transition.
+Use `slots.transition` and `slotProps.transition` to use a different transition.
 
-{{"demo": "TransitionsTooltips.js"}}
+{{"component": "file://./demos/transitions/index.ts"}}
 
 ## Follow cursor
 
 You can enable the tooltip to follow the cursor by setting `followCursor={true}`.
 
-{{"demo": "FollowCursorTooltips.js"}}
+{{"component": "file://./demos/follow-cursor/index.ts"}}
 
 ## Virtual element
 
 In the event you need to implement a custom placement, you can use the `anchorEl` prop:
 The value of the `anchorEl` prop can be a reference to a fake DOM element.
-You need to create an object shaped like the [`VirtualElement`](https://popper.js.org/docs/v2/virtual-elements/).
+You need to create an object shaped like the [`VirtualElement`](https://github.com/floating-ui/popper-docs/blob/main/docs/v2/virtual-elements.md).
 
-{{"demo": "AnchorElTooltips.js"}}
+{{"component": "file://./demos/anchor-el/index.ts"}}
 
 ## Showing and hiding
 
@@ -177,22 +195,10 @@ The tooltip is normally shown immediately when the user's mouse hovers over the 
 
 On mobile, the tooltip is displayed when the user longpresses the element and hides after a delay of 1500ms. You can disable this feature with the `disableTouchListener` prop.
 
-{{"demo": "DelayTooltips.js"}}
+{{"component": "file://./demos/delay/index.ts"}}
 
 ## Accessibility
 
 (WAI-ARIA: https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)
 
-By default, the tooltip only labels its child element.
-This is notably different from `title` which can either label **or** describe its child depending on whether the child already has a label.
-For example, in:
-
-```html
-<button title="some more information">A button</button>
-```
-
-the `title` acts as an accessible description.
-If you want the tooltip to act as an accessible description you can pass `describeChild`.
-Note that you shouldn't use `describeChild` if the tooltip provides the only visual label. Otherwise, the child would have no accessible name and the tooltip would violate [success criterion 2.5.3 in WCAG 2.1](https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html).
-
-{{"demo": "AccessibilityTooltips.js"}}
+Tooltips should wrap triggers that are focusable and hoverable (for example, buttons) so that all users can activate them. When tooltips are displayed, they are automatically linked to the trigger. The trigger element is either labeled or described by the tooltip content. However, tooltip content should not be used as a full text alternative for truncated content.

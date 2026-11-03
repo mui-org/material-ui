@@ -1,5 +1,0 @@
-<LinearProgress determinate value={25} />
-<LinearProgress determinate value={50} />
-<LinearProgress determinate value={75} />
-<LinearProgress determinate value={100} />
-<LinearProgress determinate value={progress} />

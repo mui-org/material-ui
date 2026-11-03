@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 
-import Head from 'docs/src/modules/components/Head';
+import { AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 import AppTheme from 'docs/data/material/getting-started/templates/shared-theme/AppTheme';
 import ColorModeIconDropdown from 'docs/data/material/getting-started/templates/shared-theme/ColorModeIconDropdown';
 import {

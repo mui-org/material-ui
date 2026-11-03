@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createTheme } from '@mui/material/styles';
 import createMixins from './createMixins';
 

@@ -1,8 +1,0 @@
-<Stack direction="row" spacing={1}>
-  <Chip label="primary" color="primary" />
-  <Chip label="success" color="success" />
-</Stack>
-<Stack direction="row" spacing={1}>
-  <Chip label="primary" color="primary" variant="outlined" />
-  <Chip label="success" color="success" variant="outlined" />
-</Stack>

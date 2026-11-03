@@ -1,8 +1,0 @@
-<ButtonGroup disabled aria-label="disabled button group">
-  <Button>One</Button>
-  <Button>Two</Button>
-  <Button>Three</Button>
-  <IconButton disabled={false}>
-    <Settings />
-  </IconButton>
-</ButtonGroup>

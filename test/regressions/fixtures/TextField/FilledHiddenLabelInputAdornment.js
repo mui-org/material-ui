@@ -9,8 +9,10 @@ export default function FilledHiddenLabelInputAdornment() {
       id="filled-hidden-label"
       defaultValue="Value"
       variant="filled"
-      InputProps={{
-        startAdornment: <InputAdornment position="start">kg</InputAdornment>,
+      slotProps={{
+        input: {
+          startAdornment: <InputAdornment position="start">kg</InputAdornment>,
+        },
       }}
     />
   );

@@ -3,14 +3,9 @@
 # top-most EditorConfig file
 root = true
 
-[*.md]
-trim_trailing_whitespace = false
-
-[*.js]
-trim_trailing_whitespace = true
-
 # Unix-style newlines with a newline ending every file
 [*]
+trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 end_of_line = lf

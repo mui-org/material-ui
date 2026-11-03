@@ -6,14 +6,20 @@ import composeClasses from '@mui/utils/composeClasses';
 import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import ListContext from '../List/ListContext';
 import ButtonBase from '../ButtonBase';
 import useEnhancedEffect from '../utils/useEnhancedEffect';
+import focusWithVisible from '../utils/focusWithVisible';
 import useForkRef from '../utils/useForkRef';
+import useId from '../utils/useId';
+import { useRovingTabIndexItem } from '../utils/useRovingTabIndex';
 import { dividerClasses } from '../Divider';
 import { listItemIconClasses } from '../ListItemIcon';
 import { listItemTextClasses } from '../ListItemText';
+import { useMenuListContext } from '../MenuList/MenuListContext';
+import { useSelectFocusSource } from '../Select/utils';
 import menuItemClasses, { getMenuItemUtilityClass } from './menuItemClasses';
 
 export const overridesResolver = (props, styles) => {
@@ -79,12 +85,14 @@ const MenuItemRoot = styled(ButtonBase, {
         (theme.vars || theme).palette.primary.main,
         (theme.vars || theme).palette.action.selectedOpacity,
       ),
-      [`&.${menuItemClasses.focusVisible}`]: {
-        backgroundColor: theme.alpha(
-          (theme.vars || theme).palette.primary.main,
-          `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`,
-        ),
-      },
+      ...(!theme.focusVisible && {
+        [`&.${menuItemClasses.focusVisible}`]: {
+          backgroundColor: theme.alpha(
+            (theme.vars || theme).palette.primary.main,
+            `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`,
+          ),
+        },
+      }),
     },
     [`&.${menuItemClasses.selected}:hover`]: {
       backgroundColor: theme.alpha(
@@ -99,9 +107,14 @@ const MenuItemRoot = styled(ButtonBase, {
         ),
       },
     },
-    [`&.${menuItemClasses.focusVisible}`]: {
-      backgroundColor: (theme.vars || theme).palette.action.focus,
-    },
+    ...(theme.focusVisible
+      ? // Inset the ring: a scrolling Menu/MenuList clips an outset ring.
+        applyInsetFocusVisible(1)
+      : {
+          [`&.${menuItemClasses.focusVisible}`]: {
+            backgroundColor: (theme.vars || theme).palette.action.focus,
+          },
+        }),
     [`&.${menuItemClasses.disabled}`]: {
       opacity: (theme.vars || theme).palette.action.disabledOpacity,
     },
@@ -164,7 +177,7 @@ const MenuItemRoot = styled(ButtonBase, {
 const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiMenuItem' });
   const {
-    autoFocus = false,
+    autoFocus: shouldAutoFocusOnMount = false,
     component = 'li',
     dense = false,
     divider = false,
@@ -176,6 +189,12 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
     ...other
   } = props;
 
+  // `menuitemcheckbox`/`menuitemradio` require `aria-checked`; derive it from `selected`
+  // (an omitted `selected` means unchecked). Other roles keep `selected` presentational.
+  const isCheckableRole = role === 'menuitemcheckbox' || role === 'menuitemradio';
+  const ariaChecked = isCheckableRole ? Boolean(props.selected) : undefined;
+
+  const focusSource = useSelectFocusSource();
   const context = React.useContext(ListContext);
   const childContext = React.useMemo(
     () => ({
@@ -184,19 +203,27 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
     }),
     [context.dense, dense, disableGutters],
   );
+  const menuListContext = useMenuListContext();
+  const rovingItemId = useId();
+  // Escape hatch via ButtonBase for when an anchored <Menu> is opened with a pointer
+  // interaction on a trigger, the item should receive DOM focus but without focus visible
+  // styling. Current API does not allow a reliable `openInteractionType` for anchored menus.
+  const suppressFocusVisible = menuListContext.suppressInitialFocusVisible;
+  const itemsFocusableWhenDisabled = menuListContext.itemsFocusableWhenDisabled;
 
   const menuItemRef = React.useRef(null);
   useEnhancedEffect(() => {
-    if (autoFocus) {
+    if (shouldAutoFocusOnMount) {
       if (menuItemRef.current) {
-        menuItemRef.current.focus();
+        focusWithVisible(menuItemRef.current, focusSource);
       } else if (process.env.NODE_ENV !== 'production') {
         console.error(
           'MUI: Unable to set focus to a MenuItem whose component has not been rendered.',
         );
       }
     }
-  }, [autoFocus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldAutoFocusOnMount]);
 
   const ownerState = {
     ...props,
@@ -207,11 +234,28 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
 
   const classes = useUtilityClasses(props);
 
-  const handleRef = useForkRef(menuItemRef, ref);
+  // Don't forward the 'root' class to the ButtonBase, as it will get duplicated with the one passed to the className prop.
+  const { root, ...forwardedClasses } = classes;
+
+  const rovingItemProps = useRovingTabIndexItem({
+    id: rovingItemId,
+    ref,
+    disabled: props.disabled,
+    focusableWhenDisabled: itemsFocusableWhenDisabled,
+    selected: props.selected,
+  });
+
+  const handleRef = useForkRef(menuItemRef, rovingItemProps.ref);
 
   let tabIndex;
-  if (!props.disabled) {
-    tabIndex = tabIndexProp !== undefined ? tabIndexProp : -1;
+  if (tabIndexProp !== undefined) {
+    tabIndex = tabIndexProp;
+  } else if (menuListContext.variant === 'selectedMenu') {
+    tabIndex = rovingItemProps.tabIndex;
+  } else if (!props.disabled || itemsFocusableWhenDisabled) {
+    // In `menu` variant, registration still drives arrow-key navigation even
+    // though each item keeps `tabIndex={-1}`.
+    tabIndex = -1;
   }
 
   return (
@@ -219,13 +263,17 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
       <MenuItemRoot
         ref={handleRef}
         role={role}
+        aria-checked={ariaChecked}
         tabIndex={tabIndex}
         component={component}
+        internalNativeButton={false}
+        focusableWhenDisabled={itemsFocusableWhenDisabled}
+        suppressFocusVisible={suppressFocusVisible}
         focusVisibleClassName={clsx(classes.focusVisible, focusVisibleClassName)}
         className={clsx(classes.root, className)}
         {...other}
         ownerState={ownerState}
-        classes={classes}
+        classes={forwardedClasses}
       />
     </ListContext.Provider>
   );
@@ -291,9 +339,10 @@ MenuItem.propTypes /* remove-proptypes */ = {
   /**
    * @ignore
    */
-  role: PropTypes /* @typescript-to-proptypes-ignore */.string,
+  role: PropTypes.string,
   /**
    * If `true`, the component is selected.
+   * For `menuitemcheckbox` and `menuitemradio` roles, this also drives `aria-checked`.
    * @default false
    */
   selected: PropTypes.bool,

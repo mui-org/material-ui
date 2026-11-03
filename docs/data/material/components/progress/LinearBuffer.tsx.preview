@@ -1,1 +1,0 @@
-<LinearProgress variant="buffer" value={progress} valueBuffer={buffer} />

@@ -1,0 +1,10 @@
+{
+  "title": "Toggle Button",
+  "axe": "docs/data/material/components/toggle-button/toggle-button.a11y.json",
+  "tests": ["ButtonBase"],
+  "criteria": {
+    "1.4.1": { "conformance": "Partially Supports", "responsibility": "Component" },
+    "1.4.3": { "responsibility": "Component" }
+  },
+  "notApplicable": ["3.3.2"]
+}

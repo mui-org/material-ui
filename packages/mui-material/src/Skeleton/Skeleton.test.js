@@ -1,7 +1,7 @@
-import { expect } from 'chai';
-import * as React from 'react';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, isJsdom } from '@mui/internal-test-utils';
 import Skeleton, { skeletonClasses as classes } from '@mui/material/Skeleton';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 
 describe('<Skeleton />', () => {
@@ -14,13 +14,45 @@ describe('<Skeleton />', () => {
     refInstanceof: window.HTMLSpanElement,
     muiName: 'MuiSkeleton',
     testVariantProps: { variant: 'circular', animation: 'wave' },
-    skip: ['componentsProp'],
   }));
 
   it('should render', () => {
     const { container } = render(<Skeleton />);
 
     expect(container.firstChild).to.have.class(classes.root);
+  });
+
+  it.skipIf(isJsdom())('disables pulse animation when reduced motion is always', () => {
+    const theme = createTheme({
+      motion: {
+        reducedMotion: 'always',
+      },
+    });
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <Skeleton animation="pulse" />
+      </ThemeProvider>,
+    );
+
+    expect(window.getComputedStyle(container.firstChild).animationName).to.equal('none');
+  });
+
+  it.skipIf(isJsdom())('disables wave animation when reduced motion is always', () => {
+    const theme = createTheme({
+      motion: {
+        reducedMotion: 'always',
+      },
+    });
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <Skeleton animation="wave" />
+      </ThemeProvider>,
+    );
+
+    const wave = window.getComputedStyle(container.firstChild, '::after');
+
+    expect(wave.animationName).to.equal('none');
+    expect(wave.display).to.equal('none');
   });
 
   it('should get withChildren class when passed children', () => {

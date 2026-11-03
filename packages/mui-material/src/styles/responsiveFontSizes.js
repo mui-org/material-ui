@@ -71,16 +71,28 @@ export default function responsiveFontSizes(themeInput, options = {}) {
         });
     }
 
+    const responsive = responsiveProperty({
+      cssProperty: 'fontSize',
+      min: minFontSize,
+      max: maxFontSize,
+      unit: 'rem',
+      breakpoints: breakpointValues,
+      transform,
+    });
+
+    // https://github.com/mui/material-ui/issues/40255
+    // Preserve the original font size at the largest breakpoint.
+    // Grid alignment can snap the max value away from the original designed size.
+    if (breakpointValues.length > 0) {
+      const lastBreakpoint = breakpointValues[breakpointValues.length - 1];
+      responsive[`@media (min-width:${lastBreakpoint}px)`] = {
+        fontSize: `${Math.round(maxFontSize * 10000) / 10000}rem`,
+      };
+    }
+
     typography[variant] = {
       ...style,
-      ...responsiveProperty({
-        cssProperty: 'fontSize',
-        min: minFontSize,
-        max: maxFontSize,
-        unit: 'rem',
-        breakpoints: breakpointValues,
-        transform,
-      }),
+      ...responsive,
     };
   });
 

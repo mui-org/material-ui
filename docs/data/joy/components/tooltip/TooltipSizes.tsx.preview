@@ -1,9 +1,0 @@
-<Tooltip title="Delete" size="sm">
-  <Button variant="plain">Small</Button>
-</Tooltip>
-<Tooltip title="Delete" size="md">
-  <Button variant="plain">Medium</Button>
-</Tooltip>
-<Tooltip title="Delete" size="lg">
-  <Button variant="plain">Large</Button>
-</Tooltip>

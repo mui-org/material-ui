@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { withStyles } from '@mui/styles';
 
 import { ThemeProvider } from '@mui/material/styles';

@@ -4,18 +4,6 @@
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "component": { "type": { "name": "elementType" } },
-    "components": {
-      "type": { "name": "shape", "description": "{ Root?: elementType }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": { "name": "shape", "description": "{ root?: object }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "invisible": { "type": { "name": "bool" }, "default": "false" },
     "slotProps": {
       "type": {
@@ -38,12 +26,6 @@
       },
       "additionalInfo": { "sx": true }
     },
-    "TransitionComponent": {
-      "type": { "name": "elementType" },
-      "default": "Fade",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.transition</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "transitionDuration": {
       "type": {
         "name": "union",
@@ -65,7 +47,7 @@
     },
     {
       "name": "transition",
-      "description": "The component that renders the transition.\n[Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.",
+      "description": "The component that renders the transition.\n[Follow this guide](/material-ui/transitions/#transition-slots) to learn more about the requirements for this component.",
       "default": "Fade",
       "class": null
     }
@@ -84,6 +66,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Backdrop/Backdrop.js",
   "inheritance": { "component": "Fade", "pathname": "/material-ui/api/fade/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-backdrop/\">Backdrop</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-backdrop/\">Backdrop</a></li></ul>"
 }

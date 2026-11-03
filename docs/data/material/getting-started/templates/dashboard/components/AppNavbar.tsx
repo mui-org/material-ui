@@ -21,7 +21,7 @@ const Toolbar = styled(MuiToolbar)({
   justifyContent: 'center',
   gap: '12px',
   flexShrink: 0,
-  [`& ${tabsClasses.flexContainer}`]: {
+  [`& ${tabsClasses.list}`]: {
     gap: '8px',
     p: '8px',
     pb: 0,

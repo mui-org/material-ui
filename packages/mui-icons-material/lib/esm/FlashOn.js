@@ -1,7 +1,0 @@
-"use client";
-
-import createSvgIcon from "./utils/createSvgIcon.js";
-import { jsx as _jsx } from "react/jsx-runtime";
-export default createSvgIcon(/*#__PURE__*/_jsx("path", {
-  d: "M7 2v11h3v9l7-12h-4l4-8z"
-}), 'FlashOn');

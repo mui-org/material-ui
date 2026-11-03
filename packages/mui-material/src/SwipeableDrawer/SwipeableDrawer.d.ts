@@ -9,7 +9,7 @@ export interface SwipeableDrawerSlots {
    * The component used for the swipeArea slot.
    * @default div
    */
-  swipeArea?: React.ElementType;
+  swipeArea?: React.ElementType | undefined;
 }
 
 type SwipeableDrawerSlotsAndSlotProps = DrawerSlotsAndSlotProps &
@@ -18,14 +18,15 @@ type SwipeableDrawerSlotsAndSlotProps = DrawerSlotsAndSlotProps &
     {
       /**
        * Props forwarded to the docked slot.
-       * By default, the avaible props are based on a div element.
+       * By default, the available props are based on a div element.
        */
       swipeArea: SlotProps<'div', SwipeableDrawerSwipeAreaSlotPropsOverrides, DrawerOwnerState>;
     }
   >;
 
 export interface SwipeableDrawerProps
-  extends Omit<DrawerProps, 'onClose' | 'open' | 'slots' | 'slotProps'>,
+  extends
+    Omit<DrawerProps, 'onClose' | 'open' | 'slots' | 'slotProps'>,
     SwipeableDrawerSlotsAndSlotProps {
   /**
    * If set to true, the swipe event will open the drawer even if the user begins the swipe on one of the drawer's children.
@@ -41,78 +42,74 @@ export interface SwipeableDrawerProps
    */
   allowSwipeInChildren?:
     | boolean
-    | ((event: TouchEvent, swipeArea: HTMLDivElement, paper: HTMLDivElement) => boolean);
+    | ((event: TouchEvent, swipeArea: HTMLDivElement, paper: HTMLDivElement) => boolean)
+    | undefined;
   /**
    * Disable the backdrop transition.
    * This can improve the FPS on low-end devices.
    * @default false
    */
-  disableBackdropTransition?: boolean;
+  disableBackdropTransition?: boolean | undefined;
   /**
    * If `true`, touching the screen near the edge of the drawer will not slide in the drawer a bit
    * to promote accidental discovery of the swipe gesture.
    * @default false
    */
-  disableDiscovery?: boolean;
+  disableDiscovery?: boolean | undefined;
   /**
    * If `true`, swipe to open is disabled. This is useful in browsers where swiping triggers
    * navigation actions. Swipe to open is disabled on iOS browsers by default.
    * @default typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent)
    */
-  disableSwipeToOpen?: boolean;
+  disableSwipeToOpen?: boolean | undefined;
   /**
    * Affects how far the drawer must be opened/closed to change its state.
    * Specified as percent (0-1) of the width of the drawer
    * @default 0.52
    */
-  hysteresis?: number;
+  hysteresis?: number | undefined;
   /**
    * Defines, from which (average) velocity on, the swipe is
    * defined as complete although hysteresis isn't reached.
    * Good threshold is between 250 - 1000 px/s
    * @default 450
    */
-  minFlingVelocity?: number;
+  minFlingVelocity?: number | undefined;
   /**
    * Callback fired when the component requests to be closed.
    *
-   * @param {React.SyntheticEvent<{}>} event The event source of the callback.
+   * @param {React.SyntheticEvent<{}> | Event} event The event source of the callback.
    */
-  onClose: React.ReactEventHandler<{}>;
+  onClose: { bivarianceHack(event: React.SyntheticEvent<{}> | Event): void }['bivarianceHack'];
   /**
    * Callback fired when the component requests to be opened.
    *
-   * @param {React.SyntheticEvent<{}>} event The event source of the callback.
+   * @param {React.SyntheticEvent<{}> | Event} event The event source of the callback.
    */
-  onOpen: React.ReactEventHandler<{}>;
+  onOpen: { bivarianceHack(event: React.SyntheticEvent<{}> | Event): void }['bivarianceHack'];
   /**
    * If `true`, the component is shown.
    * @default false
    */
-  open?: boolean;
-  /**
-   * The element is used to intercept the touch events on the edge.
-   * @deprecated use the `slotProps.swipeArea` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  SwipeAreaProps?: object;
+  open?: boolean | undefined;
   /**
    * The width of the left most (or right most) area in `px` that
    * the drawer can be swiped open from.
    * @default 20
    */
-  swipeAreaWidth?: number;
+  swipeAreaWidth?: number | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Drawer](https://mui.com/material-ui/react-drawer/)
+ * - [Drawer](https://next.mui.com/material-ui/react-drawer/)
  *
  * API:
  *
- * - [SwipeableDrawer API](https://mui.com/material-ui/api/swipeable-drawer/)
- * - inherits [Drawer API](https://mui.com/material-ui/api/drawer/)
+ * - [SwipeableDrawer API](https://next.mui.com/material-ui/api/swipeable-drawer/)
+ * - inherits [Drawer API](https://next.mui.com/material-ui/api/drawer/)
  */
 declare const SwipeableDrawer: React.JSXElementConstructor<SwipeableDrawerProps>;
 

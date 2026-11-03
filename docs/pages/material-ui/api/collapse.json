@@ -1,6 +1,12 @@
 {
   "props": {
-    "addEndListener": { "type": { "name": "func" } },
+    "addEndListener": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(node: HTMLElement, done: Function) => void",
+        "describedArgs": ["node", "done"]
+      }
+    },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "collapsedSize": {
@@ -8,6 +14,7 @@
       "default": "'0px'"
     },
     "component": { "type": { "name": "custom", "description": "element type" } },
+    "disablePrefersReducedMotion": { "type": { "name": "bool" }, "default": "false" },
     "easing": {
       "type": {
         "name": "union",
@@ -18,6 +25,20 @@
     "orientation": {
       "type": { "name": "enum", "description": "'horizontal'<br>&#124;&nbsp;'vertical'" },
       "default": "'vertical'"
+    },
+    "slotProps": {
+      "type": {
+        "name": "shape",
+        "description": "{ root?: func<br>&#124;&nbsp;object, wrapper?: func<br>&#124;&nbsp;object, wrapperInner?: func<br>&#124;&nbsp;object }"
+      },
+      "default": "{}"
+    },
+    "slots": {
+      "type": {
+        "name": "shape",
+        "description": "{ root?: elementType, wrapper?: elementType, wrapperInner?: elementType }"
+      },
+      "default": "{}"
     },
     "sx": {
       "type": {
@@ -39,6 +60,26 @@
     "import Collapse from '@mui/material/Collapse';",
     "import { Collapse } from '@mui/material';"
   ],
+  "slots": [
+    {
+      "name": "root",
+      "description": "The component that renders the root.",
+      "default": "'div'",
+      "class": "MuiCollapse-root"
+    },
+    {
+      "name": "wrapper",
+      "description": "The component that renders the wrapper.",
+      "default": "'div'",
+      "class": "MuiCollapse-wrapper"
+    },
+    {
+      "name": "wrapperInner",
+      "description": "The component that renders the inner wrapper.",
+      "default": "'div'",
+      "class": "MuiCollapse-wrapperInner"
+    }
+  ],
   "classes": [
     {
       "key": "entered",
@@ -57,24 +98,6 @@
       "className": "MuiCollapse-horizontal",
       "description": "State class applied to the root element if `orientation=\"horizontal\"`.",
       "isGlobal": false
-    },
-    {
-      "key": "root",
-      "className": "MuiCollapse-root",
-      "description": "Styles applied to the root element.",
-      "isGlobal": false
-    },
-    {
-      "key": "wrapper",
-      "className": "MuiCollapse-wrapper",
-      "description": "Styles applied to the outer wrapper element.",
-      "isGlobal": false
-    },
-    {
-      "key": "wrapperInner",
-      "className": "MuiCollapse-wrapperInner",
-      "description": "Styles applied to the inner wrapper element.",
-      "isGlobal": false
     }
   ],
   "spread": true,
@@ -86,6 +109,5 @@
     "component": "Transition",
     "pathname": "https://reactcommunity.org/react-transition-group/transition/#Transition-props"
   },
-  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li>\n<li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/transitions/\">Transitions</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li>\n<li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/transitions/\">Transitions</a></li></ul>"
 }

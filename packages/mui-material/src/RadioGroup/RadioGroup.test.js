@@ -1,9 +1,12 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
-import { act, createRenderer, fireEvent, screen } from '@mui/internal-test-utils';
+import { act, createRenderer, fireEvent, isJsdom, screen } from '@mui/internal-test-utils';
 import FormGroup from '@mui/material/FormGroup';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup, { useRadioGroup, radioGroupClasses as classes } from '@mui/material/RadioGroup';
 import describeConformance from '../../test/describeConformance';
@@ -16,20 +19,9 @@ describe('<RadioGroup />', () => {
     classes: {},
     inheritComponent: FormGroup,
     refInstanceof: window.HTMLDivElement,
-    skip: [
-      'componentProp',
-      'componentsProp',
-      'themeDefaultProps',
-      'themeStyleOverrides',
-      'themeVariants',
-    ],
+    muiName: 'MuiRadioGroup',
+    skip: ['componentProp', 'themeStyleOverrides', 'themeVariants'],
   }));
-
-  it('the root component has the radiogroup role', () => {
-    const { container } = render(<RadioGroup value="" />);
-
-    expect(container.firstChild).to.have.attribute('role', 'radiogroup');
-  });
 
   it('should fire the onBlur callback', () => {
     const handleBlur = spy();
@@ -42,8 +34,8 @@ describe('<RadioGroup />', () => {
 
   it('should fire the onKeyDown callback', () => {
     const handleKeyDown = spy();
-    const { getByRole } = render(<RadioGroup tabIndex={-1} value="" onKeyDown={handleKeyDown} />);
-    const radiogroup = getByRole('radiogroup');
+    render(<RadioGroup tabIndex={-1} value="" onKeyDown={handleKeyDown} />);
+    const radiogroup = screen.getByRole('radiogroup');
 
     act(() => {
       radiogroup.focus();
@@ -55,13 +47,13 @@ describe('<RadioGroup />', () => {
   });
 
   it('should support uncontrolled mode', () => {
-    const { getByRole } = render(
+    render(
       <RadioGroup name="group">
         <Radio value="one" />
       </RadioGroup>,
     );
 
-    const radio = getByRole('radio');
+    const radio = screen.getByRole('radio');
 
     fireEvent.click(radio);
 
@@ -69,35 +61,20 @@ describe('<RadioGroup />', () => {
   });
 
   it('should support default value in uncontrolled mode', () => {
-    const { getAllByRole } = render(
+    render(
       <RadioGroup name="group" defaultValue="zero">
         <Radio value="zero" />
         <Radio value="one" />
       </RadioGroup>,
     );
 
-    const radios = getAllByRole('radio');
+    const radios = screen.getAllByRole('radio');
 
     expect(radios[0].checked).to.equal(true);
 
     fireEvent.click(radios[1]);
 
     expect(radios[1].checked).to.equal(true);
-  });
-
-  it('should have a default name', () => {
-    const { getAllByRole } = render(
-      <RadioGroup>
-        <Radio value="zero" />
-        <Radio value="one" />
-      </RadioGroup>,
-    );
-
-    const [arbitraryRadio, ...radios] = getAllByRole('radio');
-    // `name` **property** will always be a string even if the **attribute** is omitted
-    expect(arbitraryRadio.name).not.to.equal('');
-    // all input[type="radio"] have the same name
-    expect(new Set(radios.map((radio) => radio.name))).to.have.length(1);
   });
 
   it('should support number value', () => {
@@ -186,7 +163,7 @@ describe('<RadioGroup />', () => {
       const actionsRef = React.createRef();
       const threeRadioOnFocus = spy();
 
-      const { getAllByRole } = render(
+      render(
         <RadioGroup actions={actionsRef} value="two">
           <Radio value="zero" disabled />
           <Radio value="one" disabled />
@@ -199,7 +176,7 @@ describe('<RadioGroup />', () => {
         actionsRef.current.focus();
       });
 
-      const radios = getAllByRole('radio');
+      const radios = screen.getAllByRole('radio');
 
       expect(radios[0]).not.toHaveFocus();
       expect(radios[1]).not.toHaveFocus();
@@ -230,14 +207,15 @@ describe('<RadioGroup />', () => {
   describe('prop: onChange', () => {
     it('should fire onChange', () => {
       const handleChange = spy();
-      const { getAllByRole } = render(
+
+      render(
         <RadioGroup value="" onChange={handleChange}>
           <Radio value="woofRadioGroup" />
           <Radio />
         </RadioGroup>,
       );
 
-      const radios = getAllByRole('radio');
+      const radios = screen.getAllByRole('radio');
 
       fireEvent.click(radios[0]);
 
@@ -247,14 +225,15 @@ describe('<RadioGroup />', () => {
     it('should chain the onChange property', () => {
       const handleChange1 = spy();
       const handleChange2 = spy();
-      const { getAllByRole } = render(
+
+      render(
         <RadioGroup value="" onChange={handleChange1}>
           <Radio value="woofRadioGroup" onChange={handleChange2} />
           <Radio />
         </RadioGroup>,
       );
 
-      const radios = getAllByRole('radio');
+      const radios = screen.getAllByRole('radio');
 
       fireEvent.click(radios[0]);
 
@@ -281,11 +260,9 @@ describe('<RadioGroup />', () => {
         const values = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
         const handleChange = spy();
 
-        const { getAllByRole } = render(
-          <Test onChange={handleChange} value={values[1]} values={values} />,
-        );
+        render(<Test onChange={handleChange} value={values[1]} values={values} />);
 
-        const radios = getAllByRole('radio');
+        const radios = screen.getAllByRole('radio');
 
         expect(radios[0].checked).to.equal(false);
         expect(radios[1].checked).to.equal(true);
@@ -427,5 +404,125 @@ describe('<RadioGroup />', () => {
     expect(radiogroup).to.have.class(classes.root);
     expect(radiogroup).to.have.class(classes.row);
     expect(radiogroup).not.to.have.class(classes.error);
+  });
+
+  describe('WCAG 2.2 conformance', () => {
+    describe('1.3.1 Info and Relationships', () => {
+      it('exposes the radiogroup role on the root', () => {
+        const { container } = render(<RadioGroup value="" />);
+
+        expect(container.firstChild).to.have.attribute('role', 'radiogroup');
+      });
+
+      it('shares one generated name across all radios', () => {
+        render(
+          <RadioGroup>
+            <Radio value="zero" />
+            <Radio value="one" />
+          </RadioGroup>,
+        );
+
+        const [arbitraryRadio, ...radios] = screen.getAllByRole('radio');
+        // `name` **property** will always be a string even if the **attribute** is omitted
+        expect(arbitraryRadio.name).not.to.equal('');
+        // all input[type="radio"] have the same name
+        expect(new Set(radios.map((radio) => radio.name))).to.have.length(1);
+      });
+    });
+
+    it.skipIf(isJsdom())(
+      '2.1.1 Keyboard, 2.4.3 Focus Order: arrow keys rove selection as a single tab stop',
+      async () => {
+        const { user } = render(
+          <React.Fragment>
+            <button type="button">before</button>
+            <RadioGroup name="pet" defaultValue="cat">
+              <Radio value="cat" disableRipple slotProps={{ input: { 'aria-label': 'Cat' } }} />
+              <Radio value="dog" disableRipple slotProps={{ input: { 'aria-label': 'Dog' } }} />
+              <Radio value="bird" disableRipple slotProps={{ input: { 'aria-label': 'Bird' } }} />
+            </RadioGroup>
+            <button type="button">after</button>
+          </React.Fragment>,
+        );
+        const after = screen.getByRole('button', { name: 'after' });
+        const [cat, dog, bird] = screen.getAllByRole('radio');
+
+        screen.getByRole('button', { name: 'before' }).focus();
+
+        // Tab enters the group on the checked radio (roving tab order).
+        await user.tab();
+        expect(cat).toHaveFocus();
+        expect(cat).to.have.property('checked', true);
+
+        // Arrow keys move focus to the next radio and check it, unchecking the previous.
+        await user.keyboard('[ArrowDown]');
+        expect(dog).toHaveFocus();
+        expect(dog).to.have.property('checked', true);
+        expect(cat).to.have.property('checked', false);
+
+        await user.keyboard('[ArrowDown]');
+        expect(bird).toHaveFocus();
+        expect(bird).to.have.property('checked', true);
+
+        // The group is a single tab stop: Tab leaves to the next control.
+        await user.tab();
+        expect(after).toHaveFocus();
+      },
+    );
+
+    it.skipIf(isJsdom())('2.1.1 Keyboard: arrow navigation skips a disabled radio', async () => {
+      const { user } = render(
+        <RadioGroup name="pet" defaultValue="cat">
+          <Radio value="cat" disableRipple slotProps={{ input: { 'aria-label': 'Cat' } }} />
+          <Radio
+            value="dog"
+            disabled
+            disableRipple
+            slotProps={{ input: { 'aria-label': 'Dog' } }}
+          />
+          <Radio value="bird" disableRipple slotProps={{ input: { 'aria-label': 'Bird' } }} />
+        </RadioGroup>,
+      );
+      const [cat, dog, bird] = screen.getAllByRole('radio');
+
+      await user.tab();
+      expect(cat).toHaveFocus();
+
+      // The arrow moves selection past the disabled radio to the next enabled one.
+      await user.keyboard('[ArrowDown]');
+      expect(bird).toHaveFocus();
+      expect(bird).to.have.property('checked', true);
+      expect(dog).to.have.property('checked', false);
+    });
+
+    describe('4.1.2 Name, Role, Value', () => {
+      it('exposes the radiogroup role named by the author FormLabel', () => {
+        render(
+          <FormControl>
+            <FormLabel id="pet-label">Pet</FormLabel>
+            <RadioGroup aria-labelledby="pet-label">
+              <FormControlLabel value="cat" control={<Radio />} label="Cat" />
+              <FormControlLabel value="dog" control={<Radio />} label="Dog" />
+            </RadioGroup>
+          </FormControl>,
+        );
+
+        expect(screen.getByRole('radiogroup', { name: 'Pet' })).not.to.equal(null);
+      });
+
+      it('exposes the selected value through the checked radio', async () => {
+        const { user } = render(
+          <RadioGroup aria-label="pet">
+            <FormControlLabel value="cat" control={<Radio />} label="Cat" />
+            <FormControlLabel value="dog" control={<Radio />} label="Dog" />
+          </RadioGroup>,
+        );
+
+        await user.click(screen.getByRole('radio', { name: 'Dog' }));
+
+        expect(screen.getByRole('radio', { name: 'Dog' })).to.have.property('checked', true);
+        expect(screen.getByRole('radio', { name: 'Cat' })).to.have.property('checked', false);
+      });
+    });
   });
 });

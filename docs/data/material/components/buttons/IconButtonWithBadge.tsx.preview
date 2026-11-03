@@ -1,4 +1,0 @@
-<IconButton>
-  <ShoppingCartIcon fontSize="small" />
-  <CartBadge badgeContent={2} color="primary" overlap="circular" />
-</IconButton>

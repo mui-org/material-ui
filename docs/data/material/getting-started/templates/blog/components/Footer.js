@@ -18,7 +18,12 @@ function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
-      <Link color="text.secondary" href="https://mui.com/">
+      <Link
+        href="https://mui.com/"
+        sx={{
+          color: 'text.secondary',
+        }}
+      >
         Sitemark
       </Link>
       &nbsp;
@@ -108,19 +113,49 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
               Product
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Features
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Testimonials
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Highlights
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Pricing
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               FAQs
             </Link>
           </Box>
@@ -134,13 +169,31 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
               Company
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               About us
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Careers
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Press
             </Link>
           </Box>
@@ -154,13 +207,31 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
               Legal
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Terms
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Privacy
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Contact
             </Link>
           </Box>
@@ -176,13 +247,25 @@ export default function Footer() {
           }}
         >
           <div>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Privacy Policy
             </Link>
             <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>
               &nbsp;•&nbsp;
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link
+              variant="body2"
+              href="#"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               Terms of Service
             </Link>
             <Copyright />

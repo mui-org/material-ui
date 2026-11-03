@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
@@ -21,9 +20,9 @@ export default function AddressForm() {
         <OutlinedInput
           id="first-name"
           name="first-name"
-          type="name"
+          type="text"
           placeholder="John"
-          autoComplete="first name"
+          autoComplete="given-name"
           required
           size="small"
         />
@@ -35,9 +34,9 @@ export default function AddressForm() {
         <OutlinedInput
           id="last-name"
           name="last-name"
-          type="last-name"
+          type="text"
           placeholder="Snow"
-          autoComplete="last name"
+          autoComplete="family-name"
           required
           size="small"
         />
@@ -49,7 +48,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="address1"
           name="address1"
-          type="address1"
+          type="text"
           placeholder="Street name and number"
           autoComplete="shipping address-line1"
           required
@@ -61,7 +60,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="address2"
           name="address2"
-          type="address2"
+          type="text"
           placeholder="Apartment, suite, unit, etc. (optional)"
           autoComplete="shipping address-line2"
           required
@@ -75,9 +74,9 @@ export default function AddressForm() {
         <OutlinedInput
           id="city"
           name="city"
-          type="city"
+          type="text"
           placeholder="New York"
-          autoComplete="City"
+          autoComplete="address-level2"
           required
           size="small"
         />
@@ -89,9 +88,9 @@ export default function AddressForm() {
         <OutlinedInput
           id="state"
           name="state"
-          type="state"
+          type="text"
           placeholder="NY"
-          autoComplete="State"
+          autoComplete="address-level1"
           required
           size="small"
         />
@@ -103,7 +102,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="zip"
           name="zip"
-          type="zip"
+          type="text"
           placeholder="12345"
           autoComplete="shipping postal-code"
           required
@@ -117,9 +116,9 @@ export default function AddressForm() {
         <OutlinedInput
           id="country"
           name="country"
-          type="country"
+          type="text"
           placeholder="United States"
-          autoComplete="shipping country"
+          autoComplete="shipping country-name"
           required
           size="small"
         />

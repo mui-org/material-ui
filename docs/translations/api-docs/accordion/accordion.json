@@ -6,10 +6,10 @@
     "defaultExpanded": { "description": "If <code>true</code>, expands the accordion by default." },
     "disabled": { "description": "If <code>true</code>, the component is disabled." },
     "disableGutters": {
-      "description": "If <code>true</code>, it removes the margin between two expanded accordion items and the increase of height."
+      "description": "If <code>true</code>, it removes the margin between two expanded accordion items and prevents the increased height when expanded."
     },
     "expanded": {
-      "description": "If <code>true</code>, expands the accordion, otherwise collapse it. Setting this prop enables control over the accordion."
+      "description": "If <code>true</code>, expands the accordion, otherwise collapses it. Setting this prop enables control over the accordion."
     },
     "onChange": {
       "description": "Callback fired when the expand/collapse state is changed.",
@@ -26,15 +26,8 @@
     },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
-    "square": { "description": "If <code>true</code>, rounded corners are disabled." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
-    },
-    "TransitionComponent": {
-      "description": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
-    },
-    "TransitionProps": {
-      "description": "Props applied to the transition element. By default, the element is based on this <a href=\"https://reactcommunity.org/react-transition-group/transition/\"><code>Transition</code></a> component."
     }
   },
   "classDescriptions": {
@@ -63,6 +56,6 @@
     "heading": "The component that renders the heading.",
     "region": "The component that renders the region.",
     "root": "The component that renders the root.",
-    "transition": "The component that renders the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
+    "transition": "The component that renders the transition. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
 }

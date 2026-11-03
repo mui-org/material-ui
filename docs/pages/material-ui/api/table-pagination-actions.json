@@ -5,17 +5,14 @@
       "required": true,
       "signature": { "type": "function(type: string) => string", "describedArgs": ["type"] }
     },
-    "backIconButtonProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.previousButton</code> instead."
-    },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
-    "nextIconButtonProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.nextButton</code> instead."
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
     }
   },
   "name": "TablePaginationActions",
@@ -73,13 +70,19 @@
       "class": null
     }
   ],
-  "classes": [],
+  "classes": [
+    {
+      "key": "root",
+      "className": "MuiTablePaginationActions-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
+    }
+  ],
   "spread": true,
   "themeDefaultProps": true,
   "muiName": "MuiTablePaginationActions",
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/TablePaginationActions/TablePaginationActions.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-pagination/\">Pagination</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-pagination/\">Pagination</a></li></ul>"
 }

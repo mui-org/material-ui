@@ -48,25 +48,25 @@ Here are the most significant improvements since March 2021.
 
 - ✨ The new style engine has unlocked problems on the `Grid` component that we couldn't solve before with JSS:
 
-  We have added support for [row & column](https://mui.com/material-ui/react-grid-legacy/#row-amp-column-spacing) spacing:
+  We have added support for [row & column](https://mui.com/material-ui/react-grid/#row-column-spacing) spacing:
 
 ```jsx
 <Grid container rowSpacing={1} columnSpacing={2} />
 ```
 
-We have added support for [responsive values](https://mui.com/material-ui/react-grid-legacy/#responsive-values) on all the props:
+We have added support for [responsive values](https://mui.com/material-ui/react-grid/#responsive-values) on all the props:
 
 ```jsx
 <Grid container spacing={{ xs: 2, md: 3 }} />
 ```
 
-We have added support for a different [number of columns](https://mui.com/material-ui/react-grid-legacy/#columns) than 12:
+We have added support for a different [number of columns](https://mui.com/material-ui/react-grid/#columns) than 12:
 
 ```jsx
 <Grid container columns={16}>
 ```
 
-We have added an alternative implementation that uses [CSS grid](https://mui.com/material-ui/react-grid-legacy/#css-grid-layout):
+We have added an alternative implementation that uses [CSS grid](https://mui.com/material-ui/react-grid/#css-grid-layout):
 
 ```jsx
 <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>

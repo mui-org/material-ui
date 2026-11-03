@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { describeJscodeshiftTransform } from '../../../testUtils';
 import transform from './menu-props';
 

@@ -9,18 +9,6 @@
         "description": "'primary'<br>&#124;&nbsp;'secondary'<br>&#124;&nbsp;'error'<br>&#124;&nbsp;'info'<br>&#124;&nbsp;'success'<br>&#124;&nbsp;'warning'<br>&#124;&nbsp;string"
       }
     },
-    "components": {
-      "type": { "name": "shape", "description": "{ Input?: elementType, Root?: elementType }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": { "name": "shape", "description": "{ input?: object, root?: object }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "defaultValue": { "type": { "name": "any" } },
     "disabled": { "type": { "name": "bool" } },
     "disableInjectingGlobalStyles": { "type": { "name": "bool" }, "default": "false" },
@@ -144,41 +132,6 @@
       "isGlobal": false
     },
     {
-      "key": "inputAdornedEnd",
-      "className": "MuiInputBase-inputAdornedEnd",
-      "description": "Styles applied to the input element if `endAdornment` is provided.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "inputAdornedStart",
-      "className": "MuiInputBase-inputAdornedStart",
-      "description": "Styles applied to the input element if `startAdornment` is provided.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "inputHiddenLabel",
-      "className": "MuiInputBase-inputHiddenLabel",
-      "description": "Styles applied to the input element if `hiddenLabel={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "inputMultiline",
-      "className": "MuiInputBase-inputMultiline",
-      "description": "Styles applied to the input element if `multiline={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "inputSizeSmall",
-      "className": "MuiInputBase-inputSizeSmall",
-      "description": "Styles applied to the input element if `size=\"small\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "inputTypeSearch",
       "className": "MuiInputBase-inputTypeSearch",
       "description": "",
@@ -215,6 +168,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/InputBase/InputBase.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-text-field/\">Text Field</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-text-field/\">Text Field</a></li></ul>"
 }

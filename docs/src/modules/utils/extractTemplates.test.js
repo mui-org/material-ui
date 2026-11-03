@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import extractTemplates from './extractTemplates';
 
 describe('extractTemplates', () => {

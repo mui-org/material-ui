@@ -11,10 +11,6 @@
     "disableRipple": { "description": "If <code>true</code>, the ripple effect is disabled." },
     "icon": { "description": "The icon to display when the component is unchecked." },
     "id": { "description": "The id of the <code>input</code> element." },
-    "inputProps": {
-      "description": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes\">Attributes</a> applied to the <code>input</code> element."
-    },
-    "inputRef": { "description": "Pass a ref to the <code>input</code> element." },
     "name": { "description": "Name attribute of the <code>input</code> element." },
     "onChange": {
       "description": "Callback fired when the state is changed.",

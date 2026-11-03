@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { spy } from 'sinon';
 import { createRenderer } from '@mui/internal-test-utils';
 import Ripple from './Ripple';
@@ -102,6 +101,33 @@ describe('<Ripple />', () => {
       expect(handleExited.callCount).to.equal(0);
       clock.tick(1);
       expect(handleExited.callCount).to.equal(1);
+    });
+
+    it('does not restart the exit timer when onExited changes while leaving', () => {
+      const firstHandleExited = spy();
+      const secondHandleExited = spy();
+      const { setProps } = render(
+        <Ripple
+          classes={classes}
+          timeout={550}
+          in
+          onExited={firstHandleExited}
+          rippleX={0}
+          rippleY={0}
+          rippleSize={11}
+          pulsate
+        />,
+      );
+
+      setProps({ in: false });
+      clock.tick(300);
+      setProps({ in: false, onExited: secondHandleExited });
+      clock.tick(249);
+      expect(firstHandleExited.callCount).to.equal(0);
+      expect(secondHandleExited.callCount).to.equal(0);
+      clock.tick(1);
+      expect(firstHandleExited.callCount).to.equal(0);
+      expect(secondHandleExited.callCount).to.equal(1);
     });
 
     it('unmount should defuse the handleExit timer', () => {

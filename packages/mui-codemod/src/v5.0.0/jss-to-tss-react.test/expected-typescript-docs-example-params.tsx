@@ -29,7 +29,7 @@ function App({classes: classesProp}: {classes?: any}) {
   });
 
   return (
-    (<div className={classes.root}>
+    <div className={classes.root}>
       <div className={classes.child}>
         The Background take the primary theme color when the mouse hovers the parent.
       </div>
@@ -37,7 +37,7 @@ function App({classes: classesProp}: {classes?: any}) {
         The Background take the primary theme color when the mouse hovers the parent.
         I am smaller than the other child.
       </div>
-    </div>)
+    </div>
   );
 }
 

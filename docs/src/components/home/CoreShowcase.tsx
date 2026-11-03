@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme, useTheme, alpha } from '@mui/material/styles';
-import { HighlightedCode } from '@mui/docs/HighlightedCode';
+import { HighlightedCode } from '@mui/internal-core-docs/HighlightedCode';
 import MaterialDesignDemo, { componentCode } from 'docs/src/components/home/MaterialDesignDemo';
 import ShowcaseContainer, { ShowcaseCodeWrapper } from 'docs/src/components/home/ShowcaseContainer';
-import PointerContainer, { Data } from 'docs/src/components/home/ElementPointer';
-import MoreInfoBox from 'docs/src/components/action/MoreInfoBox';
-import MaterialVsCustomToggle from 'docs/src/components/action/MaterialVsCustomToggle';
+import type { Data } from 'docs/src/components/home/ElementPointer';
+import PointerContainer from 'docs/src/components/home/ElementPointer';
+import { MoreInfoBox, MaterialVsCustomToggle } from '@mui/internal-core-docs/AppLayout';
+
 import FlashCode from 'docs/src/components/animation/FlashCode';
-import ROUTES from 'docs/src/route';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 
 const lineMapping: Record<string, number | number[]> = {
   card: [0, 20],

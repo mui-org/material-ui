@@ -1,8 +1,0 @@
-<CssVarsProvider theme={customTheme}>
-  <div>
-    <Typography>
-      Press <Typography level="kbd">⌘</Typography> +{' '}
-      <Typography level="kbd">k</Typography> to search the documentation.
-    </Typography>
-  </div>
-</CssVarsProvider>

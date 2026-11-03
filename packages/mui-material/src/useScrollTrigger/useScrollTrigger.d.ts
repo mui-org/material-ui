@@ -1,7 +1,7 @@
 export interface UseScrollTriggerOptions {
-  disableHysteresis?: boolean;
-  target?: Node | Window | null;
-  threshold?: number;
+  disableHysteresis?: boolean | undefined;
+  target?: Node | Window | null | undefined;
+  threshold?: number | undefined;
 }
 
 export default function useScrollTrigger(options?: UseScrollTriggerOptions): boolean;

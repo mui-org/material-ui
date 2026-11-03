@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { describe } from 'vitest';
 import { createRenderer } from '@mui/internal-test-utils';
 import Stack, { stackClasses as classes } from '@mui/material/Stack';
 import describeConformance from '../../test/describeConformance';
@@ -18,6 +18,6 @@ describe('<Stack />', () => {
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiStack',
     testVariantProps: { direction: 'row' },
-    skip: ['componentsProp', 'classesRoot'],
+    skip: ['classesRoot'],
   }));
 });

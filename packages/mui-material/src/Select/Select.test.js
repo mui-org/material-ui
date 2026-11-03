@@ -1,5 +1,5 @@
+import { describe, beforeEach, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import {
   ErrorBoundary,
@@ -8,6 +8,7 @@ import {
   fireEvent,
   screen,
   reactMajor,
+  waitFor,
 } from '@mui/internal-test-utils';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
@@ -18,6 +19,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 import { listClasses } from '@mui/material/List';
+import { isJsdom } from '@mui/internal-test-utils/env';
 import classes from './selectClasses';
 import { nativeSelectClasses } from '../NativeSelect';
 import describeConformance from '../../test/describeConformance';
@@ -31,8 +33,321 @@ describe('<Select />', () => {
     render,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiSelect',
-    skip: ['componentProp', 'componentsProp', 'themeVariants', 'themeStyleOverrides'],
+    skip: ['componentProp', 'themeVariants', 'themeStyleOverrides'],
   }));
+
+  describe('pointer interactions', () => {
+    beforeEach(() => {
+      clock.restore();
+    });
+
+    function sleep(duration) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, duration);
+      });
+    }
+
+    function stubRect(element, rect) {
+      const { left, top, width, height } = rect;
+      stub(element, 'getBoundingClientRect').returns({
+        x: left,
+        y: top,
+        left,
+        top,
+        width,
+        height,
+        right: left + width,
+        bottom: top + height,
+        toJSON: () => {},
+      });
+    }
+
+    it('closes the menu when releasing the opening mouse gesture outside the trigger and menu', async () => {
+      const { user } = render(
+        <Select
+          defaultValue={10}
+          MenuProps={{ slotProps: { backdrop: { 'data-testid': 'backdrop' } } }}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      stubRect(trigger, { left: 10, top: 10, width: 100, height: 40 });
+
+      await user.pointer({
+        keys: '[MouseLeft>]',
+        target: trigger,
+        coords: { clientX: 20, clientY: 20 },
+      });
+      expect(screen.getByRole('listbox')).not.to.equal(null);
+
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByTestId('backdrop'),
+        coords: { clientX: 200, clientY: 200 },
+      });
+
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('closes a controlled menu when releasing the opening mouse gesture outside the trigger and menu', async () => {
+      const onClose = spy();
+
+      function ControlledSelect() {
+        const [open, setOpen] = React.useState(false);
+
+        return (
+          <Select
+            open={open}
+            value={10}
+            onOpen={() => {
+              setOpen(true);
+            }}
+            onClose={(event) => {
+              onClose(event);
+              setOpen(false);
+            }}
+            MenuProps={{ slotProps: { backdrop: { 'data-testid': 'backdrop' } } }}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+          </Select>
+        );
+      }
+
+      const { user } = render(<ControlledSelect />);
+      const trigger = screen.getByRole('combobox');
+      stubRect(trigger, { left: 10, top: 10, width: 100, height: 40 });
+
+      await user.pointer({
+        keys: '[MouseLeft>]',
+        target: trigger,
+        coords: { clientX: 20, clientY: 20 },
+      });
+      expect(screen.getByRole('listbox')).not.to.equal(null);
+
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByTestId('backdrop'),
+        coords: { clientX: 200, clientY: 200 },
+      });
+
+      expect(onClose.callCount).to.equal(1);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('does not throw when the display ref is unavailable during mouse down', () => {
+      const handleMouseDown = spy();
+
+      render(
+        <Select value="one" onMouseDown={handleMouseDown} SelectDisplayProps={{ ref: () => {} }}>
+          <MenuItem value="one">One</MenuItem>
+          <MenuItem value="two">Two</MenuItem>
+        </Select>,
+      );
+
+      expect(() => {
+        fireEvent.mouseDown(screen.getByRole('combobox'));
+      }).not.to.throw();
+
+      expect(handleMouseDown.callCount).to.equal(1);
+      expect(screen.queryByRole('listbox')).to.equal(null);
+    });
+
+    it('keeps the menu open when releasing the opening mouse gesture inside the trigger bounds', async () => {
+      const { user } = render(
+        <Select
+          defaultValue={10}
+          MenuProps={{ slotProps: { backdrop: { 'data-testid': 'backdrop' } } }}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      stubRect(trigger, { left: 10, top: 10, width: 100, height: 40 });
+
+      await user.pointer({
+        keys: '[MouseLeft>]',
+        target: trigger,
+        coords: { clientX: 20, clientY: 20 },
+      });
+      expect(screen.getByRole('listbox')).not.to.equal(null);
+
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByTestId('backdrop'),
+        coords: { clientX: 20, clientY: 20 },
+      });
+
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+
+    it('keeps the menu open when releasing the opening mouse gesture inside the menu paper', async () => {
+      const { user } = render(
+        <Select defaultValue={10} MenuProps={{ slotProps: { paper: { 'data-testid': 'paper' } } }}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+
+      await user.pointer({ keys: '[MouseLeft>]', target: screen.getByRole('combobox') });
+
+      await user.pointer({ keys: '[/MouseLeft]', target: screen.getByTestId('paper') });
+
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+
+    it('does not select an option when the opening mouseup lands on it before the drag delay', async () => {
+      const onChange = spy();
+      const { user } = render(
+        <Select defaultValue={10} onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByRole('option', { name: 'Twenty' }),
+      });
+
+      expect(trigger).to.have.text('Ten');
+      expect(onChange.callCount).to.equal(0);
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+
+    it('does not close when the opening mouseup lands on the selected option before the drag delay', async () => {
+      const onClose = spy();
+      const { user } = render(
+        <Select defaultValue={10} onClose={onClose}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      await user.pointer({ keys: '[MouseLeft>]', target: screen.getByRole('combobox') });
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByRole('option', { name: 'Ten' }),
+      });
+
+      expect(onClose.callCount).to.equal(0);
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+
+    it('closes when the opening mouseup lands on the selected option after the selected-item delay', async () => {
+      const onClose = spy();
+      const { user } = render(
+        <Select defaultValue={10} onClose={onClose}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+
+      await act(async () => {
+        // Well past the 400ms selected-item window; a tight margin flakes on slow CI.
+        await sleep(700);
+      });
+
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByRole('option', { name: 'Ten' }),
+      });
+
+      expect(onClose.callCount).to.equal(1);
+      expect(trigger).to.have.text('Ten');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('selects an option when dragging from the trigger and releasing after the drag delay', async () => {
+      const onChange = spy();
+      const { user } = render(
+        <Select defaultValue={10} onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+
+      await act(async () => {
+        // Well past the 200ms drag window; a tight margin flakes on slow CI.
+        await sleep(400);
+      });
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByRole('option', { name: 'Twenty' }),
+      });
+
+      expect(trigger).to.have.text('Twenty');
+      expect(onChange.callCount).to.equal(1);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('does not double-toggle a multiple select option on a regular click', async () => {
+      const onChange = spy();
+      const { user } = render(
+        <Select defaultValue={[10]} multiple onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20} disableRipple>
+            Twenty
+          </MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      await user.click(trigger);
+
+      const option = screen.getByRole('option', { name: 'Twenty' });
+      await user.click(option);
+
+      expect(trigger).to.have.text('Ten, Twenty');
+      expect(onChange.callCount).to.equal(1);
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+
+    it('toggles a multiple select option when dragging from the trigger and releasing after the drag delay', async () => {
+      const onChange = spy();
+      const { user } = render(
+        <Select defaultValue={[10]} multiple onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+
+      await act(async () => {
+        // Well past the 200ms drag window; a tight margin flakes on slow CI.
+        await sleep(400);
+      });
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByRole('option', { name: 'Twenty' }),
+      });
+
+      expect(trigger).to.have.text('Ten, Twenty');
+      expect(onChange.callCount).to.equal(1);
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+  });
 
   describe('prop: inputProps', () => {
     it('should be able to provide a custom classes property', () => {
@@ -63,14 +378,14 @@ describe('<Select />', () => {
     expect(container.querySelector('input')).to.have.property('value', '10');
   });
 
-  specify('the trigger is in tab order', () => {
-    const { getByRole } = render(
+  it('the trigger is in tab order', () => {
+    render(
       <Select value="">
         <MenuItem value="">None</MenuItem>
       </Select>,
     );
 
-    expect(getByRole('combobox')).to.have.property('tabIndex', 0);
+    expect(screen.getByRole('combobox')).to.have.property('tabIndex', 0);
   });
 
   it('should accept null child', () => {
@@ -107,7 +422,8 @@ describe('<Select />', () => {
     // mousedown calls focus while click opens moving the focus to an item
     // this means the trigger is blurred immediately
     const handleBlur = spy();
-    const { getByRole, getAllByRole, queryByRole } = render(
+
+    render(
       <Select
         onBlur={handleBlur}
         value=""
@@ -122,14 +438,15 @@ describe('<Select />', () => {
         <MenuItem value={10}>Ten</MenuItem>
       </Select>,
     );
-    const trigger = getByRole('combobox');
+
+    const trigger = screen.getByRole('combobox');
 
     fireEvent.mouseDown(trigger);
 
     expect(handleBlur.callCount).to.equal(0);
-    expect(getByRole('listbox')).not.to.equal(null);
+    expect(screen.getByRole('listbox')).not.to.equal(null);
 
-    const options = getAllByRole('option');
+    const options = screen.getAllByRole('option');
     fireEvent.mouseDown(options[0]);
 
     await act(async () => {
@@ -137,7 +454,7 @@ describe('<Select />', () => {
     });
 
     expect(handleBlur.callCount).to.equal(0);
-    expect(queryByRole('listbox', { hidden: false })).to.equal(null);
+    expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
   });
 
   it('options should have a data-value attribute', () => {
@@ -151,6 +468,111 @@ describe('<Select />', () => {
 
     expect(options[0]).to.have.attribute('data-value', '10');
     expect(options[1]).to.have.attribute('data-value', '20');
+  });
+
+  it('should select an option when the space key is pressed', () => {
+    const handleChange = spy();
+    const handleKeyDown = spy();
+    render(
+      <Select value="0" onChange={handleChange}>
+        <MenuItem value="0" onKeyDown={handleKeyDown}>
+          Zero
+        </MenuItem>
+        <MenuItem value="1" onKeyDown={handleKeyDown}>
+          One
+        </MenuItem>
+        <MenuItem value="2" onKeyDown={handleKeyDown}>
+          Two
+        </MenuItem>
+      </Select>,
+    );
+
+    const trigger = screen.getByRole('combobox');
+    fireEvent.mouseDown(trigger);
+
+    const options = screen.getAllByRole('option');
+    fireEvent.keyDown(options[0], { key: 'ArrowDown' });
+    fireEvent.keyDown(options[1], { key: 'ArrowDown' });
+    fireEvent.keyDown(options[2], { key: ' ' });
+
+    expect(handleChange.callCount).to.equal(1);
+    expect(handleKeyDown.callCount).to.equal(3);
+    expect(handleChange.firstCall.args[0].target.value).to.equal('2');
+  });
+
+  it('should call item onKeyDown before triggering selection on space', () => {
+    const callOrder = [];
+    const handleChange = spy(() => callOrder.push('change'));
+    const handleKeyDown = spy(() => callOrder.push('keydown'));
+
+    render(
+      <Select value="" onChange={handleChange}>
+        <MenuItem value="1" onKeyDown={handleKeyDown}>
+          One
+        </MenuItem>
+      </Select>,
+    );
+
+    const trigger = screen.getByRole('combobox');
+    fireEvent.mouseDown(trigger);
+
+    const option = screen.getByRole('option');
+    fireEvent.keyDown(option, { key: ' ' });
+
+    expect(handleKeyDown.callCount).to.equal(1);
+    expect(handleChange.callCount).to.equal(1);
+    expect(callOrder).to.deep.equal(['keydown', 'change']);
+  });
+
+  it('should not select an option when space is pressed on a non-target element', async () => {
+    const handleChange = spy();
+    const handleKeyDown = spy();
+
+    render(
+      <Select value="" onChange={handleChange}>
+        <MenuItem value="1" onKeyDown={handleKeyDown}>
+          <span>One</span>
+        </MenuItem>
+      </Select>,
+    );
+
+    const trigger = screen.getByRole('combobox');
+    fireEvent.mouseDown(trigger);
+
+    const option = screen.getByRole('option');
+    const innerSpan = option.querySelector('span');
+
+    await act(async () => {
+      // Dispatch directly to bypass testing-library's active-element guard so that
+      // event.target (span) !== event.currentTarget (li) inside the React handler.
+      innerSpan.dispatchEvent(
+        new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }),
+      );
+    });
+
+    expect(handleChange.callCount).to.equal(0);
+  });
+
+  it('should not select an option when onKeyDown calls preventDefault', () => {
+    const handleChange = spy();
+    const handleKeyDown = spy((event) => event.preventDefault());
+
+    render(
+      <Select value="" onChange={handleChange}>
+        <MenuItem value="1" onKeyDown={handleKeyDown}>
+          One
+        </MenuItem>
+      </Select>,
+    );
+
+    const trigger = screen.getByRole('combobox');
+    fireEvent.mouseDown(trigger);
+
+    const option = screen.getByRole('option');
+    fireEvent.keyDown(option, { key: ' ' });
+
+    expect(handleKeyDown.callCount).to.equal(1);
+    expect(handleChange.callCount).to.equal(0);
   });
 
   [' ', 'ArrowUp', 'ArrowDown', 'Enter'].forEach((key) => {
@@ -173,14 +595,594 @@ describe('<Select />', () => {
     });
   });
 
+  describe('closed typeahead', () => {
+    beforeEach(() => {
+      clock.restore();
+    });
+
+    function sleep(duration) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, duration);
+      });
+    }
+
+    async function focusTrigger(user, testId) {
+      const trigger = testId ? screen.getByTestId(testId) : screen.getByRole('combobox');
+
+      if (document.activeElement !== trigger) {
+        await user.tab();
+      }
+
+      expect(trigger).toHaveFocus();
+      return trigger;
+    }
+
+    it('selects a matching option without opening the popup', async () => {
+      const onChange = vi.fn();
+
+      const { user } = render(
+        <Select defaultValue="" onChange={onChange}>
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="banana">Banana</MenuItem>
+          <MenuItem value="cherry">Cherry</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('c');
+
+      expect(trigger).to.have.text('Cherry');
+      expect(onChange.mock.calls.length).to.equal(1);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('passes the selected value, name, and matched child to onChange', async () => {
+      const onChange = vi.fn((event, child) => ({
+        childValue: child.props.value,
+        name: event.target.name,
+        value: event.target.value,
+      }));
+
+      const { user } = render(
+        <Select defaultValue="" name="fruit" onChange={onChange}>
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="cherry">Cherry</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('c');
+
+      expect(onChange.mock.calls.length).to.equal(1);
+      expect(onChange.mock.results[0].value).to.deep.equal({
+        childValue: 'cherry',
+        name: 'fruit',
+        value: 'cherry',
+      });
+      expect(React.isValidElement(onChange.mock.calls[0][1])).to.equal(true);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('starts from the first matching option when no value is selected', async () => {
+      const onChange = vi.fn();
+
+      const { user } = render(
+        <Select defaultValue="" onChange={onChange}>
+          <MenuItem value="banana">Banana</MenuItem>
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="apricot">Apricot</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('a');
+
+      expect(trigger).to.have.text('Apple');
+      expect(onChange.mock.calls.length).to.equal(1);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('starts before the first option when the controlled value is out of range', async () => {
+      function ControlledSelect() {
+        const [selectedValue, setSelectedValue] = React.useState('missing');
+
+        return (
+          <Select
+            value={selectedValue}
+            onChange={(event) => {
+              setSelectedValue(event.target.value);
+            }}
+          >
+            <MenuItem value="apple">Apple</MenuItem>
+            <MenuItem value="apricot">Apricot</MenuItem>
+          </Select>
+        );
+      }
+
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      try {
+        const { user } = render(<ControlledSelect />);
+
+        await waitFor(() => {
+          expect(warn.mock.calls.length).to.equal(reactMajor >= 18 ? 3 : 2);
+        });
+        warn.mock.calls.forEach(([message]) => {
+          expect(String(message)).to.include(
+            'MUI: You have provided an out-of-range value `missing` for the select component.',
+          );
+        });
+
+        await focusTrigger(user);
+        await user.keyboard('a');
+
+        expect(screen.getByRole('combobox')).to.have.text('Apple');
+        expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it('resets closed typeahead after controlled value changes', async () => {
+      function ControlledSelect() {
+        const [selectedValue, setSelectedValue] = React.useState('cat');
+
+        return (
+          <React.Fragment>
+            <Select
+              value={selectedValue}
+              onChange={(event) => {
+                setSelectedValue(event.target.value);
+              }}
+            >
+              <MenuItem value="apple">Apple</MenuItem>
+              <MenuItem value="cat">Cat</MenuItem>
+              <MenuItem value="car">Car</MenuItem>
+            </Select>
+            <button type="button" onClick={() => setSelectedValue('')}>
+              Reset
+            </button>
+            <button type="button" onClick={() => setSelectedValue('car')}>
+              Select car
+            </button>
+          </React.Fragment>
+        );
+      }
+
+      const { user } = render(<ControlledSelect />);
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      await user.tab({ shift: true });
+      expect(screen.getByRole('combobox')).toHaveFocus();
+
+      await user.keyboard('a');
+      expect(screen.getByRole('combobox')).to.have.text('Apple');
+
+      await user.click(screen.getByRole('button', { name: 'Select car' }));
+      await user.tab({ shift: true });
+      await user.tab({ shift: true });
+      expect(screen.getByRole('combobox')).toHaveFocus();
+
+      await user.keyboard('c');
+      expect(screen.getByRole('combobox')).to.have.text('Cat');
+
+      await user.keyboard('a');
+      expect(screen.getByRole('combobox')).to.have.text('Cat');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('clears an active buffer when the controlled value resets to no option while focused', async () => {
+      const onChange = vi.fn();
+
+      function ControlledSelect() {
+        const [selectedValue, setSelectedValue] = React.useState('cat');
+
+        return (
+          <React.Fragment>
+            <Select
+              value={selectedValue}
+              onChange={(event) => {
+                onChange(event);
+                setSelectedValue(event.target.value);
+              }}
+            >
+              <MenuItem value="cat">Cat</MenuItem>
+              <MenuItem value="apple">Apple</MenuItem>
+            </Select>
+            <button
+              type="button"
+              onMouseDown={(event) => {
+                event.preventDefault();
+              }}
+              onClick={() => setSelectedValue('')}
+            >
+              Reset without focus change
+            </button>
+          </React.Fragment>
+        );
+      }
+
+      const { user } = render(<ControlledSelect />);
+      await focusTrigger(user);
+
+      await user.keyboard('c');
+      expect(onChange.mock.calls.length).to.equal(0);
+
+      await user.click(screen.getByRole('button', { name: 'Reset without focus change' }));
+      expect(screen.getByRole('combobox')).toHaveFocus();
+
+      await user.keyboard('a');
+
+      expect(onChange.mock.calls.length).to.equal(1);
+      expect(onChange.mock.calls[0][0].target.value).to.equal('apple');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('cycles repeated characters through matching options', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="arizona">Arizona</MenuItem>
+          <MenuItem value="apricot">Apricot</MenuItem>
+          <MenuItem value="avocado">Avocado</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('a');
+      expect(trigger).to.have.text('Arizona');
+
+      await user.keyboard('a');
+      expect(trigger).to.have.text('Apricot');
+
+      await user.keyboard('a');
+      expect(trigger).to.have.text('Avocado');
+    });
+
+    it('does not incorrectly cycle repeated-start labels', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="aaron">Aaron</MenuItem>
+          <MenuItem value="arizona">Arizona</MenuItem>
+          <MenuItem value="apricot">Apricot</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('a');
+      expect(trigger).to.have.text('Aaron');
+
+      await user.keyboard('a');
+      expect(trigger).to.have.text('Aaron');
+    });
+
+    it('cycles repeated characters for unrelated repeated-start labels', async () => {
+      const { user } = render(
+        <Select defaultValue="banana">
+          <MenuItem value="aaron">Aaron</MenuItem>
+          <MenuItem value="banana">Banana</MenuItem>
+          <MenuItem value="bobcat">Bobcat</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('b');
+      expect(screen.getByRole('combobox')).to.have.text('Bobcat');
+
+      await user.keyboard('b');
+      expect(screen.getByRole('combobox')).to.have.text('Banana');
+    });
+
+    it('clears the buffer after a non-Space no-match', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="banana">Banana</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('za');
+
+      expect(screen.getByRole('combobox')).to.have.text('Apple');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('resets the buffer after 750 ms', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="cat">Cat</MenuItem>
+          <MenuItem value="apple">Apple</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('c');
+      expect(trigger).to.have.text('Cat');
+
+      await sleep(800);
+      await user.keyboard('a');
+
+      expect(trigger).to.have.text('Apple');
+    });
+
+    it('resets the buffer on blur', async () => {
+      const { user } = render(
+        <React.Fragment>
+          <Select defaultValue="">
+            <MenuItem value="cat">Cat</MenuItem>
+            <MenuItem value="apple">Apple</MenuItem>
+          </Select>
+          <button type="button">Outside</button>
+        </React.Fragment>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('c');
+      expect(trigger).to.have.text('Cat');
+
+      await user.tab();
+      expect(screen.getByRole('button', { name: 'Outside' })).toHaveFocus();
+
+      await user.tab({ shift: true });
+      expect(screen.getByRole('combobox')).toHaveFocus();
+      await user.keyboard('a');
+
+      expect(trigger).to.have.text('Apple');
+    });
+
+    it('resets the buffer when the popup opens', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="cat">Cat</MenuItem>
+          <MenuItem value="apple">Apple</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('c');
+      expect(trigger).to.have.text('Cat');
+
+      await user.keyboard('{ArrowDown}');
+      expect(screen.getByRole('listbox', { hidden: false })).not.to.equal(null);
+
+      await user.keyboard('{Escape}');
+      await waitFor(() => {
+        expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+      });
+
+      await focusTrigger(user);
+      await user.keyboard('a');
+
+      expect(trigger).to.have.text('Apple');
+    });
+
+    it('ignores modified printable keys', async () => {
+      const onChange = vi.fn();
+      const { user } = render(
+        <Select defaultValue="banana" onChange={onChange}>
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="banana">Banana</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('{Control>}a{/Control}');
+
+      expect(onChange.mock.calls.length).to.equal(0);
+      expect(screen.getByRole('combobox')).to.have.text('Banana');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('does not call onChange when the matched value is already selected', async () => {
+      const onChange = vi.fn();
+
+      const { user } = render(
+        <Select defaultValue="apple" onChange={onChange}>
+          <MenuItem value="apple">Apple</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('a');
+
+      expect(onChange.mock.calls.length).to.equal(0);
+      expect(screen.getByRole('combobox')).to.have.text('Apple');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('still calls onKeyDown for printable keys handled by typeahead', async () => {
+      const onKeyDown = vi.fn();
+
+      const { user } = render(
+        <Select defaultValue="" onKeyDown={onKeyDown}>
+          <MenuItem value="apple">Apple</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('a');
+
+      expect(onKeyDown.mock.calls.length).to.equal(1);
+      expect(onKeyDown.mock.calls[0][0]).to.have.property('key', 'a');
+      expect(screen.getByRole('combobox')).to.have.text('Apple');
+    });
+
+    it('uses string/number equality for selected-index lookup', async () => {
+      const { user } = render(
+        <Select defaultValue="10">
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('t');
+      expect(screen.getByRole('combobox')).to.have.text('Twenty');
+    });
+
+    it('uses object reference equality for selected-index lookup', async () => {
+      const selectedObject = { id: 1 };
+
+      const { user } = render(
+        <Select defaultValue={selectedObject}>
+          <MenuItem value={{ id: 2 }}>Alpha</MenuItem>
+          <MenuItem value={selectedObject}>Apricot</MenuItem>
+          <MenuItem value={{ id: 3 }}>Avocado</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('a');
+      expect(screen.getByRole('combobox')).to.have.text('Avocado');
+    });
+
+    it('matches numeric labels', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value={7}>{7}</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('7');
+      expect(screen.getByRole('combobox')).to.have.text('7');
+    });
+
+    it('matches nested labels', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="deep">
+            <span>
+              Deep <strong>Blue</strong>
+            </span>
+          </MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('d');
+      expect(screen.getByRole('combobox')).to.have.text('Deep Blue');
+    });
+
+    it('skips disabled options and children without their own value prop', async () => {
+      function WrappedListSubheader(props) {
+        return <ListSubheader {...props} />;
+      }
+
+      const { user } = render(
+        <Select defaultValue="">
+          <ListSubheader>Apple group</ListSubheader>
+          <Divider />
+          <WrappedListSubheader>Apricot group</WrappedListSubheader>
+          <MenuItem disabled value="apple">
+            Apple
+          </MenuItem>
+          <MenuItem value="apricot">Apricot</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('a');
+
+      expect(trigger).to.have.text('Apricot');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('skips disabled Select during keyboard navigation', async () => {
+      const { user } = render(
+        <React.Fragment>
+          <Select disabled value="banana">
+            <MenuItem value="apple">Apple</MenuItem>
+            <MenuItem value="banana">Banana</MenuItem>
+          </Select>
+          <button type="button">Next</button>
+        </React.Fragment>,
+      );
+
+      await user.tab();
+
+      expect(screen.getByRole('button', { name: 'Next' })).toHaveFocus();
+      expect(screen.getByRole('combobox')).to.have.text('Banana');
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('does not typeahead when readOnly', async () => {
+      const onChange = vi.fn();
+      const { user } = render(
+        <Select readOnly value="banana" onChange={onChange}>
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="banana">Banana</MenuItem>
+        </Select>,
+      );
+      const trigger = await focusTrigger(user);
+
+      await user.keyboard('a');
+
+      expect(trigger).to.have.text('Banana');
+      expect(trigger).to.have.attribute('aria-readonly', 'true');
+      expect(onChange.mock.calls.length).to.equal(0);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('does not typeahead when multiple', async () => {
+      const onChange = vi.fn();
+      const { user } = render(
+        <Select multiple value={['banana']} onChange={onChange}>
+          <MenuItem value="apple">Apple</MenuItem>
+          <MenuItem value="banana">Banana</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('a');
+
+      expect(screen.getByRole('combobox')).to.have.text('Banana');
+      expect(onChange.mock.calls.length).to.equal(0);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('uses Space in an active buffer', async () => {
+      const onKeyDown = vi.fn();
+      const { user } = render(
+        <Select defaultValue="" onKeyDown={onKeyDown}>
+          <MenuItem value="one">Item One</MenuItem>
+          <MenuItem value="two">Item Two</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard('item t');
+
+      expect(screen.getByRole('combobox')).to.have.text('Item Two');
+      const spaceKeyDown = onKeyDown.mock.calls.find(([event]) => event.key === ' ');
+      expect(spaceKeyDown).not.to.equal(undefined);
+      expect(spaceKeyDown[0]).to.have.property('defaultPrevented', true);
+      expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('opens the popup on initial Space', async () => {
+      const { user } = render(
+        <Select defaultValue="">
+          <MenuItem value="one">Item One</MenuItem>
+        </Select>,
+      );
+      await focusTrigger(user);
+
+      await user.keyboard(' ');
+      expect(screen.getByRole('listbox', { hidden: false })).not.to.equal(null);
+    });
+  });
+
   it('should pass "name" as part of the event.target for onBlur', async () => {
     const handleBlur = stub().callsFake((event) => event.target.name);
-    const { getByRole } = render(
+
+    render(
       <Select onBlur={handleBlur} name="blur-testing" value="">
         <MenuItem value="">none</MenuItem>
       </Select>,
     );
-    const button = getByRole('combobox');
+
+    const button = screen.getByRole('combobox');
     await act(async () => {
       button.focus();
       button.blur();
@@ -192,9 +1194,10 @@ describe('<Select />', () => {
 
   it('should call onClose when the backdrop is clicked', async () => {
     const handleClose = spy();
-    const { getByTestId } = render(
+
+    render(
       <Select
-        MenuProps={{ BackdropProps: { 'data-testid': 'backdrop' } }}
+        MenuProps={{ slotProps: { backdrop: { 'data-testid': 'backdrop' } } }}
         onClose={handleClose}
         open
         value=""
@@ -204,7 +1207,7 @@ describe('<Select />', () => {
     );
 
     await act(async () => {
-      getByTestId('backdrop').click();
+      screen.getByTestId('backdrop').click();
     });
 
     expect(handleClose.callCount).to.equal(1);
@@ -227,40 +1230,49 @@ describe('<Select />', () => {
   });
 
   it('should focus select when its label is clicked', () => {
-    const { getByRole, getByTestId } = render(
+    render(
       <React.Fragment>
         <InputLabel id="my$label" data-testid="label" />
         <Select value="" labelId="my$label" />
       </React.Fragment>,
     );
+    const selection = window.getSelection();
+    const range = document.createRange();
 
-    fireEvent.click(getByTestId('label'));
+    range.setStart(document.body, 0);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
 
-    expect(getByRole('combobox')).toHaveFocus();
+    fireEvent.click(screen.getByTestId('label'));
+
+    expect(screen.getByRole('combobox')).toHaveFocus();
   });
 
   it('should focus list if no selection', () => {
-    const { getByRole } = render(<Select value="" autoFocus />);
+    render(<Select value="" autoFocus />);
 
-    fireEvent.mouseDown(getByRole('combobox'));
+    fireEvent.mouseDown(screen.getByRole('combobox'));
 
     // TODO not matching WAI-ARIA authoring practices. It should focus the first (or selected) item.
-    expect(getByRole('listbox')).toHaveFocus();
+    expect(screen.getByRole('listbox')).toHaveFocus();
   });
 
   describe('prop: onChange', () => {
     it('should get selected element from arguments', async () => {
       const onChangeHandler = spy();
-      const { getAllByRole, getByRole } = render(
+
+      render(
         <Select onChange={onChangeHandler} value="0">
           <MenuItem value="0" />
           <MenuItem value="1" />
           <MenuItem value="2" />
         </Select>,
       );
-      fireEvent.mouseDown(getByRole('combobox'));
+
+      fireEvent.mouseDown(screen.getByRole('combobox'));
       await act(async () => {
-        getAllByRole('option')[1].click();
+        screen.getAllByRole('option')[1].click();
       });
 
       expect(onChangeHandler.calledOnce).to.equal(true);
@@ -272,16 +1284,17 @@ describe('<Select />', () => {
       const eventLog = [];
       const onChangeHandler = spy(() => eventLog.push('CHANGE_EVENT'));
       const onCloseHandler = spy(() => eventLog.push('CLOSE_EVENT'));
-      const { getAllByRole, getByRole } = render(
+
+      render(
         <Select onChange={onChangeHandler} onClose={onCloseHandler} value="0">
           <MenuItem value="0" />
           <MenuItem value="1" />
         </Select>,
       );
 
-      fireEvent.mouseDown(getByRole('combobox'));
+      fireEvent.mouseDown(screen.getByRole('combobox'));
       await act(async () => {
-        getAllByRole('option')[1].click();
+        screen.getAllByRole('option')[1].click();
       });
 
       expect(eventLog).to.deep.equal(['CHANGE_EVENT', 'CLOSE_EVENT']);
@@ -289,26 +1302,51 @@ describe('<Select />', () => {
 
     it('should not be called if selected element has the current value (value did not change)', async () => {
       const onChangeHandler = spy();
-      const { getAllByRole, getByRole } = render(
+
+      render(
         <Select onChange={onChangeHandler} value="1">
           <MenuItem value="0" />
           <MenuItem value="1" />
           <MenuItem value="2" />
         </Select>,
       );
-      fireEvent.mouseDown(getByRole('combobox'));
+
+      fireEvent.mouseDown(screen.getByRole('combobox'));
       await act(async () => {
-        getAllByRole('option')[1].click();
+        screen.getAllByRole('option')[1].click();
       });
 
       expect(onChangeHandler.callCount).to.equal(0);
+    });
+
+    it('should be called if the selected value is string-equivalent but not strictly equal', async () => {
+      clock.restore();
+      const onChangeHandler = vi.fn();
+      const { user } = render(
+        <Select onChange={onChangeHandler} value="10">
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+
+      await user.click(screen.getByRole('combobox'));
+      await user.click(screen.getByRole('option', { name: 'Ten' }));
+
+      expect(onChangeHandler.mock.calls.length).to.equal(1);
+      expect(onChangeHandler.mock.calls[0][0].target).to.deep.equal({
+        name: undefined,
+        value: 10,
+      });
     });
   });
 
   describe('prop: defaultOpen', () => {
     it('should be open on mount', () => {
-      const { getByRole } = render(<Select defaultOpen value="" />);
-      expect(getByRole('combobox', { hidden: true })).to.have.attribute('aria-expanded', 'true');
+      render(<Select defaultOpen value="" />);
+      expect(screen.getByRole('combobox', { hidden: true })).to.have.attribute(
+        'aria-expanded',
+        'true',
+      );
     });
   });
 
@@ -360,7 +1398,8 @@ describe('<Select />', () => {
 
     it('should be able to use an object', () => {
       const value = {};
-      const { getByRole } = render(
+
+      render(
         <Select value={value}>
           <MenuItem value="">
             <em>None</em>
@@ -371,7 +1410,7 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      expect(getByRole('combobox')).to.have.text('Twenty');
+      expect(screen.getByRole('combobox')).to.have.text('Twenty');
     });
 
     describe('warnings', () => {
@@ -438,23 +1477,24 @@ describe('<Select />', () => {
 
   describe('accessibility', () => {
     it('sets aria-expanded="true" when the listbox is displayed', () => {
-      // since we make the rest of the UI inaccessible when open this doesn't
-      // technically matter. This is only here in case we keep the rest accessible
-      const { getByRole } = render(<Select open value="" />);
+      render(<Select open value="" />);
 
-      expect(getByRole('combobox', { hidden: true })).to.have.attribute('aria-expanded', 'true');
+      expect(screen.getByRole('combobox', { hidden: true })).to.have.attribute(
+        'aria-expanded',
+        'true',
+      );
     });
 
-    specify('ARIA 1.2: aria-expanded="false" if the listbox isn\'t displayed', () => {
-      const { getByRole } = render(<Select value="" />);
+    it('ARIA 1.2: aria-expanded="false" if the listbox isn\'t displayed', () => {
+      render(<Select value="" />);
 
-      expect(getByRole('combobox')).to.have.attribute('aria-expanded', 'false');
+      expect(screen.getByRole('combobox')).to.have.attribute('aria-expanded', 'false');
     });
 
     it('sets aria-disabled="true" when component is disabled', () => {
-      const { getByRole } = render(<Select disabled value="" />);
+      render(<Select disabled value="" />);
 
-      expect(getByRole('combobox')).to.have.attribute('aria-disabled', 'true');
+      expect(screen.getByRole('combobox')).to.have.attribute('aria-disabled', 'true');
     });
 
     it('sets disabled attribute in input when component is disabled', () => {
@@ -463,22 +1503,22 @@ describe('<Select />', () => {
       expect(container.querySelector('input')).to.have.property('disabled', true);
     });
 
-    specify('aria-disabled is not present if component is not disabled', () => {
-      const { getByRole } = render(<Select disabled={false} value="" />);
+    it('aria-disabled is not present if component is not disabled', () => {
+      render(<Select disabled={false} value="" />);
 
-      expect(getByRole('combobox')).not.to.have.attribute('aria-disabled');
+      expect(screen.getByRole('combobox')).not.to.have.attribute('aria-disabled');
     });
 
     it('sets aria-required="true" when component is required', () => {
-      const { getByRole } = render(<Select required value="" />);
+      render(<Select required value="" />);
 
-      expect(getByRole('combobox')).to.have.attribute('aria-required', 'true');
+      expect(screen.getByRole('combobox')).to.have.attribute('aria-required', 'true');
     });
 
     it('aria-required is not present if component is not required', () => {
-      const { getByRole } = render(<Select required={false} value="" />);
+      render(<Select required={false} value="" />);
 
-      expect(getByRole('combobox')).not.to.have.attribute('aria-required');
+      expect(screen.getByRole('combobox')).not.to.have.attribute('aria-required');
     });
 
     it('sets required attribute in input when component is required', () => {
@@ -488,78 +1528,81 @@ describe('<Select />', () => {
     });
 
     it('sets aria-invalid="true" when component is in the error state', () => {
-      const { getByRole } = render(<Select error value="" />);
+      render(<Select error value="" />);
 
-      expect(getByRole('combobox')).to.have.attribute('aria-invalid', 'true');
+      expect(screen.getByRole('combobox')).to.have.attribute('aria-invalid', 'true');
     });
 
     it('aria-invalid is not present if component is not in an error state', () => {
-      const { getByRole } = render(<Select value="" />);
+      render(<Select value="" />);
 
-      expect(getByRole('combobox')).not.to.have.attribute('aria-invalid');
+      expect(screen.getByRole('combobox')).not.to.have.attribute('aria-invalid');
     });
 
     it('indicates that activating the button displays a listbox', () => {
-      const { getByRole } = render(<Select value="" />);
+      render(<Select value="" />);
 
-      expect(getByRole('combobox')).to.have.attribute('aria-haspopup', 'listbox');
+      expect(screen.getByRole('combobox')).to.have.attribute('aria-haspopup', 'listbox');
     });
 
     it('renders an element with listbox behavior', () => {
-      const { getByRole } = render(<Select open value="" />);
+      render(<Select open value="" />);
 
-      expect(getByRole('listbox')).toBeVisible();
+      expect(screen.getByRole('listbox')).toBeVisible();
     });
 
     it('indicates that input element has combobox role and aria-controls set to id of listbox', () => {
-      const { getByRole } = render(<Select open value="" />);
-      const listboxId = getByRole('listbox').id;
+      render(<Select open value="" />);
+      const listboxId = screen.getByRole('listbox').id;
 
-      expect(getByRole('combobox', { hidden: true })).to.have.attribute('aria-controls', listboxId);
+      expect(screen.getByRole('combobox', { hidden: true })).to.have.attribute(
+        'aria-controls',
+        listboxId,
+      );
     });
 
     it('does not set aria-controls when closed', () => {
-      const { getByRole } = render(<Select open={false} value="" />);
-      expect(getByRole('combobox', { hidden: true })).to.not.have.attribute('aria-controls');
+      render(<Select open={false} value="" />);
+      expect(screen.getByRole('combobox', { hidden: true })).to.not.have.attribute('aria-controls');
     });
 
-    specify('the listbox is focusable', async () => {
-      const { getByRole } = render(<Select open value="" />);
+    it('the listbox is focusable', async () => {
+      render(<Select open value="" />);
 
       await act(async () => {
-        getByRole('listbox').focus();
+        screen.getByRole('listbox').focus();
       });
 
-      expect(getByRole('listbox')).toHaveFocus();
+      expect(screen.getByRole('listbox')).toHaveFocus();
     });
 
     it('identifies each selectable element containing an option', () => {
-      const { getAllByRole } = render(
+      render(
         <Select open value="">
           <MenuItem value="1">First</MenuItem>
           <MenuItem value="2">Second</MenuItem>
         </Select>,
       );
 
-      const options = getAllByRole('option');
+      const options = screen.getAllByRole('option');
       expect(options[0]).to.have.text('First');
       expect(options[1]).to.have.text('Second');
     });
 
     it('indicates the selected option', () => {
-      const { getAllByRole } = render(
+      render(
         <Select open value="2">
           <MenuItem value="1">First</MenuItem>
           <MenuItem value="2">Second</MenuItem>
         </Select>,
       );
 
-      expect(getAllByRole('option')[1]).to.have.attribute('aria-selected', 'true');
+      expect(screen.getAllByRole('option')[1]).to.have.attribute('aria-selected', 'true');
     });
 
     describe('when the first child is a ListSubheader', () => {
       it('first selectable option is focused to use the arrow', () => {
-        const { getAllByRole } = render(
+        render(
           <Select defaultValue="" open>
             <ListSubheader>Category 1</ListSubheader>
             <MenuItem value={1}>Option 1</MenuItem>
@@ -570,7 +1613,7 @@ describe('<Select />', () => {
           </Select>,
         );
 
-        const options = getAllByRole('option');
+        const options = screen.getAllByRole('option');
         expect(options[1]).to.have.attribute('tabindex', '0');
 
         fireEvent.keyDown(options[1], { key: 'ArrowDown' });
@@ -582,7 +1625,7 @@ describe('<Select />', () => {
 
       describe('when also the second child is a ListSubheader', () => {
         it('first selectable option is focused to use the arrow', () => {
-          const { getAllByRole } = render(
+          render(
             <Select defaultValue="" open>
               <ListSubheader>Empty category</ListSubheader>
               <ListSubheader>Category 1</ListSubheader>
@@ -594,7 +1637,7 @@ describe('<Select />', () => {
             </Select>,
           );
 
-          const options = getAllByRole('option');
+          const options = screen.getAllByRole('option');
           expect(options[2]).to.have.attribute('tabindex', '0');
 
           fireEvent.keyDown(options[2], { key: 'ArrowDown' });
@@ -607,7 +1650,7 @@ describe('<Select />', () => {
 
       describe('when the second child is null', () => {
         it('first selectable option is focused to use the arrow', () => {
-          const { getAllByRole } = render(
+          render(
             <Select defaultValue="" open>
               <ListSubheader>Category 1</ListSubheader>
               {null}
@@ -619,7 +1662,7 @@ describe('<Select />', () => {
             </Select>,
           );
 
-          const options = getAllByRole('option');
+          const options = screen.getAllByRole('option');
           expect(options[1]).to.have.attribute('tabindex', '0');
 
           fireEvent.keyDown(options[1], { key: 'ArrowDown' });
@@ -633,7 +1676,7 @@ describe('<Select />', () => {
       ['', 0, false, undefined, NaN].forEach((value) =>
         describe(`when the second child is conditionally rendering with "${value}"`, () => {
           it('first selectable option is focused to use the arrow', () => {
-            const { getAllByRole } = render(
+            render(
               <Select defaultValue="" open>
                 <ListSubheader>Category 1</ListSubheader>
                 {value && <MenuItem value={1}>One</MenuItem>}
@@ -645,7 +1688,7 @@ describe('<Select />', () => {
               </Select>,
             );
 
-            const options = getAllByRole('option');
+            const options = screen.getAllByRole('option');
             expect(options[1]).to.have.attribute('tabindex', '0');
 
             fireEvent.keyDown(options[1], { key: 'ArrowDown' });
@@ -659,57 +1702,30 @@ describe('<Select />', () => {
     });
 
     describe('when the first child is a ListSubheader wrapped in a custom component', () => {
-      describe('with the `muiSkipListHighlight` static field', () => {
-        function WrappedListSubheader(props) {
-          return <ListSubheader {...props} />;
-        }
+      function WrappedListSubheader(props) {
+        return <ListSubheader {...props} />;
+      }
 
-        WrappedListSubheader.muiSkipListHighlight = true;
+      it('highlights the first selectable option below the header without extra skip markers', () => {
+        render(
+          <Select defaultValue="" open>
+            <WrappedListSubheader>Category 1</WrappedListSubheader>
+            <MenuItem value={1}>Option 1</MenuItem>
+            <MenuItem value={2}>Option 2</MenuItem>
+            <WrappedListSubheader>Category 2</WrappedListSubheader>
+            <MenuItem value={3}>Option 3</MenuItem>
+            <MenuItem value={4}>Option 4</MenuItem>
+          </Select>,
+        );
 
-        it('highlights the first selectable option below the header', () => {
-          const { getByText } = render(
-            <Select defaultValue="" open>
-              <WrappedListSubheader>Category 1</WrappedListSubheader>
-              <MenuItem value={1}>Option 1</MenuItem>
-              <MenuItem value={2}>Option 2</MenuItem>
-              <WrappedListSubheader>Category 2</WrappedListSubheader>
-              <MenuItem value={3}>Option 3</MenuItem>
-              <MenuItem value={4}>Option 4</MenuItem>
-            </Select>,
-          );
-
-          const expectedHighlightedOption = getByText('Option 1');
-          expect(expectedHighlightedOption).to.have.attribute('tabindex', '0');
-        });
-      });
-
-      describe('with the `muiSkipListHighlight` prop', () => {
-        function WrappedListSubheader(props) {
-          const { muiSkipListHighlight, ...other } = props;
-          return <ListSubheader {...other} />;
-        }
-
-        it('highlights the first selectable option below the header', () => {
-          const { getByText } = render(
-            <Select defaultValue="" open>
-              <WrappedListSubheader muiSkipListHighlight>Category 1</WrappedListSubheader>
-              <MenuItem value={1}>Option 1</MenuItem>
-              <MenuItem value={2}>Option 2</MenuItem>
-              <WrappedListSubheader muiSkipListHighlight>Category 2</WrappedListSubheader>
-              <MenuItem value={3}>Option 3</MenuItem>
-              <MenuItem value={4}>Option 4</MenuItem>
-            </Select>,
-          );
-
-          const expectedHighlightedOption = getByText('Option 1');
-          expect(expectedHighlightedOption).to.have.attribute('tabindex', '0');
-        });
+        const expectedHighlightedOption = screen.getByText('Option 1');
+        expect(expectedHighlightedOption).to.have.attribute('tabindex', '0');
       });
     });
 
     describe('when the first child is a MenuItem disabled', () => {
       it('highlights the first selectable option below the header', () => {
-        const { getAllByRole } = render(
+        render(
           <Select defaultValue="" open>
             <MenuItem value="" disabled>
               <em>None</em>
@@ -723,7 +1739,7 @@ describe('<Select />', () => {
           </Select>,
         );
 
-        const options = getAllByRole('option');
+        const options = screen.getAllByRole('option');
         expect(options[2]).to.have.attribute('tabindex', '0');
 
         fireEvent.keyDown(options[2], { key: 'ArrowDown' });
@@ -734,84 +1750,62 @@ describe('<Select />', () => {
       });
     });
 
-    it('it will fallback to its content for the accessible name when it has no name', () => {
-      const { getByRole } = render(<Select value="" />);
+    it('will be labelled by its visible value when it has no label', () => {
+      render(
+        <Select value="the value">
+          <MenuItem value="the value">Option 1</MenuItem>
+        </Select>,
+      );
 
-      // TODO what is the accessible name actually?
-      expect(getByRole('combobox')).not.to.have.attribute('aria-labelledby');
+      const combobox = screen.getByRole('combobox');
+
+      expect(combobox).not.to.have.attribute('aria-labelledby');
+      expect(combobox).to.have.text('Option 1');
     });
 
-    it('is labelled by itself when it has a name', () => {
-      const { getByRole } = render(<Select name="select" value="" />);
-
-      expect(getByRole('combobox')).to.have.attribute(
-        'aria-labelledby',
-        getByRole('combobox').getAttribute('id'),
-      );
-    });
-
-    it('is labelled by itself when it has an id which is preferred over name', () => {
-      const { getAllByRole } = render(
-        <React.Fragment>
-          <span id="select-1-label">Chose first option:</span>
-          <Select id="select-1" labelId="select-1-label" name="select" value="" />
-          <span id="select-2-label">Chose second option:</span>
-          <Select id="select-2" labelId="select-2-label" name="select" value="" />
-        </React.Fragment>,
-      );
-
-      const triggers = getAllByRole('combobox');
-
-      expect(triggers[0]).to.have.attribute(
-        'aria-labelledby',
-        `select-1-label ${triggers[0].getAttribute('id')}`,
-      );
-      expect(triggers[1]).to.have.attribute(
-        'aria-labelledby',
-        `select-2-label ${triggers[1].getAttribute('id')}`,
-      );
-    });
-
-    it('can be labelled by an additional element if its id is provided in `labelId`', () => {
-      const { getByRole } = render(
+    it('will be labelled by an additional element if its id is provided in `labelId`', () => {
+      render(
         <React.Fragment>
           <span id="select-label">Choose one:</span>
-          <Select labelId="select-label" name="select" value="" />
+          <Select value="the value" labelId="select-label">
+            <MenuItem value="the value">Option 1</MenuItem>
+          </Select>
         </React.Fragment>,
       );
 
-      expect(getByRole('combobox')).to.have.attribute(
-        'aria-labelledby',
-        `select-label ${getByRole('combobox').getAttribute('id')}`,
-      );
+      const combobox = screen.getByRole('combobox');
+
+      expect(combobox).to.have.attribute('aria-labelledby', 'select-label');
+      expect(combobox).toHaveAccessibleName('Choose one:');
+      expect(combobox).to.have.text('Option 1');
     });
 
-    specify('the list of options is not labelled by default', () => {
-      const { getByRole } = render(<Select open value="" />);
+    it('the list of options is not labelled by default', () => {
+      render(<Select open value="" />);
 
-      expect(getByRole('listbox')).not.to.have.attribute('aria-labelledby');
+      expect(screen.getByRole('listbox')).not.to.have.attribute('aria-labelledby');
     });
 
-    specify('the list of options can be labelled by providing `labelId`', () => {
-      const { getByRole } = render(
+    it('the list of options can be labelled by providing `labelId`', () => {
+      render(
         <React.Fragment>
           <span id="select-label">Choose one:</span>
           <Select labelId="select-label" open value="" />
         </React.Fragment>,
       );
 
-      expect(getByRole('listbox')).to.have.attribute('aria-labelledby', 'select-label');
+      expect(screen.getByRole('listbox')).to.have.attribute('aria-labelledby', 'select-label');
     });
 
     it('should have appropriate accessible description when provided in props', () => {
-      const { getByRole } = render(
+      render(
         <React.Fragment>
           <Select aria-describedby="select-helper-text" value="" />
           <span id="select-helper-text">Helper text content</span>
         </React.Fragment>,
       );
 
-      const target = getByRole('combobox');
+      const target = screen.getByRole('combobox');
       expect(target).to.have.attribute('aria-describedby', 'select-helper-text');
       expect(target).toHaveAccessibleDescription('Helper text content');
     });
@@ -841,13 +1835,17 @@ describe('<Select />', () => {
   describe('prop: MenuProps', () => {
     it('should apply additional props to the Menu component', () => {
       const onEntered = spy();
-      const { getByRole } = render(
-        <Select MenuProps={{ TransitionProps: { onEntered }, transitionDuration: 100 }} value="10">
+
+      render(
+        <Select
+          MenuProps={{ slotProps: { transition: { onEntered } }, transitionDuration: 100 }}
+          value="10"
+        >
           <MenuItem value="10">Ten</MenuItem>
         </Select>,
       );
 
-      fireEvent.mouseDown(getByRole('combobox'));
+      fireEvent.mouseDown(screen.getByRole('combobox'));
       clock.tick(99);
 
       expect(onEntered.callCount).to.equal(0);
@@ -857,10 +1855,12 @@ describe('<Select />', () => {
       expect(onEntered.callCount).to.equal(1);
     });
 
-    it('should be able to override PaperProps minWidth', () => {
-      const { getByTestId } = render(
+    it('should be able to override slotProps.paper minWidth', () => {
+      render(
         <Select
-          MenuProps={{ PaperProps: { 'data-testid': 'paper', style: { minWidth: 12 } } }}
+          MenuProps={{
+            slotProps: { paper: { 'data-testid': 'paper', style: { minWidth: 12 } } },
+          }}
           open
           value="10"
         >
@@ -868,26 +1868,25 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      expect(getByTestId('paper').style).to.have.property('minWidth', '12px');
+      expect(screen.getByTestId('paper').style).to.have.property('minWidth', '12px');
     });
 
     // https://github.com/mui/material-ui/issues/38700
-    it('should merge `slotProps.paper` with the default Paper props', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should merge `slotProps.paper` with the default Paper props',
+      function test() {
+        render(
+          <Select MenuProps={{ slotProps: { paper: { 'data-testid': 'paper' } } }} open value="10">
+            <MenuItem value="10">Ten</MenuItem>
+          </Select>,
+        );
 
-      const { getByTestId, getByRole } = render(
-        <Select MenuProps={{ slotProps: { paper: { 'data-testid': 'paper' } } }} open value="10">
-          <MenuItem value="10">Ten</MenuItem>
-        </Select>,
-      );
+        const paper = screen.getByTestId('paper');
+        const selectButton = screen.getByRole('combobox', { hidden: true });
 
-      const paper = getByTestId('paper');
-      const selectButton = getByRole('combobox', { hidden: true });
-
-      expect(paper.style).to.have.property('minWidth', `${selectButton.clientWidth}px`);
-    });
+        expect(paper.style).to.have.property('minWidth', `${selectButton.clientWidth}px`);
+      },
+    );
 
     // https://github.com/mui/material-ui/issues/46273
     it('should merge `slotProps.list` with default List props', () => {
@@ -909,7 +1908,7 @@ describe('<Select />', () => {
 
     // https://github.com/mui/material-ui/issues/38949
     it('should forward `slotProps` to menu', function test() {
-      const { getByTestId } = render(
+      render(
         <Select
           MenuProps={{
             slotProps: {
@@ -927,27 +1926,51 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      const backdrop = getByTestId('backdrop');
+      const backdrop = screen.getByTestId('backdrop');
 
       expect(backdrop.style).to.have.property('backgroundColor', 'red');
+    });
+
+    // https://github.com/mui/material-ui/issues/34218
+    it('supports keyboard navigation after mouse opening when disablePortal is true', async function test() {
+      clock.restore();
+
+      const { user } = render(
+        <Select value="" MenuProps={{ disablePortal: true, transitionDuration: 0 }}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      await user.click(screen.getByRole('combobox'));
+
+      const options = screen.getAllByRole('option', { hidden: true });
+      expect(options[0]).toHaveFocus();
+
+      await user.keyboard('{ArrowDown}');
+      expect(options[1]).toHaveFocus();
+
+      await user.keyboard('{ArrowUp}');
+      expect(options[0]).toHaveFocus();
     });
   });
 
   describe('prop: SelectDisplayProps', () => {
     it('should apply additional props to trigger element', () => {
-      const { getByRole } = render(
+      render(
         <Select SelectDisplayProps={{ 'data-test': 'SelectDisplay' }} value="10">
           <MenuItem value="10">Ten</MenuItem>
         </Select>,
       );
 
-      expect(getByRole('combobox')).to.have.attribute('data-test', 'SelectDisplay');
+      expect(screen.getByRole('combobox')).to.have.attribute('data-test', 'SelectDisplay');
     });
   });
 
   describe('prop: displayEmpty', () => {
     it('should display the selected item even if its value is empty', () => {
-      const { getByRole } = render(
+      render(
         <Select value="" displayEmpty>
           <MenuItem value="">Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -955,39 +1978,39 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      expect(getByRole('combobox')).to.have.text('Ten');
+      expect(screen.getByRole('combobox')).to.have.text('Ten');
     });
 
-    it('should notch the outline to accommodate the label when displayEmpty', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should notch the outline to accommodate the label when displayEmpty',
+      function test() {
+        const { container } = render(
+          <Select value="" label="Age" displayEmpty>
+            <MenuItem value="">None</MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+          </Select>,
+        );
 
-      const { container } = render(
-        <Select value="" label="Age" displayEmpty>
-          <MenuItem value="">None</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-        </Select>,
-      );
-
-      expect(container.querySelector('legend')).toHaveComputedStyle({
-        maxWidth: '100%',
-      });
-    });
+        expect(container.querySelector('legend')).toHaveComputedStyle({
+          maxWidth: '100%',
+        });
+      },
+    );
   });
 
   describe('prop: renderValue', () => {
     it('should use the prop to render the value', () => {
       const renderValue = (x) => `0b${x.toString(2)}`;
-      const { getByRole } = render(
+
+      render(
         <Select renderValue={renderValue} value={4}>
           <MenuItem value={2}>2</MenuItem>
           <MenuItem value={4}>4</MenuItem>
         </Select>,
       );
 
-      expect(getByRole('combobox')).to.have.text('0b100');
+      expect(screen.getByRole('combobox')).to.have.text('0b100');
     });
   });
 
@@ -1012,14 +2035,14 @@ describe('<Select />', () => {
           </div>
         );
       }
-      const { container, getByRole } = render(<ControlledWrapper />);
+      const { container } = render(<ControlledWrapper />);
       const openSelect = container.querySelector('#open-select');
       await act(async () => {
         openSelect.focus();
       });
       fireEvent.click(openSelect);
 
-      const option = getByRole('option');
+      const option = screen.getByRole('option');
       expect(option).toHaveFocus();
       fireEvent.click(option);
 
@@ -1043,38 +2066,36 @@ describe('<Select />', () => {
           </Select>
         );
       }
-      const { getByRole, queryByRole } = render(<ControlledWrapper />);
+      render(<ControlledWrapper />);
 
-      fireEvent.mouseDown(getByRole('combobox'));
-      expect(getByRole('listbox')).not.to.equal(null);
+      fireEvent.mouseDown(screen.getByRole('combobox'));
+      expect(screen.getByRole('listbox')).not.to.equal(null);
 
       await act(async () => {
-        getByRole('option').click();
+        screen.getByRole('option').click();
       });
       // react-transition-group uses one extra commit for exit to completely remove
       // it from the DOM. but it's at least immediately inaccessible.
       // It's desired that this fails one day. The additional tick required to remove
       // this from the DOM is not a feature
-      expect(getByRole('listbox', { hidden: true })).toBeInaccessible();
+      expect(screen.getByRole('listbox', { hidden: true })).toBeInaccessible();
       clock.tick(0);
 
-      expect(queryByRole('listbox', { hidden: true })).to.equal(null);
+      expect(screen.queryByRole('listbox', { hidden: true })).to.equal(null);
     });
 
     it('should be open when initially true', () => {
-      const { getByRole } = render(
+      render(
         <Select open value="">
           <MenuItem>Hello</MenuItem>
         </Select>,
       );
 
-      expect(getByRole('listbox')).not.to.equal(null);
+      expect(screen.getByRole('listbox')).not.to.equal(null);
     });
 
     it('open only with the left mouse button click', () => {
-      // Test for https://github.com/mui/material-ui/issues/19250#issuecomment-578620934
-      // Right/middle mouse click shouldn't open the Select
-      const { getByRole, queryByRole } = render(
+      render(
         <Select value="">
           <MenuItem value="">
             <em>None</em>
@@ -1085,57 +2106,57 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      const trigger = getByRole('combobox');
+      const trigger = screen.getByRole('combobox');
 
       // If clicked by the right/middle mouse button, no options list should be opened
       fireEvent.mouseDown(trigger, { button: 1 });
-      expect(queryByRole('listbox')).to.equal(null);
+      expect(screen.queryByRole('listbox')).to.equal(null);
 
       fireEvent.mouseDown(trigger, { button: 2 });
-      expect(queryByRole('listbox')).to.equal(null);
+      expect(screen.queryByRole('listbox')).to.equal(null);
     });
   });
 
   describe('prop: autoWidth', () => {
     it('should take the trigger parent element width into account by default', () => {
-      const { container, getByRole, getByTestId } = render(
-        <Select MenuProps={{ PaperProps: { 'data-testid': 'paper' } }} value="">
+      const { container } = render(
+        <Select MenuProps={{ slotProps: { paper: { 'data-testid': 'paper' } } }} value="">
           <MenuItem>Only</MenuItem>
         </Select>,
       );
       const parentEl = container.querySelector('.MuiInputBase-root');
-      const button = getByRole('combobox');
+      const button = screen.getByRole('combobox');
       stub(parentEl, 'clientWidth').get(() => 14);
 
       fireEvent.mouseDown(button);
-      expect(getByTestId('paper').style).to.have.property('minWidth', '14px');
+      expect(screen.getByTestId('paper').style).to.have.property('minWidth', '14px');
     });
 
     it('should not take the trigger parent element width into account when autoWidth is true', () => {
-      const { container, getByRole, getByTestId } = render(
-        <Select autoWidth MenuProps={{ PaperProps: { 'data-testid': 'paper' } }} value="">
+      const { container } = render(
+        <Select autoWidth MenuProps={{ slotProps: { paper: { 'data-testid': 'paper' } } }} value="">
           <MenuItem>Only</MenuItem>
         </Select>,
       );
       const parentEl = container.querySelector('.MuiInputBase-root');
-      const button = getByRole('combobox');
+      const button = screen.getByRole('combobox');
       stub(parentEl, 'clientWidth').get(() => 14);
 
       fireEvent.mouseDown(button);
-      expect(getByTestId('paper').style).to.have.property('minWidth', '');
+      expect(screen.getByTestId('paper').style).to.have.property('minWidth', '');
     });
   });
 
   describe('prop: multiple', () => {
     it('should serialize multiple select value', () => {
-      const { container, getAllByRole } = render(
+      const { container } = render(
         <Select multiple open value={[10, 30]}>
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>,
       );
-      const options = getAllByRole('option');
+      const options = screen.getAllByRole('option');
 
       expect(container.querySelector('input')).to.have.property('value', '10,30');
       expect(options[0]).to.have.attribute('aria-selected', 'true');
@@ -1144,7 +2165,7 @@ describe('<Select />', () => {
     });
 
     it('should have aria-multiselectable=true when multiple is true', () => {
-      const { getByRole } = render(
+      render(
         <Select multiple value={[10, 30]}>
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -1152,13 +2173,13 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      fireEvent.mouseDown(getByRole('combobox'));
+      fireEvent.mouseDown(screen.getByRole('combobox'));
 
-      expect(getByRole('listbox')).to.have.attribute('aria-multiselectable', 'true');
+      expect(screen.getByRole('listbox')).to.have.attribute('aria-multiselectable', 'true');
     });
 
     it('should serialize multiple select display value', () => {
-      const { getByRole } = render(
+      render(
         <Select multiple value={[10, 20, 30]}>
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>
@@ -1168,7 +2189,7 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      expect(getByRole('combobox')).to.have.text('Ten, Twenty, Thirty');
+      expect(screen.getByRole('combobox')).to.have.text('Ten, Twenty, Thirty');
     });
 
     it('should not throw an error if `value` is an empty array', () => {
@@ -1184,32 +2205,50 @@ describe('<Select />', () => {
     });
 
     it("selects value based on their stringified equality when they're not objects", () => {
-      const { getAllByRole } = render(
+      render(
         <Select multiple open value={['10', '20']}>
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>
         </Select>,
       );
-      const options = getAllByRole('option');
+
+      const options = screen.getAllByRole('option');
 
       expect(options[0]).to.have.attribute('aria-selected', 'true');
       expect(options[1]).to.have.attribute('aria-selected', 'true');
       expect(options[2]).not.to.have.attribute('aria-selected', 'true');
     });
 
+    it('should deselect an option whose value matches the selection by stringified equality', () => {
+      const onChange = spy();
+      render(
+        <Select multiple open value={['10', '20']} onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+
+      fireEvent.click(screen.getAllByRole('option')[0]);
+
+      expect(onChange.callCount).to.equal(1);
+      expect(onChange.firstCall.args[0].target.value).to.deep.equal(['20']);
+    });
+
     it("selects values based on strict equality if they're objects", () => {
       const obj1 = { id: 1 };
       const obj2 = { id: 2 };
       const obj3 = { id: 3 };
-      const { getAllByRole } = render(
+
+      render(
         <Select multiple open value={[obj1, obj3]}>
           <MenuItem value={obj1}>ID: 1</MenuItem>
           <MenuItem value={obj2}>ID: 2</MenuItem>
           <MenuItem value={obj3}>ID: 3</MenuItem>
         </Select>,
       );
-      const options = getAllByRole('option');
+
+      const options = screen.getAllByRole('option');
 
       expect(options[0]).to.have.attribute('aria-selected', 'true');
       expect(options[1]).not.to.have.attribute('aria-selected', 'true');
@@ -1217,14 +2256,10 @@ describe('<Select />', () => {
     });
 
     describe('errors', () => {
-      it('should throw if non array', function test() {
-        // TODO is this fixed?
-        if (!/jsdom/.test(window.navigator.userAgent)) {
-          // can't catch render errors in the browser for unknown reason
-          // tried try-catch + error boundary + window onError preventDefault
-          this.skip();
-        }
-
+      // can't catch render errors in the browser for unknown reason
+      // tried try-catch + error boundary + window onError preventDefault
+      // TODO is this fixed?
+      it.skipIf(!isJsdom())('should throw if non array', function test() {
         const errorRef = React.createRef();
         expect(() => {
           render(
@@ -1240,7 +2275,8 @@ describe('<Select />', () => {
           'MUI: The `value` prop must be an array',
           // React 18 Strict Effects run mount effects twice
           reactMajor === 18 && 'MUI: The `value` prop must be an array',
-          reactMajor < 19 && 'The above error occurred in the <ForwardRef(SelectInput)> component',
+          reactMajor < 19 &&
+            /The above error occurred in the <ForwardRef\(SelectInput.*\)> component/,
         ]);
         const {
           current: { errors },
@@ -1282,10 +2318,10 @@ describe('<Select />', () => {
             value: event.target.value,
           };
         });
-        const { getByRole, getAllByRole } = render(<ControlledSelectInput onChange={onChange} />);
+        render(<ControlledSelectInput onChange={onChange} />);
 
-        fireEvent.mouseDown(getByRole('combobox'));
-        const options = getAllByRole('option');
+        fireEvent.mouseDown(screen.getByRole('combobox'));
+        const options = screen.getAllByRole('option');
         fireEvent.click(options[2]);
 
         expect(onChange.callCount).to.equal(1);
@@ -1312,53 +2348,52 @@ describe('<Select />', () => {
       expect(container.querySelector(`.${classes.select}`)).to.have.class(classes.multiple);
     });
 
-    it('should be able to override `multiple` rule name in `select` slot', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should be able to override `multiple` rule name in `select` slot',
+      function test() {
+        const selectStyle = {
+          marginLeft: '10px',
+          marginTop: '10px',
+        };
 
-      const selectStyle = {
-        marginLeft: '10px',
-        marginTop: '10px',
-      };
+        const multipleStyle = {
+          marginTop: '14px',
+        };
 
-      const multipleStyle = {
-        marginTop: '14px',
-      };
-
-      const theme = createTheme({
-        components: {
-          MuiSelect: {
-            styleOverrides: {
-              select: selectStyle,
-              multiple: multipleStyle,
+        const theme = createTheme({
+          components: {
+            MuiSelect: {
+              styleOverrides: {
+                select: selectStyle,
+                multiple: multipleStyle,
+              },
             },
           },
-        },
-      });
+        });
 
-      const { container } = render(
-        <ThemeProvider theme={theme}>
-          <Select open value={['first']} multiple>
-            <MenuItem value="first" />
-            <MenuItem value="second" />
-          </Select>
-        </ThemeProvider>,
-      );
+        const { container } = render(
+          <ThemeProvider theme={theme}>
+            <Select open value={['first']} multiple>
+              <MenuItem value="first" />
+              <MenuItem value="second" />
+            </Select>
+          </ThemeProvider>,
+        );
 
-      const combinedStyle = { ...selectStyle, ...multipleStyle };
+        const combinedStyle = { ...selectStyle, ...multipleStyle };
 
-      expect(container.getElementsByClassName(classes.select)[0]).to.toHaveComputedStyle(
-        combinedStyle,
-      );
-    });
+        expect(container.getElementsByClassName(classes.select)[0]).to.toHaveComputedStyle(
+          combinedStyle,
+        );
+      },
+    );
   });
 
   describe('prop: autoFocus', () => {
     it('should focus select after Select did mount', () => {
-      const { getByRole } = render(<Select value="" autoFocus />);
+      render(<Select value="" autoFocus />);
 
-      expect(getByRole('combobox')).toHaveFocus();
+      expect(screen.getByRole('combobox')).toHaveFocus();
     });
   });
 
@@ -1386,27 +2421,27 @@ describe('<Select />', () => {
     // focus a button. This implies <input type="button" /> is still used.
     it('should be able focus the trigger imperatively', async () => {
       const ref = React.createRef();
-      const { getByRole } = render(<Select inputRef={ref} value="" />);
+      render(<Select inputRef={ref} value="" />);
 
       await act(async () => {
         ref.current.focus();
       });
 
-      expect(getByRole('combobox')).toHaveFocus();
+      expect(screen.getByRole('combobox')).toHaveFocus();
     });
   });
 
   describe('prop: name', () => {
     it('should have no id when name is not provided', () => {
-      const { getByRole } = render(<Select value="" />);
+      render(<Select value="" />);
 
-      expect(getByRole('combobox')).not.to.have.attribute('id');
+      expect(screen.getByRole('combobox')).not.to.have.attribute('id');
     });
 
     it('should have select-`name` id when name is provided', () => {
-      const { getByRole } = render(<Select name="foo" value="" />);
+      render(<Select name="foo" value="" />);
 
-      expect(getByRole('combobox')).to.have.attribute('id', 'mui-component-select-foo');
+      expect(screen.getByRole('combobox')).to.have.attribute('id', 'mui-component-select-foo');
     });
   });
 
@@ -1418,14 +2453,17 @@ describe('<Select />', () => {
     });
 
     it('can be labelled with a <label />', () => {
-      const { getByRole } = render(
+      render(
         <React.Fragment>
           <label htmlFor="select">A select</label>
           <Select id="select" native />
         </React.Fragment>,
       );
 
-      expect(getByRole('combobox', { name: 'A select' })).to.have.property('tagName', 'SELECT');
+      expect(screen.getByRole('combobox', { name: 'A select' })).to.have.property(
+        'tagName',
+        'SELECT',
+      );
     });
   });
 
@@ -1447,7 +2485,8 @@ describe('<Select />', () => {
 
   it('should pass onClick prop to MenuItem', () => {
     const onClick = spy();
-    const { getAllByRole } = render(
+
+    render(
       <Select open value="30">
         <MenuItem onClick={onClick} value={30}>
           Thirty
@@ -1455,7 +2494,7 @@ describe('<Select />', () => {
       </Select>,
     );
 
-    const options = getAllByRole('option');
+    const options = screen.getAllByRole('option');
     fireEvent.click(options[0]);
 
     expect(onClick.callCount).to.equal(1);
@@ -1465,7 +2504,7 @@ describe('<Select />', () => {
   // https://x.com/devongovett/status/1248306411508916224
   it('should handle the browser autofill event and simple testing-library API', () => {
     const onChangeHandler = spy();
-    const { container, getByRole } = render(
+    const { container } = render(
       <Select onChange={onChangeHandler} defaultValue="germany" name="country">
         <MenuItem value="france">France</MenuItem>
         <MenuItem value="germany">Germany</MenuItem>
@@ -1479,17 +2518,50 @@ describe('<Select />', () => {
     });
 
     expect(onChangeHandler.calledOnce).to.equal(true);
-    expect(getByRole('combobox')).to.have.text('France');
+    expect(screen.getByRole('combobox')).to.have.text('France');
   });
 
-  it('should support native form validation', function test() {
-    if (/jsdom/.test(window.navigator.userAgent)) {
-      // see https://github.com/jsdom/jsdom/issues/123
-      this.skip();
-    }
+  it('should handle the browser autofill event for non-string option values', () => {
+    const onChangeHandler = spy();
+    const { container } = render(
+      <Select onChange={onChangeHandler} defaultValue={20} name="age">
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={20}>Twenty</MenuItem>
+      </Select>,
+    );
+    fireEvent.change(container.querySelector('input[name="age"]'), {
+      target: {
+        value: '10',
+      },
+    });
 
+    expect(onChangeHandler.callCount).to.equal(1);
+    expect(onChangeHandler.firstCall.args[0].target.value).to.equal(10);
+    expect(screen.getByRole('combobox')).to.have.text('Ten');
+  });
+
+  it('should handle the browser autofill event when multiple', () => {
+    const onChangeHandler = spy();
+    const { container } = render(
+      <Select multiple onChange={onChangeHandler} defaultValue={[]} name="age">
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={20}>Twenty</MenuItem>
+      </Select>,
+    );
+    fireEvent.change(container.querySelector('input[name="age"]'), {
+      target: {
+        value: '10',
+      },
+    });
+
+    expect(onChangeHandler.callCount).to.equal(1);
+    expect(onChangeHandler.firstCall.args[0].target.value).to.deep.equal([10]);
+    expect(screen.getByRole('combobox')).to.have.text('Ten');
+  });
+
+  // see https://github.com/jsdom/jsdom/issues/123
+  it.skipIf(isJsdom())('should support native form validation', function test() {
     const handleSubmit = spy((event) => {
-      // avoid karma reload.
       event.preventDefault();
     });
     function Form(props) {
@@ -1516,11 +2588,11 @@ describe('<Select />', () => {
   });
 
   it('should programmatically focus the select', () => {
-    const { getByRole } = render(
+    render(
       <Select
         value={1}
         inputRef={(input) => {
-          if (input !== null) {
+          if (input != null) {
             input.focus();
           }
         }}
@@ -1529,7 +2601,8 @@ describe('<Select />', () => {
         <MenuItem value={2}>2</MenuItem>
       </Select>,
     );
-    expect(document.activeElement).to.equal(getByRole('combobox'));
+
+    expect(document.activeElement).to.equal(screen.getByRole('combobox'));
   });
 
   it('should not override the event.target on mouse events', () => {
@@ -1567,11 +2640,7 @@ describe('<Select />', () => {
     expect(handleChange.callCount).to.equal(0);
   });
 
-  it('slots overrides should work', function test() {
-    if (/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
-
+  it.skipIf(isJsdom())('slots overrides should work', function test() {
     const rootStyle = {
       marginTop: '15px',
     };
@@ -1607,7 +2676,7 @@ describe('<Select />', () => {
       },
     });
 
-    const { container, getByTestId } = render(
+    const { container } = render(
       <ThemeProvider theme={theme}>
         <Select open value="first" data-testid="select">
           <MenuItem value="first" />
@@ -1616,7 +2685,7 @@ describe('<Select />', () => {
       </ThemeProvider>,
     );
 
-    expect(getByTestId('select')).toHaveComputedStyle(rootStyle);
+    expect(screen.getByTestId('select')).toHaveComputedStyle(rootStyle);
     expect(container.getElementsByClassName(classes.icon)[0]).to.toHaveComputedStyle(iconStyle);
     expect(container.getElementsByClassName(classes.nativeInput)[0]).to.toHaveComputedStyle(
       nativeInputStyle,
@@ -1625,105 +2694,103 @@ describe('<Select />', () => {
   });
 
   describe('form submission', () => {
-    it('includes Select value in formData only if the `name` attribute is provided', async function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        // FormData is not available in JSDOM
-        this.skip();
-      }
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        expect(formData.get('select-one')).to.equal('2');
+    // FormData is not available in JSDOM
+    it.skipIf(isJsdom())(
+      'includes Select value in formData only if the `name` attribute is provided',
+      async function test() {
+        const handleSubmit = (event) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          expect(formData.get('select-one')).to.equal('2');
 
-        const formDataAsObject = Object.fromEntries(formData);
-        expect(Object.keys(formDataAsObject).length).to.equal(1);
-      };
+          const formDataAsObject = Object.fromEntries(formData);
+          expect(Object.keys(formDataAsObject).length).to.equal(1);
+        };
 
-      const { getByText } = render(
-        <form onSubmit={handleSubmit}>
-          <Select defaultValue={2} name="select-one">
-            <MenuItem value={1} />
-            <MenuItem value={2} />
-          </Select>
-          <Select defaultValue="a">
-            <MenuItem value="a" />
-            <MenuItem value="b" />
-          </Select>
-          <button type="submit">Submit</button>
-        </form>,
-      );
+        render(
+          <form onSubmit={handleSubmit}>
+            <Select defaultValue={2} name="select-one">
+              <MenuItem value={1} />
+              <MenuItem value={2} />
+            </Select>
+            <Select defaultValue="a">
+              <MenuItem value="a" />
+              <MenuItem value="b" />
+            </Select>
+            <button type="submit">Submit</button>
+          </form>,
+        );
 
-      const button = getByText('Submit');
-      await act(async () => {
-        button.click();
-      });
-    });
+        const button = screen.getByText('Submit');
+        await act(async () => {
+          button.click();
+        });
+      },
+    );
   });
 
   describe('theme styleOverrides:', () => {
-    it('should override with error style when `native select` has `error` state', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should override with error style when `native select` has `error` state',
+      function test() {
+        const iconStyle = { color: 'rgb(255, 0, 0)' };
 
-      const iconStyle = { color: 'rgb(255, 0, 0)' };
-
-      const theme = createTheme({
-        components: {
-          MuiNativeSelect: {
-            styleOverrides: {
-              icon: (props) => ({
-                ...(props.ownerState.error && iconStyle),
-              }),
+        const theme = createTheme({
+          components: {
+            MuiNativeSelect: {
+              styleOverrides: {
+                icon: (props) => ({
+                  ...(props.ownerState.error && iconStyle),
+                }),
+              },
             },
           },
-        },
-      });
+        });
 
-      const { container } = render(
-        <ThemeProvider theme={theme}>
-          <Select value="first" error IconComponent="div" native>
-            <option value="first">first</option>
-          </Select>
-        </ThemeProvider>,
-      );
+        const { container } = render(
+          <ThemeProvider theme={theme}>
+            <Select value="first" error IconComponent="div" native>
+              <option value="first">first</option>
+            </Select>
+          </ThemeProvider>,
+        );
 
-      expect(container.querySelector(`.${nativeSelectClasses.icon}`)).toHaveComputedStyle(
-        iconStyle,
-      );
-    });
+        expect(container.querySelector(`.${nativeSelectClasses.icon}`)).toHaveComputedStyle(
+          iconStyle,
+        );
+      },
+    );
 
-    it('should override with error style when `select` has `error` state', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should override with error style when `select` has `error` state',
+      function test() {
+        const iconStyle = { color: 'rgb(255, 0, 0)' };
+        const selectStyle = { color: 'rgb(255, 192, 203)' };
 
-      const iconStyle = { color: 'rgb(255, 0, 0)' };
-      const selectStyle = { color: 'rgb(255, 192, 203)' };
-
-      const theme = createTheme({
-        components: {
-          MuiSelect: {
-            styleOverrides: {
-              icon: (props) => ({
-                ...(props.ownerState.error && iconStyle),
-              }),
-              select: (props) => ({
-                ...(props.ownerState.error && selectStyle),
-              }),
+        const theme = createTheme({
+          components: {
+            MuiSelect: {
+              styleOverrides: {
+                icon: (props) => ({
+                  ...(props.ownerState.error && iconStyle),
+                }),
+                select: (props) => ({
+                  ...(props.ownerState.error && selectStyle),
+                }),
+              },
             },
           },
-        },
-      });
+        });
 
-      const { container } = render(
-        <ThemeProvider theme={theme}>
-          <Select value="" error IconComponent="div" />
-        </ThemeProvider>,
-      );
-      expect(container.querySelector(`.${classes.select}`)).toHaveComputedStyle(selectStyle);
-      expect(container.querySelector(`.${classes.icon}`)).toHaveComputedStyle(iconStyle);
-    });
+        const { container } = render(
+          <ThemeProvider theme={theme}>
+            <Select value="" error IconComponent="div" />
+          </ThemeProvider>,
+        );
+        expect(container.querySelector(`.${classes.select}`)).toHaveComputedStyle(selectStyle);
+        expect(container.querySelector(`.${classes.icon}`)).toHaveComputedStyle(iconStyle);
+      },
+    );
   });
 
   ['standard', 'outlined', 'filled'].forEach((variant) => {
@@ -1745,7 +2812,7 @@ describe('<Select />', () => {
         },
       });
 
-      const { getByTestId } = render(
+      render(
         <ThemeProvider theme={theme}>
           <Select variant={variant} value="first" data-testid="input">
             <MenuItem value="first" />
@@ -1754,10 +2821,17 @@ describe('<Select />', () => {
         </ThemeProvider>,
       );
 
-      expect(getByTestId('input')).to.toHaveComputedStyle({
+      expect(screen.getByTestId('input')).to.toHaveComputedStyle({
         fontWeight: '200',
       });
     });
+  });
+
+  it('should rotate the icon when open', () => {
+    const { container } = render(<Select open value="" />);
+    const icon = container.querySelector(`.${classes.icon}`);
+    expect(icon).to.have.class(classes.iconOpen);
+    expect(icon).not.toHaveComputedStyle({ transform: 'none' });
   });
 
   describe('prop: input', () => {
@@ -1797,46 +2871,177 @@ describe('<Select />', () => {
     });
 
     it('should merge the class names', () => {
-      const { getByTestId } = render(
+      render(
         <Select
           className="foo"
           input={<InputBase data-testid="root" className="bar" />}
           value=""
         />,
       );
-      expect(getByTestId('root')).to.have.class('foo');
-      expect(getByTestId('root')).to.have.class('bar');
+
+      expect(screen.getByTestId('root')).to.have.class('foo');
+      expect(screen.getByTestId('root')).to.have.class('bar');
     });
   });
 
   it('should not focus select when clicking an arbitrary element with id="undefined"', () => {
-    const { getByRole, getByTestId } = render(
+    render(
       <React.Fragment>
         <div id="undefined" data-testid="test-element" />
         <Select value="" />
       </React.Fragment>,
     );
 
-    fireEvent.click(getByTestId('test-element'));
+    fireEvent.click(screen.getByTestId('test-element'));
 
-    expect(getByRole('combobox')).not.toHaveFocus();
+    expect(screen.getByRole('combobox')).not.toHaveFocus();
   });
 
-  it('outlined icon should be selected from below css selectors', () => {
+  it('outlined icon should be selectable with sibling selector', () => {
     const { container } = render(<Select value="" />);
-    expect(container.querySelector('.MuiSelect-iconOutlined')).not.to.equal(null);
     expect(container.querySelector('.MuiSelect-outlined ~ .MuiSelect-icon')).not.to.equal(null);
   });
 
-  it('standard icon should be selected from below css selectors', () => {
+  it('standard icon should be selectable with sibling selector', () => {
     const { container } = render(<Select value="" variant="standard" />);
-    expect(container.querySelector('.MuiSelect-iconStandard')).not.to.equal(null);
     expect(container.querySelector('.MuiSelect-standard ~ .MuiSelect-icon')).not.to.equal(null);
   });
 
-  it('filled icon should be selected from below css selectors', () => {
+  it('filled icon should be selectable with sibling selector', () => {
     const { container } = render(<Select value="" variant="filled" />);
-    expect(container.querySelector('.MuiSelect-iconFilled')).not.to.equal(null);
     expect(container.querySelector('.MuiSelect-filled ~ .MuiSelect-icon')).not.to.equal(null);
+  });
+
+  it('should call onKeyDown when passed', async () => {
+    const handleKeyDown = spy();
+
+    render(
+      <Select value="one" onKeyDown={handleKeyDown}>
+        <MenuItem value="one">One</MenuItem>
+        <MenuItem value="two">Two</MenuItem>
+      </Select>,
+    );
+
+    const trigger = screen.getByRole('combobox');
+    await act(async () => {
+      trigger.focus();
+    });
+
+    fireEvent.keyDown(trigger, { key: 'a' });
+
+    expect(handleKeyDown.callCount).to.equal(1);
+    const event = handleKeyDown.firstCall.args[0];
+    expect(event).to.have.property('key', 'a');
+  });
+
+  it('should call onMouseDown when passed', async () => {
+    const handleMouseDown = spy();
+
+    render(
+      <Select value="one" onMouseDown={handleMouseDown}>
+        <MenuItem value="one">One</MenuItem>
+        <MenuItem value="two">Two</MenuItem>
+      </Select>,
+    );
+
+    const trigger = screen.getByRole('combobox');
+    await act(async () => {
+      trigger.focus();
+    });
+
+    fireEvent.mouseDown(trigger);
+
+    expect(handleMouseDown.callCount).to.equal(1);
+    const event = handleMouseDown.firstCall.args[0];
+    expect(event.button).to.equal(0);
+  });
+
+  describe('keyboard navigation in shadow DOM', () => {
+    it.skipIf(isJsdom())('should navigate between options using arrow keys', async function test() {
+      // reset fake timers
+      clock.restore();
+
+      // Create a shadow container
+      const shadowHost = document.createElement('div');
+      document.body.appendChild(shadowHost);
+      const shadowContainer = shadowHost.attachShadow({ mode: 'open' });
+
+      // Render directly into shadow container
+      const shadowRoot = document.createElement('div');
+      shadowContainer.appendChild(shadowRoot);
+
+      const { unmount, user } = render(
+        <Select value="" MenuProps={{ container: shadowRoot }}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+        { container: shadowRoot },
+      );
+
+      const trigger = shadowRoot.querySelector('[role="combobox"]');
+      expect(trigger).not.to.equal(null);
+
+      // Open Select
+      await user.click(trigger);
+
+      const options = shadowRoot.querySelectorAll('[role="option"]');
+      expect(options.length).to.equal(3);
+
+      expect(shadowContainer.activeElement).to.equal(options[0]);
+
+      await user.keyboard('{ArrowDown}');
+
+      expect(shadowContainer.activeElement).to.equal(options[1]);
+
+      await user.keyboard('{ArrowUp}');
+
+      expect(shadowContainer.activeElement).to.equal(options[0]);
+
+      // Cleanup
+      unmount();
+      if (shadowHost.parentNode) {
+        document.body.removeChild(shadowHost);
+      }
+    });
+  });
+
+  it.skipIf(isJsdom())('updates menu minWidth when the trigger resizes while open', async () => {
+    clock.restore();
+
+    render(
+      <Select value="" MenuProps={{ transitionDuration: 0 }}>
+        <MenuItem value="">None</MenuItem>
+        <MenuItem value={10}>Ten</MenuItem>
+      </Select>,
+    );
+
+    const combobox = screen.getByRole('combobox');
+    const anchor = combobox.parentElement;
+    anchor.style.width = '320px';
+
+    fireEvent.mouseDown(combobox);
+
+    await waitFor(() => {
+      const listbox = screen.getByRole('listbox');
+      const paper = listbox.parentElement;
+      expect(paper.style.minWidth).to.equal('320px');
+    });
+
+    anchor.style.width = '180px';
+
+    // ResizeObserver callbacks are delivered during the browser's rendering pipeline.
+    // Force at least one complete frame so the RO can detect the size change,
+    await act(async () => {
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      });
+    });
+
+    await waitFor(() => {
+      const listbox = screen.getByRole('listbox');
+      const paper = listbox.parentElement;
+      expect(paper.style.minWidth).to.equal('180px');
+    });
   });
 });

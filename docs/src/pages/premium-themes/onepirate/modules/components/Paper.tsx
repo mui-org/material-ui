@@ -1,5 +1,5 @@
-import * as React from 'react';
-import MuiPaper, { PaperProps } from '@mui/material/Paper';
+import type { PaperProps } from '@mui/material/Paper';
+import MuiPaper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
 interface ExtraPaperProps {

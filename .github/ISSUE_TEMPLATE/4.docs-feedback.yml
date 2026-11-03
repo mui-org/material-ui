@@ -1,5 +1,5 @@
 name: Docs feedback
-description: Improve documentation about Material UI, MUI System, or Joy UI.
+description: Improve documentation about Material UI or MUI System.
 labels: ['status: waiting for maintainer', 'support: docs-feedback']
 title: '[docs] '
 body:

@@ -10,15 +10,8 @@
       },
       "default": "true"
     },
-    "BackdropComponent": {
-      "type": { "name": "elementType" },
-      "default": "styled(Backdrop, {\n  name: 'MuiModal',\n  slot: 'Backdrop',\n})({\n  zIndex: -1,\n})",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.backdrop</code> instead. While this prop currently works, it will be removed in the next major version."
-    },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
-    "disableEscapeKeyDown": { "type": { "name": "bool" }, "default": "false" },
     "fullScreen": { "type": { "name": "bool" }, "default": "false" },
     "fullWidth": { "type": { "name": "bool" }, "default": "false" },
     "maxWidth": {
@@ -36,11 +29,9 @@
       }
     },
     "PaperComponent": { "type": { "name": "elementType" }, "default": "Paper" },
-    "PaperProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.paper</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
+    "role": {
+      "type": { "name": "enum", "description": "'alertdialog'<br>&#124;&nbsp;'dialog'" },
+      "default": "'dialog'"
     },
     "scroll": {
       "type": { "name": "enum", "description": "'body'<br>&#124;&nbsp;'paper'" },
@@ -67,23 +58,12 @@
       },
       "additionalInfo": { "sx": true }
     },
-    "TransitionComponent": {
-      "type": { "name": "elementType" },
-      "default": "Fade",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.transition</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "transitionDuration": {
       "type": {
         "name": "union",
         "description": "number<br>&#124;&nbsp;{ appear?: number, enter?: number, exit?: number }"
       },
       "default": "{\n  enter: theme.transitions.duration.enteringScreen,\n  exit: theme.transitions.duration.leavingScreen,\n}"
-    },
-    "TransitionProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.transition</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   },
   "name": "Dialog",
@@ -94,7 +74,7 @@
   "slots": [
     {
       "name": "transition",
-      "description": "The component that renders the transition.\n[Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.",
+      "description": "The component that renders the transition.\n[Follow this guide](/material-ui/transitions/#transition-slots) to learn more about the requirements for this component.",
       "default": "Collapse",
       "class": null
     },
@@ -112,7 +92,7 @@
     {
       "name": "backdrop",
       "description": "The component that renders the backdrop.",
-      "class": null
+      "class": "MuiDialog-backdrop"
     },
     {
       "name": "root",
@@ -132,20 +112,6 @@
       "className": "MuiDialog-paperFullWidth",
       "description": "Styles applied to the Paper component if `fullWidth={true}`.",
       "isGlobal": false
-    },
-    {
-      "key": "paperScrollBody",
-      "className": "MuiDialog-paperScrollBody",
-      "description": "Styles applied to the Paper component if `scroll=\"body\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperScrollPaper",
-      "className": "MuiDialog-paperScrollPaper",
-      "description": "Styles applied to the Paper component if `scroll=\"paper\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "paperWidthFalse",
@@ -202,6 +168,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Dialog/Dialog.js",
   "inheritance": { "component": "Modal", "pathname": "/material-ui/api/modal/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-dialog/\">Dialog</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-dialog/\">Dialog</a></li></ul>"
 }

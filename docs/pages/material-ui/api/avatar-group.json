@@ -3,11 +3,6 @@
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "component": { "type": { "name": "elementType" } },
-    "componentsProps": {
-      "type": { "name": "shape", "description": "{ additionalAvatar?: object }" },
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "max": { "type": { "name": "custom", "description": "number" }, "default": "5" },
     "renderSurplus": {
       "type": { "name": "func" },
@@ -18,10 +13,7 @@
       }
     },
     "slotProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ additionalAvatar?: object, surplus?: func<br>&#124;&nbsp;object }"
-      },
+      "type": { "name": "shape", "description": "{ surplus?: func<br>&#124;&nbsp;object }" },
       "default": "{}"
     },
     "slots": {
@@ -74,8 +66,8 @@
   "spread": true,
   "themeDefaultProps": true,
   "muiName": "MuiAvatarGroup",
+  "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/AvatarGroup/AvatarGroup.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-avatar/\">Avatar</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-avatar/\">Avatar</a></li></ul>"
 }

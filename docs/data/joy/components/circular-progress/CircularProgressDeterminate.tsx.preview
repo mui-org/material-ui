@@ -1,5 +1,0 @@
-<CircularProgress determinate value={25} />
-<CircularProgress determinate value={50} />
-<CircularProgress determinate value={75} />
-<CircularProgress determinate value={100} />
-<CircularProgress determinate value={progress} />

@@ -12,10 +12,6 @@
     "color": {
       "description": "The color of the component. Unless provided, the value is taken from the <code>severity</code> prop. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
     },
-    "components": { "description": "The components used for each slot inside." },
-    "componentsProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones."
-    },
     "icon": {
       "description": "Override the icon displayed before the children. Unless provided, the icon is mapped to the value of the <code>severity</code> prop. Set to <code>false</code> to remove the <code>icon</code>."
     },
@@ -65,85 +61,15 @@
       "nodeName": "the root element",
       "conditions": "<code>variant=\"filled\"</code>"
     },
-    "filledError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-filled\">.MuiAlert-filled</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorError\">.MuiAlert-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "filledInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-filled\">.MuiAlert-filled</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorInfo\">.MuiAlert-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "filledSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-filled\">.MuiAlert-filled</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorSuccess\">.MuiAlert-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "filledWarning": {
-      "description": "Styles applied to the root element if <code>variant=&quot;filled&quot;</code> and <code>color=&quot;warning&quot;</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-filled\">.MuiAlert-filled</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorWarning\">.MuiAlert-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "outlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
-    "outlinedError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-outlined\">.MuiAlert-outlined</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorError\">.MuiAlert-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-outlined\">.MuiAlert-outlined</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorInfo\">.MuiAlert-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-outlined\">.MuiAlert-outlined</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorSuccess\">.MuiAlert-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"warning\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-outlined\">.MuiAlert-outlined</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorWarning\">.MuiAlert-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "standard": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"standard\"</code>"
-    },
-    "standardError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-standard\">.MuiAlert-standard</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorError\">.MuiAlert-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "standardInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-standard\">.MuiAlert-standard</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorInfo\">.MuiAlert-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "standardSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-standard\">.MuiAlert-standard</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorSuccess\">.MuiAlert-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "standardWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"standard\"</code> and <code>color=\"warning\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/alert/#alert-classes-standard\">.MuiAlert-standard</a> and <a href=\"/material-ui/api/alert/#alert-classes-colorWarning\">.MuiAlert-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   },
   "slotDescriptions": {

@@ -1,6 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "module": "commonjs",
+    // This will stop functioning under typescript 7.0. We can probably install v6 just in this workspace then.
     "moduleResolution": "node"
   }
 }

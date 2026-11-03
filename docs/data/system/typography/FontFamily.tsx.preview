@@ -1,6 +1,0 @@
-<Typography component="div">
-  <Box sx={{ fontFamily: 'default', m: 1 }}>Default</Box>
-  <Box sx={{ fontFamily: 'Monospace', fontSize: 'h6.fontSize', m: 1 }}>
-    Monospace
-  </Box>
-</Typography>

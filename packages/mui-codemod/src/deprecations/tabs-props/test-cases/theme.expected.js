@@ -2,13 +2,24 @@ fn({
   MuiTabs: {
     defaultProps: {
       slots: {
-        scrollButton: CustomScrollButton
+        scrollButtons: CustomScrollButton
       },
 
       slotProps: {
-        scrollButton: { disableRipple: true },
+        scrollButtons: { disableRipple: true },
         indicator: { className: 'indicator' }
       }
+    },
+  },
+});
+
+fn({
+  MuiTabs: {
+    defaultProps: {
+      slots: {
+        startScrollButtonIcon: CustomIcon,
+        endScrollButtonIcon: CustomIcon2,
+      },
     },
   },
 });

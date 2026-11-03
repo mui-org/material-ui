@@ -29,6 +29,5 @@
   "muiName": "MuiClickAwayListener",
   "filename": "/packages/mui-material/src/ClickAwayListener/ClickAwayListener.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-click-away-listener/\">Click-Away Listener</a></li>\n<li><a href=\"/material-ui/react-menu/\">Menu</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-click-away-listener/\">Click-Away Listener</a></li>\n<li><a href=\"/material-ui/react-menu/\">Menu</a></li></ul>"
 }

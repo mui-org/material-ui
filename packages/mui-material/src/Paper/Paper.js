@@ -11,6 +11,7 @@ import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import getOverlayAlpha from '../styles/getOverlayAlpha';
 import { getPaperUtilityClass } from './paperClasses';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { square, elevation, variant, classes } = ownerState;
@@ -44,12 +45,12 @@ const PaperRoot = styled('div', {
   memoTheme(({ theme }) => ({
     backgroundColor: (theme.vars || theme).palette.background.paper,
     color: (theme.vars || theme).palette.text.primary,
-    transition: theme.transitions.create('box-shadow'),
+    ...getTransitionStyles(theme, 'box-shadow'),
     variants: [
       {
         props: ({ ownerState }) => !ownerState.square,
         style: {
-          borderRadius: theme.shape.borderRadius,
+          borderRadius: (theme.vars || theme).shape.borderRadius,
         },
       },
       {

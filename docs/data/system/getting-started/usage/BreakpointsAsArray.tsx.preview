@@ -1,1 +1,0 @@
-<Box sx={{ width: [100, 200, 300] }}>This box has a responsive width.</Box>

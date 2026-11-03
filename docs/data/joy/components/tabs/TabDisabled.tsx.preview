@@ -1,7 +1,0 @@
-<Tabs aria-label="Disabled tabs" defaultValue={0}>
-  <TabList>
-    <Tab>First tab</Tab>
-    <Tab disabled>Second tab</Tab>
-    <Tab>Third tab</Tab>
-  </TabList>
-</Tabs>

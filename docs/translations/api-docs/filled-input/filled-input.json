@@ -11,10 +11,6 @@
     "color": {
       "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>. The prop defaults to the value (<code>&#39;primary&#39;</code>) inherited from the parent FormControl component."
     },
-    "components": { "description": "The components used for each slot inside." },
-    "componentsProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones."
-    },
     "defaultValue": {
       "description": "The default value. Use when the component is not controlled."
     },
@@ -75,11 +71,9 @@
     },
     "rows": { "description": "Number of rows to display when multiline option is set to true." },
     "slotProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones.<br>This prop is an alias for the <code>componentsProps</code> prop, which will be deprecated in the future."
+      "description": "The extra props for the slot components. You can override the existing props or add new ones."
     },
-    "slots": {
-      "description": "The components used for each slot inside.<br>This prop is an alias for the <code>components</code> prop, which will be deprecated in the future."
-    },
+    "slots": { "description": "The components used for each slot inside." },
     "startAdornment": { "description": "Start <code>InputAdornment</code> for this component." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."

@@ -1,11 +1,10 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled, keyframes } from '@mui/material/styles';
 import Section from 'docs/src/layouts/Section';
 import GradientText from 'docs/src/components/typography/GradientText';
 import TeamStatistics from 'docs/src/components/about/TeamStatistics';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 
 const teamPhotos = [
   {
@@ -158,7 +157,7 @@ export default function AboutHero() {
             <GradientText>building better UIs effortless</GradientText>
           </Typography>
         }
-        description="Together, we are enabling developers & designers to bring stunning UIs to life with unrivalled speed and ease."
+        description="We give developers and designers the tools to bring stunning user interfaces to life with unrivaled speed and ease."
       />
       <PhotoGallery />
       <TeamStatistics />

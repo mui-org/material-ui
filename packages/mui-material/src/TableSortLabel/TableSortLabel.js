@@ -11,13 +11,14 @@ import { useDefaultProps } from '../DefaultPropsProvider';
 import capitalize from '../utils/capitalize';
 import tableSortLabelClasses, { getTableSortLabelUtilityClass } from './tableSortLabelClasses';
 import useSlot from '../utils/useSlot';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, direction, active } = ownerState;
 
   const slots = {
     root: ['root', active && 'active', `direction${capitalize(direction)}`],
-    icon: ['icon', `iconDirection${capitalize(direction)}`],
+    icon: ['icon'],
   };
 
   return composeClasses(slots, getTableSortLabelUtilityClass, classes);
@@ -60,18 +61,13 @@ const TableSortLabelRoot = styled(ButtonBase, {
 const TableSortLabelIcon = styled('span', {
   name: 'MuiTableSortLabel',
   slot: 'Icon',
-  overridesResolver: (props, styles) => {
-    const { ownerState } = props;
-
-    return [styles.icon, styles[`iconDirection${capitalize(ownerState.direction)}`]];
-  },
 })(
   memoTheme(({ theme }) => ({
     fontSize: 18,
     marginRight: 4,
     marginLeft: 4,
     opacity: 0,
-    transition: theme.transitions.create(['opacity', 'transform'], {
+    ...getTransitionStyles(theme, ['opacity', 'transform'], {
       duration: theme.transitions.duration.shorter,
     }),
     userSelect: 'none',
@@ -134,6 +130,9 @@ const TableSortLabel = React.forwardRef(function TableSortLabel(inProps, ref) {
     ownerState,
     className: clsx(classes.root, className),
     ref,
+    additionalProps: {
+      internalNativeButton: false,
+    },
   });
 
   const [IconSlot, iconProps] = useSlot('icon', {

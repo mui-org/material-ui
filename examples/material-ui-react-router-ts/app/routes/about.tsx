@@ -30,7 +30,7 @@ export default function About() {
         }}
       >
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js example in TypeScript
+          Material UI - React Router example in TypeScript
         </Typography>
         <Box sx={{ maxWidth: 'sm' }}>
           <Button variant="contained" component={ReactRouterLink} to="/">

@@ -1,6 +1,6 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -10,7 +10,7 @@ describe('<TabContext /> integration', () => {
   const { render } = createRenderer();
 
   it('wires up aria attributes', () => {
-    const { getAllByRole, setProps } = render(
+    const { setProps } = render(
       <TabContext value="0">
         <TabList>
           <Tab label="label one" value="0" />
@@ -21,7 +21,7 @@ describe('<TabContext /> integration', () => {
       </TabContext>,
     );
 
-    const [tabOne, tabTwo] = getAllByRole('tab');
+    const [tabOne, tabTwo] = screen.getAllByRole('tab');
 
     expect(tabOne).to.have.attribute('aria-selected', 'true');
     expect(tabTwo).to.have.attribute('aria-selected', 'false');

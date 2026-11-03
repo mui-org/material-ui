@@ -1,7 +1,0 @@
-<Switch onChange={handleChange} endDecorator="Toggle RTL" />
-<CacheProvider value={rtl ? rtlCache : ltrCache}>
-  <Box sx={{ flexGrow: 1, mx: 2 }} dir={rtl ? 'rtl' : ''}>
-    <Normal>RTL normal behavior</Normal>
-    <Noflip>RTL noflip</Noflip>
-  </Box>
-</CacheProvider>

@@ -19,9 +19,9 @@ import * as React from 'react';
 export default function useForkRef<Instance>(
   ...refs: Array<React.Ref<Instance> | undefined>
 ): React.RefCallback<Instance> | null {
-  const cleanupRef = React.useRef<void | (() => void)>(undefined);
+  const cleanupRef = React.useRef<() => void>(undefined);
 
-  const refEffect = React.useCallback((instance: Instance | null) => {
+  const refEffect = React.useCallback((instance: Instance) => {
     const cleanups = refs.map((ref) => {
       if (ref == null) {
         return null;
@@ -37,16 +37,16 @@ export default function useForkRef<Instance>(
             };
       }
 
-      (ref as React.RefObject<Instance | null>).current = instance;
+      ref.current = instance;
       return () => {
-        (ref as React.RefObject<Instance | null>).current = null;
+        ref.current = null;
       };
     });
 
     return () => {
       cleanups.forEach((refCleanup) => refCleanup?.());
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/use-memo
   }, refs);
 
   return React.useMemo(() => {
@@ -57,14 +57,14 @@ export default function useForkRef<Instance>(
     return (value) => {
       if (cleanupRef.current) {
         cleanupRef.current();
-        (cleanupRef as React.RefObject<void | (() => void)>).current = undefined;
+        cleanupRef.current = undefined;
       }
 
       if (value != null) {
-        (cleanupRef as React.RefObject<void | (() => void)>).current = refEffect(value);
+        cleanupRef.current = refEffect(value);
       }
     };
     // TODO: uncomment once we enable eslint-plugin-react-compiler // eslint-disable-next-line react-compiler/react-compiler -- intentionally ignoring that the dependency array must be an array literal
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/use-memo
   }, refs);
 }

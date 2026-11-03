@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 const PREFIX = 'tenth';
 
@@ -29,9 +28,9 @@ export default function Page() {
 
 
   return (
-    (<Root>
+    <Root>
       <h1 className={classes.header}></h1>
       <img className={classes.img}></img>
-    </Root>)
+    </Root>
   );
 }

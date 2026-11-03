@@ -103,12 +103,12 @@ interface UseCurrentColoSchemeOptions<SupportedColorScheme extends string> {
   defaultLightColorScheme: SupportedColorScheme;
   defaultDarkColorScheme: SupportedColorScheme;
   supportedColorSchemes: Array<SupportedColorScheme>;
-  defaultMode?: Mode;
-  modeStorageKey?: string;
-  colorSchemeStorageKey?: string;
-  storageWindow?: Window | null;
-  storageManager?: StorageManager | null;
-  noSsr?: boolean;
+  defaultMode?: Mode | undefined;
+  modeStorageKey?: string | undefined;
+  colorSchemeStorageKey?: string | undefined;
+  storageWindow?: Window | null | undefined;
+  storageManager?: StorageManager | null | undefined;
+  noSsr?: boolean | undefined;
 }
 
 export default function useCurrentColorScheme<SupportedColorScheme extends string>(
@@ -154,6 +154,7 @@ export default function useCurrentColorScheme<SupportedColorScheme extends strin
   });
   const [isClient, setIsClient] = React.useState(noSsr || !isMultiSchemes);
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsClient(true); // to rerender the component after hydration
   }, []);
 

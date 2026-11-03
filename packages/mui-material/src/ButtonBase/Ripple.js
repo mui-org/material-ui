@@ -2,6 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import useTimeout from '@mui/utils/useTimeout';
 
 /**
  * @ignore - internal component.
@@ -19,6 +20,11 @@ function Ripple(props) {
     timeout,
   } = props;
   const [leaving, setLeaving] = React.useState(false);
+  const exitTimer = useTimeout();
+  const exitTimerStartedRef = React.useRef(false);
+  const onExitedRef = React.useRef(onExited);
+  onExitedRef.current = onExited;
+  const hasExitedCallback = onExited != null;
 
   const rippleClassName = clsx(className, classes.ripple, classes.rippleVisible, {
     [classes.ripplePulsate]: pulsate,
@@ -40,15 +46,19 @@ function Ripple(props) {
     setLeaving(true);
   }
   React.useEffect(() => {
-    if (!inProp && onExited != null) {
-      // react-transition-group#onExited
-      const timeoutId = setTimeout(onExited, timeout);
-      return () => {
-        clearTimeout(timeoutId);
-      };
+    if (!inProp && hasExitedCallback) {
+      if (!exitTimerStartedRef.current) {
+        exitTimerStartedRef.current = true;
+        exitTimer.start(timeout, () => {
+          exitTimerStartedRef.current = false;
+          onExitedRef.current?.();
+        });
+      }
+    } else {
+      exitTimerStartedRef.current = false;
+      exitTimer.clear();
     }
-    return undefined;
-  }, [onExited, inProp, timeout]);
+  }, [exitTimer, hasExitedCallback, inProp, timeout]);
 
   return (
     <span className={rippleClassName} style={rippleStyles}>
@@ -64,11 +74,11 @@ Ripple.propTypes /* remove-proptypes */ = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   /**
-   * @ignore - injected from TransitionGroup
+   * @ignore - controlled by TouchRipple
    */
   in: PropTypes.bool,
   /**
-   * @ignore - injected from TransitionGroup
+   * @ignore - controlled by TouchRipple
    */
   onExited: PropTypes.func,
   /**
@@ -88,7 +98,7 @@ Ripple.propTypes /* remove-proptypes */ = {
    */
   rippleY: PropTypes.number,
   /**
-   * exit delay
+   * Exit delay.
    */
   timeout: PropTypes.number.isRequired,
 };

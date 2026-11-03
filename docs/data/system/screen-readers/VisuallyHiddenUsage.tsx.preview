@@ -1,5 +1,0 @@
-<Link href="#foo">
-  Read more
-  {/* always visually hidden because the parent is focusable element */}
-  <Box sx={visuallyHidden}>about how to visually hide elements</Box>
-</Link>

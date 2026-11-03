@@ -2,11 +2,11 @@ import excludeVariablesFromRoot from './excludeVariablesFromRoot';
 
 export default <
     T extends {
-      rootSelector?: string;
-      colorSchemeSelector?: 'media' | 'class' | 'data' | string;
-      colorSchemes?: Record<string, any>;
-      defaultColorScheme?: string;
-      cssVarPrefix?: string;
+      rootSelector?: string | undefined;
+      colorSchemeSelector?: 'media' | 'class' | 'data' | string | undefined;
+      colorSchemes?: Record<string, any> | undefined;
+      defaultColorScheme?: string | undefined;
+      cssVarPrefix?: string | undefined;
     },
   >(
     theme: T,

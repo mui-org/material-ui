@@ -5,13 +5,13 @@ components: Box
 githubLabel: 'component: Box'
 ---
 
-<!-- This page's content is duplicated (with some product-specific details) across the Material UI, Joy UI, and MUI System docs. Any changes should be applied to all three pages at the same time. -->
+<!-- This page's content is duplicated (with some product-specific details) across the Material UI and MUI System docs. Any changes should be applied to both pages at the same time. -->
 
 # Box
 
 <p class="description">The Box component is a generic, theme-aware container with access to CSS utilities from MUI System.</p>
 
-{{"component": "@mui/docs/ComponentLinkHeader", "design": false}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader", "design": false}}
 
 ## Introduction
 
@@ -32,23 +32,22 @@ import Box from '@mui/system/Box';
 The Box component renders as a `<div>` by default, but you can swap in any other valid HTML tag or React component using the `component` prop.
 The demo below replaces the `<div>` with a `<section>` element:
 
-{{"demo": "BoxBasic.js", "defaultCodeOpen": true }}
+{{"component": "file://./demos/basic/index.ts", "initialExpanded": true }}
 
 ## Customization
 
-### With MUI System props
+### With MUI System properties
 
-As a CSS utility component, the Box supports all [MUI System properties](/system/properties/).
-You can use them as props directly on the component.
+Use the [`sx` prop](/system/getting-started/the-sx-prop/) to apply [MUI System properties](/system/properties/) and theme-aware CSS utilities to any Box instance.
 
-{{"demo": "BoxSystemProps.js", "defaultCodeOpen": true }}
+{{"component": "file://./demos/system-props/index.ts", "initialExpanded": true }}
 
 ### With the sx prop
 
 Use the [`sx` prop](/system/getting-started/the-sx-prop/) to quickly customize any Box instance using a superset of CSS that has access to all the style functions and theme-aware properties exposed in the MUI System package.
 The demo below shows how to apply colors from the theme using this prop:
 
-{{"demo": "BoxSx.js", "defaultCodeOpen": true }}
+{{"component": "file://./demos/sx/index.ts", "initialExpanded": true }}
 
 ### Create your own Box
 

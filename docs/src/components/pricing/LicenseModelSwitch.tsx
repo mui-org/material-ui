@@ -75,7 +75,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 }));
 
 const perpetualDescription =
-  'One-time purchase to use the current released versions forever. 12 months of updates included.';
+  'One-time purchase to use the current versions forever in development. 12 months of updates included.';
 const annualDescription =
   'Upon expiration, your permission to use the Software in development ends. The license is perpetual in production.';
 
@@ -83,7 +83,7 @@ const tooltipProps = {
   enterDelay: 400,
   enterNextDelay: 50,
   enterTouchDelay: 500,
-  placement: 'top' as 'top',
+  placement: 'top' as const,
   describeChild: true,
   slotProps: {
     tooltip: {

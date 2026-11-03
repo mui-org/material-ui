@@ -35,8 +35,7 @@
   "themeDefaultProps": false,
   "muiName": "MuiTabPanel",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-lab/src/TabPanel/TabPanel.js",
+  "filename": "/packages/mui-lab/src/TabPanel/TabPanel.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>"
 }

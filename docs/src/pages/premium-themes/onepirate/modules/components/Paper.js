@@ -1,6 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
 import MuiPaper from '@mui/material/Paper';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 
 const PaperRoot = styled(MuiPaper, {

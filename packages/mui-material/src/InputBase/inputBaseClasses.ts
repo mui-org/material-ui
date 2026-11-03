@@ -30,27 +30,7 @@ export interface InputBaseClasses {
   readOnly: string;
   /** Styles applied to the input element. */
   input: string;
-  /** Styles applied to the input element if `size="small"`.
-   * @deprecated Combine the [.MuiInputBase-input](/material-ui/api/input-base/#inputbase-classes-input) and [.MuiInputBase-sizeSmall](/material-ui/api/input-base/#inputbase-classes-sizeSmall) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputSizeSmall: string;
-  /** Styles applied to the input element if `multiline={true}`.
-   * @deprecated Combine the [.MuiInputBase-input](/material-ui/api/input-base/#inputbase-classes-input) and [.MuiInputBase-multiline](/material-ui/api/input-base/#inputbase-classes-multiline) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputMultiline: string;
   inputTypeSearch: string;
-  /** Styles applied to the input element if `startAdornment` is provided.
-   * @deprecated Combine the [.MuiInputBase-input](/material-ui/api/input-base/#inputbase-classes-input) and [.MuiInputBase-adornedStart](/material-ui/api/input-base/#inputbase-classes-adornedStart) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputAdornedStart: string;
-  /** Styles applied to the input element if `endAdornment` is provided.
-   * @deprecated Combine the [.MuiInputBase-input](/material-ui/api/input-base/#inputbase-classes-input) and [.MuiInputBase-adornedEnd](/material-ui/api/input-base/#inputbase-classes-adornedEnd) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputAdornedEnd: string;
-  /** Styles applied to the input element if `hiddenLabel={true}`.
-   * @deprecated Combine the [.MuiInputBase-input](/material-ui/api/input-base/#inputbase-classes-input) and [.MuiInputBase-hiddenLabel](/material-ui/api/input-base/#inputbase-classes-hiddenLabel) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputHiddenLabel: string;
 }
 
 export type InputBaseClassKey = keyof InputBaseClasses;
@@ -74,12 +54,7 @@ const inputBaseClasses: InputBaseClasses = generateUtilityClasses('MuiInputBase'
   'hiddenLabel',
   'readOnly',
   'input',
-  'inputSizeSmall',
-  'inputMultiline',
   'inputTypeSearch',
-  'inputAdornedStart',
-  'inputAdornedEnd',
-  'inputHiddenLabel',
 ]);
 
 export default inputBaseClasses;

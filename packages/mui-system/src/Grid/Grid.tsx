@@ -5,7 +5,6 @@ import createGrid from './createGrid';
  *
  * Demos:
  *
- * - [Grid (Joy UI)](https://mui.com/joy-ui/react-grid/)
  * - [Grid (Material UI)](https://mui.com/material-ui/react-grid/)
  *
  * API:
@@ -49,13 +48,18 @@ Grid.propTypes /* remove-proptypes */ = {
    */
   container: PropTypes.bool,
   /**
-   * Defines the `flex-direction` style property.
-   * It is applied for all screen sizes.
+   * Defines the `flex-direction` style property for the container.
+   *
+   * ⚠️ Only `row` and `row-reverse` are supported. `column` and `column-reverse` are not supported,
+   * because the Grid component is designed to subdivide layouts into **columns**, not rows.
+   *
+   * For vertical layouts, use `Stack` instead.
+   *
    * @default 'row'
    */
   direction: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-    PropTypes.oneOf(['column-reverse', 'column', 'row-reverse', 'row']),
-    PropTypes.arrayOf(PropTypes.oneOf(['column-reverse', 'column', 'row-reverse', 'row'])),
+    PropTypes.oneOf(['row-reverse', 'row']),
+    PropTypes.arrayOf(PropTypes.oneOf(['row-reverse', 'row'])),
     PropTypes.object,
   ]),
   /**
@@ -107,7 +111,6 @@ Grid.propTypes /* remove-proptypes */ = {
     PropTypes.object,
   ]),
   /**
-   * @internal
    * The level of the grid starts from `0` and increases when the grid nests
    * inside another grid. Nesting is defined as a container Grid being a direct
    * child of a container Grid.

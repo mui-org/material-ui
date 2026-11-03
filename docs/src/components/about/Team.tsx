@@ -6,19 +6,21 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
-import Paper, { PaperProps } from '@mui/material/Paper';
+import type { PaperProps } from '@mui/material/Paper';
+import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
 import XIcon from '@mui/icons-material/X';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { Link } from '@mui/docs/Link';
-import ROUTES from 'docs/src/route';
+import { Link } from '@mui/internal-core-docs/Link';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
 import teamMembers from 'docs/data/about/teamMembers.json';
+import getMemberImageFile from './getMemberImageFile';
 // The teamMembers.json file should be synced with `pnpm docs:sync-team`.
 
 interface Profile {
@@ -67,26 +69,30 @@ function Person(props: Profile & { sx?: PaperProps['sx'] }) {
           title={props.location || false}
           placement="right-end"
           describeChild
-          PopperProps={{
-            popperOptions: {
-              modifiers: [
-                {
-                  name: 'offset',
-                  options: {
-                    offset: [3, 2],
+          slotProps={{
+            popper: {
+              popperOptions: {
+                modifiers: [
+                  {
+                    name: 'offset',
+                    options: {
+                      offset: [3, 2],
+                    },
                   },
-                },
-              ],
+                ],
+              },
             },
           }}
         >
           <Box sx={{ position: 'relative', display: 'inline-block' }}>
             <Avatar
               variant="rounded"
-              imgProps={{
-                width: '70',
-                height: '70',
-                loading: 'lazy',
+              slotProps={{
+                img: {
+                  width: '70',
+                  height: '70',
+                  loading: 'lazy',
+                },
               }}
               src={props.src}
               alt={props.name}
@@ -145,7 +151,6 @@ function Person(props: Profile & { sx?: PaperProps['sx'] }) {
               component="a"
               href={`https://github.com/${props.github}`}
               target="_blank"
-              rel="noopener"
             >
               <GitHubIcon fontSize="small" sx={{ color: 'grey.500' }} />
             </IconButton>
@@ -156,7 +161,6 @@ function Person(props: Profile & { sx?: PaperProps['sx'] }) {
               component="a"
               href={`https://x.com/${props.twitter}`}
               target="_blank"
-              rel="noopener"
             >
               <XIcon fontSize="small" sx={{ color: 'grey.500' }} />
             </IconButton>
@@ -167,7 +171,6 @@ function Person(props: Profile & { sx?: PaperProps['sx'] }) {
               component="a"
               href={`https://www.linkedin.com/${props.linkedin}`}
               target="_blank"
-              rel="noopener"
             >
               <LinkedInIcon fontSize="small" sx={{ color: 'grey.500' }} />
             </IconButton>
@@ -207,30 +210,6 @@ const contributors = [
     location: 'Minnesota, United States',
     locationCountry: 'us',
     src: 'https://avatars.githubusercontent.com/u/287804',
-  },
-  {
-    name: 'Yan Lee',
-    github: 'AGDholo',
-    title: 'Chinese docs',
-    location: 'China',
-    locationCountry: 'cn',
-    src: 'https://avatars.githubusercontent.com/u/13300332',
-  },
-  {
-    name: 'Jairon Alves Lima',
-    github: 'jaironalves',
-    title: 'Brazilian Portuguese docs',
-    location: 'São Paulo, Brazil',
-    locationCountry: 'br',
-    src: 'https://avatars.githubusercontent.com/u/29267813',
-  },
-  {
-    name: 'Danica Shen',
-    github: 'DDDDDanica',
-    title: 'Chinese docs',
-    location: 'Ireland',
-    locationCountry: 'ie',
-    src: 'https://avatars.githubusercontent.com/u/12678455',
   },
   {
     name: 'Zeeshan Tamboli',
@@ -343,6 +322,22 @@ const emeriti = [
     locationCountry: 'gb',
     src: 'https://avatars.githubusercontent.com/u/12938082',
   },
+  {
+    name: 'Yan Lee',
+    github: 'AGDholo',
+    title: 'Chinese docs',
+    location: 'China',
+    locationCountry: 'cn',
+    src: 'https://avatars.githubusercontent.com/u/13300332',
+  },
+  {
+    name: 'Danica Shen',
+    github: 'DDDDDanica',
+    title: 'Chinese docs',
+    location: 'Ireland',
+    locationCountry: 'ie',
+    src: 'https://avatars.githubusercontent.com/u/12678455',
+  },
 ];
 
 export default function Team() {
@@ -373,10 +368,7 @@ export default function Team() {
         <Grid container spacing={2}>
           {(teamMembers as Array<Profile>).map((profileJson) => {
             const profile = {
-              src: `/static/branding/about/${profileJson.name
-                .split(' ')
-                .map((x) => x.toLowerCase())
-                .join('-')}.png`,
+              src: `/static/branding/about/${getMemberImageFile(profileJson)}`,
               ...profileJson,
             };
             return (
@@ -400,9 +392,9 @@ export default function Team() {
           </Typography>
           <Typography sx={{ color: 'text.secondary', maxWidth: { md: 500 } }}>
             Special members of the community deserve a shout-out for their ever-lasting impact on
-            MUI&apos;s products.
+            MUI&apos;s open-source projects.
           </Typography>
-          <Grid container spacing={2} mt={2}>
+          <Grid container spacing={2} sx={{ mt: 2 }}>
             {contributors.map((profile) => (
               <Grid key={profile.name} size={{ xs: 12, sm: 6, md: 3 }}>
                 <Person {...profile} sx={{ bgcolor: 'primaryDark.600' }} />
@@ -421,7 +413,7 @@ export default function Team() {
             We honor some no-longer-active core team members who have made valuable contributions in
             the past. They advise us from time to time.
           </Typography>
-          <Grid container spacing={2} mt={2}>
+          <Grid container spacing={2} sx={{ mt: 2 }}>
             {emeriti.map((profile) => (
               <Grid key={profile.name} size={{ xs: 12, sm: 6, md: 3 }}>
                 <Person {...profile} sx={{ bgcolor: 'primaryDark.600' }} />

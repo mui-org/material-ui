@@ -11,6 +11,7 @@
     "focusRipple": { "type": { "name": "bool" }, "default": "false" },
     "focusVisibleClassName": { "type": { "name": "string" } },
     "LinkComponent": { "type": { "name": "elementType" }, "default": "'a'" },
+    "nativeButton": { "type": { "name": "bool" } },
     "onFocusVisible": { "type": { "name": "func" } },
     "sx": {
       "type": {
@@ -25,7 +26,8 @@
         "name": "union",
         "description": "func<br>&#124;&nbsp;{ current?: { pulsate: func, start: func, stop: func } }"
       }
-    }
+    },
+    "type": { "type": { "name": "string" }, "default": "'button'" }
   },
   "name": "ButtonBase",
   "imports": [
@@ -58,6 +60,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/ButtonBase/ButtonBase.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-button/\">Button</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-button/\">Button</a></li></ul>"
 }

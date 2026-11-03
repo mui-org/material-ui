@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
-import { DocumentHeadTags, documentGetInitialProps } from '@mui/material-nextjs/v15-pagesRouter';
+import { DocumentHeadTags, documentGetInitialProps } from '@mui/material-nextjs/v16-pagesRouter';
 import theme from '../src/theme';
 
 export default function MyDocument(props) {

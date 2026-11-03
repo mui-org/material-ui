@@ -100,6 +100,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/Skeleton/Skeleton.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-skeleton/\">Skeleton</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-skeleton/\">Skeleton</a></li></ul>"
 }

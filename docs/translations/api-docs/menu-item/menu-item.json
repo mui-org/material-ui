@@ -21,7 +21,9 @@
     "focusVisibleClassName": {
       "description": "This prop can help identify which element has keyboard focus. The class name will be applied when the element gains the focus through keyboard interaction. It&#39;s a polyfill for the <a href=\"https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo\">CSS :focus-visible selector</a>. The rationale for using this feature <a href=\"https://github.com/WICG/focus-visible/blob/HEAD/explainer.md\">is explained here</a>. A <a href=\"https://github.com/WICG/focus-visible\">polyfill can be used</a> to apply a <code>focus-visible</code> class to other components if needed."
     },
-    "selected": { "description": "If <code>true</code>, the component is selected." },
+    "selected": {
+      "description": "If <code>true</code>, the component is selected. For <code>menuitemcheckbox</code> and <code>menuitemradio</code> roles, this also drives <code>aria-checked</code>."
+    },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     }

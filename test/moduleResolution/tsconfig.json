@@ -2,11 +2,11 @@
   "compilerOptions": {
     // rely on workspace linking
     "paths": {},
-    "module": "commonjs",
-    "target": "es5",
+    "target": "es2015",
     "lib": ["es6", "dom"],
     "jsx": "react",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "strict": true,
     "noEmit": true,
     "noErrorTruncation": true,

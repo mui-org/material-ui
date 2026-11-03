@@ -10,30 +10,30 @@ export interface TabOwnProps {
    * This prop isn't supported.
    * Use the `component` prop if you need to change the children structure.
    */
-  children?: null;
+  children?: null | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TabClasses>;
+  classes?: Partial<TabClasses> | undefined;
   /**
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * If `true`, the  keyboard focus ripple is disabled.
    * @default false
    */
-  disableFocusRipple?: boolean;
+  disableFocusRipple?: boolean | undefined;
   /**
    * The icon to display.
    */
-  icon?: string | React.ReactElement<unknown>;
+  icon?: string | React.ReactElement<unknown> | undefined;
   /**
    * The position of the icon relative to the label.
    * @default 'top'
    */
-  iconPosition?: 'top' | 'bottom' | 'start' | 'end';
+  iconPosition?: 'top' | 'bottom' | 'start' | 'end' | undefined;
   /**
    * The label element.
    */
@@ -41,7 +41,7 @@ export interface TabOwnProps {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * You can provide your own value. Otherwise, we fallback to the child position index.
    */
@@ -51,7 +51,7 @@ export interface TabOwnProps {
    * They can use a second line if needed.
    * @default false
    */
-  wrapped?: boolean;
+  wrapped?: boolean | undefined;
 }
 
 export type TabTypeMap<
@@ -66,12 +66,12 @@ export type TabTypeMap<
  *
  * Demos:
  *
- * - [Tabs](https://mui.com/material-ui/react-tabs/)
+ * - [Tabs](https://next.mui.com/material-ui/react-tabs/)
  *
  * API:
  *
- * - [Tab API](https://mui.com/material-ui/api/tab/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [Tab API](https://next.mui.com/material-ui/api/tab/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const Tab: ExtendButtonBase<TabTypeMap>;
 
@@ -79,7 +79,7 @@ export type TabProps<
   RootComponent extends React.ElementType = TabTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<TabTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default Tab;

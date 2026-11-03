@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { alpha } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -65,7 +64,7 @@ export default function NotificationCard() {
                 Incredible discoveries
               </Typography>
               <Typography sx={{ fontSize: 14, color: 'text.secondary' }}>
-                It&apos;s about Material UI & MUI Base...
+                It&apos;s about Material UI...
               </Typography>
             </div>
             <Chip

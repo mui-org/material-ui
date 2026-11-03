@@ -4,10 +4,20 @@
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "module": "Node16",
-    "moduleResolution": "Node16",
-    "types": ["mocha"]
+    // Resolve modules the way the Vite/vitest bundler does (matching the root
+    // tsconfig), so typechecking sees the same module graph the regression
+    // bundle builds. `nodenext` here diverged from the bundler and couldn't
+    // resolve subpath exports like `@mui/material/themeCssVarsAugmentation`.
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": []
   },
   "include": ["e2e/**/*", "integration/**/*", "regressions/**/*"],
-  "exclude": ["node_modules", "regressions/build/**/*", "vitest.config.ts"]
+  "exclude": [
+    "node_modules",
+    "regressions/build/**/*",
+    "vitest.config.ts",
+    "e2e/vite.config.mts",
+    "regressions/vite.config.mts"
+  ]
 }

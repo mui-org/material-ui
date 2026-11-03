@@ -2,10 +2,8 @@ import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 
 export interface ListItemClasses {
-  /** Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
+  /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to the container element if `children` includes `ListItemSecondaryAction`. */
-  container: string;
   /** Styles applied to the component element if dense. */
   dense: string;
   /** Styles applied to the component element if `alignItems="flex-start"`. */
@@ -16,7 +14,7 @@ export interface ListItemClasses {
   gutters: string;
   /** Styles applied to the root element unless `disablePadding={true}`. */
   padding: string;
-  /** Styles applied to the component element if `children` includes `ListItemSecondaryAction`. */
+  /** Styles applied to the secondary action element. */
   secondaryAction: string;
 }
 
@@ -28,7 +26,6 @@ export function getListItemUtilityClass(slot: string): string {
 
 const listItemClasses: ListItemClasses = generateUtilityClasses('MuiListItem', [
   'root',
-  'container',
   'dense',
   'alignItemsFlexStart',
   'divider',

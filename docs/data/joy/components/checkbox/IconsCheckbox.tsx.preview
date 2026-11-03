@@ -1,1 +1,0 @@
-<Checkbox uncheckedIcon={<Close />} label="I have an icon when unchecked" />

@@ -3,17 +3,21 @@ import { Dialog as MyDialog } from '@mui/material';
 
 <Dialog
   slots={{
+    backdrop: CustomBackdrop,
     transition: CustomTransition
   }}
   slotProps={{
+    backdrop: CustomBackdropProps,
     transition: CustomTransitionProps,
     paper: PaperProps
   }} />;
 <MyDialog
   slots={{
+    backdrop: CustomBackdrop,
     transition: CustomTransition
   }}
   slotProps={{
+    backdrop: CustomBackdropProps,
     transition: CustomTransitionProps,
     paper: PaperProps
   }} />;

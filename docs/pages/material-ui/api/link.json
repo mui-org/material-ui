@@ -79,6 +79,5 @@
   "forwardsRefTo": "HTMLAnchorElement",
   "filename": "/packages/mui-material/src/Link/Link.js",
   "inheritance": { "component": "Typography", "pathname": "/material-ui/api/typography/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-breadcrumbs/\">Breadcrumbs</a></li>\n<li><a href=\"/material-ui/react-link/\">Links</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-breadcrumbs/\">Breadcrumbs</a></li>\n<li><a href=\"/material-ui/react-link/\">Links</a></li></ul>"
 }

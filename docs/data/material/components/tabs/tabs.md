@@ -14,7 +14,7 @@ githubSource: packages/mui-material/src/Tabs
 
 Tabs organize and allow navigation between groups of content that are related and at the same level of hierarchy.
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Introduction
 
@@ -23,7 +23,7 @@ Tabs are implemented using a collection of related components:
 - `<Tab />` - the tab element itself. Clicking on a tab displays its corresponding panel.
 - `<Tabs />` - the container that houses the tabs. Responsible for handling focus and keyboard navigation between tabs.
 
-{{"demo": "BasicTabs.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Basics
 
@@ -41,24 +41,40 @@ following [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/pattern
 - `<TabPanel />` - the card that hosts the content associated with a tab.
 - `<TabContext />` - the top-level component that wraps the Tab List and Tab Panel components.
 
-{{"demo": "LabTabs.js"}}
+{{"component": "file://./demos/lab/index.ts"}}
+
+## Keep panels always mounted
+
+Keeping panels mounted preserves state and makes subsequent tab changes faster. However, all panels render on initial load, consume memory, and may continue running effects while hidden. Use this approach selectively for stateful or frequently accessed panels.
+
+### With lab API
+
+When using the `@mui/lab` API, pass `keepMounted` to each `TabPanel`.
+
+{{"component": "file://./demos/keep-mounted-lab/index.ts"}}
+
+### With standard API
+
+With the standard API, render the panel children unconditionally and use the hidden attribute to control visibility.
+
+{{"component": "file://./demos/keep-mounted-standard/index.ts"}}
 
 ## Wrapped labels
 
 Long labels will automatically wrap on tabs.
 If the label is too long for the tab, it will overflow, and the text will not be visible.
 
-{{"demo": "TabsWrappedLabel.js"}}
+{{"component": "file://./demos/wrapped-label/index.ts"}}
 
 ## Colored tab
 
-{{"demo": "ColorTabs.js"}}
+{{"component": "file://./demos/color/index.ts"}}
 
 ## Disabled tab
 
 A tab can be disabled by setting the `disabled` prop.
 
-{{"demo": "DisabledTabs.js"}}
+{{"component": "file://./demos/disabled/index.ts"}}
 
 ## Fixed tabs
 
@@ -68,13 +84,13 @@ Fixed tabs should be used with a limited number of tabs, and when a consistent p
 
 The `variant="fullWidth"` prop should be used for smaller views.
 
-{{"demo": "FullWidthTabs.js", "bg": true}}
+{{"component": "file://./demos/full-width/index.ts", "bg": true}}
 
 ### Centered
 
 The `centered` prop should be used for larger views.
 
-{{"demo": "CenteredTabs.js", "bg": true}}
+{{"component": "file://./demos/centered/index.ts", "bg": true}}
 
 ## Scrollable tabs
 
@@ -82,13 +98,13 @@ The `centered` prop should be used for larger views.
 
 Use the `variant="scrollable"` and `scrollButtons="auto"` props to display left and right scroll buttons on desktop that are hidden on mobile:
 
-{{"demo": "ScrollableTabsButtonAuto.js", "bg": true}}
+{{"component": "file://./demos/scrollable-button-auto/index.ts", "bg": true}}
 
 ### Forced scroll buttons
 
 Apply `scrollButtons={true}` and the `allowScrollButtonsMobile` prop to display the left and right scroll buttons on all viewports:
 
-{{"demo": "ScrollableTabsButtonForce.js", "bg": true}}
+{{"component": "file://./demos/scrollable-button-force/index.ts", "bg": true}}
 
 If you want to make sure the buttons are always visible, you should customize the opacity.
 
@@ -98,29 +114,29 @@ If you want to make sure the buttons are always visible, you should customize th
 }
 ```
 
-{{"demo": "ScrollableTabsButtonVisible.js", "bg": true}}
+{{"component": "file://./demos/scrollable-button-visible/index.ts", "bg": true}}
 
 ### Prevent scroll buttons
 
 Left and right scroll buttons are never be presented with `scrollButtons={false}`.
 All scrolling must be initiated through user agent scrolling mechanisms (for example left/right swipe, shift mouse wheel, etc.)
 
-{{"demo": "ScrollableTabsButtonPrevent.js", "bg": true}}
+{{"component": "file://./demos/scrollable-button-prevent/index.ts", "bg": true}}
 
 ## Customization
 
 Here is an example of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedTabs.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
-🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/?path=/docs/tabs-introduction--docs).
+🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/primitive/tabs).
 
 ## Vertical tabs
 
 To make vertical tabs instead of default horizontal ones, there is `orientation="vertical"`:
 
-{{"demo": "VerticalTabs.js", "bg": true}}
+{{"component": "file://./demos/vertical/index.ts", "bg": true}}
 
 Note that you can restore the scrollbar with `visibleScrollbar`.
 
@@ -128,7 +144,7 @@ Note that you can restore the scrollbar with `visibleScrollbar`.
 
 By default, tabs use a `button` element, but you can provide your custom tag or component. Here's an example of implementing tabbed navigation:
 
-{{"demo": "NavTabs.js"}}
+{{"component": "file://./demos/nav/index.ts"}}
 
 ### Third-party routing library
 
@@ -140,15 +156,15 @@ Here is a [more detailed guide](/material-ui/integrations/routing/#tabs).
 
 Tab labels may be either all icons or all text.
 
-{{"demo": "IconTabs.js"}}
+{{"component": "file://./demos/icon/index.ts"}}
 
-{{"demo": "IconLabelTabs.js"}}
+{{"component": "file://./demos/icon-label/index.ts"}}
 
 ## Icon position
 
 By default, the icon is positioned at the `top` of a tab. Other supported positions are `start`, `end`, `bottom`.
 
-{{"demo": "IconPositionTabs.js"}}
+{{"component": "file://./demos/icon-position/index.ts"}}
 
 ## Accessibility
 
@@ -159,6 +175,7 @@ The following steps are needed in order to provide necessary information for ass
 1. Label `Tabs` via `aria-label` or `aria-labelledby`.
 2. `Tab`s need to be connected to their
    corresponding `[role="tabpanel"]` by setting the correct `id`, `aria-controls` and `aria-labelledby`.
+3. If a tab panel has no focusable content, or its first element containing meaningful content is not focusable, set `tabIndex={0}` on the panel.
 
 An example for the current implementation can be found in the demos on this page. We've also published [an experimental API](#experimental-api) in `@mui/lab` that does not require
 extra work.
@@ -179,11 +196,11 @@ Focus a tab and navigate with arrow keys to notice the difference, for example <
 <Tabs selectionFollowsFocus />
 ```
 
-{{"demo": "AccessibleTabs1.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/accessible-tabs1/index.ts", "collapseToEmpty": true}}
 
 ```jsx
 /* Tabs where each tab needs to be selected manually */
 <Tabs />
 ```
 
-{{"demo": "AccessibleTabs2.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/accessible-tabs2/index.ts", "collapseToEmpty": true}}

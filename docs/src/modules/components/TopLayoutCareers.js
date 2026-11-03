@@ -1,16 +1,15 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled, alpha } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import Head from 'docs/src/modules/components/Head';
-import AppContainer from 'docs/src/modules/components/AppContainer';
+
+import { AppContainer, AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 import AppFooter from 'docs/src/layouts/AppFooter';
 import AppHeader from 'docs/src/layouts/AppHeader';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
-import { MarkdownElement } from '@mui/docs/MarkdownElement';
-import { Link } from '@mui/docs/Link';
-import { useTranslate } from '@mui/docs/i18n';
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
+import { MarkdownElement } from '@mui/internal-core-docs/MarkdownDocs';
+import { Link } from '@mui/internal-core-docs/Link';
+import { useTranslate } from '@mui/internal-core-docs/i18n';
 
 const StyledDiv = styled('div')(({ theme }) => ({
   flex: '1 0 100%',

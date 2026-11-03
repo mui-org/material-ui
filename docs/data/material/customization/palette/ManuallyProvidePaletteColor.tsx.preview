@@ -1,6 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Stack direction="row" sx={{ gap: 8 }}>
-    <ColorShowcase color="primary" />
-    <ColorShowcase color="secondary" />
-  </Stack>
-</ThemeProvider>

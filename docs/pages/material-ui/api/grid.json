@@ -18,7 +18,7 @@
     "direction": {
       "type": {
         "name": "union",
-        "description": "'column-reverse'<br>&#124;&nbsp;'column'<br>&#124;&nbsp;'row-reverse'<br>&#124;&nbsp;'row'<br>&#124;&nbsp;Array&lt;'column-reverse'<br>&#124;&nbsp;'column'<br>&#124;&nbsp;'row-reverse'<br>&#124;&nbsp;'row'&gt;<br>&#124;&nbsp;object"
+        "description": "'row-reverse'<br>&#124;&nbsp;'row'<br>&#124;&nbsp;Array&lt;'row-reverse'<br>&#124;&nbsp;'row'&gt;<br>&#124;&nbsp;object"
       },
       "default": "'row'"
     },
@@ -77,6 +77,5 @@
   "forwardsRefTo": "HTMLElement",
   "filename": "/packages/mui-material/src/Grid/Grid.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-grid/\">Grid</a></li></ul>",
-  "cssComponent": true
+  "demos": "<ul><li><a href=\"/material-ui/react-grid/\">Grid</a></li></ul>"
 }

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import ReactMarkdown from 'markdown-to-jsx';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';

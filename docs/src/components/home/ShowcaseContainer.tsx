@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import NoSsr from '@mui/material/NoSsr';
-import Frame from 'docs/src/components/action/Frame';
+import { Frame } from '@mui/internal-core-docs/AppLayout';
 
 export function ShowcaseCodeWrapper({
   children,

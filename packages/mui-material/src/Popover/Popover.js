@@ -5,12 +5,12 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import refType from '@mui/utils/refType';
-import elementTypeAcceptingRef from '@mui/utils/elementTypeAcceptingRef';
 import integerPropType from '@mui/utils/integerPropType';
 import chainPropTypes from '@mui/utils/chainPropTypes';
 import isHostComponent from '@mui/utils/isHostComponent';
 import { styled } from '../zero-styled';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import isLayoutSupported from '../utils/isLayoutSupported';
 import debounce from '../utils/debounce';
 import ownerDocument from '../utils/ownerDocument';
 import ownerWindow from '../utils/ownerWindow';
@@ -19,7 +19,7 @@ import Modal from '../Modal';
 import PaperBase from '../Paper';
 import { getPopoverUtilityClass } from './popoverClasses';
 import useSlot from '../utils/useSlot';
-import { mergeSlotProps } from '../utils';
+import mergeSlotProps from '../utils/mergeSlotProps';
 
 export function getOffsetTop(rect, vertical) {
   let offset = 0;
@@ -106,19 +106,17 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
     children,
     className,
     container: containerProp,
+    disableAutoFocus = false,
     elevation = 8,
     marginThreshold = 16,
     open,
-    PaperProps: PaperPropsProp = {}, // TODO: remove in v7
     slots = {},
     slotProps = {},
     transformOrigin = {
       vertical: 'top',
       horizontal: 'left',
     },
-    TransitionComponent, // TODO: remove in v7
     transitionDuration: transitionDurationProp = 'auto',
-    TransitionProps = {}, // TODO: remove in v7
     disableScrollLock = false,
     ...other
   } = props;
@@ -132,9 +130,7 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
     elevation,
     marginThreshold,
     transformOrigin,
-    TransitionComponent,
     transitionDuration: transitionDurationProp,
-    TransitionProps,
   };
 
   const classes = useUtilityClasses(ownerState);
@@ -167,7 +163,7 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
       const box = anchorElement.getBoundingClientRect();
 
       if (
-        process.env.NODE_ENV !== 'test' &&
+        isLayoutSupported() &&
         box.top === 0 &&
         box.left === 0 &&
         box.right === 0 &&
@@ -235,13 +231,13 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
       const widthThreshold = containerWindow.innerWidth - marginThreshold;
 
       // Check if the vertical axis needs shifting
-      if (marginThreshold !== null && top < marginThreshold) {
+      if (marginThreshold != null && top < marginThreshold) {
         const diff = top - marginThreshold;
 
         top -= diff;
 
         elemTransformOrigin.vertical += diff;
-      } else if (marginThreshold !== null && bottom > heightThreshold) {
+      } else if (marginThreshold != null && bottom > heightThreshold) {
         const diff = bottom - heightThreshold;
 
         top -= diff;
@@ -264,7 +260,7 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
       }
 
       // Check if the horizontal axis needs shifting
-      if (marginThreshold !== null && left < marginThreshold) {
+      if (marginThreshold != null && left < marginThreshold) {
         const diff = left - marginThreshold;
         left -= diff;
         elemTransformOrigin.horizontal += diff;
@@ -294,10 +290,10 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
 
     const positioning = getPositioningStyle(element);
 
-    if (positioning.top !== null) {
+    if (positioning.top != null) {
       element.style.setProperty('top', positioning.top);
     }
-    if (positioning.left !== null) {
+    if (positioning.left != null) {
       element.style.left = positioning.left;
     }
     element.style.transformOrigin = positioning.transformOrigin;
@@ -358,15 +354,8 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
   let transitionDuration = transitionDurationProp;
 
   const externalForwardedProps = {
-    slots: {
-      transition: TransitionComponent,
-      ...slots,
-    },
-    slotProps: {
-      transition: TransitionProps,
-      paper: PaperPropsProp,
-      ...slotProps,
-    },
+    slots,
+    slotProps,
   };
 
   const [TransitionSlot, transitionSlotProps] = useSlot('transition', {
@@ -447,6 +436,7 @@ const Popover = React.forwardRef(function Popover(inProps, ref) {
       {...(!isHostComponent(RootSlot) && {
         slots: rootSlotsProp,
         slotProps: rootSlotPropsProp,
+        disableAutoFocus,
         disableScrollLock,
       })}
     >
@@ -479,20 +469,22 @@ Popover.propTypes /* remove-proptypes */ = {
       if (resolvedAnchorEl && resolvedAnchorEl.nodeType === 1) {
         const box = resolvedAnchorEl.getBoundingClientRect();
 
-        if (
-          process.env.NODE_ENV !== 'test' &&
-          box.top === 0 &&
-          box.left === 0 &&
-          box.right === 0 &&
-          box.bottom === 0
-        ) {
-          return new Error(
-            [
-              'MUI: The `anchorEl` prop provided to the component is invalid.',
-              'The anchor element should be part of the document layout.',
-              "Make sure the element is present in the document or that it's not display none.",
-            ].join('\n'),
-          );
+        if (process.env.NODE_ENV !== 'production') {
+          if (
+            isLayoutSupported() &&
+            box.top === 0 &&
+            box.left === 0 &&
+            box.right === 0 &&
+            box.bottom === 0
+          ) {
+            return new Error(
+              [
+                'MUI: The `anchorEl` prop provided to the component is invalid.',
+                'The anchor element should be part of the document layout.',
+                "Make sure the element is present in the document or that it's not display none.",
+              ].join('\n'),
+            );
+          }
         }
       } else {
         return new Error(
@@ -542,25 +534,6 @@ Popover.propTypes /* remove-proptypes */ = {
    */
   anchorReference: PropTypes.oneOf(['anchorEl', 'anchorPosition', 'none']),
   /**
-   * A backdrop component. This prop enables custom backdrop rendering.
-   * @deprecated Use `slots.backdrop` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default styled(Backdrop, {
-   *   name: 'MuiModal',
-   *   slot: 'Backdrop',
-   *   overridesResolver: (props, styles) => {
-   *     return styles.backdrop;
-   *   },
-   * })({
-   *   zIndex: -1,
-   * })
-   */
-  BackdropComponent: PropTypes.elementType,
-  /**
-   * Props applied to the [`Backdrop`](/material-ui/api/backdrop/) element.
-   * @deprecated Use `slotProps.backdrop` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  BackdropProps: PropTypes.object,
-  /**
    * The content of the component.
    */
   children: PropTypes.node,
@@ -583,6 +556,16 @@ Popover.propTypes /* remove-proptypes */ = {
     HTMLElementType,
     PropTypes.func,
   ]),
+  /**
+   * If `true`, the modal will not automatically shift focus to itself when it opens, and
+   * replace it to the last focused element when it closes.
+   * This also works correctly with any modal children that have the `disableAutoFocus` prop.
+   *
+   * Generally this should never be set to `true` as it makes the modal less
+   * accessible to assistive technologies, like screen readers.
+   * @default false
+   */
+  disableAutoFocus: PropTypes.bool,
   /**
    * Disable the scroll lock behavior.
    * @default false
@@ -608,17 +591,6 @@ Popover.propTypes /* remove-proptypes */ = {
    * If `true`, the component is shown.
    */
   open: PropTypes.bool.isRequired,
-  /**
-   * Props applied to the [`Paper`](https://mui.com/material-ui/api/paper/) element.
-   *
-   * This prop is an alias for `slotProps.paper` and will be overriden by it if both are used.
-   * @deprecated Use `slotProps.paper` instead.
-   *
-   * @default {}
-   */
-  PaperProps: PropTypes /* @typescript-to-proptypes-ignore */.shape({
-    component: elementTypeAcceptingRef,
-  }),
   /**
    * The props used for each slot inside.
    * @default {}
@@ -668,13 +640,6 @@ Popover.propTypes /* remove-proptypes */ = {
       .isRequired,
   }),
   /**
-   * The component used for the transition.
-   * [Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
-   * @deprecated use the `slots.transition` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default Grow
-   */
-  TransitionComponent: PropTypes.elementType,
-  /**
    * Set to 'auto' to automatically calculate transition time based on height.
    * @default 'auto'
    */
@@ -687,13 +652,6 @@ Popover.propTypes /* remove-proptypes */ = {
       exit: PropTypes.number,
     }),
   ]),
-  /**
-   * Props applied to the transition element.
-   * By default, the element is based on this [`Transition`](https://reactcommunity.org/react-transition-group/transition/) component.
-   * @deprecated use the `slotProps.transition` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default {}
-   */
-  TransitionProps: PropTypes.object,
 };
 
 export default Popover;

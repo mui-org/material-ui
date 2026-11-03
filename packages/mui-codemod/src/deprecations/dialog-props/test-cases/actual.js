@@ -2,11 +2,15 @@ import Dialog from '@mui/material/Dialog';
 import { Dialog as MyDialog } from '@mui/material';
 
 <Dialog
+  BackdropComponent={CustomBackdrop}
+  BackdropProps={CustomBackdropProps}
   TransitionComponent={CustomTransition}
   TransitionProps={CustomTransitionProps}
   PaperProps={PaperProps}
 />;
 <MyDialog
+  BackdropComponent={CustomBackdrop}
+  BackdropProps={CustomBackdropProps}
   TransitionComponent={CustomTransition}
   TransitionProps={CustomTransitionProps}
   PaperProps={PaperProps}

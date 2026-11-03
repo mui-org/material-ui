@@ -1,3 +1,4 @@
+/* eslint-disable mui/consistent-production-guard */
 const path = require('path');
 
 module.exports = {

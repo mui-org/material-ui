@@ -4,44 +4,26 @@
       "type": { "name": "enum", "description": "'center'<br>&#124;&nbsp;'flex-start'" },
       "default": "'center'"
     },
-    "children": { "type": { "name": "custom", "description": "node" } },
+    "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "component": { "type": { "name": "elementType" } },
-    "components": {
-      "type": { "name": "shape", "description": "{ Root?: elementType }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": { "name": "shape", "description": "{ root?: object }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "ContainerComponent": {
-      "type": { "name": "custom", "description": "element type" },
-      "default": "'li'",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>component</code> or <code>slots.root</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "ContainerProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slotProps.root</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "dense": { "type": { "name": "bool" }, "default": "false" },
     "disableGutters": { "type": { "name": "bool" }, "default": "false" },
     "disablePadding": { "type": { "name": "bool" }, "default": "false" },
     "divider": { "type": { "name": "bool" }, "default": "false" },
     "secondaryAction": { "type": { "name": "node" } },
     "slotProps": {
-      "type": { "name": "shape", "description": "{ root?: object }" },
+      "type": {
+        "name": "shape",
+        "description": "{ root?: func<br>&#124;&nbsp;object, secondaryAction?: func<br>&#124;&nbsp;object }"
+      },
       "default": "{}"
     },
     "slots": {
-      "type": { "name": "shape", "description": "{ root?: elementType }" },
+      "type": {
+        "name": "shape",
+        "description": "{ root?: elementType, secondaryAction?: elementType }"
+      },
       "default": "{}"
     },
     "sx": {
@@ -62,12 +44,6 @@
       "key": "alignItemsFlexStart",
       "className": "MuiListItem-alignItemsFlexStart",
       "description": "Styles applied to the component element if `alignItems=\"flex-start\"`.",
-      "isGlobal": false
-    },
-    {
-      "key": "container",
-      "className": "MuiListItem-container",
-      "description": "Styles applied to the container element if `children` includes `ListItemSecondaryAction`.",
       "isGlobal": false
     },
     {
@@ -97,13 +73,13 @@
     {
       "key": "root",
       "className": "MuiListItem-root",
-      "description": "Styles applied to the (normally root) `component` element. May be wrapped by a `container`.",
+      "description": "Styles applied to the root element.",
       "isGlobal": false
     },
     {
       "key": "secondaryAction",
       "className": "MuiListItem-secondaryAction",
-      "description": "Styles applied to the component element if `children` includes `ListItemSecondaryAction`.",
+      "description": "Styles applied to the secondary action element.",
       "isGlobal": false
     }
   ],
@@ -113,6 +89,5 @@
   "forwardsRefTo": "HTMLLIElement",
   "filename": "/packages/mui-material/src/ListItem/ListItem.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>"
 }

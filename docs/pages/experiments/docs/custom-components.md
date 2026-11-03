@@ -4,7 +4,7 @@
 
 ## Header chips
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Feature list
 

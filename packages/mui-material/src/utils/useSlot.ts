@@ -1,15 +1,15 @@
 'use client';
-import * as React from 'react';
-import { ClassValue } from 'clsx';
+import type * as React from 'react';
+import type { ClassValue } from 'clsx';
 import useForkRef from '@mui/utils/useForkRef';
 import appendOwnerState from '@mui/utils/appendOwnerState';
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
 import mergeSlotProps from '@mui/utils/mergeSlotProps';
 
 export type WithCommonProps<T> = T & {
-  className?: string;
-  style?: React.CSSProperties;
-  ref?: React.Ref<any>;
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
+  ref?: React.Ref<any> | undefined;
 };
 
 type EventHandlers = Record<string, React.EventHandler<any>>;
@@ -35,13 +35,18 @@ export default function useSlot<
   ElementType extends React.ElementType,
   SlotProps,
   OwnerState extends {},
-  ExternalSlotProps extends { component?: React.ElementType; ref?: React.Ref<any> },
+  ExternalSlotProps extends {
+    component?: React.ElementType | undefined;
+    ref?: React.Ref<any> | undefined;
+  },
   ExternalForwardedProps extends {
-    component?: React.ElementType;
-    slots?: { [k in T]?: React.ElementType };
-    slotProps?: {
-      [k in T]?: ExternalSlotProps | ((ownerState: OwnerState) => ExternalSlotProps);
-    };
+    component?: React.ElementType | undefined;
+    slots?: { [k in T]?: React.ElementType } | undefined;
+    slotProps?:
+      | {
+          [k in T]?: ExternalSlotProps | ((ownerState: OwnerState) => ExternalSlotProps);
+        }
+      | undefined;
   },
   AdditionalProps,
   SlotOwnerState extends {},
@@ -55,7 +60,7 @@ export default function useSlot<
   name: T,
   parameters: (T extends 'root' // root slot must pass a `ref` as a parameter
     ? { ref: React.ForwardedRef<any> }
-    : { ref?: React.ForwardedRef<any> }) & {
+    : { ref?: React.ForwardedRef<any> | undefined }) & {
     /**
      * The slot's className
      */
@@ -75,8 +80,8 @@ export default function useSlot<
      * If the slot is not `root`, the rest of the `externalForwardedProps` are neglected.
      */
     externalForwardedProps: ExternalForwardedProps;
-    getSlotProps?: (other: EventHandlers) => WithCommonProps<SlotProps>;
-    additionalProps?: WithCommonProps<AdditionalProps>;
+    getSlotProps?: ((other: EventHandlers) => WithCommonProps<SlotProps>) | undefined;
+    additionalProps?: WithCommonProps<AdditionalProps> | undefined;
     /**
      * props forward to `T` only if the `slotProps.*.component` is not provided.
      * e.g. Autocomplete's listbox uses Popper + StyledComponent
@@ -89,7 +94,7 @@ export default function useSlot<
      * This flag is used to forward the `component` and `slotProps.root.component` to the Paper component.
      * Otherwise, the `component` prop will be converted to `as` prop which replaces the Paper component (the paper styles are gone).
      */
-    shouldForwardComponentProp?: boolean;
+    shouldForwardComponentProp?: boolean | undefined;
   },
 ) {
   const {
@@ -127,8 +132,7 @@ export default function useSlot<
   const ref = useForkRef(internalRef, resolvedComponentsProps?.ref, parameters.ref);
 
   const LeafComponent = (name === 'root' ? slotComponent || rootComponent : slotComponent) as
-    | React.ElementType
-    | undefined;
+    React.ElementType | undefined;
 
   const props = appendOwnerState(
     elementType,

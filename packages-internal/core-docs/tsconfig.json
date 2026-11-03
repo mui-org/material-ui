@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "types": ["react", "node", "csstype"]
+  },
+  "include": ["./types.d.ts", "src/**/*", "test/**/*"]
+}

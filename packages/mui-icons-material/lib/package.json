@@ -1,0 +1,65 @@
+{
+  "name": "@mui/icons-material",
+  "version": "9.1.1",
+  "author": "MUI Team",
+  "description": "Material Design icons distributed as SVG React components.",
+  "license": "MIT",
+  "main": "./index.js",
+  "keywords": [
+    "react",
+    "react-component",
+    "mui",
+    "material-ui",
+    "material design",
+    "icons"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/material-ui.git",
+    "directory": "packages/mui-icons-material"
+  },
+  "bugs": {
+    "url": "https://github.com/mui/material-ui/issues"
+  },
+  "homepage": "https://mui.com/material-ui/material-icons/",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/mui-org"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.29.7 || ^8.0.5"
+  },
+  "peerDependencies": {
+    "@mui/material": "workspace:^",
+    "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.mjs"
+    },
+    "./*": {
+      "import": "./*.mjs",
+      "require": "./*.js",
+      "default": "./*.mjs"
+    },
+    "./index*": null,
+    "./utils/*": null
+  }
+}

@@ -1,5 +1,5 @@
+import { describe, beforeAll, afterAll, beforeEach, afterEach, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import { createRenderer, fireEvent, act, screen } from '@mui/internal-test-utils';
 import {
@@ -29,7 +29,7 @@ describe('useCurrentColorScheme', () => {
     removeEventListener: () => {},
   });
 
-  before(() => {
+  beforeAll(() => {
     originalAddEventListener = window.addEventListener;
     window.addEventListener = (key, handler) => {
       if (eventHandlers.has(key)) {
@@ -47,7 +47,7 @@ describe('useCurrentColorScheme', () => {
     };
   });
 
-  after(() => {
+  afterAll(() => {
     window.addEventListener = originalAddEventListener;
   });
 
@@ -421,20 +421,20 @@ describe('useCurrentColorScheme', () => {
           </div>
         );
       }
-      const { getByText, getByTestId } = render(<Data />);
+      render(<Data />);
 
-      fireEvent.click(getByText('first'));
+      fireEvent.click(screen.getByText('first'));
 
-      expect(JSON.parse(getByTestId('data').textContent)).to.deep.equal({
+      expect(JSON.parse(screen.getByTestId('data').textContent)).to.deep.equal({
         mode: 'light',
         lightColorScheme: 'paper',
         darkColorScheme: 'dark',
         colorScheme: 'paper',
       });
 
-      fireEvent.click(getByText('second'));
+      fireEvent.click(screen.getByText('second'));
 
-      expect(JSON.parse(getByTestId('data').textContent)).to.deep.equal({
+      expect(JSON.parse(screen.getByTestId('data').textContent)).to.deep.equal({
         mode: 'light',
         lightColorScheme: 'paper',
         darkColorScheme: 'dim',

@@ -8,4 +8,4 @@ It is used internally in the `@mui/system` package.
 
 <!-- #host-reference -->
 
-Visit [https://mui.com/material-ui/integrations/styled-components/](https://mui.com/material-ui/integrations/styled-components/) to view the full documentation.
+Visit [https://next.mui.com/material-ui/integrations/styled-components/](https://next.mui.com/material-ui/integrations/styled-components/) to view the full documentation.

@@ -1,9 +1,9 @@
 {
   "name": "@mui/styled-engine",
-  "version": "7.3.1",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "styled() API wrapper package for emotion.",
-  "main": "./src/index.js",
+  "license": "MIT",
   "keywords": [
     "react",
     "react-component",
@@ -15,7 +15,6 @@
     "url": "git+https://github.com/mui/material-ui.git",
     "directory": "packages/mui-styled-engine"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mui/material-ui/issues"
   },
@@ -25,32 +24,27 @@
     "url": "https://opencollective.com/mui-org"
   },
   "scripts": {
-    "build": "code-infra build --skipTsc && pnpm build:copy-files",
-    "build:stable": "code-infra build --bundle esm --hasLargeFiles --skipPackageJson --buildTypes false --skipBundlePackageJson",
-    "build:copy-files": "code-infra copy-files",
-    "prebuild": "rimraf build",
+    "build": "code-infra build --tsgo --flat",
     "release": "pnpm build && pnpm publish",
-    "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/mui-styled-engine/**/*.test.?(c|m)[jt]s?(x)'",
+    "test": "pnpm --workspace-root test:unit --project \"*:@mui/styled-engine\"",
     "typescript": "tsc -p tsconfig.json",
-    "attw": "attw --pack ./build --exclude-entrypoints esm modern --include-entrypoints StyledEngineProvider GlobalStyles"
+    "attw": "attw --pack ./build --entrypoints \".\" \"GlobalStyles\" \"StyledEngineProvider\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.28.3",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "@emotion/cache": "^11.14.0",
     "@emotion/serialize": "^1.3.3",
     "@emotion/sheet": "^1.4.0",
-    "csstype": "^3.1.3",
+    "csstype": "^3.2.3",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/internal-test-utils": "workspace:^",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
     "@mui/styled-engine": "workspace:*",
-    "@types/chai": "^4.3.20",
-    "@types/react": "^19.1.10",
-    "chai": "^4.5.0",
-    "react": "^19.1.1"
+    "@types/prop-types": "15.7.15",
+    "@types/react": "19.3.0",
+    "react": "19.3.1"
   },
   "peerDependencies": {
     "@emotion/react": "^11.4.1",
@@ -70,10 +64,8 @@
     "access": "public",
     "directory": "build"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "exports": {
-    "./*": "./src/*/index.js"
+    ".": "./src/index.ts",
+    "./*": "./src/*/index.ts"
   }
 }

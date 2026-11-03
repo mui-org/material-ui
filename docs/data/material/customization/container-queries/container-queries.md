@@ -4,14 +4,14 @@
 
 ## Usage
 
-To create [CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries), use `theme.containerQueries` with any method available in the [`theme.breakpoints`](/material-ui/customization/breakpoints/#api).
+To create [CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries), use `theme.containerQueries` with any method available in the [`theme.breakpoints`](/material-ui/customization/breakpoints/#api).
 The value can be unitless (in which case it'll be rendered in pixels), a string, or a breakpoint key. For example:
 
 ```js
 theme.containerQueries.up('sm'); // => '@container (min-width: 600px)'
 ```
 
-{{"demo": "BasicContainerQueries.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 :::info
 One of the ancestors must have the CSS container type specified.
@@ -19,7 +19,7 @@ One of the ancestors must have the CSS container type specified.
 
 ### Named containment contexts
 
-To refer to a [containment context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries#naming_containment_contexts), call the `containerQueries` method with the name of the container for access to all breakpoint methods:
+To refer to a [containment context](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries#naming_containment_contexts), call the `containerQueries` method with the name of the container for access to all breakpoint methods:
 
 ```js
 theme.containerQueries('sidebar').up('500px'); // => '@container sidebar (min-width: 500px)'
@@ -32,7 +32,7 @@ When adding styles using the `sx` prop, use the `@<size>` or `@<size>/<name>` no
 - `<size>`: a width or a breakpoint key.
 - `<name>` (optional): a named containment context.
 
-{{"demo": "SxPropContainerQueries.js"}}
+{{"component": "file://./demos/sx-prop/index.ts"}}
 
 ### Caveats
 

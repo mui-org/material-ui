@@ -1,5 +1,5 @@
+import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { createRenderer, reactMajor, screen, within } from '@mui/internal-test-utils';
 import capitalize from '@mui/utils/capitalize';
@@ -20,32 +20,32 @@ describe('<IconButton />', () => {
     refInstanceof: window.HTMLButtonElement,
     muiName: 'MuiIconButton',
     testVariantProps: { edge: 'end', disabled: true },
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   it('should render Icon children with right classes', () => {
     const childClassName = 'child-woof';
     const iconChild = <Icon data-testid="icon" className={childClassName} />;
-    const { getByTestId } = render(<IconButton>{iconChild}</IconButton>);
+    render(<IconButton>{iconChild}</IconButton>);
 
-    expect(getByTestId('icon')).to.have.class(childClassName);
+    expect(screen.getByTestId('icon')).to.have.class(childClassName);
   });
 
   it('should have a ripple', async () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <IconButton TouchRippleProps={{ className: 'touch-ripple' }}>book</IconButton>,
     );
-    await ripple.startTouch(getByRole('button'));
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector('.touch-ripple')).not.to.equal(null);
   });
 
   it('can disable the ripple and hover effect', async () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <IconButton disableRipple TouchRippleProps={{ className: 'touch-ripple' }}>
         book
       </IconButton>,
     );
-    await ripple.startTouch(getByRole('button'));
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector('.touch-ripple')).to.equal(null);
   });
 
@@ -90,8 +90,8 @@ describe('<IconButton />', () => {
 
   describe('prop: disabled', () => {
     it('should disable the component', () => {
-      const { getByRole } = render(<IconButton disabled>book</IconButton>);
-      const button = getByRole('button');
+      render(<IconButton disabled>book</IconButton>);
+      const button = screen.getByRole('button');
 
       expect(button).to.have.property('disabled', true);
       expect(button).to.have.class(classes.disabled);
@@ -101,28 +101,27 @@ describe('<IconButton />', () => {
   describe('prop: color', () => {
     ['primary', 'secondary', 'error', 'info', 'success', 'warning'].forEach((color) => {
       it(`should render the ${color} class`, () => {
-        const { getByRole } = render(<IconButton color={color}>Hello World</IconButton>);
-        const button = getByRole('button');
+        render(<IconButton color={color}>Hello World</IconButton>);
+        const button = screen.getByRole('button');
         expect(button).to.have.class(classes[`color${capitalize(color)}`]);
       });
     });
   });
 
-  it('should raise a warning about onClick in children because of Firefox', function test() {
-    if (reactMajor >= 19) {
-      // React 19 removed prop types support
-      this.skip();
-    }
-
-    expect(() => {
-      PropTypes.checkPropTypes(
-        IconButton.propTypes,
-        { classes: {}, children: <svg onClick={() => {}} /> },
-        'prop',
-        'MockedName',
-      );
-    }).toErrorDev(['MUI: You are providing an onClick event listener']);
-  });
+  // React 19 removed prop types support
+  it.skipIf(reactMajor >= 19)(
+    'should raise a warning about onClick in children because of Firefox',
+    function test() {
+      expect(() => {
+        PropTypes.checkPropTypes(
+          IconButton.propTypes,
+          { classes: {}, children: <svg onClick={() => {}} /> },
+          'prop',
+          'MockedName',
+        );
+      }).toErrorDev(['MUI: You are providing an onClick event listener']);
+    },
+  );
 
   it('should not throw error for a custom color', () => {
     expect(() => (
@@ -143,7 +142,7 @@ describe('<IconButton />', () => {
   });
 
   it('should disable ripple if disableRipple:true is set in MuiButtonBase', async () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <ThemeProvider
         theme={createTheme({
           components: {
@@ -158,7 +157,7 @@ describe('<IconButton />', () => {
         <IconButton TouchRippleProps={{ className: 'touch-ripple' }}>book</IconButton>,
       </ThemeProvider>,
     );
-    await ripple.startTouch(getByRole('button'));
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector('.touch-ripple')).to.equal(null);
   });
 
@@ -224,6 +223,28 @@ describe('<IconButton />', () => {
       );
 
       expect(screen.getByRole('button')).to.have.text('loading…Test');
+    });
+  });
+
+  describe('prop: nativeButton', () => {
+    it('forwards nativeButton={false} to ButtonBase with a custom component', () => {
+      const CustomSpan = React.forwardRef((props, ref) => <span ref={ref} {...props} />);
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      render(
+        <IconButton component={CustomSpan} nativeButton={false}>
+          icon
+        </IconButton>,
+      );
+
+      const button = screen.getByRole('button');
+      expect(button).to.have.tagName('SPAN');
+      expect(button).not.to.have.attribute('type');
+
+      // Proves nativeButton={false} was forwarded — without it, ButtonBase
+      // would warn about a non-button host with nativeButton omitted.
+      expect(errorSpy.mock.calls.length).to.equal(0);
+      errorSpy.mockRestore();
     });
   });
 });

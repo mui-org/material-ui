@@ -46,13 +46,6 @@
       "isGlobal": false
     },
     {
-      "key": "iconWrapper",
-      "className": "MuiTab-iconWrapper",
-      "description": "Styles applied to the `icon` HTML element if both `icon` and `label` are provided.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "labelIcon",
       "className": "MuiTab-labelIcon",
       "description": "Styles applied to the root element if both `icon` and `label` are provided.",
@@ -101,6 +94,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/Tab/Tab.js",
   "inheritance": { "component": "ButtonBase", "pathname": "/material-ui/api/button-base/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>"
 }

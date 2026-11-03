@@ -1,3 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Button>Overrides CSS</Button>
-</ThemeProvider>

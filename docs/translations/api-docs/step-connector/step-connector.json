@@ -33,18 +33,6 @@
       "conditions": "<code>orientation=\"horizontal\"</code>"
     },
     "line": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the line element" },
-    "lineHorizontal": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the line element",
-      "conditions": "<code>orientation=\"horizontal\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/step-connector/#step-connector-classes-horizontal\">.MuiStepConnector-horizontal</a> and <a href=\"/material-ui/api/step-connector/#step-connector-classes-line\">.MuiStepConnector-line</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "lineVertical": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the line element",
-      "conditions": "<code>orientation=\"vertical\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/step-connector/#step-connector-classes-vertical\">.MuiStepConnector-vertical</a> and <a href=\"/material-ui/api/step-connector/#step-connector-classes-line\">.MuiStepConnector-line</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "root": { "description": "Styles applied to the root element." },
     "vertical": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

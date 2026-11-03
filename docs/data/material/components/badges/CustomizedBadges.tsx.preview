@@ -1,5 +1,0 @@
-<IconButton aria-label="cart">
-  <StyledBadge badgeContent={4} color="secondary">
-    <ShoppingCartIcon />
-  </StyledBadge>
-</IconButton>

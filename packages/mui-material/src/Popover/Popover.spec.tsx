@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import { mergeSlotProps } from '@mui/material/utils';
-import { Popover, PaperProps, PopoverProps } from '@mui/material';
+import type { PaperProps, PopoverProps } from '@mui/material';
+import { Popover } from '@mui/material';
 
 const paperProps: PaperProps<'span'> = {
   component: 'span',
@@ -13,7 +14,17 @@ function Test() {
   return (
     <React.Fragment>
       <Popover open />;
-      <Popover open PaperProps={paperProps} />
+      <Popover open slotProps={{ paper: paperProps }} />;
+      <Popover
+        open
+        slotProps={{
+          // @ts-expect-error — unknown props should be rejected
+          transition: { randomInvalidProp: 'test' },
+        }}
+      />
+      ;
+      <Popover open disableAutoFocus />;
+      <Popover open slotProps={{ paper: paperProps }} />
     </React.Fragment>
   );
 }

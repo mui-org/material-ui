@@ -1,13 +1,20 @@
 {
-  "componentDescription": "The Grow transition is used by the [Tooltip](/material-ui/react-tooltip/) and\n[Popover](/material-ui/react-popover/) components.\nIt uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.",
+  "componentDescription": "The Grow transition is used by the [Tooltip](/material-ui/react-tooltip/) and\n[Popover](/material-ui/react-popover/) components.",
   "propDescriptions": {
     "addEndListener": {
-      "description": "Add a custom transition end trigger. Called with the transitioning DOM node and a done callback. Allows for more fine grained transition end logic. Note: Timeouts are still used as a fallback if provided."
+      "description": "Add a custom transition end trigger. Use it when you need custom logic to decide when the transition has ended. Note: Timeouts are still used as a fallback if provided.",
+      "typeDescriptions": {
+        "node": { "name": "node", "description": "The transitioning DOM node." },
+        "done": { "name": "done", "description": "Call this when the transition has finished." }
+      }
     },
     "appear": {
       "description": "Perform the enter transition when it first mounts if <code>in</code> is also <code>true</code>. Set this to <code>false</code> to disable this behavior."
     },
     "children": { "description": "A single child content element.", "requiresRef": true },
+    "disablePrefersReducedMotion": {
+      "description": "If <code>true</code>, the transition ignores <code>theme.motion.reducedMotion</code> and keeps its normal timing."
+    },
     "easing": {
       "description": "The transition timing function. You may specify a single easing or a object containing enter and exit values."
     },

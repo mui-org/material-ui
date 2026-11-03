@@ -5,9 +5,6 @@
     "delay": {
       "description": "Adds a transition delay, to allow a series of SpeedDialActions to be animated."
     },
-    "FabProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/fab/\"><code>Fab</code></a> component."
-    },
     "icon": { "description": "The icon to display in the SpeedDial Fab." },
     "id": {
       "description": "This prop is used to help implement the accessibility logic. If you don&#39;t provide this prop. It falls back to a randomly generated id."
@@ -17,13 +14,7 @@
     "slots": { "description": "The components used for each slot inside." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
-    },
-    "TooltipClasses": {
-      "description": "<code>classes</code> prop applied to the <a href=\"https://mui.com/material-ui/api/tooltip/\"><code>Tooltip</code></a> element."
-    },
-    "tooltipOpen": { "description": "Make the tooltip always visible when the SpeedDial is open." },
-    "tooltipPlacement": { "description": "Placement of the tooltip." },
-    "tooltipTitle": { "description": "Label to display in the tooltip." }
+    }
   },
   "classDescriptions": {
     "fabClosed": {
@@ -34,13 +25,27 @@
     "staticTooltipClosed": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
-      "conditions": "<code>tooltipOpen={true}</code> and <code>open={false}</code>"
+      "conditions": "<code>slotProps.tooltip.open</code> is <code>true</code> and <code>open</code> is <code>false</code>"
+    },
+    "tooltipPlacementBottom": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>slotProps.tooltip.open</code> is <code>true</code> and <code>slotProps.tooltip.placement</code> contains &quot;bottom&quot;"
     },
     "tooltipPlacementLeft": {
-      "description": "Styles applied to the root element if <code>tooltipOpen={true}</code> and `tooltipPlacement=&quot;left&quot;``"
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>slotProps.tooltip.open</code> is <code>true</code> and <code>slotProps.tooltip.placement</code> contains &quot;left&quot;"
     },
     "tooltipPlacementRight": {
-      "description": "Styles applied to the root element if <code>tooltipOpen={true}</code> and `tooltipPlacement=&quot;right&quot;``"
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>slotProps.tooltip.open</code> is <code>true</code> and <code>slotProps.tooltip.placement</code> contains &quot;right&quot;"
+    },
+    "tooltipPlacementTop": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>slotProps.tooltip.open</code> is <code>true</code> and <code>slotProps.tooltip.placement</code> contains &quot;top&quot;"
     }
   },
   "slotDescriptions": {

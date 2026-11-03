@@ -1,3 +1,6 @@
+const DEFAULT_TRANSITION_PROPS = ['all'];
+const EMPTY_OPTIONS = {};
+
 // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.
 export const easing = {
@@ -44,17 +47,20 @@ function getAutoHeightDuration(height) {
 }
 
 export default function createTransitions(inputTransitions) {
+  const transitions = { ...inputTransitions };
+  delete transitions.reducedMotion;
+
   const mergedEasing = {
     ...easing,
-    ...inputTransitions.easing,
+    ...transitions.easing,
   };
 
   const mergedDuration = {
     ...duration,
-    ...inputTransitions.duration,
+    ...transitions.duration,
   };
 
-  const create = (props = ['all'], options = {}) => {
+  const createTransitionValue = (props = DEFAULT_TRANSITION_PROPS, options = EMPTY_OPTIONS) => {
     const {
       duration: durationOption = mergedDuration.standard,
       easing: easingOption = mergedEasing.easeInOut,
@@ -107,10 +113,12 @@ export default function createTransitions(inputTransitions) {
       .join(',');
   };
 
+  const create = transitions.create ?? createTransitionValue;
+
   return {
     getAutoHeightDuration,
     create,
-    ...inputTransitions,
+    ...transitions,
     easing: mergedEasing,
     duration: mergedDuration,
   };

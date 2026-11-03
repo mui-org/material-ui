@@ -212,8 +212,10 @@ export interface ConfirmDialogPayload extends ConfirmOptions {
   msg: React.ReactNode;
 }
 
-export interface ConfirmDialogProps
-  extends DialogProps<ConfirmDialogPayload, boolean> {}
+export interface ConfirmDialogProps extends DialogProps<
+  ConfirmDialogPayload,
+  boolean
+> {}
 
 export function ConfirmDialog({ open, payload, onClose }: ConfirmDialogProps) {
   const cancelButtonProps = useDialogLoadingButton(() => onClose(false));
@@ -239,8 +241,10 @@ export interface PromptDialogPayload extends PromptOptions {
   msg: React.ReactNode;
 }
 
-export interface PromptDialogProps
-  extends DialogProps<PromptDialogPayload, string | null> {}
+export interface PromptDialogProps extends DialogProps<
+  PromptDialogPayload,
+  string | null
+> {}
 
 export function PromptDialog({ open, payload, onClose }: PromptDialogProps) {
   const [input, setInput] = React.useState('');
@@ -258,7 +262,7 @@ export function PromptDialog({ open, payload, onClose }: PromptDialogProps) {
       slotProps={{
         paper: {
           component: 'form',
-          onSubmit: async (event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit: async (event: React.SubmitEvent<HTMLFormElement>) => {
             event.preventDefault();
             try {
               setLoading(true);
@@ -313,17 +317,17 @@ export function useDialogs(): DialogHook {
   const { open, close } = dialogsContext;
 
   const alert = useEventCallback<OpenAlertDialog>(
-    (msg, { onClose, ...options } = {}) =>
+    (msg, { onClose, ...options }: AlertOptions = {}) =>
       open(AlertDialog, { ...options, msg }, { onClose }),
   );
 
   const confirm = useEventCallback<OpenConfirmDialog>(
-    (msg, { onClose, ...options } = {}) =>
+    (msg, { onClose, ...options }: ConfirmOptions = {}) =>
       open(ConfirmDialog, { ...options, msg }, { onClose }),
   );
 
   const prompt = useEventCallback<OpenPromptDialog>(
-    (msg, { onClose, ...options } = {}) =>
+    (msg, { onClose, ...options }: PromptOptions = {}) =>
       open(PromptDialog, { ...options, msg }, { onClose }),
   );
 

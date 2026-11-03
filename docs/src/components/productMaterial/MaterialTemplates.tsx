@@ -2,7 +2,8 @@ import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import ButtonBase, { ButtonBaseProps } from '@mui/material/ButtonBase';
+import type { ButtonBaseProps } from '@mui/material/ButtonBase';
+import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import LaunchRounded from '@mui/icons-material/LaunchRounded';
 import DashboardRounded from '@mui/icons-material/DashboardRounded';
@@ -11,12 +12,10 @@ import ShoppingBag from '@mui/icons-material/ShoppingBag';
 import KeyboardArrowLeftRounded from '@mui/icons-material/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import { Link } from '@mui/docs/Link';
-import More from 'docs/src/components/action/More';
+import { Item, Group, Highlighter, More } from '@mui/internal-core-docs/AppLayout';
+import { Link } from '@mui/internal-core-docs/Link';
 
 export const DEMOS = ['Dashboard', 'Landing Pages', 'E-commerce'];
 
@@ -215,12 +214,12 @@ export default function MaterialTemplates() {
               <Box
                 key={item.name}
                 sx={(theme) => ({
-                  overflow: 'auto',
+                  position: 'relative',
+                  overflow: 'hidden',
                   borderRadius: 1,
                   height: { xs: 220, sm: 320, md: 500 },
-                  backgroundImage: `url(${item.src.light})`,
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
+                  '--MaterialTemplates-imgFilter': 'blur(0px)',
+                  '--MaterialTemplates-infoOpacity': '0',
                   border: '1px solid',
                   borderColor: templateIndex === index ? 'primary.100' : 'divider',
                   boxShadow:
@@ -231,78 +230,118 @@ export default function MaterialTemplates() {
                   transform: templateIndex !== index ? 'scale(0.92)' : 'scale(1)',
                   opacity: templateIndex === index ? 1 : 0.2,
                   ...theme.applyDarkStyles({
-                    backgroundImage: `url(${item.src.dark})`,
                     borderColor: templateIndex === index ? 'primary.900' : 'divider',
                     boxShadow:
                       templateIndex === index
                         ? `0px 2px 8px ${alpha(theme.palette.primary[900], 0.4)}`
                         : undefined,
                   }),
+
+                  '&:hover, &:focus-within': {
+                    '--MaterialTemplates-imgFilter': 'blur(2px)',
+                    '--MaterialTemplates-infoOpacity': '1',
+                  },
                 })}
               >
-                <Link
-                  href={`${item.href}?utm_source=marketing&utm_medium=referral&utm_campaign=templates-cta2`}
-                  noLinkStyle
-                  target="_blank"
-                  sx={[
-                    (theme) => ({
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexDirection: 'column',
-                      gap: 1,
-                      transition: '0.2s',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '100%',
-                      opacity: 0,
-                      top: 0,
-                      left: 0,
-                      bgcolor: alpha(theme.palette.primary[50], 0.6),
-                      backdropFilter: 'blur(4px)',
-                      textDecoration: 'none',
-                      '&:hover, &:focus': {
-                        opacity: 1,
-                      },
-                      ...theme.applyDarkStyles({
-                        bgcolor: alpha(theme.palette.primaryDark[900], 0.6),
-                      }),
+                <Box
+                  sx={(theme) => ({
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: `url(${item.src.light})`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    transform: 'scale(1.05)',
+                    transition: 'filter 0.25s ease',
+                    filter: 'var(--MaterialTemplates-imgFilter)',
+                    ...theme.applyDarkStyles({
+                      backgroundImage: `url(${item.src.dark})`,
                     }),
-                  ]}
+                  })}
+                />
+
+                <Box
+                  sx={(theme) => ({
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 1,
+                    bgcolor: alpha(theme.palette.primary[50], 0.72),
+                    opacity: 'var(--MaterialTemplates-infoOpacity)',
+                    transition: 'opacity 0.25s ease',
+                    ...theme.applyDarkStyles({
+                      bgcolor: alpha(theme.palette.primaryDark[900], 0.75),
+                    }),
+                  })}
                 >
                   <Typography
                     variant="body2"
                     sx={{ color: 'text.tertiary', fontWeight: 'semiBold', textAlign: 'center' }}
                   >
-                    Developed by {templates[templateIndex].author}
+                    Developed by {item.author}
                   </Typography>
+
                   <Typography
                     component="p"
                     variant="h6"
-                    sx={{ fontWeight: 'semiBold', textAlign: 'center', color: 'text.primary' }}
+                    sx={{
+                      fontWeight: 'semiBold',
+                      textAlign: 'center',
+                      color: 'text.primary',
+                      px: 2,
+                    }}
                   >
-                    {templates[templateIndex].name}
+                    {item.name}
                   </Typography>
-                  <Box
-                    sx={[
-                      (theme) => ({
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.5,
-                        color: 'primary.500',
-                        ...theme.applyDarkStyles({
-                          color: 'primary.200',
-                        }),
+
+                  <Link
+                    href={`${item.href}?utm_source=marketing&utm_medium=referral&utm_campaign=templates-cta2`}
+                    noLinkStyle
+                    tabIndex={templateIndex === index ? undefined : -1}
+                    target="_blank"
+                    sx={(theme) => ({
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 0.5,
+                      color: 'primary.500',
+                      textDecoration: 'none',
+                      pointerEvents: 'auto',
+                      whiteSpace: 'nowrap',
+                      ...theme.applyDarkStyles({
+                        color: 'primary.200',
                       }),
-                    ]}
+                    })}
                   >
-                    <Typography sx={{ fontWeight: 'bold' }}>Buy now</Typography>
-                    <LaunchRounded fontSize="small" />
-                  </Box>
-                </Link>
+                    <Typography
+                      component="span"
+                      sx={{
+                        fontWeight: 'bold',
+                        lineHeight: 1,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      Buy now
+                    </Typography>
+                    <LaunchRounded
+                      fontSize="small"
+                      sx={{
+                        display: 'inline-block',
+                        verticalAlign: 'middle',
+                        fontSize: '0.95rem',
+                        marginTop: '-1px',
+                      }}
+                    />
+                  </Link>
+                </Box>
               </Box>
             ))}
           </SwipeableViews>
+
           {templates.length > 1 && (
             <React.Fragment>
               <ActionArea

@@ -1,17 +1,20 @@
-import { SxProps } from '@mui/system';
-import { SlotComponentProps } from '@mui/utils/types';
-import { Theme } from '../styles';
+import type { SxProps } from '@mui/system';
+import type { SlotComponentProps } from '@mui/utils/types';
+import type { Theme } from '../styles';
 
 export type {
   EventHandlers,
   WithOptionalOwnerState,
   SlotComponentProps,
   SlotComponentPropsWithSlotState,
+  // Augment `DataAttributesOverrides` to opt in to typed `data-*` attributes on slot props.
+  DataAttributesOverrides,
+  WithDataAttributes,
 } from '@mui/utils/types';
 
 export type SlotCommonProps = {
-  component?: React.ElementType;
-  sx?: SxProps<Theme>;
+  component?: React.ElementType | undefined;
+  sx?: SxProps<Theme> | undefined;
 };
 
 export type SlotProps<
@@ -30,12 +33,14 @@ export type CreateSlotsAndSlotProps<Slots, K extends Record<keyof Slots, any>> =
    * The components used for each slot inside.
    * @default {}
    */
-  slots?: Partial<Slots>;
+  slots?: Partial<Slots> | undefined;
   /**
    * The props used for each slot inside.
    * @default {}
    */
-  slotProps?: {
-    [P in keyof K]?: K[P];
-  };
+  slotProps?:
+    | {
+        [P in keyof K]?: K[P];
+      }
+    | undefined;
 };

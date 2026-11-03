@@ -15,7 +15,7 @@ To emphasize groups of related Toggle buttons,
 a group should share a common container.
 The `ToggleButtonGroup` controls the selected state of its child buttons when given its own `value` prop.
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Exclusive selection
 
@@ -25,29 +25,29 @@ In this example, text justification toggle buttons present options for left, cen
 
 **Note**: Exclusive selection does not enforce that a button must be active. For that effect see [enforce value set](#enforce-value-set).
 
-{{"demo": "ToggleButtons.js"}}
+{{"component": "file://./demos/toggle-buttons/index.ts"}}
 
 ## Multiple selection
 
 Multiple selection allows for logically-grouped options, like bold, italic, and underline, to have multiple options selected.
 
-{{"demo": "ToggleButtonsMultiple.js"}}
+{{"component": "file://./demos/multiple/index.ts"}}
 
 ## Size
 
 For larger or smaller buttons, use the `size` prop.
 
-{{"demo": "ToggleButtonSizes.js"}}
+{{"component": "file://./demos/sizes/index.ts"}}
 
 ## Color
 
-{{"demo": "ColorToggleButton.js"}}
+{{"component": "file://./demos/color/index.ts"}}
 
 ## Vertical buttons
 
 The buttons can be stacked vertically with the `orientation` prop set to "vertical".
 
-{{"demo": "VerticalToggleButtons.js"}}
+{{"component": "file://./demos/vertical/index.ts"}}
 
 ## Enforce value set
 
@@ -67,18 +67,18 @@ const handleDevices = (event, newDevices) => {
 };
 ```
 
-{{"demo": "ToggleButtonNotEmpty.js"}}
+{{"component": "file://./demos/not-empty/index.ts"}}
 
 ## Standalone toggle button
 
-{{"demo": "StandaloneToggleButton.js"}}
+{{"component": "file://./demos/standalone/index.ts"}}
 
 ## Customization
 
 Here is an example of customizing the component.
 You can learn more about this in the [overrides documentation page](/material-ui/customization/how-to-customize/).
 
-{{"demo": "CustomizedDividers.js", "bg": true}}
+{{"component": "file://./demos/customized-dividers/index.ts", "bg": true}}
 
 ### Spacing
 
@@ -86,11 +86,11 @@ The demos below show how to adjust spacing between toggle buttons in horizontal 
 
 #### Horizontal Spacing
 
-{{"demo": "HorizontalSpacingToggleButton.js"}}
+{{"component": "file://./demos/horizontal-spacing/index.ts"}}
 
 #### Vertical Spacing
 
-{{"demo": "VerticalSpacingToggleButton.js"}}
+{{"component": "file://./demos/vertical-spacing/index.ts"}}
 
 ## Accessibility
 
@@ -101,4 +101,8 @@ The demos below show how to adjust spacing between toggle buttons in horizontal 
 
 ### Keyboard
 
-At present, toggle buttons are in DOM order. Navigate between them with the tab key. The button behavior follows standard keyboard semantics.
+The group uses a single tab stop.
+Use the left and right arrow keys to move focus in a horizontal group, or the up and down arrow keys in a vertical group.
+The <kbd>Home</kbd> and <kbd>End</kbd> keys move focus to the first and last enabled buttons.
+Focus movement wraps, skips disabled buttons, and does not change the selected value.
+Press <kbd>Space</kbd> or <kbd>Enter</kbd> to toggle the focused button.

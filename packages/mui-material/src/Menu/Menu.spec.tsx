@@ -1,5 +1,14 @@
-import * as React from 'react';
-import Menu, { MenuProps } from '@mui/material/Menu';
+import type { MenuProps } from '@mui/material/Menu';
+import Menu from '@mui/material/Menu';
+
+// slotProps.transition should reject unknown props
+<Menu
+  open
+  slotProps={{
+    // @ts-expect-error — unknown props should be rejected
+    transition: { randomInvalidProp: 'test' },
+  }}
+/>;
 
 <Menu
   open
@@ -67,3 +76,5 @@ function Custom(props: MenuProps) {
     </Menu>
   );
 }
+
+const menuCloseReason: Parameters<NonNullable<MenuProps['onClose']>>[1] = 'tabKeyDown';

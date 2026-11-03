@@ -6,6 +6,9 @@ import { Theme } from '../styles';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { ChipClasses } from './chipClasses';
 
+export interface ChipRootSlotPropsOverrides {}
+export interface ChipLabelSlotPropsOverrides {}
+
 export interface ChipSlots {
   /**
    * The component that renders the root.
@@ -24,14 +27,14 @@ export type ChipSlotsAndSlotProps = CreateSlotsAndSlotProps<
   {
     /**
      * Props forwarded to the root slot.
-     * By default, the avaible props are based on the div element.
+     * By default, the available props are based on the div element.
      */
-    root: SlotProps<'div', {}, ChipOwnerState>;
+    root: SlotProps<'div', ChipRootSlotPropsOverrides, ChipOwnerState>;
     /**
      * Props forwarded to the label slot.
-     * By default, the avaible props are based on the span element.
+     * By default, the available props are based on the span element.
      */
-    label: SlotProps<'span', {}, ChipOwnerState>;
+    label: SlotProps<'span', ChipLabelSlotPropsOverrides, ChipOwnerState>;
   }
 >;
 
@@ -47,16 +50,16 @@ export interface ChipOwnProps {
   /**
    * The Avatar element to display.
    */
-  avatar?: React.ReactElement<unknown>;
+  avatar?: React.ReactElement<unknown> | undefined;
   /**
    * This prop isn't supported.
    * Use the `component` prop if you need to change the children structure.
    */
-  children?: null;
+  children?: null | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ChipClasses>;
+  classes?: Partial<ChipClasses> | undefined;
   /**
    * If `true`, the chip will appear clickable, and will raise when pressed,
    * even if the onClick prop is not defined.
@@ -65,30 +68,32 @@ export interface ChipOwnProps {
    * along with the component prop to indicate an anchor Chip is clickable.
    * Note: this controls the UI and does not affect the onClick event.
    */
-  clickable?: boolean;
+  clickable?: boolean | undefined;
   /**
    * The color of the component.
    * It supports both default and custom theme colors, which can be added as shown in the
    * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
    * @default 'default'
    */
-  color?: OverridableStringUnion<
-    'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
-    ChipPropsColorOverrides
-  >;
+  color?:
+    | OverridableStringUnion<
+        'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+        ChipPropsColorOverrides
+      >
+    | undefined;
   /**
    * Override the default delete icon element. Shown only if `onDelete` is set.
    */
-  deleteIcon?: React.ReactElement<unknown>;
+  deleteIcon?: React.ReactElement<unknown> | undefined;
   /**
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Icon element.
    */
-  icon?: React.ReactElement<unknown>;
+  icon?: React.ReactElement<unknown> | undefined;
   /**
    * The content of the component.
    */
@@ -97,31 +102,38 @@ export interface ChipOwnProps {
    * Callback fired when the delete icon is clicked.
    * If set, the delete icon will be shown.
    */
-  onDelete?: React.EventHandler<any>;
+  onDelete?: React.EventHandler<any> | undefined;
   /**
    * The size of the component.
    * @default 'medium'
    */
-  size?: OverridableStringUnion<'small' | 'medium', ChipPropsSizeOverrides>;
+  size?: OverridableStringUnion<'small' | 'medium', ChipPropsSizeOverrides> | undefined;
+  /**
+   * If `true`, the component is expected to resolve to a native `<button>` element.
+   * When omitted, custom components inherit the default button semantics of the current wrapper.
+   * Set to `true` when a custom component resolves to a native `<button>`, or `false`
+   * when it resolves to a non-button host.
+   */
+  nativeButton?: boolean | undefined;
   /**
    * If `true`, allows the disabled chip to escape focus.
    * If `false`, allows the disabled chip to receive focus.
    * @default false
    */
-  skipFocusWhenDisabled?: boolean;
+  skipFocusWhenDisabled?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    *  @ignore
    */
-  tabIndex?: number;
+  tabIndex?: number | undefined;
   /**
    * The variant to use.
    * @default 'filled'
    */
-  variant?: OverridableStringUnion<'filled' | 'outlined', ChipPropsVariantOverrides>;
+  variant?: OverridableStringUnion<'filled' | 'outlined', ChipPropsVariantOverrides> | undefined;
 }
 
 export interface ChipTypeMap<
@@ -137,11 +149,11 @@ export interface ChipTypeMap<
  *
  * Demos:
  *
- * - [Chip](https://mui.com/material-ui/react-chip/)
+ * - [Chip](https://next.mui.com/material-ui/react-chip/)
  *
  * API:
  *
- * - [Chip API](https://mui.com/material-ui/api/chip/)
+ * - [Chip API](https://next.mui.com/material-ui/api/chip/)
  */
 declare const Chip: OverridableComponent<ChipTypeMap>;
 
@@ -149,7 +161,7 @@ export type ChipProps<
   RootComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<ChipTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default Chip;

@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import AccordionDetails, {
   accordionDetailsClasses as classes,
 } from '@mui/material/AccordionDetails';
@@ -15,16 +14,16 @@ describe('<AccordionDetails />', () => {
     render,
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiAccordionDetails',
-    skip: ['componentProp', 'componentsProp', 'themeVariants'],
+    skip: ['componentProp', 'themeVariants'],
   }));
 
   it('should render a children element', () => {
-    const { queryByTestId } = render(
+    render(
       <AccordionDetails>
         <div data-testid="test-children" />
       </AccordionDetails>,
     );
 
-    expect(queryByTestId('test-children')).not.to.equal(null);
+    expect(screen.queryByTestId('test-children')).not.to.equal(null);
   });
 });

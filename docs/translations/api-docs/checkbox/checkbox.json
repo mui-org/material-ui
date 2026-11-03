@@ -15,13 +15,10 @@
     "icon": { "description": "The icon to display when the component is unchecked." },
     "id": { "description": "The id of the <code>input</code> element." },
     "indeterminate": {
-      "description": "If <code>true</code>, the component appears indeterminate. This does not set the native input element to indeterminate due to inconsistent behavior across browsers. However, we set a <code>data-indeterminate</code> attribute on the <code>input</code>."
+      "description": "If <code>true</code>, the component appears indeterminate. This sets the native input element to indeterminate, and we also set a <code>data-indeterminate</code> attribute on the <code>input</code>."
     },
     "indeterminateIcon": {
       "description": "The icon to display when the component is indeterminate."
-    },
-    "inputProps": {
-      "description": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes\">Attributes</a> applied to the <code>input</code> element."
     },
     "onChange": {
       "description": "Callback fired when the state is changed.",

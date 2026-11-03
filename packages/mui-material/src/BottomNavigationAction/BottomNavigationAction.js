@@ -5,9 +5,11 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import ButtonBase from '../ButtonBase';
 import unsupportedProp from '../utils/unsupportedProp';
+import { getTransitionStyles } from '../transitions/utils';
 import bottomNavigationActionClasses, {
   getBottomNavigationActionUtilityClass,
 } from './bottomNavigationActionClasses';
@@ -34,7 +36,7 @@ const BottomNavigationActionRoot = styled(ButtonBase, {
   },
 })(
   memoTheme(({ theme }) => ({
-    transition: theme.transitions.create(['color', 'padding-top'], {
+    ...getTransitionStyles(theme, ['color', 'padding-top'], {
       duration: theme.transitions.duration.short,
     }),
     padding: '0px 12px',
@@ -46,6 +48,7 @@ const BottomNavigationActionRoot = styled(ButtonBase, {
     [`&.${bottomNavigationActionClasses.selected}`]: {
       color: (theme.vars || theme).palette.primary.main,
     },
+    ...(theme.focusVisible && applyInsetFocusVisible(1)),
     variants: [
       {
         props: ({ showLabel, selected }) => !showLabel && !selected,
@@ -71,7 +74,10 @@ const BottomNavigationActionLabel = styled('span', {
     fontFamily: theme.typography.fontFamily,
     fontSize: theme.typography.pxToRem(12),
     opacity: 1,
-    transition: 'font-size 0.2s, opacity 0.2s',
+    ...getTransitionStyles(theme, ['font-size', 'opacity'], {
+      duration: '0.2s',
+      easing: 'ease',
+    }),
     transitionDelay: '0.1s',
     [`&.${bottomNavigationActionClasses.selected}`]: {
       fontSize: theme.typography.pxToRem(14),
@@ -96,7 +102,6 @@ const BottomNavigationAction = React.forwardRef(function BottomNavigationAction(
     label,
     onChange,
     onClick,
-    // eslint-disable-next-line react/prop-types -- private, always overridden by BottomNavigation
     selected,
     showLabel,
     value,
@@ -134,6 +139,7 @@ const BottomNavigationAction = React.forwardRef(function BottomNavigationAction(
     ref,
     className: clsx(classes.root, className),
     additionalProps: {
+      internalNativeButton: true,
       focusRipple: true,
     },
     getSlotProps: (handlers) => ({
@@ -194,6 +200,12 @@ BottomNavigationAction.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   onClick: PropTypes.func,
+  /**
+   * If `true`, the component appears selected.
+   *
+   * `BottomNavigation` sets this on each child from its own `value`.
+   */
+  selected: PropTypes.bool,
   /**
    * If `true`, the `BottomNavigationAction` will show its label.
    * By default, only the selected `BottomNavigationAction`

@@ -7,7 +7,7 @@
       "description": "The component used for the root node. Either a string to use a HTML element or a component."
     },
     "enableColorScheme": {
-      "description": "Enable <code>color-scheme</code> CSS property to use <code>theme.palette.mode</code>. For more details, check out <a href=\"https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme\">https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme</a> For browser support, check out <a href=\"https://caniuse.com/?search=color-scheme\">https://caniuse.com/?search=color-scheme</a>"
+      "description": "Enable <code>color-scheme</code> CSS property to use <code>theme.palette.mode</code>. For more details, check out <a href=\"https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme\">https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme</a> For browser support, check out <a href=\"https://caniuse.com/?search=color-scheme\">https://caniuse.com/?search=color-scheme</a>"
     },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."

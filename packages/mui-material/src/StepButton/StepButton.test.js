@@ -1,13 +1,13 @@
+import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createRenderer } from '@mui/internal-test-utils';
-import { fireEvent } from '@testing-library/dom';
+import { createRenderer, screen, fireEvent, supportsTouch } from '@mui/internal-test-utils';
 import StepButton, { stepButtonClasses as classes } from '@mui/material/StepButton';
 import Step from '@mui/material/Step';
 import StepLabel, { stepLabelClasses } from '@mui/material/StepLabel';
 import ButtonBase from '@mui/material/ButtonBase';
 import describeConformance from '../../test/describeConformance';
+import Stepper from '../Stepper';
 
 describe('<StepButton />', () => {
   const { render } = createRenderer();
@@ -19,11 +19,35 @@ describe('<StepButton />', () => {
       muiName: 'MuiStepButton',
       refInstanceof: window.HTMLButtonElement,
       render,
-      skip: ['componentProp', 'componentsProp', 'themeVariants'],
+      skip: ['componentProp', 'themeVariants'],
     }));
 
+    it('should receive the correct aria attributes', () => {
+      render(
+        <Stepper>
+          <Step>
+            <StepButton>Step One</StepButton>
+          </Step>
+          <Step>
+            <StepButton>Step Two</StepButton>
+          </Step>
+        </Stepper>,
+      );
+
+      const stepButton1 = screen.getByRole('tab', { name: 'Step One' });
+      const stepButton2 = screen.getByRole('tab', { name: 'Step Two' });
+
+      expect(stepButton1).to.have.attribute('aria-selected', 'true');
+      expect(stepButton1).to.have.attribute('aria-posinset', '1');
+      expect(stepButton1).to.have.attribute('aria-setsize', '2');
+
+      expect(stepButton2).not.to.have.attribute('aria-current', 'step');
+      expect(stepButton2).to.have.attribute('aria-posinset', '2');
+      expect(stepButton2).to.have.attribute('aria-setsize', '2');
+    });
+
     it('passes active, completed, disabled to StepLabel', () => {
-      const { container, getByText } = render(
+      const { container } = render(
         <Step active completed disabled>
           <StepButton>Step One</StepButton>
         </Step>,
@@ -35,11 +59,10 @@ describe('<StepButton />', () => {
       expect(stepLabelRoot).to.have.class(stepLabelClasses.disabled);
       expect(stepLabel).to.have.class(stepLabelClasses.active);
       expect(stepLabel).to.have.class(stepLabelClasses.completed);
-      getByText('Step One');
     });
 
     it('should pass props to a provided StepLabel', () => {
-      const { container, getByText } = render(
+      const { container } = render(
         <Step active completed disabled>
           <StepButton label="Step One">
             <StepLabel>Step One</StepLabel>
@@ -53,97 +76,134 @@ describe('<StepButton />', () => {
       expect(stepLabelRoot).to.have.class(stepLabelClasses.disabled);
       expect(stepLabel).to.have.class(stepLabelClasses.active);
       expect(stepLabel).to.have.class(stepLabelClasses.completed);
-      getByText('Step One');
     });
   });
 
   it('should disable the button', () => {
-    const { getByRole } = render(<StepButton disabled>Step One</StepButton>);
+    render(<StepButton disabled>Step One</StepButton>);
 
-    expect(getByRole('button')).to.have.property('disabled', true);
+    expect(screen.getByRole('tab')).to.have.property('disabled', true);
   });
 
-  it('should have `aria-current=step` when active', () => {
-    const { getByRole } = render(
-      <Step active>
-        <StepButton>Step One</StepButton>
-      </Step>,
+  it('should skip disabled steps in the roving tablist path', async () => {
+    const { user } = render(
+      <Stepper nonLinear orientation="vertical">
+        <Step>
+          <StepButton>Step One</StepButton>
+        </Step>
+        <Step disabled>
+          <StepButton>Step Two</StepButton>
+        </Step>
+        <Step>
+          <StepButton>Step Three</StepButton>
+        </Step>
+      </Stepper>,
     );
 
-    expect(getByRole('button')).to.have.attribute('aria-current', 'step');
-  });
+    const stepOne = screen.getByRole('tab', { name: 'Step One' });
+    const stepTwo = screen.getByRole('tab', { name: 'Step Two' });
+    const stepThree = screen.getByRole('tab', { name: 'Step Three' });
 
-  it('should not have `aria-current` when non-active', () => {
-    const { getByRole } = render(
-      <Step active={false}>
-        <StepButton>Step One</StepButton>
-      </Step>,
-    );
+    expect(stepTwo).to.have.property('disabled', true);
 
-    expect(getByRole('button')).not.to.have.attribute('aria-current', 'step');
+    await user.tab();
+    expect(stepOne).toHaveFocus();
+
+    await user.keyboard('{ArrowDown}');
+    expect(stepThree).toHaveFocus();
+    expect(stepTwo).not.toHaveFocus();
+
+    await user.keyboard('{ArrowUp}');
+    expect(stepOne).toHaveFocus();
+    expect(stepTwo).not.toHaveFocus();
   });
 
   describe('event handlers', () => {
-    it('should forward mouseenter, mouseleave and touchstart', function touchTests() {
-      // only run in supported browsers
-      if (typeof Touch === 'undefined') {
-        this.skip();
-      }
+    // only run in supported browsers
+    it.skipIf(!supportsTouch())(
+      'should forward mouseenter, mouseleave and touchstart',
+      function touchTests() {
+        const handleMouseEnter = spy();
+        const handleMouseLeave = spy();
+        const handleTouchStart = spy();
 
-      const handleMouseEnter = spy();
-      const handleMouseLeave = spy();
-      const handleTouchStart = spy();
-      const { getByRole } = render(
-        <StepButton
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onTouchStart={handleTouchStart}
-        >
-          Step One
-        </StepButton>,
+        render(
+          <StepButton
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleTouchStart}
+          >
+            Step One
+          </StepButton>,
+        );
+
+        const button = screen.getByRole('tab', { name: 'Step One' });
+
+        fireEvent.mouseOver(button);
+
+        expect(handleMouseEnter).to.have.property('callCount', 1);
+        expect(handleMouseLeave).to.have.property('callCount', 0);
+        expect(handleTouchStart).to.have.property('callCount', 0);
+
+        fireEvent.mouseOut(button);
+
+        expect(handleMouseEnter).to.have.property('callCount', 1);
+        expect(handleMouseLeave).to.have.property('callCount', 1);
+        expect(handleTouchStart).to.have.property('callCount', 0);
+
+        // fake touch
+        const firstTouch = new Touch({ identifier: 0, target: button });
+        fireEvent.touchStart(button, { touches: [firstTouch] });
+
+        expect(handleMouseEnter).to.have.property('callCount', 1);
+        expect(handleMouseLeave).to.have.property('callCount', 1);
+        expect(handleTouchStart).to.have.property('callCount', 1);
+
+        fireEvent.mouseOver(button);
+        const secondTouch = new Touch({ identifier: 1, target: button });
+        fireEvent.touchStart(button, { touches: [firstTouch, secondTouch] });
+
+        expect(handleMouseEnter).to.have.property('callCount', 2);
+        expect(handleMouseLeave).to.have.property('callCount', 1);
+        expect(handleTouchStart).to.have.property('callCount', 2);
+      },
+    );
+  });
+
+  describe('prop: nativeButton', () => {
+    it('forwards nativeButton={false} and preserves role="tab" over pseudo-button role', () => {
+      const CustomSpan = React.forwardRef((props, ref) => <span ref={ref} {...props} />);
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      render(
+        <Stepper>
+          <Step>
+            <StepButton component={CustomSpan} nativeButton={false}>
+              Step One
+            </StepButton>
+          </Step>
+        </Stepper>,
       );
-      const button = getByRole('button');
 
-      fireEvent.mouseOver(button);
+      const stepButton = screen.getByRole('tab', { name: 'Step One' });
+      expect(stepButton).to.have.tagName('SPAN');
+      expect(stepButton).to.have.attribute('role', 'tab');
+      expect(stepButton).not.to.have.attribute('type');
 
-      expect(handleMouseEnter).to.have.property('callCount', 1);
-      expect(handleMouseLeave).to.have.property('callCount', 0);
-      expect(handleTouchStart).to.have.property('callCount', 0);
-
-      fireEvent.mouseOut(button);
-
-      expect(handleMouseEnter).to.have.property('callCount', 1);
-      expect(handleMouseLeave).to.have.property('callCount', 1);
-      expect(handleTouchStart).to.have.property('callCount', 0);
-
-      // fake touch
-      const firstTouch = new Touch({ identifier: 0, target: button });
-      fireEvent.touchStart(button, { touches: [firstTouch] });
-
-      expect(handleMouseEnter).to.have.property('callCount', 1);
-      expect(handleMouseLeave).to.have.property('callCount', 1);
-      expect(handleTouchStart).to.have.property('callCount', 1);
-
-      fireEvent.mouseOver(button);
-      const secondTouch = new Touch({ identifier: 1, target: button });
-      fireEvent.touchStart(button, { touches: [firstTouch, secondTouch] });
-
-      expect(handleMouseEnter).to.have.property('callCount', 2);
-      expect(handleMouseLeave).to.have.property('callCount', 1);
-      expect(handleTouchStart).to.have.property('callCount', 2);
+      // Proves nativeButton={false} was forwarded — without it, ButtonBase
+      // would warn about a non-button host with nativeButton omitted.
+      expect(errorSpy.mock.calls.length).to.equal(0);
+      errorSpy.mockRestore();
     });
   });
 
   it('can be used as a child of `Step`', () => {
-    // a simple smoke test to check that these two
-    // integrate without any errors/warnings
-    // TODO: move into integration test for Stepper component
-    const { getByRole } = render(
+    render(
       <Step>
         <StepButton>Next</StepButton>
       </Step>,
     );
 
-    expect(getByRole('button')).not.to.equal(null);
+    expect(screen.getByRole('tab', { name: 'Next' })).not.to.equal(null);
   });
 });

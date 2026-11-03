@@ -70,20 +70,6 @@
       "isGlobal": false
     },
     {
-      "key": "groupedHorizontal",
-      "className": "MuiToggleButtonGroup-groupedHorizontal",
-      "description": "Styles applied to the children if `orientation=\"horizontal\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "groupedVertical",
-      "className": "MuiToggleButtonGroup-groupedVertical",
-      "description": "Styles applied to the children if `orientation=\"vertical\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "horizontal",
       "className": "MuiToggleButtonGroup-horizontal",
       "description": "Styles applied to the root element if `orientation=\"horizontal\"`.",
@@ -126,6 +112,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/ToggleButtonGroup/ToggleButtonGroup.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-toggle-button/\">Toggle Button</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-toggle-button/\">Toggle Button</a></li></ul>"
 }

@@ -1,9 +1,0 @@
-<Link href="#underline" underline="always">
-  Always
-</Link>
-<Link href="#underline" underline="hover">
-  Hover
-</Link>
-<Link href="#underline" underline="none">
-  None
-</Link>

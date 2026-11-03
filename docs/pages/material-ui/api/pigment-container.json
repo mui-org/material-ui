@@ -27,6 +27,5 @@
   "muiName": "MuiPigmentContainer",
   "filename": "/packages/mui-material/src/PigmentContainer/PigmentContainer.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-container/\">Container</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-container/\">Container</a></li></ul>"
 }

@@ -12,51 +12,51 @@ export interface InputLabelOwnProps extends Pick<FormLabelProps, 'children'> {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<InputLabelClasses>;
-  color?: FormLabelProps['color'];
+  classes?: Partial<InputLabelClasses> | undefined;
+  color?: FormLabelProps['color'] | undefined;
   /**
    * If `true`, the transition animation is disabled.
    * @default false
    */
-  disableAnimation?: boolean;
+  disableAnimation?: boolean | undefined;
   /**
    * If `true`, the component is disabled.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * If `true`, the label is displayed in an error state.
    */
-  error?: boolean;
+  error?: boolean | undefined;
   /**
    * If `true`, the `input` of this label is focused.
    */
-  focused?: boolean;
+  focused?: boolean | undefined;
   /**
    * If `dense`, will adjust vertical spacing. This is normally obtained via context from
    * FormControl.
    */
-  margin?: 'dense';
+  margin?: 'dense' | undefined;
   /**
    * if `true`, the label will indicate that the `input` is required.
    */
-  required?: boolean;
+  required?: boolean | undefined;
   /**
    * If `true`, the label is shrunk.
    */
-  shrink?: boolean;
+  shrink?: boolean | undefined;
   /**
    * The size of the component.
    * @default 'medium'
    */
-  size?: OverridableStringUnion<'small' | 'medium', InputLabelPropsSizeOverrides>;
+  size?: OverridableStringUnion<'small' | 'medium', InputLabelPropsSizeOverrides> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The variant to use.
    */
-  variant?: 'standard' | 'outlined' | 'filled';
+  variant?: 'standard' | 'outlined' | 'filled' | undefined;
 }
 
 export type InputLabelTypeMap<
@@ -71,12 +71,13 @@ export type InputLabelTypeMap<
  *
  * Demos:
  *
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [InputLabel API](https://mui.com/material-ui/api/input-label/)
- * - inherits [FormLabel API](https://mui.com/material-ui/api/form-label/)
+ * - [InputLabel API](https://next.mui.com/material-ui/api/input-label/)
+ * - inherits [FormLabel API](https://next.mui.com/material-ui/api/form-label/)
  */
 declare const InputLabel: OverridableComponent<InputLabelTypeMap>;
 
@@ -84,7 +85,7 @@ export type InputLabelProps<
   RootComponent extends React.ElementType = InputLabelTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<InputLabelTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default InputLabel;

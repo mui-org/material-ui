@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 export interface PortalProps {
   /**
@@ -15,10 +15,10 @@ export interface PortalProps {
    * By default, it uses the body of the top-level document object,
    * so it's simply `document.body` most of the time.
    */
-  container?: Element | (() => Element | null) | null;
+  container?: Element | (() => Element | null) | null | undefined;
   /**
    * The `children` will be under the DOM hierarchy of the parent component.
    * @default false
    */
-  disablePortal?: boolean;
+  disablePortal?: boolean | undefined;
 }

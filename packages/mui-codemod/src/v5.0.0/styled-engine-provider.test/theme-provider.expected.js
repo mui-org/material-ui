@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { ThemeProvider, StyledEngineProvider, createTheme } from '@material-ui/core/styles';
 import { OtherProvider } from './contexts';
 import Page from './pages';

@@ -10,12 +10,12 @@ export interface UseMediaQueryOptions {
    * it returns a default matches during the first mount.
    * @default false
    */
-  defaultMatches?: boolean;
+  defaultMatches?: boolean | undefined;
   /**
    * You can provide your own implementation of matchMedia.
    * This can be used for handling an iframe content window.
    */
-  matchMedia?: typeof window.matchMedia;
+  matchMedia?: typeof window.matchMedia | undefined;
   /**
    * To perform the server-side hydration, the hook needs to render twice.
    * A first time with `defaultMatches`, the value of the server, and a second time with the resolved value.
@@ -23,11 +23,11 @@ export interface UseMediaQueryOptions {
    * You can set this option to `true` if you use the returned value **only** client-side.
    * @default false
    */
-  noSsr?: boolean;
+  noSsr?: boolean | undefined;
   /**
    * You can provide your own implementation of `matchMedia`, it's used when rendering server-side.
    */
-  ssrMatchMedia?: (query: string) => { matches: boolean };
+  ssrMatchMedia?: ((query: string) => { matches: boolean }) | undefined;
 }
 
 // TODO React 17: Remove `useMediaQueryOld` once React 17 support is removed
@@ -118,7 +118,7 @@ function useMediaQueryNew(
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function unstable_createUseMediaQuery(params: { themeId?: string } = {}) {
+export function unstable_createUseMediaQuery(params: { themeId?: string | undefined } = {}) {
   const { themeId } = params;
   return function useMediaQuery<Theme = unknown>(
     queryInput: string | ((theme: Theme) => string),
@@ -134,12 +134,24 @@ export function unstable_createUseMediaQuery(params: { themeId?: string } = {}) 
     // Most of the time, the match media logic isn't central to people tests.
     const supportMatchMedia =
       typeof window !== 'undefined' && typeof window.matchMedia !== 'undefined';
+    const fallbackMatchMedia = supportMatchMedia ? window.matchMedia : null;
     const {
       defaultMatches = false,
-      matchMedia = supportMatchMedia ? window.matchMedia : null,
+      matchMedia: customMatchMedia,
       ssrMatchMedia = null,
       noSsr = false,
     } = getThemeProps({ name: 'MuiUseMediaQuery', props: options, theme });
+    const matchMedia = React.useMemo(() => {
+      if (customMatchMedia !== undefined) {
+        return customMatchMedia;
+      }
+
+      if (fallbackMatchMedia === null) {
+        return null;
+      }
+
+      return fallbackMatchMedia.bind(window);
+    }, [customMatchMedia, fallbackMatchMedia]);
 
     if (process.env.NODE_ENV !== 'production') {
       if (typeof queryInput === 'function' && theme === null) {

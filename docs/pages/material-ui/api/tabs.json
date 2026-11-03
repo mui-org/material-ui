@@ -26,12 +26,6 @@
       "type": { "name": "enum", "description": "'horizontal'<br>&#124;&nbsp;'vertical'" },
       "default": "'horizontal'"
     },
-    "ScrollButtonComponent": {
-      "type": { "name": "elementType" },
-      "default": "TabScrollButton",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots.scrollButtons</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "scrollButtons": {
       "type": { "name": "enum", "description": "'auto'<br>&#124;&nbsp;false<br>&#124;&nbsp;true" },
       "default": "'auto'"
@@ -47,7 +41,7 @@
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ endScrollButtonIcon?: elementType, EndScrollButtonIcon?: elementType, indicator?: elementType, list?: elementType, root?: elementType, scrollbar?: elementType, scrollButtons?: elementType, scroller?: elementType, startScrollButtonIcon?: elementType, StartScrollButtonIcon?: elementType }"
+        "description": "{ endScrollButtonIcon?: elementType, indicator?: elementType, list?: elementType, root?: elementType, scrollbar?: elementType, scrollButtons?: elementType, scroller?: elementType, startScrollButtonIcon?: elementType }"
       },
       "default": "{}"
     },
@@ -57,18 +51,6 @@
         "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
       },
       "additionalInfo": { "sx": true }
-    },
-    "TabIndicatorProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.indicator</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "TabScrollButtonProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.scrollButtons</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "textColor": {
       "type": {
@@ -153,20 +135,6 @@
       "isGlobal": false
     },
     {
-      "key": "flexContainer",
-      "className": "MuiTabs-flexContainer",
-      "description": "",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "flexContainerVertical",
-      "className": "MuiTabs-flexContainerVertical",
-      "description": "",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "hideScrollbar",
       "className": "MuiTabs-hideScrollbar",
       "description": "Styles applied to the tablist element if `variant=\"scrollable\"` and `visibleScrollbar={false}`.",
@@ -203,6 +171,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Tabs/Tabs.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>"
 }

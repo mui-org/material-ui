@@ -6,7 +6,7 @@
 
 You can add new keys to be processed by the `sx` prop by extending the `unstable_sxConfig` option inside the theme, as shown below:
 
-{{"demo": "ExtendTheSxProp.js"}}
+{{"component": "file://./demos/extend-the-sx-prop/index.ts"}}
 
 ## Override existing behavior
 
@@ -14,7 +14,7 @@ It is also possible to change some of the existing behavior of the `sx` prop.
 For example, in some design systems, the border radiuses need to be restricted to specific values, instead of allowing any number to be used—as is the default with MUI System.
 You can change this behavior by providing a custom config for the `borderRadius` property:
 
-{{"demo": "ChangeTheBehaviorSxProp.js"}}
+{{"component": "file://./demos/change-the-behavior-sx-prop/index.ts"}}
 
 ## API
 

@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import StepIcon, { stepIconClasses as classes } from '@mui/material/StepIcon';
 import SvgIcon from '@mui/material/SvgIcon';
 import describeConformance from '../../test/describeConformance';
@@ -15,23 +14,23 @@ describe('<StepIcon />', () => {
     muiName: 'MuiStepIcon',
     testVariantProps: { completed: true },
     refInstanceof: window.SVGSVGElement,
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   it('renders <CheckCircle> when completed', () => {
-    const { getAllByTestId } = render(<StepIcon completed icon={1} />);
+    render(<StepIcon completed icon={1} />);
 
-    expect(getAllByTestId('CheckCircleIcon')).to.have.length(1);
+    expect(screen.getAllByTestId('CheckCircleIcon')).to.have.length(1);
   });
 
   it('renders <Warning> when error occurred', () => {
-    const { getAllByTestId } = render(<StepIcon icon={1} error />);
-    expect(getAllByTestId('WarningIcon')).to.have.length(1);
+    render(<StepIcon icon={1} error />);
+    expect(screen.getAllByTestId('WarningIcon')).to.have.length(1);
   });
 
   it('contains text "3" when position is "3"', () => {
-    const { queryByText } = render(<StepIcon icon={3} />);
-    expect(queryByText('3')).not.to.equal(null);
+    render(<StepIcon icon={3} />);
+    expect(screen.queryByText('3')).not.to.equal(null);
   });
 
   it('renders the custom icon', () => {

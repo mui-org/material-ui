@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import Typography from '../components/Typography';
 import TextField from '../components/TextField';
 
@@ -50,14 +51,13 @@ export default function AppFooter() {
     >
       <Container sx={{ my: 8, display: 'flex' }}>
         <Grid container spacing={5}>
-          <Grid item xs={6} sm={4} md={3}>
-            <Grid
-              container
+          <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+            <Stack
               direction="column"
               spacing={2}
               sx={{ justifyContent: 'flex-end', height: 120 }}
             >
-              <Grid item sx={{ display: 'flex' }}>
+              <Grid sx={{ display: 'flex' }}>
                 <Box component="a" href="https://mui.com/" sx={iconStyle}>
                   <img
                     src="/static/themes/onepirate/appFooterFacebook.png"
@@ -68,12 +68,12 @@ export default function AppFooter() {
                   <img src="/static/themes/onepirate/appFooterTwitter.png" alt="X" />
                 </Box>
               </Grid>
-              <Grid item>
+              <Grid>
                 <Copyright />
               </Grid>
-            </Grid>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={4} md={2}>
+          <Grid size={{ xs: 6, sm: 4, md: 2 }}>
             <Typography variant="h6" marked="left" gutterBottom>
               Legal
             </Typography>
@@ -86,7 +86,7 @@ export default function AppFooter() {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={6} sm={8} md={4}>
+          <Grid size={{ xs: 6, sm: 8, md: 4 }}>
             <Typography variant="h6" marked="left" gutterBottom>
               Language
             </Typography>
@@ -94,8 +94,10 @@ export default function AppFooter() {
               select
               size="medium"
               variant="standard"
-              SelectProps={{
-                native: true,
+              slotProps={{
+                select: {
+                  native: true,
+                },
               }}
               sx={{ mt: 1, width: 150 }}
             >
@@ -106,7 +108,7 @@ export default function AppFooter() {
               ))}
             </TextField>
           </Grid>
-          <Grid item>
+          <Grid>
             <Typography variant="caption">
               {'Icons made by '}
               <Link href="https://www.freepik.com" rel="sponsored" title="Freepik">
@@ -121,7 +123,6 @@ export default function AppFooter() {
                 href="https://creativecommons.org/licenses/by/3.0/"
                 title="Creative Commons BY 3.0"
                 target="_blank"
-                rel="noopener noreferrer"
               >
                 CC 3.0 BY
               </Link>

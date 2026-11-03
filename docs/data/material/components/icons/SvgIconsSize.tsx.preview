@@ -1,4 +1,0 @@
-<HomeIcon fontSize="small" />
-<HomeIcon />
-<HomeIcon fontSize="large" />
-<HomeIcon sx={{ fontSize: 40 }} />

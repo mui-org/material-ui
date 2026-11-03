@@ -52,20 +52,6 @@
       "isGlobal": false
     },
     {
-      "key": "lineHorizontal",
-      "className": "MuiStepConnector-lineHorizontal",
-      "description": "Styles applied to the line element if `orientation=\"horizontal\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "lineVertical",
-      "className": "MuiStepConnector-lineVertical",
-      "description": "Styles applied to the line element if `orientation=\"vertical\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "root",
       "className": "MuiStepConnector-root",
       "description": "Styles applied to the root element.",
@@ -84,6 +70,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/StepConnector/StepConnector.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-stepper/\">Stepper</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-stepper/\">Stepper</a></li></ul>"
 }

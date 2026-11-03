@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { FieldRenderProps } from 'react-final-form';
-import TextField, { OnePirateTextFieldProps } from '../components/TextField';
+import type { FieldRenderProps } from 'react-final-form';
+import type { OnePirateTextFieldProps } from '../components/TextField';
+import TextField from '../components/TextField';
 
 function RFTextField(
   props: OnePirateTextFieldProps & FieldRenderProps<string, HTMLElement>,
@@ -8,7 +8,7 @@ function RFTextField(
   const {
     autoComplete,
     input,
-    InputProps,
+    slotProps,
     meta: { touched, error, submitError },
     ...other
   } = props;
@@ -18,11 +18,12 @@ function RFTextField(
       error={Boolean(!!touched && (error || submitError))}
       {...input}
       {...other}
-      InputProps={{
-        inputProps: {
+      slotProps={{
+        ...slotProps,
+        htmlInput: {
           autoComplete,
+          ...slotProps?.htmlInput,
         },
-        ...InputProps,
       }}
       helperText={touched ? error || submitError : ''}
       variant="standard"

@@ -1,42 +1,68 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
 import chainPropTypes from '@mui/utils/chainPropTypes';
 import HTMLElementType from '@mui/utils/HTMLElementType';
 import elementAcceptingRef from '@mui/utils/elementAcceptingRef';
 import getReactElementRef from '@mui/utils/getReactElementRef';
+import Transition from '../internal/Transition';
+import isLayoutSupported from '../utils/isLayoutSupported';
 import debounce from '../utils/debounce';
 import useForkRef from '../utils/useForkRef';
 import { useTheme } from '../zero-styled';
-import { reflow, getTransitionProps } from '../transitions/utils';
+import useReducedMotion from '../transitions/useReducedMotion';
+import {
+  normalizedTransitionCallback,
+  reflow,
+  getTransitionProps,
+  getTranslateOffsets,
+} from '../transitions/utils';
 import { ownerWindow } from '../utils';
 
-// Translate the node so it can't be seen on the screen.
-// Later, we're going to translate the node back to its original location with `none`.
-function getTranslateValue(direction, node, resolvedContainer) {
-  const rect = node.getBoundingClientRect();
+const hiddenStyles = { visibility: 'hidden' };
+const DEFAULT_TRANSLATE_OPTIONS = {};
+
+/**
+ * Detects SwipeableDrawer's active-swipe `translate(x, y)` transform.
+ * Keep this in sync with SwipeableDrawer.setPosition.
+ */
+function isGestureTranslate(transform) {
+  return typeof transform === 'string' && /^translate\(.+,\s*.+\)$/.test(transform);
+}
+
+// Move the node off-screen. Later we reset transform to `none` to slide it in.
+function getTranslateValue(
+  direction,
+  node,
+  resolvedContainer,
+  options = DEFAULT_TRANSLATE_OPTIONS,
+) {
+  const { resetInlineTransform = true } = options;
   const containerRect = resolvedContainer && resolvedContainer.getBoundingClientRect();
   const containerWindow = ownerWindow(node);
+  let rect;
   let transform;
 
-  if (node.fakeTransform) {
-    transform = node.fakeTransform;
-  } else {
+  if (resetInlineTransform) {
+    // Read layout from the element's natural position, not from a previous
+    // off-screen transform. Clear transition too, or the browser may report an
+    // in-between animated value during exit.
+    const previousTransform = node.style.transform;
+    const previousTransition = node.style.transition;
+    node.style.transition = '';
+    node.style.transform = '';
+    rect = node.getBoundingClientRect();
     const computedStyle = containerWindow.getComputedStyle(node);
-    transform =
-      computedStyle.getPropertyValue('-webkit-transform') ||
-      computedStyle.getPropertyValue('transform');
+    transform = computedStyle.getPropertyValue('transform');
+    node.style.transform = previousTransform;
+    node.style.transition = previousTransition;
+  } else {
+    rect = node.getBoundingClientRect();
+    const computedStyle = containerWindow.getComputedStyle(node);
+    transform = computedStyle.getPropertyValue('transform');
   }
 
-  let offsetX = 0;
-  let offsetY = 0;
-
-  if (transform && transform !== 'none' && typeof transform === 'string') {
-    const transformValues = transform.split('(')[1].split(')')[0].split(',');
-    offsetX = parseInt(transformValues[4], 10);
-    offsetY = parseInt(transformValues[5], 10);
-  }
+  const { offsetX, offsetY } = getTranslateOffsets(transform);
 
   if (direction === 'left') {
     if (containerRect) {
@@ -72,19 +98,17 @@ function resolveContainer(containerPropProp) {
   return typeof containerPropProp === 'function' ? containerPropProp() : containerPropProp;
 }
 
-export function setTranslateValue(direction, node, containerProp) {
+export function setTranslateValue(direction, node, containerProp, options) {
   const resolvedContainer = resolveContainer(containerProp);
-  const transform = getTranslateValue(direction, node, resolvedContainer);
+  const transform = getTranslateValue(direction, node, resolvedContainer, options);
 
   if (transform) {
-    node.style.webkitTransform = transform;
     node.style.transform = transform;
   }
 }
 
 /**
  * The Slide transition is used by the [Drawer](/material-ui/react-drawer/) component.
- * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
 const Slide = React.forwardRef(function Slide(props, ref) {
   const theme = useTheme();
@@ -103,6 +127,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
     appear = true,
     children,
     container: containerProp,
+    disablePrefersReducedMotion = false,
     direction = 'down',
     easing: easingProp = defaultEasing,
     in: inProp,
@@ -114,81 +139,87 @@ const Slide = React.forwardRef(function Slide(props, ref) {
     onExiting,
     style,
     timeout = defaultTimeout,
-    // eslint-disable-next-line react/prop-types
-    TransitionComponent = Transition,
     ...other
   } = props;
+  const reducedMotion = useReducedMotion(theme.motion.reducedMotion, disablePrefersReducedMotion);
 
   const childrenRef = React.useRef(null);
+  const preserveInlineTransformRef = React.useRef(false);
   const handleRef = useForkRef(getReactElementRef(children), childrenRef, ref);
 
-  const normalizedTransitionCallback = (callback) => (isAppearing) => {
-    if (callback) {
-      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-      if (isAppearing === undefined) {
-        callback(childrenRef.current);
-      } else {
-        callback(childrenRef.current, isAppearing);
-      }
-    }
-  };
-
-  const handleEnter = normalizedTransitionCallback((node, isAppearing) => {
+  const handleEnter = normalizedTransitionCallback(childrenRef, (node, isAppearing) => {
     setTranslateValue(direction, node, containerProp);
-    reflow(node);
+    if (!reducedMotion.shouldReduceMotion) {
+      reflow(node);
+    }
 
     if (onEnter) {
       onEnter(node, isAppearing);
     }
   });
 
-  const handleEntering = normalizedTransitionCallback((node, isAppearing) => {
+  const handleEntering = normalizedTransitionCallback(childrenRef, (node, isAppearing) => {
     const transitionProps = getTransitionProps(
       { timeout, style, easing: easingProp },
       {
         mode: 'enter',
       },
     );
-
-    node.style.webkitTransition = theme.transitions.create('-webkit-transform', {
-      ...transitionProps,
+    const transitionTiming = reducedMotion.getTransitionTiming({
+      duration: transitionProps.duration,
+      delay: transitionProps.delay,
     });
 
     node.style.transition = theme.transitions.create('transform', {
-      ...transitionProps,
+      duration: transitionTiming.duration,
+      easing: transitionProps.easing,
+      delay: transitionTiming.delay,
     });
 
-    node.style.webkitTransform = 'none';
     node.style.transform = 'none';
     if (onEntering) {
       onEntering(node, isAppearing);
     }
   });
 
-  const handleEntered = normalizedTransitionCallback(onEntered);
-  const handleExiting = normalizedTransitionCallback(onExiting);
+  const handleEntered = normalizedTransitionCallback(childrenRef, onEntered);
+  const handleExiting = normalizedTransitionCallback(childrenRef, onExiting);
 
-  const handleExit = normalizedTransitionCallback((node) => {
+  const handleExit = normalizedTransitionCallback(childrenRef, (node) => {
     const transitionProps = getTransitionProps(
       { timeout, style, easing: easingProp },
       {
         mode: 'exit',
       },
     );
+    const transitionTiming = reducedMotion.getTransitionTiming({
+      duration: transitionProps.duration,
+      delay: transitionProps.delay,
+    });
 
-    node.style.webkitTransition = theme.transitions.create('-webkit-transform', transitionProps);
-    node.style.transition = theme.transitions.create('transform', transitionProps);
+    node.style.transition = theme.transitions.create('transform', {
+      duration: transitionTiming.duration,
+      easing: transitionProps.easing,
+      delay: transitionTiming.delay,
+    });
 
-    setTranslateValue(direction, node, containerProp);
+    const preserveInlineTransform = isGestureTranslate(node.style.transform);
+    preserveInlineTransformRef.current = preserveInlineTransform;
+
+    // Preserve SwipeableDrawer's inline gesture transform during exit. Slide's
+    // own off-screen translateX/Y transforms still use the reset path.
+    setTranslateValue(direction, node, containerProp, {
+      resetInlineTransform: !preserveInlineTransform,
+    });
 
     if (onExit) {
       onExit(node);
     }
   });
 
-  const handleExited = normalizedTransitionCallback((node) => {
-    // No need for transitions when the component is hidden
-    node.style.webkitTransition = '';
+  const handleExited = normalizedTransitionCallback(childrenRef, (node) => {
+    preserveInlineTransformRef.current = false;
+    // Hidden nodes stay off-screen without animating.
     node.style.transition = '';
 
     if (onExited) {
@@ -196,12 +227,11 @@ const Slide = React.forwardRef(function Slide(props, ref) {
     }
   });
 
-  const handleAddEndListener = (next) => {
-    if (addEndListener) {
-      // Old call signature before `react-transition-group` implemented `nodeRef`
-      addEndListener(childrenRef.current, next);
-    }
-  };
+  const handleAddEndListener = addEndListener
+    ? (next) => {
+        addEndListener(childrenRef.current, next);
+      }
+    : undefined;
 
   const updatePosition = React.useCallback(() => {
     if (childrenRef.current) {
@@ -210,7 +240,7 @@ const Slide = React.forwardRef(function Slide(props, ref) {
   }, [direction, containerProp]);
 
   React.useEffect(() => {
-    // Skip configuration where the position is screen size invariant.
+    // Skip resize listeners when the off-screen position does not depend on screen size.
     if (inProp || direction === 'down' || direction === 'right') {
       return undefined;
     }
@@ -230,15 +260,15 @@ const Slide = React.forwardRef(function Slide(props, ref) {
   }, [direction, inProp, containerProp]);
 
   React.useEffect(() => {
-    if (!inProp) {
-      // We need to update the position of the drawer when the direction change and
-      // when it's hidden.
+    if (!inProp && !preserveInlineTransformRef.current) {
+      // While hidden, keep the child at the correct off-screen position if
+      // direction or container changes.
       updatePosition();
     }
   }, [inProp, updatePosition]);
 
   return (
-    <TransitionComponent
+    <Transition
       nodeRef={childrenRef}
       onEnter={handleEnter}
       onEntered={handleEntered}
@@ -249,22 +279,32 @@ const Slide = React.forwardRef(function Slide(props, ref) {
       addEndListener={handleAddEndListener}
       appear={appear}
       in={inProp}
+      reduceMotion={reducedMotion.shouldReduceMotion}
       timeout={timeout}
       {...other}
     >
-      {/* Ensure "ownerState" is not forwarded to the child DOM element when a direct HTML element is used. This avoids unexpected behavior since "ownerState" is intended for internal styling, component props and not as a DOM attribute. */}
       {(state, { ownerState, ...restChildProps }) => {
+        // Do not pass ownerState to a DOM child. ownerState is only for
+        // Material UI styling, and React would treat it as an invalid DOM attribute.
+        let childStyle;
+        if (state === 'exited' && !inProp) {
+          childStyle =
+            style || children.props.style
+              ? { visibility: 'hidden', ...style, ...children.props.style }
+              : hiddenStyles;
+        } else if (style && children.props.style) {
+          childStyle = { ...style, ...children.props.style };
+        } else {
+          childStyle = style || children.props.style;
+        }
+
         return React.cloneElement(children, {
           ref: handleRef,
-          style: {
-            visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
-            ...style,
-            ...children.props.style,
-          },
+          style: childStyle,
           ...restChildProps,
         });
       }}
-    </TransitionComponent>
+    </Transition>
   );
 });
 
@@ -274,9 +314,12 @@ Slide.propTypes /* remove-proptypes */ = {
   // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
   // └─────────────────────────────────────────────────────────────────────┘
   /**
-   * Add a custom transition end trigger. Called with the transitioning DOM
-   * node and a done callback. Allows for more fine grained transition end
-   * logic. Note: Timeouts are still used as a fallback if provided.
+   * Add a custom transition end trigger.
+   * Use it when you need custom logic to decide when the transition has ended.
+   * Note: Timeouts are still used as a fallback if provided.
+   *
+   * @param {HTMLElement} node The transitioning DOM node.
+   * @param {Function} done Call this when the transition has finished.
    */
   addEndListener: PropTypes.func,
   /**
@@ -300,20 +343,22 @@ Slide.propTypes /* remove-proptypes */ = {
       if (resolvedContainer && resolvedContainer.nodeType === 1) {
         const box = resolvedContainer.getBoundingClientRect();
 
-        if (
-          process.env.NODE_ENV !== 'test' &&
-          box.top === 0 &&
-          box.left === 0 &&
-          box.right === 0 &&
-          box.bottom === 0
-        ) {
-          return new Error(
-            [
-              'MUI: The `container` prop provided to the component is invalid.',
-              'The anchor element should be part of the document layout.',
-              "Make sure the element is present in the document or that it's not display none.",
-            ].join('\n'),
-          );
+        if (process.env.NODE_ENV !== 'production') {
+          if (
+            isLayoutSupported() &&
+            box.top === 0 &&
+            box.left === 0 &&
+            box.right === 0 &&
+            box.bottom === 0
+          ) {
+            return new Error(
+              [
+                'MUI: The `container` prop provided to the component is invalid.',
+                'The anchor element should be part of the document layout.',
+                "Make sure the element is present in the document or that it's not display none.",
+              ].join('\n'),
+            );
+          }
         }
       } else if (
         !resolvedContainer ||
@@ -337,6 +382,11 @@ Slide.propTypes /* remove-proptypes */ = {
    * @default 'down'
    */
   direction: PropTypes.oneOf(['down', 'left', 'right', 'up']),
+  /**
+   * If `true`, the transition ignores `theme.motion.reducedMotion` and keeps its normal timing.
+   * @default false
+   */
+  disablePrefersReducedMotion: PropTypes.bool,
   /**
    * The transition timing function.
    * You may specify a single easing or a object containing enter and exit values.

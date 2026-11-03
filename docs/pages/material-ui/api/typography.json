@@ -18,12 +18,6 @@
     "component": { "type": { "name": "elementType" } },
     "gutterBottom": { "type": { "name": "bool" }, "default": "false" },
     "noWrap": { "type": { "name": "bool" }, "default": "false" },
-    "paragraph": {
-      "type": { "name": "bool" },
-      "default": "false",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>component</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "sx": {
       "type": {
         "name": "union",
@@ -158,13 +152,6 @@
       "isGlobal": false
     },
     {
-      "key": "paragraph",
-      "className": "MuiTypography-paragraph",
-      "description": "Styles applied to the root element if `paragraph={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "root",
       "className": "MuiTypography-root",
       "description": "Styles applied to the root element.",
@@ -189,6 +176,5 @@
   "forwardsRefTo": "HTMLParagraphElement",
   "filename": "/packages/mui-material/src/Typography/Typography.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-breadcrumbs/\">Breadcrumbs</a></li>\n<li><a href=\"/material-ui/react-typography/\">Typography</a></li></ul>",
-  "cssComponent": true
+  "demos": "<ul><li><a href=\"/material-ui/react-breadcrumbs/\">Breadcrumbs</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li>\n<li><a href=\"/material-ui/react-typography/\">Typography</a></li></ul>"
 }

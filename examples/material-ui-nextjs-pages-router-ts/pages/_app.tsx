@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
-import { AppProps } from 'next/app';
-import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
+import type { AppProps } from 'next/app';
+import { AppCacheProvider } from '@mui/material-nextjs/v16-pagesRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '../src/theme';

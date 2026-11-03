@@ -1,13 +1,12 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
-import { Link } from '@mui/docs/Link';
+import { Link } from '@mui/internal-core-docs/Link';
 import GradientText from 'docs/src/components/typography/GradientText';
-import ROUTES from 'docs/src/route';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 
 export default function AboutEnd() {
   return (
@@ -29,7 +28,7 @@ export default function AboutEnd() {
               <br /> of tools for UI development
             </Typography>
           }
-          description="Together, we are enabling developers & designers to bring stunning UIs to life with unrivalled speed and ease."
+          description="We give developers and designers the tools to bring stunning user interfaces to life with unrivaled speed and ease."
         />
         <Button
           component={Link}

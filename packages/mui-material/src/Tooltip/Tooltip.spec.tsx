@@ -1,7 +1,19 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import { mergeSlotProps } from '@mui/material/utils';
-import Tooltip, { TooltipProps } from '@mui/material/Tooltip';
+import type { TooltipProps } from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
+
+// slotProps.transition should reject unknown props
+<Tooltip
+  title="Hello"
+  slotProps={{
+    // @ts-expect-error — unknown props should be rejected
+    transition: { randomInvalidProp: 'test' },
+  }}
+>
+  <button type="button">Hover or touch me</button>
+</Tooltip>;
 
 <Tooltip title="Hello">
   <button type="button">Hover or touch me</button>

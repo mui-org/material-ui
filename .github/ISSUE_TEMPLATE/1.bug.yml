@@ -1,5 +1,5 @@
 name: Bug report 🐛
-description: Create a bug report for Material UI, MUI System, or Joy UI.
+description: Create a bug report for Material UI or MUI System.
 labels: ['status: waiting for maintainer']
 body:
   - type: markdown

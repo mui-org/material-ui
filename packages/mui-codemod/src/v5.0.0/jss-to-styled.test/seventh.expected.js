@@ -86,7 +86,7 @@ function Iframe(props) {
   }, []);
 
   return (
-    (<Root>
+    <Root>
       {loaded === false ? (
         <div className={classes.loader}>
           <CircularProgress />
@@ -109,7 +109,7 @@ function Iframe(props) {
         frameBorder="0"
         {...props}
       />
-    </Root>)
+    </Root>
   );
 }
 

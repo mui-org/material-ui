@@ -1,13 +1,10 @@
 fn({
   MuiTablePagination: {
     defaultProps: {
-      slots: {
-        actions: 'div'
-      },
-
+      ActionsComponent: 'div',
       slotProps: {
         select: { native: true }
-      }
+      },
     },
   },
 });
@@ -15,6 +12,8 @@ fn({
 fn({
   MuiTablePagination: {
     defaultProps: {
+      ActionsComponent: 'div',
+
       slotProps: {
         root: { id: 'test' },
         select: { native: true }
@@ -22,7 +21,6 @@ fn({
 
       slots: {
         root: 'div',
-        actions: 'div'
       }
     },
   },

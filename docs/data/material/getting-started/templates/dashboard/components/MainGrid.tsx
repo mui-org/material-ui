@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -10,7 +9,8 @@ import CustomizedDataGrid from './CustomizedDataGrid';
 import HighlightedCard from './HighlightedCard';
 import PageViewsBarChart from './PageViewsBarChart';
 import SessionsChart from './SessionsChart';
-import StatCard, { StatCardProps } from './StatCard';
+import type { StatCardProps } from './StatCard';
+import StatCard from './StatCard';
 
 const data: StatCardProps[] = [
   {
@@ -81,7 +81,10 @@ export default function MainGrid() {
           <CustomizedDataGrid />
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
-          <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
+          <Stack
+            direction={{ xs: 'column', sm: 'row', lg: 'column' }}
+            sx={{ gap: 2 }}
+          >
             <CustomizedTreeView />
             <ChartUserByCountry />
           </Stack>

@@ -1,6 +1,0 @@
-<Badge color="secondary" badgeContent={0}>
-  <MailIcon />
-</Badge>
-<Badge color="secondary" badgeContent={0} showZero>
-  <MailIcon />
-</Badge>

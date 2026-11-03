@@ -1,23 +1,8 @@
 import * as React from 'react';
-import ApiPage from 'docs/src/modules/components/ApiPage';
-import mapApiPageTranslations from 'docs/src/modules/utils/mapApiPageTranslations';
+import { ApiPage } from '@mui/internal-core-docs/ApiPage';
+import descriptions from 'docs/translations/api-docs/linear-progress/linear-progress.json';
 import jsonPageContent from './linear-progress.json';
 
-export default function Page(props) {
-  const { descriptions, pageContent } = props;
-  return <ApiPage descriptions={descriptions} pageContent={pageContent} />;
+export default function Page() {
+  return <ApiPage descriptions={descriptions} pageContent={jsonPageContent} />;
 }
-
-Page.getInitialProps = () => {
-  const req = require.context(
-    'docs/translations/api-docs/linear-progress',
-    false,
-    /\.\/linear-progress.*.json$/,
-  );
-  const descriptions = mapApiPageTranslations(req);
-
-  return {
-    descriptions,
-    pageContent: jsonPageContent,
-  };
-};

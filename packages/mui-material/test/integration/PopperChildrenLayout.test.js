@@ -1,7 +1,7 @@
+import { beforeEach, afterEach, describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
-import { createRenderer } from '@mui/internal-test-utils';
+import { createRenderer, isJsdom } from '@mui/internal-test-utils';
 import Collapse from '@mui/material/Collapse';
 import Fade from '@mui/material/Fade';
 import Grow from '@mui/material/Grow';
@@ -9,18 +9,10 @@ import Slide from '@mui/material/Slide';
 import Zoom from '@mui/material/Zoom';
 import Popper from '@mui/material/Popper';
 
-describe('<Popper />', () => {
-  let isSafari;
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+describe.skipIf(isJsdom())('<Popper />', () => {
   const { render } = createRenderer();
-
-  before(function beforeHook() {
-    // JSDOM has neither layout nor window.scrollTo
-    if (/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
-
-    isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  });
 
   let originalScrollX;
   let originalScrollY;

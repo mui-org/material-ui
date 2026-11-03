@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import TableSortLabel, { tableSortLabelClasses as classes } from '@mui/material/TableSortLabel';
 import ButtonBase from '@mui/material/ButtonBase';
 import { createSvgIcon } from '@mui/material/utils';
@@ -19,7 +18,7 @@ describe('<TableSortLabel />', () => {
     testVariantProps: { variant: 'foo' },
     testDeepOverrides: { slotName: 'icon', slotClassName: classes.icon },
     refInstanceof: window.HTMLSpanElement,
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
     slots: {
       icon: {
         expectedClassName: classes.icon,
@@ -48,9 +47,6 @@ describe('<TableSortLabel />', () => {
 
     it('when given direction desc should have desc direction class', () => {
       const { container } = render(<TableSortLabel direction="desc" />);
-      const icon = container.querySelector(`.${classes.icon}`);
-      expect(icon).not.to.have.class(classes.iconDirectionAsc);
-      expect(icon).to.have.class(classes.iconDirectionDesc);
       expect(container.firstChild).to.have.class(classes.directionDesc);
       expect(container.querySelector(`.${classes.directionDesc} > .${classes.icon}`)).not.equal(
         null,
@@ -59,9 +55,6 @@ describe('<TableSortLabel />', () => {
 
     it('when given direction asc should have asc direction class', () => {
       const { container } = render(<TableSortLabel direction="asc" />);
-      const icon = container.querySelector(`.${classes.icon}`);
-      expect(icon).not.to.have.class(classes.iconDirectionDesc);
-      expect(icon).to.have.class(classes.iconDirectionAsc);
       expect(container.firstChild).to.have.class(classes.directionAsc);
       expect(container.querySelector(`.${classes.directionAsc} > .${classes.icon}`)).not.equal(
         null,
@@ -69,8 +62,8 @@ describe('<TableSortLabel />', () => {
     });
 
     it('should accept a custom icon for the sort icon', () => {
-      const { getAllByTestId } = render(<TableSortLabel IconComponent={SortIcon} />);
-      expect(getAllByTestId('SortIcon')).not.to.equal(null);
+      render(<TableSortLabel IconComponent={SortIcon} />);
+      expect(screen.getAllByTestId('SortIcon')).not.to.equal(null);
     });
   });
 
@@ -91,6 +84,15 @@ describe('<TableSortLabel />', () => {
       const { container } = render(<TableSortLabel active hideSortIcon />);
       const iconChildren = container.querySelectorAll(`.${classes.icon}`);
       expect(iconChildren.length).to.equal(1);
+    });
+  });
+
+  describe('prop: nativeButton', () => {
+    it('renders as a span with pseudo-button semantics by default', () => {
+      render(<TableSortLabel />);
+
+      const label = screen.getByRole('button');
+      expect(label).to.have.tagName('SPAN');
     });
   });
 });

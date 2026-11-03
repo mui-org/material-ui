@@ -1,9 +1,0 @@
-<FormControl>
-  <FormLabel>Label</FormLabel>
-  <Input
-    value={value}
-    onChange={(event) => setValue(event.target.value)}
-    placeholder="Placeholder"
-    slotProps={{ input: { component: TextMaskAdapter } }}
-  />
-</FormControl>

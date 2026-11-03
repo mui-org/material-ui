@@ -1,4 +1,4 @@
-/* eslint-disable material-ui/no-empty-box */
+/* eslint-disable mui/material-ui-no-empty-box */
 import * as React from 'react';
 import MuiPaper from '@mui/material/Paper';
 import { styled, css, ThemeProvider, createTheme } from '@mui/material/styles';
@@ -174,8 +174,8 @@ function variantsAPI() {
     ],
   }));
 
-  // @ts-expect-error the API is not valid for CSS properties
   const WrongUsage = styled('div')<{ foo?: string; bar?: number }>({
+    // @ts-expect-error the API is not valid for CSS properties
     color: [
       {
         props: { foo: 'a' },

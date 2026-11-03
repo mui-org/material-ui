@@ -15,27 +15,28 @@ export interface PaperOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<PaperClasses>;
+  classes?: Partial<PaperClasses> | undefined;
   /**
    * Shadow depth, corresponds to `dp` in the spec.
    * It accepts values between 0 and 24 inclusive.
    * @default 1
    */
-  elevation?: number;
+  elevation?: number | undefined;
   /**
    * If `true`, rounded corners are disabled.
    * @default false
    */
-  square?: boolean;
+  square?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The variant to use.
    * @default 'elevation'
    */
-  variant?: OverridableStringUnion<'elevation' | 'outlined', PaperPropsVariantOverrides>;
+  variant?:
+    OverridableStringUnion<'elevation' | 'outlined', PaperPropsVariantOverrides> | undefined;
 }
 
 export interface PaperTypeMap<
@@ -50,12 +51,13 @@ export interface PaperTypeMap<
  *
  * Demos:
  *
- * - [Card](https://mui.com/material-ui/react-card/)
- * - [Paper](https://mui.com/material-ui/react-paper/)
+ * - [Card](https://next.mui.com/material-ui/react-card/)
+ * - [Menubar](https://next.mui.com/material-ui/react-menubar/)
+ * - [Paper](https://next.mui.com/material-ui/react-paper/)
  *
  * API:
  *
- * - [Paper API](https://mui.com/material-ui/api/paper/)
+ * - [Paper API](https://next.mui.com/material-ui/api/paper/)
  */
 declare const Paper: OverridableComponent<PaperTypeMap>;
 
@@ -68,7 +70,7 @@ export type PaperProps<
   RootComponent extends React.ElementType = PaperTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<PaperTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default Paper;

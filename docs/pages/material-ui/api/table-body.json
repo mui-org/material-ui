@@ -30,6 +30,5 @@
   "forwardsRefTo": "HTMLTableSectionElement",
   "filename": "/packages/mui-material/src/TableBody/TableBody.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-table/\">Table</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-table/\">Table</a></li></ul>"
 }

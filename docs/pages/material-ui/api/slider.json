@@ -11,24 +11,6 @@
       },
       "default": "'primary'"
     },
-    "components": {
-      "type": {
-        "name": "shape",
-        "description": "{ Input?: elementType, Mark?: elementType, MarkLabel?: elementType, Rail?: elementType, Root?: elementType, Thumb?: elementType, Track?: elementType, ValueLabel?: elementType }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ input?: func<br>&#124;&nbsp;object, mark?: func<br>&#124;&nbsp;object, markLabel?: func<br>&#124;&nbsp;object, rail?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object, thumb?: func<br>&#124;&nbsp;object, track?: func<br>&#124;&nbsp;object, valueLabel?: func<br>&#124;&nbsp;{ children?: element, className?: string, open?: bool, style?: object, value?: node, valueLabelDisplay?: 'auto'<br>&#124;&nbsp;'off'<br>&#124;&nbsp;'on' } }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "defaultValue": {
       "type": { "name": "union", "description": "Array&lt;number&gt;<br>&#124;&nbsp;number" }
     },
@@ -133,6 +115,56 @@
     "import Slider from '@mui/material/Slider';",
     "import { Slider } from '@mui/material';"
   ],
+  "slots": [
+    {
+      "name": "root",
+      "description": "The component that renders the root.",
+      "default": "'span'",
+      "class": "MuiSlider-root"
+    },
+    {
+      "name": "track",
+      "description": "The component that renders the track.",
+      "default": "'span'",
+      "class": "MuiSlider-track"
+    },
+    {
+      "name": "rail",
+      "description": "The component that renders the rail.",
+      "default": "'span'",
+      "class": "MuiSlider-rail"
+    },
+    {
+      "name": "thumb",
+      "description": "The component that renders the thumb.",
+      "default": "'span'",
+      "class": "MuiSlider-thumb"
+    },
+    {
+      "name": "mark",
+      "description": "The component that renders the mark.",
+      "default": "'span'",
+      "class": "MuiSlider-mark"
+    },
+    {
+      "name": "markLabel",
+      "description": "The component that renders the mark label.",
+      "default": "'span'",
+      "class": "MuiSlider-markLabel"
+    },
+    {
+      "name": "valueLabel",
+      "description": "The component that renders the value label.",
+      "default": "SliderValueLabel",
+      "class": "MuiSlider-valueLabel"
+    },
+    {
+      "name": "input",
+      "description": "The component that renders the input.",
+      "default": "'input'",
+      "class": null
+    }
+  ],
   "classes": [
     {
       "key": "active",
@@ -195,12 +227,6 @@
       "isGlobal": true
     },
     {
-      "key": "mark",
-      "className": "MuiSlider-mark",
-      "description": "Styles applied to the mark element.",
-      "isGlobal": false
-    },
-    {
       "key": "markActive",
       "className": "MuiSlider-markActive",
       "description": "Styles applied to the mark element if active (depending on the value).",
@@ -213,94 +239,15 @@
       "isGlobal": false
     },
     {
-      "key": "markLabel",
-      "className": "MuiSlider-markLabel",
-      "description": "Styles applied to the mark label element.",
-      "isGlobal": false
-    },
-    {
       "key": "markLabelActive",
       "className": "MuiSlider-markLabelActive",
       "description": "Styles applied to the mark label element if active (depending on the value).",
       "isGlobal": false
     },
     {
-      "key": "rail",
-      "className": "MuiSlider-rail",
-      "description": "Styles applied to the rail element.",
-      "isGlobal": false
-    },
-    {
-      "key": "root",
-      "className": "MuiSlider-root",
-      "description": "Styles applied to the root element.",
-      "isGlobal": false
-    },
-    {
       "key": "sizeSmall",
       "className": "MuiSlider-sizeSmall",
       "description": "Styles applied to the root element if `size=\"small\"`.",
-      "isGlobal": false
-    },
-    {
-      "key": "thumb",
-      "className": "MuiSlider-thumb",
-      "description": "Styles applied to the thumb element.",
-      "isGlobal": false
-    },
-    {
-      "key": "thumbColorError",
-      "className": "MuiSlider-thumbColorError",
-      "description": "Styles applied to the thumb element if `color=\"error\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "thumbColorInfo",
-      "className": "MuiSlider-thumbColorInfo",
-      "description": "Styles applied to the thumb element if `color=\"info\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "thumbColorPrimary",
-      "className": "MuiSlider-thumbColorPrimary",
-      "description": "Styles applied to the thumb element if `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "thumbColorSecondary",
-      "className": "MuiSlider-thumbColorSecondary",
-      "description": "Styles applied to the thumb element if `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "thumbColorSuccess",
-      "className": "MuiSlider-thumbColorSuccess",
-      "description": "Styles applied to the thumb element if `color=\"success\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "thumbColorWarning",
-      "className": "MuiSlider-thumbColorWarning",
-      "description": "Styles applied to the thumb element if `color=\"warning\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "thumbSizeSmall",
-      "className": "MuiSlider-thumbSizeSmall",
-      "description": "Styles applied to the thumb element if `size=\"small\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "track",
-      "className": "MuiSlider-track",
-      "description": "Styles applied to the track element.",
       "isGlobal": false
     },
     {
@@ -313,12 +260,6 @@
       "key": "trackInverted",
       "className": "MuiSlider-trackInverted",
       "description": "Styles applied to the root element if `track=\"inverted\"`.",
-      "isGlobal": false
-    },
-    {
-      "key": "valueLabel",
-      "className": "MuiSlider-valueLabel",
-      "description": "Styles applied to the thumb label element.",
       "isGlobal": false
     },
     {
@@ -352,6 +293,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/Slider/Slider.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-slider/\">Slider</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-slider/\">Slider</a></li></ul>"
 }

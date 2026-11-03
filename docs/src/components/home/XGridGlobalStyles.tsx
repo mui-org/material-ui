@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { alpha } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 

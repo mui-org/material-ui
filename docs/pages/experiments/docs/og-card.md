@@ -9,7 +9,7 @@ The URL `mui.com/edge-functions/og-image` can be queried with 4 search parameter
 - `product`: the text element displayed next to the MUI logo
 - `title`: the title which can contains `\*` to delimit the highlighted (in blue) text sections
 - `description`: a paragraph added under the main title
-- `authors`: the GitHub username of the authors. It should be divided by a coma.
+- `authors`: the GitHub usernames of the authors, separated by commas
 
 ## Usage with Markdown
 

@@ -55,7 +55,7 @@ This release features some major highlights:
   - [Unstyled components and hooks](#unstyled-components-and-hooks)
   - [Second design system](#second-design-system)
   - [MUI X](#mui-x)
-  - [Design Kits](#design-kits-1)
+  - [Design Kits](#design-kits-2)
 - [Thank you](#thank-you)
 
 ## High-level goals for v5
@@ -197,7 +197,7 @@ For this reason, v5 comes with the capability to extend the built-in behavior of
 This was one of the most upvoted GitHub issues: [#13875](https://github.com/mui/material-ui/issues/13875).
 In practice, this change makes the MUI Core components extendable placeholders.
 
-**First**, you can use the [existing style mapping](/material-ui/customization/palette/#custom-colors) of the components.
+**First**, you can use the [existing style mapping](https://v5.mui.com/material-ui/customization/palette/#custom-colors) of the components.
 For example, you can add a new `neutral` color to the palette, and the Button computes the right derivative colors.
 
 ```jsx
@@ -340,12 +340,12 @@ While the effort is still in alpha, you can already find the first building bloc
 
 So far it features:
 
-- [Autocomplete](/material-ui/react-autocomplete/#useautocomplete)
-- [Button](/material-ui/react-button/#unstyled)
-- [Modal](/material-ui/react-modal/#unstyled)
-- [Pagination](/material-ui/react-pagination/#usepagination)
-- [Slider](/material-ui/react-slider/#unstyled)
-- [Switch](/material-ui/react-switch/#unstyled)
+- [Autocomplete](https://v5.mui.com/material-ui/react-autocomplete/#useautocomplete)
+- [Button](https://v5.mui.com/material-ui/react-button/#unstyled)
+- [Modal](https://v5.mui.com/material-ui/react-modal/#unstyled)
+- [Pagination](https://v5.mui.com/material-ui/react-pagination/#usepagination)
+- [Slider](https://v5.mui.com/material-ui/react-slider/#unstyled)
+- [Switch](https://v5.mui.com/material-ui/react-switch/#unstyled)
 
 ```jsx
 const CustomButton = React.forwardRef(function CustomButton(
@@ -464,7 +464,7 @@ MUI X embodies our initiative to solve the main pain point developers have repo
 We have heard you, you want **more components**.
 
 But, in practice, we wouldn't probably cover all the possible components you might need. It would be a titanic task.
-Instead, we are focusing on the **hardest** and **most requested** components, leaving the long tail to our [community of contributors](/material-ui/discover-more/related-projects/#supplementary-components).
+Instead, we are focusing on the **hardest** and **most requested** components, leaving the long tail to our [community of contributors](https://v5.mui.com/material-ui/discover-more/related-projects/#supplementary-components).
 
 We started working on this effort over a year ago, in a new GitHub repository: [mui/mui-x](https://github.com/mui/mui-x).
 You might wonder, why work on it as a different product? Building a great data grid or charting solution takes a considerable amount of time. Taking on the challenge of developing them required us to think about a different monetization strategy and we quickly realized that the team working on MUI X would need to become, at least, two times larger than the one working on MUI Core, which already has the community contribution.
@@ -498,13 +498,13 @@ To achieve this we have a twin licensing model.
 The `DataGrid` component is available under an MIT license for the features that can be relatively easily implemented, and that can be sustained with an open-source model.
 The `DataGridPro` on the other hand is available under a paid commercial license for the more advanced features.
 
-<a href="/x/react-data-grid/demo/">
+<a href="/x/react-data-grid/features/">
   <video autoplay muted loop playsinline width="800" height="501">
     <source src="/static/blog/mui-core-v5/data-grid.mp4" type="video/mp4" />
   </video>
 </a>
 
-<a href="/x/react-data-grid/demo/"><p class="blog-description">Check the Data Grid demo here.</p></a>
+<a href="/x/react-data-grid/features/"><p class="blog-description">Check the Data Grid demo here.</p></a>
 
 ### Date Picker
 
@@ -526,25 +526,25 @@ This release comes with eight new components!
 The development of the Grid was mostly put on hold for the last three years, blocked by the size of the statically generated CSS with JSS.
 The [migration to emotion](#migration-from-jss-to-emotion) has unlocked the following frequently requested changes:
 
-Support for [row & column](/material-ui/react-grid-legacy/#row-amp-column-spacing) spacing:
+Support for [row & column](https://v5.mui.com/material-ui/react-grid-legacy/#row-column-spacing) spacing:
 
 ```jsx
 <Grid container rowSpacing={1} columnSpacing={2} />
 ```
 
-Support for [responsive values](/material-ui/react-grid-legacy/#responsive-values) on all the props:
+Support for [responsive values](https://v5.mui.com/material-ui/react-grid-legacy/#responsive-values) on all the props:
 
 ```jsx
 <Grid container spacing={{ xs: 2, md: 3 }} />
 ```
 
-Support for a different [number of columns](/material-ui/react-grid-legacy/#columns) than 12:
+Support for a different [number of columns](https://v5.mui.com/material-ui/react-grid-legacy/#columns) than 12:
 
 ```jsx
 <Grid container columns={16}>
 ```
 
-An alternative implementation that uses [CSS grid](/material-ui/react-grid-legacy/#css-grid-layout):
+An alternative implementation that uses [CSS grid](https://v5.mui.com/material-ui/react-grid-legacy/#css-grid-layout):
 
 ```jsx
 <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -566,7 +566,7 @@ An alternative implementation that uses [CSS grid](/material-ui/react-grid-legac
 ### More Material Design icons
 
 The Material Design team at Google has released 600 new icons in five different themes since we released v4.
-We have made them [available](/material-ui/material-icons/) in the `@mui/icons-material` package.
+We have made them [available](https://v5.mui.com/material-ui/material-icons/) in the `@mui/icons-material` package.
 
 ### Stack
 
@@ -580,30 +580,30 @@ to handle one-dimensional layouts. It's's similar to how Figma handles auto-layo
 > Note that you might already be using `<Box display="flex" gap={1}>` to solve the same problem,
 > however, [browser support](https://caniuse.com/flexbox-gap) for the flexbox `gap` CSS property is lacking in Safari.
 
-You can find [more details](/material-ui/react-stack/) in the documentation.
+You can find [more details](https://v5.mui.com/material-ui/react-stack/) in the documentation.
 
 ### Promotion from the lab
 
 We have moved six components from the lab to the main component package, after over two years iterating on feedback:
 
-- [Autocomplete](/material-ui/react-autocomplete/)
-- [Pagination](/material-ui/react-pagination/)
-- [Rating](/material-ui/react-rating/)
-- [Skeleton](/material-ui/react-skeleton/)
-- [Speed Dial](/material-ui/react-speed-dial/)
-- [Toggle Button](/material-ui/react-toggle-button/)
+- [Autocomplete](https://v5.mui.com/material-ui/react-autocomplete/)
+- [Pagination](https://v5.mui.com/material-ui/react-pagination/)
+- [Rating](https://v5.mui.com/material-ui/react-rating/)
+- [Skeleton](https://v5.mui.com/material-ui/react-skeleton/)
+- [Speed Dial](https://v5.mui.com/material-ui/react-speed-dial/)
+- [Toggle Button](https://v5.mui.com/material-ui/react-toggle-button/)
 
 ### New in the lab
 
 The lab hosts the incubator components that are not yet ready to move to the core.
 The main difference between the lab and the core is how the components are versioned.
-Having a separate lab package allows us to release breaking changes when necessary while the core package follows a [slower cadence](https://mui.com/versions/#release-frequency).
+Having a separate lab package allows us to release breaking changes when necessary while the core package follows a [slower cadence](https://mui.com/material-ui/getting-started/versions/#release-frequency).
 
 The following components are now available in the lab:
 
 - [LoadingButton](https://v5.mui.com/material-ui/react-button/#loading-button). It does what you would expect. It renders the `Button` with a configurable loading/pending state.
 - [FocusTrap](https://v6.mui.com/base-ui/react-focus-trap/). This component traps the keyboard focus within a DOM node. For example, it's used by the Modal to prevent tabbing out of the component for accessibility reasons.
-- [Masonry](/material-ui/react-masonry/). One great use case for this component is when using the `Grid` component leads to wasted space. It's frequently used in dashboards.
+- [Masonry](https://v5.mui.com/material-ui/react-masonry/). One great use case for this component is when using the `Grid` component leads to wasted space. It's frequently used in dashboards.
 
   <a href="/material-ui/react-masonry/">
     <img loading="lazy" src="/static/blog/mui-core-v5/masonry.png" alt="Screenshot of the Masonry component and its code preview" width="1400" height="896" />
@@ -615,9 +615,9 @@ We have been meticulous to minimize the pain on the migration from v4 to v5.
 We know how daunting an upgrade can be.
 
 We have used all the tools at our disposal.
-We have [worked with the React core team](https://github.com/facebook/react/pull/20463) to make React DevTools display warnings directly in the components panel.
+We have [worked with the React core team](https://github.com/react/react/pull/20463) to make React DevTools display warnings directly in the components panel.
 This should make it easier to find where components need to be updated for v5.
-See this [CHANGELOG section](https://github.com/facebook/react/blob/main/packages/react-devtools/CHANGELOG.md#expose-dev-mode-warnings-in-devtools-ui) for more details on it.
+See this [CHANGELOG section](https://github.com/react/react/blob/main/packages/react-devtools/CHANGELOG.md#expose-dev-mode-warnings-in-devtools-ui) for more details on it.
 
 In the following sections, we will cover some high-level changes required for a successful upgrade.
 We have documented all the breaking changes, we have added as many deprecations as we could, we wrote codemods to automate the laborious tasks, and more!

@@ -12,6 +12,5 @@
   "muiName": "MuiNoSsr",
   "filename": "/packages/mui-material/src/NoSsr/NoSsr.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-no-ssr/\">No SSR</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-no-ssr/\">No SSR</a></li></ul>"
 }

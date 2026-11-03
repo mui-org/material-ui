@@ -1,3 +1,0 @@
-<Typography component="label" endDecorator={<Switch sx={{ ml: 1 }} />}>
-  Turn alarm on
-</Typography>

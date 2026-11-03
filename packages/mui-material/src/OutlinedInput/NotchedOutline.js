@@ -1,9 +1,9 @@
 'use client';
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import { getTransitionStyles } from '../transitions/utils';
 
 const NotchedOutlineRoot = styled('fieldset', {
   name: 'MuiNotchedOutlined',
@@ -39,7 +39,10 @@ const NotchedOutlineLegend = styled('legend', {
         style: {
           padding: 0,
           lineHeight: '11px', // sync with `height` in `legend` styles
-          transition: theme.transitions.create('width', {
+          // Firefox applies letter-spacing to a trailing zero-width space,
+          // which notches the outline: https://github.com/mui/material-ui/issues/37216
+          maxWidth: 0,
+          ...getTransitionStyles(theme, 'width', {
             duration: 150,
             easing: theme.transitions.easing.easeOut,
           }),
@@ -54,7 +57,7 @@ const NotchedOutlineLegend = styled('legend', {
           fontSize: '0.75em',
           visibility: 'hidden',
           maxWidth: 0.01,
-          transition: theme.transitions.create('max-width', {
+          ...getTransitionStyles(theme, 'max-width', {
             duration: 50,
             easing: theme.transitions.easing.easeOut,
           }),
@@ -72,7 +75,7 @@ const NotchedOutlineLegend = styled('legend', {
         props: ({ ownerState }) => ownerState.withLabel && ownerState.notched,
         style: {
           maxWidth: '100%',
-          transition: theme.transitions.create('max-width', {
+          ...getTransitionStyles(theme, 'max-width', {
             duration: 100,
             easing: theme.transitions.easing.easeOut,
             delay: 50,

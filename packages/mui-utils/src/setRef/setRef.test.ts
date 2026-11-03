@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import setRef from './setRef';
 
@@ -32,7 +32,7 @@ describe('setRef', () => {
   });
 
   it('throws on legacy string refs', () => {
-    // @ts-ignore
+    // @ts-expect-error: Legacy string refs are not supported; refs must be callbacks or ref objects.
     expect(() => setRef('stringRef1', 'proxy')).to.throw();
   });
 });

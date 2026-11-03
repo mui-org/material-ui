@@ -44,7 +44,7 @@
     {
       "key": "hiddenLabel",
       "className": "MuiInputAdornment-hiddenLabel",
-      "description": "Styles applied if the adornment is used inside <FormControl hiddenLabel />.",
+      "description": "Styles applied if the adornment is used inside `<FormControl hiddenLabel />`.",
       "isGlobal": false
     },
     {
@@ -74,7 +74,7 @@
     {
       "key": "sizeSmall",
       "className": "MuiInputAdornment-sizeSmall",
-      "description": "Styles applied if the adornment is used inside <FormControl size=\"small\" />.",
+      "description": "Styles applied if the adornment is used inside `<FormControl size=\"small\" />`.",
       "isGlobal": false
     },
     {
@@ -90,6 +90,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/InputAdornment/InputAdornment.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-text-field/\">Text Field</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-text-field/\">Text Field</a></li></ul>"
 }

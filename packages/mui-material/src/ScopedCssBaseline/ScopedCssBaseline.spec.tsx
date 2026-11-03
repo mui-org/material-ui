@@ -1,4 +1,3 @@
-import * as React from 'react';
 import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 
 <ScopedCssBaseline

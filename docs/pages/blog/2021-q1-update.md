@@ -166,7 +166,7 @@ We have redesigned most of the components from scratch to make sure all componen
 The most important change inside the organization is the introduction of a company Handbook.
 The company is distributed and operates across different time zones.
 Per the nature of our operation, and at the pace we are growing, we needed an effective and efficient way to share the organizational processes and culture.
-Per our transparency value, all the sections of the Handbook that don't contain sensitive information are [publicly available](https://mui-org.notion.site/Handbook-f086d47e10794d5e839aef9dc67f324b).
+Per our transparency value, all the sections of the Handbook that don't contain sensitive information are [publicly available](https://mui-org.notion.site).
 
 This Handbook is the single **source of truth**. It's meant to be updated by any team member, to stay in sync with how we do things.
 

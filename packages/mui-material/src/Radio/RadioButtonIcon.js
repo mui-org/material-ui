@@ -1,11 +1,11 @@
 'use client';
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import RadioButtonUncheckedIcon from '../internal/svg-icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '../internal/svg-icons/RadioButtonChecked';
 import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import { getTransitionStyles } from '../transitions/utils';
 
 const RadioButtonIconRoot = styled('span', {
   name: 'MuiRadioButtonIcon',
@@ -29,7 +29,7 @@ const RadioButtonIconDot = styled(RadioButtonCheckedIcon, {
     left: 0,
     position: 'absolute',
     transform: 'scale(0)',
-    transition: theme.transitions.create('transform', {
+    ...getTransitionStyles(theme, 'transform', {
       easing: theme.transitions.easing.easeIn,
       duration: theme.transitions.duration.shortest,
     }),
@@ -38,7 +38,7 @@ const RadioButtonIconDot = styled(RadioButtonCheckedIcon, {
         props: { checked: true },
         style: {
           transform: 'scale(1)',
-          transition: theme.transitions.create('transform', {
+          ...getTransitionStyles(theme, 'transform', {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.shortest,
           }),

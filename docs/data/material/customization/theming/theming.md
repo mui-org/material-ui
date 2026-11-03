@@ -8,6 +8,10 @@ Themes let you apply a consistent tone to your app. It allows you to **customize
 
 To promote greater consistency between apps, light and dark theme types are available to choose from. By default, components use the light theme type.
 
+:::success
+Use the [Material UI theming agent skill](https://github.com/mui/material-ui/tree/master/skills/material-ui-theming) to give your AI coding assistant full context on `createTheme`, palette, color schemes, CSS variables, and TypeScript augmentation.
+:::
+
 ## Theme provider
 
 Material UI components adhere to the library's default theme out of the box.
@@ -30,6 +34,11 @@ The following sections cover the most important theme variables:
 - [`.components`](/material-ui/customization/theme-components/)
 
 You can check out the [default theme section](/material-ui/customization/default-theme/) to view the default theme in full.
+
+:::warning
+Theme values are written into the stylesheet as they are.
+If you build a theme from user input, validate those values first, see [dynamic values in `sx`](/system/getting-started/the-sx-prop/#dynamic-values).
+:::
 
 ### Custom variables
 
@@ -76,19 +85,20 @@ declare module '@mui/material/styles' {
 }
 ```
 
-{{"demo": "CustomStyles.js"}}
+{{"component": "file://./demos/custom-styles/index.ts"}}
 
 To add extra variables to the `theme.palette`, see [palette customization](/material-ui/customization/palette/).
 
 ## Theme builder
 
-<video autoPlay muted loop width="320">
-  <source src="/static/studies.mp4" type="video/mp4" >
+<video style="width: 320px;" autoplay muted loop playsinline width="640" height="360">
+  <source src="/static/material-ui/studies.mp4" type="video/mp4" >
 </video>
 
 The community has built great tools to build a theme:
 
 - [mui-theme-creator](https://zenoo.github.io/mui-theme-creator/): A tool to help design and customize themes for the Material UI component library. Includes basic site templates to show various components and how they are affected by the theme
+- [MUI Theme Builder](https://petertyliu.github.io/mui-theme-builder/): A tool to generate, preview, and edit Material UI themes
 - [Material palette generator](https://m2.material.io/inline-tools/color/): The Material palette generator can be used to generate a palette for any color you input.
 
 ## Accessing the theme in a component
@@ -108,12 +118,12 @@ function DeepChild() {
 
 [You can nest](https://v6.mui.com/system/styles/advanced/#theme-nesting) multiple theme providers.
 
-{{"demo": "ThemeNesting.js"}}
+{{"component": "file://./demos/theme-nesting/index.ts"}}
 
 The inner theme will **override** the outer theme.
 You can extend the outer theme by providing a function:
 
-{{"demo": "ThemeNestingExtend.js"}}
+{{"component": "file://./demos/theme-nesting-extend/index.ts"}}
 
 ## CSS theme variables
 
@@ -307,6 +317,51 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
+```
+
+### `enhanceHighContrast(theme, tokens) => theme`
+
+Applies `@media (forced-colors: active)` overrides to a theme, improving component visibility in [Windows High Contrast / Forced Colors mode](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors). Available with v9.1.0.
+It accepts a fully-created theme and returns an enhanced version of it.
+
+#### Arguments
+
+1. `theme` (_object_): The theme object to enhance.
+2. `tokens` (_object_ [optional]): An object of [CSS system color keywords](https://www.w3.org/TR/css-color-4/#css-system-colors) to override individual defaults.
+
+| Token                | Default            | Description                                  |
+| :------------------- | :----------------- | :------------------------------------------- |
+| `disabled`           | `GrayText`         | Color for disabled elements                  |
+| `error`              | `ActiveText`       | Color for error states                       |
+| `selectedBackground` | `SelectedItem`     | Background color for selected items          |
+| `selectedText`       | `SelectedItemText` | Text color on selected items                 |
+| `activeBackground`   | `Highlight`        | Background color for active/toggled controls |
+| `activeText`         | `HighlightText`    | Text color on active/toggled controls        |
+| `buttonBorder`       | `ButtonBorder`     | Border color for interactive controls        |
+| `buttonText`         | `ButtonText`       | Text/icon color on buttons                   |
+| `canvas`             | `Canvas`           | Background color for the page/canvas         |
+
+#### Returns
+
+`theme` (_object_): The new theme with forced-colors overrides applied to affected components.
+
+#### Examples
+
+```js
+import { createTheme, enhanceHighContrast } from '@mui/material/styles';
+
+// Use defaults
+let theme = createTheme();
+theme = enhanceHighContrast(theme);
+```
+
+```js
+// Override individual tokens
+let theme = createTheme();
+theme = enhanceHighContrast(theme, {
+  activeBackground: 'SelectedItem',
+  activeText: 'SelectedItemText',
+});
 ```
 
 ### `unstable_createMuiStrictModeTheme(options, ...args) => theme`

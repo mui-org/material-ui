@@ -4,16 +4,17 @@ import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
-import Head from 'docs/src/modules/components/Head';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
+import { AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
 import AppHeader from 'docs/src/layouts/AppHeader';
 import Section from 'docs/src/layouts/Section';
 import AppFooter from 'docs/src/layouts/AppFooter';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Link } from '@mui/docs/Link';
+import { Link } from '@mui/internal-core-docs/Link';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import type { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import Card from '@mui/material/Card';
@@ -22,7 +23,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
 
 export default function BrandingThemeTest() {
   const [age, setAge] = React.useState('');

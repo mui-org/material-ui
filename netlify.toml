@@ -6,8 +6,8 @@
   command = "pnpm docs:build"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22.23.4"
   PNPM_FLAGS = "--frozen-lockfile"
 
-[[plugins]]
-  package = "./packages/netlify-plugin-cache-docs"
+# [[plugins]]
+#   package = "@mui/internal-netlify-cache"

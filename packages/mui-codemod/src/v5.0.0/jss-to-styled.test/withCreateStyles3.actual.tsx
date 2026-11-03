@@ -1,4 +1,3 @@
-import * as React from 'react';
 import createStyles from '@material-ui/styles/createStyles';
 import makeStyles from '@material-ui/styles/makeStyles';
 

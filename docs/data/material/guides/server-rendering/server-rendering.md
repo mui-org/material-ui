@@ -131,6 +131,13 @@ function handleRender(req, res) {
 
   // Grab the CSS from emotion
   const emotionChunks = extractCriticalToChunks(html);
+  // The chunks go into a <style> verbatim, and the browser ends that element at the first
+  // `</style>` it sees, even one sitting inside a CSS value. `\3c` is the CSS escape for `<`, so
+  // the rule keeps its meaning but the text can no longer close the element.
+  emotionChunks.styles = emotionChunks.styles.map((style) => ({
+    ...style,
+    css: style.css.replace(/<(?=\/?style\b)/gi, '\\3c '),
+  }));
   const emotionCss = constructStyleTagsFromChunks(emotionChunks);
 
   // Send the rendered page back to the client.
@@ -212,6 +219,8 @@ ReactDOM.hydrateRoot(document.querySelector('#root'), <Main />);
 ```
 
 ## Reference implementations
+
+<!-- #target-branch-reference -->
 
 Here is [the reference implementation of this tutorial](https://github.com/mui/material-ui/tree/HEAD/examples/material-ui-express-ssr).
 You can more SSR implementations in the GitHub repository under the `/examples` folder, see [the other examples](/material-ui/getting-started/example-projects/).

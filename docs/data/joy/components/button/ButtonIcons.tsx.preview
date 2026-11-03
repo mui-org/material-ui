@@ -1,4 +1,0 @@
-<Button startDecorator={<Add />}>Add to cart</Button>
-<Button endDecorator={<KeyboardArrowRight />} color="success">
-  Go to checkout
-</Button>

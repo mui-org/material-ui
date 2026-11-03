@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { spy } from 'sinon';
-import { createRenderer, fireEvent } from '@mui/internal-test-utils';
+import { createRenderer, fireEvent, isJsdom } from '@mui/internal-test-utils';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NativeSelectInput from './NativeSelectInput';
 import nativeSelectClasses from './nativeSelectClasses';
@@ -72,86 +71,84 @@ describe('<NativeSelectInput />', () => {
   });
 
   describe('prop: multiple', () => {
-    it('should be able to override `multiple` rule name in `select` slot', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should be able to override `multiple` rule name in `select` slot',
+      function test() {
+        const selectStyle = {
+          marginLeft: '10px',
+          marginTop: '10px',
+        };
 
-      const selectStyle = {
-        marginLeft: '10px',
-        marginTop: '10px',
-      };
+        const multipleStyle = {
+          marginTop: '14px',
+        };
 
-      const multipleStyle = {
-        marginTop: '14px',
-      };
-
-      const theme = createTheme({
-        components: {
-          MuiNativeSelect: {
-            styleOverrides: {
-              select: selectStyle,
-              multiple: multipleStyle,
+        const theme = createTheme({
+          components: {
+            MuiNativeSelect: {
+              styleOverrides: {
+                select: selectStyle,
+                multiple: multipleStyle,
+              },
             },
           },
-        },
-      });
+        });
 
-      const { container } = render(
-        <ThemeProvider theme={theme}>
-          <NativeSelectInput IconComponent="div" multiple>
-            <option value={'first'}>First</option>
-            <option value={'second'}>Second</option>
-          </NativeSelectInput>
-        </ThemeProvider>,
-      );
+        const { container } = render(
+          <ThemeProvider theme={theme}>
+            <NativeSelectInput IconComponent="div" multiple>
+              <option value={'first'}>First</option>
+              <option value={'second'}>Second</option>
+            </NativeSelectInput>
+          </ThemeProvider>,
+        );
 
-      const combinedStyle = { ...selectStyle, ...multipleStyle };
+        const combinedStyle = { ...selectStyle, ...multipleStyle };
 
-      expect(
-        container.getElementsByClassName(nativeSelectClasses.select)[0],
-      ).to.toHaveComputedStyle(combinedStyle);
-    });
+        expect(
+          container.getElementsByClassName(nativeSelectClasses.select)[0],
+        ).to.toHaveComputedStyle(combinedStyle);
+      },
+    );
   });
 
   describe('theme styleOverrides:', () => {
-    it('should override with error style when `select` has `error` state', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())(
+      'should override with error style when `select` has `error` state',
+      function test() {
+        const iconStyle = { color: 'rgb(255, 0, 0)' };
+        const selectStyle = { color: 'rgb(255, 192, 203)' };
 
-      const iconStyle = { color: 'rgb(255, 0, 0)' };
-      const selectStyle = { color: 'rgb(255, 192, 203)' };
-
-      const theme = createTheme({
-        components: {
-          MuiNativeSelect: {
-            styleOverrides: {
-              icon: (props) => ({
-                ...(props.ownerState.error && iconStyle),
-              }),
-              select: (props) => ({
-                ...(props.ownerState.error && selectStyle),
-              }),
+        const theme = createTheme({
+          components: {
+            MuiNativeSelect: {
+              styleOverrides: {
+                icon: (props) => ({
+                  ...(props.ownerState.error && iconStyle),
+                }),
+                select: (props) => ({
+                  ...(props.ownerState.error && selectStyle),
+                }),
+              },
             },
           },
-        },
-      });
+        });
 
-      const { container } = render(
-        <ThemeProvider theme={theme}>
-          <NativeSelectInput error IconComponent="div">
-            <option value={'first'}>First</option>
-            <option value={'second'}>Second</option>
-          </NativeSelectInput>
-        </ThemeProvider>,
-      );
-      expect(container.querySelector(`.${nativeSelectClasses.select}`)).toHaveComputedStyle(
-        selectStyle,
-      );
-      expect(container.querySelector(`.${nativeSelectClasses.icon}`)).toHaveComputedStyle(
-        iconStyle,
-      );
-    });
+        const { container } = render(
+          <ThemeProvider theme={theme}>
+            <NativeSelectInput error IconComponent="div">
+              <option value={'first'}>First</option>
+              <option value={'second'}>Second</option>
+            </NativeSelectInput>
+          </ThemeProvider>,
+        );
+        expect(container.querySelector(`.${nativeSelectClasses.select}`)).toHaveComputedStyle(
+          selectStyle,
+        );
+        expect(container.querySelector(`.${nativeSelectClasses.icon}`)).toHaveComputedStyle(
+          iconStyle,
+        );
+      },
+    );
   });
 });

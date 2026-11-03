@@ -34,7 +34,7 @@ export interface RatingSlots {
    */
   icon: React.ElementType;
   /**
-   * The component used fo r the decimal slot.
+   * The component used for the decimal slot.
    * @default 'span'
    */
   decimal: React.ElementType;
@@ -45,22 +45,22 @@ export type RatingSlotsAndSlotProps = CreateSlotsAndSlotProps<
   {
     /**
      * Props forwarded to the root slot.
-     * By default, the avaible props are based on the span element.
+     * By default, the available props are based on the span element.
      */
     root: SlotProps<'span', RatingRootSlotPropsOverrides, RatingOwnerState>;
     /**
      * Props forwarded to the label slot.
-     * By default, the avaible props are based on the label element.
+     * By default, the available props are based on the label element.
      */
     label: SlotProps<'label', RatingLabelSlotPropsOverrides, RatingOwnerState>;
     /**
      * Props forwarded to the icon slot.
-     * By default, the avaible props are based on the span element.
+     * By default, the available props are based on the span element.
      */
     icon: SlotProps<'span', RatingIconSlotPropsOverrides, RatingOwnerState>;
     /**
      * Props forwarded to the decimal slot.
-     * By default, the avaible props are based on the span element.
+     * By default, the available props are based on the span element.
      */
     decimal: SlotProps<'span', RatingDecimalSlotPropsOverrides, RatingOwnerState>;
   }
@@ -70,17 +70,17 @@ export interface RatingOwnProps extends RatingSlotsAndSlotProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<RatingClasses>;
+  classes?: Partial<RatingClasses> | undefined;
   /**
    * The default value. Use when the component is not controlled.
    * @default null
    */
-  defaultValue?: number;
+  defaultValue?: number | undefined;
   /**
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * The icon to display when empty.
    * @default <StarBorder fontSize="inherit" />
@@ -102,72 +102,63 @@ export interface RatingOwnProps extends RatingSlotsAndSlotProps {
    *   return `${value || '0'} Star${value !== 1 ? 's' : ''}`;
    * }
    */
-  getLabelText?: (value: number) => string;
+  getLabelText?: ((value: number) => string) | undefined;
   /**
    * If `true`, only the selected icon will be highlighted.
    * @default false
    */
-  highlightSelectedOnly?: boolean;
+  highlightSelectedOnly?: boolean | undefined;
   /**
    * The icon to display.
    * @default <Star fontSize="inherit" />
    */
   icon?: React.ReactNode;
   /**
-   * The component containing the icon.
-   * @deprecated Use `slotProps.icon.component` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default function IconContainer(props) {
-   *   const { value, ...other } = props;
-   *   return <span {...other} />;
-   * }
-   */
-  IconContainerComponent?: React.ElementType<IconContainerProps>;
-  /**
    * Maximum rating.
    * @default 5
    */
-  max?: number;
+  max?: number | undefined;
   /**
    * The name attribute of the radio `input` elements.
    * This input `name` should be unique within the page.
    * Being unique within a form is insufficient since the `name` is used to generate IDs.
    */
-  name?: string;
+  name?: string | undefined;
   /**
    * Callback fired when the value changes.
    * @param {React.SyntheticEvent} event The event source of the callback.
    * @param {number|null} value The new value.
    */
-  onChange?: (event: React.SyntheticEvent, value: number | null) => void;
+  onChange?: ((event: React.SyntheticEvent, value: number | null) => void) | undefined;
   /**
    * Callback function that is fired when the hover state changes.
    * @param {React.SyntheticEvent} event The event source of the callback.
    * @param {number} value The new value.
    */
-  onChangeActive?: (event: React.SyntheticEvent, value: number) => void;
+  onChangeActive?: ((event: React.SyntheticEvent, value: number) => void) | undefined;
   /**
    * The minimum increment value change allowed.
    * @default 1
    */
-  precision?: number;
+  precision?: number | undefined;
   /**
    * Removes all hover effects and pointer events.
    * @default false
    */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
   /**
    * The size of the component.
    * @default 'medium'
    */
-  size?: OverridableStringUnion<'small' | 'medium' | 'large', RatingPropsSizeOverrides>;
+  size?: OverridableStringUnion<'small' | 'medium' | 'large', RatingPropsSizeOverrides> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The rating value.
    */
-  value?: number | null;
+  value?: number | null | undefined;
 }
 
 export interface RatingOwnerState extends Omit<RatingProps, 'slots' | 'slotProps'> {}
@@ -184,11 +175,11 @@ export type RatingTypeMap<
  *
  * Demos:
  *
- * - [Rating](https://mui.com/material-ui/react-rating/)
+ * - [Rating](https://next.mui.com/material-ui/react-rating/)
  *
  * API:
  *
- * - [Rating API](https://mui.com/material-ui/api/rating/)
+ * - [Rating API](https://next.mui.com/material-ui/api/rating/)
  */
 declare const Rating: OverridableComponent<RatingTypeMap>;
 
@@ -196,7 +187,7 @@ export type RatingProps<
   RootComponent extends React.ElementType = RatingTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<RatingTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default Rating;

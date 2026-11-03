@@ -11,7 +11,7 @@ githubSource: packages/mui-material/src/Typography
 
 <p class="description">Use typography to present your design and content as clearly and efficiently as possible.</p>
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Roboto font
 
@@ -66,20 +66,20 @@ To install Roboto through the Google Web Fonts CDN, add the following code insid
 
 The Typography component follows the [Material Design typographic scale](https://m2.material.io/design/typography/#type-scale) that provides a limited set of type sizes that work well together for a consistent layout.
 
-{{"demo": "Types.js"}}
+{{"component": "file://./demos/types/index.ts"}}
 
 ### Theme keys
 
 In some situations you might not be able to use the Typography component.
 Hopefully, you might be able to take advantage of the [`typography`](/material-ui/customization/default-theme/?expand-path=$.typography) keys of the theme.
 
-{{"demo": "TypographyTheme.js"}}
+{{"component": "file://./demos/theme/index.ts"}}
 
 ## Customization
 
 ### Adding & disabling variants
 
-In addition to using the default typography variants, you can add custom ones, or disable any you don't need. See the [Adding & disabling variants](/material-ui/customization/typography/#adding-amp-disabling-variants) page for more info.
+In addition to using the default typography variants, you can add custom ones, or disable any you don't need. See the [Adding & disabling variants](/material-ui/customization/typography/#adding-disabling-variants) page for more info.
 
 ### Changing the semantic element
 
@@ -94,7 +94,7 @@ To change the underlying element for a one-off situation, like avoiding two `h1`
 </Typography>
 ```
 
-To change the typography element mapping globally, [use the theme](/material-ui/customization/typography/#adding-amp-disabling-variants):
+To change the typography element mapping globally, [use the theme](/material-ui/customization/typography/#adding-disabling-variants):
 
 ```js
 const theme = createTheme({
@@ -119,22 +119,19 @@ const theme = createTheme({
 });
 ```
 
-### System props
+### sx prop
 
-:::info
-System props are deprecated and will be removed in the next major release. Please use the `sx` prop instead.
+Use the [`sx` prop](/system/getting-started/the-sx-prop/) to quickly customize any Typography instance using a superset of CSS that has access to all the style functions and theme-aware properties exposed in the MUI System package.
+Below is an example of how to apply margin using this prop:
 
-```diff
-- <Typography mt={2} />
-+ <Typography sx={{ mt: 2 }} />
+```jsx
+<Typography sx={{ m: 2 }} />
 ```
-
-:::
 
 ## Accessibility
 
 Key factors to follow for an accessible typography:
 
-- **Color**. Provide enough contrast between text and its background, check out the minimum recommended [WCAG 2.0 color contrast ratio](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html) (4.5:1).
+- **Color**. Provide enough contrast between text and its background, check out the minimum recommended [WCAG 2.2 color contrast ratio](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) (4.5:1).
 - **Font size**. Use [relative units (rem)](/material-ui/customization/typography/#font-size), instead of pixels, to accommodate the user's browser settings.
 - **Heading hierarchy**. Based on [the W3 guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings/), don't skip heading levels. Make sure to [separate the semantics from the style](#changing-the-semantic-element).

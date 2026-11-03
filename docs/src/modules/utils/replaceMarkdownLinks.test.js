@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import {
   replaceMaterialLinks,
   replaceAPILinks,
@@ -75,7 +75,7 @@ describe('replaceMarkdownLinks', () => {
       [text](/components/progress/#main-content)
       -
       [Tree view](/components/tree-view/)
-      [Demo](/components/data-grid/demo/)
+      [Demo](/components/data-grid/features/)
     `),
     ).to.equal(`
       [ButtonGroup](/material-ui/react-button-group/)
@@ -112,7 +112,7 @@ describe('replaceMarkdownLinks', () => {
       [text](/material-ui/react-progress/#main-content)
       -
       [Tree view](/material-ui/react-tree-view/)
-      [Demo](/x/react-data-grid/demo/)
+      [Demo](/x/react-data-grid/features/)
     `);
   });
 
@@ -148,7 +148,7 @@ describe('replaceMarkdownLinks', () => {
       [text](/material-ui/pickers/#main-content)
       -
       [Tree view](/material-ui/react-tree-view/)
-      [Demo](/x/react-data-grid/demo/)
+      [Demo](/x/react-data-grid/features/)
     `),
     ).to.equal(`
       [ButtonGroup](/material-ui/react-button-group/)
@@ -180,7 +180,7 @@ describe('replaceMarkdownLinks', () => {
       [text](/material-ui/pickers/#main-content)
       -
       [Tree view](/material-ui/react-tree-view/)
-      [Demo](/x/react-data-grid/demo/)
+      [Demo](/x/react-data-grid/features/)
     `);
   });
 

@@ -1,0 +1,389 @@
+import { AXE_STATUS_SYMBOLS } from './axe.mjs';
+import { region } from './files.mjs';
+import {
+  CONFORMANCE_SYMBOLS,
+  GROUP_HEADINGS,
+  RESPONSIBILITY_SYMBOLS,
+  WCAG_BY_NUMBER,
+  WCAG_CRITERIA,
+} from './wcag.mjs';
+
+const REPORT_BASE = 'https://github.com/mui/material-ui/blob/master/packages/mui-material/src';
+
+const fileName = (ref) => ref.split('/').pop();
+
+/** The count table at the top of each component report. */
+function renderCounts(counts, inheritedFrom) {
+  const rows = [
+    ['✅ Supports', counts.supports],
+    ['⚠️ Partially Supports', counts.partiallySupports],
+    ['❌ Does Not Support', counts.doesNotSupport],
+    ['➖ Not Applicable', counts.notApplicable],
+  ];
+  if (counts.inherited !== undefined) {
+    rows.push([`↗ Inherited (see ${inheritedFrom})`, counts.inherited]);
+  }
+  rows.push(['🚩 Flagged', `${counts.flagged}/${counts.rated}`]);
+
+  return [
+    '| Result | Count |',
+    '| :----- | :---- |',
+    ...rows.map(([label, value]) => `| ${label} | ${value} |`),
+  ].join('\n');
+}
+
+/** The tests behind a criterion, listed per file so renaming a test does not change the report. */
+function renderEvidence({ evidence, axeRules }) {
+  const unit = evidence.filter((entry) => entry.type === 'unit');
+  const parts = [];
+  if (unit.length > 0) {
+    parts.push(`unit ${unit.map((entry) => `\`${fileName(entry.ref)}\``).join(', ')}`);
+  }
+  if (evidence.some((entry) => entry.type === 'playwright')) {
+    parts.push('Playwright');
+  }
+  if (axeRules.length > 0) {
+    const rules = axeRules.map(({ rule, status }) => `\`${rule}\` ${AXE_STATUS_SYMBOLS[status]}`);
+    parts.push(`axe-core ${rules.join(', ')}`);
+  }
+  return parts.length > 0 ? `Tested by: ${parts.join(' · ')}` : null;
+}
+
+function renderCriterion(criterion, slot) {
+  const status = [
+    ...(criterion.flagged ? ['🚩'] : []),
+    `${CONFORMANCE_SYMBOLS[criterion.conformance]} ${criterion.conformance}`,
+    `${RESPONSIBILITY_SYMBOLS[criterion.responsibility]} ${criterion.responsibility}`,
+  ]
+    .map((token) => `\`${token}\``)
+    .join(' · ');
+
+  // An ⚙️ Automated criterion is described by its tests, so its notes are optional.
+  const notesRequired = criterion.group !== 'Automated';
+  const parts = [
+    `#### ${criterion.number} ${criterion.name} · ${criterion.level}`,
+    status,
+    renderEvidence(criterion),
+    notesRequired || slot.has(criterion.number) ? slot(criterion.number) : null,
+    slot.has(`${criterion.number}:pass`)
+      ? `**Pass:** ${slot(`${criterion.number}:pass`, true)}`
+      : null,
+  ];
+  return parts.filter(Boolean).join('\n\n');
+}
+
+const label = ({ number, name, level }) => `${number} ${name} (${level})`;
+
+/** Own gaps take a one-line summary; inherited gaps link to the parent report. */
+function renderGaps({ criteria, inherited }, slot) {
+  const own = criteria
+    .filter((criterion) => criterion.conformance !== 'Supports')
+    .map(
+      (criterion) =>
+        `- ${CONFORMANCE_SYMBOLS[criterion.conformance]} **${criterion.number} ${criterion.name}.** ${slot(`${criterion.number}:gap`, true)}`,
+    );
+  const fromParent = (inherited?.gaps ?? []).map(
+    (criterion) =>
+      `- Inherits ${CONFORMANCE_SYMBOLS[criterion.conformance]} **${criterion.number} ${criterion.name}** from [${inherited.title}](../${inherited.component}/accessibility.md).`,
+  );
+  const lines = [...own, ...fromParent];
+  return lines.length > 0 ? lines.join('\n') : 'None.';
+}
+
+/**
+ * A bullet per reason. Criteria that share a default reason, or a region named
+ * for several criteria (`<!-- 3.3.1,3.3.3:start -->`), share a bullet.
+ */
+function renderNotApplicable(notApplicable, slot) {
+  const bullets = new Map();
+  for (const item of notApplicable) {
+    // A criterion that is not applicable only for this component needs its own reason.
+    const key = item.reasonKey ?? (item.isDefault ? `default:${item.reason}` : item.number);
+    if (!bullets.has(key)) {
+      bullets.set(key, {
+        labels: [],
+        text: key.startsWith('default:') ? item.reason : slot(key, true),
+      });
+    }
+    bullets.get(key).labels.push(label(item));
+  }
+  return [...bullets.values()]
+    .map(({ labels, text }) => `- **${labels.join(', ')}.** ${text}`)
+    .join('\n');
+}
+
+/**
+ * Renders `<Component>/accessibility.md`. The structure, names, ratings,
+ * counts, and evidence come from the data; the prose is kept from the region
+ * markers of the current report. `used` collects the region names it renders.
+ */
+export function renderReport(report, used = new Set()) {
+  const { component, title, criteria, counts, regions, inherited, version } = report;
+  const slot = (name, inline) => {
+    used.add(name);
+    return region(name, regions.get(name), inline);
+  };
+  slot.has = (name) => Boolean(regions.get(name));
+  const optional = (name) => (slot.has(name) ? slot(name) : null);
+
+  const parts = [
+    `<!-- Generated by \`pnpm a11y:scorecard\` from ${component}/accessibility.json, the library defaults, and the tests. Write prose only between the :start and :end markers; everything else is regenerated. -->`,
+    `# ${title} accessibility conformance`,
+    'Rated against WCAG 2.2 Level A and AA. See the [reports legend](../accessibility.md).',
+    optional('intro'),
+    renderCounts(counts, inherited?.title),
+    '## Known gaps',
+    renderGaps(report, slot),
+    '## Success criteria',
+  ];
+
+  for (const [group, heading] of Object.entries(GROUP_HEADINGS)) {
+    const inGroup = criteria.filter((criterion) => criterion.group === group);
+    if (inGroup.length > 0) {
+      parts.push(`### ${heading}`, ...inGroup.map((criterion) => renderCriterion(criterion, slot)));
+    }
+  }
+
+  if (inherited) {
+    parts.push(
+      `## Inherited from ${inherited.title}`,
+      optional('inherited'),
+      inherited.criteria
+        .map((criterion) =>
+          [
+            `- **${label(criterion)}.**`,
+            slot.has(criterion.number) ? slot(criterion.number, true) : '',
+          ]
+            .join(' ')
+            .trim(),
+        )
+        .join('\n'),
+    );
+  }
+  parts.push(
+    '## Not applicable',
+    renderNotApplicable(report.notApplicable, slot),
+    '## Level AAA',
+    slot('level-aaa'),
+    '## Scope and test environment',
+    [
+      '- **Standard.** WCAG 2.2, Level A and AA.',
+      `- **Component version.** \`@mui/material\` ${version}.`,
+    ].join('\n'),
+    slot('scope'),
+  );
+
+  return `${parts.filter(Boolean).join('\n\n')}\n`;
+}
+
+/**
+ * The default not-applicable reasons in `packages/mui-material/src/accessibility.md`.
+ * The reason is prose, so it is kept from the region markers.
+ */
+export function renderDefaultReasons(defaults, used = new Set()) {
+  return WCAG_CRITERIA.filter(({ number }) => defaults.data.criteria[number]?.notApplicable)
+    .map((criterion) => {
+      const { number } = criterion;
+      used.add(number);
+      return `- **${label(criterion)}.** ${region(number, defaults.regions.get(number), true)}`;
+    })
+    .join('\n');
+}
+
+/**
+ * The `Reports` table in `packages/mui-material/src/accessibility.md`.
+ *
+ * No totals row: every component rates the same WCAG criteria, so a sum across
+ * components counts each criterion once per component. The per-criterion
+ * rollup in `scorecard.json` is the library-level view.
+ */
+export function renderIndexTable(reports) {
+  const header = [
+    '| Component | ✅ Supports | ⚠️ Partially Supports | ❌ Does Not Support | ➖ Not Applicable | ↗ Inherited | 🚩 Flagged |',
+    '| :-------- | :---------- | :-------------------- | :------------------ | :---------------- | :---------- | :--------- |',
+  ];
+
+  const rows = reports.map(({ component, counts }) => {
+    const link = `[${component}](./${component}/accessibility.md)`;
+    const cell = (key) => counts[key] ?? '—';
+    return `| ${link} | ${cell('supports')} | ${cell('partiallySupports')} | ${cell('doesNotSupport')} | ${cell('notApplicable')} | ${cell('inherited')} | ${counts.flagged}/${counts.rated} |`;
+  });
+
+  return [...header, ...rows].join('\n');
+}
+
+/**
+ * The report metadata on the public conformance page. A conformance report is
+ * a statement about one release, so it names the package version. The version
+ * comes from package.json, so `release:version` regenerates it on each bump.
+ */
+export function renderDocsAbout(version) {
+  return [
+    '| Field | Value |',
+    '| :---- | :---- |',
+    '| Product | Material\u00a0UI (`@mui/material`) |',
+    '| Product type | React component library (software) |',
+    `| Version assessed | \`@mui/material\` v${version} |`,
+    '| Vendor | MUI |',
+    '| Standards applied | WCAG 2.2 Level A and AA |',
+    '| Report type | Self-assessment, published as source-controlled documentation |',
+  ].join('\n');
+}
+
+/**
+ * The library-level result on the public conformance page. It is generated so
+ * that `--check` catches it when a report changes a rating.
+ */
+export function renderDocsRollup(totals) {
+  const headline =
+    totals.doesNotSupport === 0
+      ? '**No component records a ❌ Does Not Support rating for any Level A or AA criterion.**'
+      : `**${totals.doesNotSupport} criteria record a ❌ Does Not Support rating in at least one component.**`;
+  return [
+    headline,
+    '',
+    `Rolled up to the library level, where each criterion takes the worst rating any assessed component receives, ${totals.rated} success criteria are exercised: **${totals.supports} Supports, ${totals.partiallySupports} Partially Supports, ${totals.doesNotSupport} Does Not Support.**`,
+  ].join('\n');
+}
+
+/**
+ * The summary table on the public conformance page. Detail lives in the
+ * per-component reports, so this stays to counts plus a link.
+ */
+export function renderDocsTable(reports) {
+  const header = [
+    '| Component | Level A | Level AA | Rated | ✅ Supports | ⚠️ Partially Supports | Verified | Automated |',
+    '| :-------- | ------: | -------: | ----: | ----------: | --------------------: | -------: | --------: |',
+  ];
+
+  const rows = reports.map(({ component, summary }) => {
+    const link = `[${component}](${REPORT_BASE}/${component}/accessibility.md)`;
+    return `| ${link} | ${summary.levelA} | ${summary.levelAA} | ${summary.rated} | ${summary.supports} | ${summary.partiallySupports} | ${summary.verified}/${summary.rated} | ${summary.automated} |`;
+  });
+
+  return [...header, ...rows].join('\n');
+}
+
+/** `"Button"` or `{ "component": "Button", "note": "`loading`" }` */
+export const normalizeAffected = (entry) =>
+  typeof entry === 'string' ? { component: entry } : entry;
+
+/** W3C slugs are the criterion name in kebab case: "Contrast (Minimum)" → `contrast-minimum`. */
+function criterionLink(number) {
+  const { name } = WCAG_BY_NUMBER.get(number);
+  const slug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  return `[${number} ${name}](https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html)`;
+}
+
+/**
+ * The Known gaps table on the public page. The gap and workaround wording is
+ * editorial, so it lives in `knownGaps.json`. It is rendered here so that it
+ * can be checked against the ratings.
+ */
+export function renderKnownGaps(knownGaps) {
+  const header = [
+    '| Gap | Criteria | Affected | Workaround |',
+    '| :-- | :------- | :------- | :--------- |',
+  ];
+  const rows = knownGaps.map(({ gap, criteria, affected, workaround }) => {
+    const components = affected
+      .map(normalizeAffected)
+      .map(({ component, note }) => {
+        const link = `[${component}](${REPORT_BASE}/${component}/accessibility.md)`;
+        return note ? `${link} (${note})` : link;
+      })
+      .join('<br />');
+    return `| **${gap}** | ${criteria.map(criterionLink).join('<br />')} | ${components} | ${workaround} |`;
+  });
+  return [...header, ...rows].join('\n');
+}
+
+/**
+ * Which kind of change puts a criterion at risk. The manual checklist is
+ * grouped by this so a styling change does not send you through keyboard checks.
+ */
+const TRIGGERS = [
+  ['Styling, theme, or palette', /^1\.4\./],
+  ['DOM structure, roles, or ARIA', /^(1\.1\.|1\.3\.|4\.1\.)/],
+  ['Keyboard, focus, or pointer handling', /^(2\.1\.|2\.4\.|2\.5\.|3\.2\.)/],
+  ['Labels, errors, or validation', /^3\.3\./],
+  ['Motion or timing', /^2\.2\./],
+];
+
+const triggerFor = (number) => TRIGGERS.find(([, pattern]) => pattern.test(number))?.[0] ?? 'Other';
+
+/**
+ * A criterion still needs a person when no deterministic test proves it, and
+ * when it is the component's responsibility rather than the application's.
+ */
+const needsHuman = (criterion) =>
+  criterion.group !== 'Automated' && criterion.responsibility !== 'Author';
+
+/**
+ * The pre-change checklist: every criterion a person still has to judge, using
+ * the pass condition already written in the component report.
+ */
+export function renderManualChecklist(reports) {
+  const lines = [
+    '# Manual accessibility checks',
+    '',
+    'Generated by `pnpm a11y:scorecard` from each `<Component>/accessibility.json` and the pass conditions in its report. Do not edit this file.',
+    '',
+    'The accessibility checks a person still has to make by eye when changing a component.',
+    'Anything not listed here is covered by a test — see [How it works](./accessibility.md#how-it-works).',
+    '',
+    'Two things are deliberately left out: criteria a deterministic test already proves',
+    '(⚙️ Automated in the reports), and criteria that depend on the application rather than',
+    'the component (○ Author).',
+    '',
+    '| Marker | Meaning |',
+    '| :----- | :------ |',
+    '| 🔍 | No automation. Check it by hand. |',
+    '| 🔁 | Automation catches regressions; confirm the judgment still holds. |',
+    '',
+    '## What to re-check, by kind of change',
+    '',
+    'Run the rows matching what you touched, for the component you touched.',
+    '',
+    '| If your change touches… | Re-check |',
+    '| :---------------------- | :------- |',
+  ];
+
+  const byTrigger = new Map([...TRIGGERS.map(([name]) => [name, new Set()]), ['Other', new Set()]]);
+  for (const report of reports) {
+    for (const criterion of report.criteria.filter(needsHuman)) {
+      byTrigger.get(triggerFor(criterion.number)).add(`${criterion.number} ${criterion.name}`);
+    }
+  }
+  for (const [name, criteria] of byTrigger) {
+    const sorted = [...criteria].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    if (sorted.length > 0) {
+      lines.push(`| ${name} | ${sorted.join('; ')} |`);
+    }
+  }
+  lines.push('');
+
+  for (const report of reports) {
+    const checks = report.criteria.filter(needsHuman);
+    if (checks.length === 0) {
+      continue;
+    }
+    lines.push(
+      `## ${report.component}`,
+      '',
+      `${checks.length} check${checks.length === 1 ? '' : 's'} · full procedures in [\`${report.component}/accessibility.md\`](./${report.component}/accessibility.md)`,
+      '',
+    );
+    for (const criterion of checks) {
+      const marker = criterion.group === 'Manual' ? '🔍' : '🔁';
+      const pass = criterion.pass ? ` — ${criterion.pass}` : '';
+      lines.push(`- [ ] ${marker} **${criterion.number} ${criterion.name}**${pass}`);
+    }
+    lines.push('');
+  }
+
+  return lines.join('\n');
+}

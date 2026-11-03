@@ -1,5 +1,0 @@
-<FormControl error>
-  <FormLabel>Invalid</FormLabel>
-  <Autocomplete placeholder="Error" options={top100Films} sx={{ width: 300 }} />
-  <FormHelperText>Oops! something went wrong.</FormHelperText>
-</FormControl>

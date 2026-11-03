@@ -1,5 +1,0 @@
-<Textarea
-  placeholder="Type in here…"
-  error
-  defaultValue="Oh no! Something is definitely wrong."
-/>

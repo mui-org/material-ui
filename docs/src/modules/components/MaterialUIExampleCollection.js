@@ -90,10 +90,12 @@ export default function MaterialUIExampleCollection() {
           >
             <Avatar
               alt={example.name}
-              imgProps={{
-                width: '38',
-                height: '38',
-                loading: 'lazy',
+              slotProps={{
+                img: {
+                  width: '38',
+                  height: '38',
+                  loading: 'lazy',
+                },
               }}
               {...(typeof example.src === 'string'
                 ? { src: example.src }

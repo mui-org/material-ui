@@ -2,56 +2,67 @@ import * as React from 'react';
 import { expectType } from '@mui/types';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { FormHelperTextProps } from '@mui/material/FormHelperText';
+import type { FormHelperTextProps } from '@mui/material/FormHelperText';
 
 {
   // https://github.com/mui/material-ui/issues/12999
   const defaulted = (
-    <TextField InputProps={{ classes: { inputTypeSearch: 'search-input', input: 'input' } }} />
+    <TextField
+      slotProps={{ input: { classes: { inputTypeSearch: 'search-input', input: 'input' } } }}
+    />
   );
   const standard = (
-    <TextField variant="standard" InputProps={{ classes: { inputTypeSearch: 'search-input' } }} />
+    <TextField
+      variant="standard"
+      slotProps={{ input: { classes: { inputTypeSearch: 'search-input' } } }}
+    />
   );
 
   const StandardInputAdorned = (
     <TextField
       variant="standard"
-      InputProps={{
-        classes: { inputAdornedStart: 'search-input', inputAdornedEnd: 'search-input' },
+      slotProps={{
+        input: { classes: { adornedStart: 'search-input', adornedEnd: 'search-input' } },
       }}
     />
   );
   const DefaultInputAdorned = (
     <TextField
-      InputProps={{
-        classes: { inputAdornedStart: 'search-input', inputAdornedEnd: 'search-input' },
+      slotProps={{
+        input: { classes: { adornedStart: 'search-input', adornedEnd: 'search-input' } },
       }}
     />
   );
 
   const outlinedInputTypeSearch = (
-    <TextField variant="outlined" InputProps={{ classes: { inputTypeSearch: 'search-input' } }} />
+    <TextField
+      variant="outlined"
+      slotProps={{ input: { classes: { inputTypeSearch: 'search-input' } } }}
+    />
   );
   const filledInputTypeSearch = (
-    <TextField variant="filled" InputProps={{ classes: { inputTypeSearch: 'search-input' } }} />
+    <TextField
+      variant="filled"
+      slotProps={{ input: { classes: { inputTypeSearch: 'search-input' } } }}
+    />
   );
   const standardOutlinedClassname = (
     <TextField
       variant="standard"
-      InputProps={
-        {
+      slotProps={{
+        input: {
           // notchedOutline is only used with variant "outlined"
           // FIXME this no longer generates an error in TS 3.2, see https://github.com/Microsoft/TypeScript/issues/28926
           // classes: { inputTypeSearch: 'search-input', notchedOutline: 'notched-outline' }, // @ts-expect-error
-        }
-      }
+        },
+      }}
     />
   );
 
   const filled = (
     <TextField
       variant="filled"
-      InputProps={{ classes: { inputAdornedStart: 'adorned-start' } }}
+      slotProps={{ input: { classes: { adornedStart: 'adorned-start' } } }}
       onChange={(event) => {
         // type inference for event still works?
         const value = event.target.value;
@@ -61,7 +72,10 @@ import { FormHelperTextProps } from '@mui/material/FormHelperText';
   );
 
   const outlined = (
-    <TextField variant="outlined" InputProps={{ classes: { notchedOutline: 'notched-outline' } }} />
+    <TextField
+      variant="outlined"
+      slotProps={{ input: { classes: { notchedOutline: 'notched-outline' } } }}
+    />
   );
 }
 
@@ -105,6 +119,6 @@ function FocusHandlerTest() {
     label="Enter some stuff"
     defaultValue="Hello"
     helperText="Hello, world!"
-    FormHelperTextProps={{ component: HelperText }}
+    slotProps={{ formHelperText: { component: HelperText } }}
   />;
 }

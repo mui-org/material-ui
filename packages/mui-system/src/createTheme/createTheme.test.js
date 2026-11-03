@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, expect, it } from 'vitest';
+import { createRenderer, isJsdom } from '@mui/internal-test-utils';
 import { styled, ThemeProvider } from '@mui/system';
 
 import createTheme from '@mui/system/createTheme';
@@ -57,11 +56,7 @@ describe('createTheme', () => {
   });
 
   describe('system', () => {
-    it('resolves system when used inside styled()', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-
+    it.skipIf(isJsdom())('resolves system when used inside styled()', function test() {
       const Test = styled('div')(({ theme: t }) =>
         t.unstable_sx({
           color: 'primary.main',
@@ -95,11 +90,7 @@ describe('createTheme', () => {
       });
     });
 
-    it('resolves system when used inside variants', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-
+    it.skipIf(isJsdom())('resolves system when used inside variants', function test() {
       const themeWithVariants = {
         ...theme,
         components: {

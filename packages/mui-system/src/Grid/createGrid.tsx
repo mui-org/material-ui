@@ -2,15 +2,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent } from '@mui/types';
+import type { OverridableComponent } from '@mui/types';
 import isMuiElement from '@mui/utils/isMuiElement';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import composeClasses from '@mui/utils/composeClasses';
 import systemStyled from '../styled';
 import useThemePropsSystem from '../useThemeProps';
 import useThemeSystem from '../useTheme';
-import { extendSxProp } from '../styleFunctionSx';
-import createTheme, { Breakpoint, Breakpoints } from '../createTheme';
+import type { Breakpoint, Breakpoints } from '../createTheme';
+import createTheme from '../createTheme';
 import {
   generateGridStyles,
   generateGridSizeStyles,
@@ -23,9 +23,8 @@ import {
   generateSpacingClassNames,
   generateDirectionClasses,
 } from './gridGenerator';
-import { CreateMUIStyled } from '../createStyled';
-import { GridTypeMap, GridOwnerState, GridProps, GridOffset, GridSize } from './GridProps';
-import deleteLegacyGridProps from './deleteLegacyGridProps';
+import type { CreateMUIStyled } from '../createStyled';
+import type { GridTypeMap, GridOwnerState, GridProps, GridOffset, GridSize } from './GridProps';
 
 const defaultTheme = createTheme();
 
@@ -45,10 +44,10 @@ function useThemePropsDefault<T extends {}>(props: T) {
 
 export default function createGrid(
   options: {
-    createStyledComponent?: typeof defaultCreateStyledComponent;
-    useThemeProps?: typeof useThemePropsDefault;
-    useTheme?: typeof useThemeSystem;
-    componentName?: string;
+    createStyledComponent?: typeof defaultCreateStyledComponent | undefined;
+    useThemeProps?: typeof useThemePropsDefault | undefined;
+    useTheme?: typeof useThemeSystem | undefined;
+    componentName?: string | undefined;
   } = {},
 ) {
   const {
@@ -76,7 +75,7 @@ export default function createGrid(
   };
 
   function parseResponsiveProp<T extends GridSize | GridOffset>(
-    propValue: T | null | (T | null)[] | { [key in Breakpoint]?: T | null },
+    propValue: T | null | ReadonlyArray<T | null> | { [key in Breakpoint]?: T | null },
     breakpoints: Breakpoints,
     shouldUseValue: (val: T) => boolean = () => true,
   ): { [key in Breakpoint]: T } {
@@ -94,7 +93,7 @@ export default function createGrid(
       });
     } else if (typeof propValue === 'object') {
       Object.keys(propValue).forEach((key) => {
-        const value = propValue[key as Breakpoint];
+        const value = (propValue as { [key in Breakpoint]?: T | null })[key as Breakpoint];
         if (value !== null && value !== undefined && shouldUseValue(value)) {
           parsedProp[key as Breakpoint] = value;
         }
@@ -120,11 +119,10 @@ export default function createGrid(
 
   const Grid = React.forwardRef(function Grid(inProps, ref) {
     const theme = useTheme();
-    const themeProps = useThemeProps<typeof inProps & { component?: React.ElementType }>(inProps);
-    const props = extendSxProp(themeProps) as Omit<typeof themeProps, 'color'> & GridOwnerState; // `color` type conflicts with html color attribute.
-
-    // TODO v8: Remove when removing the legacy Grid component
-    deleteLegacyGridProps(props, theme.breakpoints);
+    const themeProps = useThemeProps<
+      typeof inProps & { component?: React.ElementType | undefined }
+    >(inProps);
+    const props = themeProps as typeof themeProps & GridOwnerState;
 
     const {
       className,
@@ -246,7 +244,7 @@ export default function createGrid(
     wrap: PropTypes.oneOf(['nowrap', 'wrap-reverse', 'wrap']),
   };
 
-  // @ts-ignore internal logic for nested grid
+  // @ts-expect-error internal logic for nested grid
   Grid.muiName = 'Grid';
 
   return Grid;

@@ -87,7 +87,7 @@ const Header = () => {
   const classes = useStyles();
   const { dark, setDark } = React.useContext(DarkContext);
   return (
-    (<AppBar color="default" position="sticky">
+    <AppBar color="default" position="sticky">
       <Toolbar>
         <Typography className={classes.head} variant="h6">
           👋 Hello
@@ -110,7 +110,7 @@ const Header = () => {
           onChange={(event, checked) => setDark(checked)}
         />
       </Toolbar>
-    </AppBar>)
+    </AppBar>
   );
 };
 
@@ -119,61 +119,63 @@ function App() {
   const handleClose = () => setOpen(false);
   const { setDark } = React.useContext(DarkContext);
   const classes = useStyles();
-  return (<>
-    <CssBaseline />
-    <Header />
-    <Container>
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid item xs={6} sm={4} md={3}>
-          <Box p={2} display="flex" alignItems="center">
-            <Badge
-              color="secondary"
-              badgeContent=" "
-              overlap="circular"
-              classes={{ anchorOriginTopRightCircular: classes.badge }}
-            >
-              <Avatar variant="circular" classes={{ circular: classes.avatar }} />
-            </Badge>
-            <Box ml={2}>
-              <Typography>My name is ...</Typography>
-              <Typography variant="h5">
-                <b>siriwatknp</b>
-              </Typography>
+  return (
+    <>
+      <CssBaseline />
+      <Header />
+      <Container>
+        <Grid container spacing={2} justifyContent="center" alignItems="center">
+          <Grid item xs={6} sm={4} md={3}>
+            <Box p={2} display="flex" alignItems="center">
+              <Badge
+                color="secondary"
+                badgeContent=" "
+                overlap="circular"
+                classes={{ anchorOriginTopRightCircular: classes.badge }}
+              >
+                <Avatar variant="circular" classes={{ circular: classes.avatar }} />
+              </Badge>
+              <Box ml={2}>
+                <Typography>My name is Foo</Typography>
+                <Typography variant="h5">
+                  <b>siriwatknp</b>
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          </Grid>
+          <Grid item xs={6} sm={4} md={3}>
+            <Test />
+          </Grid>
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
-          <Test />
-        </Grid>
-      </Grid>
-      <Button variant="contained" onClick={() => setOpen(true)}>
-        Open Dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        TransitionProps={{
-          onEnter: () => setDark(true),
-          onExit: () => setDark(false)
-        }}>
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Container>
-  </>);
+        <Button variant="contained" onClick={() => setOpen(true)}>
+          Open Dialog
+        </Button>
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          TransitionProps={{
+            onEnter: () => setDark(true),
+            onExit: () => setDark(false)
+          }}>
+          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous location data to
+              Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+    </>
+  );
 }
 
 const withThemeProvider = (Component) => (props) => {
@@ -188,7 +190,7 @@ const withThemeProvider = (Component) => (props) => {
     [dark],
   );
   return (
-    (<DarkContext.Provider value={{ dark, setDark }}>
+    <DarkContext.Provider value={{ dark, setDark }}>
       <StylesProvider injectFirst>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
@@ -196,7 +198,7 @@ const withThemeProvider = (Component) => (props) => {
           </ThemeProvider>
         </StyledEngineProvider>
       </StylesProvider>
-    </DarkContext.Provider>)
+    </DarkContext.Provider>
   );
 };
 

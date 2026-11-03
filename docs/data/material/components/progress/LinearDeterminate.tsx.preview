@@ -1,1 +1,0 @@
-<LinearProgress variant="determinate" value={progress} />

@@ -1,6 +1,8 @@
+import { describe, expect, it } from 'vitest';
+import { isJsdom } from '@mui/internal-test-utils/env';
+
 const { execFileSync } = require('child_process');
 const path = require('path');
-const { expect } = require('chai');
 
 describe('@mui/envinfo', () => {
   const packagePath = __dirname;
@@ -15,12 +17,7 @@ describe('@mui/envinfo', () => {
     });
   }
 
-  it('includes info about the environment relevant to MUI', function test() {
-    // only run in node
-    if (!/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
-
+  it.skipIf(!isJsdom())('includes info about the environment relevant to MUI', function test() {
     const envinfoJSON = execEnvinfo(['--json']);
 
     const envinfo = JSON.parse(envinfoJSON);
@@ -35,8 +32,6 @@ describe('@mui/envinfo', () => {
     expect(envinfo).to.have.nested.property('Browsers');
     // Non-exhaustive list of `@mui/*` packages
     expect(envinfo).to.have.nested.property('npmPackages.@mui/material');
-    expect(envinfo).to.have.nested.property('npmPackages.@mui/joy');
-    expect(envinfo).to.have.nested.property('npmPackages.@mui/base');
     // Other libraries
     expect(envinfo).to.have.nested.property('npmPackages.react');
     expect(envinfo).to.have.nested.property('npmPackages.react-dom');

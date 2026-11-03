@@ -98,7 +98,7 @@ This `vars` object mirrors the structure of a serializable theme, with each valu
 
   :::
 
-- **Native CSS**: if you can't access the theme object, for example in a pure CSS file, you can use [`var()`](https://developer.mozilla.org/en-US/docs/Web/CSS/var) directly:
+- **Native CSS**: if you can't access the theme object, for example in a pure CSS file, you can use [`var()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var) directly:
 
   ```css
   /* external-scope.css */

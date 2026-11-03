@@ -67,6 +67,5 @@
   "forwardsRefTo": "HTMLElement",
   "filename": "/packages/mui-material/src/Breadcrumbs/Breadcrumbs.js",
   "inheritance": { "component": "Typography", "pathname": "/material-ui/api/typography/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-breadcrumbs/\">Breadcrumbs</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-breadcrumbs/\">Breadcrumbs</a></li></ul>"
 }

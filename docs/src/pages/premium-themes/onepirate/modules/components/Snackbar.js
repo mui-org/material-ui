@@ -52,7 +52,7 @@ function Snackbar(props) {
     <MuiSnackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       autoHideDuration={6000}
-      TransitionComponent={Transition}
+      slots={{ transition: Transition }}
       message={
         <React.Fragment>
           <InfoIcon className={classes.info} />

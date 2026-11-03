@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import TableCell, { tableCellClasses as classes } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -37,7 +36,6 @@ describe('<TableCell />', () => {
     refInstanceof: window.HTMLTableCellElement,
     // invalid nesting otherwise
     testComponentPropWith: 'td',
-    skip: ['componentsProp'],
   }));
 
   describe('prop: padding', () => {
@@ -64,8 +62,8 @@ describe('<TableCell />', () => {
 
   it('should render children', () => {
     const children = <p data-testid="hello">Hello</p>;
-    const { getByTestId } = renderInTable(<TableCell>{children}</TableCell>);
-    expect(getByTestId('hello')).not.to.equal(null);
+    renderInTable(<TableCell>{children}</TableCell>);
+    expect(screen.getByTestId('hello')).not.to.equal(null);
   });
 
   it('should render aria-sort="ascending" when prop sortDirection="asc" provided', () => {

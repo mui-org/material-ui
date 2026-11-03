@@ -1,7 +1,7 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
-import { act, createRenderer } from '@mui/internal-test-utils';
+import { act, createRenderer, screen } from '@mui/internal-test-utils';
 import FormLabel, { formLabelClasses as classes } from '@mui/material/FormLabel';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import { hexToRgb } from '@mui/material/styles';
@@ -19,7 +19,6 @@ describe('<FormLabel />', () => {
     testComponentPropWith: 'div',
     muiName: 'MuiFormLabel',
     testVariantProps: { color: 'secondary' },
-    skip: ['componentsProp'],
   }));
 
   describe('prop: required', () => {
@@ -162,31 +161,29 @@ describe('<FormLabel />', () => {
     });
 
     it('should have the focused class and style', () => {
-      const { container, getByTestId } = render(
-        <FormLabel data-testid="FormLabel" color="secondary" focused />,
-      );
+      const { container } = render(<FormLabel data-testid="FormLabel" color="secondary" focused />);
       expect(container.querySelector(`.${classes.colorSecondary}`)).to.have.class(classes.focused);
-      expect(getByTestId('FormLabel')).toHaveComputedStyle({
+      expect(screen.getByTestId('FormLabel')).toHaveComputedStyle({
         color: hexToRgb(defaultTheme.palette.secondary.main),
       });
     });
 
     it('should have the error class and style, even when focused', () => {
-      const { container, getByTestId } = render(
+      const { container } = render(
         <FormLabel data-testid="FormLabel" color="secondary" focused error />,
       );
       expect(container.querySelector(`.${classes.colorSecondary}`)).to.have.class(classes.error);
-      expect(getByTestId('FormLabel')).toHaveComputedStyle({
+      expect(screen.getByTestId('FormLabel')).toHaveComputedStyle({
         color: hexToRgb(defaultTheme.palette.error.main),
       });
     });
 
     it('should have the disabled class and style, even when focused', () => {
-      const { container, getByTestId } = render(
+      const { container } = render(
         <FormLabel data-testid="FormLabel" color="secondary" focused disabled />,
       );
       expect(container.querySelector(`.${classes.colorSecondary}`)).to.have.class(classes.disabled);
-      expect(getByTestId('FormLabel')).toHaveComputedStyle({
+      expect(screen.getByTestId('FormLabel')).toHaveComputedStyle({
         color: defaultTheme.palette.text.disabled,
       });
     });

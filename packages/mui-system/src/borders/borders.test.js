@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import borders from './borders';
 
 describe('borders', () => {
@@ -25,7 +25,7 @@ describe('borders', () => {
   });
 
   describe('theme shape as string', () => {
-    it('should work ', () => {
+    it('should work', () => {
       const output = borders({
         borderRadius: 2,
         theme: {

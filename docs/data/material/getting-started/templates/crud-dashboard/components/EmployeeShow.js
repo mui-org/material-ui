@@ -168,7 +168,7 @@ export default function EmployeeShow() {
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
-        <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Button
             variant="contained"
             startIcon={<ArrowBackIcon />}

@@ -7,3 +7,14 @@ fn({
     },
   },
 });
+
+fn({
+  MuiTabs: {
+    defaultProps: {
+      slots: {
+        StartScrollButtonIcon: CustomIcon,
+        EndScrollButtonIcon: CustomIcon2,
+      },
+    },
+  },
+});

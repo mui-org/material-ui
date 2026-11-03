@@ -16,20 +16,6 @@
       "isGlobal": false
     },
     {
-      "key": "flexContainer",
-      "className": "MuiTabList-flexContainer",
-      "description": "",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "flexContainerVertical",
-      "className": "MuiTabList-flexContainerVertical",
-      "description": "",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "hideScrollbar",
       "className": "MuiTabList-hideScrollbar",
       "description": "Styles applied to the tablist element if `variant=\"scrollable\"` and `visibleScrollbar={false}`.",
@@ -94,8 +80,7 @@
   "themeDefaultProps": false,
   "muiName": "MuiTabList",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-lab/src/TabList/TabList.js",
+  "filename": "/packages/mui-lab/src/TabList/TabList.tsx",
   "inheritance": { "component": "Tabs", "pathname": "/material-ui/api/tabs/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-tabs/\">Tabs</a></li></ul>"
 }

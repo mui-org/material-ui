@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { prefixer } from 'stylis';
@@ -24,64 +24,52 @@ export default function PositionedTooltipsRtl() {
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
           <Box sx={{ width: 500, margin: 10 }} dir="rtl">
-            <Grid container justifyContent="center">
-              <Grid>
-                <Tooltip title="Add" arrow open placement="top-start">
-                  <Button>top-start</Button>
-                </Tooltip>
-                <Tooltip title="Add" arrow open placement="top">
-                  <Button>top</Button>
-                </Tooltip>
-                <Tooltip title="Add" arrow open placement="top-end">
-                  <Button>top-end</Button>
-                </Tooltip>
-              </Grid>
-            </Grid>
-            <Grid container justifyContent="center">
-              <Grid size={6}>
+            <Stack direction="row" sx={{ justifyContent: 'center' }}>
+              <Tooltip title="Add" arrow open placement="top-start">
+                <Button>top-start</Button>
+              </Tooltip>
+              <Tooltip title="Add" arrow open placement="top">
+                <Button>top</Button>
+              </Tooltip>
+              <Tooltip title="Add" arrow open placement="top-end">
+                <Button>top-end</Button>
+              </Tooltip>
+            </Stack>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Stack direction="column" sx={{ alignItems: 'flex-start' }}>
                 <Tooltip title="Add" arrow open placement="left-start">
                   <Button>left-start</Button>
                 </Tooltip>
-                <br />
                 <Tooltip title="Add" arrow open placement="left">
                   <Button>left</Button>
                 </Tooltip>
-                <br />
                 <Tooltip title="Add" arrow open placement="left-end">
                   <Button>left-end</Button>
                 </Tooltip>
-              </Grid>
-              <Grid container alignItems="flex-end" direction="column" size={6}>
-                <Grid>
-                  <Tooltip title="Add" arrow open placement="right-start">
-                    <Button>right-start</Button>
-                  </Tooltip>
-                </Grid>
-                <Grid>
-                  <Tooltip title="Add" arrow open placement="right">
-                    <Button>right</Button>
-                  </Tooltip>
-                </Grid>
-                <Grid>
-                  <Tooltip title="Add" arrow open placement="right-end">
-                    <Button>right-end</Button>
-                  </Tooltip>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid container justifyContent="center">
-              <Grid>
-                <Tooltip title="Add" arrow open placement="bottom-start">
-                  <Button>bottom-start</Button>
+              </Stack>
+              <Stack direction="column" sx={{ alignItems: 'flex-end' }}>
+                <Tooltip title="Add" arrow open placement="right-start">
+                  <Button>right-start</Button>
                 </Tooltip>
-                <Tooltip title="Add" arrow open placement="bottom">
-                  <Button>bottom</Button>
+                <Tooltip title="Add" arrow open placement="right">
+                  <Button>right</Button>
                 </Tooltip>
-                <Tooltip title="Add" arrow open placement="bottom-end">
-                  <Button>bottom-end</Button>
+                <Tooltip title="Add" arrow open placement="right-end">
+                  <Button>right-end</Button>
                 </Tooltip>
-              </Grid>
-            </Grid>
+              </Stack>
+            </Box>
+            <Stack direction="row" sx={{ justifyContent: 'center' }}>
+              <Tooltip title="Add" arrow open placement="bottom-start">
+                <Button>bottom-start</Button>
+              </Tooltip>
+              <Tooltip title="Add" arrow open placement="bottom">
+                <Button>bottom</Button>
+              </Tooltip>
+              <Tooltip title="Add" arrow open placement="bottom-end">
+                <Button>bottom-end</Button>
+              </Tooltip>
+            </Stack>
           </Box>
         </ThemeProvider>
       </CacheProvider>

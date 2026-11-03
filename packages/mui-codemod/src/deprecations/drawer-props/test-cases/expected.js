@@ -27,9 +27,17 @@ import { Drawer as MyDrawer, SwipeableDrawer as MySwipeableDrawer } from '@mui/m
   transition: { direction: 'right' }
 }} />;
 
+<Drawer slots={{
+  transition: CustomTransition
+}} />;
+<SwipeableDrawer slots={{
+  transition: CustomTransition
+}} />;
+
 <MyDrawer
   slots={{
-    backdrop: Backdrop
+    backdrop: Backdrop,
+    transition: CustomTransition
   }}
   slotProps={{
     backdrop: { transitionDuration: 300 },
@@ -38,7 +46,8 @@ import { Drawer as MyDrawer, SwipeableDrawer as MySwipeableDrawer } from '@mui/m
   }} />;
 <MySwipeableDrawer
   slots={{
-    backdrop: Backdrop
+    backdrop: Backdrop,
+    transition: CustomTransition
   }}
   slotProps={{
     backdrop: { transitionDuration: 300 },

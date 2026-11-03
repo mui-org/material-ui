@@ -48,6 +48,7 @@ const ListRoot = styled('ul', {
       props: ({ ownerState }) => ownerState.subheader,
       style: {
         paddingTop: 0,
+        isolation: 'isolate', // Prevent overlap with iOS overlay scrollbars.
       },
     },
   ],

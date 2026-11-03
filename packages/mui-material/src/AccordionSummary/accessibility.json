@@ -1,0 +1,11 @@
+{
+  "axe": "docs/data/material/components/accordion/accordion.a11y.json",
+  "tests": ["ButtonBase"],
+  "criteria": {
+    "1.4.1": { "group": "Manual" },
+    "1.4.3": { "responsibility": "Component", "flagged": true },
+    "1.4.11": { "group": "Manual" },
+    "2.4.7": { "responsibility": "Component" }
+  },
+  "notApplicable": ["3.3.2"]
+}

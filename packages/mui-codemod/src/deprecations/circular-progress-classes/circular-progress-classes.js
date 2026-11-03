@@ -43,6 +43,7 @@ export default function transformer(file, api, options) {
                     .replaceAll('MuiCircularProgress-', '')
                     .replaceAll(replacementSelectorPrefix, '')
                     .replaceAll(' > ', '')
+                    .replaceAll(' ', '')
                     .split('.')
                     .filter(Boolean);
 
@@ -84,6 +85,29 @@ export default function transformer(file, api, options) {
                           3,
                           0,
                           j.templateElement({ raw: '.', cooked: '.' }, false),
+                        );
+                      }
+
+                      parent.quasis.splice(...quasisArgs);
+                    } else if (replacementSelector.includes(' .')) {
+                      const quasisArgs = [
+                        memberExpressionIndex,
+                        1,
+                        j.templateElement(
+                          {
+                            raw: precedingTemplateElement.value.raw.replace(/ \.$/, '.'),
+                            cooked: precedingTemplateElement.value.cooked.replace(/ \.$/, '.'),
+                          },
+                          false,
+                        ),
+                        j.templateElement({ raw: ' .', cooked: ' .' }, false),
+                      ];
+
+                      if (atomicClasses.length === 3) {
+                        quasisArgs.splice(
+                          3,
+                          0,
+                          j.templateElement({ raw: ' .', cooked: ' .' }, false),
                         );
                       }
 

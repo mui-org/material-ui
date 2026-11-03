@@ -16,44 +16,46 @@ export interface FormLabelOwnProps {
   /**
    * The content of the component.
    */
-  children?: React.LabelHTMLAttributes<HTMLLabelElement>['children'];
+  children?: React.LabelHTMLAttributes<HTMLLabelElement>['children'] | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<FormLabelClasses>;
+  classes?: Partial<FormLabelClasses> | undefined;
   /**
    * The color of the component.
    * It supports both default and custom theme colors, which can be added as shown in the
    * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
    */
-  color?: OverridableStringUnion<
-    'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
-    FormLabelPropsColorOverrides
-  >;
+  color?:
+    | OverridableStringUnion<
+        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+        FormLabelPropsColorOverrides
+      >
+    | undefined;
   /**
    * If `true`, the label should be displayed in a disabled state.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * If `true`, the label is displayed in an error state.
    */
-  error?: boolean;
+  error?: boolean | undefined;
   /**
    * If `true`, the label should use filled classes key.
    */
-  filled?: boolean;
+  filled?: boolean | undefined;
   /**
    * If `true`, the input of this label is focused (used by `FormGroup` components).
    */
-  focused?: boolean;
+  focused?: boolean | undefined;
   /**
    * If `true`, the label will indicate that the `input` is required.
    */
-  required?: boolean;
+  required?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface FormLabelTypeMap<
@@ -68,13 +70,14 @@ export interface FormLabelTypeMap<
  *
  * Demos:
  *
- * - [Checkbox](https://mui.com/material-ui/react-checkbox/)
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
- * - [Switch](https://mui.com/material-ui/react-switch/)
+ * - [Checkbox](https://next.mui.com/material-ui/react-checkbox/)
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
+ * - [Switch](https://next.mui.com/material-ui/react-switch/)
  *
  * API:
  *
- * - [FormLabel API](https://mui.com/material-ui/api/form-label/)
+ * - [FormLabel API](https://next.mui.com/material-ui/api/form-label/)
  */
 declare const FormLabel: OverridableComponent<FormLabelTypeMap>;
 
@@ -87,7 +90,7 @@ export type FormLabelProps<
   RootComponent extends React.ElementType = FormLabelTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<FormLabelTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default FormLabel;

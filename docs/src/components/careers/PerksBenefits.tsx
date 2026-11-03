@@ -5,26 +5,26 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
-import { Link } from '@mui/docs/Link';
-import IconImage from 'docs/src/components/icon/IconImage';
+import { Link } from '@mui/internal-core-docs/Link';
+import IconImage from '@mui/internal-core-docs/IconImage';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
-import ROUTES from 'docs/src/route';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 
 const companyInfo = [
   {
     title: 'About us',
-    description: 'Meet the team and a little bit of our history.',
+    description: 'Learn about the team and our history.',
     routeUrl: ROUTES.about,
   },
   {
     title: 'Handbook',
-    description: 'Learn everything about how MUI as a company.',
+    description: 'Find out how we function as a company.',
     routeUrl: ROUTES.handbook,
   },
   {
     title: 'Blog',
-    description: 'Learn about our products and team.',
+    description: 'Check out the latest product updates.',
     routeUrl: ROUTES.blog,
   },
 ];
@@ -44,7 +44,7 @@ function CardContentBlock({ title, description }: CardContentBlockProps) {
         {description}
       </Typography>
       <Typography variant="body2" color="primary" sx={{ fontWeight: 'bold', mt: 'auto' }}>
-        Learn more <KeyboardArrowRightRounded fontSize="small" sx={{ verticalAlign: 'middle' }} />
+        Read more <KeyboardArrowRightRounded fontSize="small" sx={{ verticalAlign: 'middle' }} />
       </Typography>
     </React.Fragment>
   );
@@ -104,7 +104,7 @@ function RemoteAwardCard() {
 export default function PerksBenefits() {
   return (
     <Section bg="gradient" cozy>
-      <Grid container spacing={5} alignItems="center">
+      <Grid container spacing={5} sx={{ alignItems: 'center' }}>
         <Grid size={{ md: 6 }}>
           <SectionHeadline
             overline="Working at MUI"

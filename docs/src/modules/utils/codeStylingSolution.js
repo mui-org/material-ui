@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { getCookie } from 'docs/src/modules/utils/helpers';
-import { CODE_STYLING } from 'docs/src/modules/constants';
+import { getCookie } from '@mui/internal-core-docs/helpers';
+import { CODE_STYLING } from '@mui/internal-core-docs/constants';
 
 const CodeStylingContext = React.createContext({
   codeStyling: CODE_STYLING.SYSTEM,

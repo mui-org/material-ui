@@ -43,7 +43,7 @@ This component _only_ has a root slot; more complex components may have addition
 Use the `component` prop to override a component's root slot.
 The demo below shows how to replace the Button's `<button>` tag with a `<a>` to create a link button:
 
-{{"demo": "OverridingRootSlot.js"}}
+{{"component": "file://./demos/overriding-root-slot/index.ts"}}
 
 :::info
 The `href`, `target`, and `rel` props are specific to `<a>` tags.
@@ -62,7 +62,7 @@ For example, the [Autocomplete](/material-ui/react-autocomplete/) is composed of
 Use the `slots` prop to replace a component's interior slots.
 The example below shows how to replace the popper slot in the [Autocomplete](/material-ui/react-autocomplete/) component to remove the popup functionality:
 
-{{"demo": "OverridingInternalSlot.js"}}
+{{"component": "file://./demos/overriding-internal-slot/index.ts"}}
 
 ### The slotProps prop
 
@@ -75,15 +75,29 @@ For example, the code snippet below shows how to add a custom `data-testid` to t
 <Autocomplete slotProps={{ popper: { 'data-testid': 'my-popper' } }} />
 ```
 
+Each slot prop can also be a callback that receives the component's `ownerState` and returns the props for that slot.
+Use this when you need slot props to depend on the component's props or internal state.
+
+```jsx
+<Popover
+  open={open}
+  slotProps={{
+    paper: (ownerState) => ({
+      elevation: ownerState.open ? 8 : 0,
+    }),
+  }}
+/>
+```
+
 All additional props placed on the primary component are also propagated into the root slot (just as if they were placed in `slotProps.root`).
 These two examples are equivalent:
 
 ```jsx
-<Autocomplete id="badge1">
+<Badge id="badge1">
 ```
 
 ```jsx
-<Autocomplete slotProps={{ root: { id: 'badge1' } }}>
+<Badge slotProps={{ root: { id: 'badge1' } }}>
 ```
 
 :::warning

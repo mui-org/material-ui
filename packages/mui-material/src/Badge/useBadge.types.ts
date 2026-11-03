@@ -7,17 +7,17 @@ export interface UseBadgeParameters {
    * If `true`, the badge is invisible.
    * @default false
    */
-  invisible?: boolean;
+  invisible?: boolean | undefined;
   /**
    * Max count to show.
    * @default 99
    */
-  max?: number;
+  max?: number | undefined;
   /**
    * Controls whether the badge is hidden when `badgeContent` is zero.
    * @default false
    */
-  showZero?: boolean;
+  showZero?: boolean | undefined;
 }
 
 export interface UseBadgeReturnValue {

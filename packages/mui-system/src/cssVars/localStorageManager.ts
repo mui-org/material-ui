@@ -1,5 +1,5 @@
 export interface StorageManager {
-  (options: { key: string; storageWindow?: Window | null }): {
+  (options: { key: string; storageWindow?: Window | null | undefined }): {
     /**
      * Function to get the value from the storage
      * @param defaultValue The default value to be returned if the key is not found

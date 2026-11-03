@@ -3,8 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import formControlState from '../FormControl/formControlState';
-import useFormControl from '../FormControl/useFormControl';
+import { useFormControlState } from '../FormControl/useFormControl';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
@@ -93,10 +92,8 @@ const FormHelperText = React.forwardRef(function FormHelperText(inProps, ref) {
     ...other
   } = props;
 
-  const muiFormControl = useFormControl();
-  const fcs = formControlState({
+  const [fcs] = useFormControlState({
     props,
-    muiFormControl,
     states: ['variant', 'size', 'disabled', 'error', 'filled', 'focused', 'required'],
   });
 

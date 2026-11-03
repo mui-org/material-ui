@@ -1,12 +1,14 @@
 'use client';
-import * as React from 'react';
+import type * as React from 'react';
 import useForkRef from '../useForkRef';
-import appendOwnerState, { AppendOwnerStateReturnType } from '../appendOwnerState';
-import mergeSlotProps, {
+import type { AppendOwnerStateReturnType } from '../appendOwnerState';
+import appendOwnerState from '../appendOwnerState';
+import type {
   MergeSlotPropsParameters,
   MergeSlotPropsResult,
   WithCommonProps,
 } from '../mergeSlotProps';
+import mergeSlotProps from '../mergeSlotProps';
 import resolveComponentProps from '../resolveComponentProps';
 
 export type UseSlotPropsParameters<
@@ -28,9 +30,7 @@ export type UseSlotPropsParameters<
    * The `slotProps.*` of the Base UI component.
    */
   externalSlotProps:
-    | ExternalSlotProps
-    | ((ownerState: OwnerState) => ExternalSlotProps)
-    | undefined;
+    ExternalSlotProps | ((ownerState: OwnerState) => ExternalSlotProps) | undefined;
   /**
    * The ownerState of the Base UI component.
    */
@@ -38,7 +38,7 @@ export type UseSlotPropsParameters<
   /**
    * Set to true if the slotProps callback should receive more props.
    */
-  skipResolvingSlotProps?: boolean;
+  skipResolvingSlotProps?: boolean | undefined;
 };
 
 export type UseSlotPropsResult<

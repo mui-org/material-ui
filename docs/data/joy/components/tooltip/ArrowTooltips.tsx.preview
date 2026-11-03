@@ -1,5 +1,0 @@
-<Sheet sx={{ pr: 7 }}>
-  <Tooltip title="Add" arrow open placement="right">
-    <Button variant="plain">Arrow</Button>
-  </Tooltip>
-</Sheet>

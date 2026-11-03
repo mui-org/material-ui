@@ -7,9 +7,11 @@ export default function OutlinedHiddenRequiredIndicator() {
       label="Name"
       variant="outlined"
       required
-      InputLabelProps={{
-        shrink: true,
-        required: false,
+      slotProps={{
+        inputLabel: {
+          shrink: true,
+          required: false,
+        },
       }}
     />
   );

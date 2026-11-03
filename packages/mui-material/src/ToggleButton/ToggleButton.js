@@ -15,6 +15,7 @@ import toggleButtonClasses, { getToggleButtonUtilityClass } from './toggleButton
 import ToggleButtonGroupContext from '../ToggleButtonGroup/ToggleButtonGroupContext';
 import ToggleButtonGroupButtonContext from '../ToggleButtonGroup/ToggleButtonGroupButtonContext';
 import isValueSelected from '../ToggleButtonGroup/isValueSelected';
+import RovingToggleButton from './RovingToggleButton';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, fullWidth, selected, disabled, size, color } = ownerState;
@@ -142,7 +143,11 @@ const ToggleButtonRoot = styled(ButtonBase, {
 
 const ToggleButton = React.forwardRef(function ToggleButton(inProps, ref) {
   // props priority: `inProps` > `contextProps` > `themeDefaultProps`
-  const { value: contextValue, ...contextProps } = React.useContext(ToggleButtonGroupContext);
+  const {
+    value: contextValue,
+    isRovingTabIndex,
+    ...contextProps
+  } = React.useContext(ToggleButtonGroupContext);
   const toggleButtonGroupButtonContextPositionClassName = React.useContext(
     ToggleButtonGroupButtonContext,
   );
@@ -191,13 +196,13 @@ const ToggleButton = React.forwardRef(function ToggleButton(inProps, ref) {
   };
 
   const positionClassName = toggleButtonGroupButtonContextPositionClassName || '';
-
-  return (
+  const button = (
     <ToggleButtonRoot
       className={clsx(contextProps.className, classes.root, className, positionClassName)}
+      internalNativeButton
       disabled={disabled}
       focusRipple={!disableFocusRipple}
-      ref={ref}
+      ref={isRovingTabIndex ? undefined : ref}
       onClick={handleChange}
       onChange={onChange}
       value={value}
@@ -208,6 +213,16 @@ const ToggleButton = React.forwardRef(function ToggleButton(inProps, ref) {
       {children}
     </ToggleButtonRoot>
   );
+
+  if (isRovingTabIndex) {
+    return (
+      <RovingToggleButton disabled={disabled} selected={selected} ref={ref} value={value}>
+        {button}
+      </RovingToggleButton>
+    );
+  }
+
+  return button;
 });
 
 ToggleButton.propTypes /* remove-proptypes */ = {

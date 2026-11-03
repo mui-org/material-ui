@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import useLazyRef from '@mui/utils/useLazyRef';
-import { TouchRippleActions } from '../ButtonBase/TouchRipple';
+import type { TouchRippleActions } from '../ButtonBase/TouchRipple';
 
 type ControlledPromise<T = unknown> = Promise<T> & {
   resolve: Function;
@@ -14,19 +14,19 @@ type ControlledPromise<T = unknown> = Promise<T> & {
  */
 export class LazyRipple {
   /** React ref to the ripple instance */
-  ref: React.RefObject<TouchRippleActions | null>;
+  ref: React.RefObject<TouchRippleActions | null> = { current: null };
 
   /** If the ripple component should be mounted */
-  shouldMount: boolean;
+  shouldMount: boolean = false;
 
   /** Promise that resolves when the ripple component is mounted */
-  private mounted: ControlledPromise | null;
+  private mounted: ControlledPromise | null = null;
 
   /** If the ripple component has been mounted */
-  private didMount: boolean;
+  private didMount: boolean = false;
 
   /** React state hook setter */
-  private setShouldMount: React.Dispatch<boolean> | null;
+  private setShouldMount: React.Dispatch<boolean> | null = null;
 
   static create() {
     return new LazyRipple();
@@ -46,14 +46,6 @@ export class LazyRipple {
     return ripple;
   }
 
-  constructor() {
-    this.ref = { current: null };
-    this.mounted = null;
-    this.didMount = false;
-    this.shouldMount = false;
-    this.setShouldMount = null;
-  }
-
   mount() {
     if (!this.mounted) {
       this.mounted = createControlledPromise();
@@ -67,8 +59,8 @@ export class LazyRipple {
     if (this.shouldMount && !this.didMount) {
       if (this.ref.current !== null) {
         this.didMount = true;
-        this.mounted!.resolve();
       }
+      this.mounted!.resolve();
     }
   };
 

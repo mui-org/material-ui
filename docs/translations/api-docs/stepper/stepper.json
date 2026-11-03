@@ -5,7 +5,7 @@
       "description": "Set the active step (zero based index). Set to -1 to disable all the steps."
     },
     "alternativeLabel": {
-      "description": "If set to &#39;true&#39; and orientation is horizontal, then the step label will be positioned under the icon."
+      "description": "If set to &#39;true&#39; and orientation is horizontal, then the step label will be positioned under the icon. If set to &#39;true&#39; and orientation is vertical, it reverses the position of the label and content."
     },
     "children": { "description": "Two or more <code>&lt;Step /&gt;</code> components." },
     "classes": { "description": "Override or extend the styles applied to the component." },

@@ -50,18 +50,6 @@
       "conditions": "<code>fullWidth={true}</code>"
     },
     "grouped": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the children" },
-    "groupedHorizontal": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>orientation=\"horizontal\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/toggle-button-group/#toggle-button-group-classes-horizontal\">.MuiToggleButtonGroup-horizontal</a> and <a href=\"/material-ui/api/toggle-button-group/#toggle-button-group-classes-grouped\">.MuiToggleButtonGroup-grouped</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "groupedVertical": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the children",
-      "conditions": "<code>orientation=\"vertical\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/toggle-button-group/#toggle-button-group-classes-vertical\">.MuiToggleButtonGroup-vertical</a> and <a href=\"/material-ui/api/toggle-button-group/#toggle-button-group-classes-grouped\">.MuiToggleButtonGroup-grouped</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "horizontal": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",

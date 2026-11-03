@@ -12,22 +12,22 @@ export interface AlertTitleProps extends TypographyProps<'div'> {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<AlertTitleClasses>;
+  classes?: Partial<AlertTitleClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Alert](https://mui.com/material-ui/react-alert/)
+ * - [Alert](https://next.mui.com/material-ui/react-alert/)
  *
  * API:
  *
- * - [AlertTitle API](https://mui.com/material-ui/api/alert-title/)
- * - inherits [Typography API](https://mui.com/material-ui/api/typography/)
+ * - [AlertTitle API](https://next.mui.com/material-ui/api/alert-title/)
+ * - inherits [Typography API](https://next.mui.com/material-ui/api/typography/)
  */
 export default function AlertTitle(props: AlertTitleProps): React.JSX.Element;

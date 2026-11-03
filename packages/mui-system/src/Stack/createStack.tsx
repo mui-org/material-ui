@@ -2,25 +2,24 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent } from '@mui/types';
+import type { OverridableComponent } from '@mui/types';
 import deepmerge from '@mui/utils/deepmerge';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import composeClasses from '@mui/utils/composeClasses';
 import systemStyled from '../styled';
 import useThemePropsSystem from '../useThemeProps';
-import { extendSxProp } from '../styleFunctionSx';
 import createTheme from '../createTheme';
-import { CreateMUIStyled } from '../createStyled';
-import { StackTypeMap, StackOwnerState } from './StackProps';
+import type { CreateMUIStyled } from '../createStyled';
+import type { StackTypeMap, StackOwnerState } from './StackProps';
 import type { Breakpoint } from '../createTheme';
-import { Breakpoints } from '../createBreakpoints/createBreakpoints';
+import type { Breakpoints } from '../createBreakpoints/createBreakpoints';
 import {
   handleBreakpoints,
   mergeBreakpointsInOrder,
   resolveBreakpointValues,
 } from '../breakpoints';
 import { createUnarySpacing, getValue } from '../spacing';
-import { Spacing } from '../createTheme/createSpacing';
+import type { Spacing } from '../createTheme/createSpacing';
 
 const defaultTheme = createTheme();
 
@@ -155,9 +154,9 @@ export const style = ({ ownerState, theme }: StyleFunctionProps) => {
 
 export default function createStack(
   options: {
-    createStyledComponent?: typeof defaultCreateStyledComponent;
-    useThemeProps?: typeof useThemePropsDefault;
-    componentName?: string;
+    createStyledComponent?: typeof defaultCreateStyledComponent | undefined;
+    useThemeProps?: typeof useThemePropsDefault | undefined;
+    componentName?: string | undefined;
   } = {},
 ) {
   const {
@@ -180,8 +179,9 @@ export default function createStack(
   }>(style);
 
   const Stack = React.forwardRef(function Grid(inProps, ref) {
-    const themeProps = useThemeProps<typeof inProps & { component?: React.ElementType }>(inProps);
-    const props = extendSxProp(themeProps) as Omit<typeof themeProps, 'color'>; // `color` type conflicts with html color attribute.
+    const themeProps = useThemeProps<
+      typeof inProps & { component?: React.ElementType | undefined }
+    >(inProps);
     const {
       component = 'div',
       direction = 'column',
@@ -191,7 +191,7 @@ export default function createStack(
       className,
       useFlexGap = false,
       ...other
-    } = props;
+    } = themeProps;
 
     const ownerState = {
       direction,

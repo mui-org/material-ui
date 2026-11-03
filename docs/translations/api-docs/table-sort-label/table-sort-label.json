@@ -30,18 +30,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>direction=\"desc\"</code>"
-    },
-    "iconDirectionAsc": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon component",
-      "conditions": "<code>direction=\"asc\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/table-sort-label/#table-sort-label-classes-icon\">.MuiTableSortLabel-icon</a> and <a href=\"/material-ui/api/table-sort-label/#table-sort-label-classes-direction-asc\">.MuiTableSortLabel-directionAsc</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconDirectionDesc": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon component",
-      "conditions": "<code>direction=\"desc\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/table-sort-label/#table-sort-label-classes-icon\">.MuiTableSortLabel-icon</a> and <a href=\"/material-ui/api/table-sort-label/#table-sort-label-classes-direction-desc\">.MuiTableSortLabel-directionDesc</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   },
   "slotDescriptions": {

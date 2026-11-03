@@ -1,11 +1,11 @@
 const classes = [
   {
     deprecatedClass: ' .MuiCircularProgress-circleDeterminate',
-    replacementSelector: '.MuiCircularProgress-determinate > .MuiCircularProgress-circle',
+    replacementSelector: '.MuiCircularProgress-determinate .MuiCircularProgress-circle',
   },
   {
     deprecatedClass: ' .MuiCircularProgress-circleIndeterminate',
-    replacementSelector: '.MuiCircularProgress-indeterminate > .MuiCircularProgress-circle',
+    replacementSelector: '.MuiCircularProgress-indeterminate .MuiCircularProgress-circle',
   },
 ];
 

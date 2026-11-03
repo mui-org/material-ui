@@ -1,5 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import {Autocomplete as MyAutocomplete} from '@mui/material';
+import Chip from '@mui/material/Chip';
+import useAutocomplete from '@mui/material/useAutocomplete';
 
 <Autocomplete
   ChipProps={{ height: 10 }}
@@ -61,4 +63,23 @@ import {Autocomplete as MyAutocomplete} from '@mui/material';
   PopperComponent={CustomPopper}
   ListboxComponent={CustomListbox}
   ListboxProps={{ height: 12 }}
-/>
+/>;
+
+<Autocomplete
+  multiple
+  options={options}
+  renderTags={(value, getTagProps, ownerState) =>
+    value.map((option, index) => (
+      <Chip label={option.label} data-focused={ownerState.focused} {...getTagProps({ index })} />
+    ))
+  }
+/>;
+
+const { getTagProps, focusedTag } = useAutocomplete(props);
+
+<Chip {...getTagProps({ index: focusedTag })} />;
+
+const { getTagProps: getAutocompleteTagProps, focusedTag: focusedAutocompleteTag } =
+  useAutocomplete(props);
+
+<Chip {...getAutocompleteTagProps({ index: focusedAutocompleteTag })} />;

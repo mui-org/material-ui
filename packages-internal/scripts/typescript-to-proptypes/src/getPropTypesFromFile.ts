@@ -1,10 +1,10 @@
-import ts from 'typescript';
+import ts from '@typescript/typescript6';
 import * as doctrine from 'doctrine';
-import {
+import type {
   GetPropsFromComponentDeclarationOptions,
-  getPropsFromComponentNode,
   TypeScriptProject,
 } from '@mui/internal-docs-utils';
+import { getPropsFromComponentNode } from '@mui/internal-docs-utils';
 import {
   createUnionType,
   createUndefinedType,
@@ -20,7 +20,7 @@ import {
   createObjectType,
   createStringType,
 } from './createType';
-import { PropTypeDefinition, PropTypesComponent, PropType } from './models';
+import type { PropTypeDefinition, PropTypesComponent, PropType } from './models';
 
 function getSymbolFileNames(symbol: ts.Symbol): Set<string> {
   const declarations = symbol.getDeclarations() || [];
@@ -28,26 +28,174 @@ function getSymbolFileNames(symbol: ts.Symbol): Set<string> {
   return new Set(declarations.map((declaration) => declaration.getSourceFile().fileName));
 }
 
+/**
+ * Flatten UnionType into array of stringified constituent types.
+ * Recurses through doctrine wrapper/container nodes so unions nested in
+ * OptionalType / NullableType / NonNullableType / RestType / TypeApplication /
+ * ArrayType are counted by their actual constituent leaves.
+ */
+function flattenUnionTypes(type: any): string[] {
+  if (!type) {
+    return [];
+  }
+  switch (type.type) {
+    case 'UnionType':
+      return type.elements.flatMap(flattenUnionTypes);
+    case 'OptionalType':
+    case 'NullableType':
+    case 'NonNullableType':
+    case 'RestType':
+      return flattenUnionTypes(type.expression);
+    case 'TypeApplication':
+      return [
+        ...flattenUnionTypes(type.expression),
+        ...type.applications.flatMap(flattenUnionTypes),
+      ];
+    case 'ArrayType':
+      return type.elements.flatMap(flattenUnionTypes);
+    default: {
+      const s = stringifyDoctrineType(type);
+      return s ? [s] : [];
+    }
+  }
+}
+
+/**
+ * Stringifies a doctrine JSDoc type AST node back to source form.
+ * Output is consumed by `flattenUnionTypes` as a counter input for
+ * `pickCoveringJSDoc` — exact form does not reach generated output, only
+ * its presence/count matters. Empty string signals "unhandled" and is
+ * filtered upstream.
+ *
+ * TODO: extend to cover remaining doctrine node kinds when encountered in
+ * real-world JSDoc. Unhandled kinds currently collapse to ''.
+ */
+function stringifyDoctrineType(type: any): string {
+  if (!type) {
+    return '';
+  }
+  switch (type.type) {
+    case 'NameExpression':
+      return type.name;
+    case 'UnionType':
+      return type.elements.map(stringifyDoctrineType).join(' | ');
+    case 'TypeApplication':
+      return `${stringifyDoctrineType(type.expression)}<${type.applications.map(stringifyDoctrineType).join(', ')}>`;
+    case 'OptionalType':
+      return `${stringifyDoctrineType(type.expression)}=`;
+    case 'NullableType':
+      return `?${stringifyDoctrineType(type.expression)}`;
+    case 'NonNullableType':
+      return `!${stringifyDoctrineType(type.expression)}`;
+    case 'RestType':
+      return `...${stringifyDoctrineType(type.expression)}`;
+    case 'ArrayType':
+      return `[${type.elements.map(stringifyDoctrineType).join(', ')}]`;
+    case 'AllLiteral':
+      return '*';
+    case 'NullLiteral':
+      return 'null';
+    case 'UndefinedLiteral':
+      return 'undefined';
+    case 'VoidLiteral':
+      return 'void';
+    default:
+      return '';
+  }
+}
+
+/**
+ * Pick the most-covering JSDoc comment among several declarations.
+ * "Most covering" = highest count of union-constituent types across all `@param`
+ * tags. Matches VS Code hover semantics which displays the richer overload.
+ * Ties fall back to the first (for declaration merging) or last (for intersection).
+ */
+function pickCoveringJSDoc(comments: string[], tieBreak: 'first' | 'last'): string {
+  if (comments.length === 0) {
+    return '';
+  }
+  if (comments.length === 1) {
+    return comments[0];
+  }
+
+  const getParamTypeCount = (comment: string) => {
+    if (!/@param\b/.test(comment)) {
+      return 0;
+    }
+    try {
+      const parsed = doctrine.parse(
+        `/**\n${comment
+          .split('\n')
+          .map((l) => ` * ${l.trim()}`)
+          .join('\n')}\n */`,
+        { unwrap: true },
+      );
+      return parsed.tags
+        .filter((t) => t.title === 'param')
+        .reduce((sum, t) => sum + (t.type ? flattenUnionTypes(t.type).length : 0), 0);
+    } catch {
+      return 0;
+    }
+  };
+
+  let bestIndex = 0;
+  let bestCount = getParamTypeCount(comments[0]);
+  for (let i = 1; i < comments.length; i += 1) {
+    const count = getParamTypeCount(comments[i]);
+    if (tieBreak === 'last' ? count >= bestCount : count > bestCount) {
+      bestIndex = i;
+      bestCount = count;
+    }
+  }
+  return comments[bestIndex];
+}
+
 function getSymbolDocumentation({
   symbol,
   project,
+  parentType,
 }: {
   symbol: ts.Symbol | undefined;
   project: TypeScriptProject;
+  parentType?: ts.Type;
 }): string | undefined {
   if (symbol === undefined) {
     return undefined;
   }
 
   const decl = symbol.getDeclarations();
-  if (decl) {
-    // @ts-ignore
-    const comments = ts.getJSDocCommentsAndTags(decl[0]) as readonly any[];
-    if (comments && comments.length === 1) {
-      const commentNode = comments[0];
-      if (ts.isJSDoc(commentNode)) {
-        return doctrine.unwrapComment(commentNode.getText()).trim();
+  if (decl && decl.length > 0) {
+    // This behavior tries to replicate how TypeScript itself merges JSDoc comments.
+    // It is a complex logic that changes based on the kind of declarations.
+    // There is an open issue for it in: https://github.com/microsoft/TypeScript/issues/30901
+    //
+    // Selection strategy (matches VS Code hover behavior):
+    // 1. Collect at most one JSDoc block per declaration.
+    // 2. If only one declaration contributes JSDoc, use it.
+    // 3. If multiple declarations contribute JSDoc, select the most-covering one
+    //    via `pickCoveringJSDoc` (richest matching signature).
+    // 4. Ties resolve to the last declaration for intersections, otherwise to the first
+    //    declaration (for example in declaration merging / module augmentation).
+    const comments = decl
+      .map((d) => {
+        const jsDocNodes = ts.getJSDocCommentsAndTags(d).filter((node) => ts.isJSDoc(node));
+        return jsDocNodes.length > 0
+          ? doctrine.unwrapComment(jsDocNodes[0].getText()).trim()
+          : undefined;
+      })
+      .filter((c): c is string => c !== undefined);
+
+    if (comments.length > 0) {
+      if (comments.length === 1) {
+        return comments[0];
       }
+
+      // Pick the declaration with the most-covering JSDoc (richest @param
+      // signature), matching how VS Code hover shows overloaded signatures.
+      // For intersections, ties resolve to the last constituent (override semantics);
+      // for declaration merging / extends, ties resolve to the first.
+      const tieBreak = parentType && parentType.isIntersection() ? 'last' : 'first';
+      return pickCoveringJSDoc(comments, tieBreak);
     }
   }
 
@@ -116,7 +264,7 @@ function checkType({
     return createObjectType({ jsDoc: undefined });
   }
 
-  const typeNode = type as any;
+  const typeNode = type;
   const symbol = typeNode.aliasSymbol ? typeNode.aliasSymbol : typeNode.symbol;
   const jsDoc = getSymbolDocumentation({ symbol, project });
 
@@ -176,7 +324,7 @@ function checkType({
   }
 
   if (project.checker.isArrayType(type)) {
-    // @ts-ignore
+    // @ts-expect-error: TypeChecker implements getElementTypeOfArrayType but does not expose it in its public types.
     const arrayType: ts.Type = project.checker.getElementTypeOfArrayType(type);
 
     return createArrayType({
@@ -199,12 +347,55 @@ function checkType({
   }
 
   if (type.isUnion()) {
+    const hasStringIntersection = type.types.some((t) => {
+      if (t.isIntersection && t.isIntersection()) {
+        const hasString = t.types.some((it) => it.flags & ts.TypeFlags.String);
+        const hasEmptyObject = t.types.some(
+          (it) =>
+            it.flags & ts.TypeFlags.Object &&
+            (!it.symbol || !it.symbol.members || it.symbol.members.size === 0),
+        );
+        return hasString && hasEmptyObject;
+      }
+      return false;
+    });
+
+    if (hasStringIntersection) {
+      const hasLiterals = type.types.some((t) => t.flags & ts.TypeFlags.Literal);
+      if (hasLiterals) {
+        const hasUndefined = type.types.some((t) => t.flags & ts.TypeFlags.Undefined);
+        if (hasUndefined) {
+          return createUnionType({
+            jsDoc,
+            types: [
+              createStringType({ jsDoc: undefined }),
+              createUndefinedType({ jsDoc: undefined }),
+            ],
+          });
+        }
+        return createStringType({ jsDoc });
+      }
+    }
+
     const node = createUnionType({
       jsDoc,
       types: type.types.map((x) => checkType({ type: x, location, typeStack, name, project })),
     });
 
     return node.types.length === 1 ? node.types[0] : node;
+  }
+
+  if (type.isIntersection && type.isIntersection()) {
+    const hasString = type.types.some((t) => t.flags & ts.TypeFlags.String);
+    const hasEmptyObject = type.types.some(
+      (t) =>
+        t.flags & ts.TypeFlags.Object &&
+        (!t.symbol || !t.symbol.members || t.symbol.members.size === 0),
+    );
+
+    if (hasString && hasEmptyObject) {
+      return createStringType({ jsDoc });
+    }
   }
 
   if (type.flags & ts.TypeFlags.TypeParameter) {
@@ -353,37 +544,76 @@ function checkSymbol({
   symbol,
   location,
   typeStack,
+  parentType,
 }: {
   project: PropTypesProject;
   symbol: ts.Symbol;
   location: ts.Node;
   typeStack: readonly number[];
+  parentType?: ts.Type;
 }): PropTypeDefinition {
   const declarations = symbol.getDeclarations();
   const declaration = declarations && declarations[0];
   const symbolFilenames = getSymbolFileNames(symbol);
-  const jsDoc = getSymbolDocumentation({ symbol, project });
+  const jsDoc = getSymbolDocumentation({ symbol, project, parentType });
 
   // TypeChecker keeps the name for
   // { a: React.ElementType, b: React.ReactElement | boolean }
   // but not
   // { a?: React.ElementType, b: React.ReactElement }
   // get around this by not using the TypeChecker
-  if (
-    declaration &&
-    ts.isPropertySignature(declaration) &&
-    declaration.type &&
-    ts.isTypeReferenceNode(declaration.type)
-  ) {
-    const name = declaration.type.typeName.getText();
-    if (
-      name === 'React.ElementType' ||
-      name === 'React.ComponentType' ||
-      name === 'React.JSXElementConstructor' ||
-      name === 'React.ReactElement'
-    ) {
+  if (declaration && ts.isPropertySignature(declaration) && declaration.type) {
+    // Helper to check if a type node is a React element type reference
+    const getElementTypeName = (typeNode: ts.TypeNode): string | null => {
+      if (ts.isTypeReferenceNode(typeNode)) {
+        const name = typeNode.typeName.getText();
+        if (
+          name === 'React.ElementType' ||
+          name === 'React.ComponentType' ||
+          name === 'React.JSXElementConstructor' ||
+          name === 'React.ReactElement'
+        ) {
+          return name;
+        }
+      }
+      return null;
+    };
+
+    // Check for direct type reference (e.g., `prop: React.ElementType`)
+    let elementTypeName = getElementTypeName(declaration.type);
+
+    // Also check for union types like `React.ElementType | undefined`
+    // but NOT for unions with other types like `string | React.ReactElement | undefined`
+    if (!elementTypeName && ts.isUnionTypeNode(declaration.type)) {
+      let foundElementType: string | null = null;
+      let hasOtherNonUndefinedTypes = false;
+
+      for (const typeNode of declaration.type.types) {
+        const name = getElementTypeName(typeNode);
+        if (name) {
+          foundElementType = name;
+        } else if (
+          // Check if this is an undefined type (keyword or literal)
+          !(
+            typeNode.kind === ts.SyntaxKind.UndefinedKeyword ||
+            (ts.isLiteralTypeNode(typeNode) &&
+              typeNode.literal.kind === ts.SyntaxKind.UndefinedKeyword)
+          )
+        ) {
+          // Found a type that's neither an element type nor undefined
+          hasOtherNonUndefinedTypes = true;
+        }
+      }
+
+      // Only use the element type if the union doesn't have other non-undefined types
+      if (foundElementType && !hasOtherNonUndefinedTypes) {
+        elementTypeName = foundElementType;
+      }
+    }
+
+    if (elementTypeName) {
       const elementNode = createElementType({
-        elementType: name === 'React.ReactElement' ? 'element' : 'elementType',
+        elementType: elementTypeName === 'React.ReactElement' ? 'element' : 'elementType',
         jsDoc,
       });
 
@@ -455,9 +685,9 @@ function squashPropTypeDefinitions({
 }): PropTypeDefinition {
   const distinctDefinitions = new Map<number, PropTypeDefinition>();
   propTypeDefinitions.forEach((definition) => {
-    if (!distinctDefinitions.has(definition.$$id)) {
-      distinctDefinitions.set(definition.$$id, definition);
-    }
+    // Always update so that the last definition's jsDoc wins
+    // This ensures that when types are intersected (A & B), the last type's documentation is used
+    distinctDefinitions.set(definition.$$id, definition);
   });
 
   if (distinctDefinitions.size === 1 && !onlyUsedInSomeSignatures) {
@@ -470,16 +700,20 @@ function squashPropTypeDefinitions({
     types.push(createUndefinedType({ jsDoc: undefined }));
   }
 
+  // Use the last definition's jsDoc so that when types are intersected (A & B),
+  // the last type's documentation wins
+  const lastDefinition = definitions[definitions.length - 1];
+
   return {
-    name: definitions[0].name,
-    jsDoc: definitions[0].jsDoc,
+    name: lastDefinition.name,
+    jsDoc: lastDefinition.jsDoc,
     propType: createUnionType({
       // TODO: jsDoc from squashing is dropped
       jsDoc: undefined,
       types,
     }),
     filenames: new Set(definitions.flatMap((definition) => Array.from(definition.filenames))),
-    $$id: definitions[0].$$id,
+    $$id: lastDefinition.$$id,
   };
 }
 
@@ -501,6 +735,7 @@ function generatePropTypesFromNode(
         project: params.project,
         location: parsedComponent.location,
         typeStack: [(componentType as any).id],
+        parentType: componentType,
       }),
     );
 
@@ -531,7 +766,7 @@ export function getPropTypesFromFile({
   const sigilIds: Map<ts.Symbol | ts.Type, number> = new Map();
   /**
    *
-   * @param sigil - Prefer ts.Type if available since these are re-used in the type checker. Symbols (especially those for literals) are oftentimes re-created on every usage.
+   * @param sigil - Prefer ts.Type if available since these are reused in the type checker. Symbols (especially those for literals) are oftentimes re-created on every usage.
    */
   function createPropTypeId(sigil: ts.Symbol | ts.Type) {
     if (!sigilIds.has(sigil)) {
@@ -598,11 +833,10 @@ export function getPropTypesFromFile({
   return components;
 }
 
-export interface GetPropTypesFromFileOptions
-  extends Pick<
-    GetPropsFromComponentDeclarationOptions,
-    'shouldInclude' | 'project' | 'checkDeclarations'
-  > {
+export interface GetPropTypesFromFileOptions extends Pick<
+  GetPropsFromComponentDeclarationOptions,
+  'shouldInclude' | 'project' | 'checkDeclarations'
+> {
   filePath: string;
   /**
    * Called before the shape of an object is resolved

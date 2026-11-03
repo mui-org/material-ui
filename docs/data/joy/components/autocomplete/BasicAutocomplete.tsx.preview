@@ -1,5 +1,0 @@
-<Autocomplete
-  placeholder="Combo box"
-  options={top100Films}
-  sx={{ width: 300 }}
-/>

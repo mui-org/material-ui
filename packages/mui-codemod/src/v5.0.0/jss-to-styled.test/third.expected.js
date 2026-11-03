@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { styled } from '@mui/material/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -27,10 +27,10 @@ const StyledCard = styled(Card)((
 export const MyCard = ((props) => {
   const { } = props;
   return (
-    (<StyledCard className={classes.root}>
+    <StyledCard className={classes.root}>
       <CardActions className={classes.actions}>
         <Button className={classes.button}>Submit</Button>
       </CardActions>
-    </StyledCard>)
+    </StyledCard>
   );
 });

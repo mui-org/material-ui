@@ -12,13 +12,13 @@ export interface ButtonBaseOwnProps {
    * A ref for imperative actions.
    * It currently only supports `focusVisible()` action.
    */
-  action?: React.Ref<ButtonBaseActions>;
+  action?: React.Ref<ButtonBaseActions> | undefined;
   /**
    * If `true`, the ripples are centered.
    * They won't start at the cursor interaction position.
    * @default false
    */
-  centerRipple?: boolean;
+  centerRipple?: boolean | undefined;
   /**
    * The content of the component.
    */
@@ -26,12 +26,12 @@ export interface ButtonBaseOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ButtonBaseClasses>;
+  classes?: Partial<ButtonBaseClasses> | undefined;
   /**
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * If `true`, the ripple effect is disabled.
    *
@@ -39,17 +39,17 @@ export interface ButtonBaseOwnProps {
    * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
    * @default false
    */
-  disableRipple?: boolean;
+  disableRipple?: boolean | undefined;
   /**
    * If `true`, the touch ripple effect is disabled.
    * @default false
    */
-  disableTouchRipple?: boolean;
+  disableTouchRipple?: boolean | undefined;
   /**
    * If `true`, the base button will have a keyboard focus ripple.
    * @default false
    */
-  focusRipple?: boolean;
+  focusRipple?: boolean | undefined;
   /**
    * This prop can help identify which element has keyboard focus.
    * The class name will be applied when the element gains the focus through keyboard interaction.
@@ -58,33 +58,45 @@ export interface ButtonBaseOwnProps {
    * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
    * if needed.
    */
-  focusVisibleClassName?: string;
+  focusVisibleClassName?: string | undefined;
   /**
    * The component used to render a link when the `href` prop is provided.
    * @default 'a'
    */
-  LinkComponent?: React.ElementType;
+  LinkComponent?: React.ElementType | undefined;
+  /**
+   * Whether the custom component is expected to render a native `<button>` element
+   * when passing a React component to the `component` or `slots` prop.
+   */
+  nativeButton?: boolean | undefined;
   /**
    * Callback fired when the component is focused with a keyboard.
    * We trigger a `onFocus` callback too.
    */
-  onFocusVisible?: React.FocusEventHandler<any>;
+  onFocusVisible?: React.FocusEventHandler<any> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * @default 0
    */
-  tabIndex?: NonNullable<React.HTMLAttributes<any>['tabIndex']>;
+  tabIndex?: NonNullable<React.HTMLAttributes<any>['tabIndex']> | undefined;
   /**
    * Props applied to the `TouchRipple` element.
    */
-  TouchRippleProps?: Partial<TouchRippleProps>;
+  TouchRippleProps?: Partial<TouchRippleProps> | undefined;
   /**
    * A ref that points to the `TouchRipple` element.
    */
-  touchRippleRef?: React.Ref<TouchRippleActions>;
+  touchRippleRef?: React.Ref<TouchRippleActions> | undefined;
+  /**
+   * The HTML [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#type)
+   * attribute applied to `button` and `a` elements.
+   * Ignored when rendering non-native buttons.
+   * @default 'button'
+   */
+  type?: string | undefined;
 }
 
 export interface ButtonBaseTypeMap<
@@ -101,7 +113,7 @@ export interface ButtonBaseTypeMap<
  * can make extension quite tricky
  */
 export interface ExtendButtonBaseTypeMap<TypeMap extends OverridableTypeMap> {
-  props: TypeMap['props'] & Omit<ButtonBaseTypeMap['props'], 'classes'>;
+  props: TypeMap['props'] & Omit<ButtonBaseTypeMap['props'], 'classes' | keyof TypeMap['props']>;
   defaultComponent: TypeMap['defaultComponent'];
 }
 
@@ -117,11 +129,11 @@ export type ExtendButtonBase<TypeMap extends OverridableTypeMap> = ((
  *
  * Demos:
  *
- * - [Button](https://mui.com/material-ui/react-button/)
+ * - [Button](https://next.mui.com/material-ui/react-button/)
  *
  * API:
  *
- * - [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const ButtonBase: ExtendButtonBase<ButtonBaseTypeMap>;
 
@@ -129,7 +141,7 @@ export type ButtonBaseProps<
   RootComponent extends React.ElementType = ButtonBaseTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<ButtonBaseTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export interface ButtonBaseActions {

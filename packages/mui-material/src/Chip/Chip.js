@@ -12,11 +12,13 @@ import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import chipClasses, { getChipUtilityClass } from './chipClasses';
 import useSlot from '../utils/useSlot';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
-  const { classes, disabled, size, color, iconColor, onDelete, clickable, variant } = ownerState;
+  const { classes, disabled, size, color, onDelete, clickable, variant } = ownerState;
 
   const slots = {
     root: [
@@ -26,20 +28,12 @@ const useUtilityClasses = (ownerState) => {
       `size${capitalize(size)}`,
       `color${capitalize(color)}`,
       clickable && 'clickable',
-      clickable && `clickableColor${capitalize(color)}`,
       onDelete && 'deletable',
-      onDelete && `deletableColor${capitalize(color)}`,
-      `${variant}${capitalize(color)}`,
     ],
-    label: ['label', `label${capitalize(size)}`],
-    avatar: ['avatar', `avatar${capitalize(size)}`, `avatarColor${capitalize(color)}`],
-    icon: ['icon', `icon${capitalize(size)}`, `iconColor${capitalize(iconColor)}`],
-    deleteIcon: [
-      'deleteIcon',
-      `deleteIcon${capitalize(size)}`,
-      `deleteIconColor${capitalize(color)}`,
-      `deleteIcon${capitalize(variant)}Color${capitalize(color)}`,
-    ],
+    label: ['label'],
+    avatar: ['avatar'],
+    icon: ['icon'],
+    deleteIcon: ['deleteIcon'],
   };
 
   return composeClasses(slots, getChipUtilityClass, classes);
@@ -48,33 +42,24 @@ const useUtilityClasses = (ownerState) => {
 const ChipRoot = styled('div', {
   name: 'MuiChip',
   slot: 'Root',
+  shouldForwardProp: (prop) =>
+    rootShouldForwardProp(prop) &&
+    prop !== 'focusableWhenDisabled' &&
+    prop !== 'skipFocusWhenDisabled',
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
-    const { color, iconColor, clickable, onDelete, size, variant } = ownerState;
+    const { color, clickable, onDelete, size, variant } = ownerState;
 
     return [
       { [`& .${chipClasses.avatar}`]: styles.avatar },
-      { [`& .${chipClasses.avatar}`]: styles[`avatar${capitalize(size)}`] },
-      { [`& .${chipClasses.avatar}`]: styles[`avatarColor${capitalize(color)}`] },
       { [`& .${chipClasses.icon}`]: styles.icon },
-      { [`& .${chipClasses.icon}`]: styles[`icon${capitalize(size)}`] },
-      { [`& .${chipClasses.icon}`]: styles[`iconColor${capitalize(iconColor)}`] },
       { [`& .${chipClasses.deleteIcon}`]: styles.deleteIcon },
-      { [`& .${chipClasses.deleteIcon}`]: styles[`deleteIcon${capitalize(size)}`] },
-      { [`& .${chipClasses.deleteIcon}`]: styles[`deleteIconColor${capitalize(color)}`] },
-      {
-        [`& .${chipClasses.deleteIcon}`]:
-          styles[`deleteIcon${capitalize(variant)}Color${capitalize(color)}`],
-      },
       styles.root,
       styles[`size${capitalize(size)}`],
       styles[`color${capitalize(color)}`],
       clickable && styles.clickable,
-      clickable && color !== 'default' && styles[`clickableColor${capitalize(color)})`],
       onDelete && styles.deletable,
-      onDelete && color !== 'default' && styles[`deletableColor${capitalize(color)}`],
       styles[variant],
-      styles[`${variant}${capitalize(color)}`],
     ];
   },
 })(
@@ -94,7 +79,7 @@ const ChipRoot = styled('div', {
       backgroundColor: (theme.vars || theme).palette.action.selected,
       borderRadius: 32 / 2,
       whiteSpace: 'nowrap',
-      transition: theme.transitions.create(['background-color', 'box-shadow']),
+      ...getTransitionStyles(theme, ['background-color', 'box-shadow']),
       // reset cursor explicitly in case ButtonBase is used
       cursor: 'unset',
       // We disable the focus ring for mouse, touch and keyboard users.
@@ -116,21 +101,6 @@ const ChipRoot = styled('div', {
         color: theme.vars ? theme.vars.palette.Chip.defaultAvatarColor : textColor,
         fontSize: theme.typography.pxToRem(12),
       },
-      [`& .${chipClasses.avatarColorPrimary}`]: {
-        color: (theme.vars || theme).palette.primary.contrastText,
-        backgroundColor: (theme.vars || theme).palette.primary.dark,
-      },
-      [`& .${chipClasses.avatarColorSecondary}`]: {
-        color: (theme.vars || theme).palette.secondary.contrastText,
-        backgroundColor: (theme.vars || theme).palette.secondary.dark,
-      },
-      [`& .${chipClasses.avatarSmall}`]: {
-        marginLeft: 4,
-        marginRight: -4,
-        width: 18,
-        height: 18,
-        fontSize: theme.typography.pxToRem(10),
-      },
       [`& .${chipClasses.icon}`]: {
         marginLeft: 5,
         marginRight: -6,
@@ -147,9 +117,38 @@ const ChipRoot = styled('div', {
       },
       variants: [
         {
+          props: {
+            color: 'primary',
+          },
+          style: {
+            [`& .${chipClasses.avatar}`]: {
+              color: (theme.vars || theme).palette.primary.contrastText,
+              backgroundColor: (theme.vars || theme).palette.primary.dark,
+            },
+          },
+        },
+        {
+          props: {
+            color: 'secondary',
+          },
+          style: {
+            [`& .${chipClasses.avatar}`]: {
+              color: (theme.vars || theme).palette.secondary.contrastText,
+              backgroundColor: (theme.vars || theme).palette.secondary.dark,
+            },
+          },
+        },
+        {
           props: { size: 'small' },
           style: {
             height: 24,
+            [`& .${chipClasses.avatar}`]: {
+              marginLeft: 4,
+              marginRight: -4,
+              width: 18,
+              height: 18,
+              fontSize: theme.typography.pxToRem(10),
+            },
             [`& .${chipClasses.icon}`]: {
               fontSize: 18,
               marginLeft: 4,
@@ -197,7 +196,7 @@ const ChipRoot = styled('div', {
         },
         {
           props: { onDelete: true },
-          style: {
+          style: !theme.focusVisible && {
             [`&.${chipClasses.focusVisible}`]: {
               backgroundColor: theme.alpha(
                 (theme.vars || theme).palette.action.selected,
@@ -211,7 +210,7 @@ const ChipRoot = styled('div', {
           .map(([color]) => {
             return {
               props: { color, onDelete: true },
-              style: {
+              style: !theme.focusVisible && {
                 [`&.${chipClasses.focusVisible}`]: {
                   background: (theme.vars || theme).palette[color].dark,
                 },
@@ -230,12 +229,14 @@ const ChipRoot = styled('div', {
                 `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.hoverOpacity}`,
               ),
             },
-            [`&.${chipClasses.focusVisible}`]: {
-              backgroundColor: theme.alpha(
-                (theme.vars || theme).palette.action.selected,
-                `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`,
-              ),
-            },
+            ...(!theme.focusVisible && {
+              [`&.${chipClasses.focusVisible}`]: {
+                backgroundColor: theme.alpha(
+                  (theme.vars || theme).palette.action.selected,
+                  `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`,
+                ),
+              },
+            }),
             '&:active': {
               boxShadow: (theme.vars || theme).shadows[1],
             },
@@ -246,9 +247,14 @@ const ChipRoot = styled('div', {
           .map(([color]) => ({
             props: { color, clickable: true },
             style: {
-              [`&:hover, &.${chipClasses.focusVisible}`]: {
+              '&:hover': {
                 backgroundColor: (theme.vars || theme).palette[color].dark,
               },
+              ...(!theme.focusVisible && {
+                [`&.${chipClasses.focusVisible}`]: {
+                  backgroundColor: (theme.vars || theme).palette[color].dark,
+                },
+              }),
             },
           })),
         {
@@ -263,25 +269,32 @@ const ChipRoot = styled('div', {
             [`&.${chipClasses.clickable}:hover`]: {
               backgroundColor: (theme.vars || theme).palette.action.hover,
             },
-            [`&.${chipClasses.focusVisible}`]: {
-              backgroundColor: (theme.vars || theme).palette.action.focus,
-            },
+            ...(!theme.focusVisible && {
+              [`&.${chipClasses.focusVisible}`]: {
+                backgroundColor: (theme.vars || theme).palette.action.focus,
+              },
+            }),
             [`& .${chipClasses.avatar}`]: {
               marginLeft: 4,
-            },
-            [`& .${chipClasses.avatarSmall}`]: {
-              marginLeft: 2,
             },
             [`& .${chipClasses.icon}`]: {
               marginLeft: 4,
             },
-            [`& .${chipClasses.iconSmall}`]: {
-              marginLeft: 2,
-            },
             [`& .${chipClasses.deleteIcon}`]: {
               marginRight: 5,
             },
-            [`& .${chipClasses.deleteIconSmall}`]: {
+          },
+        },
+        {
+          props: { size: 'small', variant: 'outlined' },
+          style: {
+            [`& .${chipClasses.avatar}`]: {
+              marginLeft: 2,
+            },
+            [`& .${chipClasses.icon}`]: {
+              marginLeft: 2,
+            },
+            [`& .${chipClasses.deleteIcon}`]: {
               marginRight: 3,
             },
           },
@@ -299,12 +312,14 @@ const ChipRoot = styled('div', {
                   (theme.vars || theme).palette.action.hoverOpacity,
                 ),
               },
-              [`&.${chipClasses.focusVisible}`]: {
-                backgroundColor: theme.alpha(
-                  (theme.vars || theme).palette[color].main,
-                  (theme.vars || theme).palette.action.focusOpacity,
-                ),
-              },
+              ...(!theme.focusVisible && {
+                [`&.${chipClasses.focusVisible}`]: {
+                  backgroundColor: theme.alpha(
+                    (theme.vars || theme).palette[color].main,
+                    (theme.vars || theme).palette.action.focusOpacity,
+                  ),
+                },
+              }),
               [`& .${chipClasses.deleteIcon}`]: {
                 color: theme.alpha((theme.vars || theme).palette[color].main, 0.7),
                 '&:hover, &:active': {
@@ -321,12 +336,6 @@ const ChipRoot = styled('div', {
 const ChipLabel = styled('span', {
   name: 'MuiChip',
   slot: 'Label',
-  overridesResolver: (props, styles) => {
-    const { ownerState } = props;
-    const { size } = ownerState;
-
-    return [styles.label, styles[`label${capitalize(size)}`]];
-  },
 })({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -389,6 +398,7 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
     slotProps = {},
     ...other
   } = props;
+  const { nativeButton, ...buttonBaseProps } = other;
 
   const chipRef = React.useRef(null);
   const handleRef = useForkRef(chipRef, ref);
@@ -396,9 +406,7 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
   const handleDeleteIconClick = (event) => {
     // Stop the event from bubbling up to the `Chip`
     event.stopPropagation();
-    if (onDelete) {
-      onDelete(event);
-    }
+    onDelete(event);
   };
 
   const handleKeyDown = (event) => {
@@ -417,7 +425,7 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
   const handleKeyUp = (event) => {
     // Ignore events from children of `Chip`.
     if (event.currentTarget === event.target) {
-      if (onDelete && isDeleteKeyboardEvent(event)) {
+      if (onDelete && !disabled && isDeleteKeyboardEvent(event)) {
         onDelete(event);
       }
     }
@@ -449,8 +457,10 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
     component === ButtonBase
       ? {
           component: ComponentProp || 'div',
+          internalNativeButton: false,
           focusVisibleClassName: classes.focusVisible,
           ...(onDelete && { disableRipple: true }),
+          ...(nativeButton !== undefined && { nativeButton }),
         }
       : {};
 
@@ -499,7 +509,7 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
     elementType: ChipRoot,
     externalForwardedProps: {
       ...externalForwardedProps,
-      ...other,
+      ...buttonBaseProps,
     },
     ownerState,
     // The `component` prop is preserved because `Chip` relies on it for internal logic. If `shouldForwardComponentProp` were `false`, `useSlot` would remove the `component` prop, potentially breaking the component's behavior.
@@ -607,6 +617,13 @@ Chip.propTypes /* remove-proptypes */ = {
    * The content of the component.
    */
   label: PropTypes.node,
+  /**
+   * If `true`, the component is expected to resolve to a native `<button>` element.
+   * When omitted, custom components inherit the default button semantics of the current wrapper.
+   * Set to `true` when a custom component resolves to a native `<button>`, or `false`
+   * when it resolves to a non-button host.
+   */
+  nativeButton: PropTypes.bool,
   /**
    * @ignore
    */

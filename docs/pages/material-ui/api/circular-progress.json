@@ -9,6 +9,9 @@
       "default": "'primary'"
     },
     "disableShrink": { "type": { "name": "custom", "description": "bool" }, "default": "false" },
+    "enableTrackSlot": { "type": { "name": "bool" }, "default": "false" },
+    "max": { "type": { "name": "number" }, "default": "100" },
+    "min": { "type": { "name": "number" }, "default": "0" },
     "size": {
       "type": { "name": "union", "description": "number<br>&#124;&nbsp;string" },
       "default": "40"
@@ -21,7 +24,7 @@
       "additionalInfo": { "sx": true }
     },
     "thickness": { "type": { "name": "number" }, "default": "3.6" },
-    "value": { "type": { "name": "number" }, "default": "0" },
+    "value": { "type": { "name": "number" }, "default": "props.min ?? 0" },
     "variant": {
       "type": { "name": "enum", "description": "'determinate'<br>&#124;&nbsp;'indeterminate'" },
       "default": "'indeterminate'"
@@ -40,24 +43,10 @@
       "isGlobal": false
     },
     {
-      "key": "circleDeterminate",
-      "className": "MuiCircularProgress-circleDeterminate",
-      "description": "Styles applied to the `circle` svg path if `variant=\"determinate\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "circleDisableShrink",
       "className": "MuiCircularProgress-circleDisableShrink",
       "description": "Styles applied to the `circle` svg path if `disableShrink={true}`.",
       "isGlobal": false
-    },
-    {
-      "key": "circleIndeterminate",
-      "className": "MuiCircularProgress-circleIndeterminate",
-      "description": "Styles applied to the `circle` svg path if `variant=\"indeterminate\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "colorPrimary",
@@ -94,6 +83,12 @@
       "className": "MuiCircularProgress-svg",
       "description": "Styles applied to the svg element.",
       "isGlobal": false
+    },
+    {
+      "key": "track",
+      "className": "MuiCircularProgress-track",
+      "description": "Styles applied to the track slot if `enableTrackSlot={true}`.",
+      "isGlobal": false
     }
   ],
   "spread": true,
@@ -102,6 +97,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/CircularProgress/CircularProgress.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-progress/\">Progress</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-progress/\">Progress</a></li></ul>"
 }

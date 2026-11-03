@@ -12,23 +12,23 @@ export interface CardMediaOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<CardMediaClasses>;
+  classes?: Partial<CardMediaClasses> | undefined;
   /**
    * Image to be displayed as a background image.
    * Either `image` or `src` prop must be specified.
    * Note that caller must specify height otherwise the image will not be visible.
    */
-  image?: string;
+  image?: string | undefined;
   /**
    * An alias for `image` property.
    * Available only with media components.
    * Media components: `video`, `audio`, `picture`, `iframe`, `img`.
    */
-  src?: string;
+  src?: string | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface CardMediaTypeMap<AdditionalProps, RootComponent extends React.ElementType> {
@@ -40,11 +40,11 @@ export interface CardMediaTypeMap<AdditionalProps, RootComponent extends React.E
  *
  * Demos:
  *
- * - [Card](https://mui.com/material-ui/react-card/)
+ * - [Card](https://next.mui.com/material-ui/react-card/)
  *
  * API:
  *
- * - [CardMedia API](https://mui.com/material-ui/api/card-media/)
+ * - [CardMedia API](https://next.mui.com/material-ui/api/card-media/)
  */
 declare const CardMedia: OverridableComponent<CardMediaTypeMap<{}, 'div'>>;
 
@@ -52,7 +52,7 @@ export type CardMediaProps<
   RootComponent extends React.ElementType = 'div',
   AdditionalProps = {},
 > = OverrideProps<CardMediaTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default CardMedia;

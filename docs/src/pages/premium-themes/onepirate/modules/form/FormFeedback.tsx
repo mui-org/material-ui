@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { styled, Theme } from '@mui/material/styles';
-import { SxProps } from '@mui/system';
+import type { Theme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import type { SxProps } from '@mui/system';
 import Typography from '../components/Typography';
 
 interface FormFeedbackProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,11 +33,11 @@ const Root = styled('div', {
 }));
 
 export default function FormFeedback(props: FormFeedbackProps) {
-  const { className, children, error, success, ...others } = props;
+  const { className, children, error, success, ...other } = props;
 
   return (
-    <Root error={error} success={success} className={className} {...others}>
-      <Typography color="inherit">{children}</Typography>
+    <Root error={error} success={success} className={className} {...other}>
+      <Typography sx={{ color: 'inherit' }}>{children}</Typography>
     </Root>
   );
 }

@@ -27,6 +27,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Card/Card.js",
   "inheritance": { "component": "Paper", "pathname": "/material-ui/api/paper/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li></ul>"
 }

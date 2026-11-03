@@ -1,7 +1,6 @@
-import * as React from 'react';
 import Divider from '@mui/material/Divider';
-import Head from 'docs/src/modules/components/Head';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
+
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
 import AppHeader from 'docs/src/layouts/AppHeader';
 import MaterialHero from 'docs/src/components/productMaterial/MaterialHero';
 import MaterialComponents from 'docs/src/components/productMaterial/MaterialComponents';
@@ -12,7 +11,7 @@ import MaterialDesignKits from 'docs/src/components/productMaterial/MaterialDesi
 import MaterialEnd from 'docs/src/components/productMaterial/MaterialEnd';
 import References, { CORE_CUSTOMERS } from 'docs/src/components/home/References';
 import AppFooter from 'docs/src/layouts/AppFooter';
-import AppHeaderBanner from 'docs/src/components/banner/AppHeaderBanner';
+import { AppHeaderBanner, AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 
 export default function MaterialUI() {
   return (
@@ -24,7 +23,7 @@ export default function MaterialUI() {
       />
       <AppHeaderBanner />
       <AppHeader gitHubRepository="https://github.com/mui/material-ui" />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <MaterialHero />
         <References companies={CORE_CUSTOMERS} />
         <Divider />

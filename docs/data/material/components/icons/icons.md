@@ -30,15 +30,15 @@ Run one of the following commands to install it and save it to your `package.jso
 
 <codeblock storageKey="package-manager">
 ```bash npm
-npm install @mui/icons-material
+npm install @mui/icons-material@next
 ```
 
 ```bash pnpm
-pnpm add @mui/icons-material
+pnpm add @mui/icons-material@next
 ```
 
 ```bash yarn
-yarn add @mui/icons-material
+yarn add @mui/icons-material@next
 ```
 
 </codeblock>
@@ -79,7 +79,7 @@ Each Material icon also has a "theme": Filled (default), Outlined, Rounded, Two-
 The Material Design guidelines name the icons using "snake_case" naming (for example `delete_forever`, `add_a_photo`), while `@mui/icons-material` exports the respective icons using "PascalCase" naming (for example `DeleteForever`, `AddAPhoto`). There are three exceptions to this naming rule: `3d_rotation` exported as `ThreeDRotation`, `4k` exported as `FourK`, and `360` exported as `ThreeSixty`.
 :::
 
-{{"demo": "SvgMaterialIcons.js"}}
+{{"component": "file://./demos/svg-material/index.ts"}}
 
 ## SvgIcon
 
@@ -93,15 +93,15 @@ This component extends the native `<svg>` element:
 - By default, the component inherits the current color. Optionally, you can apply one of the theme colors using the `color` prop.
 - It supports `<svg>` element as a child so you can copy and paste your SVG directly to `SvgIcon` component.
 
-{{"demo": "SvgIconChildren.js"}}
+{{"component": "file://./demos/svg-children/index.ts"}}
 
 ### Color
 
-{{"demo": "SvgIconsColor.js"}}
+{{"component": "file://./demos/svg-color/index.ts"}}
 
 ### Size
 
-{{"demo": "SvgIconsSize.js"}}
+{{"component": "file://./demos/svg-size/index.ts"}}
 
 ### Component prop
 
@@ -138,7 +138,7 @@ import { ReactComponent as StarIcon } from './star.svg';
 
 ### createSvgIcon
 
-The `createSvgIcon` utility component is used to create the [Material Icons](#material-icons). It can be used to wrap an `<svg>` element or an SVG path which is passed as a child to the [`SvgIcon`](#svgicon) component.
+The `createSvgIcon` utility component is used to create the [Material Icons](#material-svg-icons). It can be used to wrap an `<svg>` element or an SVG path which is passed as a child to the [`SvgIcon`](#svgicon) component.
 
 ```jsx
 const HomeIcon = createSvgIcon(
@@ -149,7 +149,6 @@ const HomeIcon = createSvgIcon(
 // or with custom SVG
 const PlusIcon = createSvgIcon(
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
@@ -162,17 +161,7 @@ const PlusIcon = createSvgIcon(
 );
 ```
 
-{{"demo": "CreateSvgIcon.js"}}
-
-### Font Awesome
-
-If you find that there are layout issues when using FontAwesomeIcon from `@fortawesome/react-fontawesome`, you can try passing the Font Awesome SVG data directly to SvgIcon.
-
-Below is a comparison of the `FontAwesomeIcon` component and a wrapped `SvgIcon` component.
-
-{{"demo": "FontAwesomeSvgIconDemo.js"}}
-
-FontAwesomeIcon's `fullWidth` prop can also be used to approximate the correct dimensions, but it isn't perfect.
+{{"component": "file://./demos/create-svg/index.ts"}}
 
 ### Other libraries
 
@@ -212,7 +201,7 @@ All you need to do is load the font, for instance, via Google Web Fonts:
 />
 ```
 
-{{"demo": "Icons.js"}}
+{{"component": "file://./demos/icons/index.ts"}}
 
 ### Custom font
 
@@ -229,7 +218,7 @@ import Icon from '@mui/material/Icon';
 />;
 ```
 
-{{"demo": "TwoToneIcons.js"}}
+{{"component": "file://./demos/two-tone/index.ts"}}
 
 #### Global base class name
 
@@ -259,7 +248,7 @@ Then, you can use the two-tone font directly:
 
 [Font Awesome](https://fontawesome.com/icons) can be used with the `Icon` component as follows:
 
-{{"demo": "FontAwesomeIcon.js"}}
+{{"component": "file://./demos/font-awesome/index.ts"}}
 
 Note that the Font Awesome icons weren't designed like the Material Icons (compare the two previous demos).
 The fa icons are cropped to use all the space available. You can adjust for this with a global override:
@@ -281,7 +270,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "FontAwesomeIconSize.js"}}
+{{"component": "file://./demos/font-awesome-size/index.ts"}}
 
 ## Font vs. SVGs: Which approach to use?
 

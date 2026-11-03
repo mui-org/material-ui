@@ -6,6 +6,8 @@ export interface FormControlLabelClasses {
   root: string;
   /** Styles applied to the root element if `labelPlacement="start"`. */
   labelPlacementStart: string;
+  /** Styles applied to the root element if `labelPlacement="end"`. */
+  labelPlacementEnd: string;
   /** Styles applied to the root element if `labelPlacement="top"`. */
   labelPlacementTop: string;
   /** Styles applied to the root element if `labelPlacement="bottom"`. */
@@ -33,6 +35,7 @@ const formControlLabelClasses: FormControlLabelClasses = generateUtilityClasses(
   [
     'root',
     'labelPlacementStart',
+    'labelPlacementEnd',
     'labelPlacementTop',
     'labelPlacementBottom',
     'disabled',

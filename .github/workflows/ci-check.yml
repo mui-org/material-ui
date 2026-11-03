@@ -6,14 +6,14 @@ name: CI Check
 on:
   push:
     branches-ignore:
-      # Renovate branches are always Pull Requests.
-      # We don't need to run CI twice (push+pull_request)
-      - 'renovate/**'
-      - 'dependabot/**'
+      # should sync with ci.yml as a workaround to bypass github checks
+      - master
+      - next
+      - v*.x
   pull_request:
     paths:
+      # should sync with ci.yml as a workaround to bypass github checks
       - 'docs/**'
-      - 'examples/**'
 
 permissions: {}
 

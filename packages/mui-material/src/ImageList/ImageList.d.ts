@@ -15,34 +15,36 @@ export interface ImageListOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ImageListClasses>;
+  classes?: Partial<ImageListClasses> | undefined;
   /**
    * Number of columns.
    * @default 2
    */
-  cols?: number;
+  cols?: number | undefined;
   /**
    * The gap between items in px.
    * @default 4
    */
-  gap?: number;
+  gap?: number | undefined;
   /**
    * The height of one row in px.
    * @default 'auto'
    */
-  rowHeight?: number | 'auto';
+  rowHeight?: number | 'auto' | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The variant to use.
    * @default 'standard'
    */
-  variant?: OverridableStringUnion<
-    'masonry' | 'quilted' | 'standard' | 'woven',
-    ImageListPropsVariantOverrides
-  >;
+  variant?:
+    | OverridableStringUnion<
+        'masonry' | 'quilted' | 'standard' | 'woven',
+        ImageListPropsVariantOverrides
+      >
+    | undefined;
 }
 
 export interface ImageListTypeMap<
@@ -56,11 +58,11 @@ export interface ImageListTypeMap<
  *
  * Demos:
  *
- * - [Image List](https://mui.com/material-ui/react-image-list/)
+ * - [Image List](https://next.mui.com/material-ui/react-image-list/)
  *
  * API:
  *
- * - [ImageList API](https://mui.com/material-ui/api/image-list/)
+ * - [ImageList API](https://next.mui.com/material-ui/api/image-list/)
  */
 declare const ImageList: OverridableComponent<ImageListTypeMap>;
 
@@ -68,7 +70,7 @@ export type ImageListProps<
   RootComponent extends React.ElementType = ImageListTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<ImageListTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default ImageList;

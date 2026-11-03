@@ -37,26 +37,26 @@ Visit [the Releases tab on GitHub](https://github.com/mui/mui-design-kits/releas
 The design kit uses Figma's local variables to create a collection of styles comparable to the theme structure of Material UI code.
 Follow the steps in the video below to see all the variables available:
 
-<iframe width="100%" height="490" src="https://www.youtube.com/embed/u3zR6p-OjKQ?si=DDVEsedwmJQeik3T" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+<iframe height="490" style="aspect-ratio: 16 / 9; width: 100% !important; border: 0" src="https://www.youtube.com/embed/u3zR6p-OjKQ?si=DDVEsedwmJQeik3T" title="YouTube video player" allowfullscreen></iframe>
 
 ### Customizing colors
 
 Use the variables panel to customize colors as shown in the video below:
 
-<iframe width="100%" height="490" src="https://www.youtube.com/embed/YuzkWFm0-bA?si=XvgPR0vNGtiBPqKY" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+<iframe height="490" style="aspect-ratio: 16 / 9; width: 100% !important; border: 0" src="https://www.youtube.com/embed/YuzkWFm0-bA?si=XvgPR0vNGtiBPqKY" title="YouTube video player" allowfullscreen></iframe>
 
 ### Customizing typography
 
 Typography customization uses local styles rather than local variables.
 The experience is similar to modifying colors, as shown in the video below:
 
-<iframe width="100%" height="490" src="https://www.youtube.com/embed/HepVDfrLmak?si=gklG_3ZZyxDWzlPM" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+<iframe height="490" style="aspect-ratio: 16 / 9; width: 100% !important; border: 0" src="https://www.youtube.com/embed/HepVDfrLmak?si=gklG_3ZZyxDWzlPM" title="YouTube video player" allowfullscreen></iframe>
 
 ### Switching between light and dark modes
 
 The design kit uses Figma's local variables to let you toggle the variable mode between light and dark, as shown in the video below:
 
-<iframe width="100%" height="490" src="https://www.youtube.com/embed/ydTF1HhLnJM?si=1Fj4CFLgVavfg4Fz" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+<iframe height="490" style="aspect-ratio: 16 / 9; width: 100% !important; border: 0" src="https://www.youtube.com/embed/ydTF1HhLnJM?si=1Fj4CFLgVavfg4Fz" title="YouTube video player" allowfullscreen></iframe>
 
 ## Components
 
@@ -64,7 +64,7 @@ The design kit uses Figma's local variables to let you toggle the variable mode 
 
 You can use the [Similayer](https://www.figma.com/community/plugin/735733267883397781/similayer) plugin to select multiple components at once that share some property.
 
-<iframe width="100%" height="490" src="https://www.youtube.com/embed/eHBk0FbS0P8?si=QbOiMU2F1yvGB6s8" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+<iframe height="490" style="aspect-ratio: 16 / 9; width: 100% !important; border: 0" src="https://www.youtube.com/embed/eHBk0FbS0P8?si=QbOiMU2F1yvGB6s8" title="YouTube video player" allowfullscreen></iframe>
 
 ### Table component
 
@@ -72,14 +72,14 @@ You can use the [Similayer](https://www.figma.com/community/plugin/7357332678833
 
 The video below shows how to add new columns by detaching cells from their row components, allowing you to freely move content around.
 
-<iframe src="https://www.loom.com/embed/6dd71cc374bc4d84af35ebb75d107d38?sid=1d3a4790-4c28-433e-94ce-97dd969601dd" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="width: 100%; height: 500px;"></iframe>
+<iframe src="https://www.loom.com/embed/6dd71cc374bc4d84af35ebb75d107d38?sid=1d3a4790-4c28-433e-94ce-97dd969601dd" title="Adding new columns by detaching cells from row components" webkitallowfullscreen mozallowfullscreen allowfullscreen style="width: 100%; height: 500px; border: 0"></iframe>
 
 #### Adding new columns in the main component
 
 The Table and Data Grid components come with a limited number of columns by default.
 The video below shows how to add new columns by copying cells directly on the main component:
 
-<iframe width="100%" height="490" src="https://www.youtube.com/embed/s_n3LHm1daI?si=_QbXvtYPkc8EBd5d" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+<iframe height="490" style="aspect-ratio: 16 / 9; width: 100% !important; border: 0" src="https://www.youtube.com/embed/s_n3LHm1daI?si=_QbXvtYPkc8EBd5d" title="YouTube video player" allowfullscreen></iframe>
 
 ## Code sync (beta)
 

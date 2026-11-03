@@ -20,22 +20,22 @@ export interface PaginationPropsSizeOverrides {}
 export interface PaginationPropsColorOverrides {}
 
 export interface PaginationProps
-  extends UsePaginationProps,
+  extends
+    UsePaginationProps,
     StandardProps<React.HTMLAttributes<HTMLElement>, 'children' | 'onChange'> {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<PaginationClasses>;
+  classes?: Partial<PaginationClasses> | undefined;
   /**
    * The active color.
    * It supports both default and custom theme colors, which can be added as shown in the
    * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
    * @default 'standard'
    */
-  color?: OverridableStringUnion<
-    'primary' | 'secondary' | 'standard',
-    PaginationPropsColorOverrides
-  >;
+  color?:
+    | OverridableStringUnion<'primary' | 'secondary' | 'standard', PaginationPropsColorOverrides>
+    | undefined;
   /**
    * Accepts a function which returns a string value that provides a user-friendly name for the current page.
    * This is important for screen reader users.
@@ -46,11 +46,13 @@ export interface PaginationProps
    * @param {boolean} selected If true, the current page is selected.
    * @returns {string}
    */
-  getItemAriaLabel?: (
-    type: UsePaginationItem['type'],
-    page: UsePaginationItem['page'],
-    selected: UsePaginationItem['selected'],
-  ) => string;
+  getItemAriaLabel?:
+    | ((
+        type: UsePaginationItem['type'],
+        page: UsePaginationItem['page'],
+        selected: UsePaginationItem['selected'],
+      ) => string)
+    | undefined;
 
   /**
    * Render the item.
@@ -58,36 +60,38 @@ export interface PaginationProps
    * @returns {ReactNode}
    * @default (item) => <PaginationItem {...item} />
    */
-  renderItem?: (params: PaginationRenderItemParams) => React.ReactNode;
+  renderItem?: ((params: PaginationRenderItemParams) => React.ReactNode) | undefined;
   /**
    * The shape of the pagination items.
    * @default 'circular'
    */
-  shape?: 'circular' | 'rounded';
+  shape?: 'circular' | 'rounded' | undefined;
   /**
    * The size of the component.
    * @default 'medium'
    */
-  size?: OverridableStringUnion<'small' | 'medium' | 'large', PaginationPropsSizeOverrides>;
+  size?:
+    OverridableStringUnion<'small' | 'medium' | 'large', PaginationPropsSizeOverrides> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The variant to use.
    * @default 'text'
    */
-  variant?: OverridableStringUnion<'text' | 'outlined', PaginationPropsVariantOverrides>;
+  variant?:
+    OverridableStringUnion<'text' | 'outlined', PaginationPropsVariantOverrides> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Pagination](https://mui.com/material-ui/react-pagination/)
+ * - [Pagination](https://next.mui.com/material-ui/react-pagination/)
  *
  * API:
  *
- * - [Pagination API](https://mui.com/material-ui/api/pagination/)
+ * - [Pagination API](https://next.mui.com/material-ui/api/pagination/)
  */
 export default function Pagination(props: PaginationProps): React.JSX.Element;

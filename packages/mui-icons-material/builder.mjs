@@ -6,10 +6,10 @@ import Mustache from 'mustache';
 import globAsync from 'fast-glob';
 import * as svgo from 'svgo';
 import { fileURLToPath } from 'url';
-import intersection from 'lodash/intersection.js';
-import { Queue } from '@mui/internal-waterfall';
+import { intersection, mapAsync } from 'es-toolkit/array';
+import { hideBin } from 'yargs/helpers';
 
-const currentDirectory = fileURLToPath(new URL('.', import.meta.url));
+const currentDirectory = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
 export const RENAME_FILTER_DEFAULT = './renameFilters/default.mjs';
 export const RENAME_FILTER_MUI = './renameFilters/material-design-icons.mjs';
@@ -256,7 +256,10 @@ export async function handler(options) {
     }),
   ]);
 
-  const queue = new Queue(
+  // Icon conversion runs on the main thread, so this only overlaps the file
+  // reads and writes. The `src:icons` script raises UV_THREADPOOL_SIZE to match.
+  await mapAsync(
+    svgPaths,
     (svgPath) =>
       worker({
         progress,
@@ -267,9 +270,6 @@ export async function handler(options) {
       }),
     { concurrency: 8 },
   );
-
-  queue.push(svgPaths);
-  await queue.wait({ empty: true });
 
   let legacyFiles = await globAsync(normalizePath(path.join(currentDirectory, '/legacy', '*.js')));
   legacyFiles = legacyFiles.map((file) => path.basename(file));
@@ -297,7 +297,7 @@ const modulePath = path.resolve(fileURLToPath(import.meta.url));
 const isRunningDirectlyViaCLI = nodePath === modulePath;
 
 if (isRunningDirectlyViaCLI) {
-  yargs(process.argv.slice(2))
+  yargs()
     .command({
       command: '$0>',
       description: "Build JSX components from SVG's.",
@@ -347,5 +347,5 @@ if (isRunningDirectlyViaCLI) {
     .help()
     .strict(true)
     .version(false)
-    .parse();
+    .parse(hideBin(process.argv));
 }

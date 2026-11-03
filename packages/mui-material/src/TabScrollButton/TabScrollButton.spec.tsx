@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TabScrollButton from '@mui/material/TabScrollButton';
 import SvgIcon from '@mui/material/SvgIcon';
 

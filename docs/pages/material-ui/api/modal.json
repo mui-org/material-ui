@@ -2,39 +2,12 @@
   "props": {
     "children": { "type": { "name": "custom", "description": "element" }, "required": true },
     "open": { "type": { "name": "bool" }, "required": true },
-    "BackdropComponent": {
-      "type": { "name": "elementType" },
-      "default": "styled(Backdrop, {\n  name: 'MuiModal',\n  slot: 'Backdrop',\n})({\n  zIndex: -1,\n})",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.backdrop</code> instead. While this prop currently works, it will be removed in the next major version."
-    },
-    "BackdropProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.backdrop</code> instead."
-    },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "closeAfterTransition": { "type": { "name": "bool" }, "default": "false" },
     "component": { "type": { "name": "elementType" } },
-    "components": {
-      "type": { "name": "shape", "description": "{ Backdrop?: elementType, Root?: elementType }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ backdrop?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "container": { "type": { "name": "union", "description": "HTML element<br>&#124;&nbsp;func" } },
     "disableAutoFocus": { "type": { "name": "bool" }, "default": "false" },
     "disableEnforceFocus": { "type": { "name": "bool" }, "default": "false" },
-    "disableEscapeKeyDown": { "type": { "name": "bool" }, "default": "false" },
     "disablePortal": { "type": { "name": "bool" }, "default": "false" },
     "disableRestoreFocus": { "type": { "name": "bool" }, "default": "false" },
     "disableScrollLock": { "type": { "name": "bool" }, "default": "false" },
@@ -97,6 +70,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Modal/Modal.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-modal/\">Modal</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-modal/\">Modal</a></li></ul>"
 }

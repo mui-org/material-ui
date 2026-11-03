@@ -1,17 +1,20 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
-import Paper, { PaperProps } from '@mui/material/Paper';
+import type { PaperProps } from '@mui/material/Paper';
+import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import PricingTable from 'docs/src/components/pricing/PricingTable';
 import {
   PlanPrice,
   PlanNameDisplay,
-  planInfo,
   FeatureItem,
+  getPlanFeatures,
 } from 'docs/src/components/pricing/PricingCards';
 import LicenseModelSwitch from 'docs/src/components/pricing/LicenseModelSwitch';
+import MultiAppSwitch from 'docs/src/components/pricing/MultiAppSwitch';
+import { useMultiApp } from 'docs/src/components/pricing/MultiAppContext';
 
 const Plan = React.forwardRef<
   HTMLDivElement,
@@ -21,33 +24,36 @@ const Plan = React.forwardRef<
     unavailable?: boolean;
   } & PaperProps
 >(function Plan({ plan, unavailable, sx, ...props }, ref) {
-  const { features } = planInfo[plan];
+  const { multiApp } = useMultiApp();
+  const features = getPlanFeatures(plan, multiApp);
 
   return (
     <Paper
       ref={ref}
       variant="outlined"
-      sx={{ p: 2, ...(unavailable && { '& .MuiTypography-root': { opacity: 0.5 } }), ...sx }}
+      sx={{
+        p: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+        ...(unavailable && { '& .MuiTypography-root': { opacity: 0.5 } }),
+        ...sx,
+      }}
       {...props}
     >
       <PlanNameDisplay plan={plan} disableDescription={false} />
-      <Box sx={{ mb: 2 }}>
-        {(plan === 'pro' || plan === 'premium') && <LicenseModelSwitch />}
-        <PlanPrice plan={plan} />
-      </Box>
-      {features.map((feature, index) => (
-        <Box
-          key={index}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            mt: 1,
-          }}
-        >
-          <FeatureItem feature={feature} idPrefix={plan} />
+      {(plan === 'pro' || plan === 'premium') && (
+        <Box sx={{ alignSelf: 'flex-start' }}>
+          <LicenseModelSwitch />
         </Box>
-      ))}
+      )}
+      <PlanPrice plan={plan} multiApp={multiApp} />
+      {plan !== 'community' && plan !== 'enterprise' && <MultiAppSwitch />}
+      <Box sx={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+        {features.map((feature, index) => (
+          <FeatureItem feature={feature} idPrefix={plan} key={index} />
+        ))}
+      </Box>
     </Paper>
   );
 });

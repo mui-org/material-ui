@@ -2,22 +2,25 @@ import deepmerge from '@mui/utils/deepmerge';
 import cssVarsParser from './cssVarsParser';
 
 export interface DefaultCssVarsTheme {
-  colorSchemes?: Record<string, any>;
-  defaultColorScheme?: string;
+  colorSchemes?: Record<string, any> | undefined;
+  defaultColorScheme?: string | undefined;
 }
 
 function prepareCssVars<T extends DefaultCssVarsTheme, ThemeVars extends Record<string, any>>(
   theme: T,
   parserConfig: {
-    prefix?: string;
-    colorSchemeSelector?: 'media' | 'class' | 'data' | string;
-    disableCssColorScheme?: boolean;
-    enableContrastVars?: boolean;
-    shouldSkipGeneratingVar?: (objectPathKeys: Array<string>, value: string | number) => boolean;
-    getSelector?: (
-      colorScheme: keyof T['colorSchemes'] | undefined,
-      css: Record<string, any>,
-    ) => string | Record<string, any>;
+    prefix?: string | undefined;
+    colorSchemeSelector?: 'media' | 'class' | 'data' | string | undefined;
+    disableCssColorScheme?: boolean | undefined;
+    enableContrastVars?: boolean | undefined;
+    shouldSkipGeneratingVar?:
+      ((objectPathKeys: Array<string>, value: string | number) => boolean) | undefined;
+    getSelector?:
+      | ((
+          colorScheme: keyof T['colorSchemes'] | undefined,
+          css: Record<string, any>,
+        ) => string | Record<string, any>)
+      | undefined;
   } = {},
 ) {
   const {
@@ -26,7 +29,7 @@ function prepareCssVars<T extends DefaultCssVarsTheme, ThemeVars extends Record<
     colorSchemeSelector: selector,
     enableContrastVars,
   } = parserConfig;
-  // @ts-ignore - ignore components do not exist
+  // @ts-expect-error - ignore components do not exist
   const { colorSchemes = {}, components, defaultColorScheme = 'light', ...otherTheme } = theme;
   const {
     vars: rootVars,

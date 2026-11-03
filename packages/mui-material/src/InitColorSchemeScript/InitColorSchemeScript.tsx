@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import SystemInitColorSchemeScript from '@mui/system/InitColorSchemeScript';
 
@@ -15,39 +14,41 @@ export interface InitColorSchemeScriptProps {
    * The default mode when the storage is empty (user's first visit).
    * @default 'system'
    */
-  defaultMode?: 'system' | 'light' | 'dark';
+  defaultMode?: 'system' | 'light' | 'dark' | undefined;
   /**
    * The default color scheme to be used in light mode.
    * @default 'light'
    */
-  defaultLightColorScheme?: string;
+  defaultLightColorScheme?: string | undefined;
   /**
    * The default color scheme to be used in dark mode.
    * @default 'dark'
    */
-  defaultDarkColorScheme?: string;
+  defaultDarkColorScheme?: string | undefined;
   /**
    * The node (provided as string) used to attach the color-scheme attribute.
+   *
+   * Requires a static value, do not derive from user input.
    * @default 'document.documentElement'
    */
-  colorSchemeNode?: string;
+  colorSchemeNode?: string | undefined;
   /**
    * localStorage key used to store `mode`.
    * @default 'mui-mode'
    */
-  modeStorageKey?: string;
+  modeStorageKey?: string | undefined;
   /**
    * localStorage key used to store `colorScheme`.
    * @default 'mui-color-scheme'
    */
-  colorSchemeStorageKey?: string;
+  colorSchemeStorageKey?: string | undefined;
   /**
    * DOM attribute for applying a color scheme.
    * @default 'data-mui-color-scheme'
    * @example '.mode-%s' // for class based color scheme
    * @example '[data-mode-%s]' // for data-attribute without '='
    */
-  attribute?: 'class' | 'data' | string;
+  attribute?: 'class' | 'data' | string | undefined;
   /**
    * Nonce string to pass to the inline script for CSP headers.
    */
@@ -57,11 +58,11 @@ export interface InitColorSchemeScriptProps {
  *
  * Demos:
  *
- * - [InitColorSchemeScript](https://mui.com/material-ui/react-init-color-scheme-script/)
+ * - [InitColorSchemeScript](https://next.mui.com/material-ui/react-init-color-scheme-script/)
  *
  * API:
  *
- * - [InitColorSchemeScript API](https://mui.com/material-ui/api/init-color-scheme-script/)
+ * - [InitColorSchemeScript API](https://next.mui.com/material-ui/api/init-color-scheme-script/)
  */
 function InitColorSchemeScript(props: InitColorSchemeScriptProps) {
   const {
@@ -102,6 +103,8 @@ InitColorSchemeScript.propTypes /* remove-proptypes */ = {
   attribute: PropTypes.string,
   /**
    * The node (provided as string) used to attach the color-scheme attribute.
+   *
+   * Requires a static value, do not derive from user input.
    * @default 'document.documentElement'
    */
   colorSchemeNode: PropTypes.string,

@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
+import { describe, beforeEach, expect, it } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { createRenderer, waitFor, reactMajor } from '@mui/internal-test-utils';
 import elementAcceptingRef from './elementAcceptingRef';
@@ -21,14 +21,7 @@ describe('elementAcceptingRef', () => {
     PropTypes.resetWarningCache();
   });
 
-  describe('acceptance when not required', () => {
-    before(function beforeCallback() {
-      if (reactMajor >= 19) {
-        // React 19 removed prop types support
-        this.skip();
-      }
-    });
-
+  describe.skipIf(reactMajor >= 19)('acceptance when not required', () => {
     function assertPass(element: any, { shouldMount = true } = {}) {
       function testAct() {
         checkPropType(element);
@@ -113,14 +106,7 @@ describe('elementAcceptingRef', () => {
     });
   });
 
-  describe('rejections', () => {
-    before(function beforeCallback() {
-      if (reactMajor >= 19) {
-        // React 19 removed prop types support
-        this.skip();
-      }
-    });
-
+  describe.skipIf(reactMajor >= 19)('rejections', () => {
     function assertFail(Component: any, hint: string) {
       expect(() => {
         checkPropType(Component);

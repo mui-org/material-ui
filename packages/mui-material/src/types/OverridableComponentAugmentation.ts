@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { DistributiveOmit } from '@mui/types';
+import type * as React from 'react';
+import type { DistributiveOmit } from '@mui/types';
 
 declare module '@mui/material/OverridableComponent' {
   /**
@@ -30,7 +30,7 @@ declare module '@mui/material/OverridableComponent' {
   > = (
     & BaseProps<TypeMap>
     & DistributiveOmit<React.ComponentPropsWithoutRef<RootComponent>, keyof BaseProps<TypeMap>>
-    & { ref?: React.Ref<Element> }
+    & { ref?: (React.Ref<Element>) | undefined }
   );
 
   /**
@@ -40,5 +40,5 @@ declare module '@mui/material/OverridableComponent' {
   type DefaultComponentPropsVer2<TypeMap extends OverridableTypeMap> = 
     & BaseProps<TypeMap>
     & DistributiveOmit<React.ComponentPropsWithoutRef<TypeMap['defaultComponent']>, keyof BaseProps<TypeMap>>
-    & { ref?: React.Ref<Element> };
+    & { ref?: (React.Ref<Element>) | undefined };
 }

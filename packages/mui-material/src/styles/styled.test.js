@@ -1,5 +1,5 @@
+import { describe, it, expect, beforeAll } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { createRenderer, screen } from '@mui/internal-test-utils';
 import createTheme from './createTheme';
 import styled from './styled';
@@ -138,7 +138,7 @@ describe('styled', () => {
      */
     let TestObj;
 
-    before(() => {
+    beforeAll(() => {
       theme = createTheme({
         palette: {
           primary: {
@@ -561,12 +561,13 @@ describe('styled', () => {
         height: 300px;
       `;
 
-      const { getByTestId } = render(
+      render(
         <Component data-testid="root" classes={{ root: 'foo' }}>
           Test
         </Component>,
       );
-      expect(getByTestId('root').getAttribute('data-with-classes')).to.equal('false');
+
+      expect(screen.getByTestId('root').getAttribute('data-with-classes')).to.equal('false');
     });
 
     it('should propagate classes props to component if it is not a root slot', () => {
@@ -581,7 +582,7 @@ describe('styled', () => {
         height: 300px;
       `;
 
-      const { getByTestId } = render(
+      render(
         <React.Fragment>
           <Component data-testid="with-classes" classes={{ root: 'foo' }}>
             Test
@@ -590,8 +591,10 @@ describe('styled', () => {
         </React.Fragment>,
       );
 
-      expect(getByTestId('with-classes').getAttribute('data-with-classes')).to.equal('true');
-      expect(getByTestId('without-classes').getAttribute('data-with-classes')).to.equal('false');
+      expect(screen.getByTestId('with-classes').getAttribute('data-with-classes')).to.equal('true');
+      expect(screen.getByTestId('without-classes').getAttribute('data-with-classes')).to.equal(
+        'false',
+      );
     });
 
     it('should propagate classes props to component if no slot is specified', () => {
@@ -603,7 +606,7 @@ describe('styled', () => {
         height: 300px;
       `;
 
-      const { getByTestId } = render(
+      render(
         <React.Fragment>
           <Component data-testid="with-classes" classes={{ root: 'foo' }}>
             Test
@@ -612,8 +615,10 @@ describe('styled', () => {
         </React.Fragment>,
       );
 
-      expect(getByTestId('with-classes').getAttribute('data-with-classes')).to.equal('true');
-      expect(getByTestId('without-classes').getAttribute('data-with-classes')).to.equal('false');
+      expect(screen.getByTestId('with-classes').getAttribute('data-with-classes')).to.equal('true');
+      expect(screen.getByTestId('without-classes').getAttribute('data-with-classes')).to.equal(
+        'false',
+      );
     });
 
     it('classes props should be correctly applied to root and slot elements', () => {

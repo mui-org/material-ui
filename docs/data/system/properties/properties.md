@@ -31,8 +31,8 @@ Note that this table only lists custom properties. All other regular CSS propert
 | `justifyContent`      | `justify-content`                                                                            | [`justifyContent`](/system/flexbox/#justify-content)         | none                                                                                                |
 | `order`               | `order`                                                                                      | [`order`](/system/flexbox/#order)                            | none                                                                                                |
 | `gap`                 | `gap`                                                                                        | [`gap`](/system/grid/#gap)                                   | [`theme.spacing(value)`](/material-ui/customization/default-theme/?expand-path=$.spacing)           |
-| `columnGap`           | `column-gap`                                                                                 | [`columnGap`](/system/grid/#row-gap-amp-column-gap)          | [`theme.spacing(value)`](/material-ui/customization/default-theme/?expand-path=$.spacing)           |
-| `rowGap`              | `row-gap`                                                                                    | [`rowGap`](/system/grid/#row-gap-amp-column-gap)             | [`theme.spacing(value)`](/material-ui/customization/default-theme/?expand-path=$.spacing)           |
+| `columnGap`           | `column-gap`                                                                                 | [`columnGap`](/system/grid/#row-gap-column-gap)              | [`theme.spacing(value)`](/material-ui/customization/default-theme/?expand-path=$.spacing)           |
+| `rowGap`              | `row-gap`                                                                                    | [`rowGap`](/system/grid/#row-gap-column-gap)                 | [`theme.spacing(value)`](/material-ui/customization/default-theme/?expand-path=$.spacing)           |
 | `gridColumn`          | `grid-column`                                                                                | [`gridColumn`](/system/grid/#grid-column)                    | none                                                                                                |
 | `gridRow`             | `grid-row`                                                                                   | [`gridRow`](/system/grid/#grid-row)                          | none                                                                                                |
 | `gridAutoFlow`        | `grid-auto-flow`                                                                             | [`gridAutoFlow`](/system/grid/#grid-auto-flow)               | none                                                                                                |
@@ -105,14 +105,14 @@ Let's take one row from [the table above](#properties-reference-table), for exam
 and detail each column:
 
 - **System keys**.
-  The column lists the key(s) by which you can use this property with the `sx` prop (or as a system function).
+  The column lists the key(s) by which you can use this property with the `sx` prop.
 
   ```jsx
   <Button sx={{ mb: 3 }}>
   // or
-  <Box mb={3}>
+  <Box sx={{ mb: 3 }}>
   // or
-  <Box marginBottom={3}>
+  <Box sx={{ marginBottom: 3 }}>
   ```
 
 - **CSS properties**.

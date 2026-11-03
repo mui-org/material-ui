@@ -10,13 +10,13 @@ githubSource: packages/mui-material/src/Link
 
 <p class="description">The Link component allows you to easily customize anchor elements with your theme colors and typography styles.</p>
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Basic links
 
 The Link component is built on top of the [Typography](/material-ui/api/typography/) component, meaning that you can use its props.
 
-{{"demo": "Links.js"}}
+{{"component": "file://./demos/links/index.ts"}}
 
 However, the Link component has some different default props than the Typography component:
 
@@ -27,16 +27,7 @@ However, the Link component has some different default props than the Typography
 
 The `underline` prop can be used to set the underline behavior. The default is `always`.
 
-{{"demo": "UnderlineLink.js"}}
-
-## Security
-
-When you use `target="_blank"` with Links, it is [recommended](https://developers.google.com/web/tools/lighthouse/audits/noopener) to always set `rel="noopener"` or `rel="noreferrer"` when linking to third party content.
-
-- `rel="noopener"` prevents the new page from being able to access the `window.opener` property and ensures it runs in a separate process.
-  Without this, the target page can potentially redirect your page to a malicious URL.
-- `rel="noreferrer"` has the same effect, but also prevents the _Referer_ header from being sent to the new page.
-  ⚠️ Removing the referrer header will affect analytics.
+{{"component": "file://./demos/underline/index.ts"}}
 
 ## Third-party routing library
 
@@ -54,7 +45,7 @@ Here is a [more detailed guide](/material-ui/integrations/routing/#link).
 - If a link doesn't have a meaningful href, [it should be rendered using a `<button>` element](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md).
   The demo below illustrates how to properly link with a `<button>`:
 
-{{"demo": "ButtonLink.js"}}
+{{"component": "file://./demos/button/index.ts"}}
 
 ### Keyboard accessibility
 

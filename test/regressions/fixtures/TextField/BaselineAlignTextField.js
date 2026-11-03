@@ -18,12 +18,14 @@ export default function BaselineAlignTextField() {
           label="label"
           placeholder="placeholder"
           variant="standard"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Visibility />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Visibility />
+                </InputAdornment>
+              ),
+            },
           }}
         />
         Base
@@ -40,12 +42,14 @@ export default function BaselineAlignTextField() {
           label="label"
           placeholder="placeholder"
           variant="standard"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Visibility />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Visibility />
+                </InputAdornment>
+              ),
+            },
           }}
         />
         Base

@@ -8,6 +8,7 @@ import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import AddIcon from '../internal/svg-icons/Add';
 import speedDialIconClasses, { getSpeedDialIconUtilityClass } from './speedDialIconClasses';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, open, openIcon } = ownerState;
@@ -40,49 +41,46 @@ const SpeedDialIconRoot = styled('span', {
     ];
   },
 })(
-  memoTheme(({ theme }) => ({
-    height: 24,
-    [`& .${speedDialIconClasses.icon}`]: {
-      transition: theme.transitions.create(['transform', 'opacity'], {
-        duration: theme.transitions.duration.short,
-      }),
-    },
-    [`& .${speedDialIconClasses.openIcon}`]: {
-      position: 'absolute',
-      transition: theme.transitions.create(['transform', 'opacity'], {
-        duration: theme.transitions.duration.short,
-      }),
-      opacity: 0,
-      transform: 'rotate(-45deg)',
-    },
-    variants: [
-      {
-        props: ({ ownerState }) => ownerState.open,
-        style: {
-          [`& .${speedDialIconClasses.icon}`]: {
-            transform: 'rotate(45deg)',
+  memoTheme(({ theme }) => {
+    return {
+      height: 24,
+      [`& .${speedDialIconClasses.icon}`]: {
+        ...getTransitionStyles(theme, ['transform', 'opacity'], {
+          duration: theme.transitions.duration.short,
+        }),
+      },
+      [`& .${speedDialIconClasses.openIcon}`]: {
+        position: 'absolute',
+        ...getTransitionStyles(theme, ['transform', 'opacity'], {
+          duration: theme.transitions.duration.short,
+        }),
+        opacity: 0,
+        transform: 'rotate(-45deg)',
+      },
+      variants: [
+        {
+          props: ({ ownerState }) => ownerState.open,
+          style: {
+            [`& .${speedDialIconClasses.icon}`]: {
+              transform: 'rotate(45deg)',
+            },
+            [`& .${speedDialIconClasses.openIcon}`]: {
+              transform: 'rotate(0deg)',
+              opacity: 1,
+            },
           },
         },
-      },
-      {
-        props: ({ ownerState }) => ownerState.open && ownerState.openIcon,
-        style: {
-          [`& .${speedDialIconClasses.icon}`]: {
-            opacity: 0,
+        {
+          props: ({ ownerState }) => ownerState.open && ownerState.openIcon,
+          style: {
+            [`& .${speedDialIconClasses.icon}`]: {
+              opacity: 0,
+            },
           },
         },
-      },
-      {
-        props: ({ ownerState }) => ownerState.open,
-        style: {
-          [`& .${speedDialIconClasses.openIcon}`]: {
-            transform: 'rotate(0deg)',
-            opacity: 1,
-          },
-        },
-      },
-    ],
-  })),
+      ],
+    };
+  }),
 );
 
 const SpeedDialIcon = React.forwardRef(function SpeedDialIcon(inProps, ref) {

@@ -184,7 +184,7 @@ Finally, add the Pigment CSS stylesheet to the top of the main file.
 ## Configuring the theme
 
 Integrating Pigment CSS with Material UI requires you to configure the theme to the plugin.
-Add the following code to your [Next.js](#nextjs) or [Vite](#vite) config file:
+Add the following code to your [Next.js](#next-js) or [Vite](#vite) config file:
 
 ```diff
 +import { createTheme } from '@mui/material';
@@ -233,7 +233,7 @@ If you are using `next/font` to optimize font loading, pass a CSS variable name 
 +  variable: '--my-font-family',
  });
 
-export default function RootLayout(props) {
+ export default function RootLayout(props) {
    const { children } = props;
    return (
      <html lang="en">

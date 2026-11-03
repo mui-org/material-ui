@@ -110,6 +110,5 @@ Your input is crucial to helping us shape the roadmap from here.
 The best places to stay up-to-date about what the team is currently working on are [GitHub issues](https://github.com/mui/toolpad) and the [public roadmap](https://github.com/orgs/mui/projects/9/views/1).
 
 If you have any questions or would like to share feedback, you can directly contact the team at toolpad@mui.com or reach us on [X/Twitter](https://x.com/MUI_Toolpad).
-You can also engage in conversation on our [Discord](https://mui.com/r/discord/) server.
 
 If you'd like an in-depth demo to discuss your use case, please feel free to [schedule a meeting with me on Calendly](https://calendly.com/prakhar-mui).

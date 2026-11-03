@@ -9,11 +9,11 @@ export interface DialogContentTextOwnProps extends Omit<TypographyTypeMap['props
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<DialogContentTextClasses>;
+  classes?: Partial<DialogContentTextClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface DialogContentTextTypeMap<
@@ -28,12 +28,12 @@ export interface DialogContentTextTypeMap<
  *
  * Demos:
  *
- * - [Dialog](https://mui.com/material-ui/react-dialog/)
+ * - [Dialog](https://next.mui.com/material-ui/react-dialog/)
  *
  * API:
  *
- * - [DialogContentText API](https://mui.com/material-ui/api/dialog-content-text/)
- * - inherits [Typography API](https://mui.com/material-ui/api/typography/)
+ * - [DialogContentText API](https://next.mui.com/material-ui/api/dialog-content-text/)
+ * - inherits [Typography API](https://next.mui.com/material-ui/api/typography/)
  */
 declare const DialogContentText: OverridableComponent<DialogContentTextTypeMap>;
 
@@ -41,7 +41,7 @@ export type DialogContentTextProps<
   RootComponent extends React.ElementType = DialogContentTextTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<DialogContentTextTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default DialogContentText;

@@ -3,7 +3,7 @@ import * as React from 'react';
 import useEnhancedEffect from '../useEnhancedEffect';
 
 /**
- * Inspired by https://github.com/facebook/react/issues/14099#issuecomment-440013892
+ * Inspired by https://github.com/react/react/issues/14099#issuecomment-440013892
  * See RFC in https://github.com/reactjs/rfcs/pull/220
  */
 function useEventCallback<Fn extends (...args: any[]) => any = (...args: unknown[]) => unknown>(

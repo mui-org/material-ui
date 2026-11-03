@@ -14,14 +14,6 @@ export interface ToggleButtonGroupClasses {
   disabled: string;
   /** Styles applied to the children. */
   grouped: string;
-  /** Styles applied to the children if `orientation="horizontal"`.
-   *  @deprecated Combine the [.MuiToggleButtonGroup-horizontal](/material-ui/api/toggle-button-group/#toggle-button-group-classes-horizontal) and [.MuiToggleButtonGroup-grouped](/material-ui/api/toggle-button-group/#toggle-button-group-classes-grouped) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  groupedHorizontal: string;
-  /** Styles applied to the children if `orientation="vertical"`.
-   * @deprecated Combine the [.MuiToggleButtonGroup-vertical](/material-ui/api/toggle-button-group/#toggle-button-group-classes-vertical) and [.MuiToggleButtonGroup-grouped](/material-ui/api/toggle-button-group/#toggle-button-group-classes-grouped) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  groupedVertical: string;
   /** Styles applied to the root element if `fullWidth={true}`. */
   fullWidth: string;
   /** Styles applied to the first button in the toggle button group. */
@@ -47,8 +39,6 @@ const toggleButtonGroupClasses: ToggleButtonGroupClasses = generateUtilityClasse
     'vertical',
     'disabled',
     'grouped',
-    'groupedHorizontal',
-    'groupedVertical',
     'fullWidth',
     'firstButton',
     'lastButton',

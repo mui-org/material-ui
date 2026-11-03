@@ -1,2 +1,0 @@
-{creditCard}
-{React.cloneElement(creditCard, { variant: 'soft' })}

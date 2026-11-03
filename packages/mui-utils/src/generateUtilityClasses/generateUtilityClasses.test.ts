@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
 
 describe('generateUtilityClasses', () => {

@@ -1,6 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import MuiTextField from '@mui/material/TextField';
 import { selectClasses } from '@mui/material/Select';
@@ -73,70 +72,54 @@ const styles = ({ theme }) => ({
 });
 
 function TextField(props) {
-  const {
-    InputProps = {},
-    InputLabelProps,
-    noBorder,
-    size = 'medium',
-    SelectProps,
-    ...other
-  } = props;
+  const { slotProps = {}, noBorder, size = 'medium', ...other } = props;
 
   const {
     classes: { input: InputPropsClassesInput, ...InputPropsClassesOther } = {},
     ...InputPropsOther
-  } = InputProps;
+  } = slotProps.input ?? {};
 
   return (
     <MuiTextField
-      InputProps={{
-        classes: {
-          root: classes.root,
-          input: clsx(
-            classes.input,
-            inputStyleMappingClasses[size],
-            {
-              [classes.inputBorder]: !noBorder,
-            },
-            InputPropsClassesInput,
-          ),
-          ...InputPropsClassesOther,
+      slotProps={{
+        ...slotProps,
+        input: {
+          classes: {
+            root: classes.root,
+            input: clsx(
+              classes.input,
+              inputStyleMappingClasses[size],
+              {
+                [classes.inputBorder]: !noBorder,
+              },
+              InputPropsClassesInput,
+            ),
+            ...InputPropsClassesOther,
+          },
+          disableUnderline: true,
+          ...InputPropsOther,
         },
-        disableUnderline: true,
-        ...InputPropsOther,
+        inputLabel: {
+          ...slotProps.inputLabel,
+          shrink: true,
+        },
       }}
-      InputLabelProps={{
-        ...InputLabelProps,
-        shrink: true,
-      }}
-      SelectProps={SelectProps}
       {...other}
     />
   );
 }
 
 TextField.propTypes = {
-  /**
-   * Props applied to the [`InputLabel`](https://mui.com/material-ui/api/input-label/) element.
-   * Pointer events like `onClick` are enabled if and only if `shrink` is `true`.
-   * @deprecated Use `slotProps.inputLabel` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  InputLabelProps: PropTypes.object,
-  /**
-   * Props applied to the Input element.
-   * It will be a [`FilledInput`](https://mui.com/material-ui/api/filled-input/),
-   * [`OutlinedInput`](https://mui.com/material-ui/api/outlined-input/) or [`Input`](https://mui.com/material-ui/api/input/)
-   * component depending on the `variant` prop value.
-   * @deprecated Use `slotProps.input` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  InputProps: PropTypes.object,
   noBorder: PropTypes.bool,
-  /**
-   * Props applied to the [`Select`](https://mui.com/material-ui/api/select/) element.
-   * @deprecated Use `slotProps.select` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  SelectProps: PropTypes.object,
   size: PropTypes.oneOf(['large', 'medium', 'small', 'xlarge']),
+  slotProps: PropTypes.shape({
+    formHelperText: PropTypes.object,
+    htmlInput: PropTypes.object,
+    input: PropTypes.object,
+    inputLabel: PropTypes.object,
+    root: PropTypes.object,
+    select: PropTypes.object,
+  }),
 };
 
 export default styled(TextField)(styles);

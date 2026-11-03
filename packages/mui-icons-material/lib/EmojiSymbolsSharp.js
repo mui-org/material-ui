@@ -9,7 +9,7 @@ exports.default = void 0;
 var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
 var _jsxRuntime = require("react/jsx-runtime");
 var _default = exports.default = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
-  d: "M3 2h8v2H3zm3 9h2V7h3V5H3v2h3zm6.4036 9.1819 7.7782-7.7782 1.4142 1.4142-7.7782 7.7782z"
+  d: "M3 2h8v2H3zm3 9h2V7h3V5H3v2h3zm6.4038 9.182 7.7782-7.7783 1.4142 1.4142-7.7782 7.7782z"
 }, "0"), /*#__PURE__*/(0, _jsxRuntime.jsx)("circle", {
   cx: "14.5",
   cy: "14.5",

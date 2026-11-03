@@ -1,5 +1,0 @@
-<AspectRatio sx={{ width: 300 }}>
-  <Typography level="h2" component="div">
-    16/9
-  </Typography>
-</AspectRatio>

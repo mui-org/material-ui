@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import createStyles from '@material-ui/styles/createStyles';
 import withStyles from '@material-ui/styles/withStyles';
 

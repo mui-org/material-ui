@@ -37,11 +37,11 @@ To learn more about this example:
 <!-- #host-reference -->
 
 - [Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
+- [Customizing Material UI](https://next.mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
 
 ## What's next?
 
 <!-- #host-reference -->
 
 You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+You can head back to the documentation and continue by browsing the [templates](https://next.mui.com/material-ui/getting-started/templates/) section.

@@ -14,9 +14,6 @@
     "noWrap": {
       "description": "If <code>true</code>, the text will not wrap, but instead will truncate with a text overflow ellipsis.<br>Note that text overflow can only happen with block or inline-block level elements (the element needs to have a width in order to overflow)."
     },
-    "paragraph": {
-      "description": "If <code>true</code>, the element will be a paragraph element."
-    },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },
@@ -115,11 +112,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"overline\"</code>"
-    },
-    "paragraph": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>paragraph={true}</code>"
     },
     "root": { "description": "Styles applied to the root element." },
     "subtitle1": {

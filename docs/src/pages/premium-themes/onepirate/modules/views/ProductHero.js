@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
@@ -21,14 +20,18 @@ export default function ProductHero() {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
+      <Typography
+        align="center"
+        variant="h2"
+        marked="center"
+        sx={{ color: 'inherit' }}
+      >
         Upgrade your Sundays
       </Typography>
       <Typography
-        color="inherit"
         align="center"
         variant="h5"
-        sx={{ mb: 4, mt: { xs: 4, sm: 10 } }}
+        sx={{ color: 'inherit', mb: 4, mt: { xs: 4, sm: 10 } }}
       >
         Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
       </Typography>
@@ -42,7 +45,7 @@ export default function ProductHero() {
       >
         Register
       </Button>
-      <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
+      <Typography variant="body2" sx={{ color: 'inherit', mt: 2 }}>
         Discover the experience
       </Typography>
     </ProductHeroLayout>

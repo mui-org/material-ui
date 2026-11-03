@@ -16,7 +16,7 @@ A Dialog is a type of [modal](/material-ui/react-modal/) window that appears in 
 
 Dialogs are purposefully interruptive, so they should be used sparingly.
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Introduction
 
@@ -29,7 +29,7 @@ Dialogs are implemented using a collection of related components:
 - Dialog Content Text: a wrapper for text inside of `<DialogContent />`.
 - Slide: optional [Transition](/material-ui/transitions/#slide) used to slide the Dialog in from the edge of the screen.
 
-{{"demo": "SimpleDialogDemo.js"}}
+{{"component": "file://./demos/simple-demo/index.ts"}}
 
 ## Basics
 
@@ -41,6 +41,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 ## Alerts
 
 Alerts are urgent interruptions, requiring acknowledgement, that inform the user about a situation.
+
+Use `role="alertdialog"` to create an Alert Dialog. This provides assistive technologies the correct purpose of the Dialog.
 
 Most alerts don't need titles.
 They summarize a decision in a sentence or two by either:
@@ -56,20 +58,21 @@ If a title is required:
 - Use a clear question or statement with an explanation in the content area, such as "Erase USB storage?".
 - Avoid apologies, ambiguity, or questions, such as "Warning!" or "Are you sure?"
 
-{{"demo": "AlertDialog.js"}}
+{{"component": "file://./demos/alert/index.ts"}}
 
 ## Transitions
 
-You can also swap out the transition, the next example uses `Slide`.
+You can swap out the default transition with the `slots.transition` and `slotProps.transition` props.
+The next example uses `Slide`.
 
-{{"demo": "AlertDialogSlide.js"}}
+{{"component": "file://./demos/alert-slide/index.ts"}}
 
 ## Form dialogs
 
 Form dialogs allow users to fill out form fields within a dialog.
 For example, if your site prompts for potential subscribers to fill in their email address, they can fill out the email field and touch 'Submit'.
 
-{{"demo": "FormDialog.js"}}
+{{"component": "file://./demos/form/index.ts"}}
 
 ## Customization
 
@@ -78,18 +81,18 @@ You can learn more about this in the [overrides documentation page](/material-ui
 
 The dialog has a close button added to aid usability.
 
-{{"demo": "CustomizedDialogs.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 ## Full-screen dialogs
 
-{{"demo": "FullScreenDialog.js"}}
+{{"component": "file://./demos/full-screen/index.ts"}}
 
 ## Optional sizes
 
 You can set a dialog maximum width by using the `maxWidth` enumerable in combination with the `fullWidth` boolean.
 When the `fullWidth` prop is true, the dialog will adapt based on the `maxWidth` value.
 
-{{"demo": "MaxWidthDialog.js"}}
+{{"component": "file://./demos/max-width/index.ts"}}
 
 ## Responsive full-screen
 
@@ -106,7 +109,7 @@ function MyComponent() {
 }
 ```
 
-{{"demo": "ResponsiveDialog.js"}}
+{{"component": "file://./demos/responsive/index.ts"}}
 
 ## Confirmation dialogs
 
@@ -115,7 +118,7 @@ For example, users can listen to multiple ringtones but only make a final select
 
 Touching "Cancel" in a confirmation dialog, cancels the action, discards any changes, and closes the dialog.
 
-{{"demo": "ConfirmationDialog.js"}}
+{{"component": "file://./demos/confirmation/index.ts"}}
 
 ## Non-modal dialog
 
@@ -124,7 +127,7 @@ Visit [the Nielsen Norman Group article](https://www.nngroup.com/articles/modal-
 
 The demo below shows a persistent cookie banner, a common non-modal dialog use case.
 
-{{"demo": "CookiesBanner.js", "iframe": true}}
+{{"component": "file://./demos/cookies-banner/index.ts", "iframe": true}}
 
 ## Draggable dialog
 
@@ -132,7 +135,7 @@ You can create a draggable dialog by using [react-draggable](https://github.com/
 To do so, you can pass the imported `Draggable` component as the `PaperComponent` of the `Dialog` component.
 This will make the entire dialog draggable.
 
-{{"demo": "DraggableDialog.js"}}
+{{"component": "file://./demos/draggable/index.ts"}}
 
 ## Scrolling long content
 
@@ -143,7 +146,7 @@ When dialogs become too long for the user's viewport or device, they scroll.
 
 Try the demo below to see what we mean:
 
-{{"demo": "ScrollDialog.js"}}
+{{"component": "file://./demos/scroll/index.ts"}}
 
 ## Performance
 

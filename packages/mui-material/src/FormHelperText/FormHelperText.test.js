@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import FormHelperText, { formHelperTextClasses as classes } from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import describeConformance from '../../test/describeConformance';
@@ -16,7 +15,6 @@ describe('<FormHelperText />', () => {
     testComponentPropWith: 'div',
     muiName: 'MuiFormHelperText',
     testVariantProps: { size: 'small' },
-    skip: ['componentsProp'],
   }));
 
   describe('prop: error', () => {
@@ -28,7 +26,7 @@ describe('<FormHelperText />', () => {
 
   describe('with FormControl', () => {
     ['error', 'disabled'].forEach((visualState) => {
-      describe(visualState, () => {
+      describe(`${visualState}`, () => {
         function FormHelperTextInFormControl(props) {
           return (
             <FormControl {...{ [visualState]: true }}>
@@ -38,24 +36,22 @@ describe('<FormHelperText />', () => {
         }
 
         it(`should have the ${visualState} class`, () => {
-          const { getByText } = render(
-            <FormHelperTextInFormControl>Foo</FormHelperTextInFormControl>,
-          );
+          render(<FormHelperTextInFormControl>Foo</FormHelperTextInFormControl>);
 
-          expect(getByText(/Foo/)).to.have.class(classes[visualState]);
+          expect(screen.getByText(/Foo/)).to.have.class(classes[visualState]);
         });
 
         it('should be overridden by props', () => {
-          const { getByText, setProps } = render(
+          const { setProps } = render(
             <FormHelperTextInFormControl {...{ [visualState]: false }}>
               Foo
             </FormHelperTextInFormControl>,
           );
 
-          expect(getByText(/Foo/)).not.to.have.class(classes[visualState]);
+          expect(screen.getByText(/Foo/)).not.to.have.class(classes[visualState]);
 
           setProps({ [visualState]: true });
-          expect(getByText(/Foo/)).to.have.class(classes[visualState]);
+          expect(screen.getByText(/Foo/)).to.have.class(classes[visualState]);
         });
       });
     });
@@ -63,13 +59,13 @@ describe('<FormHelperText />', () => {
     describe('size', () => {
       describe('small margin FormControl', () => {
         it('should have the small class', () => {
-          const { getByText } = render(
+          render(
             <FormControl size="small">
               <FormHelperText>Foo</FormHelperText>
             </FormControl>,
           );
 
-          expect(getByText(/Foo/)).to.have.class(classes.sizeSmall);
+          expect(screen.getByText(/Foo/)).to.have.class(classes.sizeSmall);
         });
       });
 
@@ -82,13 +78,11 @@ describe('<FormHelperText />', () => {
           );
         }
 
-        const { getByText, setProps } = render(
-          <FormHelperTextInFormControl>Foo</FormHelperTextInFormControl>,
-        );
+        const { setProps } = render(<FormHelperTextInFormControl>Foo</FormHelperTextInFormControl>);
 
-        expect(getByText(/Foo/)).not.to.have.class(classes.sizeSmall);
+        expect(screen.getByText(/Foo/)).not.to.have.class(classes.sizeSmall);
         setProps({ size: 'small' });
-        expect(getByText(/Foo/)).to.have.class(classes.sizeSmall);
+        expect(screen.getByText(/Foo/)).to.have.class(classes.sizeSmall);
       });
     });
   });

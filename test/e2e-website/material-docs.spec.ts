@@ -1,6 +1,7 @@
-import { test as base, expect, Page } from '@playwright/test';
-import kebabCase from 'lodash/kebabCase';
-import { TestFixture } from './playwright.config';
+import type { Page } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
+import { kebabCase } from 'es-toolkit/string';
+import type { TestFixture } from './playwright.config';
 
 const test = base.extend<TestFixture>({});
 
@@ -17,6 +18,18 @@ test.describe('Material docs', () => {
       'href',
       `/material-ui/getting-started/installation/#${kebabCase(textContent || '')}`,
     );
+  });
+
+  test('should move the focus to the main content with the skip link', async ({ page }) => {
+    await page.goto('/material-ui/getting-started/installation/');
+
+    await page.keyboard.press('Tab');
+
+    await expect(page.locator('a[href="#main-content"]')).toBeFocused();
+
+    await page.keyboard.press('Enter');
+
+    await expect(page.locator('#main-content')).toBeFocused();
   });
 
   test('[zh] should have correct link with hash in the TOC', async ({ page }) => {

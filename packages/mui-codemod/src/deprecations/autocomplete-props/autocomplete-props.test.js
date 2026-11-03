@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import { jscodeshift } from '../../../testUtils';
 import transform from './autocomplete-props';
 import readFile from '../../util/readFile';
@@ -22,6 +22,28 @@ describe('@mui/codemod', () => {
         const actual = transform({ source: read('./test-cases/expected.js') }, { jscodeshift }, {});
 
         const expected = read('./test-cases/expected.js');
+        expect(actual).to.equal(expected, 'The transformed version should be correct');
+      });
+
+      it('transforms renderInput params as needed', () => {
+        const actual = transform(
+          { source: read('./test-cases/render-input.actual.js') },
+          { jscodeshift },
+          {},
+        );
+
+        const expected = read('./test-cases/render-input.expected.js');
+        expect(actual).to.equal(expected, 'The transformed version should be correct');
+      });
+
+      it('should be idempotent for renderInput params', () => {
+        const actual = transform(
+          { source: read('./test-cases/render-input.expected.js') },
+          { jscodeshift },
+          {},
+        );
+
+        const expected = read('./test-cases/render-input.expected.js');
         expect(actual).to.equal(expected, 'The transformed version should be correct');
       });
     });
@@ -70,6 +92,28 @@ describe('@mui/codemod', () => {
         );
 
         const expected = read('./test-cases/package.expected.js');
+        expect(actual).to.equal(expected, 'The transformed version should be correct');
+      });
+
+      it('transforms renderInput params as needed', () => {
+        const actual = transform(
+          { source: read('./test-cases/render-input-package.actual.js') },
+          { jscodeshift },
+          { packageName: '@org/ui/material' },
+        );
+
+        const expected = read('./test-cases/render-input-package.expected.js');
+        expect(actual).to.equal(expected, 'The transformed version should be correct');
+      });
+
+      it('should be idempotent for renderInput params', () => {
+        const actual = transform(
+          { source: read('./test-cases/render-input-package.expected.js') },
+          { jscodeshift },
+          { packageName: '@org/ui/material' },
+        );
+
+        const expected = read('./test-cases/render-input-package.expected.js');
         expect(actual).to.equal(expected, 'The transformed version should be correct');
       });
     });

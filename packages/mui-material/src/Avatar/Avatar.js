@@ -66,6 +66,10 @@ const AvatarRoot = styled('div', {
         props: { colorDefault: true },
         style: {
           color: (theme.vars || theme).palette.background.default,
+          '@media (forced-colors: active)': {
+            boxSizing: 'border-box',
+            border: '1px solid ButtonBorder',
+          },
           ...(theme.vars
             ? {
                 backgroundColor: theme.vars.palette.Avatar.defaultBg,
@@ -103,7 +107,7 @@ const AvatarFallback = styled(Person, {
   height: '75%',
 });
 
-function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }) {
+function useLoaded(src, srcSet, crossOrigin, referrerPolicy) {
   const [loaded, setLoaded] = React.useState(false);
 
   React.useEffect(() => {
@@ -111,6 +115,7 @@ function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }) {
       return undefined;
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoaded(false);
 
     let active = true;
@@ -151,7 +156,6 @@ const Avatar = React.forwardRef(function Avatar(inProps, ref) {
     component = 'div',
     slots = {},
     slotProps = {},
-    imgProps,
     sizes,
     src,
     srcSet,
@@ -167,13 +171,10 @@ const Avatar = React.forwardRef(function Avatar(inProps, ref) {
     variant,
   };
 
+  const { crossOrigin, referrerPolicy } =
+    (typeof slotProps.img === 'function' ? slotProps.img(ownerState) : slotProps.img) ?? {};
   // Use a hook instead of onError on the img element to support server-side rendering.
-  const loaded = useLoaded({
-    ...imgProps,
-    ...(typeof slotProps.img === 'function' ? slotProps.img(ownerState) : slotProps.img),
-    src,
-    srcSet,
-  });
+  const loaded = useLoaded(src, srcSet, crossOrigin, referrerPolicy);
   const hasImg = src || srcSet;
   const hasImgNotFailing = hasImg && loaded !== 'error';
 
@@ -183,13 +184,17 @@ const Avatar = React.forwardRef(function Avatar(inProps, ref) {
 
   const classes = useUtilityClasses(ownerState);
 
+  const externalForwardedProps = {
+    slots,
+    slotProps,
+  };
+
   const [RootSlot, rootSlotProps] = useSlot('root', {
     ref,
     className: clsx(classes.root, className),
     elementType: AvatarRoot,
     externalForwardedProps: {
-      slots,
-      slotProps,
+      ...externalForwardedProps,
       component,
       ...other,
     },
@@ -199,10 +204,7 @@ const Avatar = React.forwardRef(function Avatar(inProps, ref) {
   const [ImgSlot, imgSlotProps] = useSlot('img', {
     className: classes.img,
     elementType: AvatarImg,
-    externalForwardedProps: {
-      slots,
-      slotProps: { img: { ...imgProps, ...slotProps.img } },
-    },
+    externalForwardedProps,
     additionalProps: { alt, src, srcSet, sizes },
     ownerState,
   });
@@ -210,10 +212,7 @@ const Avatar = React.forwardRef(function Avatar(inProps, ref) {
   const [FallbackSlot, fallbackSlotProps] = useSlot('fallback', {
     className: classes.fallback,
     elementType: AvatarFallback,
-    externalForwardedProps: {
-      slots,
-      slotProps,
-    },
+    externalForwardedProps,
     shouldForwardComponentProp: true,
     ownerState,
   });
@@ -261,12 +260,6 @@ Avatar.propTypes /* remove-proptypes */ = {
    * Either a string to use a HTML element or a component.
    */
   component: PropTypes.elementType,
-  /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#attributes) applied to the `img` element if the component is used to display an image.
-   * It can be used to listen for the loading error event.
-   * @deprecated Use `slotProps.img` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  imgProps: PropTypes.object,
   /**
    * The `sizes` attribute for the `img` element.
    */

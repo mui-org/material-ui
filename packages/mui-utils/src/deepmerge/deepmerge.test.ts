@@ -1,6 +1,6 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
-import { runInNewContext } from 'vm';
+import { isJsdom } from '@mui/internal-test-utils/env';
 import deepmerge from './deepmerge';
 
 describe('deepmerge', () => {
@@ -61,14 +61,8 @@ describe('deepmerge', () => {
     expect({}).not.to.have.property('isAdmin');
   });
 
-  it('should merge objects across realms', function test() {
-    if (!/jsdom/.test(window.navigator.userAgent)) {
-      // vm is only available in Node.js.
-      // We could use https://github.com/browserify/vm-browserify to run the test in an iframe when
-      // in Karma but it doesn't seem we need to go as far.
-      this.skip();
-    }
-
+  it.skipIf(!isJsdom())('should merge objects across realms', async function test() {
+    const { runInNewContext } = await import('vm');
     const vmObject = runInNewContext('({hello: "realm"})');
     const result = deepmerge({ hello: 'original' }, vmObject);
     expect(result.hello).to.equal('realm');
@@ -117,7 +111,7 @@ describe('deepmerge', () => {
 
     expect(result).to.deep.equal({ foo: { baz: 'test' } });
 
-    // @ts-ignore
+    // @ts-expect-error: The inferred target type does not include the baz property copied from the source.
     result.foo.baz = 'new test';
 
     expect(result).to.deep.equal({ foo: { baz: 'new test' } });

@@ -18,7 +18,6 @@ import {
 } from '@mui/x-tree-view/TreeItem';
 import { TreeItemIcon } from '@mui/x-tree-view/TreeItemIcon';
 import { TreeItemProvider } from '@mui/x-tree-view/TreeItemProvider';
-
 import { useTheme } from '@mui/material/styles';
 
 const ITEMS = [
@@ -91,9 +90,6 @@ function TransitionComponent(props) {
 }
 
 TransitionComponent.propTypes = {
-  /**
-   * Show the component; triggers the enter or exit states
-   */
   in: PropTypes.bool,
 };
 
@@ -144,6 +140,7 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(props, ref) {
     <TreeItemProvider id={id} itemId={itemId}>
       <TreeItemRoot {...getRootProps(other)}>
         <TreeItemContent
+          status={status}
           {...getContentProps({
             className: clsx('content', {
               expanded: status.expanded,
@@ -170,31 +167,6 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(props, ref) {
     </TreeItemProvider>
   );
 });
-
-CustomTreeItem.propTypes = {
-  /**
-   * The content of the component.
-   */
-  children: PropTypes.node,
-  /**
-   * If `true`, the item is disabled.
-   * @default false
-   */
-  disabled: PropTypes.bool,
-  /**
-   * The id attribute of the item. If not provided, it will be generated.
-   */
-  id: PropTypes.string,
-  /**
-   * The id of the item.
-   * Must be unique.
-   */
-  itemId: PropTypes.string.isRequired,
-  /**
-   * The label of the item.
-   */
-  label: PropTypes.node,
-};
 
 export default function CustomizedTreeView() {
   return (

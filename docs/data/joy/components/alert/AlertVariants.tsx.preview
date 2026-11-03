@@ -1,4 +1,0 @@
-<Alert variant="solid">This is an Alert using the solid variant.</Alert>
-<Alert variant="soft">This is an Alert using the soft variant.</Alert>
-<Alert variant="outlined">This is an Alert using the outlined variant.</Alert>
-<Alert variant="plain">This is an Alert using the plain variant.</Alert>

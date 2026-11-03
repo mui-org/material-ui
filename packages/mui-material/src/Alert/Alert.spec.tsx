@@ -1,4 +1,3 @@
-import * as React from 'react';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import { createTheme } from '@mui/material';
 import Alert from '@mui/material/Alert';

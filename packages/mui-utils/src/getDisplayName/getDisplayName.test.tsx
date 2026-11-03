@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import getDisplayName from './getDisplayName';
 
 describe('utils/getDisplayName.js', () => {
@@ -67,11 +67,11 @@ describe('utils/getDisplayName.js', () => {
       expect(getDisplayName(NamedMemoComponent)).to.equal('Div');
       expect(getDisplayName(NamedContext.Provider)).to.equal(undefined);
       expect(getDisplayName(NamedContext.Consumer)).to.equal(undefined);
-      // @ts-expect-error
+      // @ts-expect-error: A component type argument is required.
       expect(getDisplayName()).to.equal(undefined);
-      // @ts-expect-error
+      // @ts-expect-error: An empty object is not a supported React component type.
       expect(getDisplayName({})).to.equal(undefined);
-      // @ts-expect-error
+      // @ts-expect-error: A boolean is not a supported React component type.
       expect(getDisplayName(false)).to.equal(undefined);
     });
   });

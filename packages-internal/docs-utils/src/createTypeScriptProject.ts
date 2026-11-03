@@ -1,6 +1,11 @@
 import path from 'path';
 import fs from 'fs';
-import * as ts from 'typescript';
+// TypeScript 7 ships no importable compiler API: its root export is just
+// `version`, and the replacement is still behind `typescript/unstable/*`.
+// `@typescript/typescript6` is Microsoft's republished 6.x API for exactly
+// this case. Swap it for the stable API once TypeScript 7.1 ships it
+// (https://github.com/microsoft/TypeScript/issues/63703).
+import * as ts from '@typescript/typescript6';
 
 export interface TypeScriptProject {
   name: string;

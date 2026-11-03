@@ -51,9 +51,12 @@ interface ApiJson {
   filename?: string;
   inheritance?: ApiInheritance;
   demos?: string;
-  cssComponent?: boolean;
   deprecated?: boolean;
   deprecationInfo?: string;
+}
+
+export interface ProcessApiOptions {
+  origin?: string;
 }
 
 /**
@@ -80,7 +83,7 @@ function formatPropTypeDescription(html: string): string {
 /**
  * Convert HTML to markdown
  */
-function htmlToMarkdown(html: string): string {
+function htmlToMarkdown(html: string, origin?: string): string {
   // First pass: decode entities and handle inline elements
   let markdown = html
     // Decode HTML entities first
@@ -93,7 +96,10 @@ function htmlToMarkdown(html: string): string {
     // Convert <code> to backticks
     .replace(/<code>([^<]+)<\/code>/gi, '`$1`')
     // Convert <a> to markdown links
-    .replace(/<a\s+href="([^"]+)">([^<]+)<\/a>/gi, '[$2]($1)');
+    .replace(/<a\s+href="([^"]+)">([^<]+)<\/a>/gi, (match, href, text) => {
+      const url = origin && href.startsWith('/') ? new URL(href, origin).href : href;
+      return `[${text}](${url})`;
+    });
 
   // Handle lists - process them as complete units to avoid extra line breaks
   markdown = markdown.replace(/<ul[^>]*>(.*?)<\/ul>/gis, (match, listContent: string) => {
@@ -151,7 +157,7 @@ function formatPropType(prop: ApiProp): string {
 /**
  * Generate props table
  */
-function generatePropsTable(props: Record<string, ApiProp>): string {
+function generatePropsTable(props: Record<string, ApiProp>, origin?: string): string {
   const propEntries = Object.entries(props);
   if (propEntries.length === 0) {
     return '';
@@ -169,7 +175,7 @@ function generatePropsTable(props: Record<string, ApiProp>): string {
 
     let description = '';
     if (prop.deprecated && prop.deprecationInfo) {
-      description = `⚠️ ${htmlToMarkdown(prop.deprecationInfo)}`;
+      description = `⚠️ ${htmlToMarkdown(prop.deprecationInfo, origin)}`;
     } else if (prop.additionalInfo?.cssApi) {
       description = 'Override or extend the styles applied to the component.';
     } else if (prop.additionalInfo?.sx) {
@@ -186,7 +192,7 @@ function generatePropsTable(props: Record<string, ApiProp>): string {
 /**
  * Generate slots table
  */
-function generateSlotsTable(slots: ApiSlot[]): string {
+function generateSlotsTable(slots: ApiSlot[], origin?: string): string {
   if (!slots || slots.length === 0) {
     return '';
   }
@@ -197,7 +203,7 @@ function generateSlotsTable(slots: ApiSlot[]): string {
 
   for (const slot of slots) {
     const className = slot.class ? `\`.${slot.class}\`` : '-';
-    const description = htmlToMarkdown(slot.description);
+    const description = htmlToMarkdown(slot.description, origin);
     table += `| ${slot.name} | \`${slot.default}\` | ${className} | ${description} |\n`;
   }
 
@@ -207,7 +213,7 @@ function generateSlotsTable(slots: ApiSlot[]): string {
 /**
  * Generate classes table
  */
-function generateClassesTable(classes: ApiClass[]): string {
+function generateClassesTable(classes: ApiClass[], origin?: string): string {
   if (!classes || classes.length === 0) {
     return '';
   }
@@ -220,7 +226,7 @@ function generateClassesTable(classes: ApiClass[]): string {
   for (const cls of classes) {
     const globalClass = cls.isGlobal ? `\`.${cls.className}\`` : '-';
     const ruleName = cls.isGlobal ? '-' : cls.key;
-    const description = htmlToMarkdown(cls.description);
+    const description = htmlToMarkdown(cls.description, origin);
     table += `| ${globalClass} | ${ruleName} | ${description} |\n`;
   }
 
@@ -230,15 +236,16 @@ function generateClassesTable(classes: ApiClass[]): string {
 /**
  * Process API JSON and convert to markdown
  */
-export function processApiJson(apiJson: ApiJson | string): string {
+export function processApiJson(apiJson: ApiJson | string, options: ProcessApiOptions = {}): string {
   const api: ApiJson = typeof apiJson === 'string' ? JSON.parse(apiJson) : apiJson;
+  const { origin } = options;
 
   let markdown = `# ${api.name} API\n\n`;
 
   // Add deprecation warning if applicable
   if (api.deprecated) {
     const warningText = api.deprecationInfo
-      ? htmlToMarkdown(api.deprecationInfo)
+      ? htmlToMarkdown(api.deprecationInfo, origin)
       : 'This component is deprecated. Consider using an alternative component.';
     markdown += `> ⚠️ **Warning**: ${warningText}\n\n`;
   }
@@ -248,7 +255,7 @@ export function processApiJson(apiJson: ApiJson | string): string {
     markdown += '## Demos\n\n';
     markdown +=
       'For examples and details on the usage of this React component, visit the component demo pages:\n\n';
-    markdown += `${htmlToMarkdown(api.demos)}\n\n`;
+    markdown += `${htmlToMarkdown(api.demos, origin)}\n\n`;
   }
 
   // Add import section
@@ -258,7 +265,7 @@ export function processApiJson(apiJson: ApiJson | string): string {
   markdown += '\n```\n\n';
 
   // Add props section
-  const propsTable = generatePropsTable(api.props);
+  const propsTable = generatePropsTable(api.props, origin);
   if (propsTable) {
     markdown += `${propsTable}\n`;
   }
@@ -272,8 +279,12 @@ export function processApiJson(apiJson: ApiJson | string): string {
 
   // Add spread information
   if (api.spread) {
+    const inheritanceUrl =
+      origin && api.inheritance?.pathname.startsWith('/')
+        ? `${origin}${api.inheritance.pathname}`
+        : api.inheritance?.pathname;
     const spreadElement = api.inheritance
-      ? `[${api.inheritance.component}](${api.inheritance.pathname})`
+      ? `[${api.inheritance.component}](${inheritanceUrl})`
       : 'native element';
     markdown += `> Any other props supplied will be provided to the root element (${spreadElement}).\n\n`;
   }
@@ -281,7 +292,11 @@ export function processApiJson(apiJson: ApiJson | string): string {
   // Add inheritance section
   if (api.inheritance) {
     markdown += '## Inheritance\n\n';
-    markdown += `While not explicitly documented above, the props of the [${api.inheritance.component}](${api.inheritance.pathname}) component are also available on ${api.name}.`;
+    const inheritanceUrl =
+      origin && api.inheritance.pathname.startsWith('/')
+        ? `${origin}${api.inheritance.pathname}`
+        : api.inheritance.pathname;
+    markdown += `While not explicitly documented above, the props of the [${api.inheritance.component}](${inheritanceUrl}) component are also available on ${api.name}.`;
     if (api.inheritance.component === 'Transition') {
       markdown +=
         ' A subset of components support [react-transition-group](https://reactcommunity.org/react-transition-group/transition/) out of the box.';
@@ -296,20 +311,15 @@ export function processApiJson(apiJson: ApiJson | string): string {
   }
 
   // Add slots section
-  const slotsTable = generateSlotsTable(api.slots || []);
+  const slotsTable = generateSlotsTable(api.slots || [], origin);
   if (slotsTable) {
     markdown += `${slotsTable}\n`;
   }
 
   // Add classes section
-  const classesTable = generateClassesTable(api.classes || []);
+  const classesTable = generateClassesTable(api.classes || [], origin);
   if (classesTable) {
     markdown += `${classesTable}\n`;
-  }
-
-  // Add CSS component note
-  if (api.cssComponent) {
-    markdown += `> **Note**: As a CSS utility, the \`${api.name}\` component also supports all system properties. You can use them as props directly on the component.\n\n`;
   }
 
   // Add source code section
@@ -325,7 +335,7 @@ export function processApiJson(apiJson: ApiJson | string): string {
 /**
  * Process API JSON file and return markdown
  */
-export function processApiFile(filePath: string): string {
+export function processApiFile(filePath: string, options: ProcessApiOptions = {}): string {
   const content = fs.readFileSync(filePath, 'utf-8');
-  return processApiJson(content);
+  return processApiJson(content, options);
 }

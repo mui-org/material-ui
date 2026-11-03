@@ -1,7 +1,7 @@
 {
   "name": "next-webpack4",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "prestart": "node ../../scripts/createFixture.js next-webpack4",
     "start": "NODE_OPTIONS=--openssl-legacy-provider pnpm next build && concurrently --success first --kill-others \"pnpm next start\" \"node testNextWebpack4Integration\""
@@ -16,13 +16,13 @@
     "@mui/styled-engine": "workspace:*",
     "@mui/system": "workspace:*",
     "@mui/utils": "workspace:*",
-    "next": "14.2.30",
+    "next": "14.2.35",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2"
   },
   "devDependencies": {
-    "concurrently": "7.4.0",
+    "concurrently": "10.0.3",
     "@playwright/test": "1.54.1"
   },
   "pnpm": {

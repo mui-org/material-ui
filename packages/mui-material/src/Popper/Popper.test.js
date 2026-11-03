@@ -1,8 +1,7 @@
+import { describe, beforeAll, afterAll, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer, fireEvent, screen } from '@mui/internal-test-utils';
-import { ThemeProvider } from '@mui/system';
-import createTheme from '@mui/system/createTheme';
+import { createRenderer, fireEvent, screen, isJsdom } from '@mui/internal-test-utils';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Grow from '@mui/material/Grow';
 import Popper from '@mui/material/Popper';
 import describeConformance from '../../test/describeConformance';
@@ -10,16 +9,25 @@ import describeConformance from '../../test/describeConformance';
 describe('<Popper />', () => {
   let rtlTheme;
   const { clock, render } = createRenderer({ clock: 'fake' });
+
+  let defaultAnchorElm = null;
+
   const defaultProps = {
-    anchorEl: () => document.createElement('svg'),
+    anchorEl: () => defaultAnchorElm,
     children: <span>Hello World</span>,
     open: true,
   };
 
-  before(() => {
+  beforeAll(() => {
     rtlTheme = createTheme({
       direction: 'rtl',
     });
+    defaultAnchorElm = document.createElement('div');
+    document.body.appendChild(defaultAnchorElm);
+  });
+
+  afterAll(() => {
+    document.body.removeChild(defaultAnchorElm);
   });
 
   describeConformance(<Popper {...defaultProps} />, () => ({
@@ -27,13 +35,11 @@ describe('<Popper />', () => {
     inheritComponent: 'div',
     render,
     refInstanceof: window.HTMLDivElement,
-    testLegacyComponentsProp: true,
     slots: {
       root: {},
     },
     skip: [
       'componentProp',
-      'componentsProp',
       'themeDefaultProps',
       'themeStyleOverrides',
       'themeVariants',
@@ -100,11 +106,8 @@ describe('<Popper />', () => {
       });
     });
 
-    it('should flip placement when edge is reached', async function test() {
-      // JSDOM has no layout engine so PopperJS doesn't know that it should flip the placement.
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    // JSDOM has no layout engine so PopperJS doesn't know that it should flip the placement.
+    it.skipIf(isJsdom())('should flip placement when edge is reached', async function test() {
       const popperRef = React.createRef();
       render(
         <Popper popperRef={popperRef} {...defaultProps} placement="bottom">
@@ -123,19 +126,17 @@ describe('<Popper />', () => {
 
   describe('prop: open', () => {
     it('should open without any issue', () => {
-      const { queryByRole, getByRole, setProps } = render(
-        <Popper {...defaultProps} open={false} />,
-      );
-      expect(queryByRole('tooltip')).to.equal(null);
+      const { setProps } = render(<Popper {...defaultProps} open={false} />);
+      expect(screen.queryByRole('tooltip')).to.equal(null);
       setProps({ open: true });
-      expect(getByRole('tooltip')).to.have.text('Hello World');
+      expect(screen.getByRole('tooltip')).to.have.text('Hello World');
     });
 
     it('should close without any issue', () => {
-      const { queryByRole, getByRole, setProps } = render(<Popper {...defaultProps} />);
-      expect(getByRole('tooltip')).to.have.text('Hello World');
+      const { setProps } = render(<Popper {...defaultProps} />);
+      expect(screen.getByRole('tooltip')).to.have.text('Hello World');
       setProps({ open: false });
-      expect(queryByRole('tooltip')).to.equal(null);
+      expect(screen.queryByRole('tooltip')).to.equal(null);
     });
   });
 
@@ -154,6 +155,58 @@ describe('<Popper />', () => {
 
       expect(popperRef.current.state.placement).to.equal('bottom');
     });
+
+    // Regression test for https://github.com/mui/mui-x/issues/21839
+    it.skipIf(isJsdom())(
+      'should keep the Popper positioned when popperOptions reference changes',
+      () => {
+        // Models a child (e.g. MUI X YearCalendar button) that auto-focuses on
+        // mount. Its layout effect runs after the Popper's cleanup (popper.destroy())
+        // but before the Popper's new effect (createPopper()), so it observes the
+        // intermediate DOM state between the two.
+        function AutoFocusButton() {
+          const buttonRef = React.useRef(null);
+          React.useLayoutEffect(() => {
+            const popper = document.querySelector('[role="tooltip"]');
+            expect(getComputedStyle(popper).position).to.not.equal('static');
+            buttonRef.current?.focus();
+          });
+          return <button ref={buttonRef}>Calendar button</button>;
+        }
+
+        // Simulates a date picker where switching views (day → year) both mounts
+        // a new auto-focusing child and changes the popperOptions reference.
+        function DatePickerLike() {
+          const [view, setView] = React.useState('day');
+          return (
+            <React.Fragment>
+              <button type="button" onClick={() => setView('year')}>
+                Switch to year view
+              </button>
+              <Popper
+                anchorEl={() => defaultAnchorElm}
+                open
+                popperOptions={view === 'year' ? { placement: 'top' } : { placement: 'bottom' }}
+              >
+                {view === 'year' ? <AutoFocusButton /> : <span>Day view</span>}
+              </Popper>
+            </React.Fragment>
+          );
+        }
+
+        render(<DatePickerLike />);
+
+        // Note: using fireEvent instead of user.click() because this test file
+        // uses fake timers (clock: 'fake'), which causes user.click() to hang.
+        fireEvent.click(screen.getByRole('button', { name: 'Switch to year view' }));
+
+        // Guard: verify AutoFocusButton actually mounted and its effect ran,
+        // otherwise the expect inside the layout effect was silently skipped.
+        expect(document.activeElement).to.equal(
+          screen.getByRole('button', { name: 'Calendar button' }),
+        );
+      },
+    );
   });
 
   describe('prop: keepMounted', () => {
@@ -198,9 +251,9 @@ describe('<Popper />', () => {
           }
         }
 
-        const { getByRole } = render(<OpenClose />);
+        render(<OpenClose />);
         expect(document.querySelector('p')).to.equal(null);
-        fireEvent.click(getByRole('button'));
+        fireEvent.click(screen.getByRole('button'));
         expect(document.querySelector('p')).to.equal(null);
       });
     });
@@ -210,7 +263,7 @@ describe('<Popper />', () => {
     clock.withFakeTimers();
 
     it('should work', () => {
-      const { queryByRole, getByRole, setProps } = render(
+      const { setProps } = render(
         <Popper {...defaultProps} transition>
           {({ TransitionProps }) => (
             <Grow {...TransitionProps}>
@@ -220,12 +273,82 @@ describe('<Popper />', () => {
         </Popper>,
       );
 
-      expect(getByRole('tooltip')).to.have.text('Hello World');
+      expect(screen.getByRole('tooltip')).to.have.text('Hello World');
 
       setProps({ anchorEl: null, open: false });
       clock.tick(0);
 
-      expect(queryByRole('tooltip')).to.equal(null);
+      expect(screen.queryByRole('tooltip')).to.equal(null);
+    });
+
+    it('opens on the next task when reduced motion is always', () => {
+      const handleEntered = vi.fn();
+      const theme = createTheme({
+        motion: {
+          reducedMotion: 'always',
+        },
+      });
+
+      function Test(props) {
+        return (
+          <ThemeProvider theme={theme}>
+            <Popper {...defaultProps} open={props.open} transition>
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps} timeout={250} onEntered={handleEntered}>
+                  <span>Hello World</span>
+                </Grow>
+              )}
+            </Popper>
+          </ThemeProvider>
+        );
+      }
+
+      const { setProps } = render(<Test open={false} />);
+
+      setProps({ open: true });
+
+      expect(handleEntered).toHaveBeenCalledTimes(0);
+      clock.tick(0);
+      expect(handleEntered).toHaveBeenCalledTimes(1);
+      expect(screen.getByRole('tooltip')).to.have.text('Hello World');
+    });
+
+    it('allows transition slot props to opt out of reduced motion', () => {
+      const handleEntered = vi.fn();
+      const theme = createTheme({
+        motion: {
+          reducedMotion: 'always',
+        },
+      });
+
+      function Test(props) {
+        return (
+          <ThemeProvider theme={theme}>
+            <Popper {...defaultProps} open={props.open} transition>
+              {({ TransitionProps }) => (
+                <Grow
+                  {...TransitionProps}
+                  timeout={250}
+                  onEntered={handleEntered}
+                  disablePrefersReducedMotion
+                >
+                  <span>Hello World</span>
+                </Grow>
+              )}
+            </Popper>
+          </ThemeProvider>
+        );
+      }
+
+      const { setProps } = render(<Test open={false} />);
+
+      setProps({ open: true });
+
+      expect(handleEntered).toHaveBeenCalledTimes(0);
+      clock.tick(0);
+      expect(handleEntered).toHaveBeenCalledTimes(0);
+      clock.tick(250);
+      expect(handleEntered).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -246,20 +369,20 @@ describe('<Popper />', () => {
   describe('prop: disablePortal', () => {
     it('should work', () => {
       const popperRef = React.createRef();
-      const { getByRole } = render(
-        <Popper {...defaultProps} disablePortal popperRef={popperRef} />,
-      );
+
+      render(<Popper {...defaultProps} disablePortal popperRef={popperRef} />);
+
       // renders
-      expect(getByRole('tooltip')).not.to.equal(null);
+      expect(screen.getByRole('tooltip')).not.to.equal(null);
       // correctly sets modifiers
       expect(popperRef.current.state.options.modifiers[0].options.altBoundary).to.equal(true);
     });
 
     it('sets preventOverflow altBoundary to false when disablePortal is false', () => {
       const popperRef = React.createRef();
-      const { getByRole } = render(<Popper {...defaultProps} popperRef={popperRef} />);
+      render(<Popper {...defaultProps} popperRef={popperRef} />);
       // renders
-      expect(getByRole('tooltip')).not.to.equal(null);
+      expect(screen.getByRole('tooltip')).not.to.equal(null);
       // correctly sets modifiers
       expect(popperRef.current.state.options.modifiers[0].options.altBoundary).to.equal(false);
     });
@@ -269,7 +392,7 @@ describe('<Popper />', () => {
     clock.withFakeTimers();
 
     it('should keep display:none when not toggled and transition/keepMounted/disablePortal props are set', () => {
-      const { getByRole, setProps } = render(
+      const { setProps } = render(
         <Popper {...defaultProps} open={false} keepMounted transition disablePortal>
           {({ TransitionProps }) => (
             <Grow {...TransitionProps}>
@@ -279,14 +402,14 @@ describe('<Popper />', () => {
         </Popper>,
       );
 
-      expect(getByRole('tooltip', { hidden: true }).style.display).to.equal('none');
+      expect(screen.getByRole('tooltip', { hidden: true }).style.display).to.equal('none');
 
       setProps({ open: true });
       clock.tick(0);
 
       setProps({ open: false });
       clock.tick(0);
-      expect(getByRole('tooltip', { hidden: true }).style.display).to.equal('none');
+      expect(screen.getByRole('tooltip', { hidden: true }).style.display).to.equal('none');
     });
   });
 

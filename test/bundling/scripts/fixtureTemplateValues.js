@@ -94,8 +94,6 @@ import { FormHelperText as FormHelperText_core } from '@mui/material';
 import FormHelperText_core__pathImport from '@mui/material/FormHelperText';
 import { FormLabel as FormLabel_core } from '@mui/material';
 import FormLabel_core__pathImport from '@mui/material/FormLabel';
-import { GridLegacy as GridLegacy_core } from '@mui/material';
-import GridLegacy_core__pathImport from '@mui/material/GridLegacy';
 import { Grow as Grow_core } from '@mui/material';
 import Grow_core__pathImport from '@mui/material/Grow';
 import { Icon as Icon_core } from '@mui/material';
@@ -651,11 +649,6 @@ console.assert(
 console.assert(
   ReactIs.isValidElementType(FormLabel_core__pathImport),
   'FormLabel path import is not consumable.',
-);
-console.assert(ReactIs.isValidElementType(GridLegacy_core), 'Grid named import is not consumable.');
-console.assert(
-  ReactIs.isValidElementType(GridLegacy_core__pathImport),
-  'GridLegacy path import is not consumable.',
 );
 console.assert(ReactIs.isValidElementType(Grow_core), 'Grow named import is not consumable.');
 console.assert(

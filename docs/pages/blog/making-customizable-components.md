@@ -24,7 +24,7 @@ Feel free to skip this section and move on to [Logic modification](#logic-modifi
 ### Good old CSS
 
 Let's start with the easiest part: modifying the style.
-This will necessarily involve CSS—especially the notion of [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Specificity), which says that if an element is targeted by two CSS selectors, the browser will apply the more specific one.
+This will necessarily involve CSS—especially the notion of [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity), which says that if an element is targeted by two CSS selectors, the browser will apply the more specific one.
 Usually this means that the selector with more classes applied to it is more specific and therefore takes precedence.
 
 For example, if we look at the Material UI `Switch` component, we have multiple subcomponents that we could expect to modify.

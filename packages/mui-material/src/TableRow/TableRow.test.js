@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import TableRow, { tableRowClasses as classes } from '@mui/material/TableRow';
 import describeConformance from '../../test/describeConformance';
 
@@ -30,13 +29,12 @@ describe('<TableRow />', () => {
     testVariantProps: { variant: 'foo' },
     refInstanceof: window.HTMLTableRowElement,
     testComponentPropWith: 'tr',
-    skip: ['componentsProp'],
   }));
 
   it('should render children', () => {
     const children = <td data-testid="test" />;
-    const { getByTestId } = renderInTable(<TableRow>{children}</TableRow>);
-    getByTestId('test');
+    renderInTable(<TableRow>{children}</TableRow>);
+    screen.getByTestId('test');
   });
 
   describe('prop: component', () => {

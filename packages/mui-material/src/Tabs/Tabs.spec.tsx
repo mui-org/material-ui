@@ -16,11 +16,11 @@ function testOnChange() {
 }
 
 function TabTest() {
-  return <Tabs TabIndicatorProps={{ style: { backgroundColor: 'green' } }} />;
+  return <Tabs slotProps={{ indicator: { style: { backgroundColor: 'green' } } }} />;
 }
 
 function TabIndicatorSxTest() {
-  return <Tabs TabIndicatorProps={{ sx: {} }} />;
+  return <Tabs slotProps={{ indicator: { sx: {} } }} />;
 }
 
 function SampleIcon() {
@@ -38,8 +38,8 @@ function SampleIcon() {
   scrollButtons
   textColor="secondary"
   slots={{
-    StartScrollButtonIcon: SampleIcon,
-    EndScrollButtonIcon: SampleIcon,
+    startScrollButtonIcon: SampleIcon,
+    endScrollButtonIcon: SampleIcon,
   }}
   slotProps={{
     endScrollButtonIcon: (ownerState) => ({

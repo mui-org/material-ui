@@ -13,6 +13,7 @@ import { useDefaultProps } from '../DefaultPropsProvider';
 import slotShouldForwardProp from '../styles/slotShouldForwardProp';
 import { getMobileStepperUtilityClass } from './mobileStepperClasses';
 import useSlot from '../utils/useSlot';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, position } = ownerState;
@@ -96,7 +97,7 @@ const MobileStepperDot = styled('div', {
       {
         props: { variant: 'dots' },
         style: {
-          transition: theme.transitions.create('background-color', {
+          ...getTransitionStyles(theme, 'background-color', {
             duration: theme.transitions.duration.shortest,
           }),
           backgroundColor: (theme.vars || theme).palette.action.disabled,
@@ -136,7 +137,6 @@ const MobileStepper = React.forwardRef(function MobileStepper(inProps, ref) {
     activeStep = 0,
     backButton,
     className,
-    LinearProgressProps,
     nextButton,
     position = 'bottom',
     steps,
@@ -166,10 +166,7 @@ const MobileStepper = React.forwardRef(function MobileStepper(inProps, ref) {
 
   const externalForwardedProps = {
     slots,
-    slotProps: {
-      progress: LinearProgressProps,
-      ...slotProps,
-    },
+    slotProps,
   };
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
@@ -269,11 +266,6 @@ MobileStepper.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
-  /**
-   * Props applied to the `LinearProgress` element.
-   * @deprecated Use `slotProps.progress` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  LinearProgressProps: PropTypes.object,
   /**
    * A next button element. For instance, it can be a `Button` or an `IconButton`.
    */

@@ -1,7 +1,0 @@
-<Button variant="outlined" color="neutral" onClick={() => setOpen(true)}>
-  Open drawer
-</Button>
-<Drawer open={open} onClose={() => setOpen(false)}>
-  <ModalClose />
-  <DialogTitle>Title</DialogTitle>
-</Drawer>

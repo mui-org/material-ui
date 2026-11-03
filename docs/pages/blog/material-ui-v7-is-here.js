@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TopLayoutBlog from 'docs/src/modules/components/TopLayoutBlog';
 import { docs, srcComponents } from './material-ui-v7-is-here.md?muiMarkdown';
 

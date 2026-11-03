@@ -12,11 +12,6 @@
     "page": { "type": { "name": "custom", "description": "integer" }, "required": true },
     "rowsPerPage": { "type": { "name": "custom", "description": "integer" }, "required": true },
     "ActionsComponent": { "type": { "name": "elementType" }, "default": "TablePaginationActions" },
-    "backIconButtonProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.actions.previousButton</code> instead."
-    },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "component": { "type": { "name": "elementType" } },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
@@ -27,14 +22,9 @@
     },
     "labelDisplayedRows": {
       "type": { "name": "func" },
-      "default": "function defaultLabelDisplayedRows({ from, to, count }) {\n  return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;\n}"
+      "default": "function defaultLabelDisplayedRows({ from, to, count }) {\n  return `${formatNumber(from)}–${formatNumber(to)} of ${count !== -1 ? formatNumber(count) : `more than ${formatNumber(to)}`}`;\n}"
     },
     "labelRowsPerPage": { "type": { "name": "node" }, "default": "'Rows per page:'" },
-    "nextIconButtonProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.actions.nextButton</code> instead."
-    },
     "onRowsPerPageChange": {
       "type": { "name": "func" },
       "signature": {
@@ -48,12 +38,6 @@
         "description": "Array&lt;number<br>&#124;&nbsp;{ label: string, value: number }&gt;"
       },
       "default": "[10, 25, 50, 100]"
-    },
-    "SelectProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.select</code> instead."
     },
     "showFirstButton": { "type": { "name": "bool" }, "default": "false" },
     "showLastButton": { "type": { "name": "bool" }, "default": "false" },
@@ -159,6 +143,5 @@
   "forwardsRefTo": "HTMLTableCellElement",
   "filename": "/packages/mui-material/src/TablePagination/TablePagination.js",
   "inheritance": { "component": "TableCell", "pathname": "/material-ui/api/table-cell/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-pagination/\">Pagination</a></li>\n<li><a href=\"/material-ui/react-table/\">Table</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-pagination/\">Pagination</a></li>\n<li><a href=\"/material-ui/react-table/\">Table</a></li></ul>"
 }

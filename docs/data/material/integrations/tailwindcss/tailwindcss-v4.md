@@ -11,6 +11,10 @@ There are two steps to integrate Tailwind CSS v4 with Material UI:
 
 The instructions below detail how to achieve this using common React frameworks.
 
+:::success
+Use the [Material UI + Tailwind CSS agent skill](https://github.com/mui/material-ui/tree/master/skills/material-ui-tailwind) to give your AI coding assistant full context on this integration, including CSS layer ordering, `enableCssLayer`, and Tailwind class overrides.
+:::
+
 ### Next.js App Router
 
 To integrate Tailwind CSS v4 with Material UI in a Next.js App Router project, start by configuring Material UI with Next.js in the [App Router integration guide](/material-ui/integrations/nextjs/#app-router).
@@ -36,7 +40,7 @@ export default function RootLayout() {
 
 2. Configure the layer order in the Tailwind CSS file:
 
-```css title="src/app/globals.css"
+```css title="src/app/global.css"
 @layer theme, base, mui, components, utilities;
 @import 'tailwindcss';
 ```
@@ -46,34 +50,54 @@ export default function RootLayout() {
 To integrate Tailwind CSS v4 with Material UI in a Next.js Pages Router project, start by configuring Material UI with Next.js in the [Pages Router integration guide](/material-ui/integrations/nextjs/#pages-router).
 Then follow these steps:
 
-1. Enable the [CSS layer feature](/material-ui/integrations/nextjs/#configuration-2) in a custom `_document`:
+1. Create a shared Emotion cache (required for SSR + hydration)
+
+   Material UI relies on Emotion for styling.
+   To avoid hydration mismatches, the same Emotion cache instance and configuration must be used on both the server and the client.
+
+   Create a shared cache:
+
+   ```tsx title="src/createEmotionCache.js"
+   import { createEmotionCache } from '@mui/material-nextjs/v15-pagesRouter';
+
+   export const emotionCache = createEmotionCache({ enableCssLayer: true });
+   ```
+
+   > `enableCssLayer: true` ensures Material UI styles are wrapped in `@layer mui`, which allows Tailwind CSS v4 utilities to override them predictably.
+
+2. Enable the [CSS layer feature](/material-ui/integrations/nextjs/#configuration-2) in a custom `_document`:
 
 ```tsx title="pages/_document.tsx"
-import {
-  createCache,
-  documentGetInitialProps,
-} from '@mui/material-nextjs/v15-pagesRouter';
-
+import { documentGetInitialProps } from '@mui/material-nextjs/v15-pagesRouter';
+import { emotionCache } from '../src/createEmotionCache';
 // ...
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const finalProps = await documentGetInitialProps(ctx, {
-    emotionCache: createCache({ enableCssLayer: true }),
+    emotionCache,
   });
   return finalProps;
 };
 ```
 
-2. Configure the layer order with the `GlobalStyles` component—it must be the first child of the `AppCacheProvider`:
+3. Configure the global Tailwind CSS file:
+
+```css title="styles/global.css"
+@import 'tailwindcss';
+```
+
+4. Configure the layer order with the `GlobalStyles` component—it must be the first child of the `AppCacheProvider`:
 
 ```tsx title="pages/_app.tsx"
+import '../styles/global.css';
 import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { emotionCache } from '../src/createEmotionCache';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
   return (
-    <AppCacheProvider {...props}>
+    <AppCacheProvider emotionCache={emotionCache}>
       <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
       {/* Your app */}
     </AppCacheProvider>
@@ -105,7 +129,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 ## Tailwind CSS IntelliSense for VS Code
 
 The official [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) extension requires extra configuration to work properly when customizing the interior slots of Material UI components.
-After installing the extension, add the following line to your [VS Code `settings.json`](https://code.visualstudio.com/docs/editor/settings#_settings-json-file) file:
+After installing the extension, add the following line to your [VS Code `settings.json`](https://code.visualstudio.com/docs/configure/settings#_settings-json-file) file:
 
 ```json
 {
@@ -123,7 +147,7 @@ Now you should see the autocomplete and syntax highlighting features when using 
 - Use the `className` prop to apply Tailwind CSS classes to the root element of the component.
 - Use `slotProps.{slotName}.className` to apply Tailwind CSS classes to a component's [interior slots](/material-ui/customization/overriding-component-structure/#interior-slots).
 
-{{"demo": "TextFieldTailwind.js"}}
+{{"component": "file://./demos/text-field-tailwind/index.ts"}}
 
 ## Extend Material UI classes
 
@@ -164,48 +188,48 @@ If you want to use Material UI theme tokens in your Tailwind CSS classes, copy
   --breakpoint-2xl: 120rem; /* 1920px */
 
   /* Material UI theme colors */
-  --color-primary: rgb(var(--mui-palette-primary-mainChannel));
-  --color-primary-light: rgb(var(--mui-palette-primary-lightChannel));
-  --color-primary-dark: rgb(var(--mui-palette-primary-darkChannel));
-  --color-primary-contrast: rgb(var(--mui-palette-primary-contrastTextChannel));
+  --color-primary: var(--mui-palette-primary-main);
+  --color-primary-light: var(--mui-palette-primary-light);
+  --color-primary-dark: var(--mui-palette-primary-dark);
+  --color-primary-contrast: var(--mui-palette-primary-contrastText);
 
-  --color-secondary: rgb(var(--mui-palette-secondary-mainChannel));
-  --color-secondary-light: rgb(var(--mui-palette-secondary-lightChannel));
-  --color-secondary-dark: rgb(var(--mui-palette-secondary-darkChannel));
-  --color-secondary-contrast: rgb(var(--mui-palette-secondary-contrastTextChannel));
+  --color-secondary: var(--mui-palette-secondary-main);
+  --color-secondary-light: var(--mui-palette-secondary-light);
+  --color-secondary-dark: var(--mui-palette-secondary-dark);
+  --color-secondary-contrast: var(--mui-palette-secondary-contrastText);
 
   /* Material UI status colors */
-  --color-info: rgb(var(--mui-palette-info-mainChannel));
-  --color-info-light: rgb(var(--mui-palette-info-lightChannel));
-  --color-info-dark: rgb(var(--mui-palette-info-darkChannel));
-  --color-info-contrast: rgb(var(--mui-palette-info-contrastTextChannel));
+  --color-info: var(--mui-palette-info-main);
+  --color-info-light: var(--mui-palette-info-light);
+  --color-info-dark: var(--mui-palette-info-dark);
+  --color-info-contrast: var(--mui-palette-info-contrastText);
 
-  --color-error: rgb(var(--mui-palette-error-mainChannel));
-  --color-error-light: rgb(var(--mui-palette-error-lightChannel));
-  --color-error-dark: rgb(var(--mui-palette-error-darkChannel));
-  --color-error-contrast: rgb(var(--mui-palette-error-contrastTextChannel));
+  --color-error: var(--mui-palette-error-main);
+  --color-error-light: var(--mui-palette-error-light);
+  --color-error-dark: var(--mui-palette-error-dark);
+  --color-error-contrast: var(--mui-palette-error-contrastText);
 
-  --color-success: rgb(var(--mui-palette-success-mainChannel));
-  --color-success-light: rgb(var(--mui-palette-success-lightChannel));
-  --color-success-dark: rgb(var(--mui-palette-success-darkChannel));
-  --color-success-contrast: rgb(var(--mui-palette-success-contrastTextChannel));
+  --color-success: var(--mui-palette-success-main);
+  --color-success-light: var(--mui-palette-success-light);
+  --color-success-dark: var(--mui-palette-success-dark);
+  --color-success-contrast: var(--mui-palette-success-contrastText);
 
-  --color-warning: rgb(var(--mui-palette-warning-mainChannel));
-  --color-warning-light: rgb(var(--mui-palette-warning-lightChannel));
-  --color-warning-dark: rgb(var(--mui-palette-warning-darkChannel));
-  --color-warning-contrast: rgb(var(--mui-palette-warning-contrastTextChannel));
+  --color-warning: var(--mui-palette-warning-main);
+  --color-warning-light: var(--mui-palette-warning-light);
+  --color-warning-dark: var(--mui-palette-warning-dark);
+  --color-warning-contrast: var(--mui-palette-warning-contrastText);
 
   /* Material UI text & common colors */
-  --color-text-primary: rgb(var(--mui-palette-text-primaryChannel));
-  --color-text-secondary: rgb(var(--mui-palette-text-secondaryChannel));
+  --color-text-primary: var(--mui-palette-text-primary);
+  --color-text-secondary: var(--mui-palette-text-secondary);
   --color-text-disabled: var(--mui-palette-text-disabled);
   --color-common-background: var(--mui-palette-common-background);
   --color-common-onBackground: var(--mui-palette-common-onBackground);
   --color-divider: var(--mui-palette-divider);
 
   /* Material UI background colors */
-  --color-background-default: rgb(var(--mui-palette-background-defaultChannel));
-  --color-background-paper: rgb(var(--mui-palette-background-paperChannel));
+  --color-background-default: var(--mui-palette-background-default);
+  --color-background-paper: var(--mui-palette-background-paper);
 
   /* Material UI action colors */
   --color-action-active: var(--mui-palette-action-active);
@@ -435,7 +459,7 @@ If you want to use Material UI theme tokens in your Tailwind CSS classes, copy
 Then you can start using the new classes—for example:
 
 - The class `typography-h1` produces `font: var(--mui-font-h1);`
-- The class `text-primary` produces `color: rgb(var(--mui-palette-primary-mainChannel));`
+- The class `text-primary` produces `color: var(--mui-palette-primary-main);`
 
 So when you add these classes to an element…
 
@@ -452,14 +476,14 @@ So when you add these classes to an element…
     letter-spacing: -0.01562em;
   }
   .text-primary {
-    color: rgb(var(--mui-palette-primary-mainChannel));
+    color: var(--mui-palette-primary-main);
   }
 }
 ```
 
 ### Playground
 
-Visit the [Tailwind CSS Playground](https://play.tailwindcss.com/f1ZIr0qSNG) to explore the classes from Material UI theme tokens.
+Visit the [Tailwind CSS Playground](https://play.tailwindcss.com/mh7Ym0mGff) to explore the classes from Material UI theme tokens.
 
 ## Troubleshooting
 

@@ -1,8 +1,6 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import Table, { tableClasses as classes } from '@mui/material/Table';
-import TableContext from './TableContext';
 import describeConformance from '../../test/describeConformance';
 
 describe('<Table />', () => {
@@ -21,7 +19,6 @@ describe('<Table />', () => {
       refInstanceof: window.HTMLTableElement,
       // can't test another component with tbody as a child
       testComponentPropWith: 'table',
-      skip: ['componentsProp'],
     }),
   );
 
@@ -38,34 +35,12 @@ describe('<Table />', () => {
   });
 
   it('should render children', () => {
-    const { getByTestId } = render(
+    render(
       <Table>
         <tbody data-testid="children" />
       </Table>,
     );
 
-    expect(getByTestId('children')).not.to.equal(null);
-  });
-
-  it('should define table in the child context', () => {
-    let context;
-
-    // TODO test integration with TableCell
-    render(
-      <Table>
-        <TableContext.Consumer>
-          {(value) => {
-            context = value;
-            return <tbody />;
-          }}
-        </TableContext.Consumer>
-      </Table>,
-    );
-
-    expect(context).to.deep.equal({
-      size: 'medium',
-      padding: 'normal',
-      stickyHeader: false,
-    });
+    expect(screen.getByTestId('children')).not.to.equal(null);
   });
 });

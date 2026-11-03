@@ -1,3 +1,4 @@
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -8,7 +9,6 @@ import {
   strictModeDoubleLoggingSuppressed,
 } from '@mui/internal-test-utils';
 import mediaQuery from 'css-mediaquery';
-import { expect } from 'chai';
 import { stub } from 'sinon';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { THEME_ID, ThemeProvider, createTheme } from '@mui/material/styles';
@@ -46,6 +46,17 @@ function createMatchMedia(width) {
   };
 }
 
+function installMatchMedia(implementation) {
+  if (window.matchMedia === undefined) {
+    window.matchMedia = implementation;
+    window.matchMedia.restore = () => {
+      delete window.matchMedia;
+    };
+  } else {
+    stub(window, 'matchMedia').callsFake(implementation);
+  }
+}
+
 describe('useMediaQuery', () => {
   const { render, renderToString } = createRenderer({ strict: true });
 
@@ -79,17 +90,7 @@ describe('useMediaQuery', () => {
 
   describe('with window.matchMedia', () => {
     beforeEach(() => {
-      const fakeMatchMedia = createMatchMedia(1200);
-      // can't stub nonexistent properties with sinon
-      // jsdom does not implement window.matchMedia
-      if (window.matchMedia === undefined) {
-        window.matchMedia = fakeMatchMedia;
-        window.matchMedia.restore = () => {
-          delete window.matchMedia;
-        };
-      } else {
-        stub(window, 'matchMedia').callsFake(fakeMatchMedia);
-      }
+      installMatchMedia(createMatchMedia(1200));
     });
 
     afterEach(() => {
@@ -247,11 +248,11 @@ describe('useMediaQuery', () => {
         );
       }
 
-      const { unmount } = render(<Test />);
+      const view = render(<Test />);
       expect(screen.getByTestId('matches').textContent).to.equal('false');
       expect(getRenderCountRef.current()).to.equal(usesUseSyncExternalStore ? 1 : 2);
 
-      unmount();
+      view.unmount();
 
       render(<Test />);
       expect(screen.getByTestId('matches').textContent).to.equal('false');
@@ -311,6 +312,61 @@ describe('useMediaQuery', () => {
 
       expect(screen.getByTestId('matches').textContent).to.equal('true');
       expect(getRenderCountRef.current()).to.equal(2);
+    });
+
+    it('should bind the default matchMedia to window', () => {
+      const fakeMatchMedia = createMatchMedia(1200);
+      window.matchMedia.restore();
+      installMatchMedia(function matchMedia(query) {
+        if (this !== window) {
+          throw new TypeError('Illegal invocation');
+        }
+
+        return fakeMatchMedia(query);
+      });
+
+      function Test() {
+        const matches = useMediaQuery('(min-width:100px)');
+
+        return <span data-testid="matches">{`${matches}`}</span>;
+      }
+
+      expect(() => {
+        render(<Test />);
+      }).not.to.throw();
+      expect(screen.getByTestId('matches').textContent).to.equal('true');
+    });
+
+    it('should not recreate the default matchMedia on unrelated rerenders', () => {
+      let callCount = 0;
+      const fakeMatchMedia = createMatchMedia(1200);
+      window.matchMedia.restore();
+      installMatchMedia((query) => {
+        callCount += 1;
+        return fakeMatchMedia(query);
+      });
+
+      function Test(props) {
+        const matches = useMediaQuery('(min-width:100px)');
+
+        return (
+          <span data-testid="matches">
+            {`${matches}`}
+            {props.tick}
+          </span>
+        );
+      }
+      Test.propTypes = {
+        tick: PropTypes.number.isRequired,
+      };
+
+      const { setProps } = render(<Test tick={0} />);
+      const initialCallCount = callCount;
+
+      setProps({ tick: 1 });
+
+      expect(screen.getByTestId('matches').textContent).to.equal('true1');
+      expect(callCount).to.equal(initialCallCount);
     });
   });
 

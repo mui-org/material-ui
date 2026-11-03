@@ -7,6 +7,9 @@
     "classes": { "description": "Override or extend the styles applied to the component." },
     "icon": { "description": "The icon to display." },
     "label": { "description": "The label element." },
+    "selected": {
+      "description": "If <code>true</code>, the component appears selected.<br><code>BottomNavigation</code> sets this on each child from its own <code>value</code>."
+    },
     "showLabel": {
       "description": "If <code>true</code>, the <code>BottomNavigationAction</code> will show its label. By default, only the selected <code>BottomNavigationAction</code> inside <code>BottomNavigation</code> will show its label.<br>The prop defaults to the value (<code>false</code>) inherited from the parent BottomNavigation component."
     },

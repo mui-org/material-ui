@@ -12,7 +12,7 @@ The Material Design team has also built an awesome palette configuration tool: [
 This can help you create a color palette for your UI, as well as measure the accessibility level of any color combination.
 
 <a href="https://m2.material.io/inline-tools/color/" target="_blank" rel="noopener nofollow" class="remove-link-arrow">
-  <img src="/static/images/color/colorTool.png" alt="Official color tool" style="width: 574px" width=1148" height="610" />
+  <img src="/static/images/color/colorTool.png" alt="Official color tool" style="width: 574px" width="1148" height="610" />
 </a>
 <br />
 <br />
@@ -45,7 +45,7 @@ const theme = createTheme({
 To test a [material.io/design/color](https://m2.material.io/design/color/) color scheme with the Material UI documentation, simply select colors using the palette and sliders below.
 Alternatively, you can enter hex values in the Primary and Secondary text fields.
 
-{{"demo": "ColorTool.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/tool/index.ts", "hideToolbar": true, "bg": true}}
 
 The output shown in the color sample can be pasted directly into a [`createTheme()`](/material-ui/customization/theming/#createtheme-options-args-theme) function (to be used with [`ThemeProvider`](/material-ui/customization/theming/#theme-provider)):
 
@@ -72,7 +72,9 @@ If you are using the default primary and / or secondary shades then by providing
 ### Tools by the community
 
 - [mui-theme-creator](https://zenoo.github.io/mui-theme-creator/): A tool to help design and customize themes for the Material UI component library. Includes basic site templates to show various components and how they are affected by the theme
+- [MUI Theme Builder](https://petertyliu.github.io/mui-theme-builder/): A tool to generate, preview, and edit Material UI themes
 - [Material palette generator](https://m2.material.io/inline-tools/color/): The Material palette generator can be used to generate a palette for any color you input.
+- [MUI Theme Customizer](https://mansourcodes.github.io/mui-theme-customizer/): A tool to make it easier to experiment with and generate Material UI themes.
 
 ## 2014 Material Design color palettes
 
@@ -96,7 +98,7 @@ import { red } from '@mui/material/colors';
 const color = red[500];
 ```
 
-{{"demo": "Color.js", "hideToolbar": true, "bg": "inline"}}
+{{"component": "file://./demos/color/index.ts", "hideToolbar": true, "bg": "inline"}}
 
 ### Examples
 
@@ -112,8 +114,8 @@ const accent = purple.A200; // #e040fb (alternative method)
 
 ### Accessibility
 
-[WCAG 2.1 Rule 1.4.3](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) does recommend
+[WCAG 2.2 Success Criterion 1.4.3](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) does recommend
 that you have a minimum of a 4.5:1 contrast ratio for the visual presentation of text and images of text.
-Material UI currently only enforces a 3:1 contrast ratio. If you would like to meet WCAG 2.1 AA compliance,
+Material UI currently only enforces a 3:1 contrast ratio. If you would like to meet WCAG 2.2 Level AA compliance,
 you can increase your minimum contrast ratio as described in the
 [Theme customization](/material-ui/customization/palette/#accessibility) section.

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
-import Link, { LinkProps } from '@mui/material/Link';
+import type { LinkProps } from '@mui/material/Link';
+import Link from '@mui/material/Link';
 
 const CustomComponent: React.FC<{ stringProp: string; numberProp: number }> =
   function CustomComponent() {
@@ -10,13 +11,13 @@ const CustomComponent: React.FC<{ stringProp: string; numberProp: number }> =
 const props1: LinkProps<'div'> = {
   component: 'div',
   onChange: (event) => {
-    expectType<React.FormEvent<HTMLDivElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLDivElement>, typeof event>(event);
   },
 };
 
 const props2: LinkProps = {
   onChange: (event) => {
-    expectType<React.FormEvent<HTMLAnchorElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLAnchorElement>, typeof event>(event);
   },
 };
 

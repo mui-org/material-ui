@@ -3,15 +3,15 @@ import * as React from 'react';
 import type { ButtonGroupProps } from './ButtonGroup';
 
 interface ButtonGroupContextType {
-  className?: string;
-  color?: ButtonGroupProps['color'];
-  disabled?: boolean;
-  disableElevation?: boolean;
-  disableFocusRipple?: boolean;
-  disableRipple?: boolean;
-  fullWidth?: boolean;
-  size?: ButtonGroupProps['size'];
-  variant?: ButtonGroupProps['variant'];
+  className?: string | undefined;
+  color?: ButtonGroupProps['color'] | undefined;
+  disabled?: boolean | undefined;
+  disableElevation?: boolean | undefined;
+  disableFocusRipple?: boolean | undefined;
+  disableRipple?: boolean | undefined;
+  fullWidth?: boolean | undefined;
+  size?: ButtonGroupProps['size'] | undefined;
+  variant?: ButtonGroupProps['variant'] | undefined;
 }
 
 /**

@@ -184,14 +184,14 @@ export default function Paperbase() {
         >
           {isSmUp ? null : (
             <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
+              slotProps={{ paper: { style: { width: drawerWidth } } }}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
             />
           )}
           <Navigator
-            PaperProps={{ style: { width: drawerWidth } }}
+            slotProps={{ paper: { style: { width: drawerWidth } } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
           />
         </Box>

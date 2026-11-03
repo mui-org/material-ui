@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "module": "esnext",
     // aligning with Node18 recommendation: https://www.npmjs.com/package/@tsconfig/node18
     "target": "es2022",
-    "lib": ["es2020", "dom", "dom.iterable"],
-    "jsx": "preserve",
-    "moduleResolution": "node",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noEmit": true,
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "noErrorTruncation": false,
@@ -19,8 +19,10 @@
       "@mui/material/*": ["./packages/mui-material/src/*"],
       "@mui/lab": ["./packages/mui-lab/src"],
       "@mui/lab/*": ["./packages/mui-lab/src/*"],
-      "@mui/internal-markdown": ["./packages/markdown"],
-      "@mui/internal-markdown/*": ["./packages/markdown/*"],
+      "@mui/internal-api-docs-builder": ["./packages-internal/api-docs-builder/src/index.ts"],
+      "@mui/internal-docs-utils": ["./packages-internal/docs-utils/src/index.ts"],
+      "@mui/internal-markdown": ["./packages-internal/markdown"],
+      "@mui/internal-markdown/prism": ["./packages-internal/markdown/prism.mjs"],
       "@mui/styled-engine": ["./packages/mui-styled-engine/src"],
       "@mui/styled-engine/*": ["./packages/mui-styled-engine/src/*"],
       "@mui/styled-engine-sc": ["./packages/mui-styled-engine-sc/src"],
@@ -33,30 +35,24 @@
       "@mui/private-theming/*": ["./packages/mui-private-theming/src/*"],
       "@mui/utils": ["./packages/mui-utils/src"],
       "@mui/utils/*": ["./packages/mui-utils/src/*"],
-      "@mui/docs": ["./packages/mui-docs/src"],
-      "@mui/docs/*": ["./packages/mui-docs/src/*"],
+      "@mui/internal-core-docs": ["./packages-internal/core-docs/src"],
+      "@mui/internal-core-docs/*": ["./packages-internal/core-docs/src/*"],
       "@mui/material-nextjs": ["./packages/mui-material-nextjs/src"],
       "@mui/material-nextjs/*": ["./packages/mui-material-nextjs/src/*"],
-      "@mui/joy": ["./packages/mui-joy/src"],
-      "@mui/joy/package.json": ["./packages/mui-joy/package.json"],
-      "@mui/joy/*": ["./packages/mui-joy/src/*"],
-      "@mui/icons-material": ["./packages/mui-icons-material/lib/esm/index.js"],
-      "@mui/icons-material/*": ["./packages/mui-icons-material/lib/esm/*"],
-      "@mui/internal-docs-utils": ["./packages-internal/docs-utils/src"],
+      "@mui/icons-material": ["./packages/mui-icons-material/lib/index.mjs"],
+      "@mui/icons-material/*": ["./packages/mui-icons-material/lib/*.mjs"],
       "@mui/internal-scripts/typescript-to-proptypes": [
         "./packages-internal/scripts/typescript-to-proptypes/src"
       ],
       "@mui/internal-scripts/generate-llms-txt": [
         "./packages-internal/scripts/generate-llms-txt/src"
       ],
-      "@mui/internal-test-utils": ["./packages-internal/test-utils/src"],
-      "@mui/internal-test-utils/*": ["./packages-internal/test-utils/src/*"],
       "@mui/stylis-plugin-rtl": ["./packages/mui-stylis-plugin-rtl/src"],
       "@mui/stylis-plugin-rtl/*": ["./packages/mui-stylis-plugin-rtl/src/*"],
       "docs/*": ["./docs/*"]
     },
     // Otherwise we get react-native typings which conflict with dom.lib.
-    "types": ["node", "react", "mocha"]
+    "types": ["node", "react"]
   },
-  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]
+  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export", "scripts/buildApiDocs"]
 }

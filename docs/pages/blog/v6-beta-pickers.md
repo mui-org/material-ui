@@ -85,6 +85,7 @@ Please, try it out for yourself in the live demo below.
 
 <iframe
   src="https://codesandbox.io/embed/date-field-demo-pb87v0?fontsize=12&hidenavigation=1&module=%2F"
+  title="Date Field demo on CodeSandbox"
   style="width:100%; height:200px; border:0; border-radius: 4px; overflow:hidden;"
   allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
@@ -117,9 +118,11 @@ Now that you've seen what's fundamentally changed with the Pickers, let's briefl
 
 - **Drag to edit**\
   Editing a date range is even easier now with the new drag-and-drop interface. Change `start` and `end` dates at will.
+
   <video autoplay muted loop playsinline width="1488" height="796">
     <source src="/static/blog/v6-beta-pickers/edit-drag.mp4" type="video/mp4" />
   </video>
+
 - **Range shortcuts** (available from v6.0.0-beta.1)\
   Add quick and customizable shortcuts for your users. Choose to display them on the left, right, bottom or top.
   <img src="/static/blog/v6-beta-pickers/date-range-shortcuts.png" loading="lazy" alt="Date Range shortcuts." width="2222" height="1402" />

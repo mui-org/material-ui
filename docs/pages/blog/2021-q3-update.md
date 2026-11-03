@@ -44,43 +44,43 @@ Here are the most significant improvements since early July 2021.
 
   <p class="blog-description">After</p>
 
-- [Masonry](/material-ui/react-masonry/). We introduced a new component for use when the `Grid` component leads to wasted space. It's frequently used in dashboards.
+- [Masonry](https://v5.mui.com/material-ui/react-masonry/). We introduced a new component for use when the `Grid` component leads to wasted space. It's frequently used in dashboards.
 
   <a href="/material-ui/react-masonry/"><img loading="lazy" src="/static/blog/2021-q3-update/masonry.png" style="width: 700px;" width="1400" height="906" alt="react-masonry" /></a>
 
 - We introduced a new [package of components without styles](https://www.npmjs.com/package/@mui/base), laying the foundations for supporting multiple design systems with headless components.
   While it was tough to balance the time between working on v5 stable and developing the unstyled components, we still managed to introduce the first few:
-  - [Autocomplete](/material-ui/react-autocomplete/#useautocomplete)
+  - [Autocomplete](https://v5.mui.com/material-ui/react-autocomplete/#useautocomplete)
 
   ```jsx
   import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
   ```
 
-  - [Button](/material-ui/react-button/#unstyled)
+  - [Button](https://v5.mui.com/material-ui/react-button/#unstyled)
 
   ```jsx
   import { useButton } from '@mui/base/ButtonUnstyled';
   ```
 
-  - [Modal](/material-ui/react-modal/#unstyled)
+  - [Modal](https://v5.mui.com/material-ui/react-modal/#unstyled)
 
   ```jsx
   import { ModalUnstyled } from '@mui/base/ModalUnstyled';
   ```
 
-  - [Slider](/material-ui/react-slider/#unstyled)
+  - [Slider](https://v5.mui.com/material-ui/react-slider/#unstyled)
 
   ```jsx
   import { SliderUnstyled } from '@mui/base/SliderUnstyled';
   ```
 
-  - [Switch](/material-ui/react-switch/#unstyled)
+  - [Switch](https://v5.mui.com/material-ui/react-switch/#unstyled)
 
   ```jsx
   import { useSwitch } from '@mui/base/SwitchUnstyled';
   ```
 
-  - [Portal](/material-ui/react-portal/#unstyled)
+  - [Portal](https://v5.mui.com/material-ui/react-portal/#unstyled)
 
   ```jsx
   import { Portal } from '@mui/base/Portal';

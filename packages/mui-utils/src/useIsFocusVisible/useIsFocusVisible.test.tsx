@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, beforeAll, beforeEach, afterEach, it, expect } from 'vitest';
 import * as React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import {
@@ -59,19 +59,13 @@ const SimpleButton = React.forwardRef(function SimpleButton(
 describe('useIsFocusVisible', () => {
   const { render } = createRenderer();
 
-  before(() => {
+  beforeAll(() => {
     // isolate test from previous component test that use the polyfill in the document scope
     teardownFocusVisible(document);
   });
 
-  describe('focus inside shadowRoot', () => {
-    before(function beforeHook() {
-      // Only run on HeadlessChrome which has native shadowRoot support.
-      if (!/HeadlessChrome/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-    });
-
+  const isHeadlessChrome = /HeadlessChrome/.test(window.navigator.userAgent);
+  describe.skipIf(!isHeadlessChrome)('focus inside shadowRoot', () => {
     let rootElement: HTMLDivElement;
     let reactRoot: ReactDOMClient.Root;
 

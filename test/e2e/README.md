@@ -19,12 +19,13 @@ A fixture can be loaded with `await renderFixture(fixturePath)`, for example `re
 
 ## Commands
 
-For development `pnpm test:e2e:dev` and `pnpm test:e2e:run --watch` in separate terminals is recommended.
+For development, run `pnpm test:e2e:dev` in one terminal and `pnpm -F ./test/e2e test --watch`
+in another terminal.
 
-| command                | description                                                                                   |
-| :--------------------- | :-------------------------------------------------------------------------------------------- |
-| `pnpm test:e2e`        | Full run                                                                                      |
-| `pnpm test:e2e:dev`    | Prepares the fixtures to be able to test in watchmode                                         |
-| `pnpm test:e2e:run`    | Runs the tests (requires `pnpm test:e2e:dev` or `pnpm test:e2e:build`+`pnpm test:e2e:server`) |
-| `pnpm test:e2e:build`  | Builds the webpack bundle for viewing the fixtures                                            |
-| `pnpm test:e2e:server` | Serves the fixture bundle.                                                                    |
+| command                           | description                                                                   |
+| :-------------------------------- | :---------------------------------------------------------------------------- |
+| `pnpm test:e2e`                   | Full run. Builds the fixtures, starts the preview server, and runs the tests. |
+| `pnpm test:e2e:dev`               | Starts the Vite dev server for the fixture app on port `5001`.                |
+| `pnpm -F ./test/e2e test --watch` | Runs the e2e tests in watch mode against the running dev server.              |
+| `pnpm -F ./test/e2e build`        | Builds the Vite fixture app.                                                  |
+| `pnpm -F ./test/e2e server`       | Serves the built fixture app on port `5001`.                                  |

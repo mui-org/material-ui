@@ -1,5 +1,0 @@
-{
-  "hookDescription": "Stabilizes the ListContext value for the MenuItem component, so it doesn't change when sibling items update.",
-  "parametersDescriptions": {},
-  "returnValueDescriptions": {}
-}

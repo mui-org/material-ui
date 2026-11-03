@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import Icon, { iconClasses as classes } from '@mui/material/Icon';
 import describeConformance from '../../test/describeConformance';
 
@@ -14,86 +13,86 @@ describe('<Icon />', () => {
     muiName: 'MuiIcon',
     refInstanceof: window.HTMLSpanElement,
     testComponentPropWith: 'div',
-    skip: ['themeVariants', 'componentsProp'],
+    skip: ['themeVariants'],
   }));
 
   it('renders children by default', () => {
-    const { getByTestId } = render(<Icon data-testid="root">account_circle</Icon>);
+    render(<Icon data-testid="root">account_circle</Icon>);
 
-    expect(getByTestId('root')).to.have.text('account_circle');
+    expect(screen.getByTestId('root')).to.have.text('account_circle');
   });
 
   describe('optional classes', () => {
     it('should render with the secondary color', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" color="secondary">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).to.have.class(classes.colorSecondary);
+      expect(screen.getByTestId('root')).to.have.class(classes.colorSecondary);
     });
 
     it('should render with the action color', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" color="action">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).to.have.class(classes.colorAction);
+      expect(screen.getByTestId('root')).to.have.class(classes.colorAction);
     });
 
     it('should render with the error color', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" color="error">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).to.have.class(classes.colorError);
+      expect(screen.getByTestId('root')).to.have.class(classes.colorError);
     });
 
     it('should render with the primary class', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" color="primary">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).to.have.class(classes.colorPrimary);
+      expect(screen.getByTestId('root')).to.have.class(classes.colorPrimary);
     });
 
     it('should render without the default class', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" baseClassName="material-icons-round">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).not.to.have.class('material-icons');
+      expect(screen.getByTestId('root')).not.to.have.class('material-icons');
     });
 
     it('should render with the supplied base class', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" baseClassName="material-icons-round">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).to.have.class('material-icons-round');
+      expect(screen.getByTestId('root')).to.have.class('material-icons-round');
     });
   });
 
   describe('prop: fontSize', () => {
     it('should be able to change the fontSize', () => {
-      const { getByTestId } = render(
+      render(
         <Icon data-testid="root" fontSize="inherit">
           account_circle
         </Icon>,
       );
 
-      expect(getByTestId('root')).to.have.class(classes.fontSizeInherit);
+      expect(screen.getByTestId('root')).to.have.class(classes.fontSizeInherit);
     });
   });
 });

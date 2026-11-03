@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Instance } from '@popperjs/core';
+import type { Instance } from '@popperjs/core';
 import Tooltip from '@mui/material/Tooltip';
 
 interface Props {
@@ -19,8 +19,8 @@ export default function ValueLabelComponent(props: Props) {
 
   return (
     <Tooltip
-      PopperProps={{
-        popperRef,
+      slotProps={{
+        popper: { popperRef },
       }}
       enterTouchDelay={0}
       placement="top"

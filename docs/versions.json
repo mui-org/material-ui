@@ -1,0 +1,14 @@
+{
+  "versions": [
+    { "version": "v10 (next)", "url": "https://next.mui.com", "noReleaseNotes": true },
+    { "version": "v9", "url": "https://mui.com" },
+    { "version": "v8", "url": "https://v8.mui.com", "noReleaseNotes": true },
+    { "version": "v7", "url": "https://v7.mui.com" },
+    { "version": "v6", "url": "https://v6.mui.com" },
+    { "version": "v5", "url": "https://v5.mui.com" },
+    { "version": "v4", "url": "https://v4.mui.com" },
+    { "version": "v3", "url": "https://v3.mui.com" },
+    { "version": "v1", "url": "https://v1.mui.com" },
+    { "version": "v0", "url": "https://v0.mui.com", "noReleaseNotes": true }
+  ]
+}

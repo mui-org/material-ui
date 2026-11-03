@@ -13,16 +13,16 @@ export interface CardOwnProps extends DistributiveOmit<PaperOwnProps, 'classes'>
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<CardClasses>;
+  classes?: Partial<CardClasses> | undefined;
   /**
    * If `true`, the card will use raised styling.
    * @default false
    */
-  raised?: boolean;
+  raised?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface CardTypeMap<
@@ -37,12 +37,12 @@ export interface CardTypeMap<
  *
  * Demos:
  *
- * - [Card](https://mui.com/material-ui/react-card/)
+ * - [Card](https://next.mui.com/material-ui/react-card/)
  *
  * API:
  *
- * - [Card API](https://mui.com/material-ui/api/card/)
- * - inherits [Paper API](https://mui.com/material-ui/api/paper/)
+ * - [Card API](https://next.mui.com/material-ui/api/card/)
+ * - inherits [Paper API](https://next.mui.com/material-ui/api/paper/)
  */
 
 declare const Card: OverridableComponent<CardTypeMap>;
@@ -51,7 +51,7 @@ export type CardProps<
   RootComponent extends React.ElementType = CardTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<CardTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default Card;

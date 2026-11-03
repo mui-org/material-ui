@@ -12,26 +12,26 @@ export interface AccordionActionsProps extends StandardProps<React.HTMLAttribute
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<AccordionActionsClasses>;
+  classes?: Partial<AccordionActionsClasses> | undefined;
   /**
    * If `true`, the actions do not have additional margin.
    * @default false
    */
-  disableSpacing?: boolean;
+  disableSpacing?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Accordion](https://mui.com/material-ui/react-accordion/)
+ * - [Accordion](https://next.mui.com/material-ui/react-accordion/)
  *
  * API:
  *
- * - [AccordionActions API](https://mui.com/material-ui/api/accordion-actions/)
+ * - [AccordionActions API](https://next.mui.com/material-ui/api/accordion-actions/)
  */
 export default function AccordionActions(props: AccordionActionsProps): React.JSX.Element;

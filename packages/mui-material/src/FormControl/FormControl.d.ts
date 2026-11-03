@@ -12,71 +12,73 @@ export interface FormControlOwnProps {
   /**
    * The content of the component.
    */
-  children?: React.HTMLAttributes<HTMLDivElement>['children'];
+  children?: React.HTMLAttributes<HTMLDivElement>['children'] | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<FormControlClasses>;
+  classes?: Partial<FormControlClasses> | undefined;
   /**
    * The color of the component.
    * It supports both default and custom theme colors, which can be added as shown in the
    * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
    * @default 'primary'
    */
-  color?: OverridableStringUnion<
-    'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
-    FormControlPropsColorOverrides
-  >;
+  color?:
+    | OverridableStringUnion<
+        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+        FormControlPropsColorOverrides
+      >
+    | undefined;
   /**
    * If `true`, the label, input and helper text should be displayed in a disabled state.
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * If `true`, the label is displayed in an error state.
    * @default false
    */
-  error?: boolean;
+  error?: boolean | undefined;
   /**
    * If `true`, the component will take up the full width of its container.
    * @default false
    */
-  fullWidth?: boolean;
+  fullWidth?: boolean | undefined;
   /**
    * If `true`, the component is displayed in focused state.
    */
-  focused?: boolean;
+  focused?: boolean | undefined;
   /**
    * If `true`, the label is hidden.
    * This is used to increase density for a `FilledInput`.
    * Be sure to add `aria-label` to the `input` element.
    * @default false
    */
-  hiddenLabel?: boolean;
+  hiddenLabel?: boolean | undefined;
   /**
    * If `dense` or `normal`, will adjust vertical spacing of this and contained components.
    * @default 'none'
    */
-  margin?: 'dense' | 'normal' | 'none';
+  margin?: 'dense' | 'normal' | 'none' | undefined;
   /**
    * If `true`, the label will indicate that the `input` is required.
    * @default false
    */
-  required?: boolean;
+  required?: boolean | undefined;
   /**
    * The size of the component.
    * @default 'medium'
    */
-  size?: OverridableStringUnion<'small' | 'medium', FormControlPropsSizeOverrides>;
+  size?: OverridableStringUnion<'small' | 'medium', FormControlPropsSizeOverrides> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The variant to use.
    * @default 'outlined'
    */
-  variant?: 'standard' | 'outlined' | 'filled';
+  variant?: 'standard' | 'outlined' | 'filled' | undefined;
 }
 
 export interface FormControlTypeMap<
@@ -98,7 +100,7 @@ export interface FormControlTypeMap<
  * * Input
  * * InputLabel
  *
- * You can find one composition example below and more going to [the demos](https://mui.com/material-ui/react-text-field/#components).
+ * You can find one composition example below and more going to [the demos](https://next.mui.com/material-ui/react-text-field/#components).
  *
  * ```jsx
  * <FormControl>
@@ -113,14 +115,15 @@ export interface FormControlTypeMap<
  *
  * Demos:
  *
- * - [Checkbox](https://mui.com/material-ui/react-checkbox/)
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
- * - [Switch](https://mui.com/material-ui/react-switch/)
- * - [Text Field](https://mui.com/material-ui/react-text-field/)
+ * - [Checkbox](https://next.mui.com/material-ui/react-checkbox/)
+ * - [Number Field](https://next.mui.com/material-ui/react-number-field/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
+ * - [Switch](https://next.mui.com/material-ui/react-switch/)
+ * - [Text Field](https://next.mui.com/material-ui/react-text-field/)
  *
  * API:
  *
- * - [FormControl API](https://mui.com/material-ui/api/form-control/)
+ * - [FormControl API](https://next.mui.com/material-ui/api/form-control/)
  */
 declare const FormControl: OverridableComponent<FormControlTypeMap>;
 
@@ -128,7 +131,7 @@ export type FormControlProps<
   RootComponent extends React.ElementType = FormControlTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<FormControlTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default FormControl;

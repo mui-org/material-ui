@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import StepContext from '../Step/StepContext';
 import StepIcon from '../StepIcon';
-import StepperContext from '../Stepper/StepperContext';
+import { useStepperContext } from '../Stepper/StepperContext';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import stepLabelClasses, { getStepLabelUtilityClass } from './stepLabelClasses';
 import useSlot from '../utils/useSlot';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, orientation, active, completed, error, disabled, alternativeLabel } = ownerState;
@@ -56,9 +57,6 @@ const StepLabelRoot = styled('span', {
 })({
   display: 'flex',
   alignItems: 'center',
-  [`&.${stepLabelClasses.alternativeLabel}`]: {
-    flexDirection: 'column',
-  },
   [`&.${stepLabelClasses.disabled}`]: {
     cursor: 'default',
   },
@@ -68,6 +66,18 @@ const StepLabelRoot = styled('span', {
       style: {
         textAlign: 'left',
         padding: '8px 0',
+      },
+    },
+    {
+      props: { alternativeLabel: true },
+      style: {
+        flexDirection: 'column',
+      },
+    },
+    {
+      props: { orientation: 'vertical', alternativeLabel: true },
+      style: {
+        flexDirection: 'row-reverse',
       },
     },
   ],
@@ -80,14 +90,10 @@ const StepLabelLabel = styled('span', {
   memoTheme(({ theme }) => ({
     ...theme.typography.body2,
     display: 'block',
-    transition: theme.transitions.create('color', {
+    ...getTransitionStyles(theme, 'color', {
       duration: theme.transitions.duration.shortest,
     }),
-    [`&.${stepLabelClasses.active}`]: {
-      color: (theme.vars || theme).palette.text.primary,
-      fontWeight: 500,
-    },
-    [`&.${stepLabelClasses.completed}`]: {
+    [`&.${stepLabelClasses.active}, &.${stepLabelClasses.completed}`]: {
       color: (theme.vars || theme).palette.text.primary,
       fontWeight: 500,
     },
@@ -97,6 +103,16 @@ const StepLabelLabel = styled('span', {
     [`&.${stepLabelClasses.error}`]: {
       color: (theme.vars || theme).palette.error.main,
     },
+    variants: [
+      {
+        props: { orientation: 'vertical', alternativeLabel: true },
+        style: {
+          [`&.${stepLabelClasses.alternativeLabel}`]: {
+            marginTop: 0,
+          },
+        },
+      },
+    ],
   })),
 );
 
@@ -110,6 +126,15 @@ const StepLabelIconContainer = styled('span', {
   [`&.${stepLabelClasses.alternativeLabel}`]: {
     paddingRight: 0,
   },
+  variants: [
+    {
+      props: { orientation: 'vertical', alternativeLabel: true },
+      style: {
+        paddingRight: 0,
+        paddingLeft: 8,
+      },
+    },
+  ],
 });
 
 const StepLabelLabelContainer = styled('span', {
@@ -122,6 +147,16 @@ const StepLabelLabelContainer = styled('span', {
     [`&.${stepLabelClasses.alternativeLabel}`]: {
       textAlign: 'center',
     },
+    variants: [
+      {
+        props: { orientation: 'vertical', alternativeLabel: true },
+        style: {
+          [`&.${stepLabelClasses.alternativeLabel}`]: {
+            textAlign: 'right',
+          },
+        },
+      },
+    ],
   })),
 );
 
@@ -130,26 +165,17 @@ const StepLabel = React.forwardRef(function StepLabel(inProps, ref) {
   const {
     children,
     className,
-    componentsProps = {},
     error = false,
     icon: iconProp,
     optional,
     slots = {},
     slotProps = {},
-    StepIconComponent: StepIconComponentProp,
-    StepIconProps,
     ...other
   } = props;
 
-  const { alternativeLabel, orientation } = React.useContext(StepperContext);
+  const { alternativeLabel, orientation } = useStepperContext();
   const { active, disabled, completed, icon: iconContext } = React.useContext(StepContext);
   const icon = iconProp || iconContext;
-
-  let StepIconComponent = StepIconComponentProp;
-
-  if (icon && !StepIconComponent) {
-    StepIconComponent = StepIcon;
-  }
 
   const ownerState = {
     ...props,
@@ -165,11 +191,7 @@ const StepLabel = React.forwardRef(function StepLabel(inProps, ref) {
 
   const externalForwardedProps = {
     slots,
-    slotProps: {
-      stepIcon: StepIconProps,
-      ...componentsProps,
-      ...slotProps,
-    },
+    slotProps,
   };
 
   const [RootSlot, rootProps] = useSlot('root', {
@@ -190,7 +212,7 @@ const StepLabel = React.forwardRef(function StepLabel(inProps, ref) {
   });
 
   const [StepIconSlot, stepIconProps] = useSlot('stepIcon', {
-    elementType: StepIconComponent,
+    elementType: icon ? StepIcon : undefined,
     externalForwardedProps,
     ownerState,
   });
@@ -238,14 +260,6 @@ StepLabel.propTypes /* remove-proptypes */ = {
    */
   className: PropTypes.string,
   /**
-   * The props used for each slot inside.
-   * @default {}
-   * @deprecated use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  componentsProps: PropTypes.shape({
-    label: PropTypes.object,
-  }),
-  /**
    * If `true`, the step is marked as failed.
    * @default false
    */
@@ -276,16 +290,6 @@ StepLabel.propTypes /* remove-proptypes */ = {
     root: PropTypes.elementType,
     stepIcon: PropTypes.elementType,
   }),
-  /**
-   * The component to render in place of the [`StepIcon`](https://mui.com/material-ui/api/step-icon/).
-   * @deprecated Use `slots.stepIcon` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  StepIconComponent: PropTypes.elementType,
-  /**
-   * Props applied to the [`StepIcon`](https://mui.com/material-ui/api/step-icon/) element.
-   * @deprecated Use `slotProps.stepIcon` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  StepIconProps: PropTypes.object,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

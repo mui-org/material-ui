@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createRenderer, fireEvent, screen } from '@mui/internal-test-utils';
 import Paper, { paperClasses } from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -58,7 +57,7 @@ describe('<MobileStepper />', () => {
         testWithElement: CustomDot,
       },
     },
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   describeConformance(<MobileStepper {...defaultProps} steps={1} variant="progress" />, () => ({
@@ -103,17 +102,17 @@ describe('<MobileStepper />', () => {
   });
 
   it('should render the back button', () => {
-    const { queryByTestId, getByRole } = render(<MobileStepper {...defaultProps} />);
-    const backButton = getByRole('button', { name: 'back' });
+    render(<MobileStepper {...defaultProps} />);
+    const backButton = screen.getByRole('button', { name: 'back' });
     expect(backButton).not.to.equal(null);
-    expect(queryByTestId('KeyboardArrowLeftIcon')).not.to.equal(null);
+    expect(screen.queryByTestId('KeyboardArrowLeftIcon')).not.to.equal(null);
   });
 
   it('should render next button', () => {
-    const { getByRole, queryByTestId } = render(<MobileStepper {...defaultProps} />);
-    const nextButton = getByRole('button', { name: 'next' });
+    render(<MobileStepper {...defaultProps} />);
+    const nextButton = screen.getByRole('button', { name: 'next' });
     expect(nextButton).not.to.equal(null);
-    expect(queryByTestId('KeyboardArrowRightIcon')).not.to.equal(null);
+    expect(screen.queryByTestId('KeyboardArrowRightIcon')).not.to.equal(null);
   });
 
   it('should render two buttons and text displaying progress when supplied with variant text', () => {
@@ -149,31 +148,31 @@ describe('<MobileStepper />', () => {
   });
 
   it('should calculate the <LinearProgress /> value correctly', () => {
-    const { rerender } = render(<MobileStepper {...defaultProps} variant="progress" steps={3} />);
+    const view = render(<MobileStepper {...defaultProps} variant="progress" steps={3} />);
     expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).to.equal('0');
-    rerender(<MobileStepper {...defaultProps} variant="progress" steps={3} activeStep={1} />);
+    view.rerender(<MobileStepper {...defaultProps} variant="progress" steps={3} activeStep={1} />);
     expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).to.equal('50');
-    rerender(<MobileStepper {...defaultProps} variant="progress" steps={3} activeStep={2} />);
+    view.rerender(<MobileStepper {...defaultProps} variant="progress" steps={3} activeStep={2} />);
     expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).to.equal('100');
   });
 
   it('should set value correctly when steps is set to 1', () => {
-    const { getByRole } = render(<MobileStepper {...defaultProps} variant="progress" steps={1} />);
+    render(<MobileStepper {...defaultProps} variant="progress" steps={1} />);
     const progressBar = screen.getByRole('progressbar');
     expect(progressBar.getAttribute('aria-valuenow')).to.equal('100');
-    fireEvent.click(getByRole('button', { name: 'next' }));
+    fireEvent.click(screen.getByRole('button', { name: 'next' }));
     expect(progressBar.getAttribute('aria-valuenow')).to.equal('100');
-    fireEvent.click(getByRole('button', { name: 'back' }));
+    fireEvent.click(screen.getByRole('button', { name: 'back' }));
     expect(progressBar.getAttribute('aria-valuenow')).to.equal('100');
   });
 
   it('should set value correctly when steps is updated between 1 & 2', () => {
-    const { rerender } = render(<MobileStepper {...defaultProps} variant="progress" steps={1} />);
+    const view = render(<MobileStepper {...defaultProps} variant="progress" steps={1} />);
     const progressBar = screen.getByRole('progressbar');
     expect(progressBar.getAttribute('aria-valuenow')).to.equal('100');
-    rerender(<MobileStepper {...defaultProps} variant="progress" steps={2} />);
+    view.rerender(<MobileStepper {...defaultProps} variant="progress" steps={2} />);
     expect(progressBar.getAttribute('aria-valuenow')).to.equal('0');
-    rerender(<MobileStepper {...defaultProps} variant="progress" steps={1} />);
+    view.rerender(<MobileStepper {...defaultProps} variant="progress" steps={1} />);
     expect(progressBar.getAttribute('aria-valuenow')).to.equal('100');
   });
 });

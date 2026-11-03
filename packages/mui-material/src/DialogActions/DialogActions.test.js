@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, expect, it } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import DialogActions, { dialogActionsClasses as classes } from '@mui/material/DialogActions';
-import { expect } from 'chai';
 import describeConformance from '../../test/describeConformance';
 
 describe('<DialogActions />', () => {
@@ -14,16 +13,16 @@ describe('<DialogActions />', () => {
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiDialogActions',
     testVariantProps: { disableSpacing: true },
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   it('should render a children element', function test() {
-    const { queryByTestId } = render(
+    render(
       <DialogActions>
         <div data-testid="test-children" />
       </DialogActions>,
     );
 
-    expect(queryByTestId('test-children')).not.to.equal(null);
+    expect(screen.queryByTestId('test-children')).not.to.equal(null);
   });
 });

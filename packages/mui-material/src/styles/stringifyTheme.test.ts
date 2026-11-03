@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createTheme } from '@mui/material/styles';
 import { stringifyTheme } from './stringifyTheme';
 
@@ -7,6 +7,7 @@ describe('StringifyTheme', () => {
     const theme = createTheme({ cssVariables: true });
     const result = stringifyTheme({
       breakpoints: theme.breakpoints,
+      motion: theme.motion,
       transitions: theme.transitions,
     });
     expect(result).to
@@ -30,6 +31,9 @@ const theme = {
     },
     "unit": "px"
   },
+  "motion": {
+    "reducedMotion": "never"
+  },
   "transitions": {
     "easing": {
       "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -50,6 +54,7 @@ const theme = {
 };
 
 theme.breakpoints = createBreakpoints(theme.breakpoints || {});
+theme.motion = { reducedMotion: 'never', ...theme.motion };
 theme.transitions = createTransitions(theme.transitions || {});
 
 export default theme;`);
@@ -69,6 +74,9 @@ export default theme;`);
           desktop: 1280,
         } as any,
       },
+      motion: {
+        reducedMotion: 'always',
+      },
       transitions: {
         duration: {
           standard: 432,
@@ -77,6 +85,7 @@ export default theme;`);
     });
     const result = stringifyTheme({
       breakpoints: theme.breakpoints,
+      motion: theme.motion,
       transitions: theme.transitions,
     });
     expect(result).to
@@ -98,6 +107,9 @@ const theme = {
     },
     "unit": "px"
   },
+  "motion": {
+    "reducedMotion": "always"
+  },
   "transitions": {
     "duration": {
       "standard": 432,
@@ -118,6 +130,7 @@ const theme = {
 };
 
 theme.breakpoints = createBreakpoints(theme.breakpoints || {});
+theme.motion = { reducedMotion: 'never', ...theme.motion };
 theme.transitions = createTransitions(theme.transitions || {});
 
 export default theme;`);
@@ -140,6 +153,7 @@ const theme = {
 };
 
 theme.breakpoints = createBreakpoints(theme.breakpoints || {});
+theme.motion = { reducedMotion: 'never', ...theme.motion };
 theme.transitions = createTransitions(theme.transitions || {});
 
 export default theme;`);

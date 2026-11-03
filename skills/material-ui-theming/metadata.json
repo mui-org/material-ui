@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "muiVersion": ">=9.0.0 <10.0.0",
+  "organization": "Material UI",
+  "abstract": "Covers Material UI theme objects and design tokens: createTheme, ThemeProvider, palette and colorSchemes, cssVariables and theme.vars, dark mode toggling and SSR, typography/spacing, theme composition, and TypeScript augmentation.",
+  "references": [
+    "https://mui.com/material-ui/customization/theming.md",
+    "https://mui.com/material-ui/customization/palette.md",
+    "https://mui.com/material-ui/customization/dark-mode.md",
+    "https://mui.com/material-ui/customization/css-theme-variables/overview.md"
+  ]
+}

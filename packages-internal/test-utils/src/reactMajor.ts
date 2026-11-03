@@ -1,3 +1,6 @@
 import * as React from 'react';
 
-export default parseInt(React.version, 10);
+const [reactMajor, reactMinor] = React.version.split('.').map((n) => parseInt(n, 10));
+
+export default reactMajor;
+export { reactMajor, reactMinor };

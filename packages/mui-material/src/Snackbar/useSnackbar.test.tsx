@@ -1,9 +1,9 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
-import { fireEvent, createRenderer } from '@mui/internal-test-utils';
+import { fireEvent, createRenderer, screen } from '@mui/internal-test-utils';
 import useSnackbar from './useSnackbar';
-import { UseSnackbarParameters } from './useSnackbar.types';
+import type { UseSnackbarParameters } from './useSnackbar.types';
 
 describe('useSnackbar', () => {
   const { render } = createRenderer();
@@ -40,9 +40,9 @@ describe('useSnackbar', () => {
 
         return <div {...getRootProps({ onClick: handleClickSpy, random: 'arbitraryValue' })} />;
       }
-      const { getByRole } = render(<Snackbar />);
+      render(<Snackbar />);
 
-      const snackbar = getByRole('presentation');
+      const snackbar = screen.getByRole('presentation');
 
       expect(snackbar).to.have.attribute('random', 'arbitraryValue');
 

@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { Link as ReactRouterLink, LinkProps } from 'react-router';
+import type { LinkProps } from 'react-router';
+import { Link as ReactRouterLink } from 'react-router';
 import { expectType } from '@mui/types';
-import Button, { ButtonProps } from '@mui/material/Button';
-import MaterialUiLink, { LinkProps as MaterialUiLinkProps } from '@mui/material/Link';
+import type { ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
+import type { LinkProps as MaterialUiLinkProps } from '@mui/material/Link';
+import MaterialUiLink from '@mui/material/Link';
 
 const log = console.log;
 
@@ -26,13 +29,13 @@ function FakeIcon() {
 const props1: ButtonProps<'div'> = {
   component: 'div',
   onChange: (event) => {
-    expectType<React.FormEvent<HTMLDivElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLDivElement>, typeof event>(event);
   },
 };
 
 const props2: ButtonProps = {
   onChange: (event) => {
-    expectType<React.FormEvent<HTMLButtonElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLButtonElement>, typeof event>(event);
   },
 };
 
@@ -118,7 +121,7 @@ const buttonTest = () => (
     </Button>
     {
       // Can't have an onClick handler if the overriding component doesn't specify one:
-      // @ts-expect-error
+      // @ts-expect-error: TestOverride does not accept an onClick prop.
       <Button<typeof TestOverride> component={TestOverride} onClick={log}>
         TestOverride
       </Button>

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import * as ReactDOMClient from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router';
 import * as DomTestingLibrary from '@testing-library/dom';
@@ -7,21 +6,18 @@ import TestViewer from './TestViewer';
 
 const fixtures = [];
 
-const importFixtures = require.context('./fixtures', true, /\.(js|ts|tsx)$/, 'lazy');
-importFixtures.keys().forEach((path) => {
-  // require.context contains paths for module alias imports and relative imports
-  if (!path.startsWith('.')) {
-    return;
-  }
+const importFixtures = import.meta.glob('./fixtures/**/*.{js,ts,tsx}');
+
+Object.keys(importFixtures).forEach((path) => {
   const [suite, name] = path
-    .replace('./', '')
+    .replace('./fixtures/', '')
     .replace(/\.\w+$/, '')
     .split('/');
   fixtures.push({
     path,
     suite: `e2e/${suite}`,
     name,
-    Component: React.lazy(() => importFixtures(path)),
+    Component: React.lazy(importFixtures[path]),
   });
 });
 
@@ -33,7 +29,7 @@ function App() {
     if (window.location.hash === '#no-dev') {
       return false;
     }
-    return process.env.NODE_ENV === 'development';
+    return process.env.NODE_ENV !== 'production';
   }
   const [isDev, setDev] = React.useState(computeIsDev);
   React.useEffect(() => {
@@ -104,13 +100,8 @@ function App() {
 
 const container = document.getElementById('react-root');
 const children = <App />;
-if (typeof ReactDOM.unstable_createRoot === 'function') {
-  const root = ReactDOM.unstable_createRoot(container);
-  root.render(children);
-} else {
-  const root = ReactDOMClient.createRoot(container);
-  root.render(children);
-}
+const root = ReactDOMClient.createRoot(container);
+root.render(children);
 
 window.DomTestingLibrary = DomTestingLibrary;
 window.elementToString = function elementToString(element) {

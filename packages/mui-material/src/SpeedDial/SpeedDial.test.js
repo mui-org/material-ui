@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { spy } from 'sinon';
 import {
   createRenderer,
   act,
   fireEvent,
-  fireDiscreteEvent,
   screen,
+  flushEffects,
+  isJsdom,
 } from '@mui/internal-test-utils';
 import Icon from '@mui/material/Icon';
 import SpeedDial, { speedDialClasses as classes } from '@mui/material/SpeedDial';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
+import SpeedDialAction, { speedDialActionClasses } from '@mui/material/SpeedDialAction';
 import { tooltipClasses } from '@mui/material/Tooltip';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
@@ -38,7 +39,6 @@ describe('<SpeedDial />', () => {
     slots: { transition: { testWithElement: null }, root: { expectedClassName: classes.root } },
     skip: [
       'componentProp', // react-transition-group issue
-      'componentsProp',
     ],
   }));
 
@@ -53,48 +53,76 @@ describe('<SpeedDial />', () => {
   });
 
   it('should render a Fab', () => {
-    const { getByRole } = render(
+    render(
       <SpeedDial {...defaultProps}>
         <FakeAction />
       </SpeedDial>,
     );
-    expect(getByRole('button', { expanded: true })).not.to.equal(null);
+
+    expect(screen.getByRole('button', { expanded: true })).not.to.equal(null);
   });
 
   it('should render with a null child', () => {
-    const { getByRole, getAllByRole } = render(
+    render(
       <SpeedDial {...defaultProps}>
-        <SpeedDialAction icon={icon} tooltipTitle="One" />
+        <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'One' } }} />
         {null}
-        <SpeedDialAction icon={icon} tooltipTitle="Three" />
+        <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'Three' } }} />
       </SpeedDial>,
     );
-    expect(getByRole('menu').children).to.have.lengthOf(2);
-    expect(getAllByRole('menuitem')).to.have.lengthOf(2);
+
+    expect(screen.getByRole('menu').children).to.have.lengthOf(2);
+    expect(screen.getAllByRole('menuitem')).to.have.lengthOf(2);
+  });
+
+  it('should preserve object refs passed to action fab slots', () => {
+    const actionRef = React.createRef();
+
+    render(
+      <SpeedDial {...defaultProps}>
+        <SpeedDialAction
+          icon={icon}
+          slotProps={{ fab: { ref: actionRef }, tooltip: { title: 'Action' } }}
+        />
+      </SpeedDial>,
+    );
+
+    expect(actionRef.current).to.equal(screen.getByRole('menuitem'));
   });
 
   it('should pass the open prop to its children', () => {
     const actionClasses = { fabClosed: 'is-closed' };
-    const { getAllByRole } = render(
+
+    render(
       <SpeedDial {...defaultProps}>
-        <SpeedDialAction classes={actionClasses} icon={icon} tooltipTitle="SpeedDialAction1" />
-        <SpeedDialAction classes={actionClasses} icon={icon} tooltipTitle="SpeedDialAction2" />
+        <SpeedDialAction
+          classes={actionClasses}
+          icon={icon}
+          slotProps={{ tooltip: { title: 'SpeedDialAction1' } }}
+        />
+        <SpeedDialAction
+          classes={actionClasses}
+          icon={icon}
+          slotProps={{ tooltip: { title: 'SpeedDialAction2' } }}
+        />
       </SpeedDial>,
     );
-    const actions = getAllByRole('menuitem');
+
+    const actions = screen.getAllByRole('menuitem');
     expect(actions).to.have.lengthOf(2);
     expect(actions.map((element) => element.className)).not.to.contain('is-closed');
   });
 
   it('should reset the state of the tooltip when the speed dial is closed while it is open', () => {
-    const { queryByRole, getByRole, getAllByRole } = render(
+    render(
       <SpeedDial icon={icon} ariaLabel="mySpeedDial">
-        <SpeedDialAction icon={icon} tooltipTitle="SpeedDialAction1" />
-        <SpeedDialAction icon={icon} tooltipTitle="SpeedDialAction2" />
+        <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'SpeedDialAction1' } }} />
+        <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'SpeedDialAction2' } }} />
       </SpeedDial>,
     );
-    const fab = getByRole('button');
-    const actions = getAllByRole('menuitem');
+
+    const fab = screen.getByRole('button');
+    const actions = screen.getAllByRole('menuitem');
 
     fireEvent.mouseEnter(fab);
     clock.runAll();
@@ -102,7 +130,7 @@ describe('<SpeedDial />', () => {
 
     fireEvent.mouseOver(actions[0]);
     clock.runAll();
-    expect(queryByRole('tooltip')).not.to.equal(null);
+    expect(screen.queryByRole('tooltip')).not.to.equal(null);
 
     fireEvent.mouseLeave(actions[0]);
     clock.runAll();
@@ -110,19 +138,21 @@ describe('<SpeedDial />', () => {
 
     fireEvent.mouseEnter(fab);
     clock.runAll();
-    expect(queryByRole('tooltip')).to.equal(null);
+    expect(screen.queryByRole('tooltip')).to.equal(null);
     expect(fab).to.have.attribute('aria-expanded', 'true');
   });
 
   describe('prop: onKeyDown', () => {
     it('should be called when a key is pressed', async () => {
       const handleKeyDown = spy();
-      const { getByRole } = render(
+
+      render(
         <SpeedDial {...defaultProps} onKeyDown={handleKeyDown}>
           <FakeAction />
         </SpeedDial>,
       );
-      const buttonWrapper = getByRole('button', { expanded: true });
+
+      const buttonWrapper = screen.getByRole('button', { expanded: true });
 
       fireEvent.keyDown(document.body, { key: 'TAB' });
 
@@ -134,6 +164,8 @@ describe('<SpeedDial />', () => {
 
       expect(handleKeyDown.callCount).to.equal(1);
       expect(handleKeyDown.args[0][0]).to.have.property('key', ' ');
+
+      await flushEffects();
     });
   });
 
@@ -145,13 +177,14 @@ describe('<SpeedDial />', () => {
       ['right', 'directionRight'],
     ].forEach(([direction, className]) => {
       it(`should place actions in the correct position when direction=${direction}`, () => {
-        const { getByRole } = render(
+        render(
           <SpeedDial {...defaultProps} direction={direction.toLowerCase()}>
-            <SpeedDialAction icon={icon} tooltipTitle="action1" />
-            <SpeedDialAction icon={icon} tooltipTitle="action2" />
+            <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'action1' } }} />
+            <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'action2' } }} />
           </SpeedDial>,
         );
-        expect(getByRole('presentation')).to.have.class(classes[className]);
+
+        expect(screen.getByRole('presentation')).to.have.class(classes[className]);
       });
     });
 
@@ -162,16 +195,32 @@ describe('<SpeedDial />', () => {
       ['right', 'tooltipPlacementTop'],
     ].forEach(([direction, className]) => {
       it(`should place the tooltip in the correct position when direction=${direction}`, () => {
-        const { getByRole, getAllByRole } = render(
+        render(
           <SpeedDial {...defaultProps} open direction={direction.toLowerCase()}>
-            <SpeedDialAction icon={icon} tooltipTitle="action1" />
-            <SpeedDialAction icon={icon} tooltipTitle="action2" />
+            <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'action1' } }} />
+            <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'action2' } }} />
           </SpeedDial>,
         );
-        const actions = getAllByRole('menuitem');
+
+        const actions = screen.getAllByRole('menuitem');
         fireEvent.mouseOver(actions[0]);
         clock.runAll();
-        expect(getByRole('tooltip').firstChild).to.have.class(tooltipClasses[className]);
+        expect(screen.getByRole('tooltip').firstChild).to.have.class(tooltipClasses[className]);
+      });
+
+      it(`should place the persistent tooltip in the correct position when direction=${direction}`, () => {
+        const { container } = render(
+          <SpeedDial {...defaultProps} direction={direction}>
+            <SpeedDialAction
+              icon={icon}
+              slotProps={{ tooltip: { open: true, title: 'action1' } }}
+            />
+          </SpeedDial>,
+        );
+
+        expect(container.querySelector(`.${speedDialActionClasses.staticTooltip}`)).to.have.class(
+          speedDialActionClasses[className],
+        );
       });
     });
   });
@@ -179,66 +228,74 @@ describe('<SpeedDial />', () => {
   describe('keyboard', () => {
     it('should open the speed dial and move to the first action without closing', async () => {
       const handleOpen = spy();
-      const { getByRole, getAllByRole } = render(
+
+      render(
         <SpeedDial ariaLabel="mySpeedDial" onOpen={handleOpen}>
-          <SpeedDialAction tooltipTitle="action1" />
-          <SpeedDialAction tooltipTitle="action2" />
+          <SpeedDialAction slotProps={{ tooltip: { title: 'action1' } }} />
+          <SpeedDialAction slotProps={{ tooltip: { title: 'action2' } }} />
         </SpeedDial>,
       );
-      const fab = getByRole('button');
+
+      const fab = screen.getByRole('button');
       await act(async () => {
         fab.focus();
       });
       clock.tick();
 
       expect(handleOpen.callCount).to.equal(1);
-      const actions = getAllByRole('menuitem');
+      const actions = screen.getAllByRole('menuitem');
       expect(actions.length).to.equal(2);
       fireEvent.keyDown(fab, { key: 'ArrowUp' });
       expect(document.activeElement).to.equal(actions[0]);
       expect(fab).to.have.attribute('aria-expanded', 'true');
+
+      await flushEffects();
     });
 
-    it('should reset the state of the tooltip when the speed dial is closed while it is open', async function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        // JSDOM doesn't support :focus-visible
-        this.skip();
-      }
+    // JSDOM doesn't support :focus-visible
+    it.skipIf(isJsdom())(
+      'should reset the state of the tooltip when the speed dial is closed while it is open',
+      async function test() {
+        const handleOpen = spy();
 
-      const handleOpen = spy();
-      const { queryByRole, getByRole, getAllByRole } = render(
-        <SpeedDial ariaLabel="mySpeedDial" onOpen={handleOpen}>
-          <SpeedDialAction tooltipTitle="action1" />
-          <SpeedDialAction tooltipTitle="action2" />
-        </SpeedDial>,
-      );
-      const fab = getByRole('button');
-      const actions = getAllByRole('menuitem');
+        render(
+          <SpeedDial ariaLabel="mySpeedDial" onOpen={handleOpen}>
+            <SpeedDialAction slotProps={{ tooltip: { title: 'action1' } }} />
+            <SpeedDialAction slotProps={{ tooltip: { title: 'action2' } }} />
+          </SpeedDial>,
+        );
 
-      await act(async () => {
-        fab.focus();
-      });
-      clock.runAll();
+        const fab = screen.getByRole('button');
+        const actions = screen.getAllByRole('menuitem');
 
-      expect(fab).to.have.attribute('aria-expanded', 'true');
+        await act(async () => {
+          fab.focus();
+        });
+        clock.runAll();
 
-      fireEvent.keyDown(fab, { key: 'ArrowUp' });
-      clock.runAll();
-      expect(queryByRole('tooltip')).not.to.equal(null);
+        expect(fab).to.have.attribute('aria-expanded', 'true');
 
-      fireDiscreteEvent.keyDown(actions[0], { key: 'Escape' });
-      clock.runAll();
+        fireEvent.keyDown(fab, { key: 'ArrowUp' });
+        clock.runAll();
+        expect(screen.queryByRole('tooltip')).not.to.equal(null);
 
-      expect(queryByRole('tooltip')).to.equal(null);
-      expect(fab).to.have.attribute('aria-expanded', 'false');
-      expect(fab).toHaveFocus();
+        fireEvent.keyDown(actions[0], { key: 'Escape' });
 
-      clock.runAll();
+        clock.runAll();
 
-      expect(queryByRole('tooltip')).to.equal(null);
-      expect(fab).to.have.attribute('aria-expanded', 'false');
-      expect(fab).toHaveFocus();
-    });
+        expect(screen.queryByRole('tooltip')).to.equal(null);
+        expect(fab).to.have.attribute('aria-expanded', 'false');
+        expect(fab).toHaveFocus();
+
+        clock.runAll();
+
+        expect(screen.queryByRole('tooltip')).to.equal(null);
+        expect(fab).to.have.attribute('aria-expanded', 'false');
+        expect(fab).toHaveFocus();
+
+        await flushEffects();
+      },
+    );
   });
 
   describe('dial focus', () => {
@@ -268,18 +325,20 @@ describe('<SpeedDial />', () => {
           }}
           open
           direction={direction}
-          TransitionComponent={NoTransition}
+          slots={{ transition: NoTransition }}
         >
           {Array.from({ length: actionCount }, (_, index) => (
             <SpeedDialAction
               key={index}
-              FabProps={{
-                ref: (element) => {
-                  actionButtons[index] = element;
+              slotProps={{
+                fab: {
+                  ref: (element) => {
+                    actionButtons[index] = element;
+                  },
                 },
+                tooltip: { title: `action${index}` },
               }}
               icon={icon}
-              tooltipTitle={`action${index}`}
             />
           ))}
         </SpeedDial>,
@@ -287,6 +346,8 @@ describe('<SpeedDial />', () => {
       await act(async () => {
         fabButton.focus();
       });
+
+      return screen;
     };
 
     /**
@@ -324,6 +385,8 @@ describe('<SpeedDial />', () => {
       expect(isActionFocused(1)).to.equal(true);
       fireEvent.keyDown(getActionButton(1), { key: 'right' });
       expect(isActionFocused(0)).to.equal(true);
+
+      await flushEffects();
     });
 
     describe('actions navigation', () => {
@@ -359,6 +422,8 @@ describe('<SpeedDial />', () => {
               )} should be ${expectedFocusedAction}`,
             );
           }
+
+          await flushEffects();
         });
       };
 
@@ -451,7 +516,7 @@ describe('<SpeedDial />', () => {
           }}
           open
           direction={direction}
-          TransitionComponent={NoTransition}
+          slots={{ transition: NoTransition }}
         >
           {Array.from({ length: actionCount }, (_, index) => (
             <SpeedDialAction
@@ -462,9 +527,9 @@ describe('<SpeedDial />', () => {
                     actionButtons[index] = element;
                   },
                 },
+                tooltip: { title: `action${index}` },
               }}
               icon={icon}
-              tooltipTitle={`action${index}`}
             />
           ))}
         </SpeedDial>,
@@ -509,6 +574,8 @@ describe('<SpeedDial />', () => {
       expect(isActionFocused(1)).to.equal(true);
       fireEvent.keyDown(getActionButton(1), { key: 'right' });
       expect(isActionFocused(0)).to.equal(true);
+
+      await flushEffects();
     });
 
     describe('actions navigation', () => {
@@ -521,7 +588,6 @@ describe('<SpeedDial />', () => {
           const [firstFocusedAction, ...foci] = expected;
 
           await renderSpeedDial(dialDirection);
-
           fireEvent.keyDown(fabButton, { key: firstKey });
           expect(isActionFocused(firstFocusedAction)).to.equal(
             true,
@@ -533,7 +599,6 @@ describe('<SpeedDial />', () => {
             const previousFocusedAction = foci[i - 1] || firstFocusedAction;
             const expectedFocusedAction = foci[i];
             const combinationUntilNot = [firstKey, ...combination.slice(0, i + 1)];
-
             fireEvent.keyDown(getActionButton(previousFocusedAction), {
               key: arrowKey,
             });
@@ -544,6 +609,7 @@ describe('<SpeedDial />', () => {
               )} should be ${expectedFocusedAction}`,
             );
           }
+          await flushEffects();
         });
       };
 
@@ -610,26 +676,18 @@ describe('<SpeedDial />', () => {
   });
 
   describe('prop: transitionDuration', () => {
-    it('should render the default theme values by default', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-
+    it.skipIf(isJsdom())('should render the default theme values by default', function test() {
       const theme = createTheme();
       const enteringScreenDurationInSeconds = theme.transitions.duration.enteringScreen / 1000;
-      const { getByTestId } = render(<SpeedDial data-testid="speedDial" {...defaultProps} />);
+      render(<SpeedDial data-testid="speedDial" {...defaultProps} />);
 
-      const child = getByTestId('speedDial').firstChild;
+      const child = screen.getByTestId('speedDial').firstChild;
       expect(child).toHaveComputedStyle({
         transitionDuration: `${enteringScreenDurationInSeconds}s`,
       });
     });
 
-    it('should render the custom theme values', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-
+    it.skipIf(isJsdom())('should render the custom theme values', function test() {
       const theme = createTheme({
         transitions: {
           duration: {
@@ -638,27 +696,68 @@ describe('<SpeedDial />', () => {
         },
       });
 
-      const { getByTestId } = render(
+      render(
         <ThemeProvider theme={theme}>
           <SpeedDial data-testid="speedDial" {...defaultProps} />,
         </ThemeProvider>,
       );
 
-      const child = getByTestId('speedDial').firstChild;
+      const child = screen.getByTestId('speedDial').firstChild;
       expect(child).toHaveComputedStyle({ transitionDuration: '0.001s' });
     });
 
-    it('should render the values provided via prop', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(isJsdom())('should render the values provided via prop', function test() {
+      render(<SpeedDial data-testid="speedDial" {...defaultProps} transitionDuration={1} />);
 
-      const { getByTestId } = render(
-        <SpeedDial data-testid="speedDial" {...defaultProps} transitionDuration={1} />,
+      const child = screen.getByTestId('speedDial').firstChild;
+      expect(child).toHaveComputedStyle({ transitionDuration: '0.001s' });
+    });
+
+    it('enters on the next task when reduced motion is always', () => {
+      const handleEntered = spy();
+      const theme = createTheme({
+        motion: {
+          reducedMotion: 'always',
+        },
+      });
+
+      render(
+        <ThemeProvider theme={theme}>
+          <SpeedDial
+            data-testid="speedDial"
+            {...defaultProps}
+            hidden={false}
+            transitionDuration={250}
+            slotProps={{ transition: { onEntered: handleEntered } }}
+          />
+        </ThemeProvider>,
       );
 
-      const child = getByTestId('speedDial').firstChild;
-      expect(child).toHaveComputedStyle({ transitionDuration: '0.001s' });
+      expect(handleEntered.callCount).to.equal(0);
+      clock.tick(0);
+      expect(handleEntered.callCount).to.equal(1);
+      expect(screen.getByTestId('speedDial')).not.to.equal(null);
+    });
+
+    it.skipIf(isJsdom())('disables actions CSS transition when reduced motion is always', () => {
+      const theme = createTheme({
+        motion: {
+          reducedMotion: 'always',
+        },
+      });
+
+      render(
+        <ThemeProvider theme={theme}>
+          <SpeedDial data-testid="speedDial" {...defaultProps} open={false}>
+            <SpeedDialAction icon={icon} slotProps={{ tooltip: { title: 'action1' } }} />
+          </SpeedDial>
+        </ThemeProvider>,
+      );
+
+      expect(screen.getByRole('menu')).toHaveComputedStyle({
+        transitionDuration: '0s',
+        transitionDelay: '0s',
+      });
     });
   });
 });

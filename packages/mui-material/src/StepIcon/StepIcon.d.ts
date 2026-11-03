@@ -7,27 +7,28 @@ import { StepIconClasses } from './stepIconClasses';
 
 export interface StepIconProps
   // TODO v7: extend React.HTMLAttributes<SVGSVGElement> as svg is root component of StepIcon not div
-  extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'color' | 'children'>,
+  extends
+    StandardProps<React.HTMLAttributes<HTMLDivElement>, 'color' | 'children'>,
     Omit<SvgIconOwnProps, 'children'> {
   /**
    * Whether this step is active.
    * @default false
    */
-  active?: boolean;
+  active?: boolean | undefined;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<StepIconClasses>;
+  classes?: Partial<StepIconClasses> | undefined;
   /**
    * Mark the step as completed. Is passed to child components.
    * @default false
    */
-  completed?: boolean;
+  completed?: boolean | undefined;
   /**
    * If `true`, the step is marked as failed.
    * @default false
    */
-  error?: boolean;
+  error?: boolean | undefined;
   /**
    * The label displayed in the step icon.
    */
@@ -35,7 +36,7 @@ export interface StepIconProps
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export type StepIconClasskey = keyof NonNullable<StepIconProps['classes']>;
@@ -44,11 +45,11 @@ export type StepIconClasskey = keyof NonNullable<StepIconProps['classes']>;
  *
  * Demos:
  *
- * - [Stepper](https://mui.com/material-ui/react-stepper/)
+ * - [Stepper](https://next.mui.com/material-ui/react-stepper/)
  *
  * API:
  *
- * - [StepIcon API](https://mui.com/material-ui/api/step-icon/)
- * - inherits [SvgIcon API](https://mui.com/material-ui/api/svg-icon/)
+ * - [StepIcon API](https://next.mui.com/material-ui/api/step-icon/)
+ * - inherits [SvgIcon API](https://next.mui.com/material-ui/api/svg-icon/)
  */
 export default function StepIcon(props: StepIconProps): React.JSX.Element;

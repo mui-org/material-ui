@@ -13,16 +13,10 @@
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
     "subheader": { "description": "The content of the component." },
-    "subheaderTypographyProps": {
-      "description": "These props will be forwarded to the subheader (as long as disableTypography is not <code>true</code>)."
-    },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },
-    "title": { "description": "The content of the component." },
-    "titleTypographyProps": {
-      "description": "These props will be forwarded to the title (as long as disableTypography is not <code>true</code>)."
-    }
+    "title": { "description": "The content of the component." }
   },
   "classDescriptions": {},
   "slotDescriptions": {

@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "muiVersion": ">=9.0.0 <10.0.0",
+  "organization": "Material UI",
+  "abstract": "Guides selection of Material UI styling strategies from narrowest to broadest scope (sx, styled, theme.components, GlobalStyles/CssBaseline), including slot/state overrides and sx vs styled foot-guns.",
+  "references": [
+    "https://mui.com/material-ui/customization/how-to-customize.md",
+    "https://mui.com/system/getting-started/the-sx-prop.md",
+    "https://mui.com/system/styled.md",
+    "https://mui.com/material-ui/customization/theme-components.md"
+  ]
+}

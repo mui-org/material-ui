@@ -1,11 +1,11 @@
-import { expect } from 'chai';
+import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { RENAME_FILTER_MUI, RENAME_FILTER_DEFAULT, getComponentName, handler } from './builder.mjs';
 
-const currentDirectory = fileURLToPath(new URL('.', import.meta.url));
+const currentDirectory = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
 const DISABLE_LOG = true;
 
@@ -42,15 +42,27 @@ describe('builder', () => {
       outputDir: null,
     };
 
-    beforeEach(async function beforeEachHook() {
-      // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
-      options.outputDir = path.join(
-        os.tmpdir(),
-        'material-ui-icons-builder-test',
-        this.currentTest.fullTitle(),
-      );
-      await emptyDir(options.outputDir);
-    });
+    beforeEach(
+      process.env.VITEST
+        ? async function beforeEachHook(ctx) {
+            // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
+            options.outputDir = path.join(
+              os.tmpdir(),
+              'material-ui-icons-builder-test',
+              ctx.task.name,
+            );
+            await emptyDir(options.outputDir);
+          }
+        : async function beforeEachHook() {
+            // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
+            options.outputDir = path.join(
+              os.tmpdir(),
+              'material-ui-icons-builder-test',
+              this.currentTest.fullTitle(),
+            );
+            await emptyDir(options.outputDir);
+          },
+    );
 
     it('script outputs to directory', async () => {
       await handler(options);
@@ -69,15 +81,27 @@ describe('builder', () => {
       outputDir: null,
     };
 
-    beforeEach(async function beforeEachHook() {
-      // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
-      options.outputDir = path.join(
-        os.tmpdir(),
-        'material-ui-icons-builder-test',
-        this.currentTest.fullTitle(),
-      );
-      await emptyDir(options.outputDir);
-    });
+    beforeEach(
+      process.env.VITEST
+        ? async function beforeEachHook(ctx) {
+            // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
+            options.outputDir = path.join(
+              os.tmpdir(),
+              'material-ui-icons-builder-test',
+              ctx.task.name,
+            );
+            await emptyDir(options.outputDir);
+          }
+        : async function beforeEachHook() {
+            // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
+            options.outputDir = path.join(
+              os.tmpdir(),
+              'material-ui-icons-builder-test',
+              this.currentTest.fullTitle(),
+            );
+            await emptyDir(options.outputDir);
+          },
+    );
 
     it('script outputs to directory', async () => {
       await handler(options);
@@ -110,15 +134,27 @@ describe('builder', () => {
       outputDir: null,
     };
 
-    beforeEach(async function beforeEachHook() {
-      // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
-      options.outputDir = path.join(
-        os.tmpdir(),
-        'material-ui-icons-builder-test',
-        this.currentTest.fullTitle(),
-      );
-      await emptyDir(options.outputDir);
-    });
+    beforeEach(
+      process.env.VITEST
+        ? async function beforeEachHook(ctx) {
+            // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
+            options.outputDir = path.join(
+              os.tmpdir(),
+              'material-ui-icons-builder-test',
+              ctx.task.name,
+            );
+            await emptyDir(options.outputDir);
+          }
+        : async function beforeEachHook() {
+            // DON'T CLEAN UP TO MAKE TEST INSPECTABLE
+            options.outputDir = path.join(
+              os.tmpdir(),
+              'material-ui-icons-builder-test',
+              this.currentTest.fullTitle(),
+            );
+            await emptyDir(options.outputDir);
+          },
+    );
 
     it('should produce the expected output', async () => {
       await handler(options);
@@ -151,6 +187,62 @@ describe('builder', () => {
         expect(actual).to.equal(expected);
       });
     });
+  });
+});
+
+// These 23 legacy *Outline icons were removed in v9 because they were
+// exact SVG-path duplicates of their *Outlined counterparts.
+// This test prevents them from being silently reintroduced.
+// eslint-disable-next-line import/prefer-default-export
+export const LEGACY_OUTLINE_ICONS = [
+  'AddCircleOutline',
+  'ChatBubbleOutline',
+  'CheckCircleOutline',
+  'DeleteOutline',
+  'DoneOutline',
+  'DriveFileMoveOutline',
+  'ErrorOutline',
+  'HelpOutline',
+  'InfoOutline',
+  'LabelImportantOutline',
+  'LightbulbOutline',
+  'LockOutline',
+  'MailOutline',
+  'ModeEditOutline',
+  'PauseCircleOutline',
+  'PeopleOutline',
+  'PersonOutline',
+  'PieChartOutline',
+  'PlayCircleOutline',
+  'RemoveCircleOutline',
+  'StarOutline',
+  'WorkOutline',
+  'WorkspacesOutline',
+];
+
+describe('Legacy *Outline icon removal', () => {
+  let indexContent;
+
+  beforeAll(() => {
+    indexContent = fs.readFileSync(path.join(currentDirectory, 'lib', 'index.js'), {
+      encoding: 'utf8',
+    });
+  });
+
+  LEGACY_OUTLINE_ICONS.forEach((name) => {
+    it(`should not export ${name}`, () => {
+      // Check that the icon is not exported from the package index
+      expect(indexContent).not.to.include(`"${name}"`);
+      // Check that the component file does not exist
+      expect(fs.existsSync(path.join(currentDirectory, 'lib', `${name}.js`))).to.equal(false);
+    });
+  });
+
+  it('should still export DriveFileRenameOutline (not a duplicate)', () => {
+    expect(indexContent).to.include('"DriveFileRenameOutline"');
+    expect(fs.existsSync(path.join(currentDirectory, 'lib', 'DriveFileRenameOutline.js'))).to.equal(
+      true,
+    );
   });
 });
 

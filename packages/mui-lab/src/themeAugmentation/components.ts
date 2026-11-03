@@ -1,4 +1,4 @@
-import {
+import type {
   ComponentsProps,
   ComponentsOverrides,
   ComponentsVariants,
@@ -11,61 +11,83 @@ type Theme = Omit<MuiTheme, 'components'>;
 export {};
 
 export interface LabComponents {
-  MuiLoadingButton?: {
-    defaultProps?: ComponentsProps['MuiLoadingButton'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiLoadingButton'];
-    variants?: ComponentsVariants['MuiLoadingButton'];
-  };
-  MuiMasonry?: {
-    defaultProps?: ComponentsProps['MuiMasonry'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiMasonry'];
-    variants?: ComponentsVariants['MuiMasonry'];
-  };
-  MuiTabList?: {
-    defaultProps?: ComponentsProps['MuiTabList'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTabList'];
-    variants?: ComponentsVariants['MuiTabList'];
-  };
-  MuiTabPanel?: {
-    defaultProps?: ComponentsProps['MuiTabPanel'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTabPanel'];
-    variants?: ComponentsVariants['MuiTabPanel'];
-  };
-  MuiTimeline?: {
-    defaultProps?: ComponentsProps['MuiTimeline'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimeline'];
-    variants?: ComponentsVariants['MuiTimeline'];
-  };
-  MuiTimelineConnector?: {
-    defaultProps?: ComponentsProps['MuiTimelineConnector'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineConnector'];
-    variants?: ComponentsVariants['MuiTimelineConnector'];
-  };
-  MuiTimelineContent?: {
-    defaultProps?: ComponentsProps['MuiTimelineContent'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineContent'];
-    variants?: ComponentsVariants['MuiTimelineContent'];
-  };
-  MuiTimelineDot?: {
-    defaultProps?: ComponentsProps['MuiTimelineDot'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineDot'];
-    variants?: ComponentsVariants['MuiTimelineDot'];
-  };
-  MuiTimelineItem?: {
-    defaultProps?: ComponentsProps['MuiTimelineItem'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineItem'];
-    variants?: ComponentsVariants['MuiTimelineItem'];
-  };
-  MuiTimelineOppositeContent?: {
-    defaultProps?: ComponentsProps['MuiTimelineOppositeContent'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineOppositeContent'];
-    variants?: ComponentsVariants['MuiTimelineOppositeContent'];
-  };
-  MuiTimelineSeparator?: {
-    defaultProps?: ComponentsProps['MuiTimelineSeparator'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineSeparator'];
-    variants?: ComponentsVariants['MuiTimelineSeparator'];
-  };
+  MuiLoadingButton?:
+    | {
+        defaultProps?: ComponentsProps['MuiLoadingButton'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiLoadingButton'] | undefined;
+        variants?: ComponentsVariants['MuiLoadingButton'] | undefined;
+      }
+    | undefined;
+  MuiMasonry?:
+    | {
+        defaultProps?: ComponentsProps['MuiMasonry'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMasonry'] | undefined;
+        variants?: ComponentsVariants['MuiMasonry'] | undefined;
+      }
+    | undefined;
+  MuiTabList?:
+    | {
+        defaultProps?: ComponentsProps['MuiTabList'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTabList'] | undefined;
+        variants?: ComponentsVariants['MuiTabList'] | undefined;
+      }
+    | undefined;
+  MuiTabPanel?:
+    | {
+        defaultProps?: ComponentsProps['MuiTabPanel'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTabPanel'] | undefined;
+        variants?: ComponentsVariants['MuiTabPanel'] | undefined;
+      }
+    | undefined;
+  MuiTimeline?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimeline'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimeline'] | undefined;
+        variants?: ComponentsVariants['MuiTimeline'] | undefined;
+      }
+    | undefined;
+  MuiTimelineConnector?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimelineConnector'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineConnector'] | undefined;
+        variants?: ComponentsVariants['MuiTimelineConnector'] | undefined;
+      }
+    | undefined;
+  MuiTimelineContent?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimelineContent'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineContent'] | undefined;
+        variants?: ComponentsVariants['MuiTimelineContent'] | undefined;
+      }
+    | undefined;
+  MuiTimelineDot?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimelineDot'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineDot'] | undefined;
+        variants?: ComponentsVariants['MuiTimelineDot'] | undefined;
+      }
+    | undefined;
+  MuiTimelineItem?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimelineItem'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineItem'] | undefined;
+        variants?: ComponentsVariants['MuiTimelineItem'] | undefined;
+      }
+    | undefined;
+  MuiTimelineOppositeContent?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimelineOppositeContent'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineOppositeContent'] | undefined;
+        variants?: ComponentsVariants['MuiTimelineOppositeContent'] | undefined;
+      }
+    | undefined;
+  MuiTimelineSeparator?:
+    | {
+        defaultProps?: ComponentsProps['MuiTimelineSeparator'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiTimelineSeparator'] | undefined;
+        variants?: ComponentsVariants['MuiTimelineSeparator'] | undefined;
+      }
+    | undefined;
 }
 
 declare module '@mui/material/styles' {

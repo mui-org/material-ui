@@ -1,11 +1,15 @@
 /* eslint-disable no-console */
 import * as path from 'path';
-import * as fse from 'fs-extra';
+import * as fs from 'node:fs/promises';
 import * as prettier from 'prettier';
 import glob from 'fast-glob';
-import * as _ from 'lodash';
-import * as yargs from 'yargs';
-import { LiteralType } from '@mui/internal-scripts/typescript-to-proptypes/src/models';
+import { flatten } from 'es-toolkit/array';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import type {
+  LiteralType,
+  InjectPropTypesInFileOptions,
+} from '@mui/internal-scripts/typescript-to-proptypes';
 import {
   fixBabelGeneratorIssues,
   fixLineEndings,
@@ -14,14 +18,12 @@ import {
 import {
   getPropTypesFromFile,
   injectPropTypesInFile,
-  InjectPropTypesInFileOptions,
 } from '@mui/internal-scripts/typescript-to-proptypes';
-import {
-  createTypeScriptProjectBuilder,
-  TypeScriptProject,
-} from '@mui-internal/api-docs-builder/utils/createTypeScriptProject';
+import type { TypeScriptProject } from '@mui/internal-api-docs-builder';
+import { createTypeScriptProjectBuilder } from '@mui/internal-api-docs-builder';
 
-import CORE_TYPESCRIPT_PROJECTS from './coreTypeScriptProjects';
+// eslint-disable-next-line import/extensions -- explicit .mjs extension required for tsx to resolve the ESM module
+import CORE_TYPESCRIPT_PROJECTS from './coreTypeScriptProjects.mjs';
 
 const useExternalPropsFromInputBase = [
   'autoComplete',
@@ -199,10 +201,10 @@ async function generateProptypes(
     });
   });
 
-  const sourceContent = await fse.readFile(sourceFile, 'utf8');
+  const sourceContent = await fs.readFile(sourceFile, 'utf8');
   const isTsFile = /(\.(ts|tsx))/.test(sourceFile);
   // If the component inherits the props from some unstyled components
-  // we don't want to add those propTypes again in the Material UI/Joy UI propTypes
+  // we don't want to add those propTypes again in the Material UI propTypes
   const unstyledFile = getUnstyledFilename(tsFile, true);
   const unstyledPropsFile = unstyledFile.replace('.d.ts', '.types.ts');
 
@@ -296,7 +298,7 @@ async function generateProptypes(
   const formatted = fixBabelGeneratorIssues(prettified);
   const correctedLineEndings = fixLineEndings(sourceContent, formatted);
 
-  await fse.writeFile(sourceFile, correctedLineEndings);
+  await fs.writeFile(sourceFile, correctedLineEndings);
 }
 
 interface HandlerArgv {
@@ -320,7 +322,6 @@ async function run(argv: HandlerArgv) {
       path.resolve(__dirname, '../packages/mui-base/src'),
       path.resolve(__dirname, '../packages/mui-material/src'),
       path.resolve(__dirname, '../packages/mui-lab/src'),
-      path.resolve(__dirname, '../packages/mui-joy/src'),
     ].map((folderPath) =>
       glob('+([A-Z])*/+([A-Z])*.*@(d.ts|ts|tsx)', {
         absolute: true,
@@ -329,7 +330,7 @@ async function run(argv: HandlerArgv) {
     ),
   );
 
-  const files = _.flatten(allFiles)
+  const files = flatten(allFiles)
     .filter((filePath) => {
       // Filter out files where the directory name and filename doesn't match
       // Example: Modal/ModalManager.d.ts
@@ -372,7 +373,7 @@ async function run(argv: HandlerArgv) {
   }
 }
 
-yargs
+yargs()
   .command<HandlerArgv>({
     command: '$0',
     describe: 'Generates Component.propTypes from TypeScript declarations',
@@ -388,4 +389,4 @@ yargs
   .help()
   .strict(true)
   .version(false)
-  .parse();
+  .parse(hideBin(process.argv));

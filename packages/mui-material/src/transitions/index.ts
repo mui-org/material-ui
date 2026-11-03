@@ -1,1 +1,7 @@
-export * from './transition';
+export type {
+  EasingProps,
+  TransitionHandlerKeys,
+  TransitionHandlerProps,
+  TransitionKeys,
+  TransitionProps,
+} from './types';

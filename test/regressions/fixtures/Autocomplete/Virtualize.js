@@ -6,20 +6,19 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
 import { useTheme, styled } from '@mui/material/styles';
-import { VariableSizeList } from 'react-window';
+import { List, useListRef } from 'react-window';
 import Typography from '@mui/material/Typography';
 
 const LISTBOX_PADDING = 8; // px
 
-function renderRow(props) {
-  const { data, index, style } = props;
-  const dataSet = data[index];
+function RowComponent({ index, itemData, style }) {
+  const dataSet = itemData[index];
   const inlineStyle = {
     ...style,
-    top: style.top + LISTBOX_PADDING,
+    top: (style.top ?? 0) + LISTBOX_PADDING,
   };
 
-  if (dataSet.hasOwnProperty('group')) {
+  if ('group' in dataSet) {
     return (
       <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
         {dataSet.group}
@@ -36,31 +35,49 @@ function renderRow(props) {
   );
 }
 
-const OuterElementContext = React.createContext({});
+// Adapter for react-window v2
 
-const OuterElementType = React.forwardRef((props, ref) => {
-  const outerProps = React.useContext(OuterElementContext);
-  return <div ref={ref} {...props} {...outerProps} />;
-});
+RowComponent.propTypes = {
+  index: PropTypes.number.isRequired,
+  itemData: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.element, PropTypes.number, PropTypes.string]).isRequired,
+      ),
+      PropTypes.shape({
+        children: PropTypes.node,
+        group: PropTypes.string.isRequired,
+        key: PropTypes.number.isRequired,
+      }),
+    ]).isRequired,
+  ).isRequired,
+  style: PropTypes.object.isRequired,
+};
 
-function useResetCache(data) {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    if (ref.current != null) {
-      ref.current.resetAfterIndex(0, true);
-    }
-  }, [data]);
-  return ref;
-}
-
-// Adapter for react-window
 const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) {
-  const { children, ...other } = props;
+  const { children, internalListRef, onItemsBuilt, ...other } = props;
   const itemData = [];
+  const optionIndexMap = React.useMemo(() => new Map(), []);
+
   children.forEach((item) => {
     itemData.push(item);
-    itemData.push(...(item.children || []));
+    if ('children' in item && Array.isArray(item.children)) {
+      itemData.push(...item.children);
+    }
   });
+
+  // Map option values to their indices in the flattened array
+  itemData.forEach((item, index) => {
+    if (Array.isArray(item) && item[1]) {
+      optionIndexMap.set(item[1], index);
+    }
+  });
+
+  React.useEffect(() => {
+    if (onItemsBuilt) {
+      onItemsBuilt(optionIndexMap);
+    }
+  }, [onItemsBuilt, optionIndexMap]);
 
   const theme = useTheme();
   const smUp = useMediaQuery(theme.breakpoints.up('sm'), {
@@ -73,7 +90,6 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
     if (child.hasOwnProperty('group')) {
       return 48;
     }
-
     return itemSize;
   };
 
@@ -84,31 +100,44 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
     return itemData.map(getChildSize).reduce((a, b) => a + b, 0);
   };
 
-  const gridRef = useResetCache(itemCount);
+  // Separate className for List, other props for wrapper div (ARIA, handlers)
+  const { className, style, ...otherProps } = other;
 
   return (
-    <div ref={ref}>
-      <OuterElementContext.Provider value={other}>
-        <VariableSizeList
-          itemData={itemData}
-          height={getHeight() + 2 * LISTBOX_PADDING}
-          width="100%"
-          ref={gridRef}
-          outerElementType={OuterElementType}
-          innerElementType="ul"
-          itemSize={(index) => getChildSize(itemData[index])}
-          overscanCount={5}
-          itemCount={itemCount}
-        >
-          {renderRow}
-        </VariableSizeList>
-      </OuterElementContext.Provider>
+    <div ref={ref} {...otherProps}>
+      <List
+        className={className}
+        listRef={internalListRef}
+        key={itemCount}
+        rowCount={itemCount}
+        rowHeight={(index) => getChildSize(itemData[index])}
+        rowComponent={RowComponent}
+        rowProps={{ itemData }}
+        style={{
+          height: getHeight() + 2 * LISTBOX_PADDING,
+          width: '100%',
+        }}
+        overscanCount={5}
+        tagName="ul"
+      />
     </div>
   );
 });
 
 ListboxComponent.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
+  internalListRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({
+      current: PropTypes.shape({
+        element: PropTypes.object,
+        scrollToRow: PropTypes.func.isRequired,
+      }),
+    }),
+  ]),
+  onItemsBuilt: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 const StyledPopper = styled(Popper)({
@@ -131,6 +160,24 @@ const OPTIONS = [...Array(100).keys()]
   .sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
 
 export default function Virtualize() {
+  // Use react-window v2's useListRef hook for imperative API access
+  const internalListRef = useListRef(null);
+  const optionIndexMapRef = React.useRef(new Map());
+
+  const handleItemsBuilt = React.useCallback((optionIndexMap) => {
+    optionIndexMapRef.current = optionIndexMap;
+  }, []);
+
+  // Handle keyboard navigation by scrolling to highlighted option
+  const handleHighlightChange = (event, option) => {
+    if (option && internalListRef.current) {
+      const index = optionIndexMapRef.current.get(option);
+      if (index !== undefined) {
+        internalListRef.current.scrollToRow({ index, align: 'auto' });
+      }
+    }
+  };
+
   return (
     <div style={{ height: 400 }}>
       <Autocomplete
@@ -139,15 +186,18 @@ export default function Virtualize() {
         disableListWrap
         options={OPTIONS}
         groupBy={(option) => option[0].toUpperCase()}
-        renderInput={(params) => <TextField {...params} label="10,000 options" />}
+        renderInput={(params) => <TextField {...params} label="100 options" />}
         renderOption={(props, option, state) => [props, option, state.index]}
         renderGroup={(params) => params}
+        onHighlightChange={handleHighlightChange}
         slots={{
           popper: StyledPopper,
         }}
         slotProps={{
           listbox: {
             component: ListboxComponent,
+            internalListRef,
+            onItemsBuilt: handleItemsBuilt,
           },
         }}
       />

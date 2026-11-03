@@ -19,7 +19,7 @@ The created file might need some manual adjustment since not every edge case is 
 
 ### To test a published npm dist tag
 
-_For example: `latest` or `next` on npm or a codesandboxci published version_
+_For example: `latest` or `next` on npm or a pkg.pr.new published version_
 
 1. Navigate into the fixture you want to test (where the `package.json` is located)
 1. Adjust `pnpm.overrides` of the `package.json` file to point to the desired version

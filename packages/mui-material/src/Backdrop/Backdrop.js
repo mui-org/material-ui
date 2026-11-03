@@ -56,11 +56,8 @@ const Backdrop = React.forwardRef(function Backdrop(inProps, ref) {
     component = 'div',
     invisible = false,
     open,
-    components = {},
-    componentsProps = {},
     slotProps = {},
     slots = {},
-    TransitionComponent: TransitionComponentProp,
     transitionDuration,
     ...other
   } = props;
@@ -73,16 +70,10 @@ const Backdrop = React.forwardRef(function Backdrop(inProps, ref) {
 
   const classes = useUtilityClasses(ownerState);
 
-  const backwardCompatibleSlots = {
-    transition: TransitionComponentProp,
-    root: components.Root,
-    ...slots,
-  };
-  const backwardCompatibleSlotProps = { ...componentsProps, ...slotProps };
   const externalForwardedProps = {
     component,
-    slots: backwardCompatibleSlots,
-    slotProps: backwardCompatibleSlotProps,
+    slots,
+    slotProps,
   };
 
   const [RootSlot, rootProps] = useSlot('root', {
@@ -100,7 +91,7 @@ const Backdrop = React.forwardRef(function Backdrop(inProps, ref) {
 
   return (
     <TransitionSlot in={open} timeout={transitionDuration} {...other} {...transitionProps}>
-      <RootSlot aria-hidden {...rootProps} classes={classes} ref={ref}>
+      <RootSlot {...rootProps} ref={ref}>
         {children}
       </RootSlot>
     </TransitionSlot>
@@ -129,27 +120,6 @@ Backdrop.propTypes /* remove-proptypes */ = {
    * Either a string to use a HTML element or a component.
    */
   component: PropTypes.elementType,
-  /**
-   * The components used for each slot inside.
-   *
-   * @deprecated Use the `slots` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   *
-   * @default {}
-   */
-  components: PropTypes.shape({
-    Root: PropTypes.elementType,
-  }),
-  /**
-   * The extra props for the slot components.
-   * You can override the existing props or add new ones.
-   *
-   * @deprecated Use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   *
-   * @default {}
-   */
-  componentsProps: PropTypes.shape({
-    root: PropTypes.object,
-  }),
   /**
    * If `true`, the backdrop is invisible.
    * It can be used when rendering a popover or a custom select component.
@@ -184,13 +154,6 @@ Backdrop.propTypes /* remove-proptypes */ = {
     PropTypes.func,
     PropTypes.object,
   ]),
-  /**
-   * The component used for the transition.
-   * [Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
-   * @default Fade
-   * @deprecated Use `slots.transition` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  TransitionComponent: PropTypes.elementType,
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.

@@ -78,7 +78,7 @@ All prop descriptions are now written in TypeScript, which means that you can ac
 
 ### 5. Upcoming CSS variables support
 
-[CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties) will help us solve a lot of customization issues in the future.
+[CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties) will help us solve a lot of customization issues in the future.
 One of them is the dark mode flashing issue that has been requested for a long time.
 
 More importantly, this feature is opt-in if you are using Material UI v5!

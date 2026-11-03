@@ -21,7 +21,6 @@
       "description": "If <code>true</code>, only the selected icon will be highlighted."
     },
     "icon": { "description": "The icon to display." },
-    "IconContainerComponent": { "description": "The component containing the icon." },
     "max": { "description": "Maximum rating." },
     "name": {
       "description": "The name attribute of the radio <code>input</code> elements. This input <code>name</code> should be unique within the page. Being unique within a form is insufficient since the <code>name</code> is used to generate IDs."
@@ -114,7 +113,7 @@
     "visuallyHidden": { "description": "Visually hide an element." }
   },
   "slotDescriptions": {
-    "decimal": "The component used fo r the decimal slot.",
+    "decimal": "The component used for the decimal slot.",
     "icon": "The component used for the icon slot.",
     "label": "The component used for the label slot.",
     "root": "The component used for the root slot."

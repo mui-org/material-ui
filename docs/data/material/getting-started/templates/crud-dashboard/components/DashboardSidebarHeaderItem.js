@@ -4,7 +4,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 
 import DashboardSidebarContext from '../context/DashboardSidebarContext';
 import { DRAWER_WIDTH } from '../constants';
-import { getDrawerSxTransitionMixin } from '../mixins';
+import getDrawerSxTransitionMixin from '../mixins';
 
 function DashboardSidebarHeaderItem({ children }) {
   const sidebarContext = React.useContext(DashboardSidebarContext);
@@ -19,21 +19,23 @@ function DashboardSidebarHeaderItem({ children }) {
 
   return (
     <ListSubheader
-      sx={{
-        fontSize: 12,
-        fontWeight: '600',
-        height: mini ? 0 : 36,
-        ...(hasDrawerTransitions
+      sx={[
+        {
+          fontSize: 12,
+          fontWeight: '600',
+          height: mini ? 0 : 36,
+          px: 1.5,
+          py: 0,
+          minWidth: DRAWER_WIDTH,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          zIndex: 2,
+        },
+        hasDrawerTransitions
           ? getDrawerSxTransitionMixin(fullyExpanded, 'height')
-          : {}),
-        px: 1.5,
-        py: 0,
-        minWidth: DRAWER_WIDTH,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        zIndex: 2,
-      }}
+          : null,
+      ]}
     >
       {children}
     </ListSubheader>

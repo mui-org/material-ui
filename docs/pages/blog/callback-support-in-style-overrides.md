@@ -7,9 +7,9 @@ tags: ['Material UI', 'Product']
 manualCard: true
 ---
 
-<span class="x x-first x-last">[</span>Material UI v5.3.0](https://github.com/mui/material-ui/releases/tag/v5.3.0) introduces the ability to write a callback in style overrides (global theming), giving you full control of component customization at the theme level.
+[Material UI v5.3.0](https://github.com/mui/material-ui/releases/tag/v5.3.0) introduces the ability to write a callback in style overrides (global theming), giving you full control of component customization at the theme level.
 
-Why is using a callback better than the existing plain object? Let me explain from the beginning<span class="x x-first x-last">…</span>
+Why is using a callback better than the existing plain object? Let me explain from the beginning…
 
 ## The problems
 

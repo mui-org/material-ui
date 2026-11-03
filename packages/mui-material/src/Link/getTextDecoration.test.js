@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createTheme, extendTheme } from '../styles';
 import getTextDecoration from './getTextDecoration';
 
@@ -34,7 +34,12 @@ describe('getTextDecoration', () => {
       expect(getTextDecoration({ theme, ownerState: { color: 'rgb(1, 1, 1)' } })).to.equal(
         'rgba(1, 1, 1, 0.4)',
       );
-      expect(() => getTextDecoration({ theme, ownerState: { color: 'yellow' } })).to.throw();
+      expect(getTextDecoration({ theme, ownerState: { color: 'rgba(1, 1, 1, 0.8)' } })).to.equal(
+        'rgba(1, 1, 1, 0.4)',
+      );
+      expect(getTextDecoration({ theme, ownerState: { color: 'yellow' } })).to.equal(
+        'color-mix(in srgb, yellow 40%, transparent)',
+      );
     });
 
     it('work with a custom palette', () => {
@@ -109,7 +114,9 @@ describe('getTextDecoration', () => {
       expect(getTextDecoration({ theme, ownerState: { color: 'rgb(1, 1, 1)' } })).to.equal(
         'rgba(1, 1, 1, 0.4)',
       );
-      expect(() => getTextDecoration({ theme, ownerState: { color: 'yellow' } })).to.throw();
+      expect(getTextDecoration({ theme, ownerState: { color: 'yellow' } })).to.equal(
+        'color-mix(in srgb, yellow 40%, transparent)',
+      );
     });
   });
 

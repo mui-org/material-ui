@@ -7,7 +7,7 @@
     "declaration": true,
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "outDir": "build/esm",
+    "outDir": "build",
     "rootDir": "./src",
     "types": ["react", "node"]
   },

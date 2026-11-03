@@ -1,4 +1,0 @@
-<Textarea name="Solid" placeholder="Type in here…" variant="solid" />
-<Textarea name="Soft" placeholder="Type in here…" variant="soft" />
-<Textarea name="Outlined" placeholder="Type in here…" variant="outlined" />
-<Textarea name="Plain" placeholder="Type in here…" variant="plain" />

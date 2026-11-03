@@ -1,21 +1,20 @@
-import { defineConfig, transformWithEsbuild } from 'vite';
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { defineConfig, transformWithOxc } from 'vite';
 import react from '@vitejs/plugin-react';
-import * as path from 'path';
-import * as url from 'url';
+import tailwindcss from '@tailwindcss/vite';
+import { alias } from '../../vitest.shared.mts';
+import { INDEX_NAME } from './docsearchFixtureData';
 
-const currentDirectory = url.fileURLToPath(new URL('.', import.meta.url));
-const WORKSPACE_ROOT = path.resolve(currentDirectory, '../../');
+const stubsDir = resolve(fileURLToPath(new URL('.', import.meta.url)), 'stubs');
 
 // https://vite.dev/config/
 export default defineConfig({
-  esbuild: {
-    minifyIdentifiers: false,
-    keepNames: true,
-  },
   plugins: [
     {
-      // Unfortunately necessary as we opted to write our jsx in js files
+      // Necessary as we opted to write our jsx in js files
       name: 'treat-js-files-as-jsx',
+      enforce: 'pre',
       async transform(code, id) {
         if (/\/node_modules\//.test(id)) {
           return null;
@@ -26,56 +25,48 @@ export default defineConfig({
         if (id.startsWith('\0')) {
           return null;
         }
-        // Use the exposed transform from vite, instead of directly
-        // transforming with esbuild
-        return transformWithEsbuild(code, id, {
-          loader: 'tsx',
-          jsx: 'automatic',
+        // Use the transform exposed by Vite instead of invoking Oxc directly.
+        return transformWithOxc(code, id, {
+          lang: 'tsx',
+          jsx: {
+            runtime: 'automatic',
+          },
         });
       },
     },
     react(),
+    tailwindcss(),
   ],
   define: {
-    'process.env': '{}',
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    // `AppSearch` reads it for the Algolia index name, which also keys the
+    // stored recent searches `index.test.js` seeds for the `AppSearch` fixtures.
+    'process.env.SEARCH_INDEX': JSON.stringify(INDEX_NAME),
+    // Seed `@mui/x-data-grid-generator`'s Chance instances deterministically so
+    // the Data Grid composites (XHero/XGridFullDemo/XDataGrid/XTheming via
+    // `useDemoData`) render identical rows on every load. Without this the
+    // generated data is random per page visit and churns the Argos baseline.
+    // Mirrors mui-x's regression bundle, which replaces the same token.
+    __DISABLE_CHANCE_RANDOM__: 'true',
   },
   resolve: {
-    alias: {
-      '@mui/material': path.resolve(WORKSPACE_ROOT, './packages/mui-material/src'),
-      '@mui/docs': path.resolve(WORKSPACE_ROOT, './packages/mui-docs/src'),
-      '@mui/icons-material': path.resolve(WORKSPACE_ROOT, './packages/mui-icons-material/lib/esm'),
-      '@mui/lab': path.resolve(WORKSPACE_ROOT, './packages/mui-lab/src'),
-      '@mui/styled-engine': path.resolve(WORKSPACE_ROOT, './packages/mui-styled-engine/src'),
-      '@mui/styled-engine-sc': path.resolve(WORKSPACE_ROOT, './packages/mui-styled-engine-sc/src'),
-      '@mui/styles': path.resolve(WORKSPACE_ROOT, './packages/mui-styles/src'),
-      '@mui/system': path.resolve(WORKSPACE_ROOT, './packages/mui-system/src'),
-      '@mui/private-theming': path.resolve(WORKSPACE_ROOT, './packages/mui-private-theming/src'),
-      '@mui/utils': path.resolve(WORKSPACE_ROOT, './packages/mui-utils/src'),
-      '@mui/material-nextjs': path.resolve(WORKSPACE_ROOT, './packages/mui-material-nextjs/src'),
-      '@mui/joy': path.resolve(WORKSPACE_ROOT, './packages/mui-joy/src'),
-      '@mui/stylis-plugin-rtl': path.resolve(
-        WORKSPACE_ROOT,
-        './packages/mui-stylis-plugin-rtl/src',
-      ),
-      '@mui/internal-docs-utils': path.resolve(
-        WORKSPACE_ROOT,
-        './packages-internal/docs-utils/src',
-      ),
-      '@mui/internal-scripts/typescript-to-proptypes': path.resolve(
-        WORKSPACE_ROOT,
-        './packages-internal/scripts/typescript-to-proptypes/src',
-      ),
-      '@mui/internal-test-utils': path.resolve(
-        WORKSPACE_ROOT,
-        './packages-internal/test-utils/src',
-      ),
-      docs: path.resolve(WORKSPACE_ROOT, './docs'),
-    },
+    alias: [
+      // The existing `alias` from vitest.shared.mts is an object map; spread
+      // it as { find, replacement } entries so the next/* regex aliases below
+      // coexist with it.
+      ...Object.entries(alias).map(([find, replacement]) => ({ find, replacement })),
+      // Stub `next/*` modules so docs composites under `docs/src/components/`
+      // that transitively import `next/router` (via `@mui/internal-core-docs/Link`)
+      // render outside the Next.js docs host. See `stubs/next-router.ts` for
+      // the rationale.
+      { find: /^next\/router$/, replacement: `${stubsDir}/next-router.ts` },
+      { find: /^next\/link$/, replacement: `${stubsDir}/next-link.tsx` },
+      { find: /^next\/head$/, replacement: `${stubsDir}/next-head.tsx` },
+    ],
   },
   optimizeDeps: {
-    force: true,
-    esbuildOptions: {
-      loader: {
+    rolldownOptions: {
+      moduleTypes: {
         '.js': 'tsx',
       },
     },

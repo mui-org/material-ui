@@ -57,9 +57,10 @@ const BreadcrumbsSeparator = styled('li', {
 
 function insertSeparators(items, className, separator, ownerState) {
   return items.reduce((acc, current, index) => {
+    acc.push(current);
+
     if (index < items.length - 1) {
-      acc = acc.concat(
-        current,
+      acc.push(
         <BreadcrumbsSeparator
           aria-hidden
           key={`separator-${index}`}
@@ -69,8 +70,6 @@ function insertSeparators(items, className, separator, ownerState) {
           {separator}
         </BreadcrumbsSeparator>,
       );
-    } else {
-      acc.push(current);
     }
 
     return acc;

@@ -14,7 +14,7 @@ export default function NoShrinkIcon() {
     <Stepper sx={{ width: 200 }}>
       {steps.map((label) => (
         <Step key={label}>
-          <StepLabel StepIconComponent={TestIcon} sx={{ width: '1px' }}>
+          <StepLabel slots={{ stepIcon: TestIcon }} sx={{ width: '1px' }}>
             {label}
           </StepLabel>
         </Step>

@@ -17,7 +17,7 @@ export interface SvgIconOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<SvgIconClasses>;
+  classes?: Partial<SvgIconClasses> | undefined;
   /**
    * The color of the component.
    * It supports both default and custom theme colors, which can be added as shown in the
@@ -25,30 +25,31 @@ export interface SvgIconOwnProps {
    * You can use the `htmlColor` prop to apply a color attribute to the SVG element.
    * @default 'inherit'
    */
-  color?: OverridableStringUnion<
-    | 'inherit'
-    | 'action'
-    | 'disabled'
-    | 'primary'
-    | 'secondary'
-    | 'error'
-    | 'info'
-    | 'success'
-    | 'warning',
-    SvgIconPropsColorOverrides
-  >;
+  color?:
+    | OverridableStringUnion<
+        | 'inherit'
+        | 'action'
+        | 'disabled'
+        | 'primary'
+        | 'secondary'
+        | 'error'
+        | 'info'
+        | 'success'
+        | 'warning',
+        SvgIconPropsColorOverrides
+      >
+    | undefined;
   /**
    * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
    * @default 'medium'
    */
-  fontSize?: OverridableStringUnion<
-    'inherit' | 'large' | 'medium' | 'small',
-    SvgIconPropsSizeOverrides
-  >;
+  fontSize?:
+    | OverridableStringUnion<'inherit' | 'large' | 'medium' | 'small', SvgIconPropsSizeOverrides>
+    | undefined;
   /**
    * Applies a color attribute to the SVG element.
    */
-  htmlColor?: string;
+  htmlColor?: string | undefined;
   /**
    * If `true`, the root node will inherit the custom `component`'s viewBox and the `viewBox`
    * prop will be ignored.
@@ -56,22 +57,22 @@ export interface SvgIconOwnProps {
    * `component`'s viewBox to the root node.
    * @default false
    */
-  inheritViewBox?: boolean;
+  inheritViewBox?: boolean | undefined;
   /**
    * The shape-rendering attribute. The behavior of the different options is described on the
    * [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/shape-rendering).
    * If you are having issues with blurry icons you should investigate this prop.
    */
-  shapeRendering?: string;
+  shapeRendering?: string | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * Provides a human-readable title for the element that contains it.
    * https://www.w3.org/TR/SVG-access/#Equivalent
    */
-  titleAccess?: string;
+  titleAccess?: string | undefined;
   /**
    * Allows you to redefine what the coordinates without units mean inside an SVG element.
    * For example, if the SVG element is 500 (width) by 200 (height),
@@ -80,7 +81,7 @@ export interface SvgIconOwnProps {
    * to bottom right (50,20) and each unit will be worth 10px.
    * @default '0 0 24 24'
    */
-  viewBox?: string;
+  viewBox?: string | undefined;
 }
 
 export interface SvgIconTypeMap<
@@ -94,12 +95,12 @@ export interface SvgIconTypeMap<
  *
  * Demos:
  *
- * - [Icons](https://mui.com/material-ui/icons/)
- * - [Material Icons](https://mui.com/material-ui/material-icons/)
+ * - [Icons](https://next.mui.com/material-ui/icons/)
+ * - [Material Icons](https://next.mui.com/material-ui/material-icons/)
  *
  * API:
  *
- * - [SvgIcon API](https://mui.com/material-ui/api/svg-icon/)
+ * - [SvgIcon API](https://next.mui.com/material-ui/api/svg-icon/)
  */
 declare const SvgIcon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
 
@@ -107,7 +108,7 @@ export type SvgIconProps<
   RootComponent extends React.ElementType = SvgIconTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<SvgIconTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default SvgIcon;

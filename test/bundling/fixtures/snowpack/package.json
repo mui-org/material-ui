@@ -1,7 +1,7 @@
 {
   "name": "snowpack",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "prestart": "node ../../scripts/createFixture.js snowpack",
     "start": "pnpm snowpack build && concurrently --success first --kill-others \"pnpm server\" \"node testSnowpackIntegration\"",
@@ -23,7 +23,7 @@
     "react-is": "18.2.0"
   },
   "devDependencies": {
-    "concurrently": "7.4.0",
+    "concurrently": "10.0.3",
     "@playwright/test": "1.54.1",
     "serve": "14.2.4"
   },

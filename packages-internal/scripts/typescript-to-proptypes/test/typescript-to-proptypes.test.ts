@@ -1,17 +1,19 @@
+/// <reference types="vite/client" />
+import { describe, beforeAll, it, expect } from 'vitest';
 import path from 'path';
 import fs from 'fs';
-import * as ts from 'typescript';
-import { expect } from 'chai';
+import * as ts from '@typescript/typescript6';
 import glob from 'fast-glob';
 import prettier from 'prettier';
-import { TypeScriptProject, createTypeScriptProjectBuilder } from '@mui/internal-docs-utils';
+import type { TypeScriptProject } from '@mui/internal-docs-utils';
+import { createTypeScriptProjectBuilder } from '@mui/internal-docs-utils';
 import { generatePropTypes } from '../src/generatePropTypes';
 import { injectPropTypesInFile } from '../src/injectPropTypesInFile';
 import { getPropTypesFromFile } from '../src/getPropTypesFromFile';
-import { TestOptions } from './types';
+import type { TestOptions } from './types';
 
 const testCases = glob
-  .sync('**/input.{d.ts,ts,tsx}', { absolute: true, cwd: __dirname })
+  .sync('*/input.{d.ts,ts,tsx}', { absolute: true, cwd: __dirname })
   .map((testPath) => {
     const dirname = path.dirname(testPath);
     const name = path.dirname(path.relative(__dirname, testPath));
@@ -32,10 +34,7 @@ describe('typescript-to-proptypes', () => {
     return cachedProject;
   }
 
-  before(function beforeHook() {
-    // Creating a TS program might take a while.
-    this.timeout(20000);
-
+  beforeAll(function beforeHook() {
     const buildProject = createTypeScriptProjectBuilder({
       test: {
         rootPath: path.join(__dirname, '..'),
@@ -52,16 +51,16 @@ describe('typescript-to-proptypes', () => {
     //   testCases.map((testCase) => testCase.inputPath),
     //   ttp.loadConfig(path.resolve(__dirname, '../tsconfig.json')),
     // );
-  });
+  }, 20000);
 
   testCases.forEach((testCase) => {
     const { name: testName, inputPath, inputJS, outputPath } = testCase;
 
-    it(testName, async () => {
+    it(`${testName}`, async () => {
       const project = getProject();
       let options: TestOptions = {};
       try {
-        const optionsModule = await import(`./${testName}/options`);
+        const optionsModule: any = await import(`./${testName}/options.ts`);
         options = optionsModule.default;
       } catch (error) {
         // Assume "Cannot find module" which means "no options".

@@ -115,7 +115,7 @@ export default function Cart() {
     });
   };
   return (
-    (<Root>
+    <Root>
       <Head title="View cart">
         <meta name="robots" content="noindex,nofollow" />
       </Head>
@@ -208,6 +208,6 @@ export default function Cart() {
         </OrderBody>
       </Container>
       <AppFooter />
-    </Root>)
+    </Root>
   );
 }

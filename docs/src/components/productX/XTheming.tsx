@@ -1,28 +1,24 @@
 import * as React from 'react';
-import {
-  DataGridPro,
-  GridColDef,
-  GridCellParams,
-  GridRenderEditCellParams,
-} from '@mui/x-data-grid-pro';
+import type { GridColDef, GridCellParams, GridRenderEditCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro } from '@mui/x-data-grid-pro';
 import { useDemoData } from '@mui/x-data-grid-generator';
-import { CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import SvgTwinkle from 'docs/src/icons/SvgTwinkle';
-import SvgMaterialDesign from 'docs/src/icons/SvgMaterialDesign';
+import { Item, Group, Highlighter } from '@mui/internal-core-docs/AppLayout';
+import { TwinkleIcon, SvgMaterialDesignIcon } from '@mui/internal-core-docs/svgIcons';
 import XGridGlobalStyles from 'docs/src/components/home/XGridGlobalStyles';
 import ProgressBar from 'docs/src/components/x-grid/ProgressBar';
 import EditProgress from 'docs/src/components/x-grid/EditProgress';
 import Status from 'docs/src/components/x-grid/Status';
 import EditStatus from 'docs/src/components/x-grid/EditStatus';
+
+const defaultTheme = createTheme({ cssVariables: true });
 
 const dataGridStyleOverrides = <XGridGlobalStyles selector="#data-grid-theming" pro />;
 
@@ -110,14 +106,14 @@ export default function XTheming() {
           <Group sx={{ m: -2, p: 2 }}>
             <Highlighter disableBorder selected={customized} onClick={() => setCustomized(true)}>
               <Item
-                icon={<SvgTwinkle />}
+                icon={<TwinkleIcon />}
                 title="Custom theme"
                 description="Theming allows you to use your brand's design tokens, easily making the components reflect its look and feel."
               />
             </Highlighter>
             <Highlighter disableBorder selected={!customized} onClick={() => setCustomized(false)}>
               <Item
-                icon={<SvgMaterialDesign />}
+                icon={<SvgMaterialDesignIcon />}
                 title="Material Design"
                 description="Every component comes with Google's tried-and-tested design system, built-in and ready for use."
               />
@@ -143,7 +139,7 @@ export default function XTheming() {
               />
             </Paper>
           ) : (
-            <CssVarsProvider>
+            <ThemeProvider theme={defaultTheme}>
               <Paper
                 elevation={0}
                 sx={[
@@ -175,7 +171,7 @@ export default function XTheming() {
                   density="compact"
                 />
               </Paper>
-            </CssVarsProvider>
+            </ThemeProvider>
           )}
         </Grid>
       </Grid>

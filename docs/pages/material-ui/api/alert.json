@@ -10,21 +10,6 @@
         "description": "'error'<br>&#124;&nbsp;'info'<br>&#124;&nbsp;'success'<br>&#124;&nbsp;'warning'<br>&#124;&nbsp;string"
       }
     },
-    "components": {
-      "type": {
-        "name": "shape",
-        "description": "{ CloseButton?: elementType, CloseIcon?: elementType }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": { "name": "shape", "description": "{ closeButton?: object, closeIcon?: object }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "icon": { "type": { "name": "node" } },
     "iconMapping": {
       "type": {
@@ -148,100 +133,16 @@
       "isGlobal": false
     },
     {
-      "key": "filledError",
-      "className": "MuiAlert-filledError",
-      "description": "Styles applied to the root element if `variant=\"filled\"` and `color=\"error\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "filledInfo",
-      "className": "MuiAlert-filledInfo",
-      "description": "Styles applied to the root element if `variant=\"filled\"` and `color=\"info\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "filledSuccess",
-      "className": "MuiAlert-filledSuccess",
-      "description": "Styles applied to the root element if `variant=\"filled\"` and `color=\"success\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "filledWarning",
-      "className": "MuiAlert-filledWarning",
-      "description": "Styles applied to the root element if `variant=\"filled\"` and `color=\"warning\"`",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "outlined",
       "className": "MuiAlert-outlined",
       "description": "Styles applied to the root element if `variant=\"outlined\"`.",
       "isGlobal": false
     },
     {
-      "key": "outlinedError",
-      "className": "MuiAlert-outlinedError",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"error\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "outlinedInfo",
-      "className": "MuiAlert-outlinedInfo",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"info\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "outlinedSuccess",
-      "className": "MuiAlert-outlinedSuccess",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"success\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "outlinedWarning",
-      "className": "MuiAlert-outlinedWarning",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"warning\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "standard",
       "className": "MuiAlert-standard",
       "description": "Styles applied to the root element if `variant=\"standard\"`.",
       "isGlobal": false
-    },
-    {
-      "key": "standardError",
-      "className": "MuiAlert-standardError",
-      "description": "Styles applied to the root element if `variant=\"standard\"` and `color=\"error\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "standardInfo",
-      "className": "MuiAlert-standardInfo",
-      "description": "Styles applied to the root element if `variant=\"standard\"` and `color=\"info\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "standardSuccess",
-      "className": "MuiAlert-standardSuccess",
-      "description": "Styles applied to the root element if `variant=\"standard\"` and `color=\"success\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "standardWarning",
-      "className": "MuiAlert-standardWarning",
-      "description": "Styles applied to the root element if `variant=\"standard\"` and `color=\"warning\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     }
   ],
   "spread": true,
@@ -250,6 +151,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Alert/Alert.js",
   "inheritance": { "component": "Paper", "pathname": "/material-ui/api/paper/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-alert/\">Alert</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-alert/\">Alert</a></li></ul>"
 }

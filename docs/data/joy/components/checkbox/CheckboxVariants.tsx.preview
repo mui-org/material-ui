@@ -1,4 +1,0 @@
-<Checkbox label="Solid" variant="solid" defaultChecked />
-<Checkbox label="Soft" variant="soft" defaultChecked />
-<Checkbox label="Outlined" variant="outlined" defaultChecked />
-<Checkbox label="Plain" variant="plain" defaultChecked />

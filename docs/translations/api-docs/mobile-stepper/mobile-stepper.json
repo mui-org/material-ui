@@ -8,9 +8,6 @@
       "description": "A back button element. For instance, it can be a <code>Button</code> or an <code>IconButton</code>."
     },
     "classes": { "description": "Override or extend the styles applied to the component." },
-    "LinearProgressProps": {
-      "description": "Props applied to the <code>LinearProgress</code> element."
-    },
     "nextButton": {
       "description": "A next button element. For instance, it can be a <code>Button</code> or an <code>IconButton</code>."
     },

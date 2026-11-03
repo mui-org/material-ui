@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import * as React from 'react';
 import chainPropTypes from '../chainPropTypes';
 
 function isClassComponent(elementType: Function) {
@@ -23,7 +24,7 @@ function elementTypeAcceptingRef(
     // When server-side rendering React doesn't warn either.
     // This is not an accurate check for SSR.
     // This is only in place for emotion compat.
-    // TODO: Revisit once https://github.com/facebook/react/issues/20047 is resolved.
+    // TODO: Revisit once https://github.com/react/react/issues/20047 is resolved.
     typeof window === 'undefined'
   ) {
     return null;
@@ -44,11 +45,16 @@ function elementTypeAcceptingRef(
     warningHint = 'Did you accidentally provide a plain function component instead?';
   }
 
+  if (propValue === React.Fragment) {
+    warningHint = 'Did you accidentally provide a React.Fragment instead?';
+  }
+
   if (warningHint !== undefined) {
+    // #host-reference
     return new Error(
       `Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. ` +
         `Expected an element type that can hold a ref. ${warningHint} ` +
-        'For more information see https://mui.com/r/caveat-with-refs-guide',
+        'For more information see https://next.mui.com/r/caveat-with-refs-guide',
     );
   }
 

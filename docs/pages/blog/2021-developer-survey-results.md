@@ -110,44 +110,44 @@ And what has decreased:
   <summary>Click to see the breakdown of categories.</summary>
 
 <table>
-  <tr><th style="width: 40px;">597</th><th style="width: 700px;">time</th><tr>
-  <tr><th>407</th><th>design</th><tr>
-  <tr><td>148</td><td>design - look & feel</td><tr>
-  <tr><td>122</td><td>design - look & feel+</td><tr>
-  <tr><td>73</td><td>design - consistency</td><tr>
-  <tr><td>73</td><td>design - Material Design</td><tr>
-  <tr><td>6</td><td>design - ?</td><tr>
-  <tr><td>4</td><td>design - easy</td><tr>
-  <tr><td>2</td><td>design - responsiveness</td><tr>
-  <tr><td>1</td><td>design - time</td><tr>
-  <tr><th>309</th><th>components</th><tr>
-  <tr><td>173</td><td>components - quantity</td><tr>
-  <tr><td>124</td><td>components - quality</td><tr>
-  <tr><td>5</td><td>components - advanced</td><tr>
-  <tr><td>3</td><td>components - data grid</td><tr>
-  <tr><td>2</td><td>components - ?</td><tr>
-  <tr><td>1</td><td>components - autocomplete</td><tr>
-  <tr><td>1</td><td>components - base/unstyled</td><tr>
-  <tr><th>306</th><th>DX</th><tr>
-  <tr><td>221</td><td>DX - easy to use</td><tr>
-  <tr><td>49</td><td>DX - consistency</td><tr>
-  <tr><td>32</td><td>DX - API</td><tr>
-  <tr><td>4</td><td>DX - ?</td><tr>
-  <tr><th>181</th><th>customizability</th><tr>
-  <tr><th>57</th><th>docs</th><tr>
-  <tr><td>39</td><td>docs - ?</td><tr>
-  <tr><td>17</td><td>docs - quality</td><tr>
-  <tr><td>1</td><td>docs - quantity</td><tr>
-  <tr><th>26</th><th>community</th><tr>
-  <tr><th>24</th><th>accessibility</th><tr>
-  <tr><th>17</th><th>performance</th><tr>
-  <tr><td>15</td><td>performance - runtime</td><tr>
-  <tr><td>1</td><td>performance - bundle size</td><tr>
-  <tr><td>1</td><td>performance - ?</td><tr>
-  <tr><th>9</th><th>community support</th><tr>
-  <tr><th>5</th><th>icons</th><tr>
-  <tr><th>3</th><th>typescript</th><tr>
-  <tr><th>2</th><th>animations</th><tr>
+  <tr><th style="width: 40px;">597</th><th style="width: 700px;">time</th></tr>
+  <tr><th>407</th><th>design</th></tr>
+  <tr><td>148</td><td>design - look & feel</td></tr>
+  <tr><td>122</td><td>design - look & feel+</td></tr>
+  <tr><td>73</td><td>design - consistency</td></tr>
+  <tr><td>73</td><td>design - Material Design</td></tr>
+  <tr><td>6</td><td>design - ?</td></tr>
+  <tr><td>4</td><td>design - easy</td></tr>
+  <tr><td>2</td><td>design - responsiveness</td></tr>
+  <tr><td>1</td><td>design - time</td></tr>
+  <tr><th>309</th><th>components</th></tr>
+  <tr><td>173</td><td>components - quantity</td></tr>
+  <tr><td>124</td><td>components - quality</td></tr>
+  <tr><td>5</td><td>components - advanced</td></tr>
+  <tr><td>3</td><td>components - data grid</td></tr>
+  <tr><td>2</td><td>components - ?</td></tr>
+  <tr><td>1</td><td>components - autocomplete</td></tr>
+  <tr><td>1</td><td>components - base/unstyled</td></tr>
+  <tr><th>306</th><th>DX</th></tr>
+  <tr><td>221</td><td>DX - easy to use</td></tr>
+  <tr><td>49</td><td>DX - consistency</td></tr>
+  <tr><td>32</td><td>DX - API</td></tr>
+  <tr><td>4</td><td>DX - ?</td></tr>
+  <tr><th>181</th><th>customizability</th></tr>
+  <tr><th>57</th><th>docs</th></tr>
+  <tr><td>39</td><td>docs - ?</td></tr>
+  <tr><td>17</td><td>docs - quality</td></tr>
+  <tr><td>1</td><td>docs - quantity</td></tr>
+  <tr><th>26</th><th>community</th></tr>
+  <tr><th>24</th><th>accessibility</th></tr>
+  <tr><th>17</th><th>performance</th></tr>
+  <tr><td>15</td><td>performance - runtime</td></tr>
+  <tr><td>1</td><td>performance - bundle size</td></tr>
+  <tr><td>1</td><td>performance - ?</td></tr>
+  <tr><th>9</th><th>community support</th></tr>
+  <tr><th>5</th><th>icons</th></tr>
+  <tr><th>3</th><th>typescript</th></tr>
+  <tr><th>2</th><th>animations</th></tr>
 </table>
 </details>
 
@@ -193,222 +193,222 @@ If you are interested in an analysis of the growing and decreasing pain, you can
 <details>
   <summary>Click to see the breakdown of categories.</summary>
   <table>
-    <tr><th style="width: 40px;">329</th><th style="width: 700px;">docs</th><tr>
-    <tr><th>72</th><th>docs - ?</th><tr>
-    <tr><td>62</td><td>docs - more examples</td><tr>
-    <tr><td>29</td><td>docs - more templates</td><tr>
-    <tr><td>28</td><td>docs - beginner friendly</td><tr>
-    <tr><td>28</td><td>docs - tutorials</td><tr>
-    <tr><td>19</td><td>docs - API</td><tr>
-    <tr><td>19</td><td>docs - custom design system</td><tr>
-    <tr><td>16</td><td>docs - more comprehensive</td><tr>
-    <tr><td>15</td><td>docs - content quality</td><tr>
-    <tr><td>9</td><td>docs - organization</td><tr>
-    <tr><td>8</td><td>docs - smaller demos</td><tr>
-    <tr><td>6</td><td>docs - content translation</td><tr>
-    <tr><td>5</td><td>docs - search</td><tr>
-    <tr><td>4</td><td>docs - slow to navigate</td><tr>
-    <tr><td>3</td><td>docs - link to source</td><tr>
-    <tr><td>3</td><td>docs - starter example</td><tr>
-    <tr><td>3</td><td>docs - integration with third-parties</td><tr>
-    <tr><td>1</td><td>docs - visual component discovery</td><tr>
-    <tr><th>300</th><th>more components</th><tr>
-    <tr><td>145</td><td>more components - ?</td><tr>
-    <tr><td>26</td><td>more components - form</td><tr>
-    <tr><td>21</td><td>more components - charts</td><tr>
-    <tr><td>17</td><td>more components - carousel</td><tr>
-    <tr><td>12</td><td>more components - lab to core</td><tr>
-    <tr><td>9</td><td>more components - enterprise apps</td><tr>
-    <tr><td>8</td><td>more components - upload</td><tr>
-    <tr><td>7</td><td>more components - big calendar</td><tr>
-    <tr><td>7</td><td>more components - drag and drop</td><tr>
-    <tr><td>6</td><td>more components - MUI X Pro</td><tr>
-    <tr><td>5</td><td>more components - navbar</td><tr>
-    <tr><td>5</td><td>more components - image</td><tr>
-    <tr><td>4</td><td>more components - inputs</td><tr>
-    <tr><td>4</td><td>more components - rich text editor</td><tr>
-    <tr><td>3</td><td>more components - MUI X</td><tr>
-    <tr><td>2</td><td>more components - layout</td><tr>
-    <tr><td>2</td><td>more components - number input</td><tr>
-    <tr><td>2</td><td>more components - speed to release it</td><tr>
-    <tr><td>2</td><td>more components - virtualization</td><tr>
-    <tr><td>1</td><td>more components - color picker</td><tr>
-    <tr><td>1</td><td>more components - data display</td><tr>
-    <tr><td>1</td><td>more components - link</td><tr>
-    <tr><td>1</td><td>more components - loading button</td><tr>
-    <tr><td>1</td><td>more components - maps</td><tr>
-    <tr><td>1</td><td>more components - mobile</td><tr>
-    <tr><td>1</td><td>more components - nested menu</td><tr>
-    <tr><td>1</td><td>more components - OTP</td><tr>
-    <tr><td>1</td><td>more components - photo viewer</td><tr>
-    <tr><td>1</td><td>more components - scrollspy</td><tr>
-    <tr><td>1</td><td>more components - slider</td><tr>
-    <tr><td>1</td><td>more components - time picker</td><tr>
-    <tr><td>1</td><td>more components - tree select</td><tr>
-    <tr><th>265</th><th>customization</th><tr>
-    <tr><td>71</td><td>customization - ?</td><tr>
-    <tr><td>69</td><td>customization - easier</td><tr>
-    <tr><td>44</td><td>customization - docs</td><tr>
-    <tr><td>27</td><td>customization - improve custom themes</td><tr>
-    <tr><td>26</td><td>customization - color</td><tr>
-    <tr><td>25</td><td>customization - theming</td><tr>
-    <tr><td>3</td><td>customization - theme gallery (coming from the community)</td><tr>
-    <tr><th>212</th><th>system</th><tr>
-    <tr><td>37</td><td>system - ?</td><tr>
-    <tr><td>36</td><td>system - makeStyles back</td><tr>
-    <tr><td>20</td><td>system - docs</td><tr>
-    <tr><td>15</td><td>system - SASS</td><tr>
-    <tr><td>11</td><td>system - interoperability with Tailwind CSS</td><tr>
-    <tr><td>14</td><td>system - simplify</td><tr>
-    <tr><td>8</td><td>system - CSS variables</td><tr>
-    <tr><td>7</td><td>system - interoperability</td><tr>
-    <tr><td>7</td><td>system - no CSS-in-JS runtime</td><tr>
-    <tr><td>6</td><td>system - CSS modules</td><tr>
-    <tr><td>6</td><td>system - dark mode</td><tr>
-    <tr><td>6</td><td>system - utility class names</td><tr>
-    <tr><td>5</td><td>system - verbosity</td><tr>
-    <tr><td>5</td><td>system - performance</td><tr>
-    <tr><td>4</td><td>system - CSS API</td><tr>
-    <tr><td>4</td><td>system - styled-components</td><tr>
-    <tr><td>3</td><td>system - generated classes</td><tr>
-    <tr><td>3</td><td>system - variant</td><tr>
-    <tr><td>3</td><td>system - CSS that can be shared outside of React</td><tr>
-    <tr><td>3</td><td>system - state customization</td><tr>
-    <tr><td>3</td><td>system - theme</td><tr>
-    <tr><td>1</td><td>system - inline styling</td><tr>
-    <tr><td>1</td><td>system - decide on styling solution</td><tr>
-    <tr><td>1</td><td>system - duplicate CSS properties</td><tr>
-    <tr><td>1</td><td>system - transient props</td><tr>
-    <tr><td>1</td><td>system - typescript intellisense</td><tr>
-    <tr><td>1</td><td>system - use more sx oversyled</td><tr>
-    <tr><th>172</th><th>design</th><tr>
-    <tr><td>51</td><td>design - provide more themes (not just Material Design)</td><tr>
-    <tr><td>28</td><td>design - make the default theme look & feel better</td><tr>
-    <tr><td>27</td><td>design - push @mui/base more</td><tr>
-    <tr><td>24</td><td>design - Material Design v3</td><tr>
-    <tr><td>13</td><td>design - drop Material Design</td><tr>
-    <tr><td>10</td><td>design - ?</td><tr>
-    <tr><td>7</td><td>design - denser UI for enterprise apps</td><tr>
-    <tr><td>6</td><td>design - block templates</td><tr>
-    <tr><td>3</td><td>design - responsiveness</td><tr>
-    <tr><td>2</td><td>design - mobile</td><tr>
-    <tr><td>1</td><td>design - color gradients</td><tr>
-    <tr><th>109</th><th>performance</th><tr>
-    <tr><td>46</td><td>performance - bundle size</td><tr>
-    <tr><td>36</td><td>performance - ?</td><tr>
-    <tr><td>16</td><td>performance - runtime</td><tr>
-    <tr><td>4</td><td>performance - fewer DOM node/React components</td><tr>
-    <tr><td>2</td><td>performance</td><tr>
-    <tr><td>2</td><td>performance - docs</td><tr>
-    <tr><td>1</td><td>performance - animations</td><tr>
-    <tr><td>1</td><td>performance - in dev mode</td><tr>
-    <tr><td>1</td><td>performance - unecesseary prefixes</td><tr>
-    <tr><th>97</th><th>DX</th><tr>
-    <tr><td>27</td><td>DX - simpler</td><tr>
-    <tr><td>20</td><td>DX - API</td><tr>
-    <tr><td>17</td><td>DX - higher-level component API</td><tr>
-    <tr><td>6</td><td>DX - lower-level component API</td><tr>
-    <tr><td>5</td><td>DX - import</td><tr>
-    <tr><td>5</td><td>DX - lightweight</td><tr>
-    <tr><td>3</td><td>DX - debugging</td><tr>
-    <tr><td>2</td><td>DX - boilerplate</td><tr>
-    <tr><td>2</td><td>DX - fewer packages</td><tr>
-    <tr><td>2</td><td>DX - expose hooks</td><tr>
-    <tr><td>1</td><td>DX - class names</td><tr>
-    <tr><td>1</td><td>DX - ?</td><tr>
-    <tr><td>1</td><td>DX - composability</td><tr>
-    <tr><td>1</td><td>DX - faster releases</td><tr>
-    <tr><td>1</td><td>DX - fewer releases</td><tr>
-    <tr><td>1</td><td>DX - helper functions</td><tr>
-    <tr><td>1</td><td>DX - versioning</td><tr>
-    <tr><td>1</td><td>DX - vscode plugin</td><tr>
-    <tr><th>75</th><th>data grid</th><tr>
-    <tr><td>62</td><td>data grid - ?</td><tr>
-    <tr><td>3</td><td>data grid - docs</td><tr>
-    <tr><td>2</td><td>data grid - excel</td><tr>
-    <tr><td>1</td><td>data grid - bundle size</td><tr>
-    <tr><td>1</td><td>data grid - column pinning</td><tr>
-    <tr><td>1</td><td>data grid - filtering</td><tr>
-    <tr><td>1</td><td>data grid - full screen</td><tr>
-    <tr><td>1</td><td>data grid - grouping</td><tr>
-    <tr><td>1</td><td>data grid - large dataset</td><tr>
-    <tr><td>1</td><td>data grid - master panel</td><tr>
-    <tr><td>1</td><td>data grid - nesting - export options</td><tr>
-    <tr><th>61</th><th>free vs. paid</th><tr>
-    <tr><td>18</td><td>free vs. paid - all MIT</td><tr>
-    <tr><td>8</td><td>free vs. paid - cheaper Pro plan</td><tr>
-    <tr><td>8</td><td>free vs. paid - no existing features going paid</td><tr>
-    <tr><td>7</td><td>free vs. paid - more MIT</td><tr>
-    <tr><td>6</td><td>free vs. paid - data grid more MIT</td><tr>
-    <tr><td>5</td><td>free vs. paid - no Pro plan (premium can stay)</td><tr>
-    <tr><td>4</td><td>free vs. paid - date picker more MIT</td><tr>
-    <tr><td>2</td><td>free vs. paid - remove docs ads</td><tr>
-    <tr><td>1</td><td>free vs. paid - cheaper Premium plan</td><tr>
-    <tr><td>1</td><td>free vs. paid - design kit more MIT</td><tr>
-    <tr><td>1</td><td>free vs. paid - use donations</td><tr>
-    <tr><th>61</th><th>fewer breaking changes</th><tr>
-    <tr><th>47</th><th>typescript</th><tr>
-    <tr><td>28</td><td>typescript - ?</td><tr>
-    <tr><td>11</td><td>typescript - faster check</td><tr>
-    <tr><td>5</td><td>typescript - docs</td><tr>
-    <tr><td>2</td><td>typescript - more support</td><tr>
-    <tr><td>1</td><td>typescript - converter</td><tr>
-    <tr><td>1</td><td>typescript - intellisense</td><tr>
-    <tr><th>41</th><th>date picker</th><tr>
-    <tr><td>18</td><td>date picker - ?</td><tr>
-    <tr><td>5</td><td>date picker - make stable</td><tr>
-    <tr><td>3</td><td>date picker - range selection</td><tr>
-    <tr><td>2</td><td>date picker - bugs</td><tr>
-    <tr><td>2</td><td>date picker - single range input</td><tr>
-    <tr><td>2</td><td>date picker - time clock is hideous</td><tr>
-    <tr><td>2</td><td>date picker - customizability</td><tr>
-    <tr><td>1</td><td>date picker - dayjs</td><tr>
-    <tr><td>1</td><td>date picker - add range</td><tr>
-    <tr><td>1</td><td>date picker - design</td><tr>
-    <tr><td>1</td><td>date picker - docs</td><tr>
-    <tr><td>1</td><td>date picker - keyboard</td><tr>
-    <tr><td>1</td><td>date picker - locales</td><tr>
-    <tr><td>1</td><td>date picker - rewrite</td><tr>
-    <tr><th>26</th><th>community</th><tr>
-    <tr><td>14</td><td>community - nurture</td><tr>
-    <tr><td>9</td><td>community - support</td><tr>
-    <tr><td>2</td><td>community - release communication</td><tr>
-    <tr><td>1</td><td>community - v4 support</td><tr>
-    <tr><th>20</th><th>icons</th><tr>
-    <tr><td>12</td><td>icons - more</td><tr>
-    <tr><td>3</td><td>icons - ?</td><tr>
-    <tr><td>1</td><td>icons - animation</td><tr>
-    <tr><td>1</td><td>icons - built-in</td><tr>
-    <tr><td>1</td><td>icons - dynamic loading</td><tr>
-    <tr><td>1</td><td>icons - fontawesome</td><tr>
-    <tr><td>1</td><td>icons - other libraries</td><tr>
-    <tr><th>19</th><th>accessibility</th><tr>
-    <tr><td>9</td><td>accessibility - implementation</td><tr>
-    <tr><td>6</td><td>accessibility - docs</td><tr>
-    <tr><td>2</td><td>accessibility - ?</td><tr>
-    <tr><td>2</td><td>accessibility - full audit</td><tr>
-    <tr><th>15</th><th>react native</th><tr>
-    <tr><th>10</th><th>low-code</th><tr>
-    <tr><td>7</td><td>low-code - design system creator</td><tr>
-    <tr><td>2</td><td>low-code - generate code from design files</td><tr>
-    <tr><td>1</td><td>low-code - UI builder</td><tr>
-    <tr><th>10</th><th>more opinionated</th><tr>
-    <tr><th>9</th><th>animations</th><tr>
-    <tr><td>6</td><td>animations - new API</td><tr>
-    <tr><td>1</td><td>animations - Framer Motion</td><tr>
-    <tr><td>1</td><td>animations - on existing components</td><tr>
-    <tr><td>1</td><td>animations - performance</td><tr>
-    <tr><th>7</th><th>fix more bugs</th><tr>
-    <tr><th>7</th><th>support other frameworkds (for example Vue)</th><tr>
-    <tr><th>5</th><th>autocomplete</th><tr>
-    <tr><td>3</td><td>autocomplete - ?</td><tr>
-    <tr><td>1</td><td>autocomplete - abbreviation</td><tr>
-    <tr><td>1</td><td>autocomplete - consistency with text field</td><tr>
-    <tr><th>4</th><th>legacy browser support</th><tr>
-    <tr><th>3</th><th>components consistency</th><tr>
-    <tr><th>2</th><th>less opinionanted</th><tr>
-    <tr><th>2</th><th>fix RTL</th><tr>
-    <tr><th>2</th><th>class components</th><tr>
+    <tr><th style="width: 40px;">329</th><th style="width: 700px;">docs</th></tr>
+    <tr><th>72</th><th>docs - ?</th></tr>
+    <tr><td>62</td><td>docs - more examples</td></tr>
+    <tr><td>29</td><td>docs - more templates</td></tr>
+    <tr><td>28</td><td>docs - beginner friendly</td></tr>
+    <tr><td>28</td><td>docs - tutorials</td></tr>
+    <tr><td>19</td><td>docs - API</td></tr>
+    <tr><td>19</td><td>docs - custom design system</td></tr>
+    <tr><td>16</td><td>docs - more comprehensive</td></tr>
+    <tr><td>15</td><td>docs - content quality</td></tr>
+    <tr><td>9</td><td>docs - organization</td></tr>
+    <tr><td>8</td><td>docs - smaller demos</td></tr>
+    <tr><td>6</td><td>docs - content translation</td></tr>
+    <tr><td>5</td><td>docs - search</td></tr>
+    <tr><td>4</td><td>docs - slow to navigate</td></tr>
+    <tr><td>3</td><td>docs - link to source</td></tr>
+    <tr><td>3</td><td>docs - starter example</td></tr>
+    <tr><td>3</td><td>docs - integration with third-parties</td></tr>
+    <tr><td>1</td><td>docs - visual component discovery</td></tr>
+    <tr><th>300</th><th>more components</th></tr>
+    <tr><td>145</td><td>more components - ?</td></tr>
+    <tr><td>26</td><td>more components - form</td></tr>
+    <tr><td>21</td><td>more components - charts</td></tr>
+    <tr><td>17</td><td>more components - carousel</td></tr>
+    <tr><td>12</td><td>more components - lab to core</td></tr>
+    <tr><td>9</td><td>more components - enterprise apps</td></tr>
+    <tr><td>8</td><td>more components - upload</td></tr>
+    <tr><td>7</td><td>more components - big calendar</td></tr>
+    <tr><td>7</td><td>more components - drag and drop</td></tr>
+    <tr><td>6</td><td>more components - MUI X Pro</td></tr>
+    <tr><td>5</td><td>more components - navbar</td></tr>
+    <tr><td>5</td><td>more components - image</td></tr>
+    <tr><td>4</td><td>more components - inputs</td></tr>
+    <tr><td>4</td><td>more components - rich text editor</td></tr>
+    <tr><td>3</td><td>more components - MUI X</td></tr>
+    <tr><td>2</td><td>more components - layout</td></tr>
+    <tr><td>2</td><td>more components - number input</td></tr>
+    <tr><td>2</td><td>more components - speed to release it</td></tr>
+    <tr><td>2</td><td>more components - virtualization</td></tr>
+    <tr><td>1</td><td>more components - color picker</td></tr>
+    <tr><td>1</td><td>more components - data display</td></tr>
+    <tr><td>1</td><td>more components - link</td></tr>
+    <tr><td>1</td><td>more components - loading button</td></tr>
+    <tr><td>1</td><td>more components - maps</td></tr>
+    <tr><td>1</td><td>more components - mobile</td></tr>
+    <tr><td>1</td><td>more components - nested menu</td></tr>
+    <tr><td>1</td><td>more components - OTP</td></tr>
+    <tr><td>1</td><td>more components - photo viewer</td></tr>
+    <tr><td>1</td><td>more components - scrollspy</td></tr>
+    <tr><td>1</td><td>more components - slider</td></tr>
+    <tr><td>1</td><td>more components - time picker</td></tr>
+    <tr><td>1</td><td>more components - tree select</td></tr>
+    <tr><th>265</th><th>customization</th></tr>
+    <tr><td>71</td><td>customization - ?</td></tr>
+    <tr><td>69</td><td>customization - easier</td></tr>
+    <tr><td>44</td><td>customization - docs</td></tr>
+    <tr><td>27</td><td>customization - improve custom themes</td></tr>
+    <tr><td>26</td><td>customization - color</td></tr>
+    <tr><td>25</td><td>customization - theming</td></tr>
+    <tr><td>3</td><td>customization - theme gallery (coming from the community)</td></tr>
+    <tr><th>212</th><th>system</th></tr>
+    <tr><td>37</td><td>system - ?</td></tr>
+    <tr><td>36</td><td>system - makeStyles back</td></tr>
+    <tr><td>20</td><td>system - docs</td></tr>
+    <tr><td>15</td><td>system - SASS</td></tr>
+    <tr><td>11</td><td>system - interoperability with Tailwind CSS</td></tr>
+    <tr><td>14</td><td>system - simplify</td></tr>
+    <tr><td>8</td><td>system - CSS variables</td></tr>
+    <tr><td>7</td><td>system - interoperability</td></tr>
+    <tr><td>7</td><td>system - no CSS-in-JS runtime</td></tr>
+    <tr><td>6</td><td>system - CSS modules</td></tr>
+    <tr><td>6</td><td>system - dark mode</td></tr>
+    <tr><td>6</td><td>system - utility class names</td></tr>
+    <tr><td>5</td><td>system - verbosity</td></tr>
+    <tr><td>5</td><td>system - performance</td></tr>
+    <tr><td>4</td><td>system - CSS API</td></tr>
+    <tr><td>4</td><td>system - styled-components</td></tr>
+    <tr><td>3</td><td>system - generated classes</td></tr>
+    <tr><td>3</td><td>system - variant</td></tr>
+    <tr><td>3</td><td>system - CSS that can be shared outside of React</td></tr>
+    <tr><td>3</td><td>system - state customization</td></tr>
+    <tr><td>3</td><td>system - theme</td></tr>
+    <tr><td>1</td><td>system - inline styling</td></tr>
+    <tr><td>1</td><td>system - decide on styling solution</td></tr>
+    <tr><td>1</td><td>system - duplicate CSS properties</td></tr>
+    <tr><td>1</td><td>system - transient props</td></tr>
+    <tr><td>1</td><td>system - typescript intellisense</td></tr>
+    <tr><td>1</td><td>system - use more sx oversyled</td></tr>
+    <tr><th>172</th><th>design</th></tr>
+    <tr><td>51</td><td>design - provide more themes (not just Material Design)</td></tr>
+    <tr><td>28</td><td>design - make the default theme look & feel better</td></tr>
+    <tr><td>27</td><td>design - push @mui/base more</td></tr>
+    <tr><td>24</td><td>design - Material Design v3</td></tr>
+    <tr><td>13</td><td>design - drop Material Design</td></tr>
+    <tr><td>10</td><td>design - ?</td></tr>
+    <tr><td>7</td><td>design - denser UI for enterprise apps</td></tr>
+    <tr><td>6</td><td>design - block templates</td></tr>
+    <tr><td>3</td><td>design - responsiveness</td></tr>
+    <tr><td>2</td><td>design - mobile</td></tr>
+    <tr><td>1</td><td>design - color gradients</td></tr>
+    <tr><th>109</th><th>performance</th></tr>
+    <tr><td>46</td><td>performance - bundle size</td></tr>
+    <tr><td>36</td><td>performance - ?</td></tr>
+    <tr><td>16</td><td>performance - runtime</td></tr>
+    <tr><td>4</td><td>performance - fewer DOM node/React components</td></tr>
+    <tr><td>2</td><td>performance</td></tr>
+    <tr><td>2</td><td>performance - docs</td></tr>
+    <tr><td>1</td><td>performance - animations</td></tr>
+    <tr><td>1</td><td>performance - in dev mode</td></tr>
+    <tr><td>1</td><td>performance - unecesseary prefixes</td></tr>
+    <tr><th>97</th><th>DX</th></tr>
+    <tr><td>27</td><td>DX - simpler</td></tr>
+    <tr><td>20</td><td>DX - API</td></tr>
+    <tr><td>17</td><td>DX - higher-level component API</td></tr>
+    <tr><td>6</td><td>DX - lower-level component API</td></tr>
+    <tr><td>5</td><td>DX - import</td></tr>
+    <tr><td>5</td><td>DX - lightweight</td></tr>
+    <tr><td>3</td><td>DX - debugging</td></tr>
+    <tr><td>2</td><td>DX - boilerplate</td></tr>
+    <tr><td>2</td><td>DX - fewer packages</td></tr>
+    <tr><td>2</td><td>DX - expose hooks</td></tr>
+    <tr><td>1</td><td>DX - class names</td></tr>
+    <tr><td>1</td><td>DX - ?</td></tr>
+    <tr><td>1</td><td>DX - composability</td></tr>
+    <tr><td>1</td><td>DX - faster releases</td></tr>
+    <tr><td>1</td><td>DX - fewer releases</td></tr>
+    <tr><td>1</td><td>DX - helper functions</td></tr>
+    <tr><td>1</td><td>DX - versioning</td></tr>
+    <tr><td>1</td><td>DX - vscode plugin</td></tr>
+    <tr><th>75</th><th>data grid</th></tr>
+    <tr><td>62</td><td>data grid - ?</td></tr>
+    <tr><td>3</td><td>data grid - docs</td></tr>
+    <tr><td>2</td><td>data grid - excel</td></tr>
+    <tr><td>1</td><td>data grid - bundle size</td></tr>
+    <tr><td>1</td><td>data grid - column pinning</td></tr>
+    <tr><td>1</td><td>data grid - filtering</td></tr>
+    <tr><td>1</td><td>data grid - full screen</td></tr>
+    <tr><td>1</td><td>data grid - grouping</td></tr>
+    <tr><td>1</td><td>data grid - large dataset</td></tr>
+    <tr><td>1</td><td>data grid - master panel</td></tr>
+    <tr><td>1</td><td>data grid - nesting - export options</td></tr>
+    <tr><th>61</th><th>free vs. paid</th></tr>
+    <tr><td>18</td><td>free vs. paid - all MIT</td></tr>
+    <tr><td>8</td><td>free vs. paid - cheaper Pro plan</td></tr>
+    <tr><td>8</td><td>free vs. paid - no existing features going paid</td></tr>
+    <tr><td>7</td><td>free vs. paid - more MIT</td></tr>
+    <tr><td>6</td><td>free vs. paid - data grid more MIT</td></tr>
+    <tr><td>5</td><td>free vs. paid - no Pro plan (premium can stay)</td></tr>
+    <tr><td>4</td><td>free vs. paid - date picker more MIT</td></tr>
+    <tr><td>2</td><td>free vs. paid - remove docs ads</td></tr>
+    <tr><td>1</td><td>free vs. paid - cheaper Premium plan</td></tr>
+    <tr><td>1</td><td>free vs. paid - design kit more MIT</td></tr>
+    <tr><td>1</td><td>free vs. paid - use donations</td></tr>
+    <tr><th>61</th><th>fewer breaking changes</th></tr>
+    <tr><th>47</th><th>typescript</th></tr>
+    <tr><td>28</td><td>typescript - ?</td></tr>
+    <tr><td>11</td><td>typescript - faster check</td></tr>
+    <tr><td>5</td><td>typescript - docs</td></tr>
+    <tr><td>2</td><td>typescript - more support</td></tr>
+    <tr><td>1</td><td>typescript - converter</td></tr>
+    <tr><td>1</td><td>typescript - intellisense</td></tr>
+    <tr><th>41</th><th>date picker</th></tr>
+    <tr><td>18</td><td>date picker - ?</td></tr>
+    <tr><td>5</td><td>date picker - make stable</td></tr>
+    <tr><td>3</td><td>date picker - range selection</td></tr>
+    <tr><td>2</td><td>date picker - bugs</td></tr>
+    <tr><td>2</td><td>date picker - single range input</td></tr>
+    <tr><td>2</td><td>date picker - time clock is hideous</td></tr>
+    <tr><td>2</td><td>date picker - customizability</td></tr>
+    <tr><td>1</td><td>date picker - dayjs</td></tr>
+    <tr><td>1</td><td>date picker - add range</td></tr>
+    <tr><td>1</td><td>date picker - design</td></tr>
+    <tr><td>1</td><td>date picker - docs</td></tr>
+    <tr><td>1</td><td>date picker - keyboard</td></tr>
+    <tr><td>1</td><td>date picker - locales</td></tr>
+    <tr><td>1</td><td>date picker - rewrite</td></tr>
+    <tr><th>26</th><th>community</th></tr>
+    <tr><td>14</td><td>community - nurture</td></tr>
+    <tr><td>9</td><td>community - support</td></tr>
+    <tr><td>2</td><td>community - release communication</td></tr>
+    <tr><td>1</td><td>community - v4 support</td></tr>
+    <tr><th>20</th><th>icons</th></tr>
+    <tr><td>12</td><td>icons - more</td></tr>
+    <tr><td>3</td><td>icons - ?</td></tr>
+    <tr><td>1</td><td>icons - animation</td></tr>
+    <tr><td>1</td><td>icons - built-in</td></tr>
+    <tr><td>1</td><td>icons - dynamic loading</td></tr>
+    <tr><td>1</td><td>icons - fontawesome</td></tr>
+    <tr><td>1</td><td>icons - other libraries</td></tr>
+    <tr><th>19</th><th>accessibility</th></tr>
+    <tr><td>9</td><td>accessibility - implementation</td></tr>
+    <tr><td>6</td><td>accessibility - docs</td></tr>
+    <tr><td>2</td><td>accessibility - ?</td></tr>
+    <tr><td>2</td><td>accessibility - full audit</td></tr>
+    <tr><th>15</th><th>react native</th></tr>
+    <tr><th>10</th><th>low-code</th></tr>
+    <tr><td>7</td><td>low-code - design system creator</td></tr>
+    <tr><td>2</td><td>low-code - generate code from design files</td></tr>
+    <tr><td>1</td><td>low-code - UI builder</td></tr>
+    <tr><th>10</th><th>more opinionated</th></tr>
+    <tr><th>9</th><th>animations</th></tr>
+    <tr><td>6</td><td>animations - new API</td></tr>
+    <tr><td>1</td><td>animations - Framer Motion</td></tr>
+    <tr><td>1</td><td>animations - on existing components</td></tr>
+    <tr><td>1</td><td>animations - performance</td></tr>
+    <tr><th>7</th><th>fix more bugs</th></tr>
+    <tr><th>7</th><th>support other frameworkds (for example Vue)</th></tr>
+    <tr><th>5</th><th>autocomplete</th></tr>
+    <tr><td>3</td><td>autocomplete - ?</td></tr>
+    <tr><td>1</td><td>autocomplete - abbreviation</td></tr>
+    <tr><td>1</td><td>autocomplete - consistency with text field</td></tr>
+    <tr><th>4</th><th>legacy browser support</th></tr>
+    <tr><th>3</th><th>components consistency</th></tr>
+    <tr><th>2</th><th>less opinionanted</th></tr>
+    <tr><th>2</th><th>fix RTL</th></tr>
+    <tr><th>2</th><th>class components</th></tr>
   </table>
 </details>
 
@@ -520,36 +520,36 @@ The majority of respondents don't use any paid libraries, but those who do are m
 <details>
   <summary>Click to see the breakdown of categories.</summary>
   <table>
-    <tr><th style="width: 40px;">14</th><th style="width: 700px;">customizability</th><tr>
-    <tr><td>9</td><td>customizability - style</td><tr>
-    <tr><td>3</td><td>customizability - ?</td><tr>
-    <tr><td>2</td><td>customizability - docs</td><tr>
-    <tr><th>11</th><th>cheaper Pro plan</th><tr>
-    <tr><th>8</th><th>more features</th><tr>
-    <tr><td>3</td><td>more features - ?</td><tr>
-    <tr><td>2</td><td>more features - master detail</td><tr>
-    <tr><td>1</td><td>more features - row editing</td><tr>
-    <tr><td>1</td><td>more features - column pinning</td><tr>
-    <tr><td>1</td><td>more features - column resizing</td><tr>
-    <tr><th>6</th><th>fix features</th><tr>
-    <tr><td>3</td><td>fix features - filtering</td><tr>
-    <tr><td>1</td><td>fix features - editing</td><tr>
-    <tr><td>1</td><td>fix features - pagination</td><tr>
-    <tr><td>1</td><td>fix features - server-side</td><tr>
-    <tr><th>5</th><th>docs</th><tr>
-    <tr><td>4</td><td>docs - ?</td><tr>
-    <tr><td>1</td><td>docs - more examples</td><tr>
-    <tr><th>4</th><th>look and feel</th><tr>
-    <tr><th>3</th><th>maintain it</th><tr>
-    <tr><th>2</th><th>bugs</th><tr>
-    <tr><th>2</th><th>DX - MUI Core consistency</th><tr>
-    <tr><th>2</th><th>performance</th><tr>
-    <tr><th>2</th><th>translation</th><tr>
-    <tr><th>1</th><th>a11y</th><tr>
-    <tr><th>1</th><th>easier installation</th><tr>
-    <tr><th>1</th><th>fewer breaking changes</th><tr>
-    <tr><th>1</th><th>hook-only API</th><tr>
-    <tr><th>1</th><th>SSR</th><tr>
+    <tr><th style="width: 40px;">14</th><th style="width: 700px;">customizability</th></tr>
+    <tr><td>9</td><td>customizability - style</td></tr>
+    <tr><td>3</td><td>customizability - ?</td></tr>
+    <tr><td>2</td><td>customizability - docs</td></tr>
+    <tr><th>11</th><th>cheaper Pro plan</th></tr>
+    <tr><th>8</th><th>more features</th></tr>
+    <tr><td>3</td><td>more features - ?</td></tr>
+    <tr><td>2</td><td>more features - master detail</td></tr>
+    <tr><td>1</td><td>more features - row editing</td></tr>
+    <tr><td>1</td><td>more features - column pinning</td></tr>
+    <tr><td>1</td><td>more features - column resizing</td></tr>
+    <tr><th>6</th><th>fix features</th></tr>
+    <tr><td>3</td><td>fix features - filtering</td></tr>
+    <tr><td>1</td><td>fix features - editing</td></tr>
+    <tr><td>1</td><td>fix features - pagination</td></tr>
+    <tr><td>1</td><td>fix features - server-side</td></tr>
+    <tr><th>5</th><th>docs</th></tr>
+    <tr><td>4</td><td>docs - ?</td></tr>
+    <tr><td>1</td><td>docs - more examples</td></tr>
+    <tr><th>4</th><th>look and feel</th></tr>
+    <tr><th>3</th><th>maintain it</th></tr>
+    <tr><th>2</th><th>bugs</th></tr>
+    <tr><th>2</th><th>DX - MUI Core consistency</th></tr>
+    <tr><th>2</th><th>performance</th></tr>
+    <tr><th>2</th><th>translation</th></tr>
+    <tr><th>1</th><th>a11y</th></tr>
+    <tr><th>1</th><th>easier installation</th></tr>
+    <tr><th>1</th><th>fewer breaking changes</th></tr>
+    <tr><th>1</th><th>hook-only API</th></tr>
+    <tr><th>1</th><th>SSR</th></tr>
   </table>
 </details>
 
@@ -574,43 +574,43 @@ The majority of respondents don't use any paid libraries, but those who do are m
 <details>
   <summary>Click to see the breakdown of categories.</summary>
   <table>
-    <tr><th style="width: 40px;">37</th><th style="width: 700px;">more features</th><tr>
-    <tr><td>6</td><td>more features - grouping</td><tr>
-    <tr><td>6</td><td>more features - master detail</td><tr>
-    <tr><td>6</td><td>more features - roadmap</td><tr>
-    <tr><td>4</td><td>more features - ?</td><tr>
-    <tr><td>3</td><td>more features - aggregation</td><tr>
-    <tr><td>3</td><td>more features - search</td><tr>
-    <tr><td>3</td><td>more features - tree data</td><tr>
-    <tr><td>2</td><td>more features - column pinning</td><tr>
-    <tr><td>2</td><td>more features - pivot</td><tr>
-    <tr><td>1</td><td>more features - excel</td><tr>
-    <tr><td>1</td><td>more features - row reordering</td><tr>
-    <tr><th>19</th><th>customizability</th><tr>
-    <tr><td>7</td><td>customizability - behavior</td><tr>
-    <tr><td>5</td><td>customizability - style</td><tr>
-    <tr><td>4</td><td>customizability - docs</td><tr>
-    <tr><td>2</td><td>customizability - ?</td><tr>
-    <tr><td>1</td><td>customizability - charts in cells</td><tr>
-    <tr><th>14</th><th>fix features</th><tr>
-    <tr><td>10</td><td>fix features - filtering</td><tr>
-    <tr><td>2</td><td>fix features - lazy loading</td><tr>
-    <tr><td>2</td><td>fix features - server-side</td><tr>
-    <tr><th>5</th><th>performance</th><tr>
-    <tr><td>3</td><td>performance - ?</td><tr>
-    <tr><td>1</td><td>performance - bundle size</td><tr>
-    <tr><td>1</td><td>performance - runtime</td><tr>
-    <tr><th>4</th><th>docs</th><tr>
-    <tr><td>3</td><td>docs - ?</td><tr>
-    <tr><td>1</td><td>docs - more examples</td><tr>
-    <tr><th>3</th><th>cheaper premium plan</th><tr>
-    <tr><th>2</th><th>bugs</th><tr>
-    <tr><th>2</th><th>DX - API</th><tr>
-    <tr><th>2</th><th>LGPL License</th><tr>
-    <tr><th>2</th><th>more components - treeview</th><tr>
-    <tr><th>2</th><th>overflow text</th><tr>
-    <tr><th>1</th><th>DX - MUI Core consistency</th><tr>
-    <tr><th>1</th><th>UX</th><tr>
+    <tr><th style="width: 40px;">37</th><th style="width: 700px;">more features</th></tr>
+    <tr><td>6</td><td>more features - grouping</td></tr>
+    <tr><td>6</td><td>more features - master detail</td></tr>
+    <tr><td>6</td><td>more features - roadmap</td></tr>
+    <tr><td>4</td><td>more features - ?</td></tr>
+    <tr><td>3</td><td>more features - aggregation</td></tr>
+    <tr><td>3</td><td>more features - search</td></tr>
+    <tr><td>3</td><td>more features - tree data</td></tr>
+    <tr><td>2</td><td>more features - column pinning</td></tr>
+    <tr><td>2</td><td>more features - pivot</td></tr>
+    <tr><td>1</td><td>more features - excel</td></tr>
+    <tr><td>1</td><td>more features - row reordering</td></tr>
+    <tr><th>19</th><th>customizability</th></tr>
+    <tr><td>7</td><td>customizability - behavior</td></tr>
+    <tr><td>5</td><td>customizability - style</td></tr>
+    <tr><td>4</td><td>customizability - docs</td></tr>
+    <tr><td>2</td><td>customizability - ?</td></tr>
+    <tr><td>1</td><td>customizability - charts in cells</td></tr>
+    <tr><th>14</th><th>fix features</th></tr>
+    <tr><td>10</td><td>fix features - filtering</td></tr>
+    <tr><td>2</td><td>fix features - lazy loading</td></tr>
+    <tr><td>2</td><td>fix features - server-side</td></tr>
+    <tr><th>5</th><th>performance</th></tr>
+    <tr><td>3</td><td>performance - ?</td></tr>
+    <tr><td>1</td><td>performance - bundle size</td></tr>
+    <tr><td>1</td><td>performance - runtime</td></tr>
+    <tr><th>4</th><th>docs</th></tr>
+    <tr><td>3</td><td>docs - ?</td></tr>
+    <tr><td>1</td><td>docs - more examples</td></tr>
+    <tr><th>3</th><th>cheaper premium plan</th></tr>
+    <tr><th>2</th><th>bugs</th></tr>
+    <tr><th>2</th><th>DX - API</th></tr>
+    <tr><th>2</th><th>LGPL License</th></tr>
+    <tr><th>2</th><th>more components - treeview</th></tr>
+    <tr><th>2</th><th>overflow text</th></tr>
+    <tr><th>1</th><th>DX - MUI Core consistency</th></tr>
+    <tr><th>1</th><th>UX</th></tr>
   </table>
 </details>
 

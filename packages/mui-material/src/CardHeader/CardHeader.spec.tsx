@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import CardHeader, { CardHeaderProps, CardHeaderTypeMap } from '@mui/material/CardHeader';
+import type { CardHeaderProps, CardHeaderTypeMap } from '@mui/material/CardHeader';
+import CardHeader from '@mui/material/CardHeader';
 
 const CustomComponent: React.FC<{ stringProp: string; numberProp: number }> =
   function CustomComponent() {
@@ -52,259 +53,357 @@ function createElementBasePropMixedTest() {
 
 function createElementTypographyTest() {
   React.createElement<CardHeaderProps>(CardHeader, {
-    titleTypographyProps: {
-      align: 'center',
+    slotProps: {
+      title: {
+        align: 'center',
+      },
     },
   });
   React.createElement<CardHeaderProps>(CardHeader, {
-    titleTypographyProps: {
-      // @ts-expect-error
-      align: 'incorrectAlign',
+    slotProps: {
+      title: {
+        // @ts-expect-error: incorrectAlign is not a supported Typography alignment.
+        align: 'incorrectAlign',
+      },
     },
   });
   React.createElement<CardHeaderProps>(CardHeader, {
-    titleTypographyProps: {
-      variant: 'body1',
+    slotProps: {
+      title: {
+        variant: 'body1',
+      },
     },
   });
   React.createElement<CardHeaderProps>(CardHeader, {
-    titleTypographyProps: {
-      // @ts-expect-error
-      variant: 123,
+    slotProps: {
+      title: {
+        // @ts-expect-error: Typography variant must be a variant name, not a number.
+        variant: 123,
+      },
     },
   });
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
-    titleTypographyProps: {
-      component: 'div',
+    slotProps: {
+      title: {
+        component: 'div',
+      },
     },
   });
   // ExpectError: This is expected to err; the type system should catch required props from "CustomComponent".
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
-    titleTypographyProps: {
-      component: CustomComponent,
+    slotProps: {
+      title: {
+        component: CustomComponent,
+      },
     },
   });
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
-    titleTypographyProps: {
-      component: CustomComponent,
-      stringProp: '',
-      numberProp: 0,
+    slotProps: {
+      title: {
+        component: CustomComponent,
+        stringProp: '',
+        numberProp: 0,
+      },
     },
   });
   // ExpectError: This is expected to err; the type system should catch the props type mismatch
   // from "CustomComponent" props.
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
-    titleTypographyProps: {
-      component: CustomComponent,
-      stringProp: 0,
-      numberProp: '',
+    slotProps: {
+      title: {
+        component: CustomComponent,
+        stringProp: 0,
+        numberProp: '',
+      },
     },
   });
   // ExpectError: This is expected to err; the type system is welcoming unknown props.
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
-    titleTypographyProps: {
-      unknownProp: 'shouldNotWork',
+    slotProps: {
+      title: {
+        unknownProp: 'shouldNotWork',
+      },
     },
   });
   React.createElement<CardHeaderProps<DefaultComponent, {}, React.ElementType>>(CardHeader, {
-    titleTypographyProps: {
-      // @ts-expect-error
-      component: 'incorrectComponent',
+    slotProps: {
+      title: {
+        // @ts-expect-error: incorrectComponent is not a valid intrinsic element.
+        component: 'incorrectComponent',
+      },
     },
   });
   React.createElement<CardHeaderProps>(CardHeader, {
-    // @ts-expect-error
-    titleTypographyProps: true,
+    slotProps: { title: true },
   });
 }
 
 function componentPropTest() {
   <CardHeader component="div" />;
   <CardHeader component={CustomComponent} stringProp="string" numberProp={1} />;
-  // @ts-expect-error
+  // @ts-expect-error: incorrectComponent is not a valid intrinsic element.
   <CardHeader component="incorrectComponent" />;
-  // @ts-expect-error
+  // @ts-expect-error: CustomComponent requires both stringProp and numberProp.
   <CardHeader component={CustomComponent} />;
 }
 
 function mixedCardHeaderComponentAndTypographyTest() {
-  <CardHeader component="div" titleTypographyProps={{ component: 'a', href: 'href' }} />;
-  <CardHeader component="div" subheaderTypographyProps={{ component: 'a', href: 'href' }} />;
+  <CardHeader component="div" slotProps={{ title: { component: 'a', href: 'href' } }} />;
+  <CardHeader component="div" slotProps={{ subheader: { component: 'a', href: 'href' } }} />;
   <CardHeader
     component={CustomComponent}
     stringProp="string"
     numberProp={1}
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp', numberProp: 2 }}
+    slotProps={{ title: { component: CustomComponent, stringProp: 'stringProp', numberProp: 2 } }}
   />;
   <CardHeader
     component={CustomComponent}
     stringProp="string"
     numberProp={1}
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp', numberProp: 2 }}
-    subheaderTypographyProps={{
-      component: CustomComponent,
-      stringProp: 'stringProp',
-      numberProp: 2,
+    slotProps={{
+      title: { component: CustomComponent, stringProp: 'stringProp', numberProp: 2 },
+      subheader: {
+        component: CustomComponent,
+        stringProp: 'stringProp',
+        numberProp: 2,
+      },
     }}
   />;
-  // @ts-expect-error
+  // @ts-expect-error: incorrectComponent is not a valid intrinsic element.
   <CardHeader component="incorrectComponent" />;
-  // @ts-expect-error
+  // @ts-expect-error: CustomComponent requires both stringProp and numberProp.
   <CardHeader component={CustomComponent} />;
   <CardHeader
     component={CustomComponent}
     stringProp="string"
     numberProp={1}
-    // @ts-expect-error
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp' }}
-    subheaderTypographyProps={{
-      component: CustomComponent,
-      stringProp: 'stringProp',
-      numberProp: 2,
+    slotProps={{
+      // @ts-expect-error: The custom title component requires numberProp.
+      title: { component: CustomComponent, stringProp: 'stringProp' },
+      subheader: {
+        // @ts-expect-error Before tsgo, this error was merged with line 180 ignore
+        component: CustomComponent,
+        stringProp: 'stringProp',
+        numberProp: 2,
+      },
     }}
   />;
-  // @ts-expect-error
   <CardHeader
     component={CustomComponent}
     stringProp="string"
     numberProp={1}
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp' }}
-    subheaderTypographyProps={{ component: CustomComponent, stringProp: 'stringProp' }}
+    slotProps={{
+      // @ts-expect-error: The custom title component requires numberProp.
+      title: { component: CustomComponent, stringProp: 'stringProp' },
+      subheader: {
+        // @ts-expect-error: The custom subheader component requires numberProp.
+        component: CustomComponent,
+        stringProp: 'stringProp',
+      },
+    }}
   />;
   <CardHeader
-    // @ts-expect-error
     component="incorrectComponent"
     stringProp="string"
     numberProp={1}
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp', numberProp: 2 }}
-    subheaderTypographyProps={{
-      component: CustomComponent,
-      stringProp: 'stringProp',
-      numberProp: 2,
+    slotProps={{
+      // @ts-expect-error: The invalid root component prevents inferring the custom title component props.
+      title: { component: CustomComponent, stringProp: 'stringProp', numberProp: 2 },
+      subheader: {
+        // @ts-expect-error: The invalid root component prevents inferring the custom subheader component props.
+        component: CustomComponent,
+        stringProp: 'stringProp',
+        numberProp: 2,
+      },
     }}
   />;
 }
 
 function titleTypographyPropsTest() {
-  // @ts-expect-error
-  <CardHeader titleTypographyProps={{ component: 'incorrectComponent' }} />;
-  <CardHeader titleTypographyProps={{ component: 'a', href: 'href' }} />;
+  // @ts-expect-error: incorrectComponent is not a valid title element.
+  <CardHeader slotProps={{ title: { component: 'incorrectComponent' } }} />;
+  <CardHeader slotProps={{ title: { component: 'a', href: 'href' } }} />;
   <CardHeader
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp', numberProp: 2 }}
+    slotProps={{ title: { component: CustomComponent, stringProp: 'stringProp', numberProp: 2 } }}
   />;
-  <CardHeader titleTypographyProps={{ variant: 'h1' }} />;
-  <CardHeader titleTypographyProps={{ align: 'left' }} />;
+  <CardHeader slotProps={{ title: { variant: 'h1' } }} />;
+  <CardHeader slotProps={{ title: { align: 'left' } }} />;
   <CardHeader
-    titleTypographyProps={{
-      color: 'primary',
-      display: 'block',
-      gutterBottom: true,
-      noWrap: true,
-      variantMapping: { h1: 'h1' },
+    slotProps={{
+      title: {
+        color: 'primary',
+        display: 'block',
+        gutterBottom: true,
+        noWrap: true,
+        variantMapping: { h1: 'h1' },
+      },
     }}
   />;
-  // @ts-expect-error
   <CardHeader
-    titleTypographyProps={{
-      component: CustomComponent,
-      stringProp: 'stringProp',
-      numberProp: '',
+    slotProps={{
+      title: {
+        // @ts-expect-error: The custom title component requires a numeric numberProp.
+        component: CustomComponent,
+        stringProp: 'stringProp',
+        numberProp: '',
+      },
     }}
   />;
-  // @ts-expect-error
-  <CardHeader titleTypographyProps={{ component: CustomComponent, numberProp: 2 }} />;
+  // @ts-expect-error: The custom title component requires stringProp.
+  <CardHeader slotProps={{ title: { component: CustomComponent, numberProp: 2 } }} />;
   <CardHeader
-    titleTypographyProps={{
-      component: 'a',
-      // ExpectError: This is expected to err; the type system is welcoming unknown props.
-      propThatDoesntExist: 'shouldNotWork',
+    slotProps={{
+      title: {
+        component: 'a',
+        // ExpectError: This is expected to err; the type system is welcoming unknown props.
+        propThatDoesntExist: 'shouldNotWork',
+      },
     }}
   />;
   // Regression test for https://github.com/mui/material-ui/issues/21583
   // which was probably fixed in https://github.com/mui/material-ui/pull/21552.
   <CardHeader
     title={<strong>Contemplative Reptile</strong>}
-    titleTypographyProps={{ component: 'h2' }}
+    slotProps={{ title: { component: 'h2' } }}
   />;
 }
 
 function subheaderTypographyPropsTest() {
-  <CardHeader subheaderTypographyProps={{ component: 'a', href: 'href' }} />;
+  <CardHeader slotProps={{ subheader: { component: 'a', href: 'href' } }} />;
   <CardHeader
-    subheaderTypographyProps={{
-      component: CustomComponent,
-      stringProp: 'stringProp',
-      numberProp: 2,
+    slotProps={{
+      subheader: {
+        component: CustomComponent,
+        stringProp: 'stringProp',
+        numberProp: 2,
+      },
     }}
   />;
-  <CardHeader subheaderTypographyProps={{ variant: 'h1' }} />;
-  <CardHeader subheaderTypographyProps={{ align: 'left' }} />;
+  <CardHeader slotProps={{ subheader: { variant: 'h1' } }} />;
+  <CardHeader slotProps={{ subheader: { align: 'left' } }} />;
   <CardHeader
-    subheaderTypographyProps={{
-      color: 'primary',
-      display: 'block',
-      gutterBottom: true,
-      noWrap: true,
-      variantMapping: { h1: 'h1' },
+    slotProps={{
+      subheader: {
+        color: 'primary',
+        display: 'block',
+        gutterBottom: true,
+        noWrap: true,
+        variantMapping: { h1: 'h1' },
+      },
     }}
   />;
   <CardHeader
-    subheaderTypographyProps={{
-      component: 'a',
-      // ExpectError: This is expected to err; the type system is welcoming unknown props.
-      propThatDoesntExist: 'shouldNotWork',
+    slotProps={{
+      subheader: {
+        component: 'a',
+        // ExpectError: This is expected to err; the type system is welcoming unknown props.
+        propThatDoesntExist: 'shouldNotWork',
+      },
     }}
   />;
-  // @ts-expect-error
-  <CardHeader subheaderTypographyProps={{ component: 'incorrectComponent' }} />;
-  // @ts-expect-error
-  <CardHeader subheaderTypographyProps={{ component: CustomComponent, numberProp: 2 }} />;
+  <CardHeader
+    slotProps={{
+      subheader: {
+        // @ts-expect-error: incorrectComponent is not a valid subheader element.
+        component: 'incorrectComponent',
+      },
+    }}
+  />;
+  <CardHeader
+    slotProps={{
+      subheader: {
+        // @ts-expect-error: The custom subheader component requires stringProp.
+        component: CustomComponent,
+        numberProp: 2,
+      },
+    }}
+  />;
 }
 
 function mixedTypographyPropsTest() {
   <CardHeader
-    titleTypographyProps={{ component: 'a', href: 'href' }}
-    subheaderTypographyProps={{ component: 'a', href: 'href' }}
-  />;
-  <CardHeader
-    titleTypographyProps={{ component: CustomComponent, stringProp: 'stringProp', numberProp: 2 }}
-    subheaderTypographyProps={{
-      component: CustomComponent,
-      stringProp: 'stringProp',
-      numberProp: 2,
+    slotProps={{
+      title: { component: 'a', href: 'href' },
+      subheader: { component: 'a', href: 'href' },
     }}
   />;
-  // @ts-expect-error
   <CardHeader
-    titleTypographyProps={{ component: 'incorrectComponent' }}
-    subheaderTypographyProps={{ component: 'incorrectComponent' }}
-  />;
-  <CardHeader
-    titleTypographyProps={{
-      component: 'a',
-      // ExpectError: This is expected to err; the type system is welcoming unknown props.
-      propThatDoesntExist: 'shouldNotWork',
-    }}
-    subheaderTypographyProps={{
-      component: 'a',
-      // ExpectError: This is expected to err; the type system is welcoming unknown props.
-      propThatDoesntExist: 'shouldNotWork',
+    slotProps={{
+      title: { component: CustomComponent, stringProp: 'stringProp', numberProp: 2 },
+      subheader: {
+        component: CustomComponent,
+        stringProp: 'stringProp',
+        numberProp: 2,
+      },
     }}
   />;
-  // @ts-expect-error
   <CardHeader
-    titleTypographyProps={{ component: CustomComponent, numberProp: 2 }}
-    subheaderTypographyProps={{ component: CustomComponent, numberProp: 2 }}
+    slotProps={{
+      // @ts-expect-error: incorrectComponent is not a valid title element.
+      title: { component: 'incorrectComponent' },
+      subheader: {
+        // @ts-expect-error: incorrectComponent is not a valid subheader element.
+        component: 'incorrectComponent',
+      },
+    }}
   />;
   <CardHeader
-    // @ts-expect-error
-    titleTypographyProps={{ component: CustomComponent, numberProp: 2 }}
-    subheaderTypographyProps={{ component: CustomComponent, numberProp: 2, stringProp: 'yada' }}
+    slotProps={{
+      title: {
+        component: 'a',
+        // ExpectError: This is expected to err; the type system is welcoming unknown props.
+        propThatDoesntExist: 'shouldNotWork',
+      },
+      subheader: {
+        component: 'a',
+        // ExpectError: This is expected to err; the type system is welcoming unknown props.
+        propThatDoesntExist: 'shouldNotWork',
+      },
+    }}
   />;
   <CardHeader
-    titleTypographyProps={{ component: CustomComponent, numberProp: 2, stringProp: 'yada' }}
-    // @ts-expect-error
-    subheaderTypographyProps={{ component: CustomComponent, numberProp: 2 }}
+    slotProps={{
+      title: {
+        // @ts-expect-error: The custom title component requires stringProp.
+        component: CustomComponent,
+        numberProp: 2,
+      },
+      subheader: {
+        // @ts-expect-error: The custom subheader component requires stringProp.
+        component: CustomComponent,
+        numberProp: 2,
+      },
+    }}
+  />;
+  <CardHeader
+    slotProps={{
+      title: {
+        // @ts-expect-error: The custom title component requires stringProp.
+        component: CustomComponent,
+        numberProp: 2,
+      },
+      subheader: {
+        // @ts-expect-error: The invalid title props prevent inferring the custom subheader component.
+        component: CustomComponent,
+        numberProp: 2,
+        stringProp: 'yada',
+      },
+    }}
+  />;
+  <CardHeader
+    slotProps={{
+      title: {
+        // @ts-expect-error: The invalid subheader props prevent inferring the custom title component.
+        component: CustomComponent,
+        numberProp: 2,
+        stringProp: 'yada',
+      },
+      subheader: {
+        // @ts-expect-error: The custom subheader component requires stringProp.
+        component: CustomComponent,
+        numberProp: 2,
+      },
+    }}
   />;
 }
 

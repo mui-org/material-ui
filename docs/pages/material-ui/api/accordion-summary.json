@@ -53,13 +53,6 @@
   ],
   "classes": [
     {
-      "key": "contentGutters",
-      "className": "MuiAccordionSummary-contentGutters",
-      "description": "Styles applied to the children wrapper element unless `disableGutters={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "disabled",
       "className": "Mui-disabled",
       "description": "State class applied to the root element if `disabled={true}`.",
@@ -90,6 +83,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/AccordionSummary/AccordionSummary.js",
   "inheritance": { "component": "ButtonBase", "pathname": "/material-ui/api/button-base/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-accordion/\">Accordion</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-accordion/\">Accordion</a></li></ul>"
 }

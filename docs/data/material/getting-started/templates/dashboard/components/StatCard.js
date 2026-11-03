@@ -1,6 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,7 +7,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
-import { areaElementClasses } from '@mui/x-charts/LineChart';
+import { lineClasses } from '@mui/x-charts/LineChart';
 
 function getDaysInMonth(month, year) {
   const date = new Date(year, month, 0);
@@ -106,7 +105,7 @@ function StatCard({ title, value, interval, trend, data }) {
                 data: daysInWeek, // Use the correct property 'data' for xAxis
               }}
               sx={{
-                [`& .${areaElementClasses.root}`]: {
+                [`& .${lineClasses.area}`]: {
                   fill: `url(#area-gradient-${value})`,
                 },
               }}

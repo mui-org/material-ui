@@ -6,8 +6,7 @@ import deepmerge from '@mui/utils/deepmerge';
 import composeClasses from '@mui/utils/composeClasses';
 import getReactElementRef from '@mui/utils/getReactElementRef';
 import SelectInput from './SelectInput';
-import formControlState from '../FormControl/formControlState';
-import useFormControl from '../FormControl/useFormControl';
+import { useFormControlState } from '../FormControl/useFormControl';
 import ArrowDropDownIcon from '../internal/svg-icons/ArrowDropDown';
 import Input from '../Input';
 import NativeSelectInput from '../NativeSelect/NativeSelectInput';
@@ -72,10 +71,8 @@ const Select = React.forwardRef(function Select(inProps, ref) {
 
   const inputComponent = native ? NativeSelectInput : SelectInput;
 
-  const muiFormControl = useFormControl();
-  const fcs = formControlState({
+  const [fcs] = useFormControlState({
     props,
-    muiFormControl,
     states: ['variant', 'error'],
   });
 

@@ -1,6 +1,4 @@
-import * as React from 'react';
-import { expect } from 'chai';
-
+import { describe, it, expect } from 'vitest';
 import { isMuiElement } from '.';
 import { Input, ListItemSecondaryAction, SvgIcon } from '..';
 

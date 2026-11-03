@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, isJsdom, screen } from '@mui/internal-test-utils';
 import Icon from '@mui/material/Icon';
 import SpeedDialIcon, { speedDialIconClasses as classes } from '@mui/material/SpeedDialIcon';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 
 describe('<SpeedDialIcon />', () => {
@@ -16,12 +16,12 @@ describe('<SpeedDialIcon />', () => {
     refInstanceof: window.HTMLSpanElement,
     muiName: 'MuiSpeedDialIcon',
     testVariantProps: { icon },
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   it('should render the Add icon by default', () => {
-    const { getAllByTestId } = render(<SpeedDialIcon />);
-    expect(getAllByTestId('AddIcon').length).to.equal(1);
+    render(<SpeedDialIcon />);
+    expect(screen.getAllByTestId('AddIcon').length).to.equal(1);
   });
 
   it('should render an Icon', () => {
@@ -65,5 +65,26 @@ describe('<SpeedDialIcon />', () => {
     const { container } = render(<SpeedDialIcon openIcon={icon} open />);
     expect(container.firstChild.querySelector('span')).to.have.class(classes.openIcon);
     expect(container.firstChild.querySelector('span')).to.have.class(classes.openIconOpen);
+  });
+
+  it.skipIf(isJsdom())('disables CSS transitions when reduced motion is always', () => {
+    const theme = createTheme({
+      motion: {
+        reducedMotion: 'always',
+      },
+    });
+
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <SpeedDialIcon open openIcon={icon} />
+      </ThemeProvider>,
+    );
+
+    expect(container.querySelector(`.${classes.icon}`)).toHaveComputedStyle({
+      transitionDuration: '0s',
+    });
+    expect(container.querySelector(`.${classes.openIcon}`)).toHaveComputedStyle({
+      transitionDuration: '0s',
+    });
   });
 });

@@ -93,31 +93,10 @@
       "isGlobal": false
     },
     {
-      "key": "iconFilled",
-      "className": "MuiSelect-iconFilled",
-      "description": "Styles applied to the icon component if `variant=\"filled\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "iconOpen",
       "className": "MuiSelect-iconOpen",
       "description": "Styles applied to the icon component if the popup is open.",
       "isGlobal": false
-    },
-    {
-      "key": "iconOutlined",
-      "className": "MuiSelect-iconOutlined",
-      "description": "Styles applied to the icon component if `variant=\"outlined\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "iconStandard",
-      "className": "MuiSelect-iconStandard",
-      "description": "Styles applied to the icon component if `variant=\"standard\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "multiple",
@@ -162,6 +141,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Select/Select.js",
   "inheritance": { "component": "OutlinedInput", "pathname": "/material-ui/api/outlined-input/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-select/\">Select</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-select/\">Select</a></li></ul>"
 }

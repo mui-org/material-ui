@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createTheme } from '@mui/material/styles';
 import createTransitions, { easing, duration } from './createTransitions';
 
@@ -16,6 +16,16 @@ describe('createTransitions', () => {
       },
     });
     expect(theme.transitions.create('color')).to.equal(`color 432ms ${easing.easeInOut} 0ms`);
+  });
+
+  it('should not expose reducedMotion on transitions', () => {
+    const theme = createTheme({
+      transitions: {
+        reducedMotion: 'system',
+      },
+    });
+
+    expect(theme.transitions).not.to.have.property('reducedMotion');
   });
 
   describe('create() function', () => {

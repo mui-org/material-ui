@@ -6,42 +6,67 @@ import { TypographyProps } from '../Typography';
 import { ListItemTextClasses } from './listItemTextClasses';
 import { CreateSlotsAndSlotProps, SlotProps } from '../utils/types';
 
+export interface ListItemTextRootSlotPropsOverrides {}
+
 export interface ListItemTextSlots {
   /**
    * The component that renders the root slot.
    * @default 'div'
    */
-  root?: React.ElementType;
+  root?: React.ElementType | undefined;
   /**
    * The component that renders the primary slot.
    * @default Typography
    */
-  primary?: React.ElementType;
+  primary?: React.ElementType | undefined;
   /**
    * The component that renders the secondary slot.
    * @default Typography
    */
-  secondary?: React.ElementType;
+  secondary?: React.ElementType | undefined;
 }
 
-export type ListItemTextSlotsAndSlotProps = CreateSlotsAndSlotProps<
+export type ListItemTextSlotsAndSlotProps<
+  PrimaryTypographyComponent extends React.ElementType = React.ElementType<TypographyProps<'span'>>,
+  SecondaryTypographyComponent extends React.ElementType = React.ElementType<TypographyProps<'p'>>,
+> = CreateSlotsAndSlotProps<
   ListItemTextSlots,
   {
     /**
-     * Props forwared to the root slot.
+     * Props forwarded to the root slot.
      * By default, the available props are based on `div` element.
      */
-    root: SlotProps<'div', {}, ListItemTextOwnerState>;
+    root: SlotProps<'div', ListItemTextRootSlotPropsOverrides, ListItemTextOwnerState>;
     /**
-     * Props forwared to the primary slot (as long as disableTypography is not `true`)
+     * Props forwarded to the primary slot (as long as disableTypography is not `true`)
      * By default, the available props are based on the [Typography](https://mui.com/material-ui/api/typography/#props) component
      */
-    primary: SlotProps<React.ElementType<TypographyProps>, {}, ListItemTextOwnerState>;
+    primary:
+      | TypographyProps<
+          PrimaryTypographyComponent,
+          { component?: PrimaryTypographyComponent | undefined }
+        >
+      | ((
+          ownerState: ListItemTextOwnerState,
+        ) => TypographyProps<
+          PrimaryTypographyComponent,
+          { component?: PrimaryTypographyComponent | undefined }
+        >);
     /**
      * Props forwarded to the secondary slot (as long as disableTypography is not `true`)
      * By default, the available props are based on the [Typography](https://mui.com/material-ui/api/typography/#props) component
      */
-    secondary: SlotProps<React.ElementType<TypographyProps>, {}, ListItemTextOwnerState>;
+    secondary:
+      | TypographyProps<
+          SecondaryTypographyComponent,
+          { component?: SecondaryTypographyComponent | undefined }
+        >
+      | ((
+          ownerState: ListItemTextOwnerState,
+        ) => TypographyProps<
+          SecondaryTypographyComponent,
+          { component?: SecondaryTypographyComponent | undefined }
+        >);
   }
 >;
 
@@ -50,8 +75,10 @@ export interface ListItemTextOwnerState extends ListItemTextProps {}
 export interface ListItemTextProps<
   PrimaryTypographyComponent extends React.ElementType = 'span',
   SecondaryTypographyComponent extends React.ElementType = 'p',
-> extends StandardProps<React.HTMLAttributes<HTMLDivElement>>,
-    ListItemTextSlotsAndSlotProps {
+>
+  extends
+    StandardProps<React.HTMLAttributes<HTMLDivElement>>,
+    ListItemTextSlotsAndSlotProps<PrimaryTypographyComponent, SecondaryTypographyComponent> {
   /**
    * Alias for the `primary` prop.
    */
@@ -59,7 +86,7 @@ export interface ListItemTextProps<
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ListItemTextClasses>;
+  classes?: Partial<ListItemTextClasses> | undefined;
   /**
    * If `true`, the children won't be wrapped by a Typography component.
    * This can be useful to render an alternative Typography variant by wrapping
@@ -67,54 +94,37 @@ export interface ListItemTextProps<
    * with the Typography component.
    * @default false
    */
-  disableTypography?: boolean;
+  disableTypography?: boolean | undefined;
   /**
    * If `true`, the children are indented.
    * This should be used if there is no left avatar or left icon.
    * @default false
    */
-  inset?: boolean;
+  inset?: boolean | undefined;
   /**
    * The main content element.
    */
   primary?: React.ReactNode;
   /**
-   * These props will be forwarded to the primary typography component
-   * (as long as disableTypography is not `true`).
-   * @deprecated Use `slotProps.primary` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  primaryTypographyProps?: TypographyProps<
-    PrimaryTypographyComponent,
-    { component?: PrimaryTypographyComponent }
-  >;
-  /**
    * The secondary content element.
    */
   secondary?: React.ReactNode;
   /**
-   * These props will be forwarded to the secondary typography component
-   * (as long as disableTypography is not `true`).
-   * @deprecated Use `slotProps.secondary` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  secondaryTypographyProps?: TypographyProps<
-    SecondaryTypographyComponent,
-    { component?: SecondaryTypographyComponent }
-  >;
-  /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
  *
  * Demos:
  *
- * - [Lists](https://mui.com/material-ui/react-list/)
+ * - [Lists](https://next.mui.com/material-ui/react-list/)
+ * - [Menubar](https://next.mui.com/material-ui/react-menubar/)
  *
  * API:
  *
- * - [ListItemText API](https://mui.com/material-ui/api/list-item-text/)
+ * - [ListItemText API](https://next.mui.com/material-ui/api/list-item-text/)
  */
 export default function ListItemText<
   PrimaryTypographyComponent extends React.ElementType = 'span',

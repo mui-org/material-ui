@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "muiVersion": ">=9.0.0 <10.0.0",
+  "organization": "Material UI",
+  "abstract": "Documents Next.js integration for Material UI: AppRouterCacheProvider and Pages Router Document/App cache wiring, Emotion options, next/font with themes, CSS theme variables and SSR flicker pointers, enableCssLayer for Tailwind/CSS Modules, and Next.js Link client-wrapper patterns.",
+  "references": [
+    "https://mui.com/material-ui/integrations/nextjs.md",
+    "https://mui.com/material-ui/integrations/routing.md",
+    "https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts",
+    "https://nextjs.org/docs/app"
+  ]
+}

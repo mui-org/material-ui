@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -22,17 +22,20 @@ import WarningRounded from '@mui/icons-material/WarningRounded';
 import ShoppingCartRounded from '@mui/icons-material/ShoppingCartRounded';
 import InfoRounded from '@mui/icons-material/InfoRounded';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import More from 'docs/src/components/action/More';
-import Frame from 'docs/src/components/action/Frame';
+import {
+  Item,
+  Group,
+  Highlighter,
+  More,
+  Frame,
+  MaterialVsCustomToggle,
+} from '@mui/internal-core-docs/AppLayout';
 import { ShowcaseCodeWrapper } from 'docs/src/components/home/ShowcaseContainer';
-import { customTheme } from 'docs/src/components/home/MaterialDesignComponents';
-import { HighlightedCode } from '@mui/docs/HighlightedCode';
-import MaterialVsCustomToggle from 'docs/src/components/action/MaterialVsCustomToggle';
-import ROUTES from 'docs/src/route';
+import { customTheme, defaultTheme } from 'docs/src/components/home/MaterialDesignComponents';
+import { HighlightedCode } from '@mui/internal-core-docs/HighlightedCode';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 
 const DEMOS = ['Button', 'Text Field', 'Table', 'Alert', 'Tooltip'] as const;
 
@@ -140,7 +143,7 @@ export default function MaterialComponents() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Frame sx={{ height: '100%' }}>
             <Frame.Demo className="mui-default-theme" sx={{ flexGrow: 1 }}>
-              <CssVarsProvider theme={customized ? customTheme : undefined}>
+              <ThemeProvider theme={customized ? customTheme : defaultTheme}>
                 {demo === 'Button' && (
                   <Box
                     sx={{
@@ -166,9 +169,8 @@ export default function MaterialComponents() {
                 )}
                 {demo === 'Text Field' && (
                   <Stack
-                    justifyContent="center"
                     spacing={2}
-                    sx={{ p: 2, width: '50%', margin: 'auto' }}
+                    sx={{ justifyContent: 'center', p: 2, width: '50%', margin: 'auto' }}
                   >
                     <TextField variant="standard" label="Username" />
                     <TextField variant="outlined" label="Email" type="email" />
@@ -239,10 +241,8 @@ export default function MaterialComponents() {
                 )}
                 {demo === 'Tooltip' && (
                   <Stack
-                    alignItems="center"
-                    justifyContent="center"
                     spacing={1}
-                    sx={{ minHeight: 100, py: 2 }}
+                    sx={{ alignItems: 'center', justifyContent: 'center', minHeight: 100, py: 2 }}
                   >
                     <Tooltip
                       title="Appears on hover"
@@ -250,7 +250,7 @@ export default function MaterialComponents() {
                       placement="top"
                       slotProps={{ popper: { disablePortal: true } }}
                     >
-                      <Typography color="text.secondary">Top</Typography>
+                      <Typography sx={{ color: 'text.secondary' }}>Top</Typography>
                     </Tooltip>
                     <Box sx={{ '& > *': { display: 'inline-block' } }}>
                       <Tooltip
@@ -260,7 +260,7 @@ export default function MaterialComponents() {
                         open
                         slotProps={{ popper: { disablePortal: true } }}
                       >
-                        <Typography color="text.secondary">Left</Typography>
+                        <Typography sx={{ color: 'text.secondary' }}>Left</Typography>
                       </Tooltip>
                       <Box sx={{ display: 'inline-block', width: 80 }} />
                       <Tooltip
@@ -269,7 +269,7 @@ export default function MaterialComponents() {
                         placement="right"
                         slotProps={{ popper: { disablePortal: true } }}
                       >
-                        <Typography color="text.secondary">Right</Typography>
+                        <Typography sx={{ color: 'text.secondary' }}>Right</Typography>
                       </Tooltip>
                     </Box>
                     <Tooltip
@@ -278,11 +278,11 @@ export default function MaterialComponents() {
                       placement="bottom"
                       slotProps={{ popper: { disablePortal: true } }}
                     >
-                      <Typography color="text.secondary">Bottom</Typography>
+                      <Typography sx={{ color: 'text.secondary' }}>Bottom</Typography>
                     </Tooltip>
                   </Stack>
                 )}
-              </CssVarsProvider>
+              </ThemeProvider>
             </Frame.Demo>
             <Frame.Info data-mui-color-scheme="dark" sx={{ p: 0 }}>
               <MaterialVsCustomToggle customized={customized} setCustomized={setCustomized} />

@@ -70,7 +70,7 @@ const theme = {
 
 ## Example
 
-{{"demo": "SpacingDemo.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/demo/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ p: 1 }}>…
@@ -83,7 +83,7 @@ const theme = {
 The CSS flex and grid display properties are often used to align elements at the center.
 However, you can also use `margin-left: auto;`, `margin-right: auto;`, and a width for horizontally centering:
 
-{{"demo": "HorizontalCentering.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/horizontal-centering/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ mx: 'auto', width: 200 }}>…

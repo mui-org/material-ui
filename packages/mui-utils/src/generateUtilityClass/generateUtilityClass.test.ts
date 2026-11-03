@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect, afterEach } from 'vitest';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import ClassNameGenerator from '@mui/utils/ClassNameGenerator';
 

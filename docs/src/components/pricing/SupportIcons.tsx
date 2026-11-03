@@ -1,4 +1,3 @@
-import * as React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 
 export function ProSupportIcon({ idPrefix = '' }: { idPrefix?: string }) {

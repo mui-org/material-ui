@@ -1,9 +1,0 @@
-{content}
-<Divider>Visual indicator</Divider>
-{content}
-<Divider>
-  <Chip variant="soft" color="neutral" size="sm">
-    Visual indicator
-  </Chip>
-</Divider>
-{content}

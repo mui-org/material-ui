@@ -24,7 +24,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "DefaultProps.js"}}
+{{"component": "file://./demos/default-props/index.ts"}}
 
 If you're using TypeScript and [lab components](/material-ui/about-the-lab/), check [this article to learn how to override their styles](/material-ui/about-the-lab/#typescript).
 
@@ -52,7 +52,7 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "GlobalThemeOverride.js"}}
+{{"component": "file://./demos/global-theme-override/index.ts"}}
 
 ### Variants
 
@@ -153,7 +153,7 @@ declare module '@mui/material/Button' {
 }
 ```
 
-{{"demo": "GlobalThemeVariants.js"}}
+{{"component": "file://./demos/global-theme-variants/index.ts"}}
 
 The variant `props` can also be defined as a callback, allowing you to apply styles based on conditions. This is useful for styling when a property does not have a specific value.
 
@@ -212,7 +212,7 @@ This is especially handy if you're already using the `sx` prop with your compone
 The `sx` prop is a stable feature for customizing components since Material UI v5, but it is still considered _experimental_ when used directly inside the theme object.
 :::
 
-{{"demo": "GlobalThemeOverrideSx.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/global-theme-override-sx/index.ts", "collapseToEmpty": true}}
 
 ```tsx
 const finalTheme = createTheme({
@@ -257,4 +257,4 @@ const theme = createTheme({
 });
 ```
 
-{{"demo": "ThemeVariables.js"}}
+{{"component": "file://./demos/theme-variables/index.ts"}}

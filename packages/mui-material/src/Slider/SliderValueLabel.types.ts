@@ -1,7 +1,8 @@
 export interface SliderValueLabelProps {
-  children?: React.ReactElement<{ className?: string; children?: React.ReactNode }>;
-  className?: string;
-  style?: React.CSSProperties;
+  children?:
+    React.ReactElement<{ className?: string | undefined; children?: React.ReactNode }> | undefined;
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
   /**
    * If `true`, the value label is visible.
    */
@@ -18,5 +19,5 @@ export interface SliderValueLabelProps {
    * - `off` will never display.
    * @default 'off'
    */
-  valueLabelDisplay?: 'on' | 'auto' | 'off';
+  valueLabelDisplay?: 'on' | 'auto' | 'off' | undefined;
 }

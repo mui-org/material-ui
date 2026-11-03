@@ -1,0 +1,11 @@
+{
+  "axe": "docs/data/material/components/toggle-button/toggle-button.a11y.json",
+  "inherits": "ToggleButton",
+  "criteria": {
+    "1.3.1": {},
+    "1.4.10": {},
+    "2.4.6": { "group": "Manual", "flagged": true },
+    "4.1.2": {}
+  },
+  "notApplicable": ["3.3.2"]
+}

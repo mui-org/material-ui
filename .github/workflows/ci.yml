@@ -2,38 +2,41 @@ name: CI
 
 on:
   push:
-    branches-ignore:
-      # Renovate branches are always Pull Requests.
-      # We don't need to run CI twice (push+pull_request)
-      - 'renovate/**'
-      - 'dependabot/**'
+    branches:
+      # should sync with ci-check.yml as a workaround to bypass github checks
+      - master
+      - next
+      - v*.x
   pull_request:
     paths-ignore:
       # should sync with ci-check.yml as a workaround to bypass github checks
-      - 'examples/**'
+      - 'docs/**'
 
 permissions: {}
 
 jobs:
   continuous-releases:
+    name: Continuous releases / pkg.pr.new releases
+    if: ${{ github.repository_owner == 'mui' }}
     runs-on: ubuntu-latest
-    # do not run on forks
-    if: github.repository == 'mui/material-ui'
     steps:
       - run: echo "${{ github.actor }}"
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          # fetch all tags which are required for `pnpm release:changelog`
           fetch-depth: 0
       - name: Set up pnpm
-        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 20.19.4
-          cache: 'pnpm' # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
-      - run: pnpm install:codesandbox
-      - run: pnpm build:codesandbox
-      - run: pnpm pkg-pr-new-release
+          node-version: '22.23.4'
+          # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm release:build
+      - name: Publish packages to pkg.pr.new
+        uses: mui/mui-public/.github/actions/ci-publish@139de498efb5493689bd7982f18f2862b679c981 # master
 
   # Tests dev-only scripts across all supported dev environments
   test-dev:
@@ -43,28 +46,81 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - run: echo "${{ github.actor }}"
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - run: echo '${{ github.actor }}'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # fetch all tags which are required for `pnpm release:changelog`
           fetch-depth: 0
       - name: Set up pnpm
-        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 20.19.4
+          node-version: '22.23.4'
           cache: 'pnpm' # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-dependencies
       - run: pnpm install
-      - run: pnpm build:ci
+      - name: Cache Next.js build
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: docs/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('docs/**/*.js', 'docs/**/*.ts', 'docs/**/*.tsx', 'docs/**/*.jsx', 'docs/**/*.json', 'docs/**/*.md', 'docs/**/*.mdx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+            ${{ runner.os }}-nextjs-
+      - run: pnpm release:build
+      - name: Build docs
+        run: pnpm docs:build
         env:
           NODE_OPTIONS: --max_old_space_size=6144
-      - run: pnpm release:changelog
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: pnpm validate-declarations
-      - name: pnpm release:tag
+          # macOS-latest has 3 CPUs, but we get "EMFILE: too many open files" errors with that parallelism
+          # Limit Next.js to 2 CPUs to prevent file descriptor exhaustion. Empty string uses os.availableParallelism()
+          NEXT_PARALLELISM: ${{ runner.os == 'macOS' && '2' || '' }}
+          GITHUB_AUTH: Bearer ${{ secrets.GITHUB_TOKEN }}
+      # - run: pnpm release:changelog
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug export-detail.json on when pnpm docs:build fails with EMFILE error
+        if: failure()
+        run: cat ./docs/.next/export-detail.json || true
+      - name: Extract Vale version
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        id: vale-version
         run: |
-          git remote -v
-          pnpm release:tag --dryRun
+          VERSION=$(node -p "(require('./package.json').config && require('./package.json').config.valeVersion) || ''")
+          echo "vale_version=$VERSION" >> $GITHUB_OUTPUT
+      - uses: vale-cli/vale-action@518a9136acc6e6668ce7c00d367051e0941e87ff # v3.0.0
+        continue-on-error: true # GitHub Action flag needed until https://github.com/errata-ai/vale-action/issues/89 is fixed
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        with:
+          version: ${{ steps.vale-version.outputs.vale_version }}
+          # Errors should be more visible
+          fail_on_error: true
+          # The other reports don't work, not really https://github.com/reviewdog/reviewdog#reporters
+          reporter: github-pr-check
+          # Required, set by GitHub actions automatically:
+          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
+          token: ${{secrets.GITHUB_TOKEN}}
+
+  # Mirrors the real publish workflow environment (`publish.yml`) so an env
+  # mismatch — e.g. the Node version pinned by `publish-prepare` violating our
+  # engineStrict `engines` range — is caught here instead of during publishing.
+  publish-dry-run:
+    name: Publish Dry Run
+
+    if: ${{ github.repository_owner == 'mui' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Prepare for publishing
+        uses: mui/mui-public/.github/actions/publish-prepare@139de498efb5493689bd7982f18f2862b679c981 # master
+        with:
+          node-version: '22.23.4'
+      - name: Dry run npm publishing
+        env:
+          IS_PUBLISH_TEST: 'true'
+        # #npm-tag-reference
+        run: pnpm code-infra publish --ci --dry-run --tag next

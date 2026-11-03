@@ -41,12 +41,6 @@
       "nodeName": "the <code>icon</code> HTML element",
       "conditions": "both <code>icon</code> and <code>label</code> are provided"
     },
-    "iconWrapper": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the <code>icon</code> HTML element",
-      "conditions": "both <code>icon</code> and <code>label</code> are provided",
-      "deprecationInfo": "Use <code>icon</code> class instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details"
-    },
     "labelIcon": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",

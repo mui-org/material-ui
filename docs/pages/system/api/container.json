@@ -80,6 +80,5 @@
   "forwardsRefTo": "HTMLElement",
   "filename": "/packages/mui-system/src/Container/Container.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-container/\">Container (Material UI)</a></li>\n<li><a href=\"/system/react-container/\">Container (MUI System)</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-container/\">Container (Material UI)</a></li>\n<li><a href=\"/system/react-container/\">Container (MUI System)</a></li></ul>"
 }

@@ -3,24 +3,6 @@
     "children": { "type": { "name": "custom", "description": "element" }, "required": true },
     "arrow": { "type": { "name": "bool" }, "default": "false" },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
-    "components": {
-      "type": {
-        "name": "shape",
-        "description": "{ Arrow?: elementType, Popper?: elementType, Tooltip?: elementType, Transition?: elementType }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ arrow?: object, popper?: object, tooltip?: object, transition?: object }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "describeChild": { "type": { "name": "bool" }, "default": "false" },
     "disableFocusListener": { "type": { "name": "bool" }, "default": "false" },
     "disableHoverListener": { "type": { "name": "bool" }, "default": "false" },
@@ -55,17 +37,6 @@
       },
       "default": "'bottom'"
     },
-    "PopperComponent": {
-      "type": { "name": "elementType" },
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots.popper</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "PopperProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.popper</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "slotProps": {
       "type": {
         "name": "shape",
@@ -87,18 +58,7 @@
       },
       "additionalInfo": { "sx": true }
     },
-    "title": { "type": { "name": "node" } },
-    "TransitionComponent": {
-      "type": { "name": "elementType" },
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots.transition</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "TransitionProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.transition</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    }
+    "title": { "type": { "name": "node" } }
   },
   "name": "Tooltip",
   "imports": [
@@ -114,7 +74,7 @@
     },
     {
       "name": "transition",
-      "description": "The component used for the transition.\n[Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.",
+      "description": "The component used for the transition.\n[Follow this guide](/material-ui/transitions/#transition-slots) to learn more about the requirements for this component.",
       "default": "Grow",
       "class": null
     },
@@ -191,6 +151,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/Tooltip/Tooltip.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-tooltip/\">Tooltip</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-tooltip/\">Tooltip</a></li></ul>"
 }

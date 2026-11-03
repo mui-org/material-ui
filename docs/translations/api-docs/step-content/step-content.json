@@ -8,14 +8,8 @@
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },
-    "TransitionComponent": {
-      "description": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
-    },
     "transitionDuration": {
       "description": "Adjust the duration of the content expand transition. Passed as a prop to the transition component.<br>Set to &#39;auto&#39; to automatically calculate transition time based on height."
-    },
-    "TransitionProps": {
-      "description": "Props applied to the transition element. By default, the element is based on this <a href=\"https://reactcommunity.org/react-transition-group/transition/\"><code>Transition</code></a> component."
     }
   },
   "classDescriptions": {
@@ -27,6 +21,6 @@
     "root": { "description": "Styles applied to the root element." }
   },
   "slotDescriptions": {
-    "transition": "The component that renders the transition slot. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
+    "transition": "The component that renders the transition slot. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
 }

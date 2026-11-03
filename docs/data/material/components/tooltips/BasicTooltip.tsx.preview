@@ -1,5 +1,0 @@
-<Tooltip title="Delete">
-  <IconButton>
-    <DeleteIcon />
-  </IconButton>
-</Tooltip>

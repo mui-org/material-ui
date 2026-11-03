@@ -1,11 +1,11 @@
-/* eslint-disable material-ui/no-empty-box */
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, expect, afterEach, it } from 'vitest';
+import { createRenderer, isJsdom } from '@mui/internal-test-utils';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { unstable_ClassNameGenerator as ClassNameGenerator } from '@mui/material/className';
 import describeConformance from '../../test/describeConformance';
+
+const isJSDOM = isJsdom();
 
 describe('<Box />', () => {
   const { render } = createRenderer();
@@ -13,24 +13,11 @@ describe('<Box />', () => {
   describeConformance(<Box />, () => ({
     render,
     inheritComponent: 'div',
-    skip: [
-      'componentProp',
-      'componentsProp',
-      'rootClass',
-      'themeVariants',
-      'themeStyleOverrides',
-      'themeDefaultProps',
-    ],
+    skip: ['rootClass', 'themeVariants', 'themeStyleOverrides', 'themeDefaultProps'],
     refInstanceof: window.HTMLDivElement,
   }));
 
-  it('respects theme from context', function test() {
-    const isJSDOM = /jsdom/.test(window.navigator.userAgent);
-
-    if (isJSDOM) {
-      this.skip();
-    }
-
+  it.skipIf(isJSDOM)('respects theme from context', function test() {
     const theme = createTheme({
       palette: {
         primary: {
@@ -41,7 +28,7 @@ describe('<Box />', () => {
 
     const { container } = render(
       <ThemeProvider theme={theme}>
-        <Box color="primary.main" />
+        <Box sx={{ color: 'primary.main' }} />
       </ThemeProvider>,
     );
 

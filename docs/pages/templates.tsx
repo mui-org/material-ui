@@ -1,6 +1,5 @@
-import * as React from 'react';
 import Divider from '@mui/material/Divider';
-import Head from 'docs/src/modules/components/Head';
+
 import AppHeader from 'docs/src/layouts/AppHeader';
 import AppFooter from 'docs/src/layouts/AppFooter';
 import TemplateHero from 'docs/src/components/productTemplate/TemplateHero';
@@ -8,9 +7,9 @@ import ValueProposition from 'docs/src/components/home/ValueProposition';
 import TemplateDemo from 'docs/src/components/productTemplate/TemplateDemo';
 import Testimonials from 'docs/src/components/home/Testimonials';
 import HeroEnd from 'docs/src/components/home/HeroEnd';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
 import References, { TEMPLATES_CUSTOMERS } from 'docs/src/components/home/References';
-import AppHeaderBanner from 'docs/src/components/banner/AppHeaderBanner';
+import { AppHeaderBanner, AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 
 export default function Templates() {
   return (
@@ -22,7 +21,7 @@ export default function Templates() {
       />
       <AppHeaderBanner />
       <AppHeader />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <TemplateHero />
         <References companies={TEMPLATES_CUSTOMERS} />
         <Divider />

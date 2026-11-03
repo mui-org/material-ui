@@ -2,7 +2,7 @@
 
 <p class="description">This package hosts the incubator components that are not yet ready to move to the core.</p>
 
-The main difference between the lab and the core is how the components are versioned. Having a separate lab package allows us to release breaking changes when necessary while the core package follows a [slower-moving policy](https://mui.com/versions/#release-frequency).
+The main difference between the lab and the core is how the components are versioned. Having a separate lab package allows us to release breaking changes when necessary while the core package follows a [slower-moving policy](/material-ui/getting-started/versions/#release-frequency).
 
 As developers use and test the components and report issues, the maintainers learn more about shortcomings of the components: missing features, accessibility issues, bugs, API design, etc. The older and more used a component is, the less likely it is that new issues will be found and subsequently need to introduce breaking changes.
 
@@ -24,15 +24,15 @@ To install and save in your `package.json` dependencies, run one of the followin
 <codeblock storageKey="package-manager">
 
 ```bash npm
-npm install @mui/lab @mui/material
+npm install @mui/lab@next @mui/material@next
 ```
 
 ```bash pnpm
-pnpm add @mui/lab @mui/material
+pnpm add @mui/lab@next @mui/material@next
 ```
 
 ```bash yarn
-yarn add @mui/lab @mui/material
+yarn add @mui/lab@next @mui/material@next
 ```
 
 </codeblock>

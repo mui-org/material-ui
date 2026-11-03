@@ -5,23 +5,25 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import getValidReactChildren from '@mui/utils/getValidReactChildren';
+import { useRtl } from '@mui/system/RtlProvider';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
-import capitalize from '../utils/capitalize';
+import { useRovingTabIndexRoot, RovingTabIndexContext } from '../utils/useRovingTabIndex';
 import toggleButtonGroupClasses, {
   getToggleButtonGroupUtilityClass,
 } from './toggleButtonGroupClasses';
 import ToggleButtonGroupContext from './ToggleButtonGroupContext';
 import ToggleButtonGroupButtonContext from './ToggleButtonGroupButtonContext';
 import toggleButtonClasses from '../ToggleButton/toggleButtonClasses';
+import buttonBaseClasses from '../ButtonBase/buttonBaseClasses';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, orientation, fullWidth, disabled } = ownerState;
 
   const slots = {
     root: ['root', orientation, fullWidth && 'fullWidth'],
-    grouped: ['grouped', `grouped${capitalize(orientation)}`, disabled && 'disabled'],
+    grouped: ['grouped', disabled && 'disabled'],
     firstButton: ['firstButton'],
     lastButton: ['lastButton'],
     middleButton: ['middleButton'],
@@ -38,10 +40,6 @@ const ToggleButtonGroupRoot = styled('div', {
 
     return [
       { [`& .${toggleButtonGroupClasses.grouped}`]: styles.grouped },
-      {
-        [`& .${toggleButtonGroupClasses.grouped}`]:
-          styles[`grouped${capitalize(ownerState.orientation)}`],
-      },
       {
         [`& .${toggleButtonGroupClasses.firstButton}`]: styles.firstButton,
       },
@@ -60,6 +58,13 @@ const ToggleButtonGroupRoot = styled('div', {
   memoTheme(({ theme }) => ({
     display: 'inline-flex',
     borderRadius: (theme.vars || theme).shape.borderRadius,
+    ...(theme.focusVisible && {
+      // paint the focused item above its siblings so a selected sibling's
+      // background cannot cover the ring edges
+      [`& .${toggleButtonGroupClasses.grouped}.${buttonBaseClasses.focusVisible}`]: {
+        zIndex: 1,
+      },
+    }),
     variants: [
       {
         props: { orientation: 'vertical' },
@@ -145,6 +150,7 @@ const ToggleButtonGroup = React.forwardRef(function ToggleButtonGroup(inProps, r
   } = props;
   const ownerState = { ...props, disabled, fullWidth, orientation, size };
   const classes = useUtilityClasses(ownerState);
+  const isRtl = useRtl();
 
   const handleChange = React.useCallback(
     (event, buttonValue) => {
@@ -187,6 +193,7 @@ const ToggleButtonGroup = React.forwardRef(function ToggleButtonGroup(inProps, r
       fullWidth,
       color,
       disabled,
+      isRovingTabIndex: true,
     }),
     [
       classes.grouped,
@@ -220,37 +227,50 @@ const ToggleButtonGroup = React.forwardRef(function ToggleButtonGroup(inProps, r
     return classes.middleButton;
   };
 
+  const rovingTabIndexRoot = useRovingTabIndexRoot({
+    orientation,
+    isRtl,
+  });
+
+  const rovingContainerProps = rovingTabIndexRoot.getContainerProps(
+    ref,
+    other.onFocus,
+    other.onKeyDown,
+  );
+
   return (
     <ToggleButtonGroupRoot
       role="group"
       className={clsx(classes.root, className)}
-      ref={ref}
       ownerState={ownerState}
       {...other}
+      {...rovingContainerProps}
     >
-      <ToggleButtonGroupContext.Provider value={context}>
-        {validChildren.map((child, index) => {
-          if (process.env.NODE_ENV !== 'production') {
-            if (isFragment(child)) {
-              console.error(
-                [
-                  "MUI: The ToggleButtonGroup component doesn't accept a Fragment as a child.",
-                  'Consider providing an array instead.',
-                ].join('\n'),
-              );
+      <RovingTabIndexContext.Provider value={rovingTabIndexRoot}>
+        <ToggleButtonGroupContext.Provider value={context}>
+          {validChildren.map((child, index) => {
+            if (process.env.NODE_ENV !== 'production') {
+              if (isFragment(child)) {
+                console.error(
+                  [
+                    "MUI: The ToggleButtonGroup component doesn't accept a Fragment as a child.",
+                    'Consider providing an array instead.',
+                  ].join('\n'),
+                );
+              }
             }
-          }
 
-          return (
-            <ToggleButtonGroupButtonContext.Provider
-              key={index}
-              value={getButtonPositionClassName(index)}
-            >
-              {child}
-            </ToggleButtonGroupButtonContext.Provider>
-          );
-        })}
-      </ToggleButtonGroupContext.Provider>
+            return (
+              <ToggleButtonGroupButtonContext.Provider
+                key={child.key}
+                value={getButtonPositionClassName(index)}
+              >
+                {child}
+              </ToggleButtonGroupButtonContext.Provider>
+            );
+          })}
+        </ToggleButtonGroupContext.Provider>
+      </RovingTabIndexContext.Provider>
     </ToggleButtonGroupRoot>
   );
 });
@@ -306,6 +326,14 @@ ToggleButtonGroup.propTypes /* remove-proptypes */ = {
    * is selected and `exclusive` is true the value is null; when false an empty array.
    */
   onChange: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onFocus: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onKeyDown: PropTypes.func,
   /**
    * The component orientation (layout flow direction).
    * @default 'horizontal'

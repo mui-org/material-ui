@@ -1,5 +1,0 @@
-<Tooltip title="You don't have permission to do this">
-  <span>
-    <Button disabled>A Disabled Button</Button>
-  </span>
-</Tooltip>

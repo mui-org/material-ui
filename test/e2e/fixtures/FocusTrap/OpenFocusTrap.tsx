@@ -10,7 +10,7 @@ export default function OpenFocusTrap() {
       <FocusTrap isEnabled={() => true} open>
         <div tabIndex={-1} data-testid="root">
           <div>Title</div>
-          <button type="button">x</button>
+          <button type="button">confirm</button>
           <button type="button">cancel</button>
           <button type="button">ok</button>
         </div>

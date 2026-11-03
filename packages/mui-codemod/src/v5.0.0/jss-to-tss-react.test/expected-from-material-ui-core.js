@@ -44,10 +44,12 @@ export default function ComponentUsingStyles(props) {
   const { classes, cx } = useStyles(props, {
     props: props
   });
-  return <>
-    <div className={classes.test}>Test<InnerComponent/></div>
-    <div className={cx(classes.test, classes.qualifier)}>Qualifier Test</div>
-    <div className={cx(classes.test, classes.qualifier2)}>Qualifier 2 Test</div>
-    <div className={cx(classes.test, classes.qualifier, classes.qualifier2)}>Qualifier & Qualifier 2 Test</div>
-    </>;
+  return (
+    <>
+      <div className={classes.test}>Test<InnerComponent/></div>
+      <div className={cx(classes.test, classes.qualifier)}>Qualifier Test</div>
+      <div className={cx(classes.test, classes.qualifier2)}>Qualifier 2 Test</div>
+      <div className={cx(classes.test, classes.qualifier, classes.qualifier2)}>Qualifier & Qualifier 2 Test</div>
+      </>
+  );
 }

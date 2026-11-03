@@ -14,12 +14,6 @@
     }
   },
   "classDescriptions": {
-    "contentGutters": {
-      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
-      "nodeName": "the children wrapper element",
-      "conditions": "<code>disableGutters={true}</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/accordion-summary/#AccordionSummary-classes-gutters\">.MuiAccordionSummary-gutters</a> and <a href=\"/material-ui/api/accordion-summary/#AccordionSummary-classes-content\">.MuiAccordionSummary-content</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "disabled": {
       "description": "State class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",

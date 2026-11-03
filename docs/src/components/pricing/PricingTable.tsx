@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { alpha, styled, ThemeProvider } from '@mui/material/styles';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Collapse from '@mui/material/Collapse';
@@ -12,13 +13,14 @@ import { useRouter } from 'next/router';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
 import LaunchRounded from '@mui/icons-material/LaunchRounded';
 import UnfoldMoreRounded from '@mui/icons-material/UnfoldMoreRounded';
-import { Link } from '@mui/docs/Link';
-import IconImage from 'docs/src/components/icon/IconImage';
+import { Link } from '@mui/internal-core-docs/Link';
+import IconImage from '@mui/internal-core-docs/IconImage';
 import { useLicenseModel } from 'docs/src/components/pricing/LicenseModelContext';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import { PrioritySupportSwitchTable } from 'docs/src/components/pricing/PrioritySupportSwitch';
+import { MultiAppSwitchTable } from 'docs/src/components/pricing/MultiAppSwitch';
 import InfoPrioritySupport from 'docs/src/components/pricing/InfoPrioritySupport';
-import { PlanName, planInfo } from './PricingCards';
+import type { PlanName } from './PricingCards';
+import { planInfo } from './PricingCards';
 
 // TODO: Collapse should expose an API to customize the duration based on the height.
 function transitionTheme(theme: any) {
@@ -285,7 +287,7 @@ const rowHeaders: Record<string, React.ReactNode> = {
   'Base UI': (
     <ColumnHead
       label="Base UI"
-      tooltip="A library of headless ('unstyled') React UI components and low-level hooks, available in @base-ui-components/react."
+      tooltip="A library of headless ('unstyled') React UI components and low-level hooks, available in @base-ui/react."
     />
   ),
   'MUI System': (
@@ -496,6 +498,131 @@ const rowHeaders: Record<string, React.ReactNode> = {
   ),
   'tree-view/virtualization': <ColumnHead label="Virtualization" />,
 
+  // Scheduler
+  'scheduler/event-calendar': <ColumnHead label="Event Calendar" href="/x/react-scheduler/" />,
+  'scheduler/event-timeline': <ColumnHead label="Event Timeline" href="/x/react-scheduler/" />,
+  // Scheduler - Event Calendar
+  'scheduler/calendar-views': (
+    <ColumnHead
+      label="Calendar views (day, week, month, agenda)"
+      href="/x/react-scheduler/event-calendar/views/"
+    />
+  ),
+  'scheduler/calendar-year-view': (
+    <ColumnHead label="Year view" href="/x/react-scheduler/event-calendar/views/#year-view" />
+  ),
+  'scheduler/calendar-drag-and-drop': (
+    <ColumnHead label="Drag & drop" href="/x/react-scheduler/event-calendar/drag-interactions/" />
+  ),
+  'scheduler/calendar-resources': (
+    <ColumnHead label="Resource management" href="/x/react-scheduler/event-calendar/resources/" />
+  ),
+  'scheduler/calendar-timezone': (
+    <ColumnHead label="Timezone support" href="/x/react-scheduler/timezone/" />
+  ),
+  'scheduler/calendar-editing': (
+    <ColumnHead
+      label="Event editing, creation & deletion"
+      href="/x/react-scheduler/event-calendar/editing/"
+    />
+  ),
+  'scheduler/calendar-recurring-events': (
+    <ColumnHead label="Recurring events" href="/x/react-scheduler/recurring-events/" />
+  ),
+  'scheduler/calendar-lazy-loading': (
+    <ColumnHead label="Lazy loading" href="/x/react-scheduler/event-calendar/lazy-loading/" />
+  ),
+  'scheduler/calendar-resource-view': (
+    <ColumnHead
+      label="Resource views"
+      href="/x/react-scheduler/event-calendar/views/#resource-views"
+    />
+  ),
+  'scheduler/calendar-constraints': (
+    <ColumnHead
+      label="Event constraints"
+      href="/x/react-scheduler/event-calendar/events/#event-constraints"
+    />
+  ),
+  'scheduler/calendar-copy-paste-events': (
+    <ColumnHead
+      label="Copy & paste events"
+      href="/x/react-scheduler/event-calendar/editing/#copy-paste-events"
+    />
+  ),
+  'scheduler/calendar-undo-redo': (
+    <ColumnHead label="Undo / Redo" href="/x/react-scheduler/event-calendar/editing/#undo-redo" />
+  ),
+  'scheduler/calendar-search-filtering': (
+    <ColumnHead label="Search & filtering" href="/x/react-scheduler/event-calendar/filtering/" />
+  ),
+  'scheduler/calendar-import-export': (
+    <ColumnHead label="Import & export" href="/x/react-scheduler/event-calendar/import-export/" />
+  ),
+  'scheduler/calendar-accessibility': <ColumnHead label="Accessibility & keyboard navigation" />,
+  'scheduler/calendar-localization': (
+    <ColumnHead label="Localization" href="/x/react-scheduler/event-calendar/localization/" />
+  ),
+  // Scheduler - Event Timeline
+  'scheduler/timeline-views': (
+    <ColumnHead label="Timeline views" href="/x/react-scheduler/event-timeline/presets/" />
+  ),
+  'scheduler/timeline-drag-and-drop': (
+    <ColumnHead label="Drag & drop" href="/x/react-scheduler/event-timeline/drag-interactions/" />
+  ),
+  'scheduler/timeline-resources': (
+    <ColumnHead label="Resource management" href="/x/react-scheduler/event-timeline/resources/" />
+  ),
+  'scheduler/timeline-timezone': (
+    <ColumnHead label="Timezone support" href="/x/react-scheduler/timezone/" />
+  ),
+  'scheduler/timeline-editing': (
+    <ColumnHead
+      label="Event editing, creation & deletion"
+      href="/x/react-scheduler/event-timeline/editing/"
+    />
+  ),
+  'scheduler/timeline-recurring-events': (
+    <ColumnHead label="Recurring events" href="/x/react-scheduler/recurring-events/" />
+  ),
+  'scheduler/timeline-lazy-loading': (
+    <ColumnHead label="Lazy loading" href="/x/react-scheduler/event-timeline/lazy-loading/" />
+  ),
+  'scheduler/timeline-zooming': (
+    <ColumnHead
+      label="Zoom in/out"
+      href="/x/react-scheduler/event-timeline/presets/#zoom-in-and-out"
+    />
+  ),
+  'scheduler/timeline-virtualization': (
+    <ColumnHead label="Virtualization" href="/x/react-scheduler/event-timeline/virtualization/" />
+  ),
+  'scheduler/timeline-constraints': (
+    <ColumnHead
+      label="Event constraints"
+      href="/x/react-scheduler/event-timeline/events/#event-constraints"
+    />
+  ),
+  'scheduler/timeline-copy-paste-events': (
+    <ColumnHead
+      label="Copy & paste events"
+      href="/x/react-scheduler/event-timeline/editing/#copy-paste-events"
+    />
+  ),
+  'scheduler/timeline-undo-redo': (
+    <ColumnHead label="Undo / Redo" href="/x/react-scheduler/event-timeline/editing/#undo-redo" />
+  ),
+  'scheduler/timeline-search-filtering': (
+    <ColumnHead label="Search & filtering" href="/x/react-scheduler/event-timeline/filtering/" />
+  ),
+  'scheduler/timeline-import-export': (
+    <ColumnHead label="Import & export" href="/x/react-scheduler/event-timeline/import-export/" />
+  ),
+  'scheduler/timeline-accessibility': <ColumnHead label="Accessibility & keyboard navigation" />,
+  'scheduler/timeline-localization': (
+    <ColumnHead label="Localization" href="/x/react-scheduler/event-timeline/localization/" />
+  ),
+
   'mui-x-production': <ColumnHead label="Perpetual use in production" />,
   'mui-x-development': <ColumnHead label="Development license" tooltip="For active development" />,
   'mui-x-development-perpetual': (
@@ -534,17 +661,16 @@ const rowHeaders: Record<string, React.ReactNode> = {
   'priority-support': (
     <ColumnHead
       {...{
-        label: 'Priority support',
+        label: 'Priority Support',
         tooltip: (
           <React.Fragment>
-            At $399/year/dev, get the highest level of support with a 24h SLA response time,
-            pre-screening and issue escalation. More details in the{' '}
+            The highest level of support with 1 business day response time, pre-screening and issue
+            escalation. More details in the{' '}
             <Link
               href="https://mui.com/legal/technical-support-sla/#priority-support"
               target="_blank"
               color="inherit"
               underline="always"
-              rel="noopener"
             >
               Technical Support SLA
             </Link>
@@ -719,6 +845,43 @@ const communityData: Record<string, React.ReactNode> = {
   'tree-view/inline-editing': yes,
   'tree-view/drag-to-reorder': no,
   'tree-view/virtualization': no,
+  // Scheduler
+  'scheduler/event-calendar': yes,
+  'scheduler/event-timeline': no,
+  // Scheduler - Event Calendar
+  'scheduler/calendar-views': yes,
+  'scheduler/calendar-year-view': pending,
+  'scheduler/calendar-drag-and-drop': yes,
+  'scheduler/calendar-resources': yes,
+  'scheduler/calendar-timezone': yes,
+  'scheduler/calendar-editing': yes,
+  'scheduler/calendar-recurring-events': no,
+  'scheduler/calendar-lazy-loading': no,
+  'scheduler/calendar-resource-view': no,
+  'scheduler/calendar-constraints': pending,
+  'scheduler/calendar-copy-paste-events': pending,
+  'scheduler/calendar-undo-redo': pending,
+  'scheduler/calendar-search-filtering': no,
+  'scheduler/calendar-import-export': no,
+  'scheduler/calendar-accessibility': yes,
+  'scheduler/calendar-localization': yes,
+  // Scheduler - Event Timeline
+  'scheduler/timeline-views': no,
+  'scheduler/timeline-drag-and-drop': no,
+  'scheduler/timeline-resources': no,
+  'scheduler/timeline-timezone': no,
+  'scheduler/timeline-editing': no,
+  'scheduler/timeline-recurring-events': no,
+  'scheduler/timeline-lazy-loading': no,
+  'scheduler/timeline-zooming': no,
+  'scheduler/timeline-virtualization': no,
+  'scheduler/timeline-constraints': no,
+  'scheduler/timeline-copy-paste-events': no,
+  'scheduler/timeline-undo-redo': no,
+  'scheduler/timeline-search-filtering': no,
+  'scheduler/timeline-import-export': no,
+  'scheduler/timeline-accessibility': no,
+  'scheduler/timeline-localization': no,
   // general
   'mui-x-production': yes,
   'mui-x-updates': yes,
@@ -803,7 +966,7 @@ const proData: Record<string, React.ReactNode> = {
 
   'charts/radar': yes,
   'charts/funnel': yes,
-  'charts/sankey': pending,
+  'charts/sankey': yes,
   'charts/gantt': no,
   'charts/gantt-advanced': no,
   'charts/candlestick': no,
@@ -825,6 +988,43 @@ const proData: Record<string, React.ReactNode> = {
   'tree-view/inline-editing': yes,
   'tree-view/drag-to-reorder': yes,
   'tree-view/virtualization': pending,
+  // Scheduler
+  'scheduler/event-calendar': no,
+  'scheduler/event-timeline': no,
+  // Scheduler - Event Calendar
+  'scheduler/calendar-views': no,
+  'scheduler/calendar-year-view': no,
+  'scheduler/calendar-drag-and-drop': no,
+  'scheduler/calendar-resources': no,
+  'scheduler/calendar-timezone': no,
+  'scheduler/calendar-editing': no,
+  'scheduler/calendar-recurring-events': no,
+  'scheduler/calendar-lazy-loading': no,
+  'scheduler/calendar-resource-view': no,
+  'scheduler/calendar-constraints': no,
+  'scheduler/calendar-copy-paste-events': no,
+  'scheduler/calendar-undo-redo': no,
+  'scheduler/calendar-search-filtering': no,
+  'scheduler/calendar-import-export': no,
+  'scheduler/calendar-accessibility': no,
+  'scheduler/calendar-localization': no,
+  // Scheduler - Event Timeline
+  'scheduler/timeline-views': no,
+  'scheduler/timeline-drag-and-drop': no,
+  'scheduler/timeline-resources': no,
+  'scheduler/timeline-timezone': no,
+  'scheduler/timeline-editing': no,
+  'scheduler/timeline-recurring-events': no,
+  'scheduler/timeline-lazy-loading': no,
+  'scheduler/timeline-zooming': no,
+  'scheduler/timeline-virtualization': no,
+  'scheduler/timeline-constraints': no,
+  'scheduler/timeline-copy-paste-events': no,
+  'scheduler/timeline-undo-redo': no,
+  'scheduler/timeline-search-filtering': no,
+  'scheduler/timeline-import-export': no,
+  'scheduler/timeline-accessibility': no,
+  'scheduler/timeline-localization': no,
   // general
   'mui-x-production': yes,
   'mui-x-development': <Info value="1 year" />,
@@ -840,7 +1040,7 @@ const proData: Record<string, React.ReactNode> = {
   'response-time': no,
   'pre-screening': no,
   'issue-escalation': no,
-  'security-questionnaire': <Info value="Available from 10+ devs" />,
+  'security-questionnaire': <Info value="Available for orders of $12,000 and above" />,
 };
 
 const premiumData: Record<string, React.ReactNode> = {
@@ -908,7 +1108,7 @@ const premiumData: Record<string, React.ReactNode> = {
   'charts/treemap': pending,
   'charts/radar': yes,
   'charts/funnel': yes,
-  'charts/sankey': pending,
+  'charts/sankey': yes,
   'charts/gantt': pending,
   'charts/gantt-advanced': toBeDefined,
   'charts/candlestick': toBeDefined,
@@ -930,6 +1130,43 @@ const premiumData: Record<string, React.ReactNode> = {
   'tree-view/inline-editing': yes,
   'tree-view/drag-to-reorder': yes,
   'tree-view/virtualization': pending,
+  // Scheduler
+  'scheduler/event-calendar': yes,
+  'scheduler/event-timeline': yes,
+  // Scheduler - Event Calendar
+  'scheduler/calendar-views': yes,
+  'scheduler/calendar-year-view': pending,
+  'scheduler/calendar-drag-and-drop': yes,
+  'scheduler/calendar-resources': yes,
+  'scheduler/calendar-timezone': yes,
+  'scheduler/calendar-editing': yes,
+  'scheduler/calendar-recurring-events': yes,
+  'scheduler/calendar-lazy-loading': yes,
+  'scheduler/calendar-resource-view': pending,
+  'scheduler/calendar-constraints': pending,
+  'scheduler/calendar-copy-paste-events': pending,
+  'scheduler/calendar-undo-redo': pending,
+  'scheduler/calendar-search-filtering': pending,
+  'scheduler/calendar-import-export': pending,
+  'scheduler/calendar-accessibility': yes,
+  'scheduler/calendar-localization': yes,
+  // Scheduler - Event Timeline
+  'scheduler/timeline-views': yes,
+  'scheduler/timeline-drag-and-drop': yes,
+  'scheduler/timeline-resources': yes,
+  'scheduler/timeline-timezone': yes,
+  'scheduler/timeline-editing': yes,
+  'scheduler/timeline-recurring-events': yes,
+  'scheduler/timeline-lazy-loading': pending,
+  'scheduler/timeline-zooming': pending,
+  'scheduler/timeline-virtualization': pending,
+  'scheduler/timeline-constraints': pending,
+  'scheduler/timeline-copy-paste-events': pending,
+  'scheduler/timeline-undo-redo': pending,
+  'scheduler/timeline-search-filtering': pending,
+  'scheduler/timeline-import-export': pending,
+  'scheduler/timeline-accessibility': yes,
+  'scheduler/timeline-localization': yes,
   // general
   'mui-x-production': yes,
   'mui-x-development': <Info value="1 year" />,
@@ -938,13 +1175,13 @@ const premiumData: Record<string, React.ReactNode> = {
   // Support
   'core-support': <InfoPrioritySupport value={yes} value2="Community" />,
   'x-support': <Info value={yes} metadata="Priority over Pro" />,
-  'priority-support': <PrioritySupportSwitchTable />,
+  'multi-app': <MultiAppSwitchTable />,
   'tech-advisory': pending,
   'support-duration': <Info value="1 year" />,
   'response-time': <InfoPrioritySupport value={yes} metadata="1 business day" value2={no} />,
   'pre-screening': <InfoPrioritySupport value={yes} metadata="4 hours" value2={no} />,
   'issue-escalation': <InfoPrioritySupport value={yes} value2={no} />,
-  'security-questionnaire': <Info value="Available from 4+ devs" />,
+  'security-questionnaire': <Info value="Available for orders of $12,000 and above" />,
   'customer-success': no,
 };
 
@@ -1013,7 +1250,7 @@ const enterpriseData: Record<string, React.ReactNode> = {
   'charts/treemap': pending,
   'charts/radar': yes,
   'charts/funnel': yes,
-  'charts/sankey': pending,
+  'charts/sankey': yes,
   'charts/gantt': pending,
   'charts/gantt-advanced': toBeDefined,
   'charts/candlestick': toBeDefined,
@@ -1035,6 +1272,43 @@ const enterpriseData: Record<string, React.ReactNode> = {
   'tree-view/inline-editing': yes,
   'tree-view/drag-to-reorder': yes,
   'tree-view/virtualization': pending,
+  // Scheduler
+  'scheduler/event-calendar': yes,
+  'scheduler/event-timeline': yes,
+  // Scheduler - Event Calendar
+  'scheduler/calendar-views': yes,
+  'scheduler/calendar-year-view': pending,
+  'scheduler/calendar-drag-and-drop': yes,
+  'scheduler/calendar-resources': yes,
+  'scheduler/calendar-timezone': yes,
+  'scheduler/calendar-editing': yes,
+  'scheduler/calendar-recurring-events': yes,
+  'scheduler/calendar-lazy-loading': yes,
+  'scheduler/calendar-resource-view': pending,
+  'scheduler/calendar-constraints': pending,
+  'scheduler/calendar-copy-paste-events': pending,
+  'scheduler/calendar-undo-redo': pending,
+  'scheduler/calendar-search-filtering': pending,
+  'scheduler/calendar-import-export': pending,
+  'scheduler/calendar-accessibility': yes,
+  'scheduler/calendar-localization': yes,
+  // Scheduler - Event Timeline
+  'scheduler/timeline-views': yes,
+  'scheduler/timeline-drag-and-drop': yes,
+  'scheduler/timeline-resources': yes,
+  'scheduler/timeline-timezone': yes,
+  'scheduler/timeline-editing': yes,
+  'scheduler/timeline-recurring-events': yes,
+  'scheduler/timeline-lazy-loading': pending,
+  'scheduler/timeline-zooming': pending,
+  'scheduler/timeline-virtualization': pending,
+  'scheduler/timeline-constraints': pending,
+  'scheduler/timeline-copy-paste-events': pending,
+  'scheduler/timeline-undo-redo': pending,
+  'scheduler/timeline-search-filtering': pending,
+  'scheduler/timeline-import-export': pending,
+  'scheduler/timeline-accessibility': yes,
+  'scheduler/timeline-localization': yes,
   // general
   'mui-x-production': yes,
   'mui-x-development': <Info value="1 year" />,
@@ -1050,7 +1324,7 @@ const enterpriseData: Record<string, React.ReactNode> = {
   'response-time': <Info value={yes} metadata="1 business day" />,
   'pre-screening': <Info value={yes} metadata="4 hours" />,
   'issue-escalation': <Info value={yes} />,
-  'security-questionnaire': <Info value="Available from 4+ devs" />,
+  'security-questionnaire': yes,
 };
 
 function RowCategory(props: BoxProps) {
@@ -1229,12 +1503,14 @@ export default function PricingTable({
   const [dataGridCollapsed, setDataGridCollapsed] = React.useState(false);
   const [chartsCollapsed, setChartsCollapsed] = React.useState(false);
   const [treeViewCollapsed, setTreeViewCollapsed] = React.useState(false);
+  const [schedulerCollapsed, setSchedulerCollapsed] = React.useState(false);
 
   React.useEffect(() => {
     if (router.query['expand-path'] === 'all') {
       setDataGridCollapsed(true);
       setChartsCollapsed(true);
       setTreeViewCollapsed(true);
+      setSchedulerCollapsed(true);
     }
   }, [router.query]);
 
@@ -1281,13 +1557,19 @@ export default function PricingTable({
       sx={{ color: 'grey.600', opacity: treeViewCollapsed ? 0 : 1 }}
     />
   );
+  const schedulerUnfoldMore = (
+    <UnfoldMoreRounded
+      fontSize="small"
+      sx={{ color: 'grey.600', opacity: schedulerCollapsed ? 0 : 1 }}
+    />
+  );
 
   const renderRow = (key: string) => renderMasterRow(key, gridSx, plans);
   const renderNestedRow = (key: string) => renderMasterRow(key, nestedGridSx, plans);
 
   return (
     <ThemeProvider theme={transitionTheme}>
-      <Box ref={tableRef} {...props} sx={{ pt: 8, width: '100%', ...props.sx }}>
+      <Box ref={tableRef} {...props} sx={{ pt: 8, width: '100%', contain: 'paint', ...props.sx }}>
         <StickyHead container={tableRef} disableCalculation={columnHeaderHidden} />
         {!columnHeaderHidden && (
           <Box sx={gridSx}>
@@ -1554,9 +1836,9 @@ export default function PricingTable({
           {divider}
           {renderNestedRow('charts/funnel')}
           {divider}
-          {renderNestedRow('charts/treemap')}
-          {divider}
           {renderNestedRow('charts/sankey')}
+          {divider}
+          {renderNestedRow('charts/treemap')}
           {divider}
           {renderNestedRow('charts/gantt')}
           {divider}
@@ -1581,6 +1863,140 @@ export default function PricingTable({
           {renderNestedRow('charts/filter-interaction')}
           {divider}
           {renderNestedRow('charts/selection-interaction')}
+        </StyledCollapse>
+        {divider}
+        <Box
+          sx={{
+            position: 'relative',
+            minHeight: 58,
+            '& svg': { transition: '0.3s' },
+            '&:hover svg': { color: 'primary.main' },
+            ...gridSx,
+          }}
+        >
+          <Cell />
+          <Cell sx={{ minHeight: 60 }}>{schedulerUnfoldMore}</Cell>
+          <Cell highlighted sx={{ display: { xs: 'none', md: 'flex' }, minHeight: 60 }}>
+            {schedulerUnfoldMore}
+          </Cell>
+          <Cell sx={{ display: { xs: 'none', md: 'flex' }, minHeight: 60 }}>
+            {schedulerUnfoldMore}
+          </Cell>
+          <Cell highlighted sx={{ display: { xs: 'none', md: 'flex' }, minHeight: 60 }}>
+            {schedulerUnfoldMore}
+          </Cell>
+          <Button
+            fullWidth
+            onClick={() => setSchedulerCollapsed((bool) => !bool)}
+            endIcon={
+              <KeyboardArrowRightRounded
+                color="primary"
+                sx={{
+                  transform: schedulerCollapsed ? 'rotate(-90deg)' : 'rotate(90deg)',
+                }}
+              />
+            }
+            sx={[
+              (theme) => ({
+                px: 1,
+                justifyContent: 'flex-start',
+                fontSize: '0.875rem',
+                fontWeight: 'medium',
+                borderRadius: '0px',
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.primary.main, 0.06),
+                  '@media (hover: none)': {
+                    bgcolor: 'initial',
+                  },
+                },
+              }),
+              (theme) =>
+                theme.applyDarkStyles({
+                  '&:hover': {
+                    bgcolor: alpha(theme.palette.primary.main, 0.06),
+                  },
+                }),
+            ]}
+          >
+            Scheduler
+          </Button>
+        </Box>
+        <StyledCollapse in={schedulerCollapsed}>
+          <RowCategory>Components</RowCategory>
+          {renderNestedRow('scheduler/event-calendar')}
+          {divider}
+          {renderNestedRow('scheduler/event-timeline')}
+          {divider}
+          <RowCategory>Event Calendar features</RowCategory>
+          {renderNestedRow('scheduler/calendar-views')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-year-view')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-drag-and-drop')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-resources')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-timezone')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-editing')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-accessibility')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-localization')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-constraints')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-copy-paste-events')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-undo-redo')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-recurring-events')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-lazy-loading')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-resource-view')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-search-filtering')}
+          {divider}
+          {renderNestedRow('scheduler/calendar-import-export')}
+          {divider}
+          <RowCategory>Event Timeline features</RowCategory>
+          {renderNestedRow('scheduler/timeline-views')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-drag-and-drop')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-resources')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-recurring-events')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-timezone')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-editing')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-accessibility')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-localization')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-lazy-loading')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-zooming')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-virtualization')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-constraints')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-copy-paste-events')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-undo-redo')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-search-filtering')}
+          {divider}
+          {renderNestedRow('scheduler/timeline-import-export')}
         </StyledCollapse>
         {divider}
         <Box

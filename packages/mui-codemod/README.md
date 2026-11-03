@@ -14,7 +14,7 @@ Some of the codemods also run [postcss](https://github.com/postcss/postcss) plug
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod <codemod> <paths...>
+npx @mui/codemod@next <codemod> <paths...>
 
 Applies a `@mui/codemod` to the specified paths
 
@@ -34,10 +34,10 @@ Options:
   --jscodeshift                                  [string] [default: false]
 
 Examples:
-  npx @mui/codemod@latest v4.0.0/theme-spacing-api src
-  npx @mui/codemod@latest v5.0.0/component-rename-prop src --
+  npx @mui/codemod@next v4.0.0/theme-spacing-api src
+  npx @mui/codemod@next v5.0.0/component-rename-prop src --
   --component=Grid --from=prop --to=newProp
-  npx @mui/codemod@latest v5.0.0/preset-safe src --parser=flow
+  npx @mui/codemod@next v5.0.0/preset-safe src --parser=flow
 ```
 
 ### package name
@@ -45,7 +45,7 @@ Examples:
 Use this flag if you have a custom package name that reexports Material UI components. For example:
 
 ```bash
-npx @mui/codemod@latest --packageName="@org/ui"
+npx @mui/codemod@next --packageName="@org/ui"
 ```
 
 The snippet above will look for `@org/ui` instead of `@mui/material` in the codemod.
@@ -55,7 +55,7 @@ The snippet above will look for `@org/ui` instead of `@mui/material` in the code
 To pass more options directly to jscodeshift, use `--jscodeshift="..."`. For example:
 
 ```bash
-npx @mui/codemod@latest --jscodeshift="--run-in-band --verbose=2"
+npx @mui/codemod@next --jscodeshift="--run-in-band --verbose=2"
 ```
 
 See all available options [here](https://github.com/facebook/jscodeshift#usage-cli).
@@ -66,7 +66,7 @@ Options to [recast](https://github.com/benjamn/recast)'s printer can be provided
 through jscodeshift's `printOptions` command line argument
 
 ```bash
-npx @mui/codemod@latest <transform> <path> --jscodeshift="--printOptions='{\"quote\":\"double\"}'"
+npx @mui/codemod@next <transform> <path> --jscodeshift="--printOptions='{\"quote\":\"double\"}'"
 ```
 
 ## Included scripts
@@ -82,7 +82,7 @@ npx @mui/codemod@latest <transform> <path> --jscodeshift="--printOptions='{\"quo
 ### Deprecations
 
 ```bash
-npx @mui/codemod@latest deprecations/all <path>
+npx @mui/codemod@next deprecations/all <path>
 ```
 
 #### `all`
@@ -101,7 +101,7 @@ A combination of all deprecations.
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/accordion-props <path>
+npx @mui/codemod@next deprecations/accordion-props <path>
 ```
 
 #### `accordion-summary-classes`
@@ -144,7 +144,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/accordion-summary-classes <path>
+npx @mui/codemod@next deprecations/accordion-summary-classes <path>
 ```
 
 #### `alert-classes`
@@ -240,7 +240,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/alert-classes <path>
+npx @mui/codemod@next deprecations/alert-classes <path>
 ```
 
 #### `alert-props`
@@ -266,7 +266,7 @@ npx @mui/codemod@latest deprecations/alert-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/alert-props <path>
+npx @mui/codemod@next deprecations/alert-props <path>
 ```
 
 #### `autocomplete-props`
@@ -278,6 +278,11 @@ npx @mui/codemod@latest deprecations/alert-props <path>
 -  PopperComponent={CustomPopper}
 -  ListboxComponent={CustomListbox}
 -  ListboxProps={{ height: 12 }}
+-  renderTags={(value, getTagProps, ownerState) =>
+-    value.map((option, index) => (
+-      <Chip label={option.label} {...getTagProps({ index })} />
+-    ))
+-  }
 -  componentsProps={{
 -    clearIndicator: { width: 10 },
 -    paper: { width: 12 },
@@ -299,6 +304,11 @@ npx @mui/codemod@latest deprecations/alert-props <path>
 +    popper: { width: 14 },
 +    popupIndicator: { width: 16 },
 +  }}
++  renderValue={(value, getItemProps, ownerState) =>
++    value.map((option, index) => (
++      <Chip label={option.label} {...getItemProps({ index })} />
++    ))
++  }
  />
 ```
 
@@ -310,6 +320,10 @@ npx @mui/codemod@latest deprecations/alert-props <path>
 -    PopperComponent: CustomPopper,
 -    ListboxComponent: CustomListbox,
 -    ListboxProps: { height: 12 },
+-    renderTags: (value, getTagProps, ownerState) =>
+-      value.map((option, index) => (
+-        <Chip label={option.label} {...getTagProps({ index })} />
+-      )),
 -    componentsProps: {
 -       clearIndicator: { width: 10 },
 -       paper: { width: 12 },
@@ -331,12 +345,54 @@ npx @mui/codemod@latest deprecations/alert-props <path>
 +      popper: { width: 14 },
 +      popupIndicator: { width: 16 },
 +    },
++    renderValue: (value, getItemProps, ownerState) =>
++      value.map((option, index) => (
++        <Chip label={option.label} {...getItemProps({ index })} />
++      )),
    },
  },
 ```
 
+```diff
+ <Autocomplete
+  renderInput={(params) => (
+    <TextField
+      {...params}
+-      InputProps={{
+-        ...params.InputProps,
+-        endAdornment: (
+-          <React.Fragment>
+-            {params.InputProps.endAdornment}
+-          </React.Fragment>
+-        ),
+-      }}
++      slotProps={{
++        ...params.slotProps,
++        input: {
++          ...params.slotProps.input,
++          endAdornment: (
++            <React.Fragment>
++              {params.slotProps.input.endAdornment}
++            </React.Fragment>
++          ),
++        },
++      }}
+    />
+  )}
+ />
+```
+
+```diff
+ const {
+-  getTagProps,
+-  focusedTag,
++  getItemProps,
++  focusedItem,
+ } = useAutocomplete(props);
+```
+
 ```bash
-npx @mui/codemod@latest deprecations/autocomplete-props <path>
+npx @mui/codemod@next deprecations/autocomplete-props <path>
 ```
 
 #### `avatar-group-props`
@@ -384,7 +440,7 @@ npx @mui/codemod@latest deprecations/autocomplete-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/avatar-group-props <path>
+npx @mui/codemod@next deprecations/avatar-group-props <path>
 ```
 
 #### `avatar-props`
@@ -404,7 +460,7 @@ npx @mui/codemod@latest deprecations/avatar-group-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/avatar-props <path>
+npx @mui/codemod@next deprecations/avatar-props <path>
 ```
 
 #### `backdrop-props`
@@ -437,7 +493,7 @@ npx @mui/codemod@latest deprecations/avatar-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/backdrop-props <path>
+npx @mui/codemod@next deprecations/backdrop-props <path>
 ```
 
 #### `badge-props`
@@ -463,7 +519,7 @@ npx @mui/codemod@latest deprecations/backdrop-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/badge-props <path>
+npx @mui/codemod@next deprecations/badge-props <path>
 ```
 
 #### `button-classes`
@@ -685,7 +741,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/button-classes <path>
+npx @mui/codemod@next deprecations/button-classes <path>
 ```
 
 #### `button-group-classes`
@@ -811,7 +867,51 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/button-group-classes <path>
+npx @mui/codemod@next deprecations/button-group-classes <path>
+```
+
+#### `card-header-props`
+
+```diff
+ <CardHeader
+-  titleTypographyProps={{ variant: 'h6' }}
+-  subheaderTypographyProps={{ variant: 'body2' }}
++  slotProps={{
++    title: { variant: 'h6' },
++    subheader: { variant: 'body2' }
++  }}
+ />
+```
+
+```diff
+ MuiCardHeader: {
+   defaultProps: {
+-    titleTypographyProps: { variant: 'h6' },
+-    subheaderTypographyProps: { variant: 'body2' },
++    slotProps: {
++      title: { variant: 'h6' },
++      subheader: { variant: 'body2' },
++    },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/card-header-props <path>
+```
+
+#### `checkbox-props`
+
+```diff
+ <Checkbox
+-  inputProps={{ 'aria-label': 'Checkbox' }}
+-  inputRef={ref}
++  slotProps={{ input: { 'aria-label': 'Checkbox', ref } }}
+ />
+```
+
+```bash
+npx @mui/codemod@next deprecations/checkbox-props <path>
 ```
 
 #### `chip-classes`
@@ -992,7 +1092,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/chip-classes <path>
+npx @mui/codemod@next deprecations/chip-classes <path>
 ```
 
 #### `circular-progress-classes`
@@ -1006,11 +1106,11 @@ JS transforms:
    styleOverrides: {
      root: {
 -      [`& .${circularProgressClasses.circleDeterminate}`]: {
-+      [`&.${circularProgressClasses.determinate} > .${circularProgressClasses.circle}`]: {
++      [`&.${circularProgressClasses.determinate} .${circularProgressClasses.circle}`]: {
          color: 'red',
        },
 -      [`& .${circularProgressClasses.circleIndeterminate}`]: {
-+      [`&.${circularProgressClasses.indeterminate} > .${circularProgressClasses.circle}`]: {
++      [`&.${circularProgressClasses.indeterminate} .${circularProgressClasses.circle}`]: {
          color: 'red',
        },
      },
@@ -1022,16 +1122,16 @@ CSS transforms:
 
 ```diff
 -.MuiCircularProgress-circleDeterminate
-+.MuiCircularProgress-determinate > .MuiCircularProgress-circle
++.MuiCircularProgress-determinate .MuiCircularProgress-circle
 ```
 
 ```diff
 -.MuiCircularProgress-circleIndeterminate
-+.MuiCircularProgress-indeterminate > .MuiCircularProgress-circle
++.MuiCircularProgress-indeterminate .MuiCircularProgress-circle
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/circular-progress-classes <path>
+npx @mui/codemod@next deprecations/circular-progress-classes <path>
 ```
 
 #### `divider-props`
@@ -1044,7 +1144,7 @@ npx @mui/codemod@latest deprecations/circular-progress-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/divider-props <path>
+npx @mui/codemod@next deprecations/divider-props <path>
 ```
 
 #### `dialog-classes`
@@ -1080,7 +1180,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/dialog-classes <path>
+npx @mui/codemod@next deprecations/dialog-classes <path>
 ```
 
 #### `dialog-props`
@@ -1102,7 +1202,7 @@ JS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/dialog-props <path>
+npx @mui/codemod@next deprecations/dialog-props <path>
 ```
 
 #### `drawer-classes`
@@ -1174,7 +1274,47 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/drawer-classes <path>
+npx @mui/codemod@next deprecations/drawer-classes <path>
+```
+
+#### `drawer-props`
+
+```diff
+ <Drawer
+-  BackdropComponent={CustomBackdrop}
+-  BackdropProps={{ transitionDuration: 300 }}
+-  PaperProps={{ elevation: 20 }}
+-  SlideProps={{ direction: 'right' }}
++  slots={{ backdrop: CustomBackdrop }}
++  slotProps={{
++    backdrop: { transitionDuration: 300 },
++    paper: { elevation: 20 },
++    transition: { direction: 'right' },
++  }}
+ />
+```
+
+The same applies to `SwipeableDrawer`.
+
+```diff
+ MuiDrawer: {
+   defaultProps: {
+-    BackdropComponent: CustomBackdrop,
+-    BackdropProps: { transitionDuration: 300 },
+-    PaperProps: { elevation: 20 },
+-    SlideProps: { direction: 'right' },
++    slots: { backdrop: CustomBackdrop },
++    slotProps: {
++      backdrop: { transitionDuration: 300 },
++      paper: { elevation: 20 },
++      transition: { direction: 'right' },
++    },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/drawer-props <path>
 ```
 
 #### `filled-input-props`
@@ -1200,7 +1340,7 @@ npx @mui/codemod@latest deprecations/drawer-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/filled-input-props <path>
+npx @mui/codemod@next deprecations/filled-input-props <path>
 ```
 
 #### `form-control-label-props`
@@ -1222,7 +1362,7 @@ npx @mui/codemod@latest deprecations/filled-input-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/form-control-label-props <path>
+npx @mui/codemod@next deprecations/form-control-label-props <path>
 
 ```
 
@@ -1249,7 +1389,7 @@ npx @mui/codemod@latest deprecations/form-control-label-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/list-item-props <path>
+npx @mui/codemod@next deprecations/list-item-props <path>
 ```
 
 #### `list-item-text-props`
@@ -1275,7 +1415,7 @@ npx @mui/codemod@latest deprecations/list-item-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/list-item-text-props <path>
+npx @mui/codemod@next deprecations/list-item-text-props <path>
 ```
 
 #### `image-list-item-bar-classes`
@@ -1332,7 +1472,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/image-list-item-bar-classes <path>
+npx @mui/codemod@next deprecations/image-list-item-bar-classes <path>
 ```
 
 #### `input-base-props`
@@ -1358,7 +1498,7 @@ npx @mui/codemod@latest deprecations/image-list-item-bar-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/input-base-props <path>
+npx @mui/codemod@next deprecations/input-base-props <path>
 ```
 
 #### `input-base-classes`
@@ -1412,7 +1552,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/input-base-classes <path>
+npx @mui/codemod@next deprecations/input-base-classes <path>
 ```
 
 #### `input-props`
@@ -1438,7 +1578,7 @@ npx @mui/codemod@latest deprecations/input-base-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/input-props <path>
+npx @mui/codemod@next deprecations/input-props <path>
 ```
 
 #### `linear-progress-classes`
@@ -1498,7 +1638,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/linear-progress-classes <path>
+npx @mui/codemod@next deprecations/linear-progress-classes <path>
 ```
 
 #### `modal-props`
@@ -1524,7 +1664,7 @@ npx @mui/codemod@latest deprecations/linear-progress-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/modal-props <path>
+npx @mui/codemod@next deprecations/modal-props <path>
 ```
 
 #### `mobile-stepper-props`
@@ -1537,7 +1677,41 @@ npx @mui/codemod@latest deprecations/modal-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/mobile-stepper-props <path>
+npx @mui/codemod@next deprecations/mobile-stepper-props <path>
+```
+
+#### `menu-props`
+
+```diff
+ <Menu
+-  TransitionComponent={CustomTransition}
+-  MenuListProps={{ disablePadding: true }}
+-  TransitionProps={{ timeout: 200 }}
++  slots={{ transition: CustomTransition }}
++  slotProps={{
++    list: { disablePadding: true },
++    transition: { timeout: 200 },
++  }}
+ />
+```
+
+```diff
+ MuiMenu: {
+   defaultProps: {
+-    TransitionComponent: CustomTransition,
+-    MenuListProps: { disablePadding: true },
+-    TransitionProps: { timeout: 200 },
++    slots: { transition: CustomTransition },
++    slotProps: {
++      list: { disablePadding: true },
++      transition: { timeout: 200 },
++    },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/menu-props <path>
 ```
 
 #### `pagination-item-classes`
@@ -1601,7 +1775,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/pagination-item-classes <path>
+npx @mui/codemod@next deprecations/pagination-item-classes <path>
 ```
 
 #### `pagination-item-props`
@@ -1623,7 +1797,47 @@ npx @mui/codemod@latest deprecations/pagination-item-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/pagination-item-props <path>
+npx @mui/codemod@next deprecations/pagination-item-props <path>
+```
+
+#### `popover-props`
+
+```diff
+ <Popover
+-  BackdropComponent={CustomBackdrop}
+-  BackdropProps={{ timeout: 200 }}
+-  PaperProps={{ elevation: 4 }}
+-  TransitionComponent={CustomTransition}
+-  TransitionProps={{ timeout: 200 }}
++  slots={{ backdrop: CustomBackdrop, transition: CustomTransition }}
++  slotProps={{
++    backdrop: { timeout: 200 },
++    paper: { elevation: 4 },
++    transition: { timeout: 200 },
++  }}
+ />
+```
+
+```diff
+ MuiPopover: {
+   defaultProps: {
+-    BackdropComponent: 'div',
+-    BackdropProps: { timeout: 200 },
+-    PaperProps: { elevation: 8 },
+-    TransitionComponent: 'em',
+-    TransitionProps: { timeout: 200 },
++    slots: { backdrop: 'div', transition: 'em' },
++    slotProps: {
++      backdrop: { timeout: 200 },
++      paper: { elevation: 8 },
++      transition: { timeout: 200 },
++    },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/popover-props <path>
 ```
 
 #### `popper-props`
@@ -1649,7 +1863,7 @@ npx @mui/codemod@latest deprecations/pagination-item-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/popper-props <path>
+npx @mui/codemod@next deprecations/popper-props <path>
 ```
 
 #### `outlined-input-props`
@@ -1675,7 +1889,7 @@ npx @mui/codemod@latest deprecations/popper-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/outlined-input-props <path>
+npx @mui/codemod@next deprecations/outlined-input-props <path>
 ```
 
 #### `rating-props`
@@ -1689,8 +1903,24 @@ npx @mui/codemod@latest deprecations/outlined-input-props <path>
  />
 ```
 
+<!-- #npm-tag-reference -->
+
 ```bash
-npx @mui/codemod deprecations/rating-props <path>
+npx @mui/codemod@next deprecations/rating-props <path>
+```
+
+#### `radio-props`
+
+```diff
+ <Radio
+-  inputProps={{ 'aria-label': 'Radio' }}
+-  inputRef={ref}
++  slotProps={{ input: { 'aria-label': 'Radio', ref } }}
+ />
+```
+
+```bash
+npx @mui/codemod@next deprecations/radio-props <path>
 ```
 
 #### `select-classes`
@@ -1738,7 +1968,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/select-classes <path>
+npx @mui/codemod@next deprecations/select-classes <path>
 ```
 
 #### `slider-props`
@@ -1764,7 +1994,7 @@ npx @mui/codemod@latest deprecations/select-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/slider-props <path>
+npx @mui/codemod@next deprecations/slider-props <path>
 ```
 
 #### `snackbar-props`
@@ -1784,8 +2014,82 @@ npx @mui/codemod@latest deprecations/slider-props <path>
  />
 ```
 
+<!-- #npm-tag-reference -->
+
 ```bash
-npx @mui/codemod deprecations/snackbar-props <path>
+npx @mui/codemod@next deprecations/snackbar-props <path>
+```
+
+#### `speed-dial-props`
+
+```diff
+ <SpeedDial
+-  TransitionComponent={CustomTransition}
+-  TransitionProps={CustomTransitionProps}
++  slots={{ transition: CustomTransition }}
++  slotProps={{ transition: CustomTransitionProps }}
+ />
+```
+
+```diff
+ MuiSpeedDial: {
+   defaultProps: {
+-    TransitionComponent: CustomTransition,
+-    TransitionProps: CustomTransitionProps,
++    slots: { transition: CustomTransition },
++    slotProps: { transition: CustomTransitionProps },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/speed-dial-props <path>
+```
+
+#### `speed-dial-action-props`
+
+```diff
+ <SpeedDialAction
+-  FabProps={FabProps}
+-  TooltipClasses={TooltipClasses}
+-  tooltipOpen={true}
+-  tooltipPlacement="top"
+-  tooltipTitle="test"
++  slotProps={{
++    fab: FabProps,
++    tooltip: {
++      classes: TooltipClasses,
++      open: true,
++      placement: 'top',
++      title: 'test',
++    },
++  }}
+ />
+```
+
+```diff
+ MuiSpeedDialAction: {
+   defaultProps: {
+-    FabProps: { id: 'test' },
+-    TooltipClasses: classes,
+-    tooltipOpen: true,
+-    tooltipPlacement: 'top',
+-    tooltipTitle: 'test',
++    slotProps: {
++      fab: { id: 'test' },
++      tooltip: {
++        classes: classes,
++        open: true,
++        placement: 'top',
++        title: 'test',
++      },
++    },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/speed-dial-action-props <path>
 ```
 
 #### `slider-classes`
@@ -1857,26 +2161,71 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/slider-classes <path>
+npx @mui/codemod@next deprecations/slider-classes <path>
+```
+
+#### `tabs-props`
+
+```diff
+ <Tabs
+-  ScrollButtonComponent={CustomScrollButton}
+-  TabIndicatorProps={{ className: 'indicator' }}
+-  TabScrollButtonProps={{ disableRipple: true }}
++  slots={{ scrollButtons: CustomScrollButton }}
++  slotProps={{
++    indicator: { className: 'indicator' },
++    scrollButtons: { disableRipple: true },
++  }}
+ />
+```
+
+```diff
+ <Tabs
+-  slots={{ StartScrollButtonIcon: CustomIcon, EndScrollButtonIcon: CustomIcon2 }}
++  slots={{ startScrollButtonIcon: CustomIcon, endScrollButtonIcon: CustomIcon2 }}
+ />
+```
+
+```diff
+ MuiTabs: {
+   defaultProps: {
+-    ScrollButtonComponent: CustomScrollButton,
+-    TabScrollButtonProps: { disableRipple: true },
+-    TabIndicatorProps: { className: 'indicator' },
++    slots: {
++      scrollButtons: CustomScrollButton,
++    },
++    slotProps: {
++      scrollButtons: { disableRipple: true },
++      indicator: { className: 'indicator' },
++    },
+   },
+ },
+```
+
+```bash
+npx @mui/codemod@next deprecations/tabs-props <path>
 ```
 
 #### `tooltip-props`
 
 ```diff
  <Tooltip
--  components={{ Arrow: CustomArrow }}
--  componentsProps={{ arrow: { testid: 'test-id' } }}
+-  components={{ Arrow: CustomArrow, Tooltip: CustomTooltip }}
+-  componentsProps={{ arrow: { testid: 'test-id' }, tooltip: { className: 'custom' } }}
 -  PopperComponent={CustomPopperComponent}
 -  TransitionComponent={CustomTransitionComponent}
 -  PopperProps={CustomPopperProps}
 -  TransitionProps={CustomTransitionProps}
 +  slots={{
 +    arrow: CustomArrow,
++    tooltip: CustomTooltip,
 +    popper: CustomPopperComponent,
 +    transition: CustomTransitionComponent,
 +  }}
 +  slotProps={{
 +    arrow: { testid: 'test-id' },
++    tooltip: { className: 'custom' },
 +    popper: CustomPopperProps,
 +    transition: CustomTransitionProps,
 +  }}
@@ -1890,15 +2239,17 @@ npx @mui/codemod@latest deprecations/slider-classes <path>
 -    TransitionComponent: CustomTransitionComponent,
 -    PopperProps: CustomPopperProps,
 -    TransitionProps: CustomTransitionProps,
--    components: { Arrow: CustomArrow }
+-    components: { Arrow: CustomArrow, Tooltip: CustomTooltip }
 +    slots: {
 +      arrow: CustomArrow,
++      tooltip: CustomTooltip,
 +      popper: CustomPopperComponent,
 +      transition: CustomTransitionComponent,
 +    },
--    componentsProps: { arrow: { testid: 'test-id' }}
+-    componentsProps: { arrow: { testid: 'test-id' }, tooltip: { className: 'custom' } }
 +    slotProps: {
 +      arrow: { testid: 'test-id' },
++      tooltip: { className: 'custom' },
 +      popper: CustomPopperProps,
 +      transition: CustomTransitionProps,
 +    },
@@ -1907,7 +2258,7 @@ npx @mui/codemod@latest deprecations/slider-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/tooltip-props <path>
+npx @mui/codemod@next deprecations/tooltip-props <path>
 ```
 
 #### `step-connector-classes`
@@ -1945,8 +2296,10 @@ CSS transforms:
 +.MuiStepConnector-vertical > .MuiStepConnector-line
 ```
 
+<!-- #npm-tag-reference -->
+
 ```bash
-npx @mui/codemod deprecations/step-connector-classes <path>
+npx @mui/codemod@next deprecations/step-connector-classes <path>
 ```
 
 #### `step-content-props`
@@ -1961,7 +2314,7 @@ npx @mui/codemod deprecations/step-connector-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/step-content-props <path>
+npx @mui/codemod@next deprecations/step-content-props <path>
 ```
 
 #### `step-label-props`
@@ -1991,7 +2344,21 @@ npx @mui/codemod@latest deprecations/step-content-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/step-label-props <path>
+npx @mui/codemod@next deprecations/step-label-props <path>
+```
+
+#### `switch-props`
+
+```diff
+ <Switch
+-  inputProps={{ 'aria-label': 'Switch' }}
+-  inputRef={ref}
++  slotProps={{ input: { 'aria-label': 'Switch', ref } }}
+ />
+```
+
+```bash
+npx @mui/codemod@next deprecations/switch-props <path>
 ```
 
 #### `text-field-props`
@@ -2014,7 +2381,7 @@ npx @mui/codemod@latest deprecations/step-label-props <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/text-field-props <path>
+npx @mui/codemod@next deprecations/text-field-props <path>
 ```
 
 #### `toggle-button-group-classes`
@@ -2053,7 +2420,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/toggle-button-group-classes <path>
+npx @mui/codemod@next deprecations/toggle-button-group-classes <path>
 ```
 
 #### `tab-classes`
@@ -2083,7 +2450,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/tab-classes <path>
+npx @mui/codemod@next deprecations/tab-classes <path>
 ```
 
 #### `table-sort-label-classes`
@@ -2122,7 +2489,7 @@ CSS transforms:
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/table-sort-label-classes <path>
+npx @mui/codemod@next deprecations/table-sort-label-classes <path>
 ```
 
 #### `typography-props`
@@ -2151,7 +2518,38 @@ npx @mui/codemod@latest deprecations/table-sort-label-classes <path>
 ```
 
 ```bash
-npx @mui/codemod@latest deprecations/typography-props <path>
+npx @mui/codemod@next deprecations/typography-props <path>
+```
+
+### v9.0.0
+
+#### `system-props`
+
+```bash
+npx @mui/codemod@next v9.0.0/system-props <path>
+```
+
+Remove system props from Box, Stack, Typography, Link, Grid, DialogContentText, TimelineContent, and TimelineOppositeContent components and move them to the `sx` prop.
+
+Compared to the v6 codemod, the v9 version also handles:
+
+- `color="inherit"` on Typography (moved to `sx`)
+- `color="text.secondary"` on Link (moved to `sx`, while keeping named colors like `"primary"` and `"inherit"` as component props)
+- DialogContentText, TimelineContent, and TimelineOppositeContent components
+
+```diff
+-<Typography color="inherit" />
++<Typography sx={{ color: "inherit" }} />
+
+-<Link color="text.secondary" href="#" />
++<Link href="#" sx={{ color: "text.secondary" }} />
+```
+
+You can also pass `--jsx` to specify JSX element names directly, bypassing import detection.
+This is useful for projects using auto-import plugins (for example `unplugin-auto-import`) where Material UI components are available without explicit import statements:
+
+```bash
+npx @mui/codemod@next v9.0.0/system-props <path> -- --jsx=Box,Typography,Stack,Link,Grid,DialogContentText
 ```
 
 ### v7.0.0
@@ -2159,7 +2557,7 @@ npx @mui/codemod@latest deprecations/typography-props <path>
 #### `theme-color-functions`
 
 ```bash
-npx @mui/codemod@latest v7.0.0/theme-color-functions <path>
+npx @mui/codemod@next v7.0.0/theme-color-functions <path>
 ```
 
 Replace the usage of the `alpha()`, `lighten()`, and `darken()` functions from `@mui/system/colorManipulator` to use the `theme` object instead.
@@ -2182,7 +2580,7 @@ Replace the usage of the `alpha()`, `lighten()`, and `darken()` functions from `
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod v7.0.0/grid-props <path>
+npx @mui/codemod@next v7.0.0/grid-props <path>
 ```
 
 Updates the usage of the `@mui/material/Grid`, `@mui/system/Grid`, and `@mui/joy/Grid` components to their updated APIs.
@@ -2203,7 +2601,7 @@ You can provide the theme breakpoints via options, for example, `--jscodeshift='
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod v7.0.0/grid-props <path> --jscodeshift='--muiBreakpoints=mobile,desktop'
+npx @mui/codemod@next v7.0.0/grid-props <path> --jscodeshift='--muiBreakpoints=mobile,desktop'
 ```
 
 ```diff
@@ -2216,7 +2614,7 @@ npx @mui/codemod v7.0.0/grid-props <path> --jscodeshift='--muiBreakpoints=mobile
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod v7.0.0/lab-removed-components <path>
+npx @mui/codemod@next v7.0.0/lab-removed-components <path>
 ```
 
 Update the import of the following components and hook moved from `@mui/lab` to `@mui/material`:
@@ -2262,7 +2660,7 @@ Updates the `InputLabel`'s `size` value from `normal` to `medium`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod v7.0.0/input-label-size-normal-medium <path>
+npx @mui/codemod@next v7.0.0/input-label-size-normal-medium <path>
 ```
 
 <!-- #host-reference -->
@@ -2274,7 +2672,7 @@ You can find more details about this breaking change in [the migration guide](ht
 #### `sx-prop`
 
 ```bash
-npx @mui/codemod@latest v6.0.0/sx-prop <path>
+npx @mui/codemod@next v6.0.0/sx-prop <path>
 ```
 
 Update the usage of the `sx` prop to be compatible with `@pigment-css/react`.
@@ -2297,7 +2695,7 @@ Update the usage of the `sx` prop to be compatible with `@pigment-css/react`.
 #### `system-props`
 
 ```bash
-npx @mui/codemod@latest v6.0.0/system-props <path>
+npx @mui/codemod@next v6.0.0/system-props <path>
 ```
 
 Remove system props and add them to the `sx` prop.
@@ -2310,7 +2708,7 @@ Remove system props and add them to the `sx` prop.
 #### `theme-v6`
 
 ```bash
-npx @mui/codemod@latest v6.0.0/theme-v6 <path>
+npx @mui/codemod@next v6.0.0/theme-v6 <path>
 ```
 
 Update the theme creation from `@mui/system@v5` to be compatible with `@pigment-css/react`.
@@ -2372,7 +2770,7 @@ Update the theme creation from `@mui/system@v5` to be compatible with `@pigment-
 #### `styled`
 
 ```bash
-npx @mui/codemod@latest v6.0.0/styled <path>
+npx @mui/codemod@next v6.0.0/styled <path>
 ```
 
 Updates the usage of `styled` from `@mui/system@v5` to be compatible with `@pigment-css/react`.
@@ -2446,7 +2844,7 @@ However, it has some **limitations**:
 #### `grid-v2-props`
 
 ```bash
-npx @mui/codemod@latest v6.0.0/grid-v2-props <path>
+npx @mui/codemod@next v6.0.0/grid-v2-props <path>
 ```
 
 Updates the usage of the `@mui/material/Grid2`, `@mui/system/Grid`, and `@mui/joy/Grid` components to their updated APIs.
@@ -2465,7 +2863,7 @@ Updates the usage of the `@mui/material/Grid2`, `@mui/system/Grid`, and `@mui/jo
 You can provide the theme breakpoints via options, for example, `--jscodeshift='--muiBreakpoints=mobile,desktop'`, to use your custom breakpoints in the transformation.
 
 ```bash
-npx @mui/codemod@latest v6.0.0/grid-v2-props <path> --jscodeshift='--muiBreakpoints=mobile,desktop'
+npx @mui/codemod@next v6.0.0/grid-v2-props <path> --jscodeshift='--muiBreakpoints=mobile,desktop'
 ```
 
 ```diff
@@ -2491,7 +2889,7 @@ This codemod updates the import and re-export statements.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/base-use-named-exports <path>
+npx @mui/codemod@next v5.0.0/base-use-named-exports <path>
 ```
 
 #### `base-remove-unstyled-suffix`
@@ -2504,7 +2902,7 @@ The `Unstyled` suffix has been removed from all Base UI component names, includ
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/base-remove-unstyled-suffix <path>
+npx @mui/codemod@next v5.0.0/base-remove-unstyled-suffix <path>
 ```
 
 #### `base-remove-component-prop`
@@ -2519,7 +2917,7 @@ This change only affects Base UI components.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/base-remove-component-prop <path>
+npx @mui/codemod@next v5.0.0/base-remove-component-prop <path>
 ```
 
 #### `rename-css-variables`
@@ -2534,7 +2932,7 @@ Updates the names of the CSS variables of the Joy UI components to adapt to the
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/rename-css-variables <path>
+npx @mui/codemod@next v5.0.0/rename-css-variables <path>
 ```
 
 #### `base-hook-imports`
@@ -2547,7 +2945,7 @@ Updates the sources of the imports of the Base UI hooks to adapt to the new dir
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/base-hook-imports <path>
+npx @mui/codemod@next v5.0.0/base-hook-imports <path>
 ```
 
 #### `joy-rename-classname-prefix`
@@ -2562,7 +2960,7 @@ Renames the classname prefix from `'Joy'` to `'Mui'` for Joy UI components.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/joy-rename-classname-prefix <path>
+npx @mui/codemod@next v5.0.0/joy-rename-classname-prefix <path>
 ```
 
 #### `joy-rename-row-prop`
@@ -2577,7 +2975,7 @@ Transforms `row` prop to `orientation` prop across `Card`, `List` and `RadioGrou
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/joy-rename-row-prop <path>
+npx @mui/codemod@next v5.0.0/joy-rename-row-prop <path>
 ```
 
 #### `joy-avatar-remove-imgProps`
@@ -2595,7 +2993,7 @@ This change only affects Joy UI Avatar component.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/joy-avatar-remove-imgProps <path>
+npx @mui/codemod@next v5.0.0/joy-avatar-remove-imgProps <path>
 ```
 
 #### `joy-text-field-to-input`
@@ -2653,7 +3051,7 @@ This change only affects Joy UI components.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/joy-text-field-to-input <path>
+npx @mui/codemod@next v5.0.0/joy-text-field-to-input <path>
 ```
 
 #### `joy-rename-components-to-slots`
@@ -2672,7 +3070,7 @@ This change only affects Joy UI components.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/joy-rename-components-to-slots <path>
+npx @mui/codemod@next v5.0.0/joy-rename-components-to-slots <path>
 ```
 
 The associated breaking change was done in [#34997](https://github.com/mui/material-ui/pull/34997).
@@ -2682,7 +3080,7 @@ The associated breaking change was done in [#34997](https://github.com/mui/mater
 Rename the imports of Date and Time Pickers from `@mui/lab` to `@mui/x-date-pickers` and `@mui/x-date-pickers-pro`.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/date-pickers-moved-to-x <path>
+npx @mui/codemod@next v5.0.0/date-pickers-moved-to-x <path>
 ```
 
 #### `tree-view-moved-to-x`
@@ -2690,7 +3088,7 @@ npx @mui/codemod@latest v5.0.0/date-pickers-moved-to-x <path>
 Rename the imports of Tree View from `@mui/lab` to `@mui/x-tree-view`.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/tree-view-moved-to-x <path>
+npx @mui/codemod@next v5.0.0/tree-view-moved-to-x <path>
 ```
 
 #### 🚀 `preset-safe`
@@ -2698,7 +3096,7 @@ npx @mui/codemod@latest v5.0.0/tree-view-moved-to-x <path>
 A combination of all important transformers for migrating v4 to v5. ⚠️ This codemod should be run only once.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/preset-safe <path|folder>
+npx @mui/codemod@next v5.0.0/preset-safe <path|folder>
 ```
 
 The list includes these transformers
@@ -2765,7 +3163,7 @@ Imports and inserts `adaptV4Theme` into `createTheme()` (or `createMuiTheme`)
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/adapter-v4 <path>
+npx @mui/codemod@next v5.0.0/adapter-v4 <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#theme).
@@ -2782,7 +3180,7 @@ Renames `Autocomplete`'s `closeIcon` prop to `clearIcon`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/autocomplete-rename-closeicon  <path>
+npx @mui/codemod@next v5.0.0/autocomplete-rename-closeicon  <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#autocomplete).
@@ -2801,7 +3199,7 @@ Renames `Autocomplete`'s `getOptionSelected` to `isOptionEqualToValue`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/autocomplete-rename-option  <path>
+npx @mui/codemod@next v5.0.0/autocomplete-rename-option  <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#autocomplete).
@@ -2820,7 +3218,7 @@ Updates the `Avatar`'s `variant` value and `classes` key from 'circle' to 'circu
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/avatar-circle-circular <path>
+npx @mui/codemod@next v5.0.0/avatar-circle-circular <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#avatar).
@@ -2855,7 +3253,7 @@ Renames the badge's props.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/badge-overlap-value <path>
+npx @mui/codemod@next v5.0.0/badge-overlap-value <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#badge).
@@ -2879,14 +3277,31 @@ This change only affects Base UI components.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/base-rename-components-to-slots <path>
+npx @mui/codemod@next v5.0.0/base-rename-components-to-slots <path>
 ```
 
 The associated breaking change was done in [#34693](https://github.com/mui/material-ui/pull/34693).
 
+#### `box-sx-prop`
+
+Moves supported Box system props into the `sx` prop.
+
+```diff
+-<Box border="1px dashed grey" p={2} />
++<Box sx={{ border: '1px dashed grey', p: 2 }} />
+```
+
+<!-- #npm-tag-reference -->
+
+```bash
+npx @mui/codemod@next v5.0.0/box-sx-prop <path>
+```
+
+You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#box).
+
 #### `box-borderradius-values`
 
-Updates the Box API from separate system props to `sx`.
+Updates Box `borderRadius` values for the v5 sizing behavior.
 
 ```diff
 -<Box borderRadius="borderRadius">
@@ -2898,7 +3313,7 @@ Updates the Box API from separate system props to `sx`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/box-borderradius-values <path>
+npx @mui/codemod@next v5.0.0/box-borderradius-values <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#box).
@@ -2913,7 +3328,7 @@ Renames the Box `css` prop to `sx`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/box-rename-css <path>
+npx @mui/codemod@next v5.0.0/box-rename-css <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#box).
@@ -2934,7 +3349,7 @@ Renames the Box `grid*Gap` props.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/box-rename-gap <path>
+npx @mui/codemod@next v5.0.0/box-rename-gap <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#box).
@@ -2951,7 +3366,7 @@ Removes the outdated `color` prop values.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/button-color-prop <path>
+npx @mui/codemod@next v5.0.0/button-color-prop <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#button).
@@ -2968,7 +3383,7 @@ Removes the Chip `variant` prop if the value is `"default"`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/chip-variant-prop <path>
+npx @mui/codemod@next v5.0.0/chip-variant-prop <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#chip).
@@ -2985,7 +3400,7 @@ Renames the CircularProgress `static` variant to `determinate`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/circularprogress-variant <path>
+npx @mui/codemod@next v5.0.0/circularprogress-variant <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#circularprogress).
@@ -3004,7 +3419,7 @@ Renames `Collapse`'s `collapsedHeight` prop to `collapsedSize`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/collapse-rename-collapsedheight <path>
+npx @mui/codemod@next v5.0.0/collapse-rename-collapsedheight <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#collapse).
@@ -3023,7 +3438,7 @@ A generic codemod to rename any component prop.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/component-rename-prop <path> -- --component=Grid --from=prop --to=newProp
+npx @mui/codemod@next v5.0.0/component-rename-prop <path> -- --component=Grid --from=prop --to=newProp
 ```
 
 #### `core-styles-import`
@@ -3036,7 +3451,7 @@ Renames private import from `core/styles/*` to `core/styles`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/core-styles-import <path>
+npx @mui/codemod@next v5.0.0/core-styles-import <path>
 ```
 
 #### `create-theme`
@@ -3049,7 +3464,7 @@ Renames the function `createMuiTheme()` to `createTheme()`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/create-theme <path>
+npx @mui/codemod@next v5.0.0/create-theme <path>
 ```
 
 #### `dialog-props`
@@ -3062,7 +3477,7 @@ Remove `disableBackdropClick` prop from `<Dialog>`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/dialog-props <path>
+npx @mui/codemod@next v5.0.0/dialog-props <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#dialog).
@@ -3077,7 +3492,7 @@ Remove `disableTypography` prop from `<DialogTitle>`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/dialog-title-props <path>
+npx @mui/codemod@next v5.0.0/dialog-title-props <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#dialog).
@@ -3094,7 +3509,7 @@ Adds `prepend: true` to Emotion `createCache`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/create-theme <path>
+npx @mui/codemod@next v5.0.0/create-theme <path>
 ```
 
 #### `expansion-panel-component`
@@ -3102,7 +3517,7 @@ npx @mui/codemod@latest v5.0.0/create-theme <path>
 Renames `ExpansionPanel*` to `Accordion*`
 
 ```bash
-npx @mui/codemod@latest v5.0.0/expansion-panel-component <path>
+npx @mui/codemod@next v5.0.0/expansion-panel-component <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#expansionpanel).
@@ -3115,7 +3530,7 @@ You can find more details about this breaking change in [the migration guide](ht
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/fab-variant <path>
+npx @mui/codemod@next v5.0.0/fab-variant <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#fab).
@@ -3135,7 +3550,7 @@ Renames the `fade` style utility import and calls to `alpha()`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/fade-rename-alpha <path>
+npx @mui/codemod@next v5.0.0/fade-rename-alpha <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#styles).
@@ -3152,7 +3567,7 @@ Renames `Grid`'s `justify` prop to `justifyContent`.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/grid-justify-justifycontent <path>
+npx @mui/codemod@next v5.0.0/grid-justify-justifycontent <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#grid).
@@ -3162,7 +3577,7 @@ You can find more details about this breaking change in [the migration guide](ht
 Renames `GridList*` to `ImageList*`
 
 ```bash
-npx @mui/codemod@latest v5.0.0/grid-list-component <path>
+npx @mui/codemod@next v5.0.0/grid-list-component <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#gridlist).
@@ -3179,7 +3594,7 @@ Adds `size="large"` if `size` is not defined to get the same appearance as v4.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/icon-button-size <path>
+npx @mui/codemod@next v5.0.0/icon-button-size <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#iconbutton).
@@ -3244,7 +3659,7 @@ Replace JSS styling with `makeStyles` or `withStyles` to `styled` API.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/jss-to-styled <path>
+npx @mui/codemod@next v5.0.0/jss-to-styled <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#1-use-styled-or-sx-api).
@@ -3316,7 +3731,7 @@ Migrate JSS styling with `makeStyles` or `withStyles` to the corresponding `tss-
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/jss-to-tss-react <path>
+npx @mui/codemod@next v5.0.0/jss-to-tss-react <path>
 ```
 
 The following scenarios are not currently handled by this codemod and will be marked with a
@@ -3344,7 +3759,7 @@ Apply `underline="hover"` to `<Link />` that does not define `underline` prop (t
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/link-underline-hover <path>
+npx @mui/codemod@next v5.0.0/link-underline-hover <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#link).
@@ -3382,7 +3797,7 @@ Moves JSS imports to `@material-ui/styles`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/material-ui-styles <path>
+npx @mui/codemod@next v5.0.0/material-ui-styles <path>
 ```
 
 #### `material-ui-types`
@@ -3395,7 +3810,7 @@ Renames `Omit` import from `@material-ui/types` to `DistributiveOmit`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/material-ui-types <path>
+npx @mui/codemod@next v5.0.0/material-ui-types <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#material-ui-types).
@@ -3412,7 +3827,7 @@ Removes `disableBackdropClick` and `onEscapeKeyDown` from `<Modal>`
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/modal-props <path>
+npx @mui/codemod@next v5.0.0/modal-props <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#modal).
@@ -3436,7 +3851,7 @@ or
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/moved-lab-modules <path>
+npx @mui/codemod@next v5.0.0/moved-lab-modules <path>
 ```
 
 You can find more details about this breaking change in the migration guide.
@@ -3461,7 +3876,7 @@ Renames `Pagination*`'s `shape` values from 'round' to 'circular'.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/pagination-round-circular <path>
+npx @mui/codemod@next v5.0.0/pagination-round-circular <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#pagination).
@@ -3481,7 +3896,7 @@ Converts all `@mui/material` & `@mui/icons-material` top-level imports to path i
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/path-imports <path>
+npx @mui/codemod@next v5.0.0/path-imports <path>
 ```
 
 Head to https://mui.com/material-ui/guides/minimizing-bundle-size/ to understand when it's useful.
@@ -3500,7 +3915,7 @@ Fix private import paths.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/optimal-imports <path>
+npx @mui/codemod@next v5.0.0/optimal-imports <path>
 ```
 
 #### `root-ref`
@@ -3508,7 +3923,7 @@ npx @mui/codemod@latest v5.0.0/optimal-imports <path>
 Removes `RootRef` from the codebase.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/root-ref <path>
+npx @mui/codemod@next v5.0.0/root-ref <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#rootref).
@@ -3523,7 +3938,7 @@ You can find more details about this breaking change in [the migration guide](ht
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/skeleton-variant <path>
+npx @mui/codemod@next v5.0.0/skeleton-variant <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#skeleton).
@@ -3533,7 +3948,7 @@ You can find more details about this breaking change in [the migration guide](ht
 Applies `StyledEngineProvider` to the files that contains `ThemeProvider`.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/styled-engine-provider <path>
+npx @mui/codemod@next v5.0.0/styled-engine-provider <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-style-changes/#style-library).
@@ -3559,7 +3974,7 @@ Renames props in `Table*` components.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/table-props <path>
+npx @mui/codemod@next v5.0.0/table-props <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#table).
@@ -3578,7 +3993,7 @@ Renames the `Tabs`'s `scrollButtons` prop values.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/tabs-scroll-buttons <path>
+npx @mui/codemod@next v5.0.0/tabs-scroll-buttons <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#tabs).
@@ -3597,7 +4012,7 @@ Renames `TextField`'s rows props.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/textarea-minmax-rows <path>
+npx @mui/codemod@next v5.0.0/textarea-minmax-rows <path>
 ```
 
 You can find more details about this breaking change in the migration guide.
@@ -3610,7 +4025,7 @@ You can find more details about this breaking change in the migration guide.
 Adds `DefaultTheme` module augmentation to TypeScript projects.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-augment <path>
+npx @mui/codemod@next v5.0.0/theme-augment <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#material-ui-styles).
@@ -3629,7 +4044,7 @@ Updates breakpoint values to match new logic. ⚠️ This mod is not idempotent,
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-breakpoints <path>
+npx @mui/codemod@next v5.0.0/theme-breakpoints <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#theme).
@@ -3639,7 +4054,7 @@ You can find more details about this breaking change in [the migration guide](ht
 Renames `theme.breakpoints.width('md')` to `theme.breakpoints.values.md`.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-breakpoints-width <path>
+npx @mui/codemod@next v5.0.0/theme-breakpoints-width <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#theme).
@@ -3652,7 +4067,7 @@ You can find more details about this breaking change in [the migration guide](ht
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-options <path>
+npx @mui/codemod@next v5.0.0/theme-options <path>
 ```
 
 #### `theme-palette-mode`
@@ -3674,7 +4089,7 @@ Renames `type` to `mode`.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-palette-mode <path>
+npx @mui/codemod@next v5.0.0/theme-palette-mode <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#theme).
@@ -3684,7 +4099,7 @@ You can find more details about this breaking change in [the migration guide](ht
 Renames `MuiThemeProvider` to `ThemeProvider`.
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-provider <path>
+npx @mui/codemod@next v5.0.0/theme-provider <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#material-ui-core-styles).
@@ -3703,7 +4118,7 @@ Removes the 'px' suffix from some template strings.
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-spacing <path>
+npx @mui/codemod@next v5.0.0/theme-spacing <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#theme).
@@ -3718,7 +4133,7 @@ Renames `theme.typography.round($number)` to `Math.round($number * 1e5) / 1e5`.
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/theme-typography-round <path>
+npx @mui/codemod@next v5.0.0/theme-typography-round <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#theme).
@@ -3736,7 +4151,7 @@ Converts all `@mui/material` submodule imports to the root module:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/top-level-imports <path>
+npx @mui/codemod@next v5.0.0/top-level-imports <path>
 ```
 
 Head to https://mui.com/material-ui/guides/minimizing-bundle-size/ to understand when it's useful.
@@ -3746,7 +4161,7 @@ Head to https://mui.com/material-ui/guides/minimizing-bundle-size/ to understand
 Renames import `transitions` to `createTransitions`
 
 ```bash
-npx @mui/codemod@latest v5.0.0/transitions <path>
+npx @mui/codemod@next v5.0.0/transitions <path>
 ```
 
 #### `use-autocomplete`
@@ -3759,7 +4174,7 @@ Renames `useAutocomplete` related import from lab to core
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/use-autocomplete <path>
+npx @mui/codemod@next v5.0.0/use-autocomplete <path>
 ```
 
 #### `use-transitionprops`
@@ -3788,7 +4203,7 @@ Updates Dialog, Menu, Popover, and Snackbar to use the `TransitionProps` prop to
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/use-transitionprops <path>
+npx @mui/codemod@next v5.0.0/use-transitionprops <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](/material-ui/migration/v5-component-changes/#dialog).
@@ -3818,7 +4233,7 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v5.0.0/variant-prop <path>
+npx @mui/codemod@next v5.0.0/variant-prop <path>
 ```
 
 #### `with-mobile-dialog`
@@ -3832,7 +4247,7 @@ Removes imported `withMobileDialog`, and inserts hardcoded version to prevent ap
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/with-mobile-dialog <path>
+npx @mui/codemod@next v5.0.0/with-mobile-dialog <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-component-changes/#dialog).
@@ -3848,7 +4263,7 @@ Removes `withWidth` import, and inserts hardcoded version to prevent application
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/with-width <path>
+npx @mui/codemod@next v5.0.0/with-width <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/v5-style-changes/#material-ui-core-styles).
@@ -3909,7 +4324,7 @@ Replace every occurrence of `material-ui` related package with the new package n
 ```
 
 ```bash
-npx @mui/codemod@latest v5.0.0/mui-replace <path>
+npx @mui/codemod@next v5.0.0/mui-replace <path>
 ```
 
 You can find more details about this breaking change in [the migration guide](https://mui.com/material-ui/migration/migration-v4/#update-material-ui-version).
@@ -3929,7 +4344,7 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v4.0.0/theme-spacing-api <path>
+npx @mui/codemod@next v4.0.0/theme-spacing-api <path>
 ```
 
 This codemod tries to perform a basic expression simplification which can be improved for expressions that use more than one operation.
@@ -3956,7 +4371,7 @@ Converts all `@material-ui/core` imports more than 1 level deep to the optimal f
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v4.0.0/optimal-imports <path>
+npx @mui/codemod@next v4.0.0/optimal-imports <path>
 ```
 
 Head to https://mui.com/guides/minimizing-bundle-size/ to understand when it's useful.
@@ -3974,7 +4389,7 @@ Converts all `@material-ui/core` submodule imports to the root module:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v4.0.0/top-level-imports <path>
+npx @mui/codemod@next v4.0.0/top-level-imports <path>
 ```
 
 Head to https://mui.com/guides/minimizing-bundle-size/ to understand when it's useful.
@@ -3995,7 +4410,7 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v1.0.0/import-path <path>
+npx @mui/codemod@next v1.0.0/import-path <path>
 ```
 
 **Notice**: if you are migrating from pre-v1.0, and your imports use `material-ui`, you will need to manually find and replace all references to `material-ui` in your code to `@material-ui/core`. E.g.:
@@ -4022,7 +4437,7 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v1.0.0/color-imports <path>
+npx @mui/codemod@next v1.0.0/color-imports <path>
 ```
 
 **additional options**
@@ -4030,7 +4445,7 @@ npx @mui/codemod@latest v1.0.0/color-imports <path>
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v1.0.0/color-imports <path> -- --importPath='mui/styles/colors' --targetPath='mui/colors'
+npx @mui/codemod@next v1.0.0/color-imports <path> -- --importPath='mui/styles/colors' --targetPath='mui/colors'
 ```
 
 #### `svg-icon-imports`
@@ -4048,7 +4463,7 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v1.0.0/svg-icon-imports <path>
+npx @mui/codemod@next v1.0.0/svg-icon-imports <path>
 ```
 
 #### `menu-item-primary-text`
@@ -4066,7 +4481,7 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v1.0.0/menu-item-primary-text <path>
+npx @mui/codemod@next v1.0.0/menu-item-primary-text <path>
 ```
 
 ### v0.15.0
@@ -4090,5 +4505,5 @@ The diff should look like this:
 <!-- #npm-tag-reference -->
 
 ```bash
-npx @mui/codemod@latest v0.15.0/import-path <path>
+npx @mui/codemod@next v0.15.0/import-path <path>
 ```

@@ -1,5 +1,0 @@
-<Textarea
-  placeholder="Placeholder"
-  slotProps={{ textarea: { ref: textareaRef } }}
-/>
-<Button onClick={handleTextareaFocus}>Focus textarea element</Button>

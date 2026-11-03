@@ -8,11 +8,11 @@ export interface CssBaselineProps extends StyledComponentProps<never> {
   children?: React.ReactNode;
   /**
    * Enable `color-scheme` CSS property to use `theme.palette.mode`.
-   * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
+   * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme
    * For browser support, check out https://caniuse.com/?search=color-scheme
    * @default false
    */
-  enableColorScheme?: boolean;
+  enableColorScheme?: boolean | undefined;
 }
 
 /**
@@ -20,10 +20,10 @@ export interface CssBaselineProps extends StyledComponentProps<never> {
  *
  * Demos:
  *
- * - [CSS Baseline](https://mui.com/material-ui/react-css-baseline/)
+ * - [CSS Baseline](https://next.mui.com/material-ui/react-css-baseline/)
  *
  * API:
  *
- * - [CssBaseline API](https://mui.com/material-ui/api/css-baseline/)
+ * - [CssBaseline API](https://next.mui.com/material-ui/api/css-baseline/)
  */
 export default function CssBaseline(props: CssBaselineProps): React.JSX.Element;

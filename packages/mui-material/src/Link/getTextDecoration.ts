@@ -27,7 +27,12 @@ const getTextDecoration = <T extends Theme>({
   if ('vars' in theme && channelColor) {
     return `rgba(${channelColor} / 0.4)`;
   }
-  return alpha(color, 0.4);
+
+  try {
+    return alpha(color, 0.4);
+  } catch {
+    return `color-mix(in srgb, ${color} 40%, transparent)`;
+  }
 };
 
 export default getTextDecoration;

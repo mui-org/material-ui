@@ -1,9 +1,9 @@
 {
   "name": "@mui/private-theming",
-  "version": "7.3.1",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Private - The React theme context to be shared between `@mui/styles` and `@mui/material`.",
-  "main": "./src/index.js",
+  "license": "MIT",
   "keywords": [
     "react",
     "react-component",
@@ -15,7 +15,6 @@
     "url": "git+https://github.com/mui/material-ui.git",
     "directory": "packages/mui-private-theming"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mui/material-ui/issues"
   },
@@ -25,26 +24,21 @@
     "url": "https://opencollective.com/mui-org"
   },
   "scripts": {
-    "build": "code-infra build --skipTsc && pnpm build:copy-files",
-    "build:stable": "code-infra build --bundle esm --hasLargeFiles --skipPackageJson --buildTypes false --skipBundlePackageJson",
-    "build:copy-files": "code-infra copy-files",
-    "prebuild": "rimraf build",
+    "build": "code-infra build --tsgo --flat",
     "release": "pnpm build && pnpm publish",
-    "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/mui-private-theming/**/*.test.?(c|m)[jt]s?(x)'",
+    "test": "pnpm --workspace-root test:unit --project \"*:@mui/private-theming\"",
     "typescript": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@babel/runtime": "^7.28.3",
-    "@mui/utils": "workspace:^",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
+    "@mui/utils": "workspace:*",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@mui/internal-test-utils": "workspace:^",
     "@mui/types": "workspace:^",
-    "@types/chai": "^4.3.20",
-    "@types/react": "^19.1.10",
-    "chai": "^4.5.0",
-    "react": "^19.1.1"
+    "@types/prop-types": "15.7.15",
+    "@types/react": "19.3.0",
+    "react": "19.3.1"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",
@@ -60,10 +54,8 @@
     "access": "public",
     "directory": "build"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "exports": {
-    "./*": "./src/*/index.js"
+    ".": "./src/index.ts",
+    "./*": "./src/*/index.ts"
   }
 }

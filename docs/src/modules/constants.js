@@ -8,11 +8,3 @@ export const CODE_STYLING = {
   TAILWIND: 'Tailwind',
   CSS: 'CSS',
 };
-
-// Valid languages to use in production
-export const LANGUAGES_LABEL = [
-  {
-    code: 'en',
-    text: 'English',
-  },
-];

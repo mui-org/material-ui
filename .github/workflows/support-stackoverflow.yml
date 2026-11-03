@@ -14,7 +14,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: dessant/support-requests@47d5ea12f6c9e4a081637de9626b7319b415a3bf # v4.0.0
+      - uses: dessant/support-requests@04320880d61b7fcaac4216e60522cb569478a63d # v5.0.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Label used to mark issues as support requests

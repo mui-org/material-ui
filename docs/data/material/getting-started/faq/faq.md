@@ -158,7 +158,7 @@ page](/material-ui/customization/theming/) to learn about theme customization.
 
 ## Why does component X require a DOM node in a prop instead of a ref object?
 
-Components like the [Portal](https://v6.mui.com/base-ui/react-portal/components-api/) or [Popper](/material-ui/api/popper/#props) require a DOM node in the `container` or `anchorEl` prop respectively.
+Components like the [Portal](/material-ui/api/portal/#props) or [Popper](/material-ui/api/popper/#props) require a DOM node in the `container` or `anchorEl` prop respectively.
 It seems convenient to simply pass a ref object in those props and let Material UI access the current value.
 
 This works in a simple scenario:
@@ -358,7 +358,7 @@ There are several common reasons for this to happen:
 If you think that the issue may be in the duplication of the @mui/styles module somewhere in your dependencies, there are several ways to check this.
 You can use `npm ls @mui/styles`, `yarn list @mui/styles` or `find -L ./node_modules | grep /@mui/styles/package.json` commands in your application folder.
 
-If none of these commands identified the duplication, try analyzing your bundle for multiple instances of @mui/styles. You can just check your bundle source, or use a tool like [source-map-explorer](https://github.com/danvk/source-map-explorer) or [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer).
+If none of these commands identified the duplication, try analyzing your bundle for multiple instances of @mui/styles. You can just check your bundle source, or use a tool like [source-map-explorer](https://github.com/danvk/source-map-explorer) or [webpack-bundle-analyzer](https://github.com/webpack/webpack-bundle-analyzer).
 
 If you identified that duplication is the issue that you are encountering there are several things you can try to solve it:
 
@@ -377,21 +377,25 @@ If you are using webpack, you can change the way it will [resolve](https://webpa
 
 ### Running multiple applications on one page
 
-If you have several applications running on one page, consider using one @mui/styles module for all of them. If you are using webpack, you can use [CommonsChunkPlugin](https://webpack.js.org/plugins/commons-chunk-plugin/) to create an explicit [vendor chunk](https://webpack.js.org/plugins/commons-chunk-plugin/#explicit-vendor-chunk), that will contain the @mui/styles module:
+If you have several applications running on one page, consider using one @mui/styles module for all of them. If you are using webpack, you can use the [`splitChunks`](https://webpack.js.org/plugins/split-chunks-plugin/) configuration to create a shared [vendor chunk](https://webpack.js.org/plugins/split-chunks-plugin/#split-chunks-example-2) that will contain the @mui/styles module:
 
 ```diff
   module.exports = {
     entry: {
-+     vendor: ['@mui/styles'],
       app1: './src/app.1.js',
       app2: './src/app.2.js',
     },
-    plugins: [
-+     new webpack.optimize.CommonsChunkPlugin({
-+       name: 'vendor',
-+       minChunks: Infinity,
-+     }),
-    ]
++   optimization: {
++     splitChunks: {
++       cacheGroups: {
++         vendor: {
++           test: /[\\/]node_modules[\\/]@mui[\\/]styles[\\/]/,
++           name: 'vendor',
++           chunks: 'all',
++         },
++       },
++     },
++   },
   }
 ```
 

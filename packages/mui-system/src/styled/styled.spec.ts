@@ -50,10 +50,8 @@ const VariantCallbackOwnerState = styled('div')<{ ownerState: OwnerState }>({
   ],
 });
 
-// @ts-expect-error the props callback must return a boolean
 const VariantCallbacksError = styled('div')<{ ownerState: OwnerState } & OwnerState>({
-  font: 'inherit',
-  color: 'inherit',
+  // @ts-expect-error - the props callback must return a boolean, real defect is at the props callback
   variants: [
     {
       props: ({ ownerState }) => ownerState.variant,
@@ -62,4 +60,6 @@ const VariantCallbacksError = styled('div')<{ ownerState: OwnerState } & OwnerSt
       },
     },
   ],
+  font: 'inherit',
+  color: 'inherit',
 });

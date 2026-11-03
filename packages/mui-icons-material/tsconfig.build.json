@@ -7,7 +7,7 @@
     "declaration": false,
     "noEmit": false,
     "emitDeclarationOnly": false,
-    "outDir": "build/esm",
+    "outDir": "build",
     "rootDir": "./lib"
   },
   "include": ["lib/**/*.*"]

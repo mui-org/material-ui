@@ -5,8 +5,9 @@
  * with a modification at line 67 to handle layer rules.
  */
 
-// @ts-nocheck
+// @ts-expect-error: cssjanus does not ship TypeScript declarations.
 import cssjanus from 'cssjanus';
+import type { Middleware } from 'stylis';
 import {
   COMMENT,
   compile,
@@ -15,7 +16,6 @@ import {
   RULESET,
   serialize,
   strlen,
-  Middleware,
   KEYFRAMES,
   MEDIA,
   SUPPORTS,

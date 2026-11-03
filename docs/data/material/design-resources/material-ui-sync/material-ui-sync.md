@@ -2,8 +2,9 @@
 
 <p class="description">Sync is a Figma plugin that generates Material UI themes directly from design to code.</p>
 
-:::warning
-This plugin is experimental.
+:::error
+Development on the Material UI Sync plugin was suspended in 2024.
+You should not expect updates on this project in the future.
 :::
 
 ## Introduction
@@ -24,14 +25,14 @@ After installing and opening it in Figma, head over to the [Material UI Sync pl
 
 ## Customizing design tokens
 
-Design tokens are defined in the Design Kit's [local variable collections](https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables) and include color palettes, breakpoints, shapes, and spacing tokens.
+Design tokens are defined in the Design Kit's [local variable collections](https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables-and-collections) and include color palettes, breakpoints, shapes, and spacing tokens.
 Typography and shadow-related tokens are found in the [local styles collection](https://help.figma.com/hc/en-us/articles/360039820134-Manage-and-share-styles#:~:text=Local%20styles%20are%20styles%20that,or%20from%20the%20style%20picker.).
 
 ### Altering existing tokens
 
 The Design Kit comes fully loaded with design tokens that map out to the [default theme of the Material UI React library](/material-ui/customization/default-theme/).
 
-To customize existing tokens, open the [local variable modal](https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables) by clicking on the filter icon as shown below.
+To customize existing tokens, open the [local variable modal](https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables-and-collections) by clicking on the filter icon as shown below.
 Tweak any of the variables available in the collections (such as palettes, breakpoints, shapes, and spacing) as you see fit.
 
 <img src="/static/material-ui/design-resources/sync-variables.png" style="width: 814px; margin-bottom: 8px;" alt="The Local variables menu in Figma, where all design tokens are stored and new ones can be added." width="1628" height="400" />

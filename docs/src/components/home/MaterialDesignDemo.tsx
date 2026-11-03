@@ -1,7 +1,8 @@
 import * as React from 'react';
 import MuiChip from '@mui/material/Chip';
 import MuiCardMedia from '@mui/material/CardMedia';
-import MuiCard, { CardProps } from '@mui/material/Card';
+import type { CardProps } from '@mui/material/Card';
+import MuiCard from '@mui/material/Card';
 import MuiSwitch from '@mui/material/Switch';
 import MuiTypography from '@mui/material/Typography';
 import MuiStack from '@mui/material/Stack';
@@ -15,7 +16,7 @@ export const componentCode = `
     alt="Yosemite National Park"
     image="/static/images/cards/yosemite.jpeg"
   />
-  <Stack direction="row" alignItems="center" spacing={3} p={2} useFlexGap>
+  <Stack direction="row" spacing={3} sx={{ alignItems: 'center', p: 2 }} useFlexGap>
     <Stack direction="column" spacing={0.5} useFlexGap>
       <Typography>Yosemite National Park, California, USA</Typography>
       <Stack direction="row" spacing={1} useFlexGap>
@@ -53,9 +54,11 @@ export default function MaterialDesignDemo(props: CardProps) {
         image="/static/images/cards/yosemite.jpeg"
         sx={{ borderRadius: 0.5 }}
       />
-      <Stack alignItems="center" direction="row" spacing={3} mt={2} useFlexGap>
+      <Stack direction="row" spacing={3} sx={{ alignItems: 'center', mt: 2 }} useFlexGap>
         <Stack2 direction="column" spacing={0.5} useFlexGap>
-          <Typography fontWeight="semiBold">Yosemite National Park, California, USA</Typography>
+          <Typography sx={{ fontWeight: 'semiBold' }}>
+            Yosemite National Park, California, USA
+          </Typography>
           <Stack3 direction="row" spacing={1} useFlexGap>
             <Chip
               label={active ? 'Active' : 'Inactive'}
@@ -67,7 +70,7 @@ export default function MaterialDesignDemo(props: CardProps) {
           </Stack3>
         </Stack2>
         <Switch
-          inputProps={{ 'aria-label': active ? 'Active' : 'Inactive' }}
+          slotProps={{ input: { 'aria-label': active ? 'Active' : 'Inactive' } }}
           checked={active}
           onChange={(event) => setActive(event.target.checked)}
           sx={{ ml: 'auto' }}

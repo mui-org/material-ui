@@ -1,11 +1,11 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import { act, createRenderer } from '@mui/internal-test-utils';
 import FormControl, { formControlClasses as classes } from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import Select from '@mui/material/Select';
-import useFormControl from './useFormControl';
+import useFormControl, { useFormControlState } from './useFormControl';
 import describeConformance from '../../test/describeConformance';
 
 describe('<FormControl />', () => {
@@ -19,6 +19,14 @@ describe('<FormControl />', () => {
     return null;
   }
 
+  function TestFormControlState({ stateCallback, states, ...props }) {
+    const [fcs, muiFormControl] = useFormControlState({ props, states });
+    React.useEffect(() => {
+      stateCallback(fcs, muiFormControl);
+    });
+    return null;
+  }
+
   describeConformance(<FormControl />, () => ({
     classes,
     inheritComponent: 'div',
@@ -27,7 +35,6 @@ describe('<FormControl />', () => {
     testComponentPropWith: 'fieldset',
     muiName: 'MuiFormControl',
     testVariantProps: { margin: 'dense' },
-    skip: ['componentsProp'],
   }));
 
   describe('initial state', () => {
@@ -84,7 +91,7 @@ describe('<FormControl />', () => {
   });
 
   describe('prop: disabled', () => {
-    it('will be unfocused if it gets disabled', () => {
+    it('will be unfocused if it gets disabled', async () => {
       const readContext = spy();
       const { container, setProps } = render(
         <FormControl>
@@ -94,7 +101,7 @@ describe('<FormControl />', () => {
       );
       expect(readContext.args[0][0]).to.have.property('focused', false);
 
-      act(() => {
+      await act(async () => {
         container.querySelector('input').focus();
       });
       expect(readContext.lastCall.args[0]).to.have.property('focused', true);
@@ -208,7 +215,7 @@ describe('<FormControl />', () => {
           <TestComponent contextCallback={readContext} />
         </FormControl>,
       );
-      expect(readContext.args[0][0].adornedStart, true);
+      expect(readContext.args[0][0]).to.have.property('adornedStart', true);
     });
   });
 
@@ -271,19 +278,19 @@ describe('<FormControl />', () => {
 
     describe('callbacks', () => {
       describe('onFilled', () => {
-        it('should set the filled state', () => {
+        it('should set the filled state', async () => {
           const formControlRef = React.createRef();
           render(<FormControlled ref={formControlRef} />);
 
           expect(formControlRef.current).to.have.property('filled', false);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onFilled();
           });
 
           expect(formControlRef.current).to.have.property('filled', true);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onFilled();
           });
 
@@ -292,23 +299,23 @@ describe('<FormControl />', () => {
       });
 
       describe('onEmpty', () => {
-        it('should clean the filled state', () => {
+        it('should clean the filled state', async () => {
           const formControlRef = React.createRef();
           render(<FormControlled ref={formControlRef} />);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onFilled();
           });
 
           expect(formControlRef.current).to.have.property('filled', true);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onEmpty();
           });
 
           expect(formControlRef.current).to.have.property('filled', false);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onEmpty();
           });
 
@@ -317,18 +324,18 @@ describe('<FormControl />', () => {
       });
 
       describe('handleFocus', () => {
-        it('should set the focused state', () => {
+        it('should set the focused state', async () => {
           const formControlRef = React.createRef();
           render(<FormControlled ref={formControlRef} />);
           expect(formControlRef.current).to.have.property('focused', false);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onFocus();
           });
 
           expect(formControlRef.current).to.have.property('focused', true);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onFocus();
           });
 
@@ -337,30 +344,110 @@ describe('<FormControl />', () => {
       });
 
       describe('handleBlur', () => {
-        it('should clear the focused state', () => {
+        it('should clear the focused state', async () => {
           const formControlRef = React.createRef();
           render(<FormControlled ref={formControlRef} />);
           expect(formControlRef.current).to.have.property('focused', false);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onFocus();
           });
 
           expect(formControlRef.current).to.have.property('focused', true);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onBlur();
           });
 
           expect(formControlRef.current).to.have.property('focused', false);
 
-          act(() => {
+          await act(async () => {
             formControlRef.current.onBlur();
           });
 
           expect(formControlRef.current).to.have.property('focused', false);
         });
       });
+    });
+  });
+
+  describe('useFormControlState', () => {
+    it('returns the merged state and context from FormControl', () => {
+      const readState = spy();
+
+      render(
+        <FormControl disabled error required size="small">
+          <TestFormControlState
+            stateCallback={readState}
+            states={['disabled', 'error', 'required', 'size']}
+          />
+        </FormControl>,
+      );
+
+      expect(readState.args[0][0]).to.include({
+        disabled: true,
+        error: true,
+        required: true,
+        size: 'small',
+      });
+      expect(readState.args[0][1]).to.include({
+        disabled: true,
+        error: true,
+        required: true,
+        size: 'small',
+      });
+    });
+
+    it('prefers explicit props over context values', () => {
+      const readState = spy();
+
+      render(
+        <FormControl color="secondary" disabled error required size="small">
+          <TestFormControlState
+            color={null}
+            disabled={false}
+            error={false}
+            required={false}
+            size=""
+            stateCallback={readState}
+            states={['color', 'disabled', 'error', 'required', 'size']}
+          />
+        </FormControl>,
+      );
+
+      expect(readState.args[0][0]).to.include({
+        color: null,
+        disabled: false,
+        error: false,
+        required: false,
+        size: '',
+      });
+      expect(readState.args[0][1]).to.include({
+        color: 'secondary',
+        disabled: true,
+        error: true,
+        required: true,
+        size: 'small',
+      });
+    });
+
+    it('returns undefined context outside FormControl and keeps prop values', () => {
+      const readState = spy();
+
+      render(
+        <TestFormControlState
+          disabled={false}
+          required
+          stateCallback={readState}
+          states={['disabled', 'required']}
+        />,
+      );
+
+      expect(readState.args[0][0]).to.include({
+        disabled: false,
+        required: true,
+      });
+      expect(readState.args[0][1]).to.equal(undefined);
     });
   });
 });

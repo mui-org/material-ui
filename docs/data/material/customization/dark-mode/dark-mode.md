@@ -2,6 +2,10 @@
 
 <p class="description">Material UI comes with two palette modes: light (the default) and dark.</p>
 
+:::success
+Use the [Material UI theming agent skill](https://github.com/mui/material-ui/tree/master/skills/material-ui-theming) to give your AI coding assistant full context on dark mode, color schemes, and SSR behavior.
+:::
+
 ## Dark mode only
 
 You can make your application use the dark theme as the default—regardless of the user's preference—by adding `mode: 'dark'` to the `createTheme()` helper:
@@ -28,7 +32,7 @@ export default function App() {
 
 Adding `mode: 'dark'` to the `createTheme()` helper modifies several palette values, as shown in the following demo:
 
-{{"demo": "DarkTheme.js", "bg": "inline", "hideToolbar": true}}
+{{"component": "file://./demos/dark-theme/index.ts", "bg": "inline", "hideToolbar": true}}
 
 Adding `<CssBaseline />` inside of the `<ThemeProvider>` component will also enable dark mode for the app's background.
 
@@ -96,7 +100,7 @@ To test the system preference feature, follow the guide on [emulating the CSS me
 
 ### Accessing media prefers-color-scheme
 
-You can make use of this preference with the [`useMediaQuery`](/material-ui/react-use-media-query/) hook and the [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) media query.
+You can make use of this preference with the [`useMediaQuery`](/material-ui/react-use-media-query/) hook and the [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-color-scheme) media query.
 
 The following demo shows how to check the user's preference in their OS or browser settings:
 
@@ -120,7 +124,7 @@ To give your users a way to toggle between modes for [built-in support](#built-i
 The `mode` is always `undefined` on first render, so make sure to handle this case as shown in the demo below—otherwise you may encounter a hydration mismatch error.
 :::
 
-{{"demo": "ToggleColorMode.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/toggle-color-mode/index.ts", "collapseToEmpty": true}}
 
 ## Storage manager
 
@@ -405,7 +409,7 @@ It can strain your eyes and disrupt your experience, particularly if you interac
 
 To better understand this issue, take a look at the animated image below:
 
-<img src="/static/joy-ui/dark-mode/dark-mode-flicker.gif" style="width: 814px; border-radius: 8px;" alt="An example video that shows a page that initially loads correctly in dark mode but quickly flickers to light mode." width="1628" height="400" />
+<img src="/static/material-ui/dark-mode/dark-mode-flicker.gif" style="width: 814px; border-radius: 8px;" alt="An example video that shows a page that initially loads correctly in dark mode but quickly flickers to light mode." width="1628" height="400" />
 
 ### The solution: CSS variables
 

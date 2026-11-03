@@ -21,6 +21,9 @@
     "disabled": { "description": "If <code>true</code>, the component is disabled." },
     "icon": { "description": "Icon element." },
     "label": { "description": "The content of the component." },
+    "nativeButton": {
+      "description": "If <code>true</code>, the component is expected to resolve to a native <code>&lt;button&gt;</code> element. When omitted, custom components inherit the default button semantics of the current wrapper. Set to <code>true</code> when a custom component resolves to a native <code>&lt;button&gt;</code>, or <code>false</code> when it resolves to a non-button host."
+    },
     "onDelete": {
       "description": "Callback fired when the delete icon is clicked. If set, the delete icon will be shown."
     },
@@ -40,46 +43,10 @@
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the avatar element"
     },
-    "avatarColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the avatar element",
-      "conditions": "<code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-avatar\">.MuiChip-avatar</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "avatarColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the avatar element",
-      "conditions": "<code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-avatar\">.MuiChip-avatar</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "avatarMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the avatar element",
-      "conditions": "<code>size=\"medium\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-avatar\">.MuiChip-avatar</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeMedium\">.MuiChip-sizeMedium</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "avatarSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the avatar element",
-      "conditions": "<code>size=\"small\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-avatar\">.MuiChip-avatar</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeSmall\">.MuiChip-sizeSmall</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "clickable": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>onClick</code> is defined or <code>clickable={true}</code>"
-    },
-    "clickableColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>onClick</code> and <code>color=\"primary\"</code> is defined or <code>clickable={true}</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-clickable\">.MuiChip-clickable</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "clickableColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>onClick</code> and <code>color=\"secondary\"</code> is defined or <code>clickable={true}</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-clickable\">.MuiChip-clickable</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "colorDefault": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -121,69 +88,9 @@
       "nodeName": "the root element",
       "conditions": "<code>onDelete</code> is defined"
     },
-    "deletableColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>onDelete</code> and <code>color=\"primary\"</code> is defined",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deletable\">.MuiChip-deletable</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deletableColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>onDelete</code> and <code>color=\"secondary\"</code> is defined",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deletable\">.MuiChip-deletable</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "deleteIcon": {
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the deleteIcon element"
-    },
-    "deleteIconColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconFilledColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>color=\"primary\"</code> and <code>variant=\"filled\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> , <a href=\"/material-ui/api/chip/#chip-classes-filled\">.MuiChip-filled</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconFilledColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>color=\"secondary\"</code> and <code>variant=\"filled\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> , <a href=\"/material-ui/api/chip/#chip-classes-filled\">.MuiChip-filled</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>size=\"medium\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeMedium\">.MuiChip-sizeMedium</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconOutlinedColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>color=\"primary\"</code> and <code>variant=\"outlined\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> , <a href=\"/material-ui/api/chip/#chip-classes-outlined\">.MuiChip-outlined</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconOutlinedColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>color=\"secondary\"</code> and <code>variant=\"outlined\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> , <a href=\"/material-ui/api/chip/#chip-classes-outlined\">.MuiChip-outlined</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "deleteIconSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the deleteIcon element",
-      "conditions": "<code>size=\"small\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-deleteIcon\">.MuiChip-deleteIcon</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeSmall\">.MuiChip-sizeSmall</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "disabled": {
       "description": "State class applied to {{nodeName}} if {{conditions}}.",
@@ -195,76 +102,16 @@
       "nodeName": "the root element",
       "conditions": "<code>variant=\"filled\"</code>"
     },
-    "filledPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-filled\">.MuiChip-filled</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "filledSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"filled\"</code> and <code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-filled\">.MuiChip-filled</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "focusVisible": {
       "description": "State class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "keyboard focused"
     },
     "icon": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the icon element" },
-    "iconColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "<code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-icon\">.MuiChip-icon</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "<code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-icon\">.MuiChip-icon</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "<code>size=\"medium\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-icon\">.MuiChip-icon</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeMedium\">.MuiChip-sizeMedium</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "<code>size=\"small\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-icon\">.MuiChip-icon</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeSmall\">.MuiChip-sizeSmall</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "labelMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the label <code>span</code> element",
-      "conditions": "<code>size=\"medium\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-label\">.MuiChip-label</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeMedium\">.MuiChip-sizeMedium</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "labelSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the label <code>span</code> element",
-      "conditions": "<code>size=\"small\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-label\">.MuiChip-label</a> and <a href=\"/material-ui/api/chip/#chip-classes-sizeSmall\">.MuiChip-sizeSmall</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "outlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"outlined\"</code>"
-    },
-    "outlinedPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-outlined\">.MuiChip-outlined</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorPrimary\">.MuiChip-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/chip/#chip-classes-outlined\">.MuiChip-outlined</a> and <a href=\"/material-ui/api/chip/#chip-classes-colorSecondary\">.MuiChip-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "sizeMedium": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

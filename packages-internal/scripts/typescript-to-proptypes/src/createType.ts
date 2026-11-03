@@ -1,6 +1,6 @@
-import ts from 'typescript';
-import _ from 'lodash';
-import {
+import type ts from '@typescript/typescript6';
+import { uniqBy } from 'es-toolkit/array';
+import type {
   PropType,
   ArrayType,
   LiteralType,
@@ -142,7 +142,7 @@ export function uniqueUnionTypes(node: UnionType): UnionType {
   return {
     type: node.type,
     jsDoc: node.jsDoc,
-    types: _.uniqBy(node.types, (type) => {
+    types: uniqBy(node.types, (type) => {
       return getTypeHash(type);
     }),
   };

@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Material UI Review'
+  short_description: 'Review Material UI diffs for bugs, tests, cleanup, docs'
+  default_prompt: 'Use $material-ui-review to review my current diff.'

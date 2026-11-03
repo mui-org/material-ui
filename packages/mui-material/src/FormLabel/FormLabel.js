@@ -3,8 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import formControlState from '../FormControl/formControlState';
-import useFormControl from '../FormControl/useFormControl';
+import { useFormControlState } from '../FormControl/useFormControl';
 import capitalize from '../utils/capitalize';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
@@ -100,10 +99,8 @@ const FormLabel = React.forwardRef(function FormLabel(inProps, ref) {
     ...other
   } = props;
 
-  const muiFormControl = useFormControl();
-  const fcs = formControlState({
+  const [fcs] = useFormControlState({
     props,
-    muiFormControl,
     states: ['color', 'required', 'focused', 'disabled', 'error', 'filled'],
   });
 

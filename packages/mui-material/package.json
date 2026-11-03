@@ -1,9 +1,9 @@
 {
   "name": "@mui/material",
-  "version": "7.3.1",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Material UI is an open-source React component library that implements Google's Material Design. It's comprehensive and can be used in production out of the box.",
-  "main": "./src/index.ts",
+  "license": "MIT",
   "keywords": [
     "react",
     "react-component",
@@ -16,7 +16,6 @@
     "url": "git+https://github.com/mui/material-ui.git",
     "directory": "packages/mui-material"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mui/material-ui/issues"
   },
@@ -26,48 +25,38 @@
     "url": "https://opencollective.com/mui-org"
   },
   "scripts": {
-    "build": "code-infra build && pnpm build:copy-files",
-    "build:stable": "code-infra build --bundle esm --hasLargeFiles --skipPackageJson --buildTypes false --skipBundlePackageJson",
-    "build:copy-files": "code-infra copy-files",
-    "prebuild": "rimraf build tsconfig.build.tsbuildinfo",
+    "prebuild": "node ./scripts/stagePublishedDocs.mjs",
+    "build": "code-infra build --tsgo --flat --copy \"published-docs/**:docs\"",
     "release": "pnpm build && pnpm publish",
-    "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/mui-material/**/*.test.?(c|m)[jt]s?(x)'",
+    "test": "pnpm --workspace-root test:unit --project \"*:@mui/material\"",
     "typescript": "tsc -p tsconfig.json",
-    "typescript:module-augmentation": "node scripts/testModuleAugmentation.js",
-    "attw": "attw --pack ./build --exclude-entrypoints esm modern --include-entrypoints Button styles"
+    "attw": "attw --pack ./build --entrypoints \".\" \"Button\" \"styles\" \"utils\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.28.3",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
     "@mui/core-downloads-tracker": "workspace:^",
-    "@mui/system": "workspace:^",
+    "@mui/system": "workspace:*",
     "@mui/types": "workspace:^",
-    "@mui/utils": "workspace:^",
+    "@mui/utils": "workspace:*",
     "@popperjs/core": "^2.11.8",
     "@types/react-transition-group": "^4.4.12",
     "clsx": "^2.1.1",
-    "csstype": "^3.1.3",
+    "csstype": "^3.2.3",
     "prop-types": "^15.8.1",
-    "react-is": "^19.1.1",
+    "react-is": "^19.3.1",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
-    "@mui/internal-test-utils": "workspace:^",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/chai": "^4.3.20",
-    "@types/prop-types": "^15.7.15",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "@types/sinon": "^17.0.4",
-    "chai": "^4.5.0",
-    "css-mediaquery": "^0.1.2",
-    "fast-glob": "^3.3.3",
-    "fs-extra": "^11.3.1",
-    "lodash": "^4.17.21",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router": "^7.5.1",
-    "sinon": "^21.0.0"
+    "@types/prop-types": "15.7.15",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/sinon": "22.0.2",
+    "css-mediaquery": "0.1.2",
+    "es-toolkit": "1.52.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router": "8.5.1",
+    "sinon": "22.1.0"
   },
   "peerDependencies": {
     "@emotion/react": "^11.5.0",
@@ -96,12 +85,40 @@
     "access": "public",
     "directory": "build"
   },
-  "engines": {
-    "node": ">=14.0.0"
+  "browser": {
+    "react-transition-group/cjs/TransitionGroupContext.js": "react-transition-group/esm/TransitionGroupContext.js"
   },
   "exports": {
+    ".": "./src/index.js",
     "./ButtonBase/TouchRipple": "./src/ButtonBase/TouchRipple.js",
-    "./*": "./src/*/index.ts"
+    "./zero-styled": "./src/zero-styled/index.tsx",
+    "./className": "./src/className/index.ts",
+    "./ClickAwayListener": "./src/ClickAwayListener/index.ts",
+    "./colors": "./src/colors/index.ts",
+    "./darkScrollbar": "./src/darkScrollbar/index.ts",
+    "./DefaultPropsProvider": "./src/DefaultPropsProvider/index.ts",
+    "./generateUtilityClass": "./src/generateUtilityClass/index.ts",
+    "./generateUtilityClasses": "./src/generateUtilityClasses/index.ts",
+    "./Grid": "./src/Grid/index.ts",
+    "./InitColorSchemeScript": "./src/InitColorSchemeScript/index.ts",
+    "./internal": "./src/internal/index.ts",
+    "./locale": "./src/locale/index.ts",
+    "./NoSsr": "./src/NoSsr/index.ts",
+    "./OverridableComponent": "./src/OverridableComponent/index.ts",
+    "./PigmentContainer": "./src/PigmentContainer/index.ts",
+    "./PigmentGrid": "./src/PigmentGrid/index.ts",
+    "./PigmentStack": "./src/PigmentStack/index.ts",
+    "./Popper": "./src/Popper/index.ts",
+    "./Portal": "./src/Portal/index.ts",
+    "./TextareaAutosize": "./src/TextareaAutosize/index.ts",
+    "./themeCssVarsAugmentation": "./src/themeCssVarsAugmentation/index.ts",
+    "./transitions": "./src/transitions/index.ts",
+    "./Unstable_TrapFocus": "./src/Unstable_TrapFocus/index.ts",
+    "./useLazyRipple": "./src/useLazyRipple/index.ts",
+    "./useMediaQuery": "./src/useMediaQuery/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./version": "./src/version/index.ts",
+    "./*": "./src/*/index.js"
   },
   "pigment-css": {
     "vite": {

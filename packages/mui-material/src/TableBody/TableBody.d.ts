@@ -12,11 +12,11 @@ export interface TableBodyOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TableBodyClasses>;
+  classes?: Partial<TableBodyClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface TableBodyTypeMap<
@@ -30,11 +30,11 @@ export interface TableBodyTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableBody API](https://mui.com/material-ui/api/table-body/)
+ * - [TableBody API](https://next.mui.com/material-ui/api/table-body/)
  */
 declare const TableBody: OverridableComponent<TableBodyTypeMap>;
 
@@ -42,7 +42,7 @@ export type TableBodyProps<
   RootComponent extends React.ElementType = TableBodyTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<TableBodyTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default TableBody;

@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import Typography from '@mui/material/Typography';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -22,22 +21,20 @@ describe('<StepLabel />', () => {
       label: { expectedClassName: classes.label },
       root: { expectedClassName: classes.root },
     },
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   describe('label content', () => {
     it('renders the label from children', () => {
-      const { getByText } = render(<StepLabel>Step One</StepLabel>);
-      getByText('Step One');
+      render(<StepLabel>Step One</StepLabel>);
+      screen.getByText('Step One');
     });
 
-    it('renders <StepIcon> with props passed through StepIconProps', () => {
-      const stepIconProps = { error: true };
-
+    it('renders <StepIcon> with props passed through slotProps.stepIcon', () => {
       const { container } = render(
         <Stepper alternativeLabel>
           <Step active completed>
-            <StepLabel StepIconProps={stepIconProps}>Step One</StepLabel>
+            <StepLabel slotProps={{ stepIcon: { error: true } }}>Step One</StepLabel>
           </Step>
         </Stepper>,
       );
@@ -48,21 +45,21 @@ describe('<StepLabel />', () => {
     });
   });
 
-  describe('prop: StepIconComponent', () => {
+  describe('slots: stepIcon', () => {
     it('should render', () => {
       function CustomizedIcon() {
         return <div data-testid="custom-icon" />;
       }
-      const { container, getByTestId } = render(
+      const { container } = render(
         <Step active completed>
-          <StepLabel StepIconComponent={CustomizedIcon}>Step One</StepLabel>
+          <StepLabel slots={{ stepIcon: CustomizedIcon }}>Step One</StepLabel>
         </Step>,
       );
 
       const icon = container.querySelector(`.${classes.iconContainer}`);
       const label = container.querySelector(`.${classes.label}`);
 
-      getByTestId('custom-icon');
+      screen.getByTestId('custom-icon');
       expect(icon).not.to.equal(null);
       expect(icon).not.to.have.attribute('data-testid').equal('CheckCircleIcon');
       expect(label).to.have.class(classes.active);
@@ -181,21 +178,21 @@ describe('<StepLabel />', () => {
 
   describe('prop: optional = Optional Text', () => {
     it('creates a <Typography> component with text "Optional Text"', () => {
-      const { getByText } = render(
+      render(
         <StepLabel optional={<Typography variant="caption">Optional Text</Typography>}>
           Step One
         </StepLabel>,
       );
 
-      getByText('Optional Text');
+      screen.getByText('Optional Text');
     });
   });
 
-  describe('componentsProps: label', () => {
+  describe('slotProps: label', () => {
     it('spreads the props on the label element', () => {
-      const { getByTestId } = render(
+      render(
         <StepLabel
-          componentsProps={{
+          slotProps={{
             label: {
               'data-testid': 'label',
               className: 'step-label-test',
@@ -205,7 +202,8 @@ describe('<StepLabel />', () => {
           Label
         </StepLabel>,
       );
-      expect(getByTestId('label')).to.have.class('step-label-test');
+
+      expect(screen.getByTestId('label')).to.have.class('step-label-test');
     });
   });
 
@@ -216,7 +214,7 @@ describe('<StepLabel />', () => {
       }
       const { container } = render(
         <Step completed>
-          <StepLabel StepIconComponent={CustomizedIcon}>Step One</StepLabel>
+          <StepLabel slots={{ stepIcon: CustomizedIcon }}>Step One</StepLabel>
         </Step>,
       );
 
@@ -232,7 +230,7 @@ describe('<StepLabel />', () => {
       }
       const { container } = render(
         <Step active>
-          <StepLabel StepIconComponent={CustomizedIcon}>Step One</StepLabel>
+          <StepLabel slots={{ stepIcon: CustomizedIcon }}>Step One</StepLabel>
         </Step>,
       );
 

@@ -1,4 +1,4 @@
-# Contributing to Material UI, MUI System, Joy UI
+# Contributing to Material UI and MUI System
 
 If you're reading this, you're awesome!
 Thank you for being a part of the community and helping us make these projects great.
@@ -14,11 +14,28 @@ Here are a few guidelines that will help you along the way.
   - [Trying changes on the playground](#trying-changes-on-the-playground)
   - [How to increase the chances of being accepted](#how-to-increase-the-chances-of-being-accepted)
   - [CI checks and how to fix them](#ci-checks-and-how-to-fix-them)
+    - [Continuous Releases](#continuous-releases)
+    - [ci/circleci: checkout](#cicircleci-checkout)
+    - [ci/circleci: test_static](#cicircleci-test_static)
+    - [ci/circleci: test_unit-1](#cicircleci-test_unit-1)
+    - [ci/circleci: test_browser](#cicircleci-test_browser)
+    - [ci/circleci: test_regressions](#cicircleci-test_regressions)
+    - [ci/circleci: test_types](#cicircleci-test_types)
+    - [ci/circleci: test_bundle_size_monitor](#cicircleci-test_bundle_size_monitor)
+    - [argos](#argos)
+    - [deploy/netlify](#deploynetlify)
+    - [codecov/project](#codecovproject)
+    - [Misc](#misc)
   - [Updating the component API documentation](#updating-the-component-api-documentation)
   - [Coding style](#coding-style)
 - [Contributing to the documentation](#contributing-to-the-documentation)
   - [How to find docs issues to work on](#how-to-find-docs-issues-to-work-on)
   - [How to add a new demo to the docs](#how-to-add-a-new-demo-to-the-docs)
+    - [1. Create the demo folder](#1-create-the-demo-folder)
+    - [2. Write the demo code](#2-write-the-demo-code)
+    - [3. Add `client.ts` and `index.ts`](#3-add-clientts-and-indexts)
+    - [4. Reference the demo from Markdown](#4-reference-the-demo-from-markdown)
+    - [5. Submit your PR](#5-submit-your-pr)
 - [How can I use a change that hasn't been released yet?](#how-can-i-use-a-change-that-hasnt-been-released-yet)
 - [Roadmap](#roadmap)
 - [License](#license)
@@ -162,7 +179,6 @@ The following statements must be true:
 - The code is linted. If the code was changed, run `pnpm eslint`.
 - The code is type-safe. If TypeScript sources or declarations were changed, run `pnpm typescript` to confirm that the check passes.
 - The API docs are up to date. If API was changed, run `pnpm proptypes && pnpm docs:api`.
-- The demos are up to date. If demos were changed, run `pnpm docs:typescript:formatted`. See [about writing demos](#2-write-the-demo-code).
 - The pull request title follows the pattern `[product-name][Component] Imperative commit message`. (See: [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/) for a great explanation).
 
 Don't worry if you miss a step—the Continuous Integration will run a thorough set of tests on your commits, and the maintainers of the project can assist you if you run into problems.
@@ -178,10 +194,9 @@ For CircleCI, you need to log in first.
 No further permissions are required to view the build logs.
 The following sections give an overview of what each check is responsible for.
 
-#### ci/codesandbox
+#### Continuous Releases
 
-This task creates multiple sandboxes on CodeSandbox.com that use the version of npm packages that was built from this pull request.
-It should not fail in isolation. Use it to test more complex scenarios.
+This task publishes a preview for the packages to pkg.pr.new. It should not fail in isolation. Use it to test more complex scenarios.
 
 #### ci/circleci: checkout
 
@@ -202,20 +217,22 @@ If it fails then `pnpm test:unit` should<sup>[1](test/README.md#accessibility-tr
 You can narrow the scope of tests run with `pnpm test:unit --grep ComponentName`.
 If `pnpm test:unit` passes locally, but fails in CI, consider [Accessibility tree exclusion in CI](test/README.md#accessibility-tree-exclusion).
 
-#### ci/circleci: test_browser-1
+#### ci/circleci: test_browser
 
-This runs the unit tests in multiple browsers (via BrowserStack).
+This runs the unit tests in multiple browsers (via Playwright).
 The log of the failed build should list which browsers failed.
-If Chrome failed then `pnpm test:karma` should<sup>[1](test/README.md#accessibility-tree-exclusion)</sup> fail locally as well.
-If other browsers failed, then debugging might be trickier.
-If `pnpm test:karma` passes locally, but fails in CI, consider [Accessibility tree exclusion in CI](test/README.md#accessibility-tree-exclusion).
+If Chrome failed then `pnpm test:browser` should<sup>[1](test/README.md#accessibility-tree-exclusion)</sup> fail locally as well.
+If other browsers failed, you can debug using `VITEST_BROWSERS=firefox,webkit pnpm test:browser`.
 
-#### ci/circleci: test_regression-1
+#### ci/circleci: test_regressions
 
-This renders tests in `test/regressions/tests` and takes screenshots.
-This step shouldn't fail if the others pass.
-Otherwise, a maintainer will take a look.
-The screenshots are evaluated in another step.
+This builds the regression fixture app and runs Playwright in a real browser.
+It checks for visual regressions with screenshots and accessibility regressions with axe-core.
+
+If it fails, check the log for the exact error.
+If generated accessibility results are stale, run `pnpm test:regressions` locally and commit the updated files.
+
+Screenshots are uploaded and compared by Argos in a separate step.
 
 #### ci/circleci: test_types
 
@@ -285,53 +302,75 @@ Or [follow this link directly to the results of that search](https://github.com/
 
 ### How to add a new demo to the docs
 
-The following steps explain how to add a new demo to the docs using the Button component as an example:
+Demos are powered by [`@mui/internal-docs-infra`](https://mui-internal.netlify.app/docs-infra/). The following steps explain how to add a new demo using the Button component as an example.
 
-#### 1. Add a new component file to the directory
+#### 1. Create the demo folder
 
-Add the new file to the component's corresponding directory...
+Each demo lives in its own kebab-cased folder next to the component's markdown page:
 
 ```bash
-docs/src/pages/components/buttons/
+docs/data/material/components/buttons/demos/super/
 ```
-
-...and give it a name: how about `SuperButtons.tsx`?
 
 #### 2. Write the demo code
 
-We use TypeScript to document our components.
-We prefer demos written in TypeScript (using the `.tsx` file format).
+Demos are authored as TypeScript (`.tsx`).
 
-After creating a TypeScript demo, run `pnpm docs:typescript:formatted` to automatically create the JavaScript version, which is also required.
+```tsx
+// docs/data/material/components/buttons/demos/super/SuperButtons.tsx
+import * as React from 'react';
+import Button from '@mui/material/Button';
 
-If you're not familiar with TypeScript, you can write the demo in JavaScript, and a core contributor may help you migrate it to TypeScript.
+export default function SuperButtons() {
+  return <Button>Super</Button>;
+}
+```
 
-#### 3. Edit the page's Markdown file
+Use `{/* @focus-start */}` / `{/* @focus-end */}` JSX comments inside the demo to highlight regions in the rendered code viewer.
 
-The Markdown file in the component's respective folder—in this case, `/buttons/buttons.md`—is the source of content for the document.
-Any changes you make there will be reflected on the website.
+#### 3. Add `client.ts` and `index.ts`
 
-Add a header and a brief description of the demo and its use case, along with the `"demo"` code snippet to inject it into the page:
+```ts
+// docs/data/material/components/buttons/demos/super/client.ts
+'use client';
+
+import { createDemoClient } from '@mui/internal-core-docs/utils/createDemoClient';
+
+export default createDemoClient(import.meta.url);
+```
+
+```ts
+// docs/data/material/components/buttons/demos/super/index.ts
+import { createDemo } from '@mui/internal-core-docs/utils/createDemo';
+import ClientProvider from './client';
+import SuperButtons from './SuperButtons';
+
+export default createDemo(import.meta.url, SuperButtons, { ClientProvider });
+```
+
+#### 4. Reference the demo from Markdown
+
+The Markdown file in the component's respective folder—in this case, `buttons.md`—is the source of content for the document. The `component` field is a `file://` URL relative to the Markdown file:
 
 ```diff
 +### Super buttons
 +
 +To create a super button for a specific use case, add the `super` prop:
 +
-+{{"demo": "pages/components/buttons/SuperButtons.js"}}
++{{"component": "file://./demos/super/index.ts"}}
 ```
 
-#### 4. Submit your PR
+Demo options (`bg`, `hideToolbar`, `isolated`, `iframe`, `defaultCodeOpen`, `maxWidth`, `height`, `disableAd`, `disableLiveEdit`, `hideEditButton`, `aiSuggestion`, `anchorId`) are defined by the `DemoOptions` interface in [`packages-internal/core-docs/src/DemoContent/DemoContent.tsx`](packages-internal/core-docs/src/DemoContent/DemoContent.tsx). See the [demo variants experiment page](docs/pages/experiments/docs/demos.md) for live examples.
+
+#### 5. Submit your PR
 
 Now you're ready to [open a PR](#sending-a-pull-request) to add your new demo to the docs.
 
-Check out [this Toggle Button demo PR](https://github.com/mui/material-ui/pull/19582/files) for an example of what your new and edited files should look like when opening your own demo PR.
-
 ## How can I use a change that hasn't been released yet?
 
-We use [CodeSandbox CI](https://codesandbox.io/docs/ci) to publish a working version of the packages for each pull request as a "preview."
+We use [pkg.pr.new](https://pkg.pr.new) to publish a working version of the packages for each pull request as a "preview."
 
-You can check the CodeSandbox CI status of a pull request to get the URL needed to install these preview packages:
+You can check the _Continuous Releases_ status of a pull request to get the URL needed to install these preview packages:
 
 ```diff
 diff --git a//package.json b//package.json
@@ -343,11 +382,11 @@ index 791a7da1f4..a5db13b414 100644
      "@babel/runtime": "^7.4.4",
      "@mui/styled-engine": "^5.0.0-alpha.16",
 -    "@mui/material": "^5.0.0-alpha.15",
-+    "@mui/material": "https://pkg.csb.dev/mui/material-ui/commit/371c952b/@mui/material",
++    "@mui/material": "https://pkg.pr.new/mui/material-ui/@mui/material@b0f26aa",
      "@mui/system": "^5.0.0-alpha.16",
 ```
 
-Alternatively, you can open the Netlify preview of the documentation, and open any demo in CodeSandbox.
+Alternatively, you can open the Netlify preview of the documentation, and open any demo in CodeSandbox or StackBlitz.
 The documentation automatically configures the dependencies to use the preview packages.
 
 You can also package and test your changes locally.

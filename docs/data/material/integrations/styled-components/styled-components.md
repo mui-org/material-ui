@@ -35,11 +35,11 @@ If you're using yarn, you can configure it using a package resolution:
 ```diff title="package.json"
  {
    "dependencies": {
--    "@mui/styled-engine": "latest"
-+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+-    "@mui/styled-engine": "next"
++    "@mui/styled-engine": "npm:@mui/styled-engine-sc@next"
    },
 +  "resolutions": {
-+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
++    "@mui/styled-engine": "npm:@mui/styled-engine-sc@next"
 +  },
  }
 ```
@@ -93,5 +93,7 @@ For TypeScript, you must also update the `tsconfig.json` as shown here:
 ```
 
 :::info
-**Versions compatibility**: To ensure compatibility, it's essential to align the major version of `@mui/styled-engine-sc` with that of the `styled-components` package you're using. For instance, if you opt for `styled-components` version 5, it's necessary to use `@mui/styled-engine-sc` version 5. Similarly, if your preference is `styled-components` version 6, you'll need to upgrade `@mui/styled-engine-sc` to its version 6, which is currently in an alpha state.
+**Versions compatibility**: Use the same major version of `@mui/styled-engine-sc` as your Material UI packages—for example, `@mui/styled-engine-sc@9.x` with `@mui/material@9.x`.
+
+The installed `styled-components` version only needs to satisfy the peer dependency of `@mui/styled-engine-sc`. For Material UI v7 and v9, this is `styled-components@^6.0.0`.
 :::

@@ -1,5 +1,0 @@
-<Box sx={{ ...commonStyles, border: 1 }} />
-<Box sx={{ ...commonStyles, borderTop: 1 }} />
-<Box sx={{ ...commonStyles, borderRight: 1 }} />
-<Box sx={{ ...commonStyles, borderBottom: 1 }} />
-<Box sx={{ ...commonStyles, borderLeft: 1 }} />

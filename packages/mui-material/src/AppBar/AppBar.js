@@ -6,6 +6,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import { applyChildrenFocusVisible } from '../styles/focusVisible';
 import capitalize from '../utils/capitalize';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
 import Paper from '../Paper';
@@ -23,7 +24,7 @@ const useUtilityClasses = (ownerState) => {
 
 // var2 is the fallback.
 // Ex. var1: 'var(--a)', var2: 'var(--b)'; return: 'var(--a, var(--b))'
-const joinVars = (var1, var2) => (var1 ? `${var1?.replace(')', '')}, ${var2})` : var2);
+const joinVars = (var1, var2) => (var1 ? `${var1.replace(')', '')}, ${var2})` : var2);
 
 const AppBarRoot = styled(Paper, {
   name: 'MuiAppBar',
@@ -95,6 +96,7 @@ const AppBarRoot = styled(Paper, {
         props: { color: 'inherit' },
         style: {
           '--AppBar-color': 'inherit',
+          color: 'var(--AppBar-color)',
         },
       },
       {
@@ -123,6 +125,10 @@ const AppBarRoot = styled(Paper, {
           style: {
             '--AppBar-background': (theme.vars ?? theme).palette[color].main,
             '--AppBar-color': (theme.vars ?? theme).palette[color].contrastText,
+            ...(theme.focusVisible &&
+              applyChildrenFocusVisible(
+                `0 0 0 4px ${(theme.vars || theme).palette.background.default}`,
+              )),
           },
         })),
       {
@@ -241,17 +247,28 @@ AppBar.propTypes /* remove-proptypes */ = {
     PropTypes.string,
   ]),
   /**
+   * Shadow depth, corresponds to `dp` in the spec.
+   * It accepts values between 0 and 24 inclusive.
+   * @default 4
+   */
+  elevation: PropTypes.number,
+  /**
    * If true, the `color` prop is applied in dark mode.
    * @default false
    */
   enableColorOnDark: PropTypes.bool,
   /**
    * The positioning type. The behavior of the different options is described
-   * [in the MDN web docs](https://developer.mozilla.org/en-US/docs/Web/CSS/position).
+   * [in the MDN web docs](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position).
    * Note: `sticky` is not universally supported and will fall back to `static` when unavailable.
    * @default 'fixed'
    */
   position: PropTypes.oneOf(['absolute', 'fixed', 'relative', 'static', 'sticky']),
+  /**
+   * If `false`, rounded corners are enabled.
+   * @default true
+   */
+  square: PropTypes.bool,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

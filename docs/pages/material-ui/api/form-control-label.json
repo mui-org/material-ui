@@ -3,15 +3,8 @@
     "control": { "type": { "name": "element" }, "required": true },
     "checked": { "type": { "name": "bool" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
-    "componentsProps": {
-      "type": { "name": "shape", "description": "{ typography?: object }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "disabled": { "type": { "name": "bool" } },
     "disableTypography": { "type": { "name": "bool" } },
-    "inputRef": { "type": { "name": "custom", "description": "ref" } },
     "label": { "type": { "name": "node" } },
     "labelPlacement": {
       "type": {
@@ -90,6 +83,12 @@
       "isGlobal": false
     },
     {
+      "key": "labelPlacementEnd",
+      "className": "MuiFormControlLabel-labelPlacementEnd",
+      "description": "Styles applied to the root element if `labelPlacement=\"end\"`.",
+      "isGlobal": false
+    },
+    {
       "key": "labelPlacementStart",
       "className": "MuiFormControlLabel-labelPlacementStart",
       "description": "Styles applied to the root element if `labelPlacement=\"start\"`.",
@@ -120,6 +119,5 @@
   "forwardsRefTo": "HTMLLabelElement",
   "filename": "/packages/mui-material/src/FormControlLabel/FormControlLabel.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-checkbox/\">Checkbox</a></li>\n<li><a href=\"/material-ui/react-radio-button/\">Radio Group</a></li>\n<li><a href=\"/material-ui/react-switch/\">Switch</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-checkbox/\">Checkbox</a></li>\n<li><a href=\"/material-ui/react-radio-button/\">Radio Group</a></li>\n<li><a href=\"/material-ui/react-switch/\">Switch</a></li></ul>"
 }

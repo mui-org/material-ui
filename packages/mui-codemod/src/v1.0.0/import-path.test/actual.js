@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 import { MenuItem } from '@material-ui/core/Menu';
 import MuiTabs, { Tab } from '@material-ui/core/Tabs';

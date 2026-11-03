@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -33,7 +32,6 @@ export default function TextFieldComponent(props) {
       <SelectedRoute />
       <FromToSelect />
       <FromToSelectDrawer />
-
       <MuiTextField2 />
       <Select2 />
       <MuiFormControl2 />

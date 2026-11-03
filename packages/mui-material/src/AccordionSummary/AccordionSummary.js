@@ -8,6 +8,7 @@ import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import ButtonBase from '../ButtonBase';
 import AccordionContext from '../Accordion/AccordionContext';
+import { getTransitionStyles } from '../transitions/utils';
 import accordionSummaryClasses, {
   getAccordionSummaryUtilityClass,
 } from './accordionSummaryClasses';
@@ -19,7 +20,7 @@ const useUtilityClasses = (ownerState) => {
   const slots = {
     root: ['root', expanded && 'expanded', disabled && 'disabled', !disableGutters && 'gutters'],
     focusVisible: ['focusVisible'],
-    content: ['content', expanded && 'expanded', !disableGutters && 'contentGutters'],
+    content: ['content', expanded && 'expanded'],
     expandIconWrapper: ['expandIconWrapper', expanded && 'expanded'],
   };
 
@@ -30,38 +31,37 @@ const AccordionSummaryRoot = styled(ButtonBase, {
   name: 'MuiAccordionSummary',
   slot: 'Root',
 })(
-  memoTheme(({ theme }) => {
-    const transition = {
+  memoTheme(({ theme }) => ({
+    display: 'flex',
+    width: '100%',
+    minHeight: 48,
+    padding: theme.spacing(0, 2),
+    font: 'inherit',
+    ...getTransitionStyles(theme, ['min-height', 'background-color'], {
       duration: theme.transitions.duration.shortest,
-    };
-
-    return {
-      display: 'flex',
-      width: '100%',
-      minHeight: 48,
-      padding: theme.spacing(0, 2),
-      transition: theme.transitions.create(['min-height', 'background-color'], transition),
+    }),
+    ...(!theme.focusVisible && {
       [`&.${accordionSummaryClasses.focusVisible}`]: {
         backgroundColor: (theme.vars || theme).palette.action.focus,
       },
-      [`&.${accordionSummaryClasses.disabled}`]: {
-        opacity: (theme.vars || theme).palette.action.disabledOpacity,
-      },
-      [`&:hover:not(.${accordionSummaryClasses.disabled})`]: {
-        cursor: 'pointer',
-      },
-      variants: [
-        {
-          props: (props) => !props.disableGutters,
-          style: {
-            [`&.${accordionSummaryClasses.expanded}`]: {
-              minHeight: 64,
-            },
+    }),
+    [`&.${accordionSummaryClasses.disabled}`]: {
+      opacity: (theme.vars || theme).palette.action.disabledOpacity,
+    },
+    [`&:hover:not(.${accordionSummaryClasses.disabled})`]: {
+      cursor: 'pointer',
+    },
+    variants: [
+      {
+        props: (props) => !props.disableGutters,
+        style: {
+          [`&.${accordionSummaryClasses.expanded}`]: {
+            minHeight: 64,
           },
         },
-      ],
-    };
-  }),
+      },
+    ],
+  })),
 );
 
 const AccordionSummaryContent = styled('span', {
@@ -77,7 +77,7 @@ const AccordionSummaryContent = styled('span', {
       {
         props: (props) => !props.disableGutters,
         style: {
-          transition: theme.transitions.create(['margin'], {
+          ...getTransitionStyles(theme, ['margin'], {
             duration: theme.transitions.duration.shortest,
           }),
           [`&.${accordionSummaryClasses.expanded}`]: {
@@ -97,7 +97,7 @@ const AccordionSummaryExpandIconWrapper = styled('span', {
     display: 'flex',
     color: (theme.vars || theme).palette.action.active,
     transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
+    ...getTransitionStyles(theme, 'transform', {
       duration: theme.transitions.duration.shortest,
     }),
     [`&.${accordionSummaryClasses.expanded}`]: {
@@ -156,6 +156,7 @@ const AccordionSummary = React.forwardRef(function AccordionSummary(inProps, ref
     additionalProps: {
       focusRipple: false,
       disableRipple: true,
+      internalNativeButton: true,
       disabled,
       'aria-expanded': expanded,
       focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),

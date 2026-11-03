@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './path-imports';
 import readFile from '../util/readFile';
@@ -43,6 +43,22 @@ describe('@mui/codemod', () => {
           expected?.trim(),
           'The transformed version should be correct',
         );
+      });
+
+      it('should not leak imports between file transformations', () => {
+        transform(
+          {
+            source: read('./path-imports.test/actual.js'),
+            path: require.resolve('./path-imports.test/actual.js'),
+          },
+          { jscodeshift },
+          {},
+        );
+
+        const source = "import { createContext } from 'react';\n";
+        const actual = transform({ source, path: 'other.js' }, { jscodeshift }, {});
+
+        expect(actual).to.equal(source);
       });
     });
   });

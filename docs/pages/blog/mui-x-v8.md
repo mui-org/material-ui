@@ -70,7 +70,7 @@ Learn more in the [support for Material UI](#support-for-material-ui) section b
 - [Priority Support – a new support service](#priority-support-a-new-support-service)
 - [Support for Material UI](#support-for-material-ui)
 - [Migration guide](#migration-guide)
-- [Long-term support (LTS)](#long-term-support-lts)
+- [Long-term support (LTS)](#longterm-support-lts)
 - [What's next](#whats-next)
 - [How to get involved](#how-to-get-involved)
 

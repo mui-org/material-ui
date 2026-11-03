@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TopLayoutBlog from 'docs/src/modules/components/TopLayoutBlog';
 import { docs } from './siriwat-kunaporn-joining.md?muiMarkdown';
 

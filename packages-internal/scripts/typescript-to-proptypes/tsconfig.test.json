@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "moduleResolution": "node",
-    "types": ["node", "mocha"],
+    "types": ["node"],
     "strict": true,
     "esModuleInterop": true,
     "isolatedModules": true

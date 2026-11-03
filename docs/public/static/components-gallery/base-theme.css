@@ -23,11 +23,11 @@
 
   --canvas: #fff;
 
-  --font-color-soft: hsla(var(--grey-800));
-  --font-color-hard: hsla(var(--grey-900));
+  --font-color-soft: hsl(var(--grey-800));
+  --font-color-hard: hsl(var(--grey-900));
   --font-color-onDark: #fff;
-  --font-color-interactive: hsla(var(--primary-500));
-  --font-color-placeholder: hsla(var(--grey-600));
+  --font-color-interactive: hsl(var(--primary-500));
+  --font-color-placeholder: hsl(var(--grey-600));
 
   --h1-font-family: 'Inter', sans-serif;
   --h1-font-weight: 500;
@@ -80,47 +80,48 @@
     var(--caption-font-family);
 
   --bg-default: #fff;
-  --bg-soft: hsla(var(--grey-50), 0.9);
-  --bg-hard: hsla(var(--grey-100), 0.8);
-  --bg-highlight: hsla(var(--primary-600));
-  --bg-overlay: hsla(0, 0, 0, 0.3);
+  --bg-soft: hsl(var(--grey-50), 0.9);
+  --bg-hard: hsl(var(--grey-100), 0.8);
+  --bg-highlight: hsl(var(--primary-600));
+  --bg-overlay: hsl(0deg 0 0 / 0.3);
 
-  --bg-button: hsla(var(--primary-500));
-  --bg-button-hover: hsla(var(--primary-700));
-  --bg-button-active: hsla(var(--primary-800));
-  --bg-button-disabled: hsla(var(--grey-100), 0.5);
-  --border-solid-button: 1px solid hsla(var(--primary-500));
+  --bg-button: hsl(var(--primary-500));
+  --bg-button-hover: hsl(var(--primary-700));
+  --bg-button-active: hsl(var(--primary-800));
+  --bg-button-disabled: hsl(var(--grey-100), 0.5);
+  --border-solid-button: 1px solid hsl(var(--primary-500));
 
-  --bg-input-base: hsla(var(--grey-50), 0.5);
-  --bg-input-hover: hsla(var(--grey-50));
-  --bg-input-active: hsla(var(--grey-200));
-  --bg-input-disabled: hsla(var(--grey-100));
+  --bg-input-base: hsl(var(--grey-50), 0.5);
+  --bg-input-hover: hsl(var(--grey-50));
+  --bg-input-active: hsl(var(--grey-200));
+  --bg-input-disabled: hsl(var(--grey-100));
 
-  --bg-switch-track: hsla(var(--grey-300), 0.6);
-  --bg-select-option: hsla(var(--primary-100), 0.8);
+  --bg-switch-track: hsl(var(--grey-300), 0.6);
+  --bg-select-option: hsl(var(--primary-100), 0.8);
 
-  --border-default: 1px solid hsla(var(--grey-300));
-  --border-soft: 1px solid hsla(var(--grey-300), 0.8);
-  --border-hard: 1px solid hsla(var(--grey-500));
-  --border-interactive: 1px solid hsla(var(--primary-400));
-  --border-transparent: 1px solid hsla(0, 0, 0, 0);
-  --border-active-switch: 1px solid hsla(var(--primary-100));
+  --border-default: 1px solid hsl(var(--grey-300));
+  --border-soft: 1px solid hsl(var(--grey-300), 0.8);
+  --border-hard: 1px solid hsl(var(--grey-500));
+  --border-interactive: 1px solid hsl(var(--primary-400));
+  --border-transparent: 1px solid hsl(0deg 0 0 / 0);
+  --border-active-switch: 1px solid hsl(var(--primary-100));
 
-  --shadow-elevation-1: 0px 1px 2px 0px hsla(0, 0, 0, 0.15);
-  --shadow-elevation-2: 0px 2px 4px 0px hsla(var(--grey-700), 0.2);
+  --shadow-elevation-1: 0px 1px 2px 0px hsl(0deg 0 0 / 0.15);
+  --shadow-elevation-2: 0px 2px 4px 0px hsl(var(--grey-700), 0.2);
   --shadow-elevation-3:
-    0px 4px 16px -4px hsla(var(--grey-700), 0.2), 0px 1px 2px -1px hsla(var(--grey-700), 0.1);
-  --shadow-elevation-4: 0px 8px 32px -4px hsla(0, 0, 0, 0.25), 0px 1px 2px -1px hsla(0, 0, 0, 0.15);
+    0px 4px 16px -4px hsl(var(--grey-700), 0.2), 0px 1px 2px -1px hsl(var(--grey-700), 0.1);
+  --shadow-elevation-4:
+    0px 8px 32px -4px hsl(0deg 0 0 / 0.25), 0px 1px 2px -1px hsl(0deg 0 0 / 0.15);
 
   --shadow-interactive-button:
-    0 -2px 0.5px 0 hsla(var(--primary-700), 0.4) inset,
-    0 2px 0.5px 0 hsla(var(--primary-400), 0.6) inset, 0 1px 0.5px 0 hsla(var(--primary-900), 0.3);
+    0 -2px 0.5px 0 hsl(var(--primary-700), 0.4) inset,
+    0 2px 0.5px 0 hsl(var(--primary-400), 0.6) inset, 0 1px 0.5px 0 hsl(var(--primary-900), 0.3);
   --shadow-outlined-button:
-    0 -2px 0.5px 0 hsla(var(--grey-100), 0.5) inset, 0 1px 0.5px 0 hsla(var(--grey-500), 0.2);
-  --shadow-input: 0px 1px 2px hsla(var(--primary-300), 0.2);
-  --shadow-interactive-switch-track: 0px 1px 1px 0px hsla(0, 0, 0, 0.05) inset;
-  --shadow-interactive-switch-thumb: 0px 1px 2px 0px hsla(0, 0, 0, 0.3);
-  --shadow-interactive-focus-visible: 0 0 0 4px hsla(var(--primary-300), 0.5);
+    0 -2px 0.5px 0 hsl(var(--grey-100), 0.5) inset, 0 1px 0.5px 0 hsl(var(--grey-500), 0.2);
+  --shadow-input: 0px 1px 2px hsl(var(--primary-300), 0.2);
+  --shadow-interactive-switch-track: 0px 1px 1px 0px hsl(0deg 0 0 / 0.05) inset;
+  --shadow-interactive-switch-thumb: 0px 1px 2px 0px hsl(0deg 0 0 / 0.3);
+  --shadow-interactive-focus-visible: 0 0 0 4px hsl(var(--primary-300), 0.5);
 
   --border-radius-sm: 4px;
   --border-radius-md: 6px;
@@ -133,56 +134,57 @@
   .GalleryContainer,
   .GalleryMenu,
   .GalleryPopup,
-  .GalleryPopup,
   .GallerySelect-listbox {
     --canvas: #0f0f0f;
 
-    --font-color-soft: hsla(var(--grey-300));
-    --font-color-hard: hsla(var(--grey-50));
-    --font-color-interactive: hsla(var(--primary-300));
+    --font-color-soft: hsl(var(--grey-300));
+    --font-color-hard: hsl(var(--grey-50));
+    --font-color-interactive: hsl(var(--primary-300));
     --font-color-onDark: #fff;
 
-    --bg-default: hsla(var(--grey-900));
-    --bg-soft: hsla(var(--grey-800), 0.6);
-    --bg-hard: hsla(var(--grey-900), 0.8);
-    --bg-highlight: hsla(var(--primary-500));
-    --bg-overlay: hsla(0, 0, 0, 0.6);
+    --bg-default: hsl(var(--grey-900));
+    --bg-soft: hsl(var(--grey-800), 0.6);
+    --bg-hard: hsl(var(--grey-900), 0.8);
+    --bg-highlight: hsl(var(--primary-500));
+    --bg-overlay: hsl(0deg 0 0 / 0.6);
 
-    --bg-button-base: hsla(var(--primary-500));
-    --bg-button-hover: hsla(var(--primary-400));
-    --bg-button-active: hsla(var(--primary-600));
-    --bg-button-disabled: hsla(var(--grey-900));
-    --border-solid-button: 1px solid hsla(var(--primary-600));
+    --bg-button-base: hsl(var(--primary-500));
+    --bg-button-hover: hsl(var(--primary-400));
+    --bg-button-active: hsl(var(--primary-600));
+    --bg-button-disabled: hsl(var(--grey-900));
+    --border-solid-button: 1px solid hsl(var(--primary-600));
 
-    --bg-input-base: hsla(var(--grey-900, 0.5));
-    --bg-input-hover: hsla(var(--grey-900));
-    --bg-input-active: hsla(var(--grey-700));
-    --bg-input-disabled: hsla(var(--grey-800));
+    --bg-input-base: hsl(var(--grey-900, 0.5));
+    --bg-input-hover: hsl(var(--grey-900));
+    --bg-input-active: hsl(var(--grey-700));
+    --bg-input-disabled: hsl(var(--grey-800));
 
-    --bg-switch-track: hsla(var(--grey-700), 0.5);
-    --bg-select-option: hsla(var(--primary-300), 0.2);
+    --bg-switch-track: hsl(var(--grey-700), 0.5);
+    --bg-select-option: hsl(var(--primary-300), 0.2);
 
-    --border-default: 1px solid hsla(var(--grey-800));
-    --border-soft: 1px solid hsla(var(--grey-800), 0.8);
-    --border-hard: 1px solid hsla(var(--grey-700));
-    --border-interactive: 1px solid hsla(var(--primary-200));
+    --border-default: 1px solid hsl(var(--grey-800));
+    --border-soft: 1px solid hsl(var(--grey-800), 0.8);
+    --border-hard: 1px solid hsl(var(--grey-700));
+    --border-interactive: 1px solid hsl(var(--primary-200));
     --border-transparent: 1px solid transparent;
-    --border-active-switch: 1px solid hsla(var(--primary-400), 0.4);
+    --border-active-switch: 1px solid hsl(var(--primary-400), 0.4);
 
-    --shadow-elevation-1: 0px 2px 4px -0.5px hsla(0, 0, 0, 0.4);
-    --shadow-elevation-2: 0px 2px 8px 0px hsla(0, 0, 0, 0.3), 0px 2px 4px -0.5px hsla(0, 0, 0, 0.4);
-    --shadow-elevation-3: 0px 4px 8px 0px hsla(0, 0, 0, 0.32), 0px 8px 16px 0px hsla(0, 0, 0, 0.32);
+    --shadow-elevation-1: 0px 2px 4px -0.5px hsl(0deg 0 0 / 0.4);
+    --shadow-elevation-2:
+      0px 2px 8px 0px hsl(0deg 0 0 / 0.3), 0px 2px 4px -0.5px hsl(0deg 0 0 / 0.4);
+    --shadow-elevation-3:
+      0px 4px 8px 0px hsl(0deg 0 0 / 0.32), 0px 8px 16px 0px hsl(0deg 0 0 / 0.32);
     --shadow-elevation-4:
-      0px 2px 24px 0px hsla(0, 0, 0, 0.32), 0px 16px 32px 0px hsla(0, 0, 0, 0.32);
+      0px 2px 24px 0px hsl(0deg 0 0 / 0.32), 0px 16px 32px 0px hsl(0deg 0 0 / 0.32);
 
     --shadow-interactive-button:
-      0 -2px 0.5px 0 hsla(var(--primary-700), 0.4) inset,
-      0 2px 0.5px 0 hsla(var(--primary-400), 0.6) inset, 0 1px 0.5px 0 hsla(var(--primary-900), 0.3);
+      0 -2px 0.5px 0 hsl(var(--primary-700), 0.4) inset,
+      0 2px 0.5px 0 hsl(var(--primary-400), 0.6) inset, 0 1px 0.5px 0 hsl(var(--primary-900), 0.3);
     --shadow-outlined-button:
-      0 -2px 0.5px 0 hsla(0, 0%, 0%, 0.4) inset, 0 1px 0.5px 0 hsla(0, 0%, 0%, 0.9);
-    --shadow-input: 0px 1.5px 0.5px 0px hsla(0, 0%, 0%, 0.9);
-    --shadow-interactive-switch-track: 0px 1px 1px 0px hsla(0, 0, 0, 0.35) inset;
-    --shadow-interactive-switch-thumb: 0px 1px 2px 0px hsla(0, 0, 0, 0.3);
+      0 -2px 0.5px 0 hsl(0deg 0% 0% / 0.4) inset, 0 1px 0.5px 0 hsl(0deg 0% 0% / 0.9);
+    --shadow-input: 0px 1.5px 0.5px 0px hsl(0deg 0% 0% / 0.9);
+    --shadow-interactive-switch-track: 0px 1px 1px 0px hsl(0deg 0 0 / 0.35) inset;
+    --shadow-interactive-switch-thumb: 0px 1px 2px 0px hsl(0deg 0 0 / 0.3);
   }
 }
 
@@ -474,7 +476,6 @@
 }
 
 .GalleryNumberInput .input {
-  font-family: inherit;
   font: var(--text-body);
   grid-column: 1/2;
   grid-row: 1/3;
@@ -561,7 +562,7 @@
   border-radius: var(--border-radius-md);
   padding: 0.75rem;
   opacity: 1;
-  margin: 0.25rem 0px;
+  margin: 0.25rem 0;
   color: var(--font-color-soft);
   background: var(--bg-default);
   border: var(--border-soft);
@@ -612,7 +613,6 @@
 }
 
 .GallerySelect-listbox {
-  box-sizing: border-box;
   width: 300px;
   font: var(--text-body);
   line-height: var(--button-line-height);
@@ -902,10 +902,6 @@
 }
 
 /* Table pagination styles */
-
-.GalleryTablePaginationDemo th {
-  background-color: var(--bg-default);
-}
 
 .GalleryTablePaginationDemo table {
   font: var(--text-body);

@@ -1,12 +1,11 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
 import GradientText from 'docs/src/components/typography/GradientText';
 import HeroContainer from 'docs/src/layouts/HeroContainer';
-import IconImage from 'docs/src/components/icon/IconImage';
-import { Link } from '@mui/docs/Link';
+import IconImage from '@mui/internal-core-docs/IconImage';
+import { Link } from '@mui/internal-core-docs/Link';
 import {
   StoreTemplatesSet1,
   StoreTemplatesSet2,

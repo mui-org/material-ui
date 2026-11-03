@@ -31,7 +31,6 @@
       }
     },
     "orientation": { "description": "The component orientation (layout flow direction)." },
-    "ScrollButtonComponent": { "description": "The component used to render the scroll buttons." },
     "scrollButtons": {
       "description": "<p>Determine behavior of scroll buttons when tabs are set to scroll:</p>\n<ul>\n<li><code>auto</code> will only present them when not all the items are visible.</li>\n<li><code>true</code> will always present them.</li>\n<li><code>false</code> will never present them.</li>\n</ul>\n<p>By default the scroll buttons are hidden on mobile.\nThis behavior can be disabled with <code>allowScrollButtonsMobile</code>.</p>\n"
     },
@@ -42,10 +41,6 @@
     "slots": { "description": "The components used for each slot inside." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
-    },
-    "TabIndicatorProps": { "description": "Props applied to the tab indicator element." },
-    "TabScrollButtonProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/tab-scroll-button/\"><code>TabScrollButton</code></a> element."
     },
     "textColor": { "description": "Determines the color of the <code>Tab</code>." },
     "value": {
@@ -68,14 +63,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the tablist element",
       "conditions": "<code>!variant=\"scrollable\"</code>\b\b\b"
-    },
-    "flexContainer": {
-      "description": "",
-      "deprecationInfo": "use <code>list</code> instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "flexContainerVertical": {
-      "description": "",
-      "deprecationInfo": "use a combination of <code>list</code> and <code>vertical</code> instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "hideScrollbar": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

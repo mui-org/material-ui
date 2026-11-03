@@ -20,7 +20,7 @@ Feel free to submit a pull request and the maintainers will work with you to wri
 
 ### Layout
 
-- [MUI Treasury Layout](https://mui-treasury.com/?path=/docs/layout-v6-introduction--docs): Components to handle the overall layout of a page. Check out examples such as [a legacy.reactjs.org clone](https://mui-treasury.com/?path=/story/layout-v6-app-react-legacy--react-legacy).
+- [MUI Treasury Layout](https://mui-treasury.com/layout): Components to handle the overall layout of a page.
 
 ### Image
 

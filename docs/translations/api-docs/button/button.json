@@ -25,7 +25,7 @@
       "description": "The URL to link to when the button is clicked. If defined, an <code>a</code> element will be used as the root node."
     },
     "loading": {
-      "description": "If <code>true</code>, the loading indicator is visible and the button is disabled. If <code>true \\| false</code>, the loading wrapper is always rendered before the children to prevent <a href=\"https://github.com/mui/material-ui/issues/27853\">Google Translation Crash</a>."
+      "description": "If <code>true</code>, the loading indicator is visible and the button is disabled. If <code>true | false</code>, the loading wrapper is always rendered before the children to prevent <a href=\"https://github.com/mui/material-ui/issues/27853\">Google Translation Crash</a>."
     },
     "loadingIndicator": {
       "description": "Element placed before the children if the button is in loading state. The node should contain an element with <code>role=&quot;progressbar&quot;</code> with an accessible name. By default, it renders a <code>CircularProgress</code> that is labeled by the button itself."
@@ -83,66 +83,6 @@
       "nodeName": "the root element",
       "conditions": "<code>variant=\"contained\"</code>"
     },
-    "containedError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorError\">.MuiButton-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorInfo\">.MuiButton-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"inherit\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorInherit\">.MuiButton-colorInherit</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorPrimary\">.MuiButton-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorSecondary\">.MuiButton-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedSizeLarge": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"large\"</code> and <code>variant=\"contained\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeLarge\">.MuiButton-sizeLarge</a> and <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedSizeMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"medium\"</code> and <code>variant=\"contained\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeMedium\">.MuiButton-sizeMedium</a> and <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedSizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"small\"</code> and <code>variant=\"contained\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeSmall\">.MuiButton-sizeSmall</a> and <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorSuccess\">.MuiButton-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "containedWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"contained\"</code> and <code>color=\"warning\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-contained\">.MuiButton-contained</a> and <a href=\"/material-ui/api/button/#button-classes-colorWarning\">.MuiButton-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "disabled": {
       "description": "State class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
@@ -169,24 +109,6 @@
       "conditions": "<code>fullWidth={true}</code>"
     },
     "icon": { "description": "Styles applied to the icon element if supplied" },
-    "iconSizeLarge": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "supplied and <code>size=\"large\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-icon\">.MuiButton-icon</a> and <a href=\"/material-ui/api/button/#button-classes-sizeLarge\">.MuiButtonSizeLarge</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconSizeMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "supplied and <code>size=\"medium\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-icon\">.MuiButton-icon</a> and <a href=\"/material-ui/api/button/#button-classes-sizeMedium\">.MuiButtonSizeMedium</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconSizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon element",
-      "conditions": "supplied and <code>size=\"small\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-icon\">.MuiButton-icon</a> and <a href=\"/material-ui/api/button/#button-classes-sizeSmall\">.MuiButtonSizeSmall</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "loading": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
@@ -224,66 +146,6 @@
       "nodeName": "the root element",
       "conditions": "<code>variant=\"outlined\"</code>"
     },
-    "outlinedError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorError\">.MuiButton-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorInfo\">.MuiButton-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"inherit\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorInherit\">.MuiButton-colorInherit</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorPrimary\">.MuiButton-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorSecondary\">.MuiButton-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSizeLarge": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"large\"</code> and <code>variant=\"outlined\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeLarge\">.MuiButton-sizeLarge</a> and <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSizeMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"medium\"</code> and <code>variant=\"outlined\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeMedium\">.MuiButton-sizeMedium</a> and <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"small\"</code> and <code>variant=\"outlined\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeSmall\">.MuiButton-sizeSmall</a> and <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorSuccess\">.MuiButton-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "outlinedWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"outlined\"</code> and <code>color=\"warning\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-outlined\">.MuiButton-outlined</a> and <a href=\"/material-ui/api/button/#button-classes-colorWarning\">.MuiButton-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "root": { "description": "Styles applied to the root element." },
     "sizeLarge": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -309,66 +171,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>variant=\"text\"</code>"
-    },
-    "textError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorError\">.MuiButton-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorInfo\">.MuiButton-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textInherit": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"inherit\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorInherit\">.MuiButton-colorInherit</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorPrimary\">.MuiButton-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorSecondary\">.MuiButton-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textSizeLarge": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"large\"</code> and <code>variant=\"text\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeLarge\">.MuiButton-sizeLarge</a> and <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textSizeMedium": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"medium\"</code> and <code>variant=\"text\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeMedium\">.MuiButton-sizeMedium</a> and <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textSizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>size=\"small\"</code> and <code>variant=\"text\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-sizeSmall\">.MuiButton-sizeSmall</a> and <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorSuccess\">.MuiButton-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "textWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the root element",
-      "conditions": "<code>variant=\"text\"</code> and <code>color=\"warning\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/button/#button-classes-text\">.MuiButton-text</a> and <a href=\"/material-ui/api/button/#button-classes-colorWarning\">.MuiButton-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   }
 }

@@ -1,4 +1,0 @@
-{
-  "extends": "../../../../../tsconfig.json",
-  "files": ["typographyVariants.spec.tsx"]
-}

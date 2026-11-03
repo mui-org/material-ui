@@ -1,6 +1,0 @@
-<Button component="a" href="#as-link" startDecorator={<OpenInNew />}>
-  Open in new tab
-</Button>
-<IconButton aria-label="Open in new tab" component="a" href="#as-link">
-  <OpenInNew />
-</IconButton>

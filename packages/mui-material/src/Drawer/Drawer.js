@@ -13,8 +13,10 @@ import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled, useTheme } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import useForkRef from '../utils/useForkRef';
 import { getDrawerUtilityClass } from './drawerClasses';
 import useSlot from '../utils/useSlot';
+import { FOCUSABLE_ATTRIBUTE } from '../utils/focusable';
 import { mergeSlotProps } from '../utils';
 
 const overridesResolver = (props, styles) => {
@@ -23,7 +25,7 @@ const overridesResolver = (props, styles) => {
   return [
     styles.root,
     (ownerState.variant === 'permanent' || ownerState.variant === 'persistent') && styles.docked,
-    styles.modal,
+    ownerState.variant === 'temporary' && styles.modal,
   ];
 };
 
@@ -34,11 +36,7 @@ const useUtilityClasses = (ownerState) => {
     root: ['root', `anchor${capitalize(anchor)}`],
     docked: [(variant === 'permanent' || variant === 'persistent') && 'docked'],
     modal: ['modal'],
-    paper: [
-      'paper',
-      `paperAnchor${capitalize(anchor)}`,
-      variant !== 'temporary' && `paperAnchorDocked${capitalize(anchor)}`,
-    ],
+    paper: ['paper'],
   };
 
   return composeClasses(slots, getDrawerUtilityClass, classes);
@@ -67,16 +65,6 @@ const DrawerDockedRoot = styled('div', {
 const DrawerPaper = styled(Paper, {
   name: 'MuiDrawer',
   slot: 'Paper',
-  overridesResolver: (props, styles) => {
-    const { ownerState } = props;
-
-    return [
-      styles.paper,
-      styles[`paperAnchor${capitalize(ownerState.anchor)}`],
-      ownerState.variant !== 'temporary' &&
-        styles[`paperAnchorDocked${capitalize(ownerState.anchor)}`],
-    ];
-  },
 })(
   memoTheme(({ theme }) => ({
     overflowY: 'auto',
@@ -198,18 +186,13 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
 
   const {
     anchor: anchorProp = 'left',
-    BackdropProps,
     children,
     className,
     elevation = 16,
     hideBackdrop = false,
-    ModalProps: { BackdropProps: BackdropPropsProp, ...ModalProps } = {},
+    ModalProps = {},
     onClose,
     open = false,
-    PaperProps = {},
-    SlideProps,
-    // eslint-disable-next-line react/prop-types
-    TransitionComponent,
     transitionDuration = defaultTransitionDuration,
     variant = 'temporary',
     slots = {},
@@ -221,9 +204,16 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
   // We use this state is order to skip the appear transition during the
   // initial mount of the component.
   const mounted = React.useRef(false);
+  const rootRef = React.useRef(null);
+  const handleRef = useForkRef(ref, rootRef);
+
   React.useEffect(() => {
     mounted.current = true;
   }, []);
+
+  // Resolve the container lazily so Slide reads the mounted modal root
+  // after refs are assigned, rather than the initial null ref during render.
+  const resolveSlideContainer = React.useCallback(() => rootRef.current, []);
 
   const anchorInvariant = getAnchor({ direction: isRtl ? 'rtl' : 'ltr' }, anchorProp);
   const anchor = anchorProp;
@@ -240,22 +230,17 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
   const classes = useUtilityClasses(ownerState);
 
   const externalForwardedProps = {
-    slots: {
-      transition: TransitionComponent,
-      ...slots,
-    },
+    slots,
     slotProps: {
-      paper: PaperProps,
-      transition: SlideProps,
       ...slotProps,
-      backdrop: mergeSlotProps(slotProps.backdrop || { ...BackdropProps, ...BackdropPropsProp }, {
+      backdrop: mergeSlotProps(slotProps.backdrop, {
         transitionDuration,
       }),
     },
   };
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
-    ref,
+    ref: handleRef,
     elementType: DrawerRoot,
     className: clsx(classes.root, classes.modal, className),
     shouldForwardComponentProp: true,
@@ -266,6 +251,7 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
       ...ModalProps,
     },
     additionalProps: {
+      closeAfterTransition: true,
       open,
       onClose,
       hideBackdrop,
@@ -281,7 +267,7 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
   const [PaperSlot, paperSlotProps] = useSlot('paper', {
     elementType: DrawerPaper,
     shouldForwardComponentProp: true,
-    className: clsx(classes.paper, PaperProps.className),
+    className: classes.paper,
     ownerState,
     externalForwardedProps,
     additionalProps: {
@@ -290,13 +276,15 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
       ...(variant === 'temporary' && {
         role: 'dialog',
         'aria-modal': 'true',
+        [FOCUSABLE_ATTRIBUTE]: '',
+        tabIndex: -1,
       }),
     },
   });
 
   const [DockedSlot, dockedSlotProps] = useSlot('docked', {
     elementType: DrawerDockedRoot,
-    ref,
+    ref: handleRef,
     className: clsx(classes.root, classes.docked, className),
     ownerState,
     externalForwardedProps,
@@ -312,6 +300,10 @@ const Drawer = React.forwardRef(function Drawer(inProps, ref) {
       direction: oppositeDirection[anchorInvariant],
       timeout: transitionDuration,
       appear: mounted.current,
+      ...(variant === 'temporary' &&
+        (slots.transition == null || slots.transition === Slide) && {
+          container: resolveSlideContainer,
+        }),
     },
   });
 
@@ -341,10 +333,6 @@ Drawer.propTypes /* remove-proptypes */ = {
    * @default 'left'
    */
   anchor: PropTypes.oneOf(['bottom', 'left', 'right', 'top']),
-  /**
-   * @ignore
-   */
-  BackdropProps: PropTypes.object,
   /**
    * The content of the component.
    */
@@ -385,17 +373,6 @@ Drawer.propTypes /* remove-proptypes */ = {
    * @default false
    */
   open: PropTypes.bool,
-  /**
-   * Props applied to the [`Paper`](https://mui.com/material-ui/api/paper/) element.
-   * @deprecated use the `slotProps.paper` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default {}
-   */
-  PaperProps: PropTypes.object,
-  /**
-   * Props applied to the [`Slide`](https://mui.com/material-ui/api/slide/) element.
-   * @deprecated use the `slotProps.transition` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  SlideProps: PropTypes.object,
   /**
    * The props used for each slot inside.
    * @default {}

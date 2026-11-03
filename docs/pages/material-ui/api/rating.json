@@ -13,12 +13,6 @@
     },
     "highlightSelectedOnly": { "type": { "name": "bool" }, "default": "false" },
     "icon": { "type": { "name": "node" }, "default": "<Star fontSize=\"inherit\" />" },
-    "IconContainerComponent": {
-      "type": { "name": "elementType" },
-      "default": "function IconContainer(props) {\n  const { value, ...other } = props;\n  return <span {...other} />;\n}",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.icon.component</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "max": { "type": { "name": "number" }, "default": "5" },
     "name": { "type": { "name": "string" } },
     "onChange": {
@@ -93,7 +87,7 @@
     },
     {
       "name": "decimal",
-      "description": "The component used fo r the decimal slot.",
+      "description": "The component used for the decimal slot.",
       "default": "'span'",
       "class": "MuiRating-decimal"
     }
@@ -184,6 +178,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/Rating/Rating.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-rating/\">Rating</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-rating/\">Rating</a></li></ul>"
 }

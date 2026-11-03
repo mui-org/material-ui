@@ -9,9 +9,9 @@ import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import AccountTreeRounded from '@mui/icons-material/AccountTreeRounded';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import { visuallyHidden } from '@mui/utils';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import { Link } from '@mui/docs/Link';
-import ROUTES from 'docs/src/route';
+import { Highlighter } from '@mui/internal-core-docs/AppLayout';
+import { Link } from '@mui/internal-core-docs/Link';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 
 const SwipeableViews = dynamic(() => import('react-swipeable-views'), { ssr: false });
 

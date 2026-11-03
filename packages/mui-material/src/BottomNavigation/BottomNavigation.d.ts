@@ -12,24 +12,24 @@ export interface BottomNavigationOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<BottomNavigationClasses>;
+  classes?: Partial<BottomNavigationClasses> | undefined;
   /**
    * Callback fired when the value changes.
    *
    * @param {React.SyntheticEvent} event The event source of the callback. **Warning**: This is a generic event not a change event.
    * @param {any} value We default to the index of the child.
    */
-  onChange?: (event: React.SyntheticEvent, value: any) => void;
+  onChange?: ((event: React.SyntheticEvent, value: any) => void) | undefined;
   /**
    * If `true`, all `BottomNavigationAction`s will show their labels.
    * By default, only the selected `BottomNavigationAction` will show its label.
    * @default false
    */
-  showLabels?: boolean;
+  showLabels?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The value of the currently selected `BottomNavigationAction`.
    */
@@ -47,11 +47,11 @@ export interface BottomNavigationTypeMap<
  *
  * Demos:
  *
- * - [Bottom Navigation](https://mui.com/material-ui/react-bottom-navigation/)
+ * - [Bottom Navigation](https://next.mui.com/material-ui/react-bottom-navigation/)
  *
  * API:
  *
- * - [BottomNavigation API](https://mui.com/material-ui/api/bottom-navigation/)
+ * - [BottomNavigation API](https://next.mui.com/material-ui/api/bottom-navigation/)
  */
 declare const BottomNavigation: OverridableComponent<BottomNavigationTypeMap>;
 
@@ -59,7 +59,7 @@ export type BottomNavigationProps<
   RootComponent extends React.ElementType = BottomNavigationTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<BottomNavigationTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default BottomNavigation;

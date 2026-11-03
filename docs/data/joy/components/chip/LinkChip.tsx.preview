@@ -1,3 +1,0 @@
-<Chip slotProps={{ action: { component: 'a', href: '#as-link' } }}>
-  Anchor chip
-</Chip>

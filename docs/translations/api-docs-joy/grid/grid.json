@@ -1,6 +1,0 @@
-{
-  "componentDescription": "",
-  "propDescriptions": { "children": { "description": "The content of the component." } },
-  "classDescriptions": {},
-  "slotDescriptions": { "root": "The component that renders the root." }
-}

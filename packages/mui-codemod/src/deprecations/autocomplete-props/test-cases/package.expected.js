@@ -1,5 +1,6 @@
 import Autocomplete from '@org/ui/material/Autocomplete';
 import {Autocomplete as MyAutocomplete} from '@org/ui/material';
+import Chip from '@org/ui/material/Chip';
 
 <Autocomplete
   slots={{
@@ -74,4 +75,12 @@ import {Autocomplete as MyAutocomplete} from '@org/ui/material';
   PopperComponent={CustomPopper}
   ListboxComponent={CustomListbox}
   ListboxProps={{ height: 12 }}
+/>;
+
+<MyAutocomplete
+  multiple
+  options={options}
+  renderValue={(value, getItemProps) =>
+    value.map((option, index) => <Chip label={option.label} {...getItemProps({ index })} />)
+  }
 />

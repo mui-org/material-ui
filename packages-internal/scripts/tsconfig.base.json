@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "types": ["node"],
-
     "strict": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "composite": true,
-
     "esModuleInterop": true,
     "isolatedModules": true
   }

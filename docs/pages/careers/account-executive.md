@@ -1,33 +1,35 @@
 # Account Executive
 
-<p class="description">You will help establish MUI's sales team by implementing effective sales processes and tools to optimize and expand our sales pipeline.</p>
+<p class="description">You will be a key player in driving revenue growth and building strong customer relationships.</p>
 
 ## Details of the role
 
-- **Location**: Remote (preference for UTC-6 to UTC+5).
-- **Type of work**: Full-time (contractor or employee [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
-- **Level**: [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
-- We're a **remote** company, we prefer asynchronous communication over meetings.
+- **Location:** Remote (preference for UTC-6 to UTC+5).
+- **Type of work:** Full-time (employee or contractor [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
+- **Level:** [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
+- We're a **remote** company, operating mostly asynchronously.
 
 ## The company
 
-MUI's story began in 2014 with Material UI, the most successful React implementation of Google's Material Design. Today, Material UI stands as one of the most popular open-source libraries on GitHub and has paved the way for the fully-fledged startup known as MUI (founded in 2019), which now boasts an ever-expanding ecosystem of React UI products.
-
-We're a company of 35+ people as of early 2024, and we're growing.
+MUI's story began in 2014 with Material UI, the most successful React implementation of Google's Material Design.
+This open-source project has paved the way for the fully-fledged startup known as MUI (founded in 2019), which now boasts an ever-expanding ecosystem of React UI products.
+We're a company of 40 people as of 2026, and we're growing steadily.
 
 ## The products
 
-MUI is best known for our flagship product, Material UI—but this is just one of three core component libraries we maintain. Base UI is our headless component library, and Pigment CSS is a zero-runtime CSS-in-JS styling engine. We also host Design Kits and pre-built Templates.
-
-Beyond the core libraries, MUI X offers advanced components like the Data Grid, Date and Time Pickers, and Charts, for more complex user interactions and data visualization needs.
-
-Learn more about MUI's products in this blog post: [An introduction to the MUI ecosystem](https://mui.com/blog/mui-product-comparison/).
+MUI is best known for our flagship product, Material UI—but this is just one of the UI libraries we maintain.
+Material UI is complemented by advanced components through MUI X (Data Grid, Charts, Date and Time Pickers, Tree View) for more complex user interactions and data visualization needs.
+Base UI is our headless component library.
+We also host Design Kits and pre-built Templates.
 
 ## The culture
 
-MUI is a fully remote company with a team that spans the globe. The majority of our work is asynchronous, and we rely on written communication to collaborate. We're radically transparent: nearly all of our work happens in public. Each contributor has the freedom to decide how and when they work, and that work is primarily self-directed: it's your responsibility to define and complete your own tasks in a timely manner.
+MUI is a fully remote company with a team that spans the globe.
+The majority of our work is asynchronous, and we rely on written communication to collaborate.
+We're radically transparent: a lot of our work happens in public.
+Each contributor has the freedom to decide how and when they work, and that work is primarily self-directed: it's your responsibility to define and complete your own tasks in a timely manner.
 
-For additional details about the culture, you can check our [careers](https://mui.com/careers/) and [about](https://mui.com/about/) pages and also our [public Handbook](https://mui-org.notion.site/Handbook-f086d47e10794d5e839aef9dc67f324b).
+For additional details about the culture, you can check our [careers](https://mui.com/careers/) and [about](https://mui.com/about/) pages and also our [public Handbook](https://mui-org.notion.site).
 
 ## Why we're hiring
 
@@ -35,7 +37,8 @@ Currently, 100% of MUI's sales are inbound, and MUI boasts an impressive existin
 
 MUI now needs to recruit a Senior Account Executive who can lead the transition to outbound sales while also building and implementing sales processes and methodologies as the company expands.
 
-This Senior Account Executive is not focused on aggressive hunting; instead, it is about being proactive in pursuing and creating deals and implementing sales frameworks with customers. This is a key hire for MUI because it involves collaborating with the leadership team to determine how sales can best support MUI.
+This Senior Account Executive is not focused on aggressive hunting; instead, it is about being proactive in pursuing and creating deals and implementing sales frameworks with customers.
+This is a key hire for MUI because it involves collaborating with the leadership team to determine how sales can best support MUI.
 
 To accelerate this growth, MUI needs to hire a Senior Account Executive, who, as MUI's first senior sales hire, will not only be responsible for selling MUI's products but will also primarily focus on defining, building, and implementing MUI's sales strategy and processes.
 
@@ -52,11 +55,10 @@ The Senior Account Executives aim will be towards implementing the strategies th
 Depending on the day, you'll:
 
 - **Hands-on Sales**.
-  Actively engage in the full sales cycle, from lead generation and qualification to closing deals and managing client relationships. Focus on selling our developer licenses for advanced UI components.
+  Actively engage in the full sales cycle, from lead generation and qualification to closing deals and managing client relationships.
+  Focus on selling our developer licenses for advanced UI components.
 - **Sales Strategy Development**.
   Collaborate with leadership to define and implement a comprehensive sales strategy, including target market segmentation, pricing strategies, and sales processes.
-- **Team Building & Leadership**.
-  Lead the charge in building our sales team. This includes defining roles, writing job descriptions, conducting interviews, hiring top talent, and providing ongoing coaching and mentorship.
 - **Sales Process Optimization**.
   Continuously evaluate and improve our sales processes, leveraging best practices and data-driven insights to maximize efficiency and effectiveness.
 - **Sales Forecasting & Reporting**.
@@ -66,21 +68,25 @@ Depending on the day, you'll:
 
 ## Who we're looking for
 
-As our Senior Account Executive, you'll be a key player in our growth story. You'll not only be a hands-on sales contributor, closing deals and building relationships with key clients, but you'll also be responsible for building the entire sales function. This includes leading the hiring process for future sales team members, developing and implementing our sales strategy, defining sales roles, and fostering a high-performing sales culture.
+As our Senior Account Executive, you'll be a key player in our growth story.
+You'll be a hands-on sales contributor, closing deals and building relationships with key clients.
 
 ### Required
 
-- The goal for the Senior Account Executive would be to progress and transition into the Sales team lead for MUI. Therefore, while past sales team management experience is not essential; a desire, ambition, and motivation to progress through MUI's organization is key, with an interest in taking on additional responsibility within MUI.
 - To manage existing customers and qualify incoming leads with a focus on selling additional licenses, upselling/cross-selling, and increasing total contract value – building strong relationships with each customer.
-- The Senior Account Executive will manage key customers with large accounts, and scan existing smaller accounts to upsell into them. Essentially ensuring users are successful by explaining the benefits of the MUI products to them
-- MUI's typical customers are engineers, developers, Heads of Engineering Departments, CTOs, etc. The Senior Account Executive will need to develop an understanding of MUI's products to resonate with MUI's customers and will manage mid-market and enterprise sales cycles with multiple engagement points.
+- The Senior Account Executive will manage key customers with large accounts, and scan existing smaller accounts to upsell into them.
+  Essentially ensuring users are successful by explaining the benefits of the MUI products to them
+- MUI's typical customers are engineers, developers, Heads of Engineering Departments, CTOs, etc.
+  The Senior Account Executive will need to develop an understanding of MUI's products to resonate with MUI's customers and will manage mid-market and enterprise sales cycles with multiple engagement points.
 - The Senior Account Executive will be in active communication with the customers leading them into the onboarding process, working closely with customer success.
 - MUI needs a Senior Account Executive who has sold either:
   - UI interfaces/libraries and related technologies for front-end development
   - API and other Developer products
 - The Senior Account Executive needs to have a track record of selling relevant tools and products to customers, with a history of success in upselling, cross-selling, increasing total contract values, and renewal rates of customers.
 - The Senior Account Executive will consult and advise MUI's customers and then report relevant information/feedback back to the MUI team regarding points such as features that clients have asked for more information regarding.
-- This will be the 1st Senior Account Executive hire for MUI. Therefore, this individual needs to be a self-starter, motivated, and able to work autonomously. Also, MUI is in the startup phase, not all processes will be defined, the Senior Account Executive needs to be comfortable working alone, and sometimes with activities that may extend outside of the job description.
+- This will be the 1st Senior Account Executive hire for MUI.
+  Therefore, this individual needs to be a self-starter, motivated, and able to work autonomously.
+  Also, MUI is in the startup phase, not all processes will be defined, the Senior Account Executive needs to be comfortable working alone, and sometimes with activities that may extend outside of the job description.
 - While startup experience is preferred, but certainly not essential, a startup, entrepreneurial and self-motivating mindset is essential.
 - The Senior Account Executive needs to have the ambition to further learn and progress in their career, be open to communication, and be constantly interested in taking on further responsibilities.
 
@@ -94,9 +100,8 @@ As our Senior Account Executive, you'll be a key player in our growth story. You
 
 ## Benefits and compensation
 
-Competitive compensation depending on the profile and location.
-We are ready to pay top market rates for a person who can clearly exceed the role's expectations.
-You can find the other perks & benefits on the [careers](https://mui.com/careers/#perks-and-benefits) page.
+We offer competitive compensation commensurate with your experience level and location and are prepared to pay top market rates for someone who can clearly exceed the role's expectations.
+You can find the other perks and benefits on the [careers](https://mui.com/careers/#perks-and-benefits) page.
 
 ## How to apply
 

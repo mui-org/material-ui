@@ -1,11 +1,10 @@
-import * as React from 'react';
 import { useInView } from 'react-intersection-observer';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import AddRounded from '@mui/icons-material/AddRounded';
-import { Link } from '@mui/docs/Link';
+import { Link } from '@mui/internal-core-docs/Link';
 import SponsorCard from 'docs/src/components/home/SponsorCard';
 
 const DIAMONDs = [
@@ -70,7 +69,6 @@ export default function DiamondSponsors() {
                 component="a"
                 href="mailto:sales@mui.com"
                 target="_blank"
-                rel="noopener"
                 color="primary"
                 sx={(theme) => ({
                   mr: 2,
@@ -89,7 +87,7 @@ export default function DiamondSponsors() {
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   To join us, contact us at{' '}
-                  <Link href="mailto:sales@mui.com" target="_blank" rel="noopener">
+                  <Link href="mailto:sales@mui.com" target="_blank">
                     sales@mui.com
                   </Link>{' '}
                   for pre-approval.

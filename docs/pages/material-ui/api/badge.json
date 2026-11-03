@@ -18,21 +18,6 @@
       "default": "'default'"
     },
     "component": { "type": { "name": "elementType" } },
-    "components": {
-      "type": { "name": "shape", "description": "{ Badge?: elementType, Root?: elementType }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "componentsProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ badge?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
-      },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "invisible": { "type": { "name": "bool" }, "default": "false" },
     "max": { "type": { "name": "number" }, "default": "99" },
     "overlap": {
@@ -228,6 +213,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/Badge/Badge.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-avatar/\">Avatar</a></li>\n<li><a href=\"/material-ui/react-badge/\">Badge</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-avatar/\">Avatar</a></li>\n<li><a href=\"/material-ui/react-badge/\">Badge</a></li></ul>"
 }

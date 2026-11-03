@@ -33,6 +33,5 @@
   "muiName": "MuiPigmentStack",
   "filename": "/packages/mui-material/src/PigmentStack/PigmentStack.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-stack/\">Stack</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-stack/\">Stack</a></li></ul>"
 }

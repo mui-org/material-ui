@@ -39,6 +39,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/BottomNavigation/BottomNavigation.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-bottom-navigation/\">Bottom Navigation</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-bottom-navigation/\">Bottom Navigation</a></li></ul>"
 }

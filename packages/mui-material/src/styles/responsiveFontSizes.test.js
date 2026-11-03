@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createTheme } from '@mui/material/styles';
 import defaultTheme from './defaultTheme';
 import responsiveFontSizes from './responsiveFontSizes';
@@ -56,6 +56,33 @@ describe('responsiveFontSizes', () => {
       [`@media (min-width:${defaultTheme.breakpoints.values.lg}px)`]: {
         fontSize: defaultVariant.fontSize,
       },
+    });
+  });
+
+  it('should preserve the original font size at the largest breakpoint', () => {
+    // Regression test for https://github.com/mui/material-ui/issues/40255
+    // h4 (34px = 2.125rem, lineHeight 1.235) has a font size that falls between
+    // grid alignment points, causing alignProperty to snap it ~1.6px away.
+    // Uses px input to also verify that the largest-breakpoint value is
+    // normalized to rem (consistent with the other breakpoints).
+    const defaultVariant = {
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      fontSize: '34px',
+      fontWeight: 400,
+      letterSpacing: '0.00735em',
+      lineHeight: 1.235,
+    };
+
+    const theme = createTheme({
+      typography: {
+        h4: defaultVariant,
+      },
+    });
+    const { typography } = responsiveFontSizes(theme);
+    expect(
+      typography.h4[`@media (min-width:${defaultTheme.breakpoints.values.lg}px)`],
+    ).to.deep.equal({
+      fontSize: '2.125rem',
     });
   });
 

@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, beforeAll, it, expect } from 'vitest';
+import { createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
 import SvgIcon, { svgIconClasses as classes } from '@mui/material/SvgIcon';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 
 describe('<SvgIcon />', () => {
@@ -9,7 +9,7 @@ describe('<SvgIcon />', () => {
 
   let path;
 
-  before(() => {
+  beforeAll(() => {
     path = <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" data-testid="test-path" />;
   });
 
@@ -34,15 +34,30 @@ describe('<SvgIcon />', () => {
           {props.children}
         </svg>
       ),
-      skip: ['themeVariants', 'componentsProp'],
+      skip: ['themeVariants'],
     }),
   );
 
   it('renders children by default', () => {
-    const { container, queryByTestId } = render(<SvgIcon>{path}</SvgIcon>);
+    const { container } = render(<SvgIcon>{path}</SvgIcon>);
 
-    expect(queryByTestId('test-path')).not.to.equal(null);
+    expect(screen.queryByTestId('test-path')).not.to.equal(null);
     expect(container.firstChild).to.have.attribute('aria-hidden', 'true');
+  });
+
+  it.skipIf(isJsdom())('disables the fill transition when reduced motion is always', () => {
+    const theme = createTheme({
+      motion: {
+        reducedMotion: 'always',
+      },
+    });
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <SvgIcon>{path}</SvgIcon>
+      </ThemeProvider>,
+    );
+
+    expect(window.getComputedStyle(container.firstChild).transitionProperty).to.equal('none');
   });
 
   it('renders children of provided svg and merge the props', () => {
@@ -62,13 +77,13 @@ describe('<SvgIcon />', () => {
 
   describe('prop: titleAccess', () => {
     it('should be able to make an icon accessible', () => {
-      const { container, queryByText } = render(
+      const { container } = render(
         <SvgIcon title="Go to link" titleAccess="Network">
           {path}
         </SvgIcon>,
       );
 
-      expect(queryByText('Network')).not.to.equal(null);
+      expect(screen.queryByText('Network')).not.to.equal(null);
       expect(container.firstChild).not.to.have.attribute('aria-hidden');
     });
   });
@@ -138,40 +153,35 @@ describe('<SvgIcon />', () => {
     });
   });
 
-  it('should not override internal ownerState with the ownerState passed to the icon', function test() {
-    if (/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
+  it.skipIf(isJsdom())(
+    'should not override internal ownerState with the ownerState passed to the icon',
+    function test() {
+      const { container } = render(<SvgIcon ownerState={{ fontSize: 'large' }}>{path}</SvgIcon>);
+      expect(container.firstChild).toHaveComputedStyle({ fontSize: '24px' }); // fontSize: medium -> 1.5rem = 24px
+    },
+  );
 
-    const { container } = render(<SvgIcon ownerState={{ fontSize: 'large' }}>{path}</SvgIcon>);
-    expect(container.firstChild).toHaveComputedStyle({ fontSize: '24px' }); // fontSize: medium -> 1.5rem = 24px
-  });
-
-  it('should have `fill="currentColor"`', function test() {
-    if (!/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
+  // `getComputedStyle()` resolves `currentColor`, so set an explicit color to tell
+  // an inherited `fill` apart from the `black` initial value of SVG `fill`.
+  it.skipIf(!isJsdom())('should have `fill="currentColor"`', function test() {
     const { container } = render(
-      <SvgIcon>
+      <SvgIcon sx={{ color: 'rgb(255, 0, 0)' }}>
         <path />
       </SvgIcon>,
     );
 
-    expect(container.firstChild).toHaveComputedStyle({ fill: 'currentColor' });
+    expect(container.firstChild).toHaveComputedStyle({ fill: 'rgb(255, 0, 0)' });
   });
 
-  it('should not add `fill` if svg is a direct child', function test() {
-    if (!/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
+  it.skipIf(!isJsdom())('should not add `fill` if svg is a direct child', function test() {
     const { container } = render(
-      <SvgIcon>
+      <SvgIcon sx={{ color: 'rgb(255, 0, 0)' }}>
         <svg>
           <path />
         </svg>
       </SvgIcon>,
     );
 
-    expect(container.firstChild).not.toHaveComputedStyle({ fill: 'currentColor' });
+    expect(container.firstChild).toHaveComputedStyle({ fill: 'rgb(0, 0, 0)' });
   });
 });

@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import postcss from 'postcss';
 import { jscodeshift } from '../../../testUtils';
 import jsTransform from './accordion-summary-classes';

@@ -1,6 +1,6 @@
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { act, createRenderer, screen, isJsdom } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import OutlinedInput, { outlinedInputClasses as classes } from '@mui/material/OutlinedInput';
 import InputBase from '@mui/material/InputBase';
@@ -22,7 +22,6 @@ describe('<OutlinedInput />', () => {
     testDeepOverrides: { slotName: 'input', slotClassName: classes.input },
     testVariantProps: { variant: 'contained', fullWidth: true },
     testStateOverrides: { prop: 'size', value: 'small', styleKey: 'sizeSmall' },
-    testLegacyComponentsProp: ['root', 'input'],
     slots: {
       // can't test with DOM element as InputBase places an ownerState prop on it unconditionally.
       root: { expectedClassName: classes.root, testWithElement: null },
@@ -34,7 +33,6 @@ describe('<OutlinedInput />', () => {
     },
     skip: [
       'componentProp',
-      'componentsProp',
       'slotPropsCallback', // not supported yet
       'slotPropsCallbackWithPropsAsOwnerState', // not supported yet
     ],
@@ -65,8 +63,8 @@ describe('<OutlinedInput />', () => {
     expect(document.querySelector('.error')).not.to.equal(null);
   });
 
-  it('should respects the componentsProps if passed', () => {
-    render(<OutlinedInput componentsProps={{ root: { 'data-test': 'test' } }} />);
+  it('should respect the slotProps if passed', () => {
+    render(<OutlinedInput slotProps={{ root: { 'data-test': 'test' } }} />);
     expect(document.querySelector('[data-test=test]')).not.to.equal(null);
   });
 
@@ -102,5 +100,22 @@ describe('<OutlinedInput />', () => {
         </ThemeProvider>,
       ),
     ).not.to.throw();
+  });
+  describe('theme.focusVisible', () => {
+    // The notched outline already recolors on focus, so the theme ring would be a second indicator.
+    it.skipIf(isJsdom())('does not render the ring on focus', async () => {
+      render(
+        <ThemeProvider theme={createTheme({ focusVisible: true })}>
+          <OutlinedInput data-testid="root" />
+        </ThemeProvider>,
+      );
+      const root = screen.getByTestId('root');
+
+      await act(async () => {
+        root.querySelector('input').focus();
+      });
+
+      expect(root).toHaveComputedStyle({ outlineStyle: 'none' });
+    });
   });
 });

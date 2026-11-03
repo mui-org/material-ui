@@ -1,8 +1,6 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import TableFooter, { tableFooterClasses as classes } from '@mui/material/TableFooter';
-import Tablelvl2Context from '../Table/Tablelvl2Context';
 import describeConformance from '../../test/describeConformance';
 
 describe('<TableFooter />', () => {
@@ -23,28 +21,12 @@ describe('<TableFooter />', () => {
     testVariantProps: { variant: 'foo' },
     refInstanceof: window.HTMLTableSectionElement,
     testComponentPropWith: 'thead',
-    skip: ['componentsProp'],
   }));
 
   it('should render children', () => {
     const children = <tr data-testid="test" />;
-    const { getByTestId } = renderInTable(<TableFooter>{children}</TableFooter>);
-    getByTestId('test');
-  });
-
-  it('should define table.footer in the child context', () => {
-    let context;
-    // TODO test integration with TableCell
-    renderInTable(
-      <TableFooter>
-        <Tablelvl2Context.Consumer>
-          {(value) => {
-            context = value;
-          }}
-        </Tablelvl2Context.Consumer>
-      </TableFooter>,
-    );
-    expect(context.variant).to.equal('footer');
+    renderInTable(<TableFooter>{children}</TableFooter>);
+    screen.getByTestId('test');
   });
 
   describe('prop: component', () => {

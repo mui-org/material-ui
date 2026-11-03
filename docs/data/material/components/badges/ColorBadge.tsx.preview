@@ -1,6 +1,0 @@
-<Badge badgeContent={4} color="secondary">
-  <MailIcon color="action" />
-</Badge>
-<Badge badgeContent={4} color="success">
-  <MailIcon color="action" />
-</Badge>

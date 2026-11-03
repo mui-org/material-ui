@@ -70,6 +70,5 @@
   "forwardsRefTo": "HTMLLIElement",
   "filename": "/packages/mui-material/src/ListSubheader/ListSubheader.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li></ul>"
 }

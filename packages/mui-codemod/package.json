@@ -1,9 +1,10 @@
 {
   "name": "@mui/codemod",
-  "version": "7.3.0",
+  "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Codemod scripts for Material UI.",
-  "bin": "./codemod.js",
+  "license": "MIT",
+  "bin": "./src/codemod.js",
   "keywords": [
     "react",
     "react-component",
@@ -12,10 +13,8 @@
     "jscodeshift"
   ],
   "scripts": {
-    "test": "cd ../../ && cross-env NODE_ENV=test mocha 'packages/mui-codemod/**/*.test.?(c|m)[jt]s?(x)'",
-    "prebuild": "rimraf build",
-    "build:copy-files": "code-infra copy-files codemod.js",
-    "build": "code-infra build --bundle cjs --buildTypes false && pnpm build:copy-files",
+    "test": "pnpm --workspace-root test:unit --project \"*:@mui/codemod\"",
+    "build": "code-infra build --flat --bundle cjs --buildTypes false --ignore \"**/*.test/**\" --ignore \"**/actual.js\" --ignore \"**/expected.js\" --ignore \"**/test-cases/**\"",
     "release": "pnpm build && pnpm publish"
   },
   "repository": {
@@ -23,26 +22,25 @@
     "url": "git+https://github.com/mui/material-ui.git",
     "directory": "packages/mui-codemod"
   },
-  "license": "MIT",
   "homepage": "https://github.com/mui/material-ui/tree/master/packages/mui-codemod",
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/mui-org"
   },
   "dependencies": {
-    "@babel/core": "^7.28.3",
-    "@babel/runtime": "^7.28.3",
-    "@babel/traverse": "^7.28.3",
-    "jscodeshift": "^17.1.2",
+    "@babel/core": "^7.29.7",
+    "@babel/runtime": "^7.29.7 || ^8.0.5",
+    "@babel/traverse": "^7.29.12",
+    "@mui/material-v5": "npm:@mui/material@5.18.0",
+    "jscodeshift": "^17.4.0",
     "jscodeshift-add-imports": "^1.0.11",
-    "postcss": "^8.5.6",
-    "postcss-cli": "^11.0.1",
-    "yargs": "^17.7.2"
+    "postcss": "^8.5.32",
+    "postcss-cli": "^12.0.0",
+    "yargs": "^18.2.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.20",
-    "@types/jscodeshift": "0.12.0",
-    "chai": "^4.5.0"
+    "@material-ui/core": "^4.12.4",
+    "@types/jscodeshift": "17.3.0"
   },
   "sideEffects": false,
   "publishConfig": {
@@ -50,6 +48,6 @@
     "directory": "build"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.19.0"
   }
 }

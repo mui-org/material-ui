@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Typography from '@material-ui/core/Typography';
+import { styled } from '@mui/material/styles';
 import Container from 'modules/components/Container';
 import Button from 'modules/components/Button';
 import Link from 'modules/components/Link';
@@ -40,7 +39,7 @@ const Root = styled('div')((
       flexDirection: 'column',
       position: 'relative',
       alignItems: 'center',
-      // Fix IE11 issue
+      // Fix IE 11 issue
       marginRight: 0,
       marginLeft: 0,
       padding: theme.spacing(0, 2),
@@ -62,7 +61,7 @@ function SellHero() {
 
 
   return (
-    (<Root className={classes.root}>
+    <Root className={classes.root}>
       <Container className={classes.container}>
         <Typography variant="h1" align="center" color="textPrimary" className={classes.title}>
           Sell themes
@@ -77,7 +76,6 @@ function SellHero() {
             naked
             to="https://support.mui.com/hc/en-us/articles/360008775380-How-do-I-apply-to-be-a-contributor-"
             target="_blank"
-            rel="noopener"
             className={classes.apply}
           >
             Apply now
@@ -87,7 +85,7 @@ function SellHero() {
           </Button>
         </div>
       </Container>
-    </Root>)
+    </Root>
   );
 }
 

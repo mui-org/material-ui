@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 import { spy, useFakeTimers } from 'sinon';
 import debounce from './debounce';
 

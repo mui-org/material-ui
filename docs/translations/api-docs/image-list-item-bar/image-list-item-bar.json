@@ -19,12 +19,6 @@
       "nodeName": "the actionIcon",
       "conditions": "supplied"
     },
-    "actionIconActionPosLeft": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the actionIcon",
-      "conditions": "<code>actionPosition=\"left\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-actionIcon\">.MuiImageListItemBar-actionIcon</a> and <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-actionPositionLeft\">.MuiImageListItemBar-actionPositionLeft</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "actionPositionLeft": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the action container element",
@@ -62,24 +56,6 @@
     "titleWrap": {
       "description": "Styles applied to {{nodeName}}.",
       "nodeName": "the title and subtitle container element"
-    },
-    "titleWrapActionPosLeft": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the container element",
-      "conditions": "<code>actionPosition=\"left\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-titleWrap\">.MuiImageListItemBar-titleWrap</a> and <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-actionPositionLeft\">.MuiImageListItemBar-actionPositionLeft</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "titleWrapActionPosRight": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the container element",
-      "conditions": "<code>actionPosition=\"right\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-titleWrap\">.MuiImageListItemBar-titleWrap</a> and <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-actionPositionRight\">.MuiImageListItemBar-actionPositionRight</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "titleWrapBelow": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the title and subtitle container element",
-      "conditions": "<code>position=\"below\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-titleWrap\">.MuiImageListItemBar-titleWrap</a> and <a href=\"/material-ui/api/image-list-item-bar/#image-list-item-bar-classes-positionBelow\">.MuiImageListItemBar-positionBelow</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   }
 }

@@ -3,14 +3,14 @@ import ownerDocument from '@mui/utils/ownerDocument';
 import getScrollbarSize from '@mui/utils/getScrollbarSize';
 
 export interface ManagedModalProps {
-  disableScrollLock?: boolean;
+  disableScrollLock?: boolean | undefined;
 }
 
 // Is a vertical scrollbar displayed?
 function isOverflowing(container: Element): boolean {
   const doc = ownerDocument(container);
 
-  if (doc.body === container) {
+  if (container === doc.body || container === doc.documentElement) {
     return ownerWindow(container).innerWidth > doc.documentElement.clientWidth;
   }
 
@@ -26,7 +26,7 @@ export function ariaHidden(element: Element, hide: boolean): void {
 }
 
 function getPaddingRight(element: Element): number {
-  return parseInt(ownerWindow(element).getComputedStyle(element).paddingRight, 10) || 0;
+  return parseFloat(ownerWindow(element).getComputedStyle(element).paddingRight) || 0;
 }
 
 function isAriaHiddenForbiddenOnElement(element: Element): boolean {
@@ -54,34 +54,76 @@ function isAriaHiddenForbiddenOnElement(element: Element): boolean {
   return isForbiddenTagName || isInputHidden;
 }
 
-function ariaHiddenSiblings(
-  container: Element,
-  mountElement: Element,
-  currentElement: Element,
-  elementsToExclude: readonly Element[],
-  hide: boolean,
-): void {
-  const blacklist = [mountElement, currentElement, ...elementsToExclude];
+// The chain of elements from `node` up to (but not including) `container`
+// that should not be aria-hidden.
+function getKeepChain(node: Element, container: Element): Set<Element> {
+  const chain = new Set<Element>();
+  let current: Element | null = node;
 
-  [].forEach.call(container.children, (element: Element) => {
-    const isNotExcludedElement = !blacklist.includes(element);
-    const isNotForbiddenElement = !isAriaHiddenForbiddenOnElement(element);
-    if (isNotExcludedElement && isNotForbiddenElement) {
-      ariaHidden(element, hide);
+  while (current && current !== container) {
+    chain.add(current);
+    current = current.parentElement;
+  }
+
+  return current === container ? chain : new Set<Element>();
+}
+
+// Walk down from `parent` collecting everything that should be aria-hidden.
+// An element on the keep chain is stepped through rather than hidden, so the
+// modal's own ancestors stay readable while their other children get hidden.
+function collectHiddenTargets(
+  parent: Element,
+  keep: Element,
+  keepChain: Set<Element>,
+  out: Set<Element>,
+): void {
+  [].forEach.call(parent.children, (element: Element) => {
+    if (element === keep || isAriaHiddenForbiddenOnElement(element)) {
+      return;
     }
+
+    if (keepChain.has(element)) {
+      collectHiddenTargets(element, keep, keepChain, out);
+      return;
+    }
+
+    out.add(element);
   });
 }
 
-function findIndexOf<T>(items: readonly T[], callback: (item: T) => boolean): number {
-  let idx = -1;
-  items.some((item, index) => {
-    if (callback(item)) {
-      idx = index;
-      return true;
+/**
+ * Hides every element of the container from assistive technology except the
+ * topmost modal and the ancestors it sits inside, and unhides what no longer
+ * needs hiding. Elements that were already `aria-hidden` before the manager
+ * touched them are left untouched.
+ */
+function syncAriaHidden(containerInfo: Container): void {
+  const { container, modals } = containerInfo;
+  const top = modals[modals.length - 1];
+  const keep = top.modalRef;
+
+  const next = new Set<Element>();
+  collectHiddenTargets(container, keep, getKeepChain(keep, container), next);
+
+  next.forEach((element) => {
+    if (!containerInfo.hiddenSet.has(element) && element.getAttribute('aria-hidden') === 'true') {
+      next.delete(element);
     }
-    return false;
   });
-  return idx;
+
+  // Hands the accessibility tree back to a parent dialog when a nested one closes.
+  containerInfo.hiddenSet.forEach((element) => {
+    if (!next.has(element)) {
+      ariaHidden(element, false);
+    }
+  });
+  next.forEach((element) => ariaHidden(element, true));
+
+  if (keep) {
+    ariaHidden(keep, false);
+  }
+
+  containerInfo.hiddenSet = next;
 }
 
 function handleContainer(containerInfo: Container, props: ManagedModalProps) {
@@ -96,30 +138,6 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
   const container = containerInfo.container;
 
   if (!props.disableScrollLock) {
-    if (isOverflowing(container)) {
-      // Compute the size before applying overflow hidden to avoid any scroll jumps.
-      const scrollbarSize = getScrollbarSize(ownerWindow(container));
-
-      restoreStyle.push({
-        value: container.style.paddingRight,
-        property: 'padding-right',
-        el: container,
-      });
-      // Use computed style, here to get the real padding to add our scrollbar width.
-      container.style.paddingRight = `${getPaddingRight(container) + scrollbarSize}px`;
-
-      // .mui-fixed is a global helper.
-      const fixedElements = ownerDocument(container).querySelectorAll('.mui-fixed');
-      [].forEach.call(fixedElements, (element: HTMLElement | SVGElement) => {
-        restoreStyle.push({
-          value: element.style.paddingRight,
-          property: 'padding-right',
-          el: element,
-        });
-        element.style.paddingRight = `${getPaddingRight(element) + scrollbarSize}px`;
-      });
-    }
-
     let scrollContainer: HTMLElement;
 
     if (container.parentNode instanceof DocumentFragment) {
@@ -134,6 +152,30 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
         containerWindow.getComputedStyle(parent).overflowY === 'scroll'
           ? parent
           : container;
+    }
+
+    if (isOverflowing(scrollContainer)) {
+      // Compute the size before applying overflow hidden to avoid any scroll jumps.
+      const scrollbarSize = getScrollbarSize(ownerWindow(scrollContainer));
+
+      restoreStyle.push({
+        value: scrollContainer.style.paddingRight,
+        property: 'padding-right',
+        el: scrollContainer,
+      });
+      // Use computed style, here to get the real padding to add our scrollbar width.
+      scrollContainer.style.paddingRight = `${getPaddingRight(scrollContainer) + scrollbarSize}px`;
+
+      // .mui-fixed is a global helper.
+      const fixedElements = ownerDocument(container).querySelectorAll('.mui-fixed');
+      [].forEach.call(fixedElements, (element: HTMLElement | SVGElement) => {
+        restoreStyle.push({
+          value: element.style.paddingRight,
+          property: 'padding-right',
+          el: element,
+        });
+        element.style.paddingRight = `${getPaddingRight(element) + scrollbarSize}px`;
+      });
     }
 
     // Block the scroll even if no scrollbar is visible to account for mobile keyboard
@@ -172,16 +214,6 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
   return restore;
 }
 
-function getHiddenSiblings(container: Element) {
-  const hiddenSiblings: Element[] = [];
-  [].forEach.call(container.children, (element: Element) => {
-    if (element.getAttribute('aria-hidden') === 'true') {
-      hiddenSiblings.push(element);
-    }
-  });
-  return hiddenSiblings;
-}
-
 interface Modal {
   mount: Element;
   modalRef: Element;
@@ -189,7 +221,7 @@ interface Modal {
 
 interface Container {
   container: HTMLElement;
-  hiddenSiblings: Element[];
+  hiddenSet: Set<Element>;
   modals: Modal[];
   restore: null | (() => void);
 }
@@ -202,14 +234,9 @@ interface Container {
  * Used by the Modal to ensure proper styling of containers.
  */
 export class ModalManager {
-  private containers: Container[];
+  private containers: Container[] = [];
 
-  private modals: Modal[];
-
-  constructor() {
-    this.modals = [];
-    this.containers = [];
-  }
+  private modals: Modal[] = [];
 
   add(modal: Modal, container: HTMLElement): number {
     let modalIndex = this.modals.indexOf(modal);
@@ -225,27 +252,28 @@ export class ModalManager {
       ariaHidden(modal.modalRef, false);
     }
 
-    const hiddenSiblings = getHiddenSiblings(container);
-    ariaHiddenSiblings(container, modal.mount, modal.modalRef, hiddenSiblings, true);
+    const containerIndex = this.containers.findIndex((item) => item.container === container);
 
-    const containerIndex = findIndexOf(this.containers, (item) => item.container === container);
     if (containerIndex !== -1) {
       this.containers[containerIndex].modals.push(modal);
+      syncAriaHidden(this.containers[containerIndex]);
       return modalIndex;
     }
 
-    this.containers.push({
+    const containerInfo: Container = {
       modals: [modal],
       container,
       restore: null,
-      hiddenSiblings,
-    });
+      hiddenSet: new Set(),
+    };
+    this.containers.push(containerInfo);
+    syncAriaHidden(containerInfo);
 
     return modalIndex;
   }
 
   mount(modal: Modal, props: ManagedModalProps): void {
-    const containerIndex = findIndexOf(this.containers, (item) => item.modals.includes(modal));
+    const containerIndex = this.containers.findIndex((item) => item.modals.includes(modal));
     const containerInfo = this.containers[containerIndex];
 
     if (!containerInfo.restore) {
@@ -260,7 +288,7 @@ export class ModalManager {
       return modalIndex;
     }
 
-    const containerIndex = findIndexOf(this.containers, (item) => item.modals.includes(modal));
+    const containerIndex = this.containers.findIndex((item) => item.modals.includes(modal));
     const containerInfo = this.containers[containerIndex];
 
     containerInfo.modals.splice(containerInfo.modals.indexOf(modal), 1);
@@ -278,22 +306,14 @@ export class ModalManager {
         ariaHidden(modal.modalRef, ariaHiddenState);
       }
 
-      ariaHiddenSiblings(
-        containerInfo.container,
-        modal.mount,
-        modal.modalRef,
-        containerInfo.hiddenSiblings,
-        false,
-      );
+      containerInfo.hiddenSet.forEach((element) => ariaHidden(element, false));
+      containerInfo.hiddenSet.clear();
       this.containers.splice(containerIndex, 1);
     } else {
-      // Otherwise make sure the next top modal is visible to a screen reader.
-      const nextTop = containerInfo.modals[containerInfo.modals.length - 1];
-      // as soon as a modal is adding its modalRef is undefined. it can't set
-      // aria-hidden because the dom element doesn't exist either
-      // when modal was unmounted before modalRef gets null
-      if (nextTop.modalRef) {
-        ariaHidden(nextTop.modalRef, false);
+      syncAriaHidden(containerInfo);
+
+      if (modal.modalRef) {
+        ariaHidden(modal.modalRef, ariaHiddenState);
       }
     }
 

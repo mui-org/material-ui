@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TimelineDot from '@mui/lab/TimelineDot';
 
 function TestBaseColorPaletteProp() {

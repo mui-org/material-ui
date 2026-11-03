@@ -1,7 +1,7 @@
 const Component = styled('div')(({ theme, ownerState }) => {
   const palette = (theme.vars || theme).palette?.[ownerState.color];
   return {
-    overflow: 'visible', // Explicitly set the default value to solve a bug on IE11.
+    overflow: 'visible', // Explicitly set the default value to solve a bug on IE 11.
     color: (theme.vars || theme).palette.action.active,
     transition: theme.transitions.create('background-color', {
       duration: theme.transitions.duration.shortest,

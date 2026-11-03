@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AutoAwesomeRounded from '@mui/icons-material/AutoAwesomeRounded';
-import { HighlightedCode } from '@mui/docs/HighlightedCode';
+import { HighlightedCode } from '@mui/internal-core-docs/HighlightedCode';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import SvgMaterialDesign from 'docs/src/icons/SvgMaterialDesign';
-import Frame from 'docs/src/components/action/Frame';
+import { Item, Group, Highlighter, Frame } from '@mui/internal-core-docs/AppLayout';
+import { SvgMaterialDesignIcon } from '@mui/internal-core-docs/svgIcons';
+
 import PlayerCard from 'docs/src/components/showcase/PlayerCard';
+
+const defaultTheme = createTheme({ cssVariables: true });
 
 const code = `
 <Card
@@ -33,22 +34,19 @@ const code = `
     sx={{    width: { xs: '100%', sm: 100 },
     }}
   />
-  <Stack direction="column" alignItems="center" spacing={1} useFlexGap>
+  <Stack direction="column" sx={{ alignItems: 'center' }} spacing={1} useFlexGap>
     <div>
-      <Typography color="text.primary" fontWeight="semiBold">
+      <Typography sx={{ color: 'text.primary', fontWeight: 'semiBold' }}>
         Contemplative Reptile
       </Typography>
       <Typography
         variant="caption"
-        color="text.secondary"
-        fontWeight="medium"
-        textAlign="center"
-        sx={{ width: '100%' }}
+        sx={{ color: 'text.secondary', fontWeight: 'medium', textAlign: 'center', width: '100%' }}
       >
         Sounds of Nature
       </Typography>
     </div>
-    <Stack direction="row" alignItems="center" spacing={1} useFlexGap>
+    <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1} useFlexGap>
       <IconButton aria-label="Shuffle" disabled size="small">
         <ShuffleRoundedIcon fontSize="small" />
       </IconButton>
@@ -97,7 +95,7 @@ export default function MaterialTheming() {
             </Highlighter>
             <Highlighter disableBorder selected={!customized} onClick={() => setCustomized(false)}>
               <Item
-                icon={<SvgMaterialDesign />}
+                icon={<SvgMaterialDesignIcon />}
                 title="Material Design"
                 description="Every component comes with Google's tried and tested design system ready for use."
               />
@@ -119,9 +117,9 @@ export default function MaterialTheming() {
               {customized ? (
                 <PlayerCard />
               ) : (
-                <CssVarsProvider>
+                <ThemeProvider theme={defaultTheme}>
                   <PlayerCard disableTheming />
-                </CssVarsProvider>
+                </ThemeProvider>
               )}
             </Frame.Demo>
             <Frame.Info sx={{ maxHeight: 300, overflow: 'auto' }}>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Step from '@mui/material/Step';
 
 <Step component="a" href="/" active />;

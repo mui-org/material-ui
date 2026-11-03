@@ -16,7 +16,9 @@ import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import slotShouldForwardProp from '../styles/slotShouldForwardProp';
 import ratingClasses, { getRatingUtilityClass } from './ratingClasses';
+import { outsetFocusRing } from '../styles/focusVisible';
 import useSlot from '../utils/useSlot';
+import { getTransitionStyles } from '../transitions/utils';
 
 function getDecimalPrecision(num) {
   const decimalPart = num.toString().split('.')[1];
@@ -87,7 +89,11 @@ const RatingRoot = styled('span', {
       pointerEvents: 'none',
     },
     [`&.${ratingClasses.focusVisible} .${ratingClasses.iconActive}`]: {
-      outline: '1px solid #999',
+      // Legacy default, superseded when the curated ring is opted in.
+      ...(!theme.focusVisible && {
+        outline: '1px solid #999',
+      }),
+      ...(theme.focusVisible && { ...outsetFocusRing, ...theme.focusVisible }),
     },
     [`& .${ratingClasses.visuallyHidden}`]: visuallyHidden,
     variants: [
@@ -125,21 +131,27 @@ const RatingLabel = styled('label', {
     styles.label,
     ownerState.emptyValueFocused && styles.labelEmptyValueActive,
   ],
-})({
-  cursor: 'inherit',
-  variants: [
-    {
-      props: ({ ownerState }) => ownerState.emptyValueFocused,
-      style: {
-        top: 0,
-        bottom: 0,
-        position: 'absolute',
-        outline: '1px solid #999',
-        width: '100%',
+})(
+  memoTheme(({ theme }) => ({
+    cursor: 'inherit',
+    variants: [
+      {
+        props: ({ ownerState }) => ownerState.emptyValueFocused,
+        style: {
+          top: 0,
+          bottom: 0,
+          position: 'absolute',
+          width: '100%',
+          // Legacy default, superseded when the curated ring is opted in.
+          ...(!theme.focusVisible && {
+            outline: '1px solid #999',
+          }),
+          ...(theme.focusVisible && { ...outsetFocusRing, ...theme.focusVisible }),
+        },
       },
-    },
-  ],
-});
+    ],
+  })),
+);
 
 const RatingIcon = styled('span', {
   name: 'MuiRating',
@@ -160,11 +172,11 @@ const RatingIcon = styled('span', {
   memoTheme(({ theme }) => ({
     // Fit wrapper to actual icon size.
     display: 'flex',
-    transition: theme.transitions.create('transform', {
+    ...getTransitionStyles(theme, 'transform', {
       duration: theme.transitions.duration.shortest,
     }),
     // Fix mouseLeave issue.
-    // https://github.com/facebook/react/issues/4492
+    // https://github.com/react/react/issues/4492
     pointerEvents: 'none',
     variants: [
       {
@@ -223,7 +235,6 @@ function RatingItem(props) {
     highlightSelectedOnly,
     hover,
     icon,
-    IconContainerComponent,
     isActive,
     itemValue,
     labelProps,
@@ -278,9 +289,7 @@ function RatingItem(props) {
       value: itemValue,
     },
     internalForwardedProps: {
-      // TODO: remove this in v7 because `IconContainerComponent` is deprecated
-      // only forward if `slots.icon` is NOT provided
-      as: IconContainerComponent,
+      as: IconContainer,
     },
   });
 
@@ -334,7 +343,6 @@ RatingItem.propTypes = {
   highlightSelectedOnly: PropTypes.bool.isRequired,
   hover: PropTypes.number.isRequired,
   icon: PropTypes.node,
-  IconContainerComponent: PropTypes.elementType.isRequired,
   isActive: PropTypes.bool.isRequired,
   itemValue: PropTypes.number.isRequired,
   labelProps: PropTypes.object,
@@ -370,7 +378,6 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
     getLabelText = defaultLabelText,
     highlightSelectedOnly = false,
     icon = defaultIcon,
-    IconContainerComponent = IconContainer,
     max = 5,
     name: nameProp,
     onChange,
@@ -483,7 +490,7 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
 
   const handleClear = (event) => {
     // Ignore keyboard events
-    // https://github.com/facebook/react/issues/7407
+    // https://github.com/react/react/issues/7407
     if (event.clientX === 0 && event.clientY === 0) {
       return;
     }
@@ -541,7 +548,6 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
     focusVisible,
     getLabelText,
     icon,
-    IconContainerComponent,
     max,
     precision,
     readOnly,
@@ -610,7 +616,6 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
           highlightSelectedOnly,
           hover,
           icon,
-          IconContainerComponent,
           name,
           onBlur: handleBlur,
           onChange: handleChange,
@@ -760,15 +765,6 @@ Rating.propTypes /* remove-proptypes */ = {
    * @default <Star fontSize="inherit" />
    */
   icon: PropTypes.node,
-  /**
-   * The component containing the icon.
-   * @deprecated Use `slotProps.icon.component` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default function IconContainer(props) {
-   *   const { value, ...other } = props;
-   *   return <span {...other} />;
-   * }
-   */
-  IconContainerComponent: PropTypes.elementType,
   /**
    * Maximum rating.
    * @default 5

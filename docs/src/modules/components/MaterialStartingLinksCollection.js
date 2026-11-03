@@ -1,11 +1,10 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import InstallDesktopRoundedIcon from '@mui/icons-material/InstallDesktopRounded';
 import WebRoundedIcon from '@mui/icons-material/WebRounded';
 import DrawRoundedIcon from '@mui/icons-material/DrawRounded';
 import PlayCircleFilledWhiteRoundedIcon from '@mui/icons-material/PlayCircleFilledWhiteRounded';
 import DesignServicesRoundedIcon from '@mui/icons-material/DesignServicesRounded';
-import { InfoCard } from '@mui/docs/InfoCard';
+import { InfoCard } from '@mui/internal-core-docs/InfoCard';
 
 const content = [
   {

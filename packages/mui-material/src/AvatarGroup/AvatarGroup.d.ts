@@ -22,16 +22,7 @@ export interface AvatarGroupSlots {
 export type AvatarGroupSlotsAndSlotProps = CreateSlotsAndSlotProps<
   AvatarGroupSlots,
   {
-    /**
-     * @deprecated use `slotProps.surplus` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-     *  */
-    additionalAvatar: React.ComponentPropsWithRef<typeof Avatar> &
-      AvatarGroupComponentsPropsOverrides;
-    surplus: SlotProps<
-      React.ElementType<React.ComponentPropsWithRef<typeof Avatar>>,
-      AvatarGroupComponentsPropsOverrides,
-      AvatarGroupOwnerState
-    >;
+    surplus: SlotProps<typeof Avatar, AvatarGroupComponentsPropsOverrides, AvatarGroupOwnerState>;
   }
 >;
 export interface AvatarGroupOwnProps extends AvatarGroupSlotsAndSlotProps {
@@ -42,57 +33,44 @@ export interface AvatarGroupOwnProps extends AvatarGroupSlotsAndSlotProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<AvatarGroupClasses>;
+  classes?: Partial<AvatarGroupClasses> | undefined;
   /**
    * The component used for the root node.
    * Either a string to use a HTML element or a component.
    */
-  component?: React.ElementType;
-  /**
-   * The extra props for the slot components.
-   * You can override the existing props or add new ones.
-   *
-   * This prop is an alias for the `slotProps` prop.
-   *
-   * @deprecated use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  componentsProps?: {
-    additionalAvatar?: React.ComponentPropsWithRef<typeof Avatar> &
-      AvatarGroupComponentsPropsOverrides;
-  };
+  component?: React.ElementType | undefined;
   /**
    * Max avatars to show before +x.
    * @default 5
    */
-  max?: number;
+  max?: number | undefined;
   /**
    * custom renderer of extraAvatars
    * @param {number} surplus number of extra avatars
    * @returns {React.ReactNode} custom element to display
    */
-  renderSurplus?: (surplus: number) => React.ReactNode;
+  renderSurplus?: ((surplus: number) => React.ReactNode) | undefined;
   /**
    * Spacing between avatars.
    * @default 'medium'
    */
-  spacing?: 'small' | 'medium' | number;
+  spacing?: 'small' | 'medium' | number | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The total number of avatars. Used for calculating the number of extra avatars.
    * @default children.length
    */
-  total?: number;
+  total?: number | undefined;
   /**
    * The variant to use.
    * @default 'circular'
    */
-  variant?: OverridableStringUnion<
-    'circular' | 'rounded' | 'square',
-    AvatarGroupPropsVariantOverrides
-  >;
+  variant?:
+    | OverridableStringUnion<'circular' | 'rounded' | 'square', AvatarGroupPropsVariantOverrides>
+    | undefined;
 }
 
 export interface AvatarGroupTypeMap<
@@ -107,11 +85,11 @@ export interface AvatarGroupTypeMap<
  *
  * Demos:
  *
- * - [Avatar](https://mui.com/material-ui/react-avatar/)
+ * - [Avatar](https://next.mui.com/material-ui/react-avatar/)
  *
  * API:
  *
- * - [AvatarGroup API](https://mui.com/material-ui/api/avatar-group/)
+ * - [AvatarGroup API](https://next.mui.com/material-ui/api/avatar-group/)
  */
 declare const AvatarGroup: OverridableComponent<AvatarGroupTypeMap>;
 
@@ -119,10 +97,12 @@ export type AvatarGroupProps<
   RootComponent extends React.ElementType = AvatarGroupTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<AvatarGroupTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
-export interface AvatarGroupOwnerState
-  extends PartiallyRequired<AvatarGroupProps, 'max' | 'spacing' | 'component' | 'variant'> {}
+export interface AvatarGroupOwnerState extends PartiallyRequired<
+  AvatarGroupProps,
+  'max' | 'spacing' | 'component' | 'variant'
+> {}
 
 export default AvatarGroup;

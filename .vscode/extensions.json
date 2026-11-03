@@ -2,8 +2,8 @@
   "recommendations": [
     "editorconfig.editorconfig",
     "dbaeumer.vscode-eslint",
-    "davidanson.vscode-markdownlint",
     "esbenp.prettier-vscode",
-    "yoavbls.pretty-ts-errors"
+    "yoavbls.pretty-ts-errors",
+    "TypeScriptTeam.native-preview"
   ]
 }

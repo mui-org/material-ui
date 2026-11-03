@@ -7,18 +7,19 @@
 .vscode/*
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/settings.json
 *.log
-*.tsbuildinfo
 /.eslintcache
 /.nyc_output
-/coverage
+/coverage/
 /docs/.env.local
-/docs/export
+/docs/export/
 /docs/pages/playground/
 /docs/public/feed/
 /docs/public/material-ui/
-/examples/**/.cache
-/packages/mui-codemod/lib
+/examples/**/.cache/
+/packages/mui-codemod/lib/
+/packages/mui-material/published-docs/
 /packages/mui-envinfo/*.tgz
 /packages/mui-icons-material/src/*.js
 /test/bundling/fixtures/*/yarn.lock
@@ -26,23 +27,33 @@
 # created by test/bundling/scripts/createFixture
 /test/bundling/fixtures/**/*.fixture.js
 # created by test/bundling/fixtures/gatsby gatsby build
-/test/bundling/fixtures/gatsby/.cache
-/test/bundling/fixtures/gatsby/public
-/test/regressions/screenshots
-/tmp
-.next
+/test/bundling/fixtures/gatsby/.cache/
+/test/bundling/fixtures/gatsby/public/
+/test/regressions/screenshots/
+/tmp/
+.next/
 # created by netlify dev (to perform local debug)
 .netlify
-build
-dist
-node_modules
+build/
+dist/
+node_modules/
 package-lock.json
 size-snapshot.json
 bundle-sizes/
 docs/public/static/blog/feed/*
 # vale downloaded config
 .github/styles/
-.nx/cache
-.nx/workspace-data
-screenshots
+.nx/cache/
+.nx/workspace-data/
+screenshots/
 packed
+test-results/
+# `benchmark` CLI output and generated pages
+.benchmark/
+test/benchmark/src/__bench__/
+.env
+.claude/worktrees/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

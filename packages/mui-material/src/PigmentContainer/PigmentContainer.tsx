@@ -1,27 +1,29 @@
+'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { OverridableComponent, OverrideProps } from '@mui/types';
-// @ts-ignore
+import type { OverridableComponent, OverrideProps } from '@mui/types';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- The peer is resolvable only after its build.
+// @ts-ignore: material-pigment-css links to its build directory, which is absent in a fresh checkout.
 import Container from '@mui/material-pigment-css/Container';
 import capitalize from '@mui/utils/capitalize';
 import composeClasses from '@mui/utils/composeClasses';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
-import { SxProps, Breakpoint } from '@mui/system';
-import { Theme } from '../styles';
-import { ContainerClasses } from '../Container/containerClasses';
+import type { SxProps, Breakpoint } from '@mui/system';
+import type { Theme } from '../styles';
+import type { ContainerClasses } from '../Container/containerClasses';
 
 export interface PigmentContainerOwnProps {
   children?: React.ReactNode;
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ContainerClasses>;
+  classes?: Partial<ContainerClasses> | undefined;
   /**
    * If `true`, the left and right padding is removed.
    * @default false
    */
-  disableGutters?: boolean;
+  disableGutters?: boolean | undefined;
   /**
    * Set the max-width to match the min-width of the current breakpoint.
    * This is useful if you'd prefer to design for a fixed set of sizes
@@ -29,18 +31,18 @@ export interface PigmentContainerOwnProps {
    * It's fluid by default.
    * @default false
    */
-  fixed?: boolean;
+  fixed?: boolean | undefined;
   /**
    * Determine the max-width of the container.
    * The container width grows with the size of the screen.
    * Set to `false` to disable `maxWidth`.
    * @default 'lg'
    */
-  maxWidth?: Breakpoint | false;
+  maxWidth?: Breakpoint | false | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface PigmentContainerTypeMap<
@@ -55,7 +57,7 @@ export type PigmentContainerProps<
   RootComponent extends React.ElementType = PigmentContainerTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<PigmentContainerTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 const useUtilityClasses = (ownerState: PigmentContainerOwnProps) => {
@@ -76,11 +78,11 @@ const useUtilityClasses = (ownerState: PigmentContainerOwnProps) => {
  *
  * Demos:
  *
- * - [Container](https://mui.com/material-ui/react-container/)
+ * - [Container](https://next.mui.com/material-ui/react-container/)
  *
  * API:
  *
- * - [PigmentContainer API](https://mui.com/material-ui/api/pigment-container/)
+ * - [PigmentContainer API](https://next.mui.com/material-ui/api/pigment-container/)
  */
 const PigmentContainer = React.forwardRef(function PigmentContainer(
   { className, disableGutters = false, fixed = false, maxWidth = 'lg', ...props },
@@ -100,7 +102,6 @@ const PigmentContainer = React.forwardRef(function PigmentContainer(
       fixed={fixed}
       maxWidth={maxWidth}
       {...(props as any)}
-      // @ts-ignore
       ref={ref}
     />
   );

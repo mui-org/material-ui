@@ -8,6 +8,12 @@ export const getBlogFilePaths = (ext = '.md') => {
   return fs.readdirSync(blogDir).filter((file) => file.endsWith(ext));
 };
 
+const caseStudyDir = path.join(process.cwd(), 'pages/customers');
+
+export const getCaseStudyFilePaths = (ext = '.md') => {
+  return fs.readdirSync(caseStudyDir).filter((file) => file.endsWith(ext));
+};
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -16,11 +22,28 @@ export interface BlogPost {
   tags: Array<string>;
   authors?: Array<string>;
   date?: string;
+  rank?: string;
+  /**
+   * If `true`, it omits posts with `hideFromHomeList: true` in frontmatter. Use it for SEO only blog posts.
+   */
+  hideFromHomeList?: string;
 }
 
 export function getBlogPost(filePath: string): BlogPost {
   const slug = filePath.replace(/\.md$/, '');
   const content = fs.readFileSync(path.join(blogDir, filePath), 'utf-8');
+
+  const headers = getHeaders(content) as unknown as BlogPost;
+
+  return {
+    ...headers,
+    slug,
+  };
+}
+
+export function getCaseStudyPost(filePath: string): BlogPost {
+  const slug = filePath.replace(/\.md$/, '');
+  const content = fs.readFileSync(path.join(caseStudyDir, filePath), 'utf-8');
 
   const headers = getHeaders(content) as unknown as BlogPost;
 
@@ -37,6 +60,7 @@ const ALLOWED_TAGS = [
   'Developer Survey',
   'Guide',
   'Product',
+  'Tech',
   // Product tags
   'Material UI',
   'Base UI',
@@ -78,4 +102,12 @@ export const getAllBlogPosts = () => {
     allBlogPosts, // posts with at least a title
     tagInfo,
   };
+};
+
+export const getCaseStudies = () => {
+  const filePaths = getCaseStudyFilePaths();
+
+  const caseStudies = filePaths.map((name) => getCaseStudyPost(name));
+
+  return caseStudies;
 };

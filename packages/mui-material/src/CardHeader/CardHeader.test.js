@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { createRenderer } from '@mui/internal-test-utils';
 import { typographyClasses } from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
@@ -42,7 +41,6 @@ describe('<CardHeader />', () => {
           expectedClassName: classes.subheader,
         },
       },
-      skip: ['componentsProp'],
     }),
   );
 
@@ -75,11 +73,11 @@ describe('<CardHeader />', () => {
   });
 
   describe('with an avatar', () => {
-    let avatar;
+    const avatar = <span />;
     let cardHeader;
 
     beforeEach(() => {
-      avatar = <span />;
+      // eslint-disable-next-line testing-library/no-render-in-lifecycle
       cardHeader = render(<CardHeader avatar={avatar} title="Title" subheader="Subhead" />)
         .container.firstChild;
     });

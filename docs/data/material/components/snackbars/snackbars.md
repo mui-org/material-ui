@@ -12,20 +12,20 @@ githubSource: packages/mui-material/src/Snackbar
 
 <p class="description">Snackbars (also known as toasts) are used for brief notifications of processes that have been or will be performed.</p>
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Introduction
 
 The Snackbar component appears temporarily and floats above the UI to provide users with (non-critical) updates on an app's processes.
 The demo below, inspired by Google Keep, shows a basic Snackbar with a text element and two actions:
 
-{{"demo": "SimpleSnackbar.js"}}
+{{"component": "file://./demos/simple/index.ts"}}
 
 ### Usage
 
 Snackbars differ from [Alerts](/material-ui/react-alert/) in that Snackbars have a fixed position and a high z-index, so they're intended to break out of the document flow; Alerts, on the other hand, are usually part of the flow—except when they're [used as children of a Snackbar](#use-with-alerts).
 
-Snackbars also from differ from [Dialogs](/material-ui/react-dialog/) in that Snackbars are not intended to convey _critical_ information or block the user from interacting with the rest of the app; Dialogs, by contrast, require input from the user in order to be dismissed.
+Snackbars also differ from [Dialogs](/material-ui/react-dialog/) in that Snackbars are not intended to convey _critical_ information or block the user from interacting with the rest of the app; Dialogs, by contrast, require input from the user in order to be dismissed.
 
 ## Basics
 
@@ -39,7 +39,7 @@ import Snackbar from '@mui/material/Snackbar';
 
 Use the `anchorOrigin` prop to control the Snackbar's position on the screen.
 
-{{"demo": "PositionedSnackbar.js"}}
+{{"component": "file://./demos/positioned/index.ts"}}
 
 ### Content
 
@@ -49,21 +49,21 @@ import SnackbarContent from '@mui/material/SnackbarContent';
 
 Use the Snackbar Content component to add text and actions to the Snackbar.
 
-{{"demo": "LongTextSnackbar.js"}}
+{{"component": "file://./demos/long-text/index.ts"}}
 
 ### Automatic dismiss
 
 Use the `autoHideDuration` prop to automatically trigger the Snackbar's `onClose` function after a set period of time (in milliseconds).
 
-Make sure to [provide sufficient time](https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits.html) for the user to process the information displayed on it.
+Make sure to [provide sufficient time](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html) for the user to process the information displayed on it.
 
-{{"demo": "AutohideSnackbar.js"}}
+{{"component": "file://./demos/autohide/index.ts"}}
 
 ### Transitions
 
-You can use the `TransitionComponent` prop to change the transition of the Snackbar from [Grow](/material-ui/transitions/#grow) (the default) to others such as [Slide](/material-ui/transitions/#slide).
+Use `slots.transition` and `slotProps.transition` to change the transition of the Snackbar from [Grow](/material-ui/transitions/#grow) (the default) to others such as [Slide](/material-ui/transitions/#slide).
 
-{{"demo": "TransitionsSnackbar.js"}}
+{{"component": "file://./demos/transitions/index.ts"}}
 
 ## Customization
 
@@ -88,21 +88,28 @@ If you would like to prevent the default onClickAway behavior, you can set the e
 
 Use an Alert inside a Snackbar for messages that communicate a certain severity.
 
-{{"demo": "CustomizedSnackbars.js"}}
+{{"component": "file://./demos/customized/index.ts"}}
 
 ### Use with Floating Action Buttons
 
 If you're using a [Floating Action Button](/material-ui/react-floating-action-button/) on mobile, Material Design recommends positioning snackbars directly above it, as shown in the demo below:
 
-{{"demo": "FabIntegrationSnackbar.js", "iframe": true, "maxWidth": 400}}
+{{"component": "file://./demos/fab-integration/index.ts", "iframe": true, "maxWidth": 400}}
 
 ## Common examples
+
+### Use with Dialogs
+
+When a Snackbar is open inside a [Dialog](/material-ui/react-dialog/), handle the `escapeKeyDown` reason in the Dialog's `onClose` callback to close the Snackbar first.
+Once the Snackbar is closed, the next press of <kbd class="key">Escape</kbd> closes the Dialog.
+
+{{"component": "file://./demos/dialog-snackbar/index.ts"}}
 
 ### Consecutive Snackbars
 
 This demo shows how to display multiple Snackbars without stacking them by using a consecutive animation.
 
-{{"demo": "ConsecutiveSnackbars.js"}}
+{{"component": "file://./demos/consecutive/index.ts"}}
 
 ## Supplementary components
 
@@ -114,7 +121,7 @@ This demo shows how to display multiple Snackbars without stacking them by using
 With an imperative API, [notistack](https://github.com/iamhosseindhv/notistack) lets you vertically stack multiple Snackbars without having to handle their open and close states.
 Even though this is discouraged in the Material Design guidelines, it is still a common pattern.
 
-{{"demo": "IntegrationNotistack.js", "defaultCodeOpen": false}}
+{{"component": "file://./demos/integration-notistack/index.ts", "collapseToEmpty": true}}
 
 :::warning
 Note that notistack prevents Snackbars from being [closed by pressing <kbd class="key">Escape</kbd>](#accessibility).

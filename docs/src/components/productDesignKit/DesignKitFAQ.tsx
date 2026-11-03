@@ -9,7 +9,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetail from '@mui/material/AccordionDetails';
 import KeyboardArrowDownRounded from '@mui/icons-material/KeyboardArrowDownRounded';
-import { Link as InternalLink } from '@mui/docs/Link';
+import { Link as InternalLink } from '@mui/internal-core-docs/Link';
 import Section from 'docs/src/layouts/Section';
 
 const faqData = [
@@ -46,11 +46,11 @@ const faqData = [
     ),
   },
   {
-    summary: 'Is the Material UI Sync plugin paid?',
+    summary: 'Can I still use the Material UI Sync plugin?',
     detail: (
       <React.Fragment>
-        No. We&apos;re still in alpha mode and rolling out more features progressively, as per your
-        feedback. We might introduce paid tiers in the future, though.
+        Development on the Material UI Sync plugin was suspended in 2024. We do not recommend using
+        it in new projects.
       </React.Fragment>
     ),
   },
@@ -177,14 +177,14 @@ export default function DesignKitFAQ() {
               gutterBottom
               sx={{ color: 'text.primary', fontWeight: 'bold' }}
             >
-              Got any questions unanswered or need more help?
+              Still have questions?
             </Typography>
             <Typography variant="body2" gutterBottom sx={{ color: 'text.primary' }}>
-              From community help to premium business support, we&apos;re here to help.
+              From community help to premium business support, we&apos;re here for you.
             </Typography>
             <Button
               component="a"
-              // @ts-expect-error
+              // @ts-expect-error: The branding theme provides link without global Button variant augmentation.
               variant="link"
               size="small"
               href="mailto:sales@mui.com"

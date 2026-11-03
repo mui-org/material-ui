@@ -10,7 +10,7 @@ githubLabel: 'package: icons'
 
 <p class="description">2,100+ ready-to-use React Material Icons from the official website.</p>
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 <br/>
 
 [@mui/icons-material](https://www.npmjs.com/package/@mui/icons-material)
@@ -23,15 +23,15 @@ Use one of the following commands to install it:
 <codeblock storageKey="package-manager">
 
 ```bash npm
-npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+npm install @mui/icons-material@next @mui/material@next @emotion/styled @emotion/react
 ```
 
 ```bash pnpm
-pnpm add @mui/icons-material @mui/material @emotion/styled @emotion/react
+pnpm add @mui/icons-material@next @mui/material@next @emotion/styled @emotion/react
 ```
 
 ```bash yarn
-yarn add @mui/icons-material @mui/material @emotion/styled @emotion/react
+yarn add @mui/icons-material@next @mui/material@next @emotion/styled @emotion/react
 ```
 
 </codeblock>
@@ -49,4 +49,4 @@ Google offers [Material Symbols](https://fonts.google.com/icons?icon.set=Materia
 Browse through the icons below to find the one you need.
 The search field supports synonyms—for example, try searching for "hamburger" or "logout."
 
-{{"demo": "SearchIcons.js", "hideToolbar": true, "bg": true}}
+{{"component": "file://./demos/search-icons/index.ts", "hideToolbar": true, "bg": true}}

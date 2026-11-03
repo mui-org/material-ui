@@ -1,6 +1,0 @@
-<Textarea
-  placeholder="Type in here…"
-  defaultValue="Try to put text longer than 4 lines."
-  minRows={2}
-  maxRows={4}
-/>

@@ -13,6 +13,14 @@ import { Tabs as MyTabs } from '@mui/material';
   TabIndicatorProps={{ className: 'indicator' }}
 />;
 
+<Tabs
+  slots={{ StartScrollButtonIcon: CustomIcon, EndScrollButtonIcon: CustomIcon2 }}
+/>;
+
+<MyTabs
+  slots={{ StartScrollButtonIcon: CustomIcon }}
+/>;
+
 <CustomTabs
   ScrollButtonComponent={CustomScrollButton}
   TabScrollButtonProps={{ disableRipple: true }}

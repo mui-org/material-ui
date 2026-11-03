@@ -1,9 +1,0 @@
-{buttons}
-<Snackbar
-  anchorOrigin={{ vertical, horizontal }}
-  open={open}
-  onClose={handleClose}
-  key={vertical + horizontal}
->
-  I love snacks
-</Snackbar>

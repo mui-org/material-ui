@@ -16,25 +16,12 @@
       },
       "default": "false"
     },
-    "ChipProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.chip</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "clearIcon": { "type": { "name": "node" }, "default": "<ClearIcon fontSize=\"small\" />" },
     "clearOnBlur": { "type": { "name": "bool" }, "default": "!props.freeSolo" },
     "clearOnEscape": { "type": { "name": "bool" }, "default": "false" },
     "clearText": { "type": { "name": "string" }, "default": "'Clear'" },
     "closeText": { "type": { "name": "string" }, "default": "'Close'" },
-    "componentsProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ clearIndicator?: object, paper?: object, popper?: object, popupIndicator?: object }"
-      },
-      "deprecated": true,
-      "deprecationInfo": "Use the <code>slotProps</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "defaultValue": {
       "type": { "name": "custom", "description": "any" },
       "default": "props.multiple ? [] : null"
@@ -79,7 +66,11 @@
     "getOptionLabel": {
       "type": { "name": "func" },
       "default": "(option) => option.label ?? option",
-      "signature": { "type": "function(option: Value) => string", "describedArgs": [] }
+      "signature": { "type": "function(option: Value | string) => string", "describedArgs": [] }
+    },
+    "getOptionValue": {
+      "type": { "name": "func" },
+      "signature": { "type": "function(option: Value) => MappedValue", "describedArgs": ["option"] }
     },
     "groupBy": {
       "type": { "name": "func" },
@@ -92,22 +83,11 @@
     "isOptionEqualToValue": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(option: Value, value: Value) => boolean",
+        "type": "function(option: Value, value: Value | MappedValue | string) => boolean",
         "describedArgs": ["option", "value"]
       }
     },
     "limitTags": { "type": { "name": "custom", "description": "integer" }, "default": "-1" },
-    "ListboxComponent": {
-      "type": { "name": "elementType" },
-      "default": "'ul'",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.listbox.component</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "ListboxProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.listbox</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "loading": { "type": { "name": "bool" }, "default": "false" },
     "loadingText": { "type": { "name": "node" }, "default": "'Loading…'" },
     "multiple": { "type": { "name": "bool" }, "default": "false" },
@@ -115,7 +95,7 @@
     "onChange": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(event: React.SyntheticEvent, value: Value | Array<Value>, reason: string, details?: string) => void",
+        "type": "function(event: React.SyntheticEvent, value: Value | MappedValue | Array<Value | MappedValue>, reason: string, details?: string) => void",
         "describedArgs": ["event", "value", "reason"]
       }
     },
@@ -150,18 +130,6 @@
     "open": { "type": { "name": "bool" } },
     "openOnFocus": { "type": { "name": "bool" }, "default": "false" },
     "openText": { "type": { "name": "string" }, "default": "'Open'" },
-    "PaperComponent": {
-      "type": { "name": "elementType" },
-      "default": "Paper",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.paper</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "PopperComponent": {
-      "type": { "name": "elementType" },
-      "default": "Popper",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.popper</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "popupIcon": { "type": { "name": "node" }, "default": "<ArrowDropDownIcon />" },
     "readOnly": { "type": { "name": "bool" }, "default": "false" },
     "renderGroup": {
@@ -178,22 +146,14 @@
         "describedArgs": ["props", "option", "state", "ownerState"]
       }
     },
-    "renderTags": {
-      "type": { "name": "func" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>renderValue</code> prop instead",
-      "signature": {
-        "type": "function(value: Array<Value>, getTagProps: function, ownerState: object) => ReactNode",
-        "describedArgs": ["value", "getTagProps", "ownerState"]
-      }
-    },
     "renderValue": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(value: AutocompleteRenderValue<Value, Multiple, FreeSolo>, getItemProps: function, ownerState: object) => ReactNode",
+        "type": "function(value: AutocompleteRenderValue<Value | MappedValue, Multiple, FreeSolo>, getItemProps: function, ownerState: object) => ReactNode",
         "describedArgs": ["value", "getItemProps", "ownerState"]
       }
     },
+    "resetHighlightOnMouseLeave": { "type": { "name": "bool" }, "default": "false" },
     "selectOnFocus": { "type": { "name": "bool" }, "default": "!props.freeSolo" },
     "size": {
       "type": {
@@ -205,14 +165,14 @@
     "slotProps": {
       "type": {
         "name": "shape",
-        "description": "{ chip?: func<br>&#124;&nbsp;object, clearIndicator?: func<br>&#124;&nbsp;object, listbox?: func<br>&#124;&nbsp;object, paper?: func<br>&#124;&nbsp;object, popper?: func<br>&#124;&nbsp;object, popupIndicator?: func<br>&#124;&nbsp;object }"
+        "description": "{ chip?: func<br>&#124;&nbsp;object, clearIndicator?: func<br>&#124;&nbsp;object, listbox?: func<br>&#124;&nbsp;object, status?: func<br>&#124;&nbsp;object, paper?: func<br>&#124;&nbsp;object, popper?: func<br>&#124;&nbsp;object, popupIndicator?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
       },
       "default": "{}"
     },
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ listbox?: elementType, paper?: elementType, popper?: elementType }"
+        "description": "{ chip?: elementType, clearIndicator?: elementType, listbox?: elementType, paper?: elementType, popper?: elementType, popupIndicator?: elementType, root?: elementType, status?: elementType }"
       },
       "default": "{}"
     },
@@ -232,10 +192,40 @@
   ],
   "slots": [
     {
+      "name": "root",
+      "description": "The component that renders the root.",
+      "default": "'div'",
+      "class": "MuiAutocomplete-root"
+    },
+    {
+      "name": "chip",
+      "description": "The component used to render the selected values when `multiple` is `true`.",
+      "default": "Chip",
+      "class": null
+    },
+    {
+      "name": "clearIndicator",
+      "description": "The component used to render the clear indicator element.",
+      "default": "IconButton",
+      "class": "MuiAutocomplete-clearIndicator"
+    },
+    {
+      "name": "popupIndicator",
+      "description": "The component used to render the popup indicator element.",
+      "default": "IconButton",
+      "class": "MuiAutocomplete-popupIndicator"
+    },
+    {
       "name": "listbox",
       "description": "The component used to render the listbox.",
       "default": "'ul'",
       "class": "MuiAutocomplete-listbox"
+    },
+    {
+      "name": "status",
+      "description": "The component used to render the status message container.",
+      "default": "'div'",
+      "class": "MuiAutocomplete-status"
     },
     {
       "name": "paper",
@@ -251,12 +241,6 @@
     }
   ],
   "classes": [
-    {
-      "key": "clearIndicator",
-      "className": "MuiAutocomplete-clearIndicator",
-      "description": "Styles applied to the clear indicator.",
-      "isGlobal": false
-    },
     {
       "key": "endAdornment",
       "className": "MuiAutocomplete-endAdornment",
@@ -354,21 +338,9 @@
       "isGlobal": false
     },
     {
-      "key": "popupIndicator",
-      "className": "MuiAutocomplete-popupIndicator",
-      "description": "Styles applied to the popup indicator.",
-      "isGlobal": false
-    },
-    {
       "key": "popupIndicatorOpen",
       "className": "MuiAutocomplete-popupIndicatorOpen",
       "description": "Styles applied to the popup indicator if the popup is open.",
-      "isGlobal": false
-    },
-    {
-      "key": "root",
-      "className": "MuiAutocomplete-root",
-      "description": "Styles applied to the root element.",
       "isGlobal": false
     },
     {
@@ -395,6 +367,5 @@
   "muiName": "MuiAutocomplete",
   "filename": "/packages/mui-material/src/Autocomplete/Autocomplete.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-autocomplete/\">Autocomplete</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-autocomplete/\">Autocomplete</a></li></ul>"
 }

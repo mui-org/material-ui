@@ -1,7 +1,6 @@
-import * as React from 'react';
 import NoSsr from '@mui/material/NoSsr';
 import Divider from '@mui/material/Divider';
-import Head from 'docs/src/modules/components/Head';
+
 import AppHeader from 'docs/src/layouts/AppHeader';
 import Hero from 'docs/src/components/home/Hero';
 import References, { CORE_CUSTOMERS } from 'docs/src/components/home/References';
@@ -12,9 +11,9 @@ import Testimonials from 'docs/src/components/home/Testimonials';
 import Sponsors from 'docs/src/components/home/Sponsors';
 import HeroEnd from 'docs/src/components/home/HeroEnd';
 import AppFooter from 'docs/src/layouts/AppFooter';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
 import NewsletterToast from 'docs/src/components/home/NewsletterToast';
-import AppHeaderBanner from 'docs/src/components/banner/AppHeaderBanner';
+import { AppHeaderBanner, AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 
 export default function Home() {
   return (
@@ -24,6 +23,8 @@ export default function Home() {
         description="MUI provides a simple, customizable, and accessible library of React components. Follow your own design system, or start with Material Design."
         card="/static/social-previews/home-preview.jpg"
       >
+        {/* Organization schema for Google Knowledge Panel and entity recognition.
+          https://developers.google.com/search/docs/appearance/structured-data/organization */}
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
@@ -33,11 +34,11 @@ export default function Home() {
               '@type': 'Organization',
               name: 'MUI',
               url: 'https://mui.com/',
-              logo: 'https://mui.com/static/logo.png',
+              logo: 'https://mui.com/static/favicon.svg',
               sameAs: [
-                'https://x.com/MUI_hq',
                 'https://github.com/mui/',
-                'https://opencollective.com/mui-org',
+                'https://x.com/MUI_hq',
+                'https://www.npmjs.com/package/@mui/material',
               ],
             }),
           }}
@@ -48,7 +49,7 @@ export default function Home() {
       </NoSsr>
       <AppHeaderBanner />
       <AppHeader />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <References companies={CORE_CUSTOMERS} />
         <Divider />

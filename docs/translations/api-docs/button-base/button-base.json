@@ -29,6 +29,9 @@
     "LinkComponent": {
       "description": "The component used to render a link when the <code>href</code> prop is provided."
     },
+    "nativeButton": {
+      "description": "Whether the custom component is expected to render a native <code>&lt;button&gt;</code> element when passing a React component to the <code>component</code> or <code>slots</code> prop."
+    },
     "onFocusVisible": {
       "description": "Callback fired when the component is focused with a keyboard. We trigger a <code>onFocus</code> callback too."
     },
@@ -38,6 +41,9 @@
     "TouchRippleProps": { "description": "Props applied to the <code>TouchRipple</code> element." },
     "touchRippleRef": {
       "description": "A ref that points to the <code>TouchRipple</code> element."
+    },
+    "type": {
+      "description": "The HTML <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#type\"><code>type</code></a> attribute applied to <code>button</code> and <code>a</code> elements. Ignored when rendering non-native buttons."
     }
   },
   "classDescriptions": {

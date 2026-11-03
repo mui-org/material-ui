@@ -2,10 +2,10 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "../..",
-    "types": ["node", "mocha"],
+    "types": ["node"],
     "noEmit": true
   },
   "include": ["./**/*.ts"],
-  "exclude": ["./build", "./node_modules"],
+  "exclude": ["./build", "./node_modules", "vitest.config.ts"],
   "references": [{ "path": "../../packages-internal/docs-utils/tsconfig.build.json" }]
 }

@@ -1,6 +1,11 @@
-import * as React from 'react';
-import { expect } from 'chai';
-import { createRenderer, screen } from '@mui/internal-test-utils';
+import { describe, it, expect } from 'vitest';
+import {
+  act,
+  createRenderer,
+  screen,
+  simulateKeyboardDevice,
+  isJsdom,
+} from '@mui/internal-test-utils';
 import ButtonGroup, { buttonGroupClasses as classes } from '@mui/material/ButtonGroup';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Button, { buttonClasses } from '@mui/material/Button';
@@ -23,7 +28,6 @@ describe('<ButtonGroup />', () => {
       testComponentPropWith: 'span',
       muiName: 'MuiButtonGroup',
       testVariantProps: { variant: 'contained' },
-      skip: ['componentsProp'],
     }),
   );
 
@@ -62,117 +66,206 @@ describe('<ButtonGroup />', () => {
   });
 
   it('should render an outlined button', () => {
-    const { getByRole } = render(
+    render(
       <ButtonGroup>
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
-    expect(button).to.have.class('MuiButton-outlined');
+
+    const button = screen.getByRole('button');
+    expect(button).to.have.class(buttonClasses.outlined);
     expect(button).to.have.class(classes.grouped);
-    expect(button).to.have.class(classes.groupedOutlined);
-    expect(button).to.have.class(classes.groupedOutlinedPrimary);
-    expect(button).not.to.have.class(classes.groupedOutlinedSecondary);
+    expect(button).to.have.class(buttonClasses.colorPrimary);
+    expect(button).not.to.have.class(buttonClasses.colorSecondary);
   });
 
   it('can render an outlined primary button', () => {
-    const { getByRole } = render(
+    render(
       <ButtonGroup color="primary">
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
-    expect(button).to.have.class('MuiButton-outlinedPrimary');
+
+    const button = screen.getByRole('button');
+    expect(button).to.have.class(buttonClasses.outlined);
+    expect(button).to.have.class(buttonClasses.colorPrimary);
     expect(button).to.have.class(classes.grouped);
-    expect(button).to.have.class(classes.groupedOutlined);
-    expect(button).to.have.class(classes.groupedOutlinedPrimary);
-    expect(button).not.to.have.class(classes.groupedOutlinedSecondary);
+    expect(button).not.to.have.class(buttonClasses.colorSecondary);
   });
 
   it('can render a contained button', () => {
-    const { getByRole } = render(
+    render(
       <ButtonGroup variant="contained">
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
-    expect(button).to.have.class('MuiButton-contained');
+
+    const button = screen.getByRole('button');
+    expect(button).to.have.class(buttonClasses.contained);
     expect(button).to.have.class(classes.grouped);
-    expect(button).to.have.class(classes.groupedContained);
-    expect(button).to.have.class(classes.groupedContainedPrimary);
-    expect(button).not.to.have.class(classes.groupedContainedSecondary);
+    expect(button).to.have.class(buttonClasses.colorPrimary);
+    expect(button).not.to.have.class(buttonClasses.colorSecondary);
   });
 
   it('can render a small button', () => {
-    const { getByRole } = render(
+    render(
       <ButtonGroup size="small">
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
-    expect(button).to.have.class('MuiButton-outlinedSizeSmall');
+
+    const button = screen.getByRole('button');
+    expect(button).to.have.class(buttonClasses.outlined);
+    expect(button).to.have.class(buttonClasses.sizeSmall);
   });
 
   it('can render a large button', () => {
-    const { getByRole } = render(
+    render(
       <ButtonGroup size="large">
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
-    expect(button).to.have.class('MuiButton-outlinedSizeLarge');
+
+    const button = screen.getByRole('button');
+    expect(button).to.have.class(buttonClasses.outlined);
+    expect(button).to.have.class(buttonClasses.sizeLarge);
   });
 
   it('should have a ripple', async () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <ButtonGroup>
         <Button TouchRippleProps={{ classes: { root: 'touchRipple' } }}>Hello World</Button>
       </ButtonGroup>,
     );
-    await ripple.startTouch(getByRole('button'));
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector('.touchRipple')).not.to.equal(null);
   });
 
   it('can disable the elevation', () => {
-    const { getByRole } = render(
+    render(
       <ButtonGroup disableElevation>
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
-    expect(button).to.have.class('MuiButton-disableElevation');
+
+    const button = screen.getByRole('button');
+    expect(button).to.have.class(buttonClasses.disableElevation);
   });
 
   it('can disable the ripple', async () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <ButtonGroup disableRipple>
         <Button TouchRippleProps={{ classes: { root: 'touchRipple' } }}>Hello World</Button>
       </ButtonGroup>,
     );
-    await ripple.startTouch(getByRole('button'));
+    await ripple.startTouch(screen.getByRole('button'));
     expect(container.querySelector('.touchRipple')).to.equal(null);
   });
 
+  it('applies a global disableRipple (MuiButtonBase.defaultProps) to grouped buttons', async () => {
+    const { container } = render(
+      <ThemeProvider
+        theme={createTheme({
+          components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
+        })}
+      >
+        <ButtonGroup>
+          <Button TouchRippleProps={{ classes: { root: 'touchRipple' } }}>Hello World</Button>
+        </ButtonGroup>
+      </ThemeProvider>,
+    );
+    await ripple.startTouch(screen.getByRole('button'));
+    expect(container.querySelector('.touchRipple')).to.equal(null);
+  });
+
+  it('explicit disableRipple on ButtonGroup overrides the global default', async () => {
+    const { container } = render(
+      <ThemeProvider
+        theme={createTheme({
+          components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
+        })}
+      >
+        <ButtonGroup disableRipple={false}>
+          <Button TouchRippleProps={{ classes: { root: 'touchRipple' } }}>Hello World</Button>
+        </ButtonGroup>
+      </ThemeProvider>,
+    );
+    await ripple.startTouch(screen.getByRole('button'));
+    expect(container.querySelector('.touchRipple')).not.to.equal(null);
+  });
+
+  // JSDOM doesn't support :focus-visible
+  it.skipIf(isJsdom())(
+    'applies a global disableFocusRipple (MuiButton.defaultProps) to grouped buttons',
+    async function test() {
+      const { container } = render(
+        <ThemeProvider
+          theme={createTheme({
+            components: { MuiButton: { defaultProps: { disableFocusRipple: true } } },
+          })}
+        >
+          <ButtonGroup>
+            <Button TouchRippleProps={{ classes: { ripplePulsate: 'pulsate-focus-visible' } }}>
+              Hello World
+            </Button>
+          </ButtonGroup>
+        </ThemeProvider>,
+      );
+      const button = screen.getByRole('button');
+
+      simulateKeyboardDevice();
+      await ripple.startFocus(button);
+
+      expect(container.querySelector('.pulsate-focus-visible')).to.equal(null);
+    },
+  );
+
+  // JSDOM doesn't support :focus-visible
+  it.skipIf(isJsdom())(
+    'explicit disableFocusRipple on ButtonGroup overrides the global default',
+    async function test() {
+      const { container } = render(
+        <ThemeProvider
+          theme={createTheme({
+            components: { MuiButton: { defaultProps: { disableFocusRipple: true } } },
+          })}
+        >
+          <ButtonGroup disableFocusRipple={false}>
+            <Button TouchRippleProps={{ classes: { ripplePulsate: 'pulsate-focus-visible' } }}>
+              Hello World
+            </Button>
+          </ButtonGroup>
+        </ThemeProvider>,
+      );
+      const button = screen.getByRole('button');
+
+      simulateKeyboardDevice();
+      await ripple.startFocus(button);
+
+      expect(container.querySelector('.pulsate-focus-visible')).not.to.equal(null);
+    },
+  );
+
   it('should not be fullWidth by default', () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <ButtonGroup>
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
     const buttonGroup = container.firstChild;
     expect(buttonGroup).not.to.have.class(classes.fullWidth);
     expect(button).not.to.have.class(buttonClasses.fullWidth);
   });
 
   it('can pass fullWidth to Button', () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <ButtonGroup fullWidth>
         <Button>Hello World</Button>
       </ButtonGroup>,
     );
     const buttonGroup = container.firstChild;
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
     expect(buttonGroup).to.have.class(classes.fullWidth);
     expect(button).to.have.class(buttonClasses.fullWidth);
   });
@@ -201,8 +294,9 @@ describe('<ButtonGroup />', () => {
     expect(context.variant).to.equal('contained');
     expect(context.size).to.equal('large');
     expect(context.fullWidth).to.equal(false);
-    expect(context.disableRipple).to.equal(false);
-    expect(context.disableFocusRipple).to.equal(false);
+    // Unset ripple flags are not forwarded, so each child resolves its own default (#32970).
+    expect(context.disableRipple).to.equal(undefined);
+    expect(context.disableFocusRipple).to.equal(undefined);
     expect(context.disableElevation).to.equal(false);
     expect(context.disabled).to.equal(false);
     expect(context.color).to.equal('primary');
@@ -232,7 +326,7 @@ describe('<ButtonGroup />', () => {
 
       expect(screen.getByRole('button')).to.have.class(buttonClasses.outlined);
       expect(screen.getByRole('button')).to.have.class(buttonClasses.sizeSmall);
-      expect(screen.getByRole('button')).to.have.class(buttonClasses.outlinedSecondary);
+      expect(screen.getByRole('button')).to.have.class(buttonClasses.colorSecondary);
     });
   });
 
@@ -275,6 +369,28 @@ describe('<ButtonGroup />', () => {
       expect(button).not.to.have.class(classes.firstButton);
       expect(button).not.to.have.class(classes.middleButton);
       expect(button).not.to.have.class(classes.lastButton);
+    });
+
+    it('should keep a button mounted when the button before it is removed', async () => {
+      function Toolbar({ showUndo }) {
+        return (
+          <ButtonGroup>
+            {showUndo && <Button>Undo</Button>}
+            <Button>Save</Button>
+            <Button>Delete</Button>
+          </ButtonGroup>
+        );
+      }
+      const { setProps } = render(<Toolbar showUndo />);
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await act(async () => {
+        saveButton.focus();
+      });
+
+      setProps({ showUndo: false });
+
+      expect(screen.getByRole('button', { name: 'Save' })).to.equal(saveButton);
+      expect(saveButton).toHaveFocus();
     });
   });
 });

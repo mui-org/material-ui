@@ -21,17 +21,12 @@ export default function SmallAutocompleteWithStartAdornment() {
           {...params}
           label="Autocomplete"
           slotProps={{
+            ...params.slotProps,
             input: {
-              ...params.InputProps,
+              ...params.slotProps.input,
               startAdornment: (
                 <SvgIcon>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
+                  <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

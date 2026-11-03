@@ -54,9 +54,8 @@
   "spread": true,
   "themeDefaultProps": true,
   "muiName": "MuiStep",
-  "forwardsRefTo": "HTMLDivElement",
+  "forwardsRefTo": "HTMLLIElement",
   "filename": "/packages/mui-material/src/Step/Step.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-stepper/\">Stepper</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-stepper/\">Stepper</a></li></ul>"
 }

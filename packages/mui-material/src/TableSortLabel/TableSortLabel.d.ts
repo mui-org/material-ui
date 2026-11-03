@@ -15,12 +15,12 @@ export interface TableSortLabelSlots {
    * The component that renders the root slot.
    * @default span
    */
-  root?: React.ElementType;
+  root?: React.ElementType | undefined;
   /**
    * The component that renders the icon slot.
    * @default ArrowDownwardIcon
    */
-  icon?: React.ElementType;
+  icon?: React.ElementType | undefined;
 }
 
 export type TableSortLabelSlotsAndSlotProps = CreateSlotsAndSlotProps<
@@ -52,7 +52,7 @@ export interface TableSortLabelOwnProps {
    * If `true`, the label will have the active styling (should be true for the sorted column).
    * @default false
    */
-  active?: boolean;
+  active?: boolean | undefined;
   /**
    * Label contents, the arrow will be appended automatically.
    */
@@ -60,28 +60,30 @@ export interface TableSortLabelOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TableSortLabelClasses>;
+  classes?: Partial<TableSortLabelClasses> | undefined;
   /**
    * The current sort direction.
    * @default 'asc'
    */
-  direction?: 'asc' | 'desc';
+  direction?: 'asc' | 'desc' | undefined;
   /**
    * Hide sort icon when active is false.
    * @default false
    */
-  hideSortIcon?: boolean;
+  hideSortIcon?: boolean | undefined;
   /**
    * Sort icon to use.
    * @default ArrowDownwardIcon
    */
-  IconComponent?: React.JSXElementConstructor<{
-    className: string;
-  }>;
+  IconComponent?:
+    | React.JSXElementConstructor<{
+        className: string;
+      }>
+    | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export type TableSortLabelTypeMap<
@@ -97,12 +99,12 @@ export type TableSortLabelTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableSortLabel API](https://mui.com/material-ui/api/table-sort-label/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [TableSortLabel API](https://next.mui.com/material-ui/api/table-sort-label/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 declare const TableSortLabel: ExtendButtonBase<TableSortLabelTypeMap>;
 
@@ -110,7 +112,7 @@ export type TableSortLabelProps<
   RootComponent extends React.ElementType = TableSortLabelTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<TableSortLabelTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default TableSortLabel;

@@ -191,8 +191,7 @@ To align with React 19's removal of UMD builds, Material UI has also removed it
 This results in a reduction of the `@mui/material` package size by 2.5MB, or 25% of the total package size.
 See [Package Phobia](https://packagephobia.com/result?p=@mui/material) for more details.
 
-Instead, we recommend using ESM-based CDNs such as [esm.sh](https://esm.sh/).
-For alternative installation methods, refer to the [CDN documentation](/material-ui/getting-started/installation/#cdn).
+For alternative installation methods, refer to the [installation documentation](/material-ui/getting-started/installation/).
 
 ### Accordion
 
@@ -384,7 +383,7 @@ This eliminates the need for the `disableEqualOverflow` prop:
 #### Grid item spacing change
 
 In v5, Grid items included spacing in their boxes.
-In v6, Grid items no longer include spacing in their boxes by using the [CSS gap property](https://developer.mozilla.org/en-US/docs/Web/CSS/gap).
+In v6, Grid items no longer include spacing in their boxes by using the [CSS gap property](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/gap).
 
 Note that the item position doesn't change.
 

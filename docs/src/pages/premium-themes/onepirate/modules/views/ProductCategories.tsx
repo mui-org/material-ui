@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -144,8 +143,8 @@ export default function ProductCategories() {
               <Typography
                 component="h3"
                 variant="h6"
-                color="inherit"
                 className="imageTitle"
+                sx={{ color: 'inherit' }}
               >
                 {image.title}
                 <div className="imageMarked" />

@@ -1,4 +1,9 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "skipLibCheck": true,
+    "types": ["react", "@mui/internal-code-infra/build-env"]
+  },
   "include": ["src/**/*"]
 }

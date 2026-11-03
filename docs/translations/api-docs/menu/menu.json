@@ -12,9 +12,6 @@
     "disableAutoFocusItem": {
       "description": "When opening the menu will not focus the active item but the <code>[role=&quot;menu&quot;]</code> unless <code>autoFocus</code> is also set to <code>false</code>. Not using the default means not following WAI-ARIA authoring practices. Please be considerate about possible accessibility implications."
     },
-    "MenuListProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/menu-list/\"><code>MenuList</code></a> element."
-    },
     "onClose": {
       "description": "Callback fired when the component requests to be closed.",
       "typeDescriptions": {
@@ -36,9 +33,6 @@
     },
     "transitionDuration": {
       "description": "The length of the transition in <code>ms</code>, or &#39;auto&#39;"
-    },
-    "TransitionProps": {
-      "description": "Props applied to the transition element. By default, the element is based on this <a href=\"https://reactcommunity.org/react-transition-group/transition/\"><code>Transition</code></a> component."
     },
     "variant": {
       "description": "The variant to use. Use <code>menu</code> to prevent selected items from impacting the initial focus."

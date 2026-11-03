@@ -14,16 +14,10 @@ export interface CircularProgressClasses {
   colorSecondary: string;
   /** Styles applied to the svg element. */
   svg: string;
+  /** Styles applied to the track slot if `enableTrackSlot={true}`. */
+  track: string;
   /** Styles applied to the `circle` svg path. */
   circle: string;
-  /** Styles applied to the `circle` svg path if `variant="determinate"`.
-   * @deprecated Combine the [.MuiCircularProgress-circle](/material-ui/api/circular-progress/#circular-progress-classes-circle) and [.MuiCircularProgress-determinate](/material-ui/api/circular-progress/#circular-progress-classes-determinate) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  circleDeterminate: string;
-  /** Styles applied to the `circle` svg path if `variant="indeterminate"`.
-   * @deprecated Combine the [.MuiCircularProgress-circle](/material-ui/api/circular-progress/#circular-progress-classes-circle) and [.MuiCircularProgress-indeterminate](/material-ui/api/circular-progress/#circular-progress-classes-indeterminate) classes instead. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  circleIndeterminate: string;
   /** Styles applied to the `circle` svg path if `disableShrink={true}`. */
   circleDisableShrink: string;
 }
@@ -43,9 +37,8 @@ const circularProgressClasses: CircularProgressClasses = generateUtilityClasses(
     'colorPrimary',
     'colorSecondary',
     'svg',
+    'track',
     'circle',
-    'circleDeterminate',
-    'circleIndeterminate',
     'circleDisableShrink',
   ],
 );

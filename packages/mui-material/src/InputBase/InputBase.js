@@ -7,17 +7,22 @@ import refType from '@mui/utils/refType';
 import composeClasses from '@mui/utils/composeClasses';
 import isHostComponent from '@mui/utils/isHostComponent';
 import TextareaAutosize from '../TextareaAutosize';
-import formControlState from '../FormControl/formControlState';
 import FormControlContext from '../FormControl/FormControlContext';
-import useFormControl from '../FormControl/useFormControl';
+import { useFormControlState } from '../FormControl/useFormControl';
 import { styled, globalCss } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import capitalize from '../utils/capitalize';
 import useForkRef from '../utils/useForkRef';
 import useEnhancedEffect from '../utils/useEnhancedEffect';
+import ownerDocument from '../utils/ownerDocument';
+import getActiveElement from '../utils/getActiveElement';
 import { isFilled } from './utils';
 import inputBaseClasses, { getInputBaseUtilityClass } from './inputBaseClasses';
+import { getTransitionStyles } from '../transitions/utils';
+
+const MUI_AUTO_FILL = 'mui-auto-fill';
+const MUI_AUTO_FILL_CANCEL = 'mui-auto-fill-cancel';
 
 export const rootOverridesResolver = (props, styles) => {
   const { ownerState } = props;
@@ -39,15 +44,7 @@ export const rootOverridesResolver = (props, styles) => {
 export const inputOverridesResolver = (props, styles) => {
   const { ownerState } = props;
 
-  return [
-    styles.input,
-    ownerState.size === 'small' && styles.inputSizeSmall,
-    ownerState.multiline && styles.inputMultiline,
-    ownerState.type === 'search' && styles.inputTypeSearch,
-    ownerState.startAdornment && styles.inputAdornedStart,
-    ownerState.endAdornment && styles.inputAdornedEnd,
-    ownerState.hiddenLabel && styles.inputHiddenLabel,
-  ];
+  return [styles.input, ownerState.type === 'search' && styles.inputTypeSearch];
 };
 
 const useUtilityClasses = (ownerState) => {
@@ -87,11 +84,6 @@ const useUtilityClasses = (ownerState) => {
       'input',
       disabled && 'disabled',
       type === 'search' && 'inputTypeSearch',
-      multiline && 'inputMultiline',
-      size === 'small' && 'inputSizeSmall',
-      hiddenLabel && 'inputHiddenLabel',
-      startAdornment && 'inputAdornedStart',
-      endAdornment && 'inputAdornedEnd',
       readOnly && 'readOnly',
     ],
   };
@@ -119,15 +111,9 @@ export const InputBaseRoot = styled('div', {
     },
     variants: [
       {
-        props: ({ ownerState }) => ownerState.multiline,
-        style: {
-          padding: '4px 0 5px',
-        },
-      },
-      {
-        props: ({ ownerState, size }) => ownerState.multiline && size === 'small',
-        style: {
-          paddingTop: 1,
+        props: { internalDisabledThemeFocusVisible: false },
+        style: theme.focusVisible && {
+          [`&.${inputBaseClasses.focused}`]: theme.focusVisible,
         },
       },
       {
@@ -156,7 +142,7 @@ export const InputBaseInput = styled('input', {
         : {
             opacity: light ? 0.42 : 0.5,
           }),
-      transition: theme.transitions.create('opacity', {
+      ...getTransitionStyles(theme, 'opacity', {
         duration: theme.transitions.duration.shorter,
       }),
     };
@@ -217,11 +203,11 @@ export const InputBaseInput = styled('input', {
         {
           props: ({ ownerState }) => !ownerState.disableInjectingGlobalStyles,
           style: {
-            animationName: 'mui-auto-fill-cancel',
+            animationName: MUI_AUTO_FILL_CANCEL,
             animationDuration: '10ms',
             '&:-webkit-autofill': {
               animationDuration: '5000s',
-              animationName: 'mui-auto-fill',
+              animationName: MUI_AUTO_FILL,
             },
           },
         },
@@ -238,8 +224,6 @@ export const InputBaseInput = styled('input', {
           style: {
             height: 'auto',
             resize: 'none',
-            padding: 0,
-            paddingTop: 0,
           },
         },
         {
@@ -256,8 +240,10 @@ export const InputBaseInput = styled('input', {
 );
 
 const InputGlobalStyles = globalCss({
-  '@keyframes mui-auto-fill': { from: { display: 'block' } },
-  '@keyframes mui-auto-fill-cancel': { from: { display: 'block' } },
+  // Keep keyframes non-empty for Emotion production builds. Animation properties are ignored
+  // inside keyframes, avoiding the visible display animation triggered by Chrome 117+.
+  [`@keyframes ${MUI_AUTO_FILL}`]: { from: { animationName: MUI_AUTO_FILL } },
+  [`@keyframes ${MUI_AUTO_FILL_CANCEL}`]: { from: { animationName: MUI_AUTO_FILL_CANCEL } },
 });
 
 /**
@@ -269,12 +255,11 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiInputBase' });
   const {
     'aria-describedby': ariaDescribedby,
+    'aria-label': ariaLabel,
     autoComplete,
     autoFocus,
     className,
     color,
-    components = {},
-    componentsProps = {},
     defaultValue,
     disabled,
     disableInjectingGlobalStyles,
@@ -283,8 +268,11 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     fullWidth = false,
     id,
     inputComponent = 'input',
-    inputProps: inputPropsProp = {},
+    inputProps: inputPropsBase,
     inputRef: inputRefProp,
+    /* eslint-disable react/prop-types */
+    internalDisabledThemeFocusVisible = false,
+    /* eslint-enable react/prop-types */
     margin,
     maxRows,
     minRows,
@@ -309,6 +297,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     ...other
   } = props;
 
+  const inputPropsProp = { ...inputPropsBase, ...slotProps.input };
   const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
   const { current: isControlled } = React.useRef(value != null);
 
@@ -335,7 +324,10 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
   );
 
   const [focused, setFocused] = React.useState(false);
-  const muiFormControl = useFormControl();
+  const [fcs, muiFormControl] = useFormControlState({
+    props,
+    states: ['color', 'disabled', 'error', 'hiddenLabel', 'size', 'required', 'filled'],
+  });
 
   if (process.env.NODE_ENV !== 'production') {
     // TODO: uncomment once we enable eslint-plugin-react-compiler // eslint-disable-next-line react-compiler/react-compiler
@@ -349,18 +341,13 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     }, [muiFormControl]);
   }
 
-  const fcs = formControlState({
-    props,
-    muiFormControl,
-    states: ['color', 'disabled', 'error', 'hiddenLabel', 'size', 'required', 'filled'],
-  });
-
   fcs.focused = muiFormControl ? muiFormControl.focused : focused;
 
   // The blur won't fire when the disabled state is set on a focused input.
   // We need to book keep the focused state manually.
   React.useEffect(() => {
     if (!muiFormControl && disabled && focused) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFocused(false);
       if (onBlur) {
         onBlur();
@@ -389,6 +376,36 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
       checkDirty({ value });
     }
   }, [value, checkDirty, isControlled]);
+
+  // Sync focused state when autoFocus is used in SSR.
+  // If the browser focused the element before hydration, the onFocus handler never
+  // fires. If it did not, React hydration does not call focus() for autoFocus.
+  useEnhancedEffect(() => {
+    if (!autoFocus) {
+      return;
+    }
+
+    const input = inputRef.current;
+    if (!input) {
+      return;
+    }
+
+    const doc = ownerDocument(input);
+    const activeElement = getActiveElement(doc);
+    const noElementFocused =
+      activeElement == null || activeElement === doc.body || activeElement === doc.documentElement;
+
+    if (input === activeElement) {
+      if (muiFormControl && muiFormControl.onFocus) {
+        muiFormControl.onFocus();
+      } else {
+        setFocused(true);
+      }
+    } else if (noElementFocused) {
+      input.focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoFocus]);
 
   const handleFocus = (event) => {
     if (onFocus) {
@@ -495,7 +512,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
 
   const handleAutoFill = (event) => {
     // Provide a fake value as Chrome might not let you access it for security reasons.
-    checkDirty(event.animationName === 'mui-auto-fill-cancel' ? inputRef.current : { value: 'x' });
+    checkDirty(event.animationName === MUI_AUTO_FILL_CANCEL ? inputRef.current : { value: 'x' });
   };
 
   React.useEffect(() => {
@@ -509,6 +526,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
     color: fcs.color || 'primary',
     disabled: fcs.disabled,
     endAdornment,
+    internalDisabledThemeFocusVisible,
     error: fcs.error,
     focused: fcs.focused,
     formControl: muiFormControl,
@@ -522,11 +540,10 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
 
   const classes = useUtilityClasses(ownerState);
 
-  const Root = slots.root || components.Root || InputBaseRoot;
-  const rootProps = slotProps.root || componentsProps.root || {};
+  const Root = slots.root || InputBaseRoot;
+  const rootProps = slotProps.root || {};
 
-  const Input = slots.input || components.Input || InputBaseInput;
-  inputProps = { ...inputProps, ...(slotProps.input ?? componentsProps.input) };
+  const Input = slots.input || InputBaseInput;
 
   return (
     <React.Fragment>
@@ -559,6 +576,7 @@ const InputBase = React.forwardRef(function InputBase(inProps, ref) {
           <Input
             aria-invalid={fcs.error}
             aria-describedby={ariaDescribedby}
+            aria-label={ariaLabel}
             autoComplete={autoComplete}
             autoFocus={autoFocus}
             defaultValue={defaultValue}
@@ -615,6 +633,10 @@ InputBase.propTypes /* remove-proptypes */ = {
    */
   'aria-describedby': PropTypes.string,
   /**
+   * @ignore
+   */
+  'aria-label': PropTypes.string,
+  /**
    * This prop helps users to fill forms faster, especially on mobile devices.
    * The name can be confusing, as it's more like an autofill.
    * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
@@ -642,29 +664,6 @@ InputBase.propTypes /* remove-proptypes */ = {
     PropTypes.oneOf(['primary', 'secondary', 'error', 'info', 'success', 'warning']),
     PropTypes.string,
   ]),
-  /**
-   * The components used for each slot inside.
-   *
-   * @deprecated use the `slots` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   *
-   * @default {}
-   */
-  components: PropTypes.shape({
-    Input: PropTypes.elementType,
-    Root: PropTypes.elementType,
-  }),
-  /**
-   * The extra props for the slot components.
-   * You can override the existing props or add new ones.
-   *
-   * @deprecated use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   *
-   * @default {}
-   */
-  componentsProps: PropTypes.shape({
-    input: PropTypes.object,
-    root: PropTypes.object,
-  }),
   /**
    * The default value. Use when the component is not controlled.
    */
@@ -802,8 +801,6 @@ InputBase.propTypes /* remove-proptypes */ = {
    * The extra props for the slot components.
    * You can override the existing props or add new ones.
    *
-   * This prop is an alias for the `componentsProps` prop, which will be deprecated in the future.
-   *
    * @default {}
    */
   slotProps: PropTypes.shape({
@@ -812,8 +809,6 @@ InputBase.propTypes /* remove-proptypes */ = {
   }),
   /**
    * The components used for each slot inside.
-   *
-   * This prop is an alias for the `components` prop, which will be deprecated in the future.
    *
    * @default {}
    */

@@ -1,2 +1,0 @@
-<Chip label="Clickable" onClick={handleClick} />
-<Chip label="Clickable" variant="outlined" onClick={handleClick} />

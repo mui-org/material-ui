@@ -36,7 +36,7 @@
       "conditions": "<code>variant=\"filled\"</code>"
     },
     "hiddenLabel": {
-      "description": "Styles applied if the adornment is used inside <FormControl hiddenLabel />."
+      "description": "Styles applied if the adornment is used inside <code>&lt;FormControl hiddenLabel /&gt;</code>."
     },
     "outlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
@@ -55,7 +55,7 @@
     },
     "root": { "description": "Styles applied to the root element." },
     "sizeSmall": {
-      "description": "Styles applied if the adornment is used inside <FormControl size=\"small\" />."
+      "description": "Styles applied if the adornment is used inside <code>&lt;FormControl size=&quot;small&quot; /&gt;</code>."
     },
     "standard": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

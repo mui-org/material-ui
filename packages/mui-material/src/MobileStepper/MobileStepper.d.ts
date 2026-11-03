@@ -40,7 +40,7 @@ export type MobileStepperSlotsAndSlotProps = CreateSlotsAndSlotProps<
   {
     /**
      * Props forwarded to the root slot.
-     * By default, the avaible props are based on the [Paper](https://mui.com/material-ui/api/paper/#props) component.
+     * By default, the available props are based on the [Paper](https://mui.com/material-ui/api/paper/#props) component.
      */
     root: SlotProps<
       React.ElementType<PaperProps>,
@@ -49,7 +49,7 @@ export type MobileStepperSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the progress slot.
-     * By default, the avaible props are based on the [LinearProgress](https://mui.com/material-ui/api/linear-progress/#props) component.
+     * By default, the available props are based on the [LinearProgress](https://mui.com/material-ui/api/linear-progress/#props) component.
      */
     progress: SlotProps<
       React.ElementType<LinearProgressProps>,
@@ -58,26 +58,25 @@ export type MobileStepperSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the dots slot.
-     * By default, the avaible props are based on the div element.
+     * By default, the available props are based on the div element.
      */
     dots: SlotProps<'div', MobileStepperDotsSlotPropsOverrides, MobileStepperOwnerState>;
     /**
      * Props forwarded to the dot slot.
-     * By default, the avaible props are based on the div element.
+     * By default, the available props are based on the div element.
      */
     dot: SlotProps<'div', MobileStepperDotSlotPropsOverrides, MobileStepperOwnerState>;
   }
 >;
 
 export interface MobileStepperProps
-  extends StandardProps<PaperProps, 'children' | 'variant'>,
-    MobileStepperSlotsAndSlotProps {
+  extends StandardProps<PaperProps, 'children' | 'variant'>, MobileStepperSlotsAndSlotProps {
   /**
    * Set the active step (zero based index).
    * Defines which dot is highlighted when the variant is 'dots'.
    * @default 0
    */
-  activeStep?: number;
+  activeStep?: number | undefined;
   /**
    * A back button element. For instance, it can be a `Button` or an `IconButton`.
    */
@@ -85,12 +84,7 @@ export interface MobileStepperProps
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<MobileStepperClasses>;
-  /**
-   * Props applied to the `LinearProgress` element.
-   * @deprecated Use `slotProps.progress` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  LinearProgressProps?: Partial<LinearProgressProps>;
+  classes?: Partial<MobileStepperClasses> | undefined;
   /**
    * A next button element. For instance, it can be a `Button` or an `IconButton`.
    */
@@ -99,7 +93,7 @@ export interface MobileStepperProps
    * Set the positioning type.
    * @default 'bottom'
    */
-  position?: 'bottom' | 'top' | 'static';
+  position?: 'bottom' | 'top' | 'static' | undefined;
   /**
    * The total steps.
    */
@@ -107,12 +101,12 @@ export interface MobileStepperProps
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
   /**
    * The variant to use.
    * @default 'dots'
    */
-  variant?: 'text' | 'dots' | 'progress';
+  variant?: 'text' | 'dots' | 'progress' | undefined;
 }
 
 export interface MobileStepperOwnerState extends Omit<MobileStepperProps, 'slots' | 'slotProps'> {}
@@ -121,11 +115,11 @@ export interface MobileStepperOwnerState extends Omit<MobileStepperProps, 'slots
  *
  * Demos:
  *
- * - [Stepper](https://mui.com/material-ui/react-stepper/)
+ * - [Stepper](https://next.mui.com/material-ui/react-stepper/)
  *
  * API:
  *
- * - [MobileStepper API](https://mui.com/material-ui/api/mobile-stepper/)
- * - inherits [Paper API](https://mui.com/material-ui/api/paper/)
+ * - [MobileStepper API](https://next.mui.com/material-ui/api/mobile-stepper/)
+ * - inherits [Paper API](https://next.mui.com/material-ui/api/paper/)
  */
 export default function MobileStepper(props: MobileStepperProps): React.JSX.Element;

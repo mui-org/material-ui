@@ -18,13 +18,19 @@ export interface Duration {
 export const duration: Duration;
 
 export interface TransitionsOptions {
-  easing?: Partial<Easing>;
-  duration?: Partial<Duration>;
-  create?: (
-    props: string | string[],
-    options?: Partial<{ duration: number | string; easing: string; delay: number | string }>,
-  ) => string;
-  getAutoHeightDuration?: (height: number) => number;
+  easing?: Partial<Easing> | undefined;
+  duration?: Partial<Duration> | undefined;
+  create?:
+    | ((
+        props?: string | string[],
+        options?: Partial<{ duration: number | string; easing: string; delay: number | string }>,
+      ) => string)
+    | ((
+        props: string | string[],
+        options?: Partial<{ duration: number | string; easing: string; delay: number | string }>,
+      ) => string)
+    | undefined;
+  getAutoHeightDuration?: ((height: number) => number) | undefined;
 }
 
 /**
@@ -33,7 +39,7 @@ export interface TransitionsOptions {
  * @param options
  */
 export function create(
-  props: string | string[],
+  props?: string | string[],
   options?: Partial<{ duration: number | string; easing: string; delay: number | string }>,
 ): string;
 

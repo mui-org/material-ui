@@ -1,0 +1,28 @@
+{
+  // This config is for emitting declarations (.d.ts) only
+  // Actual .ts source files are transpiled via babel
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "build",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "build/tsconfig.build.tsbuildinfo",
+    "paths": {
+      "@mui/internal-markdown": ["../markdown/index.d.mts"],
+      "@mui/internal-markdown/prism": ["../markdown/prism.d.mts"]
+    }
+  },
+  "include": ["./types.d.ts", "src/**/*.ts*", "src/**/*.json"],
+  "exclude": ["src/**/*.spec.ts*", "src/**/*.test.ts*"],
+  "references": [
+    { "path": "../docs-utils/tsconfig.build.json" },
+    { "path": "../../packages/mui-material/tsconfig.build.json" },
+    { "path": "../../packages/mui-material-nextjs/tsconfig.build.json" },
+    { "path": "../../packages/mui-system/tsconfig.build.json" },
+    { "path": "../../packages/mui-icons-material/tsconfig.build.json" },
+    { "path": "../../packages/mui-stylis-plugin-rtl/tsconfig.build.json" }
+  ]
+}

@@ -18,7 +18,7 @@ You don't need to connect your component to the theme if you are only using it i
 
 This guide will walk you through how to build this statistics component, which accepts the app's theme as though it were a built-in Material UI component:
 
-{{"demo": "StatComponent.js", "hideToolbar": true}}
+{{"component": "file://./demos/stat-component/index.ts", "hideToolbar": true}}
 
 ### 1. Create the component slots
 
@@ -34,7 +34,7 @@ This statistics component is composed of three slots:
 Though you can give these slots any names you prefer, we recommend using `root` for the outermost container element for consistency with the rest of the library.
 :::
 
-{{"demo": "StatSlots.js", "hideToolbar": true}}
+{{"component": "file://./demos/stat-slots/index.ts", "hideToolbar": true}}
 
 Use the `styled` API with `name` and `slot` parameters to create the slots, as shown below:
 
@@ -327,4 +327,4 @@ declare module '@mui/material/styles' {
 
 This template is the final product of the step-by-step guide above, demonstrating how to build a custom component that can be styled with the theme as if it was a built-in component.
 
-{{"demo": "StatFullTemplate.js", "defaultCodeOpen": true}}
+{{"component": "file://./demos/stat-full-template/index.ts", "initialExpanded": true}}

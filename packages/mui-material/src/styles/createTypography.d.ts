@@ -28,7 +28,7 @@ export interface FontStyle {
 }
 
 export interface FontStyleOptions extends Partial<FontStyle> {
-  allVariants?: React.CSSProperties;
+  allVariants?: React.CSSProperties | undefined;
 }
 
 // TODO: which one should actually be allowed to be subject to module augmentation?
@@ -42,12 +42,11 @@ export interface TypographyUtils {
 }
 
 export interface TypographyVariants
-  extends Record<TypographyVariant, TypographyStyle>,
-    FontStyle,
-    TypographyUtils {}
+  extends Record<TypographyVariant, TypographyStyle>, FontStyle, TypographyUtils {}
 
-export interface TypographyVariantsOptions
-  extends Partial<Record<TypographyVariant, TypographyStyleOptions> & FontStyleOptions> {}
+export interface TypographyVariantsOptions extends Partial<
+  Record<TypographyVariant, TypographyStyleOptions> & FontStyleOptions
+> {}
 
 export default function createTypography(
   palette: Palette,

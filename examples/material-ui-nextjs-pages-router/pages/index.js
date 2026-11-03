@@ -11,7 +11,7 @@ export default function Index() {
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js example
+          Material UI - Next.js example in JavaScript
         </Typography>
         <Link href="/about" color="secondary">
           Go to the about page

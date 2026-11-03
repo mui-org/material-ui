@@ -2,27 +2,30 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
-import useTimeout from '@mui/utils/useTimeout';
 import elementTypeAcceptingRef from '@mui/utils/elementTypeAcceptingRef';
 import composeClasses from '@mui/utils/composeClasses';
+import Transition from '../internal/Transition';
+import useReducedMotion from '../transitions/useReducedMotion';
 import { styled, useTheme } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import { duration } from '../styles/createTransitions';
-import { getTransitionProps } from '../transitions/utils';
+import { normalizedTransitionCallback, getTransitionProps } from '../transitions/utils';
 import { useForkRef } from '../utils';
+import useSlot from '../utils/useSlot';
 import { getCollapseUtilityClass } from './collapseClasses';
+
+const EMPTY_OBJECT = {};
 
 const useUtilityClasses = (ownerState) => {
   const { orientation, classes } = ownerState;
 
   const slots = {
-    root: ['root', `${orientation}`],
+    root: ['root', orientation],
     entered: ['entered'],
     hidden: ['hidden'],
-    wrapper: ['wrapper', `${orientation}`],
-    wrapperInner: ['wrapperInner', `${orientation}`],
+    wrapper: ['wrapper', orientation],
+    wrapperInner: ['wrapperInner', orientation],
   };
 
   return composeClasses(slots, getCollapseUtilityClass, classes);
@@ -93,7 +96,7 @@ const CollapseWrapper = styled('div', {
   name: 'MuiCollapse',
   slot: 'Wrapper',
 })({
-  // Hack to get children with a negative margin to not falsify the height computation.
+  // Prevent children with negative margins from making the measured size too small.
   display: 'flex',
   width: '100%',
   variants: [
@@ -130,7 +133,6 @@ const CollapseWrapperInner = styled('div', {
 /**
  * The Collapse transition is used by the
  * [Vertical Stepper](/material-ui/react-stepper/#vertical-stepper) StepContent component.
- * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
 const Collapse = React.forwardRef(function Collapse(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiCollapse' });
@@ -140,6 +142,7 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     className,
     collapsedSize: collapsedSizeProp = '0px',
     component,
+    disablePrefersReducedMotion = false,
     easing,
     in: inProp,
     onEnter,
@@ -149,6 +152,8 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     onExited,
     onExiting,
     orientation = 'vertical',
+    slots = EMPTY_OBJECT,
+    slotProps = EMPTY_OBJECT,
     style,
     timeout = duration.standard,
     // eslint-disable-next-line react/prop-types
@@ -165,36 +170,24 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
   const classes = useUtilityClasses(ownerState);
 
   const theme = useTheme();
-  const timer = useTimeout();
   const wrapperRef = React.useRef(null);
-  const autoTransitionDuration = React.useRef();
+  const autoTransitionDuration = React.useRef(null);
   const collapsedSize =
     typeof collapsedSizeProp === 'number' ? `${collapsedSizeProp}px` : collapsedSizeProp;
   const isHorizontal = orientation === 'horizontal';
   const size = isHorizontal ? 'width' : 'height';
+  const reducedMotion = useReducedMotion(theme.motion.reducedMotion, disablePrefersReducedMotion);
 
   const nodeRef = React.useRef(null);
   const handleRef = useForkRef(ref, nodeRef);
 
-  const normalizedTransitionCallback = (callback) => (maybeIsAppearing) => {
-    if (callback) {
-      const node = nodeRef.current;
-
-      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-      if (maybeIsAppearing === undefined) {
-        callback(node);
-      } else {
-        callback(node, maybeIsAppearing);
-      }
-    }
-  };
-
   const getWrapperSize = () =>
     wrapperRef.current ? wrapperRef.current[isHorizontal ? 'clientWidth' : 'clientHeight'] : 0;
 
-  const handleEnter = normalizedTransitionCallback((node, isAppearing) => {
+  const handleEnter = normalizedTransitionCallback(nodeRef, (node, isAppearing) => {
     if (wrapperRef.current && isHorizontal) {
-      // Set absolute position to get the size of collapsed content
+      // Temporarily remove horizontal content from normal layout so we can
+      // measure its natural width.
       wrapperRef.current.style.position = 'absolute';
     }
     node.style[size] = collapsedSize;
@@ -204,11 +197,11 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     }
   });
 
-  const handleEntering = normalizedTransitionCallback((node, isAppearing) => {
+  const handleEntering = normalizedTransitionCallback(nodeRef, (node, isAppearing) => {
     const wrapperSize = getWrapperSize();
 
     if (wrapperRef.current && isHorizontal) {
-      // After the size is read reset the position back to default
+      // Restore normal layout after measuring the horizontal content.
       wrapperRef.current.style.position = '';
     }
 
@@ -219,14 +212,21 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
       },
     );
 
-    if (timeout === 'auto') {
+    if (timeout === 'auto' && !reducedMotion.shouldReduceMotion) {
       const duration2 = theme.transitions.getAutoHeightDuration(wrapperSize);
-      node.style.transitionDuration = `${duration2}ms`;
       autoTransitionDuration.current = duration2;
     } else {
-      node.style.transitionDuration =
-        typeof transitionDuration === 'string' ? transitionDuration : `${transitionDuration}ms`;
+      autoTransitionDuration.current = null;
     }
+    const transitionTiming = reducedMotion.getTransitionTiming({
+      duration: autoTransitionDuration.current ?? transitionDuration,
+      delay: undefined,
+    });
+
+    node.style.transitionDuration =
+      typeof transitionTiming.duration === 'string'
+        ? transitionTiming.duration
+        : `${transitionTiming.duration}ms`;
 
     node.style[size] = `${wrapperSize}px`;
     node.style.transitionTimingFunction = transitionTimingFunction;
@@ -236,7 +236,7 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     }
   });
 
-  const handleEntered = normalizedTransitionCallback((node, isAppearing) => {
+  const handleEntered = normalizedTransitionCallback(nodeRef, (node, isAppearing) => {
     node.style[size] = 'auto';
 
     if (onEntered) {
@@ -244,7 +244,7 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     }
   });
 
-  const handleExit = normalizedTransitionCallback((node) => {
+  const handleExit = normalizedTransitionCallback(nodeRef, (node) => {
     node.style[size] = `${getWrapperSize()}px`;
 
     if (onExit) {
@@ -252,9 +252,9 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     }
   });
 
-  const handleExited = normalizedTransitionCallback(onExited);
+  const handleExited = normalizedTransitionCallback(nodeRef, onExited);
 
-  const handleExiting = normalizedTransitionCallback((node) => {
+  const handleExiting = normalizedTransitionCallback(nodeRef, (node) => {
     const wrapperSize = getWrapperSize();
     const { duration: transitionDuration, easing: transitionTimingFunction } = getTransitionProps(
       { style, timeout, easing },
@@ -263,16 +263,22 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
       },
     );
 
-    if (timeout === 'auto') {
-      // TODO: rename getAutoHeightDuration to something more generic (width support)
-      // Actually it just calculates animation duration based on size
+    if (timeout === 'auto' && !reducedMotion.shouldReduceMotion) {
+      // getAutoHeightDuration also works for width; it calculates duration from size.
       const duration2 = theme.transitions.getAutoHeightDuration(wrapperSize);
-      node.style.transitionDuration = `${duration2}ms`;
       autoTransitionDuration.current = duration2;
     } else {
-      node.style.transitionDuration =
-        typeof transitionDuration === 'string' ? transitionDuration : `${transitionDuration}ms`;
+      autoTransitionDuration.current = null;
     }
+    const transitionTiming = reducedMotion.getTransitionTiming({
+      duration: autoTransitionDuration.current ?? transitionDuration,
+      delay: undefined,
+    });
+
+    node.style.transitionDuration =
+      typeof transitionTiming.duration === 'string'
+        ? transitionTiming.duration
+        : `${transitionTiming.duration}ms`;
 
     node.style[size] = collapsedSize;
     node.style.transitionTimingFunction = transitionTimingFunction;
@@ -282,15 +288,46 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
     }
   });
 
-  const handleAddEndListener = (next) => {
-    if (timeout === 'auto') {
-      timer.start(autoTransitionDuration.current || 0, next);
-    }
-    if (addEndListener) {
-      // Old call signature before `react-transition-group` implemented `nodeRef`
-      addEndListener(nodeRef.current, next);
-    }
+  const handleAddEndListener = addEndListener
+    ? (next) => {
+        addEndListener(nodeRef.current, next);
+      }
+    : undefined;
+
+  const externalForwardedProps = {
+    slots,
+    slotProps,
+    component,
   };
+
+  const [RootSlot, rootSlotProps] = useSlot('root', {
+    ref: handleRef,
+    className: clsx(classes.root, className),
+    elementType: CollapseRoot,
+    externalForwardedProps,
+    ownerState,
+    additionalProps: {
+      style: {
+        [isHorizontal ? 'minWidth' : 'minHeight']: collapsedSize,
+        ...style,
+      },
+    },
+  });
+
+  const [WrapperSlot, wrapperSlotProps] = useSlot('wrapper', {
+    ref: wrapperRef,
+    className: classes.wrapper,
+    elementType: CollapseWrapper,
+    externalForwardedProps,
+    ownerState,
+  });
+
+  const [WrapperInnerSlot, wrapperInnerSlotProps] = useSlot('wrapperInner', {
+    className: classes.wrapperInner,
+    elementType: CollapseWrapperInner,
+    externalForwardedProps,
+    ownerState,
+  });
 
   return (
     <TransitionComponent
@@ -302,44 +339,33 @@ const Collapse = React.forwardRef(function Collapse(inProps, ref) {
       onExited={handleExited}
       onExiting={handleExiting}
       addEndListener={handleAddEndListener}
+      getAutoTimeout={timeout === 'auto' ? () => autoTransitionDuration.current : undefined}
+      reduceMotion={reducedMotion.shouldReduceMotion}
       nodeRef={nodeRef}
       timeout={timeout === 'auto' ? null : timeout}
       {...other}
     >
-      {/* Destructure child props to prevent the component's "ownerState" from being overridden by incomingOwnerState. */}
-      {(state, { ownerState: incomingOwnerState, ...restChildProps }) => (
-        <CollapseRoot
-          as={component}
-          className={clsx(
-            classes.root,
-            {
+      {/* Keep child props from replacing the ownerState used by Collapse slots. */}
+      {(state, { ownerState: incomingOwnerState, ...restChildProps }) => {
+        const stateOwnerState = { ...ownerState, state };
+        return (
+          <RootSlot
+            {...rootSlotProps}
+            className={clsx(rootSlotProps.className, {
               [classes.entered]: state === 'entered',
               [classes.hidden]: state === 'exited' && !inProp && collapsedSize === '0px',
-            },
-            className,
-          )}
-          style={{
-            [isHorizontal ? 'minWidth' : 'minHeight']: collapsedSize,
-            ...style,
-          }}
-          ref={handleRef}
-          ownerState={{ ...ownerState, state }}
-          {...restChildProps}
-        >
-          <CollapseWrapper
-            ownerState={{ ...ownerState, state }}
-            className={classes.wrapper}
-            ref={wrapperRef}
+            })}
+            ownerState={stateOwnerState}
+            {...restChildProps}
           >
-            <CollapseWrapperInner
-              ownerState={{ ...ownerState, state }}
-              className={classes.wrapperInner}
-            >
-              {children}
-            </CollapseWrapperInner>
-          </CollapseWrapper>
-        </CollapseRoot>
-      )}
+            <WrapperSlot {...wrapperSlotProps} ownerState={stateOwnerState}>
+              <WrapperInnerSlot {...wrapperInnerSlotProps} ownerState={stateOwnerState}>
+                {children}
+              </WrapperInnerSlot>
+            </WrapperSlot>
+          </RootSlot>
+        );
+      }}
     </TransitionComponent>
   );
 });
@@ -350,9 +376,12 @@ Collapse.propTypes /* remove-proptypes */ = {
   // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
   // └─────────────────────────────────────────────────────────────────────┘
   /**
-   * Add a custom transition end trigger. Called with the transitioning DOM
-   * node and a done callback. Allows for more fine grained transition end
-   * logic. Note: Timeouts are still used as a fallback if provided.
+   * Add a custom transition end trigger.
+   * Use it when you need custom logic to decide when the transition has ended.
+   * Note: Timeouts are still used as a fallback if provided.
+   *
+   * @param {HTMLElement} node The transitioning DOM node.
+   * @param {Function} done Call this when the transition has finished.
    */
   addEndListener: PropTypes.func,
   /**
@@ -377,6 +406,11 @@ Collapse.propTypes /* remove-proptypes */ = {
    * Either a string to use a HTML element or a component.
    */
   component: elementTypeAcceptingRef,
+  /**
+   * If `true`, the transition ignores `theme.motion.reducedMotion` and keeps its normal timing.
+   * @default false
+   */
+  disablePrefersReducedMotion: PropTypes.bool,
   /**
    * The transition timing function.
    * You may specify a single easing or a object containing enter and exit values.
@@ -421,6 +455,24 @@ Collapse.propTypes /* remove-proptypes */ = {
    * @default 'vertical'
    */
   orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+  /**
+   * The props used for each slot inside.
+   * @default {}
+   */
+  slotProps: PropTypes.shape({
+    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    wrapper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    wrapperInner: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  }),
+  /**
+   * The components used for each slot inside.
+   * @default {}
+   */
+  slots: PropTypes.shape({
+    root: PropTypes.elementType,
+    wrapper: PropTypes.elementType,
+    wrapperInner: PropTypes.elementType,
+  }),
   /**
    * @ignore
    */

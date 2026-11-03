@@ -1,5 +1,5 @@
 {
-  "name": "material-ui-vite-ts",
+  "name": "material-ui-vite-tailwind-ts",
   "private": true,
   "version": "7.0.0",
   "type": "module",
@@ -12,7 +12,7 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@mui/material": "latest",
+    "@mui/material": "next",
     "@tailwindcss/vite": "latest",
     "react": "latest",
     "react-dom": "latest",

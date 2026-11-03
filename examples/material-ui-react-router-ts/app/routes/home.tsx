@@ -30,7 +30,7 @@ export default function Home() {
         }}
       >
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js App Router example in TypeScript
+          Material UI - React Router example in TypeScript
         </Typography>
         <Link to="/about" color="secondary" component={ReactRouterLink}>
           Go to the about page

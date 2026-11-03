@@ -14,38 +14,51 @@ githubSource: packages/mui-material/src/SpeedDial
 
 If more than six actions are needed, something other than a FAB should be used to present them.
 
-{{"component": "@mui/docs/ComponentLinkHeader"}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 ## Basic speed dial
 
 The floating action button can display related actions.
 
-{{"demo": "BasicSpeedDial.js"}}
+{{"component": "file://./demos/basic/index.ts"}}
 
 ## Playground
 
-{{"demo": "PlaygroundSpeedDial.js"}}
+{{"component": "file://./demos/playground/index.ts"}}
 
 ## Controlled speed dial
 
 The open state of the component can be controlled with the `open`/`onOpen`/`onClose` props.
 
-{{"demo": "ControlledOpenSpeedDial.js"}}
+{{"component": "file://./demos/controlled-open/index.ts"}}
 
 ## Custom close icon
 
 You can provide an alternate icon for the closed and open states using the `icon` and `openIcon` props
 of the `SpeedDialIcon` component.
 
-{{"demo": "OpenIconSpeedDial.js"}}
+{{"component": "file://./demos/open-icon/index.ts"}}
 
 ## Persistent action tooltips
 
-The SpeedDialActions tooltips can be displayed persistently so that users don't have to long-press to see the tooltip on touch devices.
+The SpeedDialActions tooltips can be displayed persistently with `slotProps.tooltip.open` so that users don't have to long-press to see the tooltip on touch devices.
 
-It is enabled here across all devices for demo purposes, but in production it could use the `isTouch` logic to conditionally set the prop.
+It is enabled here across all devices for demo purposes, but in production it could use the `isTouch` logic to conditionally set it.
 
-{{"demo": "SpeedDialTooltipOpen.js"}}
+The labels are placed to the left of the actions for the `up` and `down` directions, and above them for `left` and `right`.
+Use `slotProps.tooltip.placement` to move them to the opposite side: `right` for vertical speed dials, or `bottom` for horizontal ones.
+Compound placements like `top-start` are centered like `top`.
+
+In horizontal speed dials, each action is as wide as its label so that the labels don't overlap.
+The actions keep that space while the speed dial is closed.
+
+{{"component": "file://./demos/tooltip-open/index.ts"}}
+
+## Transitions
+
+Speed Dial uses [Zoom](/material-ui/transitions/#zoom) by default.
+Use `slots.transition` and `slotProps.transition` to replace it with another transition or to pass transition props.
+Use `transitionDuration` to control the timing.
 
 ## Accessibility
 
@@ -60,7 +73,7 @@ It is enabled here across all devices for demo purposes, but in production it co
 
 - The Fab has `aria-haspopup`, `aria-expanded` and `aria-controls` attributes.
 - The speed dial actions container has `role="menu"` and `aria-orientation` set according to the direction.
-- The speed dial actions have `role="menuitem"`, and an `aria-describedby` attribute that references the associated tooltip.
+- The speed dial actions have `role="menuitem"` and are labeled by their tooltip title.
 
 ### Keyboard
 

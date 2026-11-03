@@ -6,10 +6,6 @@
     "component": {
       "description": "The component used for the root node. Either a string to use a HTML element or a component."
     },
-    "components": { "description": "The components used for each slot inside." },
-    "componentsProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones."
-    },
     "invisible": {
       "description": "If <code>true</code>, the backdrop is invisible. It can be used when rendering a popover or a custom select component."
     },
@@ -18,9 +14,6 @@
     "slots": { "description": "The components used for each slot inside." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
-    },
-    "TransitionComponent": {
-      "description": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
     },
     "transitionDuration": {
       "description": "The duration for the transition, in milliseconds. You may specify a single timeout for all transitions, or individually with an object."
@@ -35,6 +28,6 @@
   },
   "slotDescriptions": {
     "root": "The component that renders the root.",
-    "transition": "The component that renders the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
+    "transition": "The component that renders the transition. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
 }

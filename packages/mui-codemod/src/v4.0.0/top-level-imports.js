@@ -5,11 +5,7 @@ export default function transformer(fileInfo, api, options) {
   const importModule = options.importModule || '@material-ui/core';
   const targetModule = options.targetModule || '@material-ui/core';
 
-  let requirePath = importModule;
-
-  if (process.env.NODE_ENV === 'test') {
-    requirePath = requirePath.replace(/^@material-ui\/core/, '../../../mui-material/src');
-  }
+  const requirePath = importModule;
 
   // eslint-disable-next-line global-require, import/no-dynamic-require
   const whitelist = require(requirePath);

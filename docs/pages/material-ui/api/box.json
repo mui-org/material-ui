@@ -25,6 +25,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Box/Box.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-box/\">Box</a></li></ul>",
-  "cssComponent": true
+  "demos": "<ul><li><a href=\"/material-ui/react-box/\">Box</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li></ul>"
 }

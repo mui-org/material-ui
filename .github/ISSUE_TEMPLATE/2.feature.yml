@@ -1,5 +1,5 @@
 name: Feature request 💄
-description: Suggest a new idea for Material UI, MUI System, or Joy UI.
+description: Suggest a new idea for Material UI or MUI System.
 labels: ['status: waiting for maintainer']
 body:
   - type: markdown

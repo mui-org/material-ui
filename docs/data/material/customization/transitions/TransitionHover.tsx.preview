@@ -1,3 +1,0 @@
-<ThemeProvider theme={customTheme}>
-  <StyledAvatar>OP</StyledAvatar>
-</ThemeProvider>

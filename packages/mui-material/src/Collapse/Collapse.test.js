@@ -1,11 +1,22 @@
+import { describe, expect, it, beforeEach } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-import { act, createRenderer } from '@mui/internal-test-utils';
-import { Transition } from 'react-transition-group';
+import { act, createRenderer, isJsdom } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Collapse, { collapseClasses as classes } from '@mui/material/Collapse';
+import Transition from '../internal/Transition';
 import describeConformance from '../../test/describeConformance';
+import describeTransitionConformance from '../../test/describeTransitionConformance';
+
+const CustomCollapse = React.forwardRef(({ ownerState, ...props }, ref) => (
+  <div ref={ref} {...props} />
+));
+const CustomWrapper = React.forwardRef(({ ownerState, ...props }, ref) => (
+  <div ref={ref} {...props} />
+));
+const CustomWrapperInner = React.forwardRef(({ ownerState, ...props }, ref) => (
+  <div ref={ref} {...props} />
+));
 
 describe('<Collapse />', () => {
   const { clock, render } = createRenderer();
@@ -23,7 +34,42 @@ describe('<Collapse />', () => {
     muiName: 'MuiCollapse',
     testVariantProps: { orientation: 'horizontal' },
     testDeepOverrides: { slotName: 'wrapper', slotClassName: classes.wrapper },
-    skip: ['componentsProp'],
+    slots: {
+      root: { expectedClassName: classes.root, testWithElement: CustomCollapse },
+      wrapper: { expectedClassName: classes.wrapper, testWithElement: CustomWrapper },
+      wrapperInner: {
+        expectedClassName: classes.wrapperInner,
+        testWithElement: CustomWrapperInner,
+      },
+    },
+  }));
+
+  describeTransitionConformance('Collapse', () => ({
+    Component: Collapse,
+    render,
+    clock,
+    children: <div />,
+    getNode: (container) => container.firstChild,
+    propTimeout: {
+      enter: {
+        timeout: 556,
+        callback: 'onEntering',
+        assertStyle: (node) => {
+          expect(node.style.transitionDuration).to.equal('556ms');
+        },
+      },
+      exit: {
+        timeout: 446,
+        callback: 'onExiting',
+        assertStyle: (node) => {
+          expect(node.style.transitionDuration).to.equal('446ms');
+        },
+      },
+    },
+    reducedMotion: {
+      testOptOut: true,
+      testNoDomPropLeak: true,
+    },
   }));
 
   it('should render a container around the wrapper', () => {
@@ -55,8 +101,8 @@ describe('<Collapse />', () => {
     let nodeEnteringHeightStyle;
     let nodeExitHeightStyle;
 
-    /* We needs to create wrappers here because the node is passed by reference
-       and it's style is overwritten by the later stages */
+    /* Capture each height value immediately because the same DOM node is reused
+       and later lifecycle steps overwrite its inline style. */
     const handleEnter = spy();
     const handleEnterWrapper = (...args) => {
       handleEnter(...args);
@@ -78,7 +124,8 @@ describe('<Collapse />', () => {
     const handleAddEndListener = spy();
 
     beforeEach(() => {
-      const renderProps = render(
+      // eslint-disable-next-line testing-library/no-render-in-lifecycle
+      ({ container, setProps } = render(
         <Collapse
           addEndListener={handleAddEndListener}
           onEnter={handleEnterWrapper}
@@ -91,9 +138,7 @@ describe('<Collapse />', () => {
         >
           <div />
         </Collapse>,
-      );
-      container = renderProps.container;
-      setProps = renderProps.setProps;
+      ));
       collapse = container.firstChild;
       stub(collapse.firstChild, 'clientHeight').get(() => 666);
     });
@@ -155,12 +200,12 @@ describe('<Collapse />', () => {
           </ThemeProvider>
         );
       }
-      const renderProps1 = render(<Test />);
-      const collapse = renderProps1.container.firstChild;
-      // Gets wrapper
+      const { setProps: setProps1, container: container1 } = render(<Test />);
+      const collapse = container1.firstChild;
+      // Stub the wrapper height used for auto duration.
       stub(collapse.firstChild, 'clientHeight').get(() => 10);
 
-      renderProps1.setProps({
+      setProps1({
         in: true,
       });
 
@@ -174,12 +219,12 @@ describe('<Collapse />', () => {
       expect(next1.callCount).to.equal(1);
 
       const next2 = spy();
-      const renderProps2 = render(
+      const { setProps: setProps2 } = render(
         <Collapse timeout="auto" onEntered={next2}>
           <div />
         </Collapse>,
       );
-      renderProps2.setProps({ in: true });
+      setProps2({ in: true });
 
       expect(next2.callCount).to.equal(0);
       clock.tick(0);
@@ -211,41 +256,75 @@ describe('<Collapse />', () => {
       expect(next.callCount).to.equal(1);
     });
 
-    it('should create proper easeOut animation onEntering', () => {
-      const handleEntering = spy();
+    it('completes auto duration on the next task when reduced motion is always', () => {
+      const getAutoHeightDuration = spy(() => 25);
+      const theme = createTheme({
+        motion: {
+          reducedMotion: 'always',
+        },
+        transitions: {
+          getAutoHeightDuration,
+        },
+      });
+      const next = spy();
 
-      const { setProps } = render(
-        <Collapse
-          onEntering={handleEntering}
-          timeout={{
-            enter: 556,
-          }}
-        >
-          <div />
-        </Collapse>,
-      );
+      function Test(props) {
+        return (
+          <ThemeProvider theme={theme}>
+            <Collapse timeout="auto" onEntered={next} {...props}>
+              <div />
+            </Collapse>
+          </ThemeProvider>
+        );
+      }
+
+      const { setProps, container } = render(<Test />);
+      const collapse = container.firstChild;
+      stub(collapse.firstChild, 'clientHeight').get(() => 10);
 
       setProps({ in: true });
-      expect(handleEntering.args[0][0].style.transitionDuration).to.equal('556ms');
+
+      expect(next.callCount).to.equal(0);
+      expect(collapse.style.height).to.equal('10px');
+      expect(getAutoHeightDuration.callCount).to.equal(0);
+      clock.tick(0);
+      expect(next.callCount).to.equal(1);
+      expect(collapse.style.height).to.equal('auto');
     });
 
-    it('should create proper sharp animation onExiting', () => {
-      const handleExiting = spy();
-
-      const { setProps } = render(
-        <Collapse
-          {...defaultProps}
-          onExiting={handleExiting}
-          timeout={{
-            exit: 446,
-          }}
-        />,
-      );
-
-      setProps({
-        in: false,
+    it('completes exit auto duration on the next task without calculating duration when reduced motion is always', () => {
+      const getAutoHeightDuration = spy(() => 25);
+      const theme = createTheme({
+        motion: {
+          reducedMotion: 'always',
+        },
+        transitions: {
+          getAutoHeightDuration,
+        },
       });
-      expect(handleExiting.args[0][0].style.transitionDuration).to.equal('446ms');
+      const next = spy();
+
+      function Test(props) {
+        return (
+          <ThemeProvider theme={theme}>
+            <Collapse timeout="auto" onExited={next} {...props}>
+              <div />
+            </Collapse>
+          </ThemeProvider>
+        );
+      }
+
+      const { setProps, container } = render(<Test in />);
+      const collapse = container.firstChild;
+      stub(collapse.firstChild, 'clientHeight').get(() => 10);
+
+      setProps({ in: false });
+
+      expect(next.callCount).to.equal(0);
+      expect(collapse.style.height).to.equal('0px');
+      expect(getAutoHeightDuration.callCount).to.equal(0);
+      clock.tick(0);
+      expect(next.callCount).to.equal(1);
     });
   });
 
@@ -269,21 +348,20 @@ describe('<Collapse />', () => {
     });
   });
 
-  // Test for https://github.com/mui/material-ui/issues/40653
-  it('should render correctly when external ownerState prop is passed', function test() {
-    if (/jsdom/.test(window.navigator.userAgent)) {
-      this.skip();
-    }
+  // Regression test for https://github.com/mui/material-ui/issues/40653.
+  it.skipIf(isJsdom())(
+    'should render correctly when external ownerState prop is passed',
+    function test() {
+      const { container } = render(
+        <Collapse in ownerState={{}}>
+          <div style={{ height: '100px' }} />
+        </Collapse>,
+      );
+      const collapse = container.firstChild;
 
-    const { container } = render(
-      <Collapse in ownerState={{}}>
-        <div style={{ height: '100px' }} />
-      </Collapse>,
-    );
-    const collapse = container.firstChild;
-
-    expect(collapse).toHaveComputedStyle({
-      height: '100px',
-    });
-  });
+      expect(collapse).toHaveComputedStyle({
+        height: '100px',
+      });
+    },
+  );
 });

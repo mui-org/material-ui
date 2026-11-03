@@ -5,7 +5,6 @@ any comments that they get combined with.
 /*
 Comments that should not be lost when the clsx import comments are preserved.
  */
-import * as React from "react";
 import { makeStyles } from 'tss-react/mui';
 
 // TODO jss-to-tss-react codemod: Unable to handle style definition reliably. ArrowFunctionExpression in CSS prop.
@@ -67,10 +66,12 @@ function ComponentUsingStyles(props) {
   const { classes, cx } = useStyles(props, {
     props: props
   });
-  return <>
-    <div className={classes.test}>Test<InnerComponent/></div>
-    <div className={cx(classes.test, classes.qualifier)}>Qualifier Test</div>
-    </>;
+  return (
+    <>
+      <div className={classes.test}>Test<InnerComponent/></div>
+      <div className={cx(classes.test, classes.qualifier)}>Qualifier Test</div>
+      </>
+  );
 }
 
 // TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.

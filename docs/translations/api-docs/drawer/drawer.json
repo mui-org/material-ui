@@ -20,12 +20,6 @@
       }
     },
     "open": { "description": "If <code>true</code>, the component is shown." },
-    "PaperProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/paper/\"><code>Paper</code></a> element."
-    },
-    "SlideProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/slide/\"><code>Slide</code></a> element."
-    },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
     "sx": {
@@ -57,64 +51,13 @@
       "nodeName": "the root element",
       "conditions": "<code>anchor=\"top\"</code>"
     },
-    "modal": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the Modal component"
-    },
-    "paperAnchorBottom": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"bottom\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorBottom\">.MuiDrawer-anchorBottom</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorDockedBottom": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"bottom\"</code> and <code>variant</code> is not &quot;temporary&quot;",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorBottom\">.MuiDrawer-anchorBottom</a>, <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-docked\">.MuiDrawer-docked</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorDockedLeft": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"left\"</code> and <code>variant</code> is not &quot;temporary&quot;",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorLeft\">.MuiDrawer-anchorLeft</a>, <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-docked\">.MuiDrawer-docked</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorDockedRight": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"right\"</code> and <code>variant</code> is not &quot;temporary&quot;",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorRight\">.MuiDrawer-anchorRight</a>, <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-docked\">.MuiDrawer-docked</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorDockedTop": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"top\"</code> and <code>variant</code> is not &quot;temporary&quot;",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorTop\">.MuiDrawer-anchorTop</a>, <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-docked\">.MuiDrawer-docked</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorLeft": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"left\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorLeft\">.MuiDrawer-anchorLeft</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorRight": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"right\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorRight\">.MuiDrawer-anchorRight</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "paperAnchorTop": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the Paper component",
-      "conditions": "<code>anchor=\"top\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-anchorTop\">.MuiDrawer-anchorTop</a> and <a href=\"/material-ui/api/drawer/#drawer-classes-MuiDrawer-paper\">.MuiDrawer-paper</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    }
+    "modal": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the Modal component" }
   },
   "slotDescriptions": {
     "backdrop": "The component used for the Modal backdrop.",
     "docked": "The component used for the root element when the variant is <code>permanent</code> or <code>persistent</code>.",
     "paper": "The component used for the paper.",
     "root": "The component used for the root when the variant is <code>temporary</code>.",
-    "transition": "The component used for the transition. <a href=\"https://mui.com/material-ui/transitions/#transitioncomponent-prop\">Follow this guide</a> to learn more about the requirements for this component."
+    "transition": "The component used for the transition. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
 }

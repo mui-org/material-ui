@@ -172,7 +172,7 @@ We're hiring!
 
 MUI is on track to grow from roughly 20 people to 40 or more by the time we get to our next company retreat in late Q1 2023.
 
-We are constantly interviewing React developers from all around the world, and we are also increasingly looking to hire for non-technical roles such as [People Operations Manager](/careers/people-operations-manager/) in which you could have a huge impact steering the direction of the company's nascent HR department.
+We are constantly interviewing React developers from all around the world, and we are also increasingly looking to hire for non-technical roles such as People Operations Manager in which you could have a huge impact steering the direction of the company's nascent HR department.
 
 Check out [our open roles](/careers/) so you can join us before the next retreat!
 

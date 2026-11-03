@@ -8,7 +8,7 @@ function HoverMaterialAutocomplete() {
       open
       options={['one', 'two', 'three', 'four', 'five']}
       sx={{ width: 300 }}
-      ListboxProps={{ sx: { height: '100px' } }}
+      slotProps={{ listbox: { sx: { height: '100px' } } }}
       renderInput={(params) => <TextField {...params} />}
     />
   );

@@ -11,13 +11,13 @@ githubLabel: 'component: Container'
 
 While containers can be nested, most layouts do not require a nested container.
 
-{{"component": "@mui/docs/ComponentLinkHeader", "design": false}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader", "design": false}}
 
 ## Fluid
 
 A fluid container width is bounded by the `maxWidth` prop value.
 
-{{"demo": "SimpleContainer.js", "iframe": true, "defaultCodeOpen": false}}
+{{"component": "file://./demos/simple/index.ts", "iframe": true, "collapseToEmpty": true}}
 
 ```jsx
 <Container maxWidth="sm">
@@ -28,7 +28,7 @@ A fluid container width is bounded by the `maxWidth` prop value.
 If you prefer to design for a fixed set of sizes instead of trying to accommodate a fully fluid viewport, you can set the `fixed` prop.
 The max-width matches the min-width of the current breakpoint.
 
-{{"demo": "FixedContainer.js", "iframe": true, "defaultCodeOpen": false}}
+{{"component": "file://./demos/fixed/index.ts", "iframe": true, "collapseToEmpty": true}}
 
 ```jsx
 <Container fixed>

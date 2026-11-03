@@ -2,8 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import JoyBox from '@mui/joy/Box';
-import { CssVarsProvider } from '@mui/joy/styles';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 function TestViewer(props) {
   const { children, path } = props;
@@ -46,7 +45,7 @@ function TestViewer(props) {
   };
 
   return (
-    <React.Fragment>
+    <StyledEngineProvider enableCssLayer>
       <GlobalStyles
         styles={{
           html: {
@@ -67,28 +66,15 @@ function TestViewer(props) {
           },
         }}
       />
-      {path.startsWith('/docs-joy') ? (
-        <CssVarsProvider>
-          <JoyBox
-            aria-busy={!ready}
-            data-testid="testcase"
-            data-testpath={path}
-            sx={{ bgcolor: 'background.body', ...viewerBoxSx }}
-          >
-            {children}
-          </JoyBox>
-        </CssVarsProvider>
-      ) : (
-        <Box
-          aria-busy={!ready}
-          data-testid="testcase"
-          data-testpath={path}
-          sx={{ bgcolor: 'background.default', ...viewerBoxSx }}
-        >
-          {children}
-        </Box>
-      )}
-    </React.Fragment>
+      <Box
+        aria-busy={!ready}
+        data-testid="testcase"
+        data-testpath={path}
+        sx={{ bgcolor: 'background.default', ...viewerBoxSx }}
+      >
+        {children}
+      </Box>
+    </StyledEngineProvider>
   );
 }
 

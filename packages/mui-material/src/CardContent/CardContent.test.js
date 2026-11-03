@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { describe } from 'vitest';
 import { createRenderer } from '@mui/internal-test-utils';
 import CardContent, { cardContentClasses as classes } from '@mui/material/CardContent';
 import describeConformance from '../../test/describeConformance';
@@ -12,7 +12,7 @@ describe('<CardContent />', () => {
     render,
     muiName: 'MuiCardContent',
     refInstanceof: window.HTMLDivElement,
-    skip: ['componentsProp', 'themeVariants'],
+    skip: ['themeVariants'],
     testComponentPropWith: 'span',
   }));
 });

@@ -2,9 +2,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import refType from '@mui/utils/refType';
 import composeClasses from '@mui/utils/composeClasses';
-import { useFormControl } from '../FormControl';
+import { useFormControlState } from '../FormControl/useFormControl';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
@@ -13,7 +12,6 @@ import capitalize from '../utils/capitalize';
 import formControlLabelClasses, {
   getFormControlLabelUtilityClasses,
 } from './formControlLabelClasses';
-import formControlState from '../FormControl/formControlState';
 import useSlot from '../utils/useSlot';
 
 const useUtilityClasses = (ownerState) => {
@@ -114,11 +112,9 @@ const FormControlLabel = React.forwardRef(function FormControlLabel(inProps, ref
   const {
     checked,
     className,
-    componentsProps = {},
     control,
     disabled: disabledProp,
     disableTypography,
-    inputRef,
     label: labelProp,
     labelPlacement = 'end',
     name,
@@ -130,7 +126,10 @@ const FormControlLabel = React.forwardRef(function FormControlLabel(inProps, ref
     ...other
   } = props;
 
-  const muiFormControl = useFormControl();
+  const [fcs, muiFormControl] = useFormControlState({
+    props,
+    states: ['error'],
+  });
 
   const disabled = disabledProp ?? control.props.disabled ?? muiFormControl?.disabled;
   const required = requiredProp ?? control.props.required;
@@ -140,16 +139,10 @@ const FormControlLabel = React.forwardRef(function FormControlLabel(inProps, ref
     required,
   };
 
-  ['checked', 'name', 'onChange', 'value', 'inputRef'].forEach((key) => {
+  ['checked', 'name', 'onChange', 'value'].forEach((key) => {
     if (typeof control.props[key] === 'undefined' && typeof props[key] !== 'undefined') {
       controlProps[key] = props[key];
     }
-  });
-
-  const fcs = formControlState({
-    props,
-    muiFormControl,
-    states: ['error'],
   });
 
   const ownerState = {
@@ -164,10 +157,7 @@ const FormControlLabel = React.forwardRef(function FormControlLabel(inProps, ref
 
   const externalForwardedProps = {
     slots,
-    slotProps: {
-      ...componentsProps,
-      ...slotProps,
-    },
+    slotProps,
   };
 
   const [TypographySlot, typographySlotProps] = useSlot('typography', {
@@ -229,14 +219,6 @@ FormControlLabel.propTypes /* remove-proptypes */ = {
    */
   className: PropTypes.string,
   /**
-   * The props used for each slot inside.
-   * @default {}
-   * @deprecated use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  componentsProps: PropTypes.shape({
-    typography: PropTypes.object,
-  }),
-  /**
    * A control element. For instance, it can be a `Radio`, a `Switch` or a `Checkbox`.
    */
   control: PropTypes.element.isRequired,
@@ -248,10 +230,6 @@ FormControlLabel.propTypes /* remove-proptypes */ = {
    * If `true`, the label is rendered as it is passed without an additional typography node.
    */
   disableTypography: PropTypes.bool,
-  /**
-   * Pass a ref to the `input` element.
-   */
-  inputRef: refType,
   /**
    * A text or an element to be used in an enclosing label element.
    */

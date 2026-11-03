@@ -5,17 +5,7 @@
     "disableTypography": { "type": { "name": "bool" }, "default": "false" },
     "inset": { "type": { "name": "bool" }, "default": "false" },
     "primary": { "type": { "name": "node" } },
-    "primaryTypographyProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.primary</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "secondary": { "type": { "name": "node" } },
-    "secondaryTypographyProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.secondary</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "slotProps": {
       "type": {
         "name": "shape",
@@ -89,6 +79,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/ListItemText/ListItemText.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li></ul>"
 }

@@ -180,7 +180,7 @@ class AppAppBar extends React.Component {
     const { menuOpen } = this.state;
 
     return (
-      (<StyledAppBar essential={essential} position={position}>
+      <StyledAppBar essential={essential} position={position}>
         <div className={clsx(classes.wrap, { [classes.wrapOpened]: menuOpen })}>
           <Link to="/" aria-label="Back to homepage" color="inherit">
             <Logo color={menuOpen ? 'inherit' : 'textPrimary'} />
@@ -237,7 +237,7 @@ class AppAppBar extends React.Component {
             </div>
           )}
         </div>
-      </StyledAppBar>)
+      </StyledAppBar>
     );
   }
 }

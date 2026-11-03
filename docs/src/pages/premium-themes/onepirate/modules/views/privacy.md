@@ -1,9 +1,6 @@
-<!-- markdownlint-capture -->
-<!-- markdownlint-disable -->
+<!-- lint disable mui-first-block-heading -->
 
 Last modified: October 7th, 2018.
-
-<!-- markdownlint-restore -->
 
 MUI is committed to protecting and respecting your privacy. This Privacy Policy sets out how we collect and process personal information about you when you visit the website mui.com, when you use our products and services (our "Services"), or when you otherwise do business or make contact with us.
 

@@ -1,8 +1,0 @@
-<Tooltip title="Delete">
-  <IconButton>
-    <DeleteIcon />
-  </IconButton>
-</Tooltip>
-<Tooltip describeChild title="Does not add if it already exists.">
-  <Button>Add</Button>
-</Tooltip>

@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "description": "MUI Core-specific settings for API docs generator",
+  "private": true,
+  "main": "./index.ts",
+  "scripts": {
+    "test": "pnpm --workspace-root test:unit --project \"*:packages-internal/api-docs-builder-core\"",
+    "typescript": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui/material-ui.git",
+    "directory": "packages-internal/api-docs-builder-core"
+  },
+  "dependencies": {
+    "@mui/internal-api-docs-builder": "workspace:^",
+    "@mui/internal-core-docs": "workspace:^",
+    "@mui/internal-markdown": "workspace:^",
+    "docs": "workspace:^",
+    "es-toolkit": "^1.52.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/sinon": "22.0.2",
+    "sinon": "22.1.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
+  }
+}

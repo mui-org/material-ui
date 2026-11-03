@@ -109,28 +109,10 @@
       "conditions": "it is focused"
     },
     "icon": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the icon component" },
-    "iconFilled": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon component",
-      "conditions": "<code>variant=\"filled\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/select/#select-classes-icon\">.MuiSelect-icon</a> and <a href=\"/material-ui/api/select/#select-classes-filled\">.MuiSelect-filled</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "iconOpen": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the icon component",
       "conditions": "the popup is open"
-    },
-    "iconOutlined": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon component",
-      "conditions": "<code>variant=\"outlined\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/select/#select-classes-icon\">.MuiSelect-icon</a> and <a href=\"/material-ui/api/select/#select-classes-outlined\">.MuiSelect-outlined</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "iconStandard": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon component",
-      "conditions": "<code>variant=\"standard\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/select/#select-classes-icon\">.MuiSelect-icon</a> and <a href=\"/material-ui/api/select/#select-classes-standard\">.MuiSelect-standard</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "multiple": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

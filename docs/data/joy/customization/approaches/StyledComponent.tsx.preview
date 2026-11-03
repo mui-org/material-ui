@@ -1,7 +1,0 @@
-<ToggleButton
-  aria-pressed={muted ? 'true' : 'false'}
-  onClick={() => setMuted((bool) => !bool)}
-  sx={{ minWidth: 120 }}
->
-  Mute {muted ? <VolumeOffRoundedIcon /> : <VolumeUpRoundedIcon />}
-</ToggleButton>

@@ -32,7 +32,7 @@ As we gear up to focus on the next major version, let's review the notable new f
   - [Sparkline as a column type](#sparkline-as-a-column-type)
   - [Performance improvements](#performance-improvements)
 - [What's next](#whats-next)
-- [Feedback](#feedback)
+- [Feedback](#give-us-feedback)
 
 ## New stable components
 

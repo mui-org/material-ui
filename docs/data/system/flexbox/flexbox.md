@@ -8,7 +8,7 @@ If you are **new to or unfamiliar with flexbox**, we encourage you to read this 
 
 ### display
 
-{{"demo": "Display.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/display/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ display: 'flex' }}>…
@@ -18,10 +18,10 @@ If you are **new to or unfamiliar with flexbox**, we encourage you to read this 
 ### flex-direction
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction" target="_blank" rel="noopener">flex-direction</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-direction" target="_blank">flex-direction</a>
 on MDN.
 
-{{"demo": "FlexDirection.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/flex-direction/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ flexDirection: 'row' }}>…
@@ -33,10 +33,10 @@ on MDN.
 ### flex-wrap
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap" target="_blank" rel="noopener">flex-wrap</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-wrap" target="_blank">flex-wrap</a>
 on MDN.
 
-{{"demo": "FlexWrap.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/flex-wrap/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ flexWrap: 'nowrap' }}>…
@@ -47,10 +47,10 @@ on MDN.
 ### justify-content
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content" target="_blank" rel="noopener">justify-content</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/justify-content" target="_blank">justify-content</a>
 on MDN.
 
-{{"demo": "JustifyContent.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/justify-content/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ justifyContent: 'flex-start' }}>…
@@ -64,10 +64,10 @@ on MDN.
 ### align-items
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items" target="_blank" rel="noopener">align-items</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-items" target="_blank">align-items</a>
 on MDN.
 
-{{"demo": "AlignItems.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/align-items/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ alignItems: 'flex-start' }}>…
@@ -80,10 +80,10 @@ on MDN.
 ### align-content
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-content" target="_blank" rel="noopener">align-content</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-content" target="_blank">align-content</a>
 on MDN.
 
-{{"demo": "AlignContent.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/align-content/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ alignContent: 'flex-start' }}>…
@@ -99,10 +99,10 @@ on MDN.
 ### order
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/order" target="_blank" rel="noopener">order</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/order" target="_blank">order</a>
 on MDN.
 
-{{"demo": "Order.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/order/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ order: 2 }}>Item 1</Box>
@@ -113,10 +113,10 @@ on MDN.
 ### flex-grow
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow" target="_blank" rel="noopener">flex-grow</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-grow" target="_blank">flex-grow</a>
 on MDN.
 
-{{"demo": "FlexGrow.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/flex-grow/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ flexGrow: 1 }}>Item 1</Box>
@@ -127,10 +127,10 @@ on MDN.
 ### flex-shrink
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink" target="_blank" rel="noopener">flex-shrink</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-shrink" target="_blank">flex-shrink</a>
 on MDN.
 
-{{"demo": "FlexShrink.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/flex-shrink/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box sx={{ width: '100%' }}>Item 1</Box>
@@ -141,10 +141,10 @@ on MDN.
 ### align-self
 
 For more information please see
-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-self" target="_blank" rel="noopener">align-self</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-self" target="_blank">align-self</a>
 on MDN.
 
-{{"demo": "AlignSelf.js", "defaultCodeOpen": false, "bg": true}}
+{{"component": "file://./demos/align-self/index.ts", "collapseToEmpty": true, "bg": true}}
 
 ```jsx
 <Box>Item 1</Box>

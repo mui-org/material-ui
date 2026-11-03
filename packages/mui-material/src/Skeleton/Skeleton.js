@@ -7,6 +7,7 @@ import { unstable_getUnit as getUnit, unstable_toUnitless as toUnitless } from '
 import { keyframes, css, styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import { getReducedMotionStyles } from '../transitions/utils';
 import { getSkeletonUtilityClass } from './skeletonClasses';
 
 const useUtilityClasses = (ownerState) => {
@@ -93,6 +94,13 @@ const SkeletonRoot = styled('span', {
   memoTheme(({ theme }) => {
     const radiusUnit = getUnit(theme.shape.borderRadius) || 'px';
     const radiusValue = toUnitless(theme.shape.borderRadius);
+    const reducedMotionPulseStyles = getReducedMotionStyles(theme, { animation: 'none' });
+    const reducedMotionWaveStyles = getReducedMotionStyles(theme, {
+      '&::after': {
+        animation: 'none',
+        display: 'none',
+      },
+    });
 
     return {
       display: 'block',
@@ -164,6 +172,16 @@ const SkeletonRoot = styled('span', {
             animation: `${pulseKeyframe} 2s ease-in-out 0.5s infinite`,
           },
         },
+        ...(reducedMotionPulseStyles
+          ? [
+              {
+                props: {
+                  animation: 'pulse',
+                },
+                style: reducedMotionPulseStyles,
+              },
+            ]
+          : []),
         {
           props: {
             animation: 'wave',
@@ -200,6 +218,16 @@ const SkeletonRoot = styled('span', {
             },
           },
         },
+        ...(reducedMotionWaveStyles
+          ? [
+              {
+                props: {
+                  animation: 'wave',
+                },
+                style: reducedMotionWaveStyles,
+              },
+            ]
+          : []),
       ],
     };
   }),

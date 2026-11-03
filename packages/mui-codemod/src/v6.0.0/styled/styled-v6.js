@@ -76,9 +76,10 @@ export default function styledV6(file, api, options) {
   if (shouldTransform) {
     // recast adds extra newlines that we don't want, https://github.com/facebook/jscodeshift/issues/249
     // need to remove them manually
+    const lineTerminator = transformed.includes('\r\n') ? '\r\n' : '\n';
     const lines = [];
     let isInStyled = false;
-    transformed.split('\n').forEach((line, index, array) => {
+    transformed.split(lineTerminator).forEach((line, index, array) => {
       if (!isInStyled) {
         lines.push(line);
       } else if (
@@ -94,7 +95,7 @@ export default function styledV6(file, api, options) {
         isInStyled = true;
       }
     });
-    return lines.join('\n');
+    return lines.join(lineTerminator);
   }
 
   return transformed;

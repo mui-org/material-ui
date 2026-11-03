@@ -70,5 +70,20 @@ export default function transformer(file, api, options) {
     slotName: 'transition',
   });
 
+  movePropIntoSlots(j, {
+    root,
+    packageName: options.packageName,
+    componentName: 'Drawer',
+    propName: 'TransitionComponent',
+    slotName: 'transition',
+  });
+  movePropIntoSlots(j, {
+    root,
+    packageName: options.packageName,
+    componentName: 'SwipeableDrawer',
+    propName: 'TransitionComponent',
+    slotName: 'transition',
+  });
+
   return root.toSource(printOptions);
 }

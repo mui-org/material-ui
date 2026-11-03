@@ -44,11 +44,6 @@ export interface TypographyClasses {
   noWrap: string;
   /** Styles applied to the root element if `gutterBottom={true}`. */
   gutterBottom: string;
-  /**
-   * Styles applied to the root element if `paragraph={true}`.
-   * @deprecated
-   */
-  paragraph: string;
 }
 
 export type TypographyClassKey = keyof TypographyClasses;
@@ -79,7 +74,6 @@ const typographyClasses: TypographyClasses = generateUtilityClasses('MuiTypograp
   'alignJustify',
   'noWrap',
   'gutterBottom',
-  'paragraph',
 ]);
 
 export default typographyClasses;

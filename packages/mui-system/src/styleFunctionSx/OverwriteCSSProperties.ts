@@ -1,4 +1,4 @@
-import * as CSS from 'csstype';
+import type * as CSS from 'csstype';
 
 export interface OverwriteCSSProperties {
   /**
@@ -12,7 +12,7 @@ export interface OverwriteCSSProperties {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/border
    */
-  border?: CSS.Property.Border | number;
+  border?: CSS.Property.Border | number | undefined;
   /**
    * The **`box-shadow`** CSS property adds shadow effects around an element's frame. You can set multiple effects separated by commas. A box shadow is described by X and Y offsets relative to the
    * element for blur and spread radii, and by its color.
@@ -26,7 +26,7 @@ export interface OverwriteCSSProperties {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/box-shadow
    */
-  boxShadow?: CSS.Property.BoxShadow | number;
+  boxShadow?: CSS.Property.BoxShadow | number | undefined;
   /**
    * The **`font-weight`** CSS property specifies the weight (or boldness) of the font. The font weights available to you will depend on the `font-family` you are using. Some fonts are only
    * available in `normal` and `bold`.
@@ -39,7 +39,7 @@ export interface OverwriteCSSProperties {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/font-weight
    */
-  fontWeight?: CSS.Property.FontWeight | string;
+  fontWeight?: CSS.Property.FontWeight | string | undefined;
   /**
    * The **`z-index`** CSS property sets the z-order of a positioned element and its descendants or flex items. Overlapping elements with a higher z-index cover those with a lower one.
    *
@@ -51,5 +51,5 @@ export interface OverwriteCSSProperties {
    *
    * @see https://developer.mozilla.org/docs/Web/CSS/z-index
    */
-  zIndex?: CSS.Property.ZIndex | string;
+  zIndex?: CSS.Property.ZIndex | string | undefined;
 }

@@ -56,10 +56,10 @@ export type TypeDivider = string;
 export type PaletteColorOptions = SimplePaletteColorOptions | ColorPartial;
 
 export interface SimplePaletteColorOptions {
-  light?: string;
+  light?: string | undefined;
   main: string;
-  dark?: string;
-  contrastText?: string;
+  dark?: string | undefined;
+  contrastText?: string | undefined;
 }
 
 export interface PaletteColor {
@@ -88,10 +88,10 @@ export const dark: TypeObject;
 
 export interface PaletteAugmentColorOptions {
   color: PaletteColorOptions;
-  mainShade?: number | string;
-  lightShade?: number | string;
-  darkShade?: number | string;
-  name?: number | string;
+  mainShade?: number | string | undefined;
+  lightShade?: number | string | undefined;
+  darkShade?: number | string | undefined;
+  name?: number | string | undefined;
 }
 
 export interface Palette {
@@ -124,22 +124,22 @@ export interface Channels {
 export type PartialTypeObject = { [P in keyof TypeObject]?: Partial<TypeObject[P]> };
 
 export interface PaletteOptions {
-  primary?: PaletteColorOptions;
-  secondary?: PaletteColorOptions;
-  error?: PaletteColorOptions;
-  warning?: PaletteColorOptions;
-  info?: PaletteColorOptions;
-  success?: PaletteColorOptions;
-  mode?: PaletteMode;
-  tonalOffset?: PaletteTonalOffset;
-  contrastThreshold?: number;
-  common?: Partial<CommonColors>;
-  grey?: ColorPartial;
-  text?: Partial<TypeText>;
-  divider?: string;
-  action?: Partial<TypeAction>;
-  background?: Partial<TypeBackground>;
-  getContrastText?: (background: string) => string;
+  primary?: PaletteColorOptions | undefined;
+  secondary?: PaletteColorOptions | undefined;
+  error?: PaletteColorOptions | undefined;
+  warning?: PaletteColorOptions | undefined;
+  info?: PaletteColorOptions | undefined;
+  success?: PaletteColorOptions | undefined;
+  mode?: PaletteMode | undefined;
+  tonalOffset?: PaletteTonalOffset | undefined;
+  contrastThreshold?: number | undefined;
+  common?: Partial<CommonColors> | undefined;
+  grey?: ColorPartial | undefined;
+  text?: Partial<TypeText> | undefined;
+  divider?: string | undefined;
+  action?: Partial<TypeAction> | undefined;
+  background?: Partial<TypeBackground> | undefined;
+  getContrastText?: ((background: string) => string) | undefined;
 }
 
 export default function createPalette(palette: PaletteOptions): Palette;

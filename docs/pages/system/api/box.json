@@ -23,8 +23,7 @@
   "themeDefaultProps": false,
   "muiName": "MuiBox",
   "forwardsRefTo": "HTMLDivElement",
-  "filename": "/packages/mui-system/src/Box/Box.js",
+  "filename": "/packages/mui-system/src/Box/Box.tsx",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/joy-ui/react-box/\">Box (Joy UI)</a></li>\n<li><a href=\"/material-ui/react-box/\">Box (Material UI)</a></li>\n<li><a href=\"/system/react-box/\">Box (MUI System)</a></li></ul>",
-  "cssComponent": true
+  "demos": "<ul><li><a href=\"/material-ui/react-box/\">Box (Material UI)</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar (Material UI)</a></li>\n<li><a href=\"/system/react-box/\">Box (MUI System)</a></li></ul>"
 }

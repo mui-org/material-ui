@@ -2,8 +2,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import refType from '@mui/utils/refType';
 import composeClasses from '@mui/utils/composeClasses';
+import buttonBaseClasses from '../ButtonBase/buttonBaseClasses';
+import { outsetFocusRing } from '../styles/focusVisible';
 import SwitchBase from '../internal/SwitchBase';
 import RadioButtonIcon from './RadioButtonIcon';
 import capitalize from '../utils/capitalize';
@@ -47,6 +48,13 @@ const RadioRoot = styled(SwitchBase, {
 })(
   memoTheme(({ theme }) => ({
     color: (theme.vars || theme).palette.text.secondary,
+    ...(theme.focusVisible && {
+      [`&.${buttonBaseClasses.focusVisible} svg:first-of-type`]: {
+        ...outsetFocusRing,
+        borderRadius: 99,
+        ...theme.focusVisible,
+      },
+    }),
     [`&.${radioClasses.disabled}`]: {
       color: (theme.vars || theme).palette.action.disabled,
     },
@@ -128,7 +136,6 @@ const Radio = React.forwardRef(function Radio(inProps, ref) {
     disableRipple = false,
     slots = {},
     slotProps = {},
-    inputProps,
     ...other
   } = props;
 
@@ -168,7 +175,7 @@ const Radio = React.forwardRef(function Radio(inProps, ref) {
     }
   }
 
-  const externalInputProps = slotProps.input ?? inputProps;
+  const externalInputProps = slotProps.input;
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
     ref,
@@ -197,6 +204,9 @@ const Radio = React.forwardRef(function Radio(inProps, ref) {
       disabled,
       name,
       checked,
+      // Forward the raw prop so an unset value stays `undefined` and ButtonBase resolves its
+      // own default — letting a global `MuiButtonBase.defaultProps.disableRipple` apply here.
+      disableRipple: props.disableRipple,
       slots,
       slotProps: {
         // Do not forward `slotProps.root` again because it's already handled by the `RootSlot` in this file.
@@ -261,16 +271,6 @@ Radio.propTypes /* remove-proptypes */ = {
    * The id of the `input` element.
    */
   id: PropTypes.string,
-  /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes) applied to the `input` element.
-   * @deprecated Use `slotProps.input` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputProps: PropTypes.object,
-  /**
-   * Pass a ref to the `input` element.
-   * @deprecated Use `slotProps.input.ref` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  inputRef: refType,
   /**
    * Name attribute of the `input` element.
    */

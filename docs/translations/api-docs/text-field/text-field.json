@@ -1,5 +1,5 @@
 {
-  "componentDescription": "The `TextField` is a convenience wrapper for the most common cases (80%).\nIt cannot be all things to all people, otherwise the API would grow out of control.\n\n## Advanced Configuration\n\nIt's important to understand that the text field is a simple abstraction\non top of the following components:\n\n- [FormControl](/material-ui/api/form-control/)\n- [InputLabel](/material-ui/api/input-label/)\n- [FilledInput](/material-ui/api/filled-input/)\n- [OutlinedInput](/material-ui/api/outlined-input/)\n- [Input](/material-ui/api/input/)\n- [FormHelperText](/material-ui/api/form-helper-text/)\n\nIf you wish to alter the props applied to the `input` element, you can do so as follows:\n\n```jsx\nconst inputProps = {\n  step: 300,\n};\n\nreturn <TextField id=\"time\" type=\"time\" inputProps={inputProps} />;\n```\n\nFor advanced cases, please look at the source of TextField by clicking on the\n\"Edit this page\" button above. Consider either:\n\n- using the upper case props for passing values directly to the components\n- using the underlying components directly as shown in the demos",
+  "componentDescription": "The `TextField` is a convenience wrapper for the most common cases (80%).\nIt cannot be all things to all people, otherwise the API would grow out of control.\n\n## Advanced Configuration\n\nIt's important to understand that the text field is a simple abstraction\non top of the following components:\n\n- [FormControl](/material-ui/api/form-control/)\n- [InputLabel](/material-ui/api/input-label/)\n- [FilledInput](/material-ui/api/filled-input/)\n- [OutlinedInput](/material-ui/api/outlined-input/)\n- [Input](/material-ui/api/input/)\n- [FormHelperText](/material-ui/api/form-helper-text/)\n\nIf you wish to alter the props applied to the `input` element, you can do so as follows:\n\n```jsx\nconst slotProps = {\n  htmlInput: {\n     step: 300\n  }\n};\n\nreturn <TextField id=\"time\" type=\"time\" slotProps={slotProps} />;\n```\n\nFor advanced cases, please look at the source of TextField by clicking on the\n\"Edit this page\" button above. Consider either:\n\n- using the `slotProps` prop for passing values directly to the components\n- using the underlying components directly as shown in the demos",
   "propDescriptions": {
     "autoComplete": {
       "description": "This prop helps users to fill forms faster, especially on mobile devices. The name can be confusing, as it&#39;s more like an autofill. You can learn more about it <a href=\"https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill\">following the specification</a>."
@@ -16,24 +16,12 @@
     },
     "disabled": { "description": "If <code>true</code>, the component is disabled." },
     "error": { "description": "If <code>true</code>, the label is displayed in an error state." },
-    "FormHelperTextProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/form-helper-text/\"><code>FormHelperText</code></a> element."
-    },
     "fullWidth": {
       "description": "If <code>true</code>, the input will take up the full width of its container."
     },
     "helperText": { "description": "The helper text content." },
     "id": {
       "description": "The id of the <code>input</code> element. Use this prop to make <code>label</code> and <code>helperText</code> accessible for screen readers."
-    },
-    "InputLabelProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/input-label/\"><code>InputLabel</code></a> element. Pointer events like <code>onClick</code> are enabled if and only if <code>shrink</code> is <code>true</code>."
-    },
-    "inputProps": {
-      "description": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes\">Attributes</a> applied to the <code>input</code> element."
-    },
-    "InputProps": {
-      "description": "Props applied to the Input element. It will be a <a href=\"https://mui.com/material-ui/api/filled-input/\"><code>FilledInput</code></a>, <a href=\"https://mui.com/material-ui/api/outlined-input/\"><code>OutlinedInput</code></a> or <a href=\"https://mui.com/material-ui/api/input/\"><code>Input</code></a> component depending on the <code>variant</code> prop value."
     },
     "inputRef": { "description": "Pass a ref to the <code>input</code> element." },
     "label": { "description": "The label content." },
@@ -68,9 +56,6 @@
     "rows": { "description": "Number of rows to display when multiline option is set to true." },
     "select": {
       "description": "Render a <a href=\"https://mui.com/material-ui/api/select/\"><code>Select</code></a> element while passing the Input element to <code>Select</code> as <code>input</code> parameter. If this option is set you must pass the options of the select as children."
-    },
-    "SelectProps": {
-      "description": "Props applied to the <a href=\"https://mui.com/material-ui/api/select/\"><code>Select</code></a> element."
     },
     "size": { "description": "The size of the component." },
     "slotProps": { "description": "The props used for each slot inside." },

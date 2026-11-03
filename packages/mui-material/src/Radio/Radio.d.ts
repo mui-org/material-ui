@@ -33,7 +33,7 @@ export type RadioSlotsAndSlotProps = CreateSlotsAndSlotProps<
   {
     /**
      * Props forwarded to the root slot.
-     * By default, the avaible props are based on the span element.
+     * By default, the available props are based on the span element.
      */
     root: SlotProps<
       React.ElementType<SwitchBaseProps>,
@@ -42,14 +42,15 @@ export type RadioSlotsAndSlotProps = CreateSlotsAndSlotProps<
     >;
     /**
      * Props forwarded to the input slot.
-     * By default, the avaible props are based on the input element.
+     * By default, the available props are based on the input element.
      */
     input: SlotProps<'input', RadioInputSlotPropsOverrides, RadioOwnerState>;
   }
 >;
 
 export interface RadioProps
-  extends StandardProps<
+  extends
+    StandardProps<
       SwitchBaseProps,
       'checkedIcon' | 'color' | 'icon' | 'type' | 'slots' | 'slotProps'
     >,
@@ -62,21 +63,23 @@ export interface RadioProps
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<RadioClasses>;
+  classes?: Partial<RadioClasses> | undefined;
   /**
    * The color of the component.
    * It supports both default and custom theme colors, which can be added as shown in the
    * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
    * @default 'primary'
    */
-  color?: OverridableStringUnion<
-    'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'default',
-    RadioPropsColorOverrides
-  >;
+  color?:
+    | OverridableStringUnion<
+        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'default',
+        RadioPropsColorOverrides
+      >
+    | undefined;
   /**
    * If `true`, the component is disabled.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * The icon to display when the component is unchecked.
    * @default <RadioButtonIcon />
@@ -87,11 +90,11 @@ export interface RadioProps
    * `small` is equivalent to the dense radio styling.
    * @default 'medium'
    */
-  size?: OverridableStringUnion<'small' | 'medium', RadioPropsSizeOverrides>;
+  size?: OverridableStringUnion<'small' | 'medium', RadioPropsSizeOverrides> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface RadioOwnerState extends Omit<RadioProps, 'slots' | 'slotProps'> {}
@@ -100,11 +103,11 @@ export interface RadioOwnerState extends Omit<RadioProps, 'slots' | 'slotProps'>
  *
  * Demos:
  *
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
  *
  * API:
  *
- * - [Radio API](https://mui.com/material-ui/api/radio/)
- * - inherits [ButtonBase API](https://mui.com/material-ui/api/button-base/)
+ * - [Radio API](https://next.mui.com/material-ui/api/radio/)
+ * - inherits [ButtonBase API](https://next.mui.com/material-ui/api/button-base/)
  */
 export default function Radio(props: RadioProps): React.JSX.Element;

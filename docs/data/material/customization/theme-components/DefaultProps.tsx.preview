@@ -1,3 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Button>This button has disabled ripples.</Button>
-</ThemeProvider>

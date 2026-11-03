@@ -5,12 +5,6 @@
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "component": { "type": { "name": "elementType" } },
     "flexItem": { "type": { "name": "bool" }, "default": "false" },
-    "light": {
-      "type": { "name": "bool" },
-      "default": "false",
-      "deprecated": true,
-      "deprecationInfo": "Use &lt;Divider sx={{ opacity: 0.6 }} /&gt; (or any opacity or color) instead. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "orientation": {
       "type": { "name": "enum", "description": "'horizontal'<br>&#124;&nbsp;'vertical'" },
       "default": "'horizontal'"
@@ -68,13 +62,6 @@
       "isGlobal": false
     },
     {
-      "key": "light",
-      "className": "MuiDivider-light",
-      "description": "Styles applied to the root element if `light={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "middle",
       "className": "MuiDivider-middle",
       "description": "Styles applied to the root element if `variant=\"middle\"`.",
@@ -111,13 +98,6 @@
       "isGlobal": false
     },
     {
-      "key": "withChildrenVertical",
-      "className": "MuiDivider-withChildrenVertical",
-      "description": "Styles applied to the root element if divider have text and `orientation=\"vertical\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "wrapper",
       "className": "MuiDivider-wrapper",
       "description": "Styles applied to the span children element if `orientation=\"horizontal\"`.",
@@ -136,6 +116,5 @@
   "forwardsRefTo": "HTMLHRElement",
   "filename": "/packages/mui-material/src/Divider/Divider.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-divider/\">Divider</a></li>\n<li><a href=\"/material-ui/react-list/\">Lists</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-divider/\">Divider</a></li>\n<li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li></ul>"
 }

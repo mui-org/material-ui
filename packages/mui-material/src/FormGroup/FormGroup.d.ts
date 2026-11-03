@@ -12,16 +12,16 @@ export interface FormGroupProps extends StandardProps<React.HTMLAttributes<HTMLD
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<FormGroupClasses>;
+  classes?: Partial<FormGroupClasses> | undefined;
   /**
    * Display group of elements in a compact row.
    * @default false
    */
-  row?: boolean;
+  row?: boolean | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 /**
@@ -31,11 +31,11 @@ export interface FormGroupProps extends StandardProps<React.HTMLAttributes<HTMLD
  *
  * Demos:
  *
- * - [Checkbox](https://mui.com/material-ui/react-checkbox/)
- * - [Switch](https://mui.com/material-ui/react-switch/)
+ * - [Checkbox](https://next.mui.com/material-ui/react-checkbox/)
+ * - [Switch](https://next.mui.com/material-ui/react-switch/)
  *
  * API:
  *
- * - [FormGroup API](https://mui.com/material-ui/api/form-group/)
+ * - [FormGroup API](https://next.mui.com/material-ui/api/form-group/)
  */
 export default function FormGroup(props: FormGroupProps): React.JSX.Element;

@@ -2,20 +2,19 @@ import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import ButtonBase, { ButtonBaseProps } from '@mui/material/ButtonBase';
+import type { ButtonBaseProps } from '@mui/material/ButtonBase';
+import ButtonBase from '@mui/material/ButtonBase';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import LaunchRounded from '@mui/icons-material/LaunchRounded';
 import KeyboardArrowLeftRounded from '@mui/icons-material/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import Frame from 'docs/src/components/action/Frame';
-import { Link } from '@mui/docs/Link';
-import More from 'docs/src/components/action/More';
+import { Item, Group, Highlighter, Frame, More } from '@mui/internal-core-docs/AppLayout';
+import { Link } from '@mui/internal-core-docs/Link';
+
 import { DEMOS, icons, TEMPLATES } from 'docs/src/components/productMaterial/MaterialTemplates';
 
 function ActionArea(props: ButtonBaseProps) {
@@ -58,7 +57,7 @@ export default function TemplateDemo() {
 
   return (
     <Section bg="gradient">
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} sx={{ alignItems: 'center' }}>
         <Grid sx={{ minWidth: 0 }} size={{ md: 6 }}>
           <SectionHeadline
             overline="Templates"
@@ -144,6 +143,7 @@ export default function TemplateDemo() {
                         href={`${item.href}?utm_source=marketing&utm_medium=referral&utm_campaign=templates-cta2`}
                         noLinkStyle
                         target="_blank"
+                        tabIndex={templateIndex === index ? 0 : -1}
                         sx={{
                           transition: '0.3s',
                           borderRadius: 1,

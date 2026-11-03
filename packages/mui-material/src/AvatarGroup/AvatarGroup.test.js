@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { createRenderer } from '@mui/internal-test-utils';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup, { avatarGroupClasses as classes } from '@mui/material/AvatarGroup';
@@ -24,25 +23,6 @@ describe('<AvatarGroup />', () => {
       slots: {
         surplus: { expectedClassName: classes.avatar },
       },
-      skip: ['componentsProp'],
-    }),
-  );
-
-  // test additionalAvatar slot separately
-  describeConformance(
-    <AvatarGroup max={2}>
-      <Avatar src="/fake.png" />
-      <Avatar src="/fake.png" />
-      <Avatar src="/fake.png" />
-    </AvatarGroup>,
-    () => ({
-      classes,
-      render,
-      muiName: 'MuiAvatarGroup',
-      slots: {
-        additionalAvatar: { expectedClassName: classes.avatar },
-      },
-      only: ['slotPropsProp'],
     }),
   );
 
@@ -98,22 +78,6 @@ describe('<AvatarGroup />', () => {
       </AvatarGroup>,
     );
     expect(container.textContent).to.equal('%2');
-  });
-
-  it('should pass props from componentsProps.additionalAvatar to the slot component', () => {
-    const componentsProps = { additionalAvatar: { className: 'additional-avatar-test' } };
-
-    const { container } = render(
-      <AvatarGroup max={3} componentsProps={componentsProps}>
-        <Avatar src="/fake.png" />
-        <Avatar src="/fake.png" />
-        <Avatar src="/fake.png" />
-        <Avatar src="/fake.png" />
-      </AvatarGroup>,
-    );
-
-    const additionalAvatar = container.querySelector('.additional-avatar-test');
-    expect(additionalAvatar.classList.contains('additional-avatar-test')).to.equal(true);
   });
 
   it('should respect total', () => {

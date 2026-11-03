@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -6,15 +5,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
-import Head from 'docs/src/modules/components/Head';
+import { AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 import AppHeader from 'docs/src/layouts/AppHeader';
 import AppFooter from 'docs/src/layouts/AppFooter';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
 import Section from 'docs/src/layouts/Section';
-import { pageToTitleI18n } from 'docs/src/modules/utils/helpers';
-import { useTranslate } from '@mui/docs/i18n';
-import { Link } from '@mui/docs/Link';
-import type { MuiPage } from 'docs/src/MuiPage';
+import { pageToTitleI18n } from '@mui/internal-core-docs/helpers';
+import { useTranslate } from '@mui/internal-core-docs/i18n';
+import { Link } from '@mui/internal-core-docs/Link';
+import type { MuiPage } from '@mui/internal-core-docs/MuiPage';
 import materialPages from 'docs/data/material/pages';
 
 export default function Components() {
@@ -51,7 +50,7 @@ export default function Components() {
         description="MUI provides a simple, customizable, and accessible library of React components. Follow your own design system, or start with Material Design. You will develop React applications faster."
       />
       <AppHeader />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <Section bg="gradient" sx={{ py: { xs: 2, sm: 4 } }}>
           <Typography component="h1" variant="h2" sx={{ mb: 4, pl: 1 }}>
             All Components

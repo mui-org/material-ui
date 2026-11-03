@@ -1,5 +1,0 @@
-<ThemeProvider theme={theme}>
-  <Button color="neutral" variant="contained">
-    neutral
-  </Button>
-</ThemeProvider>

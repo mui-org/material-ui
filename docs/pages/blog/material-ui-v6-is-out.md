@@ -170,7 +170,7 @@ function App() {
 
 ### Container queries
 
-Material UI v6 introduces a [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries) utility based on the existing `theme.breakpoints` API.
+Material UI v6 introduces a [container query](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries) utility based on the existing `theme.breakpoints` API.
 
 This feature lets you define styles based on the parent container's width instead of the viewport.
 

@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './top-level-imports';
 import readFile from '../util/readFile';
@@ -16,6 +16,7 @@ describe('@mui/codemod', () => {
   describe('v5.0.0', () => {
     describe('top-level-imports', () => {
       it('convert path as needed', () => {
+        this?.timeout?.(20000);
         const actual = transform(
           {
             source: read('./top-level-imports.test/actual.js'),

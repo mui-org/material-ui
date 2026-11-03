@@ -5,10 +5,12 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import cardActionAreaClasses, { getCardActionAreaUtilityClass } from './cardActionAreaClasses';
 import ButtonBase from '../ButtonBase';
 import useSlot from '../utils/useSlot';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes } = ownerState;
@@ -36,9 +38,14 @@ const CardActionAreaRoot = styled(ButtonBase, {
         opacity: 0,
       },
     },
-    [`&.${cardActionAreaClasses.focusVisible} .${cardActionAreaClasses.focusHighlight}`]: {
-      opacity: (theme.vars || theme).palette.action.focusOpacity,
-    },
+    ...(theme.focusVisible
+      ? // Inset the ring: Card sets overflow:hidden, which clips an outset ring.
+        applyInsetFocusVisible(1)
+      : {
+          [`&.${cardActionAreaClasses.focusVisible} .${cardActionAreaClasses.focusHighlight}`]: {
+            opacity: (theme.vars || theme).palette.action.focusOpacity,
+          },
+        }),
   })),
 );
 
@@ -57,7 +64,7 @@ const CardActionAreaFocusHighlight = styled('span', {
     borderRadius: 'inherit',
     opacity: 0,
     backgroundColor: 'currentcolor',
-    transition: theme.transitions.create('opacity', {
+    ...getTransitionStyles(theme, 'opacity', {
       duration: theme.transitions.duration.short,
     }),
   })),
@@ -93,6 +100,7 @@ const CardActionArea = React.forwardRef(function CardActionArea(inProps, ref) {
     ref,
     className: clsx(classes.root, className),
     additionalProps: {
+      internalNativeButton: true,
       focusVisibleClassName: clsx(focusVisibleClassName, classes.focusVisible),
     },
   });
@@ -101,7 +109,6 @@ const CardActionArea = React.forwardRef(function CardActionArea(inProps, ref) {
     elementType: CardActionAreaFocusHighlight,
     externalForwardedProps,
     ownerState,
-    ref,
     className: classes.focusHighlight,
   });
 

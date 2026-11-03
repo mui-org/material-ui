@@ -1,4 +1,0 @@
-<ColorButton variant="contained">Custom CSS</ColorButton>
-<BootstrapButton variant="contained" disableRipple>
-  Bootstrap
-</BootstrapButton>

@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import spacing, { margin, padding } from './spacing';
 
 describe('system spacing', () => {

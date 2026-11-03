@@ -1,5 +1,0 @@
-<IconButton aria-label={notificationsLabel(100)}>
-  <Badge badgeContent={100} color="secondary">
-    <MailIcon />
-  </Badge>
-</IconButton>

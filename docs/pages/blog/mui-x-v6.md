@@ -21,7 +21,7 @@ tags: ['MUI X', 'Product']
   - [Cell selection](#cell-selection) <a title="Premium plan" href="/x/introduction/licensing/#premium-plan"><span class="plan-premim"></span></a>
   - [Use web workers to export data to excel files](#use-web-workers-to-export-data-to-excel-files) <a title="Premium plan" href="/x/introduction/licensing/#premium-plan"><span class="plan-premim"></span></a>
 - [Date and Time Pickers - feature highlights ✨](#date-and-time-pickers-features-highlights-✨)
-  - [Fields: the new default \<input\> for pickers](#fields-the-new-default-input-gt-for-pickers)
+  - [Fields: the new default \<input\> for pickers](#fields-the-new-default-input-for-pickers)
   - [Improved layout customization](#improved-layout-customization)
   - [Overhaul in the documentation](#overhaul-in-the-documentation)
   - [Removed clock view on desktop Time Pickers](#removed-clock-view-on-desktop-time-pickers)

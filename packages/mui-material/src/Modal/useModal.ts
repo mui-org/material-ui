@@ -5,9 +5,9 @@ import useForkRef from '@mui/utils/useForkRef';
 import useEventCallback from '@mui/utils/useEventCallback';
 import createChainedFunction from '@mui/utils/createChainedFunction';
 import extractEventHandlers from '@mui/utils/extractEventHandlers';
-import { EventHandlers } from '../utils/types';
+import type { EventHandlers } from '../utils/types';
 import { ModalManager, ariaHidden } from './ModalManager';
-import {
+import type {
   UseModalParameters,
   UseModalReturnValue,
   UseModalRootSlotProps,
@@ -31,7 +31,6 @@ const manager = new ModalManager();
 function useModal(parameters: UseModalParameters): UseModalReturnValue {
   const {
     container,
-    disableEscapeKeyDown = false,
     disableScrollLock = false,
     closeAfterTransition = false,
     onTransitionEnter,
@@ -42,9 +41,10 @@ function useModal(parameters: UseModalParameters): UseModalReturnValue {
     rootRef,
   } = parameters;
 
-  // @ts-ignore internal logic
+  // @ts-expect-error: The modal refs are assigned after render; the initial ref object is empty.
   const modal = React.useRef<{ modalRef: HTMLDivElement; mount: HTMLElement }>({});
   const mountNodeRef = React.useRef<HTMLElement>(null);
+  const lastMountNodeRef = React.useRef<HTMLElement>(null);
   const modalRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(modalRef, rootRef);
   const [exited, setExited] = React.useState(!open);
@@ -84,12 +84,14 @@ function useModal(parameters: UseModalParameters): UseModalReturnValue {
 
   const isTopModal = () => manager.isTopModal(getModal());
 
-  const handlePortalRef = useEventCallback((node: HTMLElement) => {
+  const handlePortalRef = useEventCallback((node: HTMLElement | null) => {
     mountNodeRef.current = node;
 
     if (!node) {
       return;
     }
+
+    lastMountNodeRef.current = node;
 
     if (open && isTopModal()) {
       handleMounted();
@@ -133,13 +135,11 @@ function useModal(parameters: UseModalParameters): UseModalReturnValue {
       return;
     }
 
-    if (!disableEscapeKeyDown) {
-      // Swallow the event, in case someone is listening for the escape key on the body.
-      event.stopPropagation();
+    // Swallow the event, in case someone is listening for the escape key on the body.
+    event.stopPropagation();
 
-      if (onClose) {
-        onClose(event, 'escapeKeyDown');
-      }
+    if (onClose) {
+      onClose(event, 'escapeKeyDown');
     }
   };
 
@@ -223,12 +223,18 @@ function useModal(parameters: UseModalParameters): UseModalReturnValue {
     };
   };
 
+  // Changing a portal's container remounts its children. Keep an exiting transition in its
+  // current container so it can finish and notify the modal that it is safe to unmount.
+  const portalContainer =
+    !open && hasTransition && !exited ? (lastMountNodeRef.current ?? container) : container;
+
   return {
     getRootProps,
     getBackdropProps,
     getTransitionProps,
     rootRef: handleRef,
     portalRef: handlePortalRef,
+    portalContainer,
     isTopModal,
     exited,
     hasTransition,

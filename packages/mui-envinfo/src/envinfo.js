@@ -9,7 +9,7 @@ envinfo
         '@mui/*',
         '@toolpad/*',
         '@pigment-css/*',
-        '@base-ui-components/*',
+        '@base-ui/*',
         // Peer dependencies
         'react',
         'react-dom',

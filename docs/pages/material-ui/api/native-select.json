@@ -68,12 +68,6 @@
       "isGlobal": false
     },
     {
-      "key": "iconOpen",
-      "className": "MuiNativeSelect-iconOpen",
-      "description": "Styles applied to the icon component if the popup is open.",
-      "isGlobal": false
-    },
-    {
       "key": "iconOutlined",
       "className": "MuiNativeSelect-iconOutlined",
       "description": "Styles applied to the icon component if `variant=\"outlined\"`.",
@@ -128,6 +122,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/NativeSelect/NativeSelect.js",
   "inheritance": { "component": "Input", "pathname": "/material-ui/api/input/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-select/\">Select</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-select/\">Select</a></li></ul>"
 }

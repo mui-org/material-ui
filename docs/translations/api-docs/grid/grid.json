@@ -10,7 +10,7 @@
       "description": "If <code>true</code>, the component will have the flex <em>container</em> behavior. You should be wrapping <em>items</em> with a <em>container</em>."
     },
     "direction": {
-      "description": "Defines the <code>flex-direction</code> style property. It is applied for all screen sizes."
+      "description": "Defines the <code>flex-direction</code> style property for the container.<br>⚠️ Only <code>row</code> and <code>row-reverse</code> are supported. <code>column</code> and <code>column-reverse</code> are not supported, because the Grid component is designed to subdivide layouts into <strong>columns</strong>, not rows.<br>For vertical layouts, use <code>Stack</code> instead."
     },
     "offset": {
       "description": "Defines the offset value for the type <code>item</code> components."
@@ -21,6 +21,9 @@
     "size": { "description": "Defines the size of the the type <code>item</code> components." },
     "spacing": {
       "description": "Defines the space between the type <code>item</code> components. It can only be used on a type <code>container</code> component."
+    },
+    "unstable_level": {
+      "description": "The level of the grid starts from <code>0</code> and increases when the grid nests inside another grid. Nesting is defined as a container Grid being a direct child of a container Grid.<br><code>js &amp;lt;Grid container&gt; // level 0   &amp;lt;Grid container&gt; // level 1     &amp;lt;Grid container&gt; // level 2 </code><br>Only consecutive grid is considered nesting. A grid container will start at <code>0</code> if there are non-Grid container element above it.<br><code>js &amp;lt;Grid container&gt; // level 0   &amp;lt;div&gt;     &amp;lt;Grid container&gt; // level 0 </code><br><code>js &amp;lt;Grid container&gt; // level 0   &amp;lt;Grid&gt;     &amp;lt;Grid container&gt; // level 0 </code>"
     },
     "wrap": {
       "description": "Defines the <code>flex-wrap</code> style property. It&#39;s applied for all screen sizes."

@@ -1,12 +1,12 @@
+import { describe, beforeAll, it, expect, beforeEach } from 'vitest';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
 import requirePropFactory from './requirePropFactory';
 
 describe('requirePropFactory', () => {
   const componentNameInError = 'componentNameInError';
   let requireProp: (prop: string) => PropTypes.Validator<any>;
 
-  before(() => {
+  beforeAll(() => {
     requireProp = requirePropFactory(componentNameInError);
   });
 
@@ -20,7 +20,7 @@ describe('requirePropFactory', () => {
 
     let requirePropValidator: PropTypes.Validator<any>;
 
-    before(() => {
+    beforeAll(() => {
       requirePropValidator = requireProp(requiredPropName);
     });
 
@@ -73,7 +73,7 @@ describe('requirePropFactory', () => {
       describe('propName is in props and requiredProp not in props', () => {
         let result: Error | null;
 
-        before(() => {
+        beforeAll(() => {
           props = {};
           propName = 'propName';
           props[propName] = true;
@@ -100,7 +100,7 @@ describe('requirePropFactory', () => {
         describe('propFullName given to validator', () => {
           let propFullName: string;
 
-          before(() => {
+          beforeAll(() => {
             propFullName = 'propFullName';
             // @ts-expect-error The validator should be called with the right arguments
             result = requirePropValidator(props, propName, undefined, undefined, propFullName);

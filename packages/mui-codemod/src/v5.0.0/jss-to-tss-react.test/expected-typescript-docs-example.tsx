@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles<void, 'child' | 'small'>()((theme, _params, classes) => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles<void, 'child' | 'small'>()((theme, _params, classes
 function App() {
   const { classes, cx } = useStyles();
   return (
-    (<div className={classes.parent}>
+    <div className={classes.parent}>
       <div className={classes.child}>
         Background turns red when the mouse hovers over the parent.
       </div>
@@ -30,7 +30,7 @@ function App() {
         Background turns red when the mouse hovers over the parent.
         I am smaller than the other child.
       </div>
-    </div>)
+    </div>
   );
 }
 

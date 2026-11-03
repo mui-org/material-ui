@@ -2,6 +2,8 @@ type NestedRecord<V = any> = {
   [k: string | number]: NestedRecord<V> | V;
 };
 
+const prototypePollutingKeys = new Set(['__proto__', 'constructor', 'prototype']);
+
 /**
  * This function create an object from keys, value and then assign to target
  *
@@ -29,7 +31,13 @@ export const assignNestedKeys = <
   arrayKeys: Array<string> = [],
 ) => {
   let temp: T = obj;
-  keys.forEach((k, index) => {
+  for (let index = 0; index < keys.length; index += 1) {
+    const k = keys[index];
+    // Prevent prototype pollution: never traverse or write through
+    // `__proto__` / `constructor` / `prototype` (e.g. a theme parsed from untrusted JSON).
+    if (prototypePollutingKeys.has(k)) {
+      break;
+    }
     if (index === keys.length - 1) {
       if (Array.isArray(temp)) {
         temp[Number(k)] = value;
@@ -42,7 +50,7 @@ export const assignNestedKeys = <
       }
       temp = temp[k];
     }
-  });
+  }
 };
 
 /**
@@ -122,8 +130,9 @@ const getCssValue = (keys: string[], value: string | number) => {
 export default function cssVarsParser<T extends Record<string, any>>(
   theme: Record<string, any>,
   options?: {
-    prefix?: string;
-    shouldSkipGeneratingVar?: (objectPathKeys: Array<string>, value: string | number) => boolean;
+    prefix?: string | undefined;
+    shouldSkipGeneratingVar?:
+      ((objectPathKeys: Array<string>, value: string | number) => boolean) | undefined;
   },
 ) {
   const { prefix, shouldSkipGeneratingVar } = options || {};

@@ -1,8 +1,0 @@
-{
-  "componentDescription": "",
-  "propDescriptions": {
-    "maxRows": { "description": "Maximum number of rows to display." },
-    "minRows": { "description": "Minimum number of rows to display." }
-  },
-  "classDescriptions": {}
-}

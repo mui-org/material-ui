@@ -1,12 +1,10 @@
 {
-  "name": "@mui-internal/test-module-resolution",
   "private": true,
   "scripts": {
     "typescript:all": "pnpm typescript:node && pnpm typescript:node16",
-    "typescript:node": "tsc -p tsconfig.node.json",
+    "typescript:node": "tsc6 -p tsconfig.node.json",
     "typescript:node16": "tsc -p tsconfig.node16.json"
   },
-  "devDependencies": {},
   "dependencies": {
     "@mui/icons-material": "workspace:^",
     "@mui/material": "workspace:^"

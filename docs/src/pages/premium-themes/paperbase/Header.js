@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/GridLegacy';
+import Grid from '@mui/material/Grid';
 import HelpIcon from '@mui/icons-material/Help';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
@@ -25,7 +25,7 @@ function Header(props) {
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} sx={{ alignItems: 'center' }}>
-            <Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
+            <Grid sx={{ display: { sm: 'none', xs: 'block' } }}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -35,8 +35,8 @@ function Header(props) {
                 <MenuIcon />
               </IconButton>
             </Grid>
-            <Grid item xs />
-            <Grid item>
+            <Grid size="grow" />
+            <Grid>
               <Link
                 href="/"
                 variant="body2"
@@ -47,20 +47,19 @@ function Header(props) {
                     color: 'common.white',
                   },
                 }}
-                rel="noopener noreferrer"
                 target="_blank"
               >
                 Go to docs
               </Link>
             </Grid>
-            <Grid item>
+            <Grid>
               <Tooltip title="Alerts • No alerts">
                 <IconButton color="inherit">
                   <NotificationsIcon />
                 </IconButton>
               </Tooltip>
             </Grid>
-            <Grid item>
+            <Grid>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
               </IconButton>
@@ -77,12 +76,18 @@ function Header(props) {
       >
         <Toolbar>
           <Grid container spacing={1} sx={{ alignItems: 'center' }}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1">
+            <Grid size="grow">
+              <Typography
+                variant="h5"
+                component="h1"
+                sx={{
+                  color: 'inherit',
+                }}
+              >
                 Authentication
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid>
               <Button
                 sx={{ borderColor: lightColor }}
                 variant="outlined"
@@ -92,7 +97,7 @@ function Header(props) {
                 Web setup
               </Button>
             </Grid>
-            <Grid item>
+            <Grid>
               <Tooltip title="Help">
                 <IconButton color="inherit">
                   <HelpIcon />

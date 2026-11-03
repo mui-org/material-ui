@@ -16,6 +16,7 @@ Here are the most significant improvements in June:
   ![Slider](/static/blog/june-2019-update/slider.png)
 
 - 💄 We have introduced a new [TextareaAutosize](/material-ui/react-textarea-autosize/) component.
+
   <video style="margin-bottom: 24px;" autoplay muted loop playsinline>
     <source src="/static/blog/june-2019-update/textarea-autosize.mp4" type="video/mp4" />
   </video>

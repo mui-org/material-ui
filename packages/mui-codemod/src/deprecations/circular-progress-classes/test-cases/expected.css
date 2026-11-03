@@ -1,7 +1,7 @@
-.MuiCircularProgress-root.MuiCircularProgress-determinate > .MuiCircularProgress-circle {
+.MuiCircularProgress-root.MuiCircularProgress-determinate .MuiCircularProgress-circle {
   color: red;
 }
 
-.MuiCircularProgress-root.MuiCircularProgress-indeterminate > .MuiCircularProgress-circle {
+.MuiCircularProgress-root.MuiCircularProgress-indeterminate .MuiCircularProgress-circle {
   color: red;
 }

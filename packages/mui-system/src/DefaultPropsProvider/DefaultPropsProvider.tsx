@@ -29,13 +29,15 @@ DefaultPropsProvider.propTypes /* remove-proptypes */ = {
 
 function getThemeProps<
   Theme extends {
-    components?: Record<string, { defaultProps?: any; styleOverrides?: any; variants?: any }> & {
-      mergeClassNameAndStyle?: boolean;
-    };
+    components?:
+      | (Record<string, { defaultProps?: any; styleOverrides?: any; variants?: any }> & {
+          mergeClassNameAndStyle?: boolean | undefined;
+        })
+      | undefined;
   },
   Props,
   Name extends string,
->(params: { props: Props; name: Name; theme?: Theme }): Props {
+>(params: { props: Props; name: Name; theme?: Theme | undefined }): Props {
   const { theme, name, props } = params;
 
   if (!theme || !theme.components || !theme.components[name]) {

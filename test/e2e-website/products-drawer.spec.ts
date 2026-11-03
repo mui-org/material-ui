@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import FEATURE_TOGGLE from 'docs/src/featureToggle';
-import { TestFixture } from './playwright.config';
+import type { TestFixture } from './playwright.config';
 
 const test = base.extend<TestFixture>({});
 
@@ -23,7 +23,5 @@ test('able to navigate between products', async ({ page }) => {
   await expect(page.locator('#mui-product-menu a[href^="/x/react-data-grid/"]')).toBeVisible();
   await expect(page.locator('#mui-product-menu a[href^="/x/react-date-pickers/"]')).toBeVisible();
 
-  await expect(
-    page.locator('#mui-product-menu a[href^="/base-ui/getting-started/"]'),
-  ).toBeVisible();
+  await expect(page.locator('#mui-product-menu a[href^="https://base-ui.com/"]')).toBeVisible();
 });

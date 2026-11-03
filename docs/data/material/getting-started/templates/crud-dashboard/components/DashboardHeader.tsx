@@ -80,17 +80,17 @@ export default function DashboardHeader({
       <Toolbar sx={{ backgroundColor: 'inherit', mx: { xs: -0.75, sm: -1 } }}>
         <Stack
           direction="row"
-          justifyContent="space-between"
-          alignItems="center"
           sx={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
             flexWrap: 'wrap',
             width: '100%',
           }}
         >
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" sx={{ alignItems: 'center' }}>
             <Box sx={{ mr: 1 }}>{getMenuIcon(menuOpen)}</Box>
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <Stack direction="row" alignItems="center">
+              <Stack direction="row" sx={{ alignItems: 'center' }}>
                 {logo ? <LogoContainer>{logo}</LogoContainer> : null}
                 {title ? (
                   <Typography
@@ -111,11 +111,10 @@ export default function DashboardHeader({
           </Stack>
           <Stack
             direction="row"
-            alignItems="center"
             spacing={1}
-            sx={{ marginLeft: 'auto' }}
+            sx={{ alignItems: 'center', marginLeft: 'auto' }}
           >
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" sx={{ alignItems: 'center' }}>
               <ThemeSwitcher />
             </Stack>
           </Stack>

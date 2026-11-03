@@ -1,9 +1,0 @@
-<FormControl>
-  <FormLabel>Label</FormLabel>
-  <Autocomplete
-    placeholder="Placeholder"
-    options={top100Films}
-    sx={{ width: 300 }}
-  />
-  <FormHelperText>A description for the combo box.</FormHelperText>
-</FormControl>

@@ -1,6 +1,0 @@
-<Select defaultValue="dog" onChange={handleChange}>
-  <Option value="dog">Dog</Option>
-  <Option value="cat">Cat</Option>
-  <Option value="fish">Fish</Option>
-  <Option value="bird">Bird</Option>
-</Select>

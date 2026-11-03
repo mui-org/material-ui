@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && pnpm update --latest"
   },
   "dependencies": {
@@ -14,19 +13,19 @@
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
-    "@mui/material-nextjs": "latest",
+    "@mui/icons-material": "next",
+    "@mui/material": "next",
+    "@mui/material-nextjs": "next",
     "clsx": "latest",
-    "next": "^15.0.0",
+    "next": "^16.0.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "latest",
-    "@types/react": "^19.0.0",
+    "@types/react": "latest",
     "eslint": "latest",
-    "eslint-config-next": "^15.0.0",
+    "eslint-config-next": "latest",
     "typescript": "latest"
   }
 }

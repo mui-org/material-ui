@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 
 import useResizeHandle from 'docs/src/modules/utils/useResizeHandle';
-import Frame from '../../action/Frame';
+import { Frame } from '@mui/internal-core-docs/AppLayout';
 
 export default function CustomThemeComparison() {
   const objectRef = React.useRef(null);

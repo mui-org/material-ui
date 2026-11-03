@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, expect, beforeEach, it } from 'vitest';
 import PropTypes from 'prop-types';
 import integerPropType from '@mui/utils/integerPropType';
 import { getTypeByValue } from './integerPropType';

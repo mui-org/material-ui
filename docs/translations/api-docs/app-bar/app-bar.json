@@ -6,12 +6,16 @@
     "color": {
       "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
     },
+    "elevation": {
+      "description": "Shadow depth, corresponds to <code>dp</code> in the spec. It accepts values between 0 and 24 inclusive."
+    },
     "enableColorOnDark": {
       "description": "If true, the <code>color</code> prop is applied in dark mode."
     },
     "position": {
-      "description": "The positioning type. The behavior of the different options is described <a href=\"https://developer.mozilla.org/en-US/docs/Web/CSS/position\">in the MDN web docs</a>. Note: <code>sticky</code> is not universally supported and will fall back to <code>static</code> when unavailable."
+      "description": "The positioning type. The behavior of the different options is described <a href=\"https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position\">in the MDN web docs</a>. Note: <code>sticky</code> is not universally supported and will fall back to <code>static</code> when unavailable."
     },
+    "square": { "description": "If <code>false</code>, rounded corners are enabled." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     }

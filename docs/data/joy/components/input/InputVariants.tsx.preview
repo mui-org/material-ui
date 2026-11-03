@@ -1,4 +1,0 @@
-<Input placeholder="Type in here…" variant="solid" />
-<Input placeholder="Type in here…" variant="soft" />
-<Input placeholder="Type in here…" variant="outlined" />
-<Input placeholder="Type in here…" variant="plain" />

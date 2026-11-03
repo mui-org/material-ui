@@ -6,12 +6,6 @@
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "disableAutoFocusItem": { "type": { "name": "bool" }, "default": "false" },
-    "MenuListProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.list</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "onClose": {
       "type": { "name": "func" },
       "signature": {
@@ -47,12 +41,6 @@
         "description": "'auto'<br>&#124;&nbsp;number<br>&#124;&nbsp;{ appear?: number, enter?: number, exit?: number }"
       },
       "default": "'auto'"
-    },
-    "TransitionProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.transition</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     },
     "variant": {
       "type": { "name": "enum", "description": "'menu'<br>&#124;&nbsp;'selectedMenu'" },
@@ -100,6 +88,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Menu/Menu.js",
   "inheritance": { "component": "Popover", "pathname": "/material-ui/api/popover/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-app-bar/\">App Bar</a></li>\n<li><a href=\"/material-ui/react-menu/\">Menu</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-app-bar/\">App Bar</a></li>\n<li><a href=\"/material-ui/react-menu/\">Menu</a></li></ul>"
 }

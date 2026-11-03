@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 import { spy } from 'sinon';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import { createRenderer, screen, fireEvent } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@mui/system';
 import createCssVarsTheme from './createCssVarsTheme';
@@ -105,7 +106,7 @@ describe('createCssVarsProvider', () => {
         const { allColorSchemes } = useColorScheme();
         return <div data-testid="all-colorSchemes">{allColorSchemes.join(',')}</div>;
       }
-      const { rerender } = render(
+      const view = render(
         <CssVarsProvider>
           <Consumer />
         </CssVarsProvider>,
@@ -113,7 +114,7 @@ describe('createCssVarsProvider', () => {
 
       expect(screen.getByTestId('all-colorSchemes').textContent).to.equal('light,dark');
 
-      rerender(
+      view.rerender(
         <CssVarsProvider
           theme={createCssVarsTheme({
             colorSchemes: { light: {}, dark: {}, comfort: { palette: { color: '#e5e5e5' } } },
@@ -290,6 +291,36 @@ describe('createCssVarsProvider', () => {
         expect(document.head.children[document.head.children.length - 1]?.textContent).not.to.equal(
           DISABLE_CSS_TRANSITION,
         );
+      });
+
+      it('sets the nonce of the Emotion cache on the style tag that disables transitions', () => {
+        const { CssVarsProvider, useColorScheme } = createCssVarsProvider({
+          theme: createCssVarsTheme({
+            colorSchemes: { light: {}, dark: {} },
+          }),
+          defaultColorScheme: {
+            light: 'light',
+            dark: 'dark',
+          },
+          disableTransitionOnChange: true,
+        });
+        function Consumer() {
+          const { setMode } = useColorScheme();
+          return <button onClick={() => setMode('dark')}>change to dark</button>;
+        }
+        const cache = createCache({ key: 'nonce-test', nonce: 'test-nonce' });
+        render(
+          <CacheProvider value={cache}>
+            <CssVarsProvider>
+              <Consumer />
+            </CssVarsProvider>
+          </CacheProvider>,
+        );
+        clock.runToLast();
+        fireEvent.click(screen.getByRole('button', { name: 'change to dark' }));
+        const styleElement = document.head.children[document.head.children.length - 1];
+        expect(styleElement.textContent).to.equal(DISABLE_CSS_TRANSITION);
+        expect(styleElement.nonce).to.equal('test-nonce');
       });
 
       it('disable all css transitions when switching between color schemes, given `disableTransitionOnChange` is true', () => {
@@ -880,7 +911,8 @@ describe('createCssVarsProvider', () => {
           </button>
         );
       }
-      const { getByTestId } = render(
+
+      render(
         <CssVarsProvider>
           <Toggle data-testid="outer" />
           <CssVarsProvider disableNestedContext>
@@ -888,13 +920,14 @@ describe('createCssVarsProvider', () => {
           </CssVarsProvider>
         </CssVarsProvider>,
       );
-      fireEvent.click(getByTestId('inner'));
+
+      fireEvent.click(screen.getByTestId('inner'));
 
       // state changes in nested provider should not affect the upper context
       // if `disableNestedContext` is true.
-      expect(getByTestId('outer')).to.have.text('system');
+      expect(screen.getByTestId('outer')).to.have.text('system');
 
-      expect(getByTestId('inner')).to.have.text('dark');
+      expect(screen.getByTestId('inner')).to.have.text('dark');
     });
 
     it('themeId should not exist in the theme if not provided as a prop', () => {

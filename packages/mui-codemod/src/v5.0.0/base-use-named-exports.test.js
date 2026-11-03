@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './base-use-named-exports';
 import readFile from '../util/readFile';
@@ -57,7 +57,6 @@ describe('@mui/codemod', () => {
 
         const expected = read('./base-use-named-exports.test/expected-with-warning.js');
         expect(actual).to.equal(expected, 'The transformed version should be correct');
-        expect(actual);
       });
     });
   });

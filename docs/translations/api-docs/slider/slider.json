@@ -12,10 +12,6 @@
     "color": {
       "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
     },
-    "components": { "description": "The components used for each slot inside." },
-    "componentsProps": {
-      "description": "The extra props for the slot components. You can override the existing props or add new ones."
-    },
     "defaultValue": {
       "description": "The default value. Use when the component is not controlled."
     },
@@ -61,7 +57,7 @@
       }
     },
     "onChangeCommitted": {
-      "description": "Callback function that is fired when the <code>mouseup</code> is triggered.",
+      "description": "Callback function that is fired when the pointer or touch interaction ends.",
       "typeDescriptions": {
         "event": {
           "name": "event",
@@ -76,10 +72,8 @@
       "description": "The granularity with which the slider can step through values when using Page Up/Page Down or Shift + Arrow Up/Arrow Down."
     },
     "size": { "description": "The size of the slider." },
-    "slotProps": { "description": "The props used for each slot inside the Slider." },
-    "slots": {
-      "description": "The components used for each slot inside the Slider. Either a string to use a HTML element or a component."
-    },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
     "step": {
       "description": "The granularity with which the slider can step through values. (A &quot;discrete&quot; slider.) The <code>min</code> prop serves as the origin for the valid values. We recommend (max - min) to be evenly divisible by the step.<br>When step is <code>null</code>, the thumb can only be slid onto marks provided with the <code>marks</code> prop."
     },
@@ -151,7 +145,6 @@
       "nodeName": "the thumb element",
       "conditions": "keyboard focused"
     },
-    "mark": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the mark element" },
     "markActive": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the mark element",
@@ -162,66 +155,16 @@
       "nodeName": "the root element",
       "conditions": "<code>marks</code> is provided with at least one label"
     },
-    "markLabel": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the mark label element"
-    },
     "markLabelActive": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the mark label element",
       "conditions": "active (depending on the value)"
     },
-    "rail": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the rail element" },
-    "root": { "description": "Styles applied to the root element." },
     "sizeSmall": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>size=\"small\"</code>"
     },
-    "thumb": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the thumb element" },
-    "thumbColorError": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>color=\"error\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-colorError\">.MuiSlider-colorError</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "thumbColorInfo": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>color=\"info\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-colorInfo\">.MuiSlider-colorInfo</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "thumbColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-colorPrimary\">.MuiSlider-colorPrimary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "thumbColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-colorSecondary\">.MuiSlider-colorSecondary</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "thumbColorSuccess": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>color=\"success\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-colorSuccess\">.MuiSlider-colorSuccess</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "thumbColorWarning": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>color=\"warning\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-colorWarning\">.MuiSlider-colorWarning</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "thumbSizeSmall": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the thumb element",
-      "conditions": "<code>size=\"small\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/slider/#slider-classes-thumb\">.MuiSlider-thumb</a> and <a href=\"/material-ui/api/slider/#slider-classes-sizeSmall\">.MuiSlider-sizeSmall</a> classes instead. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "track": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the track element" },
     "trackFalse": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
@@ -231,10 +174,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>track=\"inverted\"</code>"
-    },
-    "valueLabel": {
-      "description": "Styles applied to {{nodeName}}.",
-      "nodeName": "the thumb label element"
     },
     "valueLabelCircle": {
       "description": "Styles applied to {{nodeName}}.",
@@ -254,5 +193,15 @@
       "nodeName": "the root element",
       "conditions": "<code>orientation=\"vertical\"</code>"
     }
+  },
+  "slotDescriptions": {
+    "input": "The component that renders the input.",
+    "mark": "The component that renders the mark.",
+    "markLabel": "The component that renders the mark label.",
+    "rail": "The component that renders the rail.",
+    "root": "The component that renders the root.",
+    "thumb": "The component that renders the thumb.",
+    "track": "The component that renders the track.",
+    "valueLabel": "The component that renders the value label."
   }
 }

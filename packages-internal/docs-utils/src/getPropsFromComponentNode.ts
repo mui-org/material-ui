@@ -1,5 +1,5 @@
-import * as ts from 'typescript';
-import { TypeScriptProject } from './createTypeScriptProject';
+import * as ts from '@typescript/typescript6';
+import type { TypeScriptProject } from './createTypeScriptProject';
 
 export interface ParsedProp {
   /**
@@ -23,11 +23,8 @@ function isTypeJSXElementLike(type: ts.Type, project: TypeScriptProject): boolea
   if (symbol) {
     const name = project.checker.getFullyQualifiedName(symbol);
     return (
-      // Remove once global JSX namespace is no longer used by React
-      name === 'global.JSX.Element' ||
-      name === 'React.JSX.Element' ||
-      name === 'React.ReactElement' ||
-      name === 'React.ReactNode'
+      // Some types are resolved to paths like: "/Users/.../node_modules/@types/react/jsx-runtime".JSX.Element
+      name.endsWith('.JSX.Element') || name.endsWith('.ReactElement') || name.endsWith('.ReactNode')
     );
   }
 

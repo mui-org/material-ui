@@ -1,6 +1,6 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
 import { createRenderer, screen } from '@mui/internal-test-utils';
 import CardMedia, { cardMediaClasses as classes } from '@mui/material/CardMedia';
 import describeConformance from '../../test/describeConformance';
@@ -16,7 +16,6 @@ describe('<CardMedia />', () => {
     refInstanceof: window.HTMLDivElement,
     testComponentPropWith: 'span',
     testVariantProps: { variant: 'foo' },
-    skip: ['componentsProp'],
   }));
 
   it('has the img role if `image` is defined', () => {

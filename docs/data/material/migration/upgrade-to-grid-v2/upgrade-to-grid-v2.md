@@ -16,7 +16,7 @@ Grid provides the following improvements over GridLegacy:
 - All grids are considered items without specifying the `item` prop.
 - The [offset feature](/material-ui/react-grid/#offset) gives you more flexibility for positioning.
 - [Nested grids](/material-ui/react-grid/#nested-grid) now have no depth limitation.
-- Its implementation doesn't use negative margins so it doesn't [overflow like GridLegacy](/material-ui/react-grid-legacy/#negative-margin).
+- Its implementation doesn't use negative margins so it doesn't overflow.
 
 ## How to upgrade
 
@@ -34,27 +34,27 @@ Depending on the Material UI version you are using, you must update the import 
 <codeblock storageKey="material-ui-version">
 
 ```diff v7
-// The legacy Grid component is named GridLegacy
+ // The legacy Grid component is named GridLegacy
 -import Grid from '@mui/material/GridLegacy';
 
-// The updated Grid component is named Grid
+ // The updated Grid component is named Grid
 +import Grid from '@mui/material/Grid';
 
 ```
 
 ```diff v6
-// The legacy Grid component is named Grid
+ // The legacy Grid component is named Grid
 -import Grid from '@mui/material/Grid';
 
-// The updated Grid component is named Grid2
+ // The updated Grid component is named Grid2
 +import Grid from '@mui/material/Grid2';
 ```
 
 ```diff v5
-// The legacy Grid component is named Grid
+ // The legacy Grid component is named Grid
 -import Grid from '@mui/material/Grid';
 
-// The updated Grid component is named Unstable_Grid2
+ // The updated Grid component is named Unstable_Grid2
 +import Grid from '@mui/material/Unstable_Grid2';
 ```
 
@@ -108,7 +108,7 @@ You can use the following codemod to update the size props:
 <codeblock storageKey="material-ui-version">
 
 ```bash v7
-npx @mui/codemod@next v7.0.0/grid-props <path/to/folder>
+npx @mui/codemod@latest v7.0.0/grid-props <path/to/folder>
 ```
 
 ```bash v6
@@ -122,7 +122,7 @@ Skip this step if you're using Material UI v5.
 </codeblock>
 
 :::warning
-The codemod requires [updating the imports](#update-the-import) beforehand.
+The codemod requires [updating the imports](#1-update-the-import) beforehand.
 :::
 
 ### 4. Opt in to legacy negative margins
@@ -163,7 +163,7 @@ function Demo() {
 
 ### Column direction
 
-Using `direction="column"` or `direction="column-reverse"` is not supported on [GridLegacy](/material-ui/react-grid-legacy/#direction-column-column-reverse) nor on [the updated Grid](/material-ui/react-grid/#column-direction).
+Using `direction="column"` or `direction="column-reverse"` is not supported.
 If your layout used GridLegacy with these values, it might break when you switch to the updated Grid.
 If you need a vertical layout, follow the instructions in the [Grid documentation](/material-ui/react-grid/#column-direction).
 
@@ -202,6 +202,3 @@ You'll need to manually update these components.
 - Grid:
   - [Documentation](/material-ui/react-grid/)
   - [API](/material-ui/api/grid/)
-- GridLegacy:
-  - [Documentation](/material-ui/react-grid-legacy/)
-  - [API](/material-ui/api/grid-legacy/)

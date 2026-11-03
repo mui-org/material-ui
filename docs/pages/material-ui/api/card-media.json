@@ -44,6 +44,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/CardMedia/CardMedia.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-card/\">Card</a></li></ul>"
 }

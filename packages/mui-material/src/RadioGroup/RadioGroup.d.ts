@@ -10,7 +10,7 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
    * The name used to reference the value of the control.
    * If you don't provide this prop, it falls back to a randomly generated name.
    */
-  name?: string;
+  name?: string | undefined;
   /**
    * Callback fired when a radio button is selected.
    *
@@ -18,7 +18,7 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
    * @param {string} value The value of the selected radio button.
    * You can pull out the new value by accessing `event.target.value` (string).
    */
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
+  onChange?: ((event: React.ChangeEvent<HTMLInputElement>, value: string) => void) | undefined;
   /**
    * Value of the selected radio button. The DOM API casts this to a string.
    */
@@ -29,11 +29,11 @@ export interface RadioGroupProps extends Omit<FormGroupProps, 'onChange'> {
  *
  * Demos:
  *
- * - [Radio Group](https://mui.com/material-ui/react-radio-button/)
+ * - [Radio Group](https://next.mui.com/material-ui/react-radio-button/)
  *
  * API:
  *
- * - [RadioGroup API](https://mui.com/material-ui/api/radio-group/)
- * - inherits [FormGroup API](https://mui.com/material-ui/api/form-group/)
+ * - [RadioGroup API](https://next.mui.com/material-ui/api/radio-group/)
+ * - inherits [FormGroup API](https://next.mui.com/material-ui/api/form-group/)
  */
 export default function RadioGroup(props: RadioGroupProps): React.JSX.Element;

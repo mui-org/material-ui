@@ -22,16 +22,6 @@
     },
     "icon": { "type": { "name": "node" } },
     "id": { "type": { "name": "string" } },
-    "inputProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.input</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "inputRef": {
-      "type": { "name": "custom", "description": "ref" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.input.ref</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "onChange": {
       "type": { "name": "func" },
       "signature": {
@@ -163,6 +153,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/Switch/Switch.js",
   "inheritance": { "component": "IconButton", "pathname": "/material-ui/api/icon-button/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-switch/\">Switch</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-switch/\">Switch</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>"
 }

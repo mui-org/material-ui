@@ -1,0 +1,1 @@
+export { getProductInfoFromUrl } from './getProductInfoFromUrl';

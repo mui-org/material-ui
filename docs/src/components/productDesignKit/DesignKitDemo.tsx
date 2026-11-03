@@ -10,13 +10,10 @@ import TextFieldsRounded from '@mui/icons-material/TextFieldsRounded';
 import WidgetsRounded from '@mui/icons-material/WidgetsRounded';
 import ToggleOnRounded from '@mui/icons-material/ToggleOnRounded';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import Item, { Group } from 'docs/src/components/action/Item';
-import Highlighter from 'docs/src/components/action/Highlighter';
-import More from 'docs/src/components/action/More';
-import Frame from 'docs/src/components/action/Frame';
-import { Link } from '@mui/docs/Link';
+import { Item, Group, Highlighter, More, Frame } from '@mui/internal-core-docs/AppLayout';
+import { Link } from '@mui/internal-core-docs/Link';
 
 const DEMOS = ['Components', 'Branding', 'Iconography'];
 
@@ -187,7 +184,7 @@ export default function DesignKitsDemo() {
   };
   return (
     <Section bg="gradient" cozy>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} sx={{ alignItems: 'center' }}>
         <Grid sx={{ minWidth: 0 }} size={{ md: 6 }}>
           <SectionHeadline
             overline="Design Kits"

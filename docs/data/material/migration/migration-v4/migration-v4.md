@@ -28,6 +28,8 @@ Need to refer back to an older version of the docs? Check out [the v4 documentat
 :::
 
 :::info
+<!-- #target-branch-reference -->
+
 If you are using Next.js and you are not sure how to configure SSR to work with both Emotion & JSS, take a look a this [example project](https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts-v4-v5-migration).
 :::
 
@@ -239,7 +241,7 @@ With the release of v5, the names of all related packages were changed from `@ma
 @material-ui/styled-engine-sc ->@mui/styled-engine-sc
 @material-ui/private-theming -> @mui/private-theming
 @material-ui/codemod -> @mui/codemod
-@material-ui/docs -> @mui/docs
+@material-ui/docs -> @mui/internal-core-docs
 @material-ui/envinfo -> @mui/envinfo
 ```
 

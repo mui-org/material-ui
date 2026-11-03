@@ -1,9 +1,11 @@
 /* eslint-disable react/prefer-stateless-function */
+import { describe, beforeEach, expect, it } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { createRenderer, waitFor } from '@mui/internal-test-utils';
 import elementTypeAcceptingRef from './elementTypeAcceptingRef';
+
+const [reactMajor, reactMinor] = React.version.split('.').map(Number);
 
 describe('elementTypeAcceptingRef', () => {
   const { render } = createRenderer();
@@ -31,7 +33,13 @@ describe('elementTypeAcceptingRef', () => {
       }
 
       if (failsOnMount) {
-        expect(testAct).toErrorDev('');
+        expect(testAct).toErrorDev([
+          'Did you accidentally provide a React.Fragment instead?',
+          reactMajor < 19 && 'Invalid attribute `ref` supplied to `React.Fragment`.',
+          reactMajor === 19 &&
+            reactMinor < 3 &&
+            'Invalid prop `ref` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.',
+        ]);
       } else {
         expect(testAct).not.toErrorDev();
       }

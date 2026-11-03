@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { emphasize } from '@mui/system/colorManipulator';
-import { styled } from '../zero-styled';
+import { styled, useTheme } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import Fab from '../Fab';
 import Tooltip from '../Tooltip';
+import { getReducedMotionStyles, getTransitionStyles } from '../transitions/utils';
+import useReducedMotion from '../transitions/useReducedMotion';
 import capitalize from '../utils/capitalize';
 import speedDialActionClasses, { getSpeedDialActionUtilityClass } from './speedDialActionClasses';
 import useSlot from '../utils/useSlot';
-import { mergeSlotProps } from '../utils';
 
 const useUtilityClasses = (ownerState) => {
   const { open, tooltipPlacement, classes } = ownerState;
@@ -53,6 +54,7 @@ const SpeedDialActionFab = styled(Fab, {
     transition: `${theme.transitions.create('transform', {
       duration: theme.transitions.duration.shorter,
     })}, opacity 0.8s`,
+    ...getReducedMotionStyles(theme),
     opacity: 1,
     variants: [
       {
@@ -84,7 +86,7 @@ const SpeedDialActionStaticTooltip = styled('span', {
     display: 'flex',
     alignItems: 'center',
     [`& .${speedDialActionClasses.staticTooltipLabel}`]: {
-      transition: theme.transitions.create(['transform', 'opacity'], {
+      ...getTransitionStyles(theme, ['transform', 'opacity'], {
         duration: theme.transitions.duration.shorter,
       }),
       opacity: 1,
@@ -123,6 +125,48 @@ const SpeedDialActionStaticTooltip = styled('span', {
           },
         },
       },
+      {
+        props: {
+          tooltipPlacement: 'top',
+        },
+        style: {
+          // The label sits in a zero-height row, so it widens the action to keep
+          // neighboring labels apart without making the action taller.
+          display: 'grid',
+          gridTemplateRows: '0 auto',
+          justifyItems: 'center',
+          // Stay as tall as the Fab when a sibling action is larger.
+          alignSelf: 'center',
+          [`& .${speedDialActionClasses.staticTooltipLabel}`]: {
+            position: 'static',
+            alignSelf: 'end',
+            transformOrigin: '50% 100%',
+            marginBottom: 8,
+            marginLeft: 8,
+            marginRight: 8,
+          },
+        },
+      },
+      {
+        props: {
+          tooltipPlacement: 'bottom',
+        },
+        style: {
+          display: 'grid',
+          gridTemplateRows: 'auto 0',
+          justifyItems: 'center',
+          alignSelf: 'center',
+          [`& .${speedDialActionClasses.staticTooltipLabel}`]: {
+            position: 'static',
+            gridRow: 2,
+            alignSelf: 'start',
+            transformOrigin: '50% 0%',
+            marginTop: 8,
+            marginLeft: 8,
+            marginRight: 8,
+          },
+        },
+      },
     ],
   })),
 );
@@ -145,45 +189,28 @@ const SpeedDialActionStaticTooltipLabel = styled('span', {
 
 const SpeedDialAction = React.forwardRef(function SpeedDialAction(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiSpeedDialAction' });
-  const {
-    className,
-    delay = 0,
-    FabProps = {},
-    icon,
-    id,
-    open,
-    TooltipClasses,
-    tooltipOpen: tooltipOpenProp = false,
-    tooltipPlacement = 'left',
-    tooltipTitle,
-    slots = {},
-    slotProps = {},
-    ...other
-  } = props;
+  const { className, delay = 0, icon, id, open, slots = {}, slotProps = {}, ...other } = props;
+  const theme = useTheme();
+  const reducedMotion = useReducedMotion(theme.motion.reducedMotion, false);
+
+  const resolvedTooltipSlotProps =
+    typeof slotProps.tooltip === 'function' ? slotProps.tooltip(props) : (slotProps.tooltip ?? {});
+  // The label is styled per side: compound placements like `top-start` use their side,
+  // and placements without one, like `auto`, fall back to the left.
+  const placementSide = String(resolvedTooltipSlotProps.placement).split('-')[0];
+  const tooltipPlacement = ['top', 'right', 'bottom', 'left'].includes(placementSide)
+    ? placementSide
+    : 'left';
 
   const ownerState = { ...props, tooltipPlacement };
   const classes = useUtilityClasses(ownerState);
 
   const externalForwardedProps = {
     slots,
-    slotProps: {
-      fab: FabProps,
-      ...slotProps,
-      tooltip: mergeSlotProps(
-        typeof slotProps.tooltip === 'function' ? slotProps.tooltip(ownerState) : slotProps.tooltip,
-        {
-          title: tooltipTitle,
-          open: tooltipOpenProp,
-          placement: tooltipPlacement,
-          classes: TooltipClasses,
-        },
-      ),
-    },
+    slotProps,
   };
 
-  const [tooltipOpen, setTooltipOpen] = React.useState(
-    externalForwardedProps.slotProps.tooltip?.open,
-  );
+  const [tooltipOpen, setTooltipOpen] = React.useState(resolvedTooltipSlotProps.open ?? false);
 
   const handleTooltipClose = () => {
     setTooltipOpen(false);
@@ -193,7 +220,14 @@ const SpeedDialAction = React.forwardRef(function SpeedDialAction(inProps, ref) 
     setTooltipOpen(true);
   };
 
-  const transitionStyle = { transitionDelay: `${delay}ms` };
+  const transitionTiming = reducedMotion.getTransitionTiming({
+    duration: 0,
+    delay: `${delay}ms`,
+  });
+
+  const transitionStyle = {
+    transitionDelay: transitionTiming.delay,
+  };
 
   const [FabSlot, fabSlotProps] = useSlot('fab', {
     elementType: SpeedDialActionFab,
@@ -305,12 +339,6 @@ SpeedDialAction.propTypes /* remove-proptypes */ = {
    */
   delay: PropTypes.number,
   /**
-   * Props applied to the [`Fab`](https://mui.com/material-ui/api/fab/) component.
-   * @default {}
-   * @deprecated Use `slotProps.fab` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  FabProps: PropTypes.object,
-  /**
    * The icon to display in the SpeedDial Fab.
    */
   icon: PropTypes.node,
@@ -351,44 +379,6 @@ SpeedDialAction.propTypes /* remove-proptypes */ = {
     PropTypes.func,
     PropTypes.object,
   ]),
-  /**
-   * `classes` prop applied to the [`Tooltip`](https://mui.com/material-ui/api/tooltip/) element.
-   * @deprecated Use `slotProps.tooltip.classes` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  TooltipClasses: PropTypes.object,
-  /**
-   * Make the tooltip always visible when the SpeedDial is open.
-   * @default false
-   * @deprecated Use `slotProps.tooltip.open` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  tooltipOpen: PropTypes.bool,
-  /**
-   * Placement of the tooltip.
-   * @default 'left'
-   * @deprecated Use `slotProps.tooltip.placement` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  tooltipPlacement: PropTypes.oneOf([
-    'auto-end',
-    'auto-start',
-    'auto',
-    'bottom-end',
-    'bottom-start',
-    'bottom',
-    'left-end',
-    'left-start',
-    'left',
-    'right-end',
-    'right-start',
-    'right',
-    'top-end',
-    'top-start',
-    'top',
-  ]),
-  /**
-   * Label to display in the tooltip.
-   * @deprecated Use `slotProps.tooltip.title` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  tooltipTitle: PropTypes.node,
 };
 
 export default SpeedDialAction;

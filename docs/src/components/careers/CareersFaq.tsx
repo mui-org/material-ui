@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -9,9 +8,9 @@ import KeyboardArrowDownRounded from '@mui/icons-material/KeyboardArrowDownRound
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetail from '@mui/material/AccordionDetails';
-import { MarkdownElement } from '@mui/docs/MarkdownElement';
+import { MarkdownElement } from '@mui/internal-core-docs/MarkdownDocs';
 import { createRender } from '@mui/internal-markdown';
-import { Link } from '@mui/docs/Link';
+import { Link } from '@mui/internal-core-docs/Link';
 import Section from 'docs/src/layouts/Section';
 
 const Accordion = styled(MuiAccordion)(({ theme }) => ({
@@ -69,36 +68,31 @@ const faqData = [
   {
     summary: 'Does MUI do whiteboarding during interviews?',
     detail:
-      'No. We ask applicants to complete challenges that are close to their future day-to-day contributions.',
+      'No. We ask applicants to complete challenges that resemble the kinds of contributions we would expect from the role.',
   },
   {
-    summary: 'Contractor or Employee?',
+    summary: 'Would I be hired as an employee or contractor?',
     detail: `
-  People joining MUI have the choice between joining:
+  New team members can choose whether to join as an employee or a contractor. The legal requirements may vary significantly between countries, but we've designed our compensation packages to minimize the differences between each type of contract. You can also switch between the two statuses if and when your circumstances change.
 
-  - under an "employee" legal type of contract
-  - under a "contractor" legal type of contract
+  For those who choose to join as employees:
 
-  This is up to you. This is also not set in stone, you can change it later on [Raising a change of employment request](https://www.notion.so/Raising-a-change-of-employment-request-bac24a7a73f0413c8036b2640e1df9ae?pvs=21). We design the benefits so that there are as few differences as possible between each type of contract. 
-
-  For those that chose the "employee":
-
-  - people in France are hired as full-time employees under the French [legal entity](https://www.infogreffe.fr/entreprise-societe/852357748-material-ui-750119B189960000.html).
-  - people outside of France are hired through an Employer of Record (EOR), for example, Deel: https://www.deel.com/.
+  - people in France are hired as full-time employees under the French [legal entity](https://www.infogreffe.fr/entreprise-societe/852357748-material-ui-750119B189960000).
+  - people outside of France are hired through an Employer of Record (EOR) such as [Deel](https://www.deel.com/).
 `,
   },
   {
     summary: 'Which countries does MUI hire from?',
     detail: `
-We hire from as many countries as possible. However, we have a few limitations:
+  As a general rule, we can hire from any country where we can legally compensate you. This includes countries where:
 
-- We favor candidates working normal hours in the UTC-6 to UTC+5 timezone range. It's not a hard requirement though. This helps us find synchronous time, e.g. for bonding.
-- We can't hire people who have a fiscal residency in Russia. If you are impacted, you would need to relocate to a different country. We don't want to help fund the current government in place.
+  - [we can send money via Wise](https://wise.com/help/articles/2571942/what-countries-can-i-send-to)
+  - [we can use Deel as an EOR](https://help.letsdeel.com/hc/en-gb/articles/4407737728273-Where-Is-Deel-Available)
 
-**Countries with complications**
+  Beyond that, we do have some limitations:
 
-  - Bank accounts in countries we can send money to with our Wise account https://wise.com/help/articles/2571942/what-countries-can-i-send-to
-  - Countries we can use Deel in: https://help.letsdeel.com/hc/en-gb/articles/4407737728273-Where-Is-Deel-Available
+  - We favor candidates working normal hours in the UTC-6 to UTC+5 timezone range. This isn't a hard requirement, but it greatly simplifies communication and collaboration.
+  - We can't hire fiscal residents of Russia due to legal and ethical constraints.
 `,
   },
   {
@@ -106,25 +100,25 @@ We hire from as many countries as possible. However, we have a few limitations:
     detail: `At present, MUI does not provide visa sponsorship for individuals applying for new roles within the company. Candidates must already possess legal authorization to work in the country for which they're applying to be considered for employment.`,
   },
   {
-    summary: 'How would you describe the culture?',
+    summary: 'How would you describe the company culture?',
     detail: `
-We are documenting our [Company culture](https://www.notion.so/Company-culture-8c295a7b95564f2da03aca6759413391?pvs=21). This culture is not frozen in time, it evolves based on the needs of the organization and the opportunities we find to improve it. Assuming that most people's behavior hardly changes over time, we filter the candidates based on how we want the culture to look.
+  We aim to build a team of people who:
 
-Compared to other company cultures, we aim to build a team of people who:
+  - **seek accuracy over complacency.** People who enjoy discovering the truth more than being right. People who appreciate debate, embrace confusion, and reason carefully.
+  - **aim for clarity of thought.** People who take the time to understand the problem before solving it. People who can explain complex ideas in simple terms, and know how to tailor their communication to their audience.
+  - **possess self-determination.** People who are motivated to set their own goals and work towards them. People who can manage their own time and priorities, and don't wait to be told what to do.
+  - **view challenges as opportunities.** People who don't stop when things get tough—on the contrary, that's when the work starts to get really interesting.
 
-- **seeking correctness over complacency.** People who enjoy discovering the truth a lot more than being right. People who enjoy debate, embrace confusion, and reason with probabilistic models.
-- **aim for clarity of thoughts.** This is the foundation for any great teamwork.
-- **have self-determination.** They don't stop when it becomes hard, on the contrary, it's when things start to be interesting for them.
-- **see opportunities anywhere there is a struggle.** We are optimistic about the future, and we enjoy helping the people around us.
+  See [company culture](https://www.notion.so/Company-culture-8c295a7b95564f2da03aca6759413391?pvs=21) in our handbook to learn more.
 `,
   },
   {
     summary: 'Can I use AI during the hiring process?',
     detail: `
-We don't allow AI tools anytime we test skills for which candidates wouldn't be able to use AI in the role. For example, debating the pros and cons of a decision.
-
-However, we allow candidates to use AI tools when applied to solve problems they would also use AI to solve in the role. For example, writing code.
-    `,
+  When testing candidates, we aim to simulate the actual conditions they would work in. You may use generative AI tools during the hiring process in the same way you might use them in your day-to-day work—for example, to speed up the process of writing boilerplate code. 
+    
+  However, we ask that you don't use AI to generate complete solutions to technical challenges, nor to replace your own decision-making. We need to see your thought process and problem-solving skills—not the output of a machine learning model.
+`,
   },
 ];
 
@@ -189,14 +183,15 @@ export default function CareersFaq() {
           >
             <Box sx={{ textAlign: 'left' }}>
               <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                Got any questions unanswered or need more help?
+                Still have questions?
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ color: 'text.secondary', my: 1, textAlign: 'left' }}>
-              We&apos;re here to help you with any other question you have about our hiring process.
+              Feel free to reach out with any other questions you might have about our hiring
+              process.
             </Typography>
             <Link href="mailto:job@mui.com" variant="body2">
-              Contact us <KeyboardArrowRightRounded fontSize="small" />
+              Email us <KeyboardArrowRightRounded fontSize="small" />
             </Link>
           </Paper>
         </Grid>

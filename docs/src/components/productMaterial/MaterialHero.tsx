@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { extendTheme, CssVarsProvider } from '@mui/material/styles';
+import { extendTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -52,16 +52,16 @@ import Badge from '@mui/material/Badge';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import IconImage from 'docs/src/components/icon/IconImage';
+import IconImage from '@mui/internal-core-docs/IconImage';
 import HeroContainer from 'docs/src/layouts/HeroContainer';
 import GetStartedButtons from 'docs/src/components/home/GetStartedButtons';
 import GradientText from 'docs/src/components/typography/GradientText';
-import { getDesignTokens } from '@mui/docs/branding';
-import { Link } from '@mui/docs/Link';
-import ROUTES from 'docs/src/route';
+import { getDesignTokens } from '@mui/internal-core-docs/branding';
+import { Link } from '@mui/internal-core-docs/Link';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 
 function Checkboxes() {
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+  const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
   return (
     <React.Fragment>
       <Checkbox {...label} defaultChecked />
@@ -159,7 +159,7 @@ function BadgeVisibilityDemo() {
   );
 }
 function SwitchToggleDemo() {
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const label = { slotProps: { input: { 'aria-label': 'Switch demo' } } };
   return (
     <Box
       sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
@@ -273,8 +273,8 @@ export default function MaterialHero() {
         overflow: 'hidden', // the components on the Hero section are mostly illustrative, even though they're interactive. That's why scrolling is disabled.
       }}
       right={
-        <CssVarsProvider theme={customTheme}>
-          <Paper sx={{ maxWidth: 780, p: 2, mb: 4 }}>
+        <ThemeProvider theme={customTheme}>
+          <Paper sx={{ maxWidth: 772, p: 2, mb: 4 }}>
             <Stepper activeStep={1}>
               <Step>
                 <StepLabel>Search for React UI libraries</StepLabel>
@@ -487,7 +487,7 @@ export default function MaterialHero() {
               </Card>
             </Stack>
           </Box>
-        </CssVarsProvider>
+        </ThemeProvider>
       }
     />
   );

@@ -35,6 +35,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Stack/Stack.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-stack/\">Stack</a></li></ul>",
-  "cssComponent": true
+  "demos": "<ul><li><a href=\"/material-ui/react-stack/\">Stack</a></li></ul>"
 }

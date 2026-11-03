@@ -1,12 +1,14 @@
 # TypeScript
 
-<p class="description">You can add static typing to JavaScript to improve developer productivity and code quality thanks to TypeScript.</p>
+<p class="description">You can add static typing to JavaScript to improve developer productivity and code quality, thanks to TypeScript.</p>
 
 ## Minimum configuration
 
 <!-- #target-branch-reference -->
 
-Material UI requires a minimum version of TypeScript 4.9. Have a look at the [Vite.js with TypeScript](https://github.com/mui/material-ui/tree/master/examples/material-ui-vite-ts) example.
+Material UI supports TypeScript 5 and later.
+
+Have a look at the [Vite.js with TypeScript](https://github.com/mui/material-ui/tree/master/examples/material-ui-vite-ts) example.
 
 For types to work, it's recommended that you have at least the following options enabled in your `tsconfig.json`:
 
@@ -41,6 +43,38 @@ The demos include typed variants that use type casting.
 It is an acceptable tradeoff because the types are all located in a single file and are very basic.
 You have to decide for yourself if the same tradeoff is acceptable for you.
 The library types are strict by default and loose via opt-in.
+
+## Allowing `data-*` attributes on `slotProps`
+
+By default, slot prop types reject arbitrary `data-*` attributes, even though they are forwarded to the DOM at runtime.
+This keeps the typed surface tight and catches typos.
+Augment the `DataAttributesOverrides` interface to allow `data-*` attributes (such as test locators like `data-testid`) on `slotProps`:
+
+```ts
+// Accept any data-* attribute on every slot.
+declare module '@mui/material/utils' {
+  interface DataAttributesOverrides {
+    [key: `data-${string}`]: string | number | boolean | undefined;
+  }
+}
+```
+
+The `data-*` attributes then type-check on any component's `slotProps`:
+
+```tsx
+<Badge slotProps={{ badge: { 'data-testid': 'badge' } }} />
+```
+
+For a stricter contract, declare only the keys you use.
+You then get autocomplete and typo-checking for them, at the cost of listing each one:
+
+```ts
+declare module '@mui/material/utils' {
+  interface DataAttributesOverrides {
+    'data-testid'?: string;
+  }
+}
+```
 
 ## Customization of `Theme`
 

@@ -4,6 +4,7 @@
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "icon": { "type": { "name": "node" } },
     "label": { "type": { "name": "node" } },
+    "selected": { "type": { "name": "bool" } },
     "showLabel": { "type": { "name": "bool" } },
     "slotProps": {
       "type": {
@@ -64,6 +65,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/BottomNavigationAction/BottomNavigationAction.js",
   "inheritance": { "component": "ButtonBase", "pathname": "/material-ui/api/button-base/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-bottom-navigation/\">Bottom Navigation</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-bottom-navigation/\">Bottom Navigation</a></li></ul>"
 }

@@ -16,6 +16,7 @@
     "disabled": { "type": { "name": "bool" }, "default": "false" },
     "icon": { "type": { "name": "element" } },
     "label": { "type": { "name": "node" } },
+    "nativeButton": { "type": { "name": "bool" } },
     "onDelete": { "type": { "name": "func" } },
     "size": {
       "type": {
@@ -75,52 +76,10 @@
       "isGlobal": false
     },
     {
-      "key": "avatarColorPrimary",
-      "className": "MuiChip-avatarColorPrimary",
-      "description": "Styles applied to the avatar element if `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "avatarColorSecondary",
-      "className": "MuiChip-avatarColorSecondary",
-      "description": "Styles applied to the avatar element if `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "avatarMedium",
-      "className": "MuiChip-avatarMedium",
-      "description": "Styles applied to the avatar element if `size=\"medium\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "avatarSmall",
-      "className": "MuiChip-avatarSmall",
-      "description": "Styles applied to the avatar element if `size=\"small\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "clickable",
       "className": "MuiChip-clickable",
       "description": "Styles applied to the root element if `onClick` is defined or `clickable={true}`.",
       "isGlobal": false
-    },
-    {
-      "key": "clickableColorPrimary",
-      "className": "MuiChip-clickableColorPrimary",
-      "description": "Styles applied to the root element if `onClick` and `color=\"primary\"` is defined or `clickable={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "clickableColorSecondary",
-      "className": "MuiChip-clickableColorSecondary",
-      "description": "Styles applied to the root element if `onClick` and `color=\"secondary\"` is defined or `clickable={true}`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "colorDefault",
@@ -171,80 +130,10 @@
       "isGlobal": false
     },
     {
-      "key": "deletableColorPrimary",
-      "className": "MuiChip-deletableColorPrimary",
-      "description": "Styles applied to the root element if `onDelete` and `color=\"primary\"` is defined.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deletableColorSecondary",
-      "className": "MuiChip-deletableColorSecondary",
-      "description": "Styles applied to the root element if `onDelete` and `color=\"secondary\"` is defined.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "deleteIcon",
       "className": "MuiChip-deleteIcon",
       "description": "Styles applied to the deleteIcon element.",
       "isGlobal": false
-    },
-    {
-      "key": "deleteIconColorPrimary",
-      "className": "MuiChip-deleteIconColorPrimary",
-      "description": "Styles applied to the deleteIcon element if `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconColorSecondary",
-      "className": "MuiChip-deleteIconColorSecondary",
-      "description": "Styles applied to the deleteIcon element if `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconFilledColorPrimary",
-      "className": "MuiChip-deleteIconFilledColorPrimary",
-      "description": "Styles applied to the deleteIcon element if `color=\"primary\"` and `variant=\"filled\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconFilledColorSecondary",
-      "className": "MuiChip-deleteIconFilledColorSecondary",
-      "description": "Styles applied to the deleteIcon element if `color=\"secondary\"` and `variant=\"filled\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconMedium",
-      "className": "MuiChip-deleteIconMedium",
-      "description": "Styles applied to the deleteIcon element if `size=\"medium\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconOutlinedColorPrimary",
-      "className": "MuiChip-deleteIconOutlinedColorPrimary",
-      "description": "Styles applied to the deleteIcon element if `color=\"primary\"` and `variant=\"outlined\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconOutlinedColorSecondary",
-      "className": "MuiChip-deleteIconOutlinedColorSecondary",
-      "description": "Styles applied to the deleteIcon element if `color=\"secondary\"` and `variant=\"outlined\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "deleteIconSmall",
-      "className": "MuiChip-deleteIconSmall",
-      "description": "Styles applied to the deleteIcon element if `size=\"small\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "disabled",
@@ -259,20 +148,6 @@
       "isGlobal": false
     },
     {
-      "key": "filledPrimary",
-      "className": "MuiChip-filledPrimary",
-      "description": "Styles applied to the root element if `variant=\"filled\"` and `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "filledSecondary",
-      "className": "MuiChip-filledSecondary",
-      "description": "Styles applied to the root element if `variant=\"filled\"` and `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "focusVisible",
       "className": "Mui-focusVisible",
       "description": "State class applied to the root element if keyboard focused.",
@@ -285,66 +160,10 @@
       "isGlobal": false
     },
     {
-      "key": "iconColorPrimary",
-      "className": "MuiChip-iconColorPrimary",
-      "description": "Styles applied to the icon element if `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "iconColorSecondary",
-      "className": "MuiChip-iconColorSecondary",
-      "description": "Styles applied to the icon element if `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "iconMedium",
-      "className": "MuiChip-iconMedium",
-      "description": "Styles applied to the icon element if `size=\"medium\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "iconSmall",
-      "className": "MuiChip-iconSmall",
-      "description": "Styles applied to the icon element if `size=\"small\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "labelMedium",
-      "className": "MuiChip-labelMedium",
-      "description": "Styles applied to the label `span` element if `size=\"medium\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "labelSmall",
-      "className": "MuiChip-labelSmall",
-      "description": "Styles applied to the label `span` element if `size=\"small\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "outlined",
       "className": "MuiChip-outlined",
       "description": "Styles applied to the root element if `variant=\"outlined\"`.",
       "isGlobal": false
-    },
-    {
-      "key": "outlinedPrimary",
-      "className": "MuiChip-outlinedPrimary",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "outlinedSecondary",
-      "className": "MuiChip-outlinedSecondary",
-      "description": "Styles applied to the root element if `variant=\"outlined\"` and `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "sizeMedium",
@@ -365,6 +184,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Chip/Chip.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-chip/\">Chip</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-chip/\">Chip</a></li></ul>"
 }

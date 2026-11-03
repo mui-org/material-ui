@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { spy } from 'sinon';
-import { createRenderer, fireEvent } from '@mui/internal-test-utils';
+import { createRenderer, fireEvent, screen } from '@mui/internal-test-utils';
 import BottomNavigation, {
   bottomNavigationClasses as classes,
 } from '@mui/material/BottomNavigation';
@@ -28,7 +27,7 @@ describe('<BottomNavigation />', () => {
       muiName: 'MuiBottomNavigation',
       refInstanceof: window.HTMLDivElement,
       testComponentPropWith: 'span',
-      skip: ['componentsProp', 'themeVariants'],
+      skip: ['themeVariants'],
     }),
   );
 
@@ -55,14 +54,15 @@ describe('<BottomNavigation />', () => {
   });
 
   it('should overwrite parent showLabel prop adding class iconOnly', () => {
-    const { getByTestId } = render(
+    render(
       <BottomNavigation showLabels>
         <BottomNavigationAction icon={icon} data-testid="withLabel" />
         <BottomNavigationAction icon={icon} showLabel={false} data-testid="withoutLabel" />
       </BottomNavigation>,
     );
-    expect(getByTestId('withLabel')).not.to.have.class(actionClasses.iconOnly);
-    expect(getByTestId('withoutLabel')).to.have.class(actionClasses.iconOnly);
+
+    expect(screen.getByTestId('withLabel')).not.to.have.class(actionClasses.iconOnly);
+    expect(screen.getByTestId('withoutLabel')).to.have.class(actionClasses.iconOnly);
   });
 
   it('should forward the click', () => {
@@ -100,10 +100,10 @@ describe('<BottomNavigation />', () => {
       </BottomNavigation>,
     );
     fireEvent.click(getBottomNavigation(container).childNodes[0]);
-    expect(handleChange.args[0][1], '');
+    expect(handleChange.args[0][1]).to.equal('');
     fireEvent.click(getBottomNavigation(container).childNodes[1]);
-    expect(handleChange.args[1][1], 1);
+    expect(handleChange.args[1][1]).to.equal(1);
     fireEvent.click(getBottomNavigation(container).childNodes[2]);
-    expect(handleChange.args[2][1], '');
+    expect(handleChange.args[2][1]).to.equal(null);
   });
 });

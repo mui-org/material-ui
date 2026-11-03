@@ -4,37 +4,32 @@
 
 ## Details of the role
 
-- **Location**: Remote (preference for UTC-6 to UTC+5).
-- **Type of work**: Full-time (contractor or employee [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
-- **Level**: [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
-- We're a **remote** company, we prefer asynchronous communication over meetings.
+- **Location:** Remote (preference for UTC-6 to UTC+5).
+- **Type of work:** Full-time (employee or contractor [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
+- **Level:** [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
+- We're a **remote** company, operating mostly asynchronously.
 
-## About the company
+## The company
 
-MUI started with Material UI, the most successful React implementation of Google's Material Design.
-It has gained a large following, not only due to its fidelity to Material Design, but also because of the number of components, its carefully designed component API, its obsession with details, and community engagement.
-Today, countless teams and organizations rely on our open-source projects to build their design system.
+MUI's story began in 2014 with Material UI, the most successful React implementation of Google's Material Design.
+This open-source project has paved the way for the fully-fledged startup known as MUI (founded in 2019), which now boasts an ever-expanding ecosystem of React UI products.
+We're a company of 40 people as of 2026, and we're growing steadily.
 
-A couple of years ago, we started to expand our suite of products.
-We released [MUI X](https://mui.com/x/), a collection of advanced components; [MUI Design Kits](https://mui.com/design-kits/), the MUI components available for Figma, Sketch, etc.; and also host [Templates](https://mui.com/templates/), a set of pre-built UI kits.
-We've seen rapid growth with all of them (2x per year) and we have more to come.
-We are building [a low-code platform](https://mui.com/toolpad/) for developers to significantly increase the speed and lower the barrier for creating simple CRUD/dashboard UIs with MUI's libraries.
+## The products
 
-We are a fully distributed team, spread across multiple time zones.
-We work mainly asynchronously, relying mostly on written collaboration.
-Every contributor has the freedom to define how they work — the rest of us won't know what you're doing day-to-day unless you tell us.
-For additional details about the culture, you can check our [careers](https://mui.com/careers/) and [about](https://mui.com/about/) pages and also our [public Handbook](https://mui-org.notion.site/Handbook-f086d47e10794d5e839aef9dc67f324b).
+MUI is best known for our flagship product, Material UI—but this is just one of the UI libraries we maintain.
+Material UI is complemented by advanced components through MUI X (Data Grid, Charts, Date and Time Pickers, Tree View) for more complex user interactions and data visualization needs.
+Base UI is our headless component library.
+We also host Design Kits and pre-built Templates.
 
-## Why we're hiring
+## The culture
 
-Our mission is to empower as many people as possible to build great UIs, faster.
-The faster and simpler it is, and the broader the audience that can create custom UIs, the better.
-We believe that the best way to improve on these dimensions is to eliminate [80%](https://www.youtube.com/watch?v=GnO7D5UaDig&t=2451s) of the code that has to be written.
+MUI is a fully remote company with a team that spans the globe.
+The majority of our work is asynchronous, and we rely on written communication to collaborate.
+We're radically transparent: a lot of our work happens in public.
+Each contributor has the freedom to decide how and when they work, and that work is primarily self-directed: it's your responsibility to define and complete your own tasks in a timely manner.
 
-We're in the early stages of exploring what our role could be in the currently emerging low-code space. We've assembled a team to work on a new product and plan to bring it to market in 2022. We have made our initial research and need help to accelerate the development of our MVP.
-
-Overall, both our open-source community and our premium products are growing fast.
-We need talented people to keep up with the demands of our exigent community!
+For additional details about the culture, you can check our [careers](https://mui.com/careers/) and [about](https://mui.com/about/) pages and also our [public Handbook](https://mui-org.notion.site).
 
 ## The role
 
@@ -95,15 +90,20 @@ We're looking for someone with both strong front-end and back-end skills. More i
 
 ## Benefits and compensation
 
-Competitive compensation depending on the profile and location.
-We are ready to pay top market rates for a person who can clearly exceed the role's expectations.
-You can find the other perks & benefits on the [careers](https://mui.com/careers/#perks-and-benefits) page.
+We offer competitive compensation commensurate with your experience level and location and are prepared to pay top market rates for someone who can clearly exceed the role's expectations.
+You can find the other perks and benefits on the [careers](https://mui.com/careers/#perks-and-benefits) page.
 
 ## How to apply
 
 [Apply now for this position 📮](https://jobs.ashbyhq.com/MUI/4f76b45b-a18e-4bdb-8a34-8bb5a3c9c2ef/application?utm_source=ZNRrPGBkqO)
 
-## What happens next?
+Don't meet every requirement?
+Apply anyway!
+Research shows that certain folks are less likely to apply for a role than others [unless they meet 100%](https://hbr.org/2014/08/why-women-dont-apply-for-jobs-unless-theyre-100-qualified) of the outlined qualifications.
+If this role excites you, we want to hear from you.
+We'd love for you to share the unique skills, passion, and experience you could bring to MUI.
+
+## Interview process
 
 We start by screening applications, looking for candidates that showcase the desired skills and experience. If your application stands out, we'll contact you for a get-to-know conversation, where we'll meet each other.
 
@@ -115,11 +115,3 @@ If that goes well, you'll be invited to up to four additional conversations, tho
 - A possible follow-up chat if we missed addressing anything relevant in the previous conversations.
 
 All these conversations will be 1:1 and over video chat. Please ask as many questions as you wish throughout the whole process, it's a two-way discussion. If you happen to need additional conversations as well, feel free to ask; we'll be happy to schedule them. Lastly, please note that we're unable to offer individual feedback during the initial screening process, as we're a small team and don't have the bandwidth to do so.
-
-We look forward to hearing from you! ☺️
-
-Don't meet every requirement?
-Apply anyway!
-Research shows that certain folks are less likely to apply for a role than others [unless they meet 100%](https://hbr.org/2014/08/why-women-dont-apply-for-jobs-unless-theyre-100-qualified) of the outlined qualifications.
-If this role excites you, we want to hear from you.
-We'd love for you to share the unique skills, passion, and experience you could bring to MUI.

@@ -1,6 +1,6 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
 import { EOL } from 'os';
-import { expect } from 'chai';
 import jscodeshift from 'jscodeshift';
 import transform from './theme-spacing-api';
 import readFile from '../util/readFile';

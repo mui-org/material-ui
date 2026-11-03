@@ -12,21 +12,21 @@ export interface ImageListItemOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<ImageListItemClasses>;
+  classes?: Partial<ImageListItemClasses> | undefined;
   /**
    * Width of the item in number of grid columns.
    * @default 1
    */
-  cols?: number;
+  cols?: number | undefined;
   /**
    * Height of the item in number of grid rows.
    * @default 1
    */
-  rows?: number;
+  rows?: number | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface ImageListItemTypeMap<
@@ -40,11 +40,11 @@ export interface ImageListItemTypeMap<
  *
  * Demos:
  *
- * - [Image List](https://mui.com/material-ui/react-image-list/)
+ * - [Image List](https://next.mui.com/material-ui/react-image-list/)
  *
  * API:
  *
- * - [ImageListItem API](https://mui.com/material-ui/api/image-list-item/)
+ * - [ImageListItem API](https://next.mui.com/material-ui/api/image-list-item/)
  */
 declare const ImageListItem: OverridableComponent<ImageListItemTypeMap>;
 
@@ -52,7 +52,7 @@ export type ImageListItemProps<
   RootComponent extends React.ElementType = ImageListItemTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<ImageListItemTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default ImageListItem;

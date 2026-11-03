@@ -4,14 +4,13 @@
     "allowJs": true,
     "isolatedModules": true,
     "moduleResolution": "bundler",
-    /* files are emitted by babel */
-    "baseUrl": "../",
     "noEmit": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "incremental": true
+    "incremental": true,
+    "jsx": "preserve"
   },
   "include": ["next-env.d.ts", "next.config.ts", "types", "src", "pages", "data"],
   "exclude": ["docs/.next", "docs/export", "node_modules"]

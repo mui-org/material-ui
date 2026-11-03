@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { PropTypeDefinition, PropTypesComponent, PropType, LiteralType } from './models';
+import partition from 'es-toolkit/compat/partition';
+import type { PropTypeDefinition, PropTypesComponent, PropType, LiteralType } from './models';
 import { createDOMElementType, createBooleanType, uniqueUnionTypes } from './createType';
 
 export interface GeneratePropTypesOptions {
@@ -34,6 +34,10 @@ export interface GeneratePropTypesOptions {
    * Previous source code of the validator for each prop type
    */
   previousPropTypesSource?: Map<string, string>;
+  /**
+   * Previous JSDoc comment source for each prop type
+   */
+  previousPropTypesJsDoc?: Map<string, string>;
   /**
    * Given the `prop`, the `previous` source of the validator and the `generated` source:
    * What source should be injected? `previous` is `undefined` if the validator
@@ -108,6 +112,7 @@ export function generatePropTypes(
     includeJSDoc = true,
     sortProptypes = true,
     previousPropTypesSource = new Map<string, string>(),
+    previousPropTypesJsDoc = new Map<string, string>(),
     reconcilePropTypes = (_prop: PropTypeDefinition, _previous: string, generated: string) =>
       generated,
     shouldInclude,
@@ -228,7 +233,7 @@ export function generatePropTypes(
         );
       }
 
-      let [literals, rest] = _.partition(
+      let [literals, rest] = partition(
         isOptional ? nonNullishUniqueTypes : uniqueTypes,
         (type): type is LiteralType => type.type === 'LiteralNode',
       );
@@ -306,7 +311,13 @@ export function generatePropTypes(
       })}${isRequired === true ? '.isRequired' : ''}`,
     );
 
-    return `${jsDoc(propTypeDefinition)}"${propTypeDefinition.name}": ${validatorSource},`;
+    const previousJsDoc = previousPropTypesJsDoc.get(propTypeDefinition.name);
+    const jsDocSource =
+      previousJsDoc !== undefined && validatorSource.includes('@typescript-to-proptypes-ignore')
+        ? `${previousJsDoc}\n`
+        : jsDoc(propTypeDefinition);
+
+    return `${jsDocSource}"${propTypeDefinition.name}": ${validatorSource},`;
   }
 
   const propTypes = component.types.slice();

@@ -9,7 +9,7 @@ manualCard: true
 
 <img src="/static/blog/material-ui-is-now-mui/intro.png" alt="The new Material UI logo" width="2400" height="800" />
 
-Starting today we are evolving our brand identity to clarifying the difference between our company and our products.
+Starting today, we are evolving our brand identity to clarify the difference between our company and our products.
 
 - Material-UI: the Material Design components developed by MUI is now called **[Material UI](https://mui.com/material-ui/getting-started/)**, we ditched the hyphen!
 - Material-UI: the organization is now called **[MUI](https://github.com/mui)**.
@@ -53,7 +53,7 @@ We are breaking the strong association with Material Design
 as we have seen too many people confusing Material UI with Google or as a synonym of Material Design.
 
 We are now called **MUI**. It stands for **M**aterial to build **UI**s
-and is pronounced [/ɛm juː aɪ/](http://ipa-reader.xyz/?text=%C9%9Bmju%CB%90a%C9%AA).
+and is pronounced [/ɛm juː aɪ/](https://ipa-reader.com/?text=%C9%9Bmju%CB%90a%C9%AA).
 
 It's shorter, it distinguishes us, and it's familiar – many people already used it for abbreviating Material UI.
 More importantly, it allows for the release of products not directly coupled to Material Design, such as an unstyled/headless version of the components, a brand new second design system as an alternative to MD, and more ambitious initiatives.

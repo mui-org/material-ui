@@ -29,9 +29,9 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - run: echo "${{ github.actor }}"
+      - run: echo '${{ github.actor }}'
       - name: Check if prs are dirty
-        uses: eps1lon/actions-label-merge-conflict@1df065ebe6e3310545d4f4c4e862e43bdca146f0 # v3.0.3
+        uses: eps1lon/actions-label-merge-conflict@0273be72a0bbd58fcd71d0d6c02c209b50d1e5e1 # v3.1.0
         with:
           dirtyLabel: 'PR: out-of-date'
           removeOnDirtyLabel: 'PR: ready to ship'

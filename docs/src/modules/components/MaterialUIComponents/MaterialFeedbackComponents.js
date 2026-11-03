@@ -1,6 +1,5 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import ComponentShowcaseCard from 'docs/src/components/action/ComponentShowcaseCard';
+import { ComponentShowcaseCard } from '@mui/internal-core-docs/AppLayout';
 
 const feedbackComponents = [
   {
@@ -8,16 +7,6 @@ const feedbackComponents = [
     srcLight: '/static/material-ui/react-components/alert-light.png',
     srcDark: '/static/material-ui/react-components/alert-dark.png',
     link: '/material-ui/react-alert/',
-    md1: false,
-    md2: false,
-    md3: false,
-    noGuidelines: true,
-  },
-  {
-    name: 'Backdrop',
-    srcLight: '/static/material-ui/react-components/backdrop-light.png',
-    srcDark: '/static/material-ui/react-components/backdrop-dark.png',
-    link: '/material-ui/react-backdrop/',
     md1: false,
     md2: false,
     md3: false,

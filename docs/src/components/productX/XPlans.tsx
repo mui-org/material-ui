@@ -1,13 +1,12 @@
-import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
 import GradientText from 'docs/src/components/typography/GradientText';
-import ROUTES from 'docs/src/route';
-import { InfoCard } from '@mui/docs/InfoCard';
-import IconImage from 'docs/src/components/icon/IconImage';
+import { ROUTES } from '@mui/internal-core-docs/constants';
+import { InfoCard } from '@mui/internal-core-docs/InfoCard';
+import IconImage from '@mui/internal-core-docs/IconImage';
 import GetStartedButtons from 'docs/src/components/home/GetStartedButtons';
 
 const content = [
@@ -37,7 +36,7 @@ const content = [
 export default function XPlans2() {
   return (
     <Section cozy>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} sx={{ alignItems: 'center' }}>
         <Grid size={{ md: 6 }}>
           <SectionHeadline
             overline="Plans"

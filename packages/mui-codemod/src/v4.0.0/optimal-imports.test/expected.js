@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { withTheme, withStyles, createTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tab from '@material-ui/core/Tab';

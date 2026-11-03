@@ -1,5 +1,5 @@
-import { DistributiveOmit } from '@mui/types';
-import { StyledComponentProps } from '../styles';
+import type { DistributiveOmit } from '@mui/types';
+import type { StyledComponentProps } from '../styles';
 
 /**
  * @internal
@@ -15,8 +15,10 @@ export type InternalStandardProps<
 > = DistributiveOmit<ComponentProps, 'classes' | Removals> &
   // each component declares it's classes in a separate interface for proper JSDoc
   StyledComponentProps<never> & {
-    ref?: ComponentProps extends { ref?: infer RefType } ? RefType : React.Ref<unknown>;
+    ref?:
+      | (ComponentProps extends { ref?: infer RefType | undefined } ? RefType : React.Ref<unknown>)
+      | undefined;
     // TODO: Remove implicit props. Up to each component.
-    className?: string;
-    style?: React.CSSProperties;
+    className?: string | undefined;
+    style?: React.CSSProperties | undefined;
   };

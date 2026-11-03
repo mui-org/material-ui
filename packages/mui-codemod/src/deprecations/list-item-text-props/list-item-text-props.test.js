@@ -1,5 +1,5 @@
+import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { expect } from 'chai';
 import { jscodeshift } from '../../../testUtils';
 import transform from './list-item-text-props';
 import readFile from '../../util/readFile';

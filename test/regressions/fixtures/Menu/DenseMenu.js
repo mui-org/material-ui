@@ -35,7 +35,7 @@ export default function DenseMenu() {
         </MenuItem>
         <Divider />
         <MenuItem>
-          <ListItemText>Custom spacing...</ListItemText>
+          <ListItemText>Custom spacing…</ListItemText>
         </MenuItem>
       </MenuList>
     </Paper>

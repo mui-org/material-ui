@@ -5,13 +5,21 @@
     "color": {
       "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
     },
+    "max": {
+      "description": "The maximum value for the progress indicator for the determinate and buffer variants."
+    },
+    "min": {
+      "description": "The minimum value for the progress indicator for the determinate and buffer variants."
+    },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },
     "value": {
-      "description": "The value of the progress indicator for the determinate and buffer variants. Value between 0 and 100."
+      "description": "The value of the progress indicator for the determinate and buffer variants. Value between <code>min</code> and <code>max</code>."
     },
-    "valueBuffer": { "description": "The value for the buffer variant. Value between 0 and 100." },
+    "valueBuffer": {
+      "description": "The value for the buffer variant. Value between <code>min</code> and <code>max</code>."
+    },
     "variant": {
       "description": "The variant to use. Use indeterminate or query when there is no progress value."
     }
@@ -22,49 +30,7 @@
       "nodeName": "the layered bar1 and bar2 elements"
     },
     "bar1": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the bar1 element" },
-    "bar1Buffer": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar1 element",
-      "conditions": "<code>variant=\"buffer\"</code>",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar1\">.MuiLinearProgress-bar1</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-buffer\">.MuiLinearProgress-buffer</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "bar1Determinate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar1 element",
-      "conditions": "<code>variant=\"determinate\"</code>",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar1\">.MuiLinearProgress-bar1</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-determinate\">.MuiLinearProgress-determinate</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "bar1Indeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar1 element",
-      "conditions": "<code>variant=\"indeterminate or query\"</code>",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar1\">.MuiLinearProgress-bar1</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-indeterminate\">.MuiLinearProgress-indeterminate</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
     "bar2": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the bar2 element" },
-    "bar2Buffer": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar2 element",
-      "conditions": "<code>variant=\"buffer\"</code>",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar2\">.MuiLinearProgress-bar2</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-buffer\">.MuiLinearProgress-buffer</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "bar2Indeterminate": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar2 element",
-      "conditions": "<code>variant=\"indeterminate or query\"</code>",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar2\">.MuiLinearProgress-bar2</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-indeterminate\">.MuiLinearProgress-indeterminate</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "barColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar elements",
-      "conditions": "<code>color=\"primary\"</code>; bar2 if <code>variant</code> not &quot;buffer&quot;",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar\">.MuiLinearProgress-bar</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-colorPrimary\">.MuiLinearProgress-colorPrimary</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "barColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the bar elements",
-      "conditions": "<code>color=\"secondary\"</code>; bar2 if <code>variant</code> not &quot;buffer&quot;",
-      "deprecationInfo": "Use the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-bar\">.MuiLinearProgress-bar</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-colorSecondary\">.MuiLinearProgress-colorSecondary</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
     "buffer": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
@@ -84,18 +50,6 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the additional bar element",
       "conditions": "<code>variant=\"buffer\"</code>"
-    },
-    "dashedColorPrimary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the additional bar element",
-      "conditions": "<code>variant=\"buffer\"</code> and <code>color=\"primary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-dashed\">.MuiLinearProgress-dashed</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-colorPrimary\">.MuiLinearProgress-colorPrimary</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
-    },
-    "dashedColorSecondary": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the additional bar element",
-      "conditions": "<code>variant=\"buffer\"</code> and <code>color=\"secondary\"</code>",
-      "deprecationInfo": "Combine the <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-dashed\">.MuiLinearProgress-dashed</a> and <a href=\"/material-ui/api/linear-progress/#linear-progress-classes-colorSecondary\">.MuiLinearProgress-colorSecondary</a> classes instead. <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">How to migrate</a>"
     },
     "determinate": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

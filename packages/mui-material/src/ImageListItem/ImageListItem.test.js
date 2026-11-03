@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { createRenderer } from '@mui/internal-test-utils';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem, { imageListItemClasses as classes } from '@mui/material/ImageListItem';
 import describeConformance from '../../test/describeConformance';
@@ -16,7 +16,7 @@ describe('<ImageListItem />', () => {
     testComponentPropWith: 'div',
     muiName: 'MuiImageListItem',
     testVariantProps: { variant: 'masonry' },
-    skip: ['componentProp', 'componentsProp'],
+    skip: ['componentProp'],
   }));
 
   const itemData = {
@@ -52,9 +52,9 @@ describe('<ImageListItem />', () => {
   describe('props:', () => {
     describe('prop: children', () => {
       it('should render children by default', () => {
-        const { getByTestId } = render(<ImageListItem>{children}</ImageListItem>);
+        render(<ImageListItem>{children}</ImageListItem>);
 
-        expect(getByTestId('test-children')).not.to.equal(null);
+        expect(screen.getByTestId('test-children')).not.to.equal(null);
       });
     });
 
@@ -67,44 +67,44 @@ describe('<ImageListItem />', () => {
 
     describe('prop: variant', () => {
       it('should render with the  woven class', () => {
-        const { getByTestId } = render(
+        render(
           <ImageList variant="woven">
             <ImageListItem data-testid="test-children" />
           </ImageList>,
         );
 
-        expect(getByTestId('test-children')).to.have.class(classes.root);
-        expect(getByTestId('test-children')).to.have.class(classes.woven);
+        expect(screen.getByTestId('test-children')).to.have.class(classes.root);
+        expect(screen.getByTestId('test-children')).to.have.class(classes.woven);
       });
     });
   });
 
   describe('classes:', () => {
     it('should render with the root and standard classes by default', () => {
-      const { getByTestId } = render(
+      render(
         <ImageList>
           <ImageListItem data-testid="test-children" />
         </ImageList>,
       );
 
-      expect(getByTestId('test-children')).to.have.class(classes.root);
-      expect(getByTestId('test-children')).to.have.class(classes.standard);
+      expect(screen.getByTestId('test-children')).to.have.class(classes.root);
+      expect(screen.getByTestId('test-children')).to.have.class(classes.standard);
     });
 
     it('should render img with the img class', () => {
-      const { getByTestId } = render(<ImageListItem>{children}</ImageListItem>);
+      render(<ImageListItem>{children}</ImageListItem>);
 
-      expect(getByTestId('test-children')).to.have.class(classes.img);
+      expect(screen.getByTestId('test-children')).to.have.class(classes.img);
     });
 
     it('should not render a non-img with the img class', () => {
-      const { getByTestId } = render(
+      render(
         <ImageListItem>
           <div data-testid="test-children" />
         </ImageListItem>,
       );
 
-      expect(getByTestId('test-children')).not.to.have.class(classes.img);
+      expect(screen.getByTestId('test-children')).not.to.have.class(classes.img);
     });
   });
 });

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import { mergeSlotProps } from '@mui/material/utils';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
-import { PaperProps } from '@mui/material/Paper';
+import type { DialogProps } from '@mui/material/Dialog';
+import Dialog from '@mui/material/Dialog';
+import type { PaperProps } from '@mui/material/Paper';
 
 const paperProps: PaperProps<'span'> = {
   component: 'span',
@@ -14,9 +15,21 @@ function Test() {
   return (
     <React.Fragment>
       <Dialog open />;
-      <Dialog open PaperProps={paperProps} />;
+      <Dialog open slotProps={{ paper: paperProps }} />;
+      <Dialog
+        open
+        slotProps={{
+          // @ts-expect-error — unknown props should be rejected
+          transition: { randomInvalidProp: 'test' },
+        }}
+      />
+      ;
     </React.Fragment>
   );
+}
+
+function DialogWithAlertRole() {
+  return <Dialog open role="alertdialog" />;
 }
 
 function Custom(props: DialogProps) {

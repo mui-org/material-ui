@@ -2,10 +2,10 @@ import { Theme } from './createTheme';
 import { Components } from './components';
 
 export interface ThemeWithProps {
-  components?: Components<Omit<Theme, 'components'>>;
+  components?: Components<Omit<Theme, 'components'>> | undefined;
 }
 
-export type ThemedProps<Theme, Name extends keyof any> = Theme extends {
+export type ThemedProps<ThemeInput, Name extends keyof any> = ThemeInput extends {
   components: Record<Name, { defaultProps: infer Props }>;
 }
   ? Props
@@ -39,7 +39,7 @@ export type ThemedProps<Theme, Name extends keyof any> = Theme extends {
  * @param params.name The name of the component as defined in the theme
  */
 export default function useThemeProps<
-  Theme extends ThemeWithProps,
+  ThemeInput extends ThemeWithProps,
   Props,
   Name extends keyof any,
->(params: { props: Props; name: Name }): Props & ThemedProps<Theme, Name>;
+>(params: { props: Props; name: Name }): Props & ThemedProps<ThemeInput, Name>;

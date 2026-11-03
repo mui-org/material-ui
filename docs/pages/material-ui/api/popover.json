@@ -20,30 +20,14 @@
       },
       "default": "'anchorEl'"
     },
-    "BackdropComponent": {
-      "type": { "name": "elementType" },
-      "default": "styled(Backdrop, {\n  name: 'MuiModal',\n  slot: 'Backdrop',\n  overridesResolver: (props, styles) => {\n    return styles.backdrop;\n  },\n})({\n  zIndex: -1,\n})",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slots.backdrop</code> instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "BackdropProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.backdrop</code> instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "container": { "type": { "name": "union", "description": "HTML element<br>&#124;&nbsp;func" } },
+    "disableAutoFocus": { "type": { "name": "bool" }, "default": "false" },
     "disableScrollLock": { "type": { "name": "bool" }, "default": "false" },
     "elevation": { "type": { "name": "custom", "description": "integer" }, "default": "8" },
     "marginThreshold": { "type": { "name": "number" }, "default": "16" },
     "onClose": { "type": { "name": "func" } },
-    "PaperProps": {
-      "type": { "name": "shape", "description": "{ component?: element type }" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "Use <code>slotProps.paper</code> instead."
-    },
     "slotProps": {
       "type": {
         "name": "shape",
@@ -72,24 +56,12 @@
       },
       "default": "{\n  vertical: 'top',\n  horizontal: 'left',\n}"
     },
-    "TransitionComponent": {
-      "type": { "name": "elementType" },
-      "default": "Grow",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slots.transition</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "transitionDuration": {
       "type": {
         "name": "union",
         "description": "'auto'<br>&#124;&nbsp;number<br>&#124;&nbsp;{ appear?: number, enter?: number, exit?: number }"
       },
       "default": "'auto'"
-    },
-    "TransitionProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.transition</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
     }
   },
   "name": "Popover",
@@ -130,6 +102,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Popover/Popover.js",
   "inheritance": { "component": "Modal", "pathname": "/material-ui/api/modal/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-menu/\">Menu</a></li>\n<li><a href=\"/material-ui/react-popover/\">Popover</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-menu/\">Menu</a></li>\n<li><a href=\"/material-ui/react-popover/\">Popover</a></li></ul>"
 }

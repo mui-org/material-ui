@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Container from 'modules/components/Container';
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     position: 'relative',
     alignItems: 'center',
-    // Fix IE11 issue
+    // Fix IE 11 issue
     marginRight: 0,
     marginLeft: 0,
     padding: `0 ${theme.spacing(2)}`,

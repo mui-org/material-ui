@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InferGetStaticPropsType } from 'next';
+import type { InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -16,19 +16,19 @@ import XIcon from '@mui/icons-material/X';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import DiscordIcon from 'docs/src/icons/DiscordIcon';
-import Head from 'docs/src/modules/components/Head';
+import { AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 import AppHeader from 'docs/src/layouts/AppHeader';
 import AppFooter from 'docs/src/layouts/AppFooter';
 import GradientText from 'docs/src/components/typography/GradientText';
-import BrandingCssVarsProvider from 'docs/src/BrandingCssVarsProvider';
+import { BrandingCssVarsProvider } from '@mui/internal-core-docs/branding';
 import { authors as AUTHORS } from 'docs/src/modules/components/TopLayoutBlog';
 import HeroEnd from 'docs/src/components/home/HeroEnd';
-import { Link } from '@mui/docs/Link';
+import { Link } from '@mui/internal-core-docs/Link';
 import generateRssFeed from 'docs/scripts/generateRSSFeed';
 import Section from 'docs/src/layouts/Section';
-import SectionHeadline from 'docs/src/components/typography/SectionHeadline';
-import { getAllBlogPosts, BlogPost } from 'docs/lib/sourcing';
+import SectionHeadline from '@mui/internal-core-docs/SectionHeadline';
+import type { BlogPost } from 'docs/lib/sourcing';
+import { getAllBlogPosts } from 'docs/lib/sourcing';
 
 export const getStaticProps = () => {
   const data = getAllBlogPosts();
@@ -37,6 +37,23 @@ export const getStaticProps = () => {
     props: data,
   };
 };
+
+const blogDateFormatter = new Intl.DateTimeFormat('en-US', {
+  weekday: 'short',
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+  timeZone: 'UTC',
+});
+
+function formatBlogDate(dateString: string) {
+  // Frontmatter dates can be plain YYYY-MM-DD; pin to UTC to avoid timezone drift.
+  const normalizedDate = /^\d{4}-\d{2}-\d{2}$/.test(dateString)
+    ? `${dateString}T00:00:00.000Z`
+    : dateString;
+
+  return blogDateFormatter.format(new Date(normalizedDate));
+}
 
 function PostPreview(props: BlogPost) {
   return (
@@ -145,7 +162,7 @@ function PostPreview(props: BlogPost) {
           )}
           {props.date && (
             <Typography variant="caption" sx={{ fontWeight: 'regular', color: 'text.tertiary' }}>
-              {new Date(props.date).toDateString()}
+              {formatBlogDate(props.date)}
             </Typography>
           )}
         </Box>
@@ -172,20 +189,32 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
   const postListRef = React.useRef<HTMLDivElement>(null);
   const [page, setPage] = React.useState(0);
   const [selectedTags, setSelectedTags] = React.useState<Record<string, boolean>>({});
-  const { allBlogPosts, tagInfo: rawTagInfo } = props;
-  const [firstPost, secondPost, ...otherPosts] = allBlogPosts;
-  const tagInfo = { ...rawTagInfo };
-  [firstPost, secondPost].forEach((post) => {
-    post.tags.forEach((tag) => {
-      if (tagInfo[tag]) {
-        tagInfo[tag]! -= 1;
-      }
-    });
-  });
-  Object.entries(tagInfo).forEach(([tagName, tagCount]) => {
-    if (tagCount === 0) {
-      delete tagInfo[tagName];
+  const { allBlogPosts } = props;
+
+  // On the `/blog` index we:
+  // - show the v9 aggregator card (see FEATURED_BLOG_SLUG)
+  // - optionally show one additional recent card
+  // All posts remain fully discoverable by direct URL and RSS.
+  const FEATURED_BLOG_SLUG = 'introducing-mui-v9';
+  const featuredPosts = allBlogPosts.filter((post) => post.slug === FEATURED_BLOG_SLUG);
+
+  const visibleNonFeaturedPosts = allBlogPosts.filter((post) => {
+    if (post.slug === FEATURED_BLOG_SLUG) {
+      return false;
     }
+    if (post.hideFromHomeList === 'true') {
+      return false;
+    }
+    return true;
+  });
+
+  const topPosts = [...featuredPosts, ...visibleNonFeaturedPosts.slice(0, 1)];
+  const otherPosts = visibleNonFeaturedPosts.slice(1);
+  const tagInfo: Record<string, number> = {};
+  otherPosts.forEach((post) => {
+    post.tags.forEach((tag) => {
+      tagInfo[tag] = (tagInfo[tag] || 0) + 1;
+    });
   });
   const filteredPosts = otherPosts.filter((post) => {
     if (Object.keys(selectedTags).length === 0) {
@@ -238,7 +267,7 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
         disableAlternateLocale
       />
       <AppHeader />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <Section cozy bg="gradient">
           <SectionHeadline
             alwaysCenter
@@ -263,7 +292,7 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             }}
           >
-            {[firstPost, secondPost].map((post) => (
+            {topPosts.map((post) => (
               <Paper
                 key={post.slug}
                 component="li"
@@ -299,174 +328,174 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
             ))}
           </Box>
         </Container>
-        <Container
-          ref={postListRef}
-          sx={{
-            py: { xs: 4, sm: 6, md: 8 },
-            mt: -6,
-            display: 'grid',
-            gridTemplateColumns: { md: '1fr 380px' },
-            columnGap: 8,
-          }}
-        >
-          <Typography
-            component="h2"
-            variant="h6"
-            sx={{ fontWeight: 'semiBold', mb: { xs: 1, sm: 2 }, mt: 8 }}
+        {otherPosts.length > 0 && (
+          <Container
+            ref={postListRef}
+            sx={{
+              py: { xs: 4, sm: 6, md: 8 },
+              mt: -6,
+              display: 'grid',
+              gridTemplateColumns: { md: '1fr 380px' },
+              columnGap: 8,
+            }}
           >
-            Posts{' '}
-            {Object.keys(selectedTags).length ? (
-              <span>
-                tagged as{' '}
-                <Typography component="span" variant="inherit" color="primary" noWrap>
-                  &quot;{Object.keys(selectedTags)[0]}&quot;
-                </Typography>
-              </span>
-            ) : (
-              ''
-            )}
-          </Typography>
-          <Box sx={{ gridRow: 'span 2' }}>
-            <Box
-              sx={{
-                position: 'sticky',
-                top: 90,
-                mt: { xs: 0, md: 9 },
-                mb: { xs: 2, md: 0 },
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                '& .MuiPaper-root': {
-                  p: 2,
-                  bgcolor: 'transparent',
-                  borderColor: 'divider',
-                },
-              }}
+            <Typography
+              component="h2"
+              variant="h6"
+              sx={{ fontWeight: 'semiBold', mb: { xs: 1, sm: 2 }, mt: 8 }}
             >
-              <Paper variant="outlined">
-                <Typography
-                  component="h3"
-                  variant="subtitle2"
-                  sx={{ color: 'text.primary', fontWeight: 'semiBold', mb: 2 }}
-                >
-                  Filter posts by tag
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                  {Object.keys(tagInfo).map((tag) => {
-                    const selected = !!selectedTags[tag];
-                    return (
-                      <Chip
-                        key={tag}
-                        variant={selected ? 'filled' : 'outlined'}
-                        color={selected ? 'primary' : undefined}
-                        {...(selected
-                          ? {
-                              label: tag,
-                              onDelete: () => {
-                                postListRef.current?.scrollIntoView();
-                                removeTag(tag);
-                              },
-                            }
-                          : {
-                              label: tag,
-                              onClick: () => {
-                                postListRef.current?.scrollIntoView();
-                                router.push(
-                                  {
-                                    query: {
-                                      ...router.query,
-                                      tags: tag,
+              Posts{' '}
+              {Object.keys(selectedTags).length ? (
+                <span>
+                  tagged as{' '}
+                  <Typography component="span" variant="inherit" color="primary" noWrap>
+                    &quot;{Object.keys(selectedTags)[0]}&quot;
+                  </Typography>
+                </span>
+              ) : (
+                ''
+              )}
+            </Typography>
+            <Box sx={{ gridRow: 'span 2' }}>
+              <Box
+                sx={{
+                  position: 'sticky',
+                  top: 90,
+                  mt: { xs: 0, md: 9 },
+                  mb: { xs: 2, md: 0 },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 2,
+                  '& .MuiPaper-root': {
+                    p: 2,
+                    bgcolor: 'transparent',
+                    borderColor: 'divider',
+                  },
+                }}
+              >
+                <Paper variant="outlined">
+                  <Typography
+                    component="h3"
+                    variant="subtitle2"
+                    sx={{ color: 'text.primary', fontWeight: 'semiBold', mb: 2 }}
+                  >
+                    Filter posts by tag
+                  </Typography>
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {Object.keys(tagInfo).map((tag) => {
+                      const selected = !!selectedTags[tag];
+                      return (
+                        <Chip
+                          key={tag}
+                          variant={selected ? 'filled' : 'outlined'}
+                          color={selected ? 'primary' : undefined}
+                          {...(selected
+                            ? {
+                                label: tag,
+                                onDelete: () => {
+                                  postListRef.current?.scrollIntoView();
+                                  removeTag(tag);
+                                },
+                              }
+                            : {
+                                label: tag,
+                                onClick: () => {
+                                  postListRef.current?.scrollIntoView();
+                                  router.push(
+                                    {
+                                      query: {
+                                        ...router.query,
+                                        tags: tag,
+                                      },
                                     },
-                                  },
-                                  undefined,
-                                  { shallow: true },
-                                );
-                              },
-                            })}
-                        size="small"
-                      />
-                    );
-                  })}
-                </Box>
-              </Paper>
-              <Paper variant="outlined">
-                <Typography
-                  component="h3"
-                  variant="subtitle2"
-                  gutterBottom
-                  sx={{ color: 'text.primary', fontWeight: 'semiBold' }}
-                >
-                  Want to hear more from us?
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                  Get up to date with everything MUI-related through our social media:
-                </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, '* > svg': { mr: 1 } }}>
-                  <Link href="https://github.com/mui" target="_blank" sx={{ fontSize: 14 }}>
-                    <GitHubIcon fontSize="small" />
-                    GitHub
-                  </Link>
-                  <Link href="https://x.com/MUI_hq" target="_blank" sx={{ fontSize: 14 }}>
-                    <XIcon fontSize="small" />X
-                  </Link>
-                  <Link href="https://mui.com/r/discord/" target="_blank" sx={{ fontSize: 14 }}>
-                    <DiscordIcon fontSize="small" />
-                    Discord
-                  </Link>
-                  <Link
-                    href="https://www.linkedin.com/company/mui/"
-                    target="_blank"
-                    sx={{ fontSize: 14 }}
+                                    undefined,
+                                    { shallow: true },
+                                  );
+                                },
+                              })}
+                          size="small"
+                        />
+                      );
+                    })}
+                  </Box>
+                </Paper>
+                <Paper variant="outlined">
+                  <Typography
+                    component="h3"
+                    variant="subtitle2"
+                    gutterBottom
+                    sx={{ color: 'text.primary', fontWeight: 'semiBold' }}
                   >
-                    <LinkedInIcon fontSize="small" />
-                    LinkedIn
-                  </Link>
-                  <Link
-                    href="https://www.youtube.com/@MUI_hq"
-                    target="_blank"
-                    sx={{ fontSize: 14 }}
-                  >
-                    <YouTubeIcon fontSize="small" />
-                    Youtube
-                  </Link>
-                </Box>
-              </Paper>
+                    Want to hear more from us?
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+                    Get up to date with everything MUI-related through our social media:
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, '* > svg': { mr: 1 } }}>
+                    <Link href="https://github.com/mui" target="_blank" sx={{ fontSize: 14 }}>
+                      <GitHubIcon fontSize="small" />
+                      GitHub
+                    </Link>
+                    <Link href="https://x.com/MUI_hq" target="_blank" sx={{ fontSize: 14 }}>
+                      <XIcon fontSize="small" />X
+                    </Link>
+                    <Link
+                      href="https://www.linkedin.com/company/mui/"
+                      target="_blank"
+                      sx={{ fontSize: 14 }}
+                    >
+                      <LinkedInIcon fontSize="small" />
+                      LinkedIn
+                    </Link>
+                    <Link
+                      href="https://www.youtube.com/@MUI_hq"
+                      target="_blank"
+                      sx={{ fontSize: 14 }}
+                    >
+                      <YouTubeIcon fontSize="small" />
+                      Youtube
+                    </Link>
+                  </Box>
+                </Paper>
+              </Box>
             </Box>
-          </Box>
-          <div>
-            <Box component="ul" sx={{ p: 0, m: 0 }}>
-              {displayedPosts.map((post) => (
-                <Box
-                  component="li"
-                  key={post.slug}
-                  sx={{
-                    py: 2.5,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    position: 'relative',
-                    '&:not(:last-of-type)': {
-                      borderBottom: '1px solid',
-                      borderColor: 'divider',
-                    },
+            <div>
+              <Box component="ul" sx={{ p: 0, m: 0 }}>
+                {displayedPosts.map((post) => (
+                  <Box
+                    component="li"
+                    key={post.slug}
+                    sx={{
+                      py: 2.5,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      position: 'relative',
+                      '&:not(:last-of-type)': {
+                        borderBottom: '1px solid',
+                        borderColor: 'divider',
+                      },
+                    }}
+                  >
+                    <PostPreview {...post} />
+                  </Box>
+                ))}
+              </Box>
+              {totalPage > 0 && (
+                <Pagination
+                  page={page + 1}
+                  count={totalPage}
+                  variant="outlined"
+                  shape="rounded"
+                  onChange={(_, value) => {
+                    setPage(value - 1);
+                    postListRef.current?.scrollIntoView();
                   }}
-                >
-                  <PostPreview {...post} />
-                </Box>
-              ))}
-            </Box>
-            <Pagination
-              page={page + 1}
-              count={totalPage}
-              variant="outlined"
-              shape="rounded"
-              onChange={(_, value) => {
-                setPage(value - 1);
-                postListRef.current?.scrollIntoView();
-              }}
-              sx={{ mt: 1, mb: 4 }}
-            />
-          </div>
-        </Container>
+                  sx={{ mt: 1, mb: 4 }}
+                />
+              )}
+            </div>
+          </Container>
+        )}
       </main>
       <Divider />
       <HeroEnd />

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useInView } from 'react-intersection-observer';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
@@ -8,22 +7,15 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import SponsorCard from 'docs/src/components/home/SponsorCard';
 import BacklinkSponsor from 'docs/src/components/home/BacklinkSponsor';
-import { Link } from '@mui/docs/Link';
-import ROUTES from 'docs/src/route';
+import { Link } from '@mui/internal-core-docs/Link';
+import { ROUTES } from '@mui/internal-core-docs/constants';
 
 const GOLDs = [
   {
     src: '/static/sponsors/tidelift.svg',
     name: 'Tidelift',
     description: 'Enterprise-ready open-source software.',
-    href: 'https://tidelift.com/?utm_source=npm-material-ui&utm_medium=referral&utm_campaign=homepage',
-  },
-  {
-    src: 'https://avatars.githubusercontent.com/u/1262264?size=40',
-    srcSet: 'https://avatars.githubusercontent.com/u/1262264?s=120 3x',
-    name: 'Text-em-all',
-    description: 'Mass text messaging and automated calling.',
-    href: 'https://www.text-em-all.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
+    href: 'https://tidelift.com/',
   },
   {
     src: 'https://images.opencollective.com/dialmycalls/f5ae9ab/avatar/40.png',
@@ -41,26 +33,6 @@ const BACKLINKs = [
     href: 'https://goread.io/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
   },
   {
-    name: 'Buzzoid',
-    description: 'Instant delivery Instagram followers.',
-    href: 'https://buzzoid.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
-  },
-  {
-    name: 'Buzzoid',
-    description: 'Instant delivery YouTube Views.',
-    href: 'https://buzzoid.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
-  },
-  {
-    name: 'Twicsy',
-    description: 'Instant delivery Instagram followers.',
-    href: 'https://twicsy.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
-  },
-  {
-    name: 'Views4You',
-    description: 'Social media growth services.',
-    href: 'https://views4you.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
-  },
-  {
     name: 'Poprey',
     description: 'Buy Instagram likes with crypto.',
     href: 'https://poprey.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
@@ -76,14 +48,19 @@ const BACKLINKs = [
     href: 'https://www.follower24.de/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
   },
   {
-    name: 'TikTokFame',
-    description: 'The ultimate TikTok growth platform.',
-    href: 'https://tiktokfame.co/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
+    name: 'Views4You',
+    description: 'Maximize Social Media Impact.',
+    href: 'https://views4you.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
   },
   {
-    name: 'Reputation Manage',
-    description: 'Instant Delivery Google Reviews.',
-    href: 'https://reputationmanage.co/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
+    name: 'InstantFamous',
+    description: 'Grow Your Social Network.',
+    href: 'https://instant-famous.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
+  },
+  {
+    name: 'TokBoostly',
+    description: 'Premium TikTok Growth.',
+    href: 'https://tokboostly.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
   },
 ];
 
@@ -145,7 +122,6 @@ export default function GoldSponsors() {
               component="a"
               href={ROUTES.goldSponsor}
               target="_blank"
-              rel="noopener"
               color="primary"
             >
               <AddRounded />
@@ -156,7 +132,7 @@ export default function GoldSponsors() {
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 Find out how{' '}
-                <Link href={ROUTES.goldSponsor} target="_blank" rel="noopener">
+                <Link href={ROUTES.goldSponsor} target="_blank">
                   you can support MUI.
                 </Link>
               </Typography>

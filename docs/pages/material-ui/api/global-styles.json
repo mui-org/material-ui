@@ -18,6 +18,5 @@
   "muiName": "MuiGlobalStyles",
   "filename": "/packages/mui-material/src/GlobalStyles/GlobalStyles.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/customization/how-to-customize/\">How to customize</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/customization/how-to-customize/\">How to customize</a></li></ul>"
 }

@@ -1,6 +1,11 @@
 fn({
   MuiAutocomplete: {
     defaultProps: {
+      renderValue: (value, getItemProps, ownerState) =>
+        value.map((option, index) => (
+          <Chip label={option.label} data-focused={ownerState.focused} {...getItemProps({ index })} />
+        )),
+
       slots: {
         paper: CustomPaper,
         popper: CustomPopper
@@ -25,6 +30,11 @@ fn({
 fn({
   MuiAutocomplete: {
     defaultProps: {
+      renderValue: (value, getItemProps, ownerState) =>
+        value.map((option, index) => (
+          <Chip label={option.label} data-focused={ownerState.focused} {...getItemProps({ index })} />
+        )),
+
       slotProps: {
         clearIndicator: { width: 10 },
         paper: { width: 12 },

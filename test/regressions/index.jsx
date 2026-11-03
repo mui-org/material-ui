@@ -1,10 +1,40 @@
+// `./fakeDateSetup` MUST stay first: it installs the frozen `Date` before any
+// other module — notably the demo modules pulled in by `./fixtures`'s eager
+// globs — reads `Date` at module scope. See `fakeDateSetup.ts` for why this
+// ordering (and the separate `./fixtures` module) is required.
+import './fakeDateSetup';
+// Make the Data Grid demo-data generator run synchronously (before fixtures
+// load any composite). See `syncDataGridGenerator.ts` — prevents the async
+// row-generation skeleton/flake on the grid composites.
+import './syncDataGridGenerator';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactDOMClient from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router';
-import webfontloader from 'webfontloader';
 import { Globals } from '@react-spring/web';
+import loadFonts from '@mui/internal-test-utils/loadFonts';
+// Static font files, installed from npm instead of loaded from Google Fonts. Google
+// serves Roboto and Inter as variable fonts, and for the same stylesheet URL it
+// sometimes returns a file with the weight axis trimmed to the requested range
+// (300-700 instead of 100-900). That file renders weights other than 400 with
+// slightly different glyph outlines and advances, which shows up as random
+// anti-aliasing diffs in the screenshots.
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/inter/800.css';
+import '@fontsource/inter/900.css';
+import '@fontsource/material-icons';
 import TestViewer from './TestViewer';
+import MarketingWrapper from './MarketingWrapper';
+import allFixtures from './fixtures';
+import './global.css';
 
 // Skip charts annimation for screen shots
 Globals.assign({
@@ -15,185 +45,23 @@ window.muiFixture = {
   navigate: () => {
     throw new Error(`muiFixture.navigate is not ready`);
   },
+  // `index.test.js` awaits this in `renderFixture`, before any fixture mounts.
+  // The font imports above declare every face except Font Awesome. The Font
+  // Awesome demos inject this exact stylesheet URL unless it is already linked.
+  fontsReady: loadFonts({
+    stylesheets: ['https://use.fontawesome.com/releases/v5.14.0/css/all.css'],
+    faces: [
+      ...[300, 400, 500, 700].map((weight) => ({ family: 'Roboto', weight })),
+      ...[300, 400, 500, 600, 700, 800, 900].map((weight) => ({ family: 'Inter', weight })),
+      { family: 'Material Icons', weight: 400 },
+      { family: 'Font Awesome 5 Free', weight: 900 },
+    ],
+  }),
+  // Read by `index.test.js` to evaluate `ScreenshotRule.minReactMajor`. Taken
+  // from the bundle rather than the test process's own `react` so the two can
+  // never disagree about which React the demos actually render with.
+  reactVersion: React.version,
 };
-
-// Get all the fixtures specifically written for preventing visual regressions.
-const importRegressionFixtures = import.meta.glob(['./fixtures/**/*.(js|ts|tsx)'], {
-  import: 'default',
-  eager: true,
-});
-
-const regressionFixtures = [];
-
-Object.keys(importRegressionFixtures).forEach((path) => {
-  const [suite, name] = path
-    .replace('./fixtures/', '')
-    .replace(/\.\w+$/, '')
-    .split('/');
-
-  // TODO: Why does webpack include a key for the absolute and relative path?
-  // We just want the relative path
-  if (path.startsWith('./')) {
-    regressionFixtures.push({
-      path,
-      suite: `regression-${suite}`,
-      name,
-      Component: importRegressionFixtures[path],
-    });
-  }
-}, []);
-
-// Also use some of the demos to avoid code duplication.
-const importDemos = import.meta.glob(
-  [
-    'docs/data/**/[A-Z]*.js',
-    'docs/data/base/**/[A-Z]*/css/index.js',
-    'docs/data/base/**/[A-Z]*/tailwind/index.js',
-    'docs/data/base/**/[A-Z]*/system/index.js',
-    // ================== Exclusions ==================
-    '!docs/data/experiments',
-    '!docs/data/material/**/*NoSnap.*',
-    // Template
-    '!docs/data/material/getting-started/templates/blog/components',
-    '!docs/data/material/getting-started/templates/checkout/components',
-    '!docs/data/material/getting-started/templates/crud-dashboard/components',
-    '!docs/data/material/getting-started/templates/crud-dashboard/theme/customizations',
-    '!docs/data/material/getting-started/templates/crud-dashboard/hooks',
-    '!docs/data/material/getting-started/templates/crud-dashboard/context',
-    '!docs/data/material/getting-started/templates/dashboard/components',
-    '!docs/data/material/getting-started/templates/dashboard/internals/components',
-    '!docs/data/material/getting-started/templates/dashboard/theme/customizations',
-    '!docs/data/material/getting-started/templates/marketing-page/components',
-    '!docs/data/material/getting-started/templates/marketing-page/MarketingPage',
-    '!docs/data/material/getting-started/templates/shared-theme',
-    '!docs/data/material/getting-started/templates/sign-in/components',
-    '!docs/data/material/getting-started/templates/sign-in-side/components',
-    '!docs/data/material/getting-started/templates/sign-up/components',
-    // Marketing Page Theme Customizations
-    '!docs/data/material/components/alert/TransitionAlerts', // Needs interaction
-    '!docs/data/material/components/app-bar/BackToTop', // Needs interaction
-    '!docs/data/material/components/app-bar/ElevateAppBar', // Needs interaction
-    '!docs/data/material/components/app-bar/HideAppBar', // Needs interaction
-    '!docs/data/material/components/app-bar/MenuAppBar', // Redundant
-    '!docs/data/material/components/autocomplete/Asynchronous', // Redundant
-    '!docs/data/material/components/autocomplete/CheckboxesTags', // Redundant
-    '!docs/data/material/components/autocomplete/CountrySelect', // Redundant
-    '!docs/data/material/components/autocomplete/DisabledOptions', // Redundant
-    '!docs/data/material/components/autocomplete/Filter', // Redundant
-    '!docs/data/material/components/autocomplete/FreeSolo', // Redundant
-    '!docs/data/material/components/autocomplete/GoogleMaps', // Redundant
-    '!docs/data/material/components/autocomplete/Grouped', // Redundant
-    '!docs/data/material/components/autocomplete/Highlights', // Redundant
-    '!docs/data/material/components/autocomplete/Playground', // Redundant
-    '!docs/data/material/components/autocomplete/UseAutocomplete', // Redundant
-    '!docs/data/material/components/autocomplete/Virtualize', // Redundant
-    '!docs/data/material/components/backdrop/SimpleBackdrop', // Needs interaction
-    '!docs/data/material/components/badges/BadgeAlignment', // Redux isolation
-    '!docs/data/material/components/badges/BadgeVisibility', // Needs interaction
-    '!docs/data/material/components/bottom-navigation/FixedBottomNavigation', // Redundant
-    '!docs/data/material/components/breadcrumbs/ActiveLastBreadcrumb', // Redundant
-    '!docs/data/material/components/chips/ChipsPlayground', // Redux isolation
-    '!docs/data/material/components/click-away-listener', // Needs interaction
-    '!docs/data/material/components/container', // Can't see the impact
-    '!docs/data/material/components/dialogs', // Needs interaction
-    '!docs/data/material/components/drawers/SwipeableEdgeDrawer', // Needs interaction
-    '!docs/data/material/components/drawers/SwipeableTemporaryDrawer', // Needs interaction
-    '!docs/data/material/components/drawers/TemporaryDrawer', // Needs interaction
-    '!docs/data/material/components/floating-action-button/FloatingActionButtonZoom', // Needs interaction
-    '!docs/data/material/components/grid-legacy/InteractiveGrid', // Redux isolation
-    '!docs/data/material/components/grid-legacy/SpacingGrid', // Needs interaction
-    '!docs/data/material/components/image-list', // Image don't load
-    '!docs/data/material/components/masonry/ImageMasonry', // Image don't load
-    '!docs/data/material/components/masonry/Sequential', // Flaky
-    '!docs/data/material/components/material-icons/SearchIcons',
-    '!docs/data/material/components/menus', // Need interaction
-    '!docs/data/material/components/modal/BasicModal', // Needs interaction
-    '!docs/data/material/components/modal/KeepMountedModal', // Needs interaction
-    '!docs/data/material/components/modal/SpringModal', // Needs interaction
-    '!docs/data/material/components/modal/TransitionsModal', // Needs interaction
-    '!docs/data/material/components/no-ssr/FrameDeferring', // Needs interaction
-    '!docs/data/material/components/popover/AnchorPlayground', // Redux isolation
-    '!docs/data/material/components/popover/BasicPopover', // Needs interaction
-    '!docs/data/material/components/popover/PopoverPopupState', // Needs interaction
-    '!docs/data/material/components/popper/PopperPopupState', // Needs interaction
-    '!docs/data/material/components/popper/PositionedPopper', // Needs interaction
-    '!docs/data/material/components/popper/ScrollPlayground', // Redux isolation
-    '!docs/data/material/components/popper/SimplePopper', // Needs interaction
-    '!docs/data/material/components/popper/SpringPopper', // Needs interaction
-    '!docs/data/material/components/popper/TransitionsPopper', // Needs interaction
-    '!docs/data/material/components/popper/VirtualElementPopper', // Needs interaction
-    '!docs/data/material/components/progress', // Flaky
-    '!docs/data/material/components/selects/ControlledOpenSelect', // Needs interaction
-    '!docs/data/material/components/selects/DialogSelect', // Needs interaction
-    '!docs/data/material/components/selects/GroupedSelect', // Needs interaction
-    '!docs/data/material/components/skeleton/Animations', // Animation disabled
-    '!docs/data/material/components/skeleton/Facebook', // Flaky image loading
-    '!docs/data/material/components/skeleton/SkeletonChildren', // flaky image loading
-    '!docs/data/material/components/skeleton/YouTube', // Flaky image loading
-    '!docs/data/material/components/snackbars/ConsecutiveSnackbars', // Needs interaction
-    '!docs/data/material/components/snackbars/CustomizedSnackbars', // Redundant
-    '!docs/data/material/components/snackbars/DirectionSnackbar', // Needs interaction
-    '!docs/data/material/components/snackbars/FabIntegrationSnackbar', // Needs interaction
-    '!docs/data/material/components/snackbars/IntegrationNotistack', // Needs interaction
-    '!docs/data/material/components/snackbars/PositionedSnackbar', // Needs interaction
-    '!docs/data/material/components/snackbars/SimpleSnackbar', // Needs interaction
-    '!docs/data/material/components/snackbars/TransitionsSnackbar', // Needs interaction
-    '!docs/data/material/components/speed-dial', // Needs interaction
-    '!docs/data/material/components/stack/InteractiveStack', // Redundant
-    '!docs/data/material/components/steppers/HorizontalNonLinearStepper', // Redundant
-    '!docs/data/material/components/steppers/TextMobileStepper', // Flaky image loading
-    '!docs/data/material/components/tabs/AccessibleTabs1', // Need interaction
-    '!docs/data/material/components/tabs/AccessibleTabs2', // Need interaction
-    '!docs/data/material/components/textarea-autosize', // Superseded by a dedicated regression test
-    '!docs/data/material/components/tooltips', // Needs interaction
-    '!docs/data/material/components/transitions', // Needs interaction
-    '!docs/data/material/components/use-media-query', // Need to dynamically resize to test
-    '!docs/data/material/customization/breakpoints', // Need to dynamically resize to test
-    '!docs/data/material/customization/color', // Escape viewport
-    '!docs/data/material/customization/container-queries/ResizableDemo', // No public components
-    '!docs/data/material/customization/default-theme', // Redux isolation
-    '!docs/data/material/customization/density/DensityTool', // Redux isolation
-    '!docs/data/material/customization/right-to-left/RtlDemo',
-    '!docs/data/material/customization/transitions/TransitionHover', // Need interaction
-    '!docs/data/material/customization/typography/ResponsiveFontSizesChart',
-    '!docs/data/material/getting-started/supported-components/MaterialUIComponents', // No public components
-    '!docs/data/material/guides',
-    '!docs/data/base/getting-started/quickstart/BaseButtonTailwind', // CodeSandbox
-    '!docs/data/base/guides/working-with-tailwind-css/PlayerFinal', // No public components
-    '!docs/data/joy/components/circular-progress/CircularProgressCountUp', // Flaky due to animation
-    '!docs/data/joy/components/divider/DividerChildPosition', // Needs interaction
-    '!docs/data/joy/components/linear-progress/LinearProgressCountUp', // Flaky due to animation
-    '!docs/data/joy/customization/theme-typography/TypographyThemeViewer', // No need for theme tokens
-    '!docs/data/joy/getting-started/templates/TemplateCollection', // No public components
-    '!docs/data/joy/**/*Variables.*',
-    '!docs/data/joy/**/*Usage.*',
-    '!docs/data/premium-themes',
-  ],
-  {
-    import: 'default',
-    eager: true,
-  },
-);
-
-const demoFixtures = [];
-Object.keys(importDemos).forEach((path) => {
-  const [name, ...suiteArray] = path
-    .replace('../../docs/data/', '')
-    .replace('.js', '')
-    .split('/')
-    .reverse();
-  const suite = `docs-${suiteArray
-    .reverse()
-    .join('-')
-    .replace(/^material-/, '')}`;
-
-  demoFixtures.push({
-    path,
-    suite,
-    name,
-    Component: importDemos[path],
-  });
-}, []);
 
 function FixtureRenderer({ component: FixtureComponent, path }) {
   React.useEffect(() => {
@@ -245,7 +113,7 @@ function computeIsDev(hash) {
   if (hash === '#no-dev') {
     return false;
   }
-  return process.env.NODE_ENV === 'development';
+  return process.env.NODE_ENV !== 'production';
 }
 
 function App(props) {
@@ -253,27 +121,6 @@ function App(props) {
 
   const hash = useHash();
   const isDev = computeIsDev(hash);
-
-  // Using <link rel="stylesheet" /> does not apply the google Roboto font in chromium headless/headfull.
-  const [fontState, setFontState] = React.useState('pending');
-  React.useEffect(() => {
-    webfontloader.load({
-      google: {
-        families: ['Roboto:300,400,500,700', 'Inter:300,400,500,600,700,800,900', 'Material+Icons'],
-      },
-      custom: {
-        families: ['Font Awesome 5 Free:n9'],
-        urls: ['https://use.fontawesome.com/releases/v5.14.0/css/all.css'],
-      },
-      timeout: 20000,
-      active: () => {
-        setFontState('active');
-      },
-      inactive: () => {
-        setFontState('inactive');
-      },
-    });
-  }, []);
 
   function computePath(fixture) {
     return `/${fixture.suite}/${fixture.name}`;
@@ -286,31 +133,39 @@ function App(props) {
 
   return (
     <React.Fragment>
-      {fontState === 'active' ? (
-        <Routes>
-          {fixtures.map((fixture) => {
-            const path = computePath(fixture);
-            const FixtureComponent = fixture.Component;
-            if (FixtureComponent === undefined) {
-              console.warn('Missing `Component` for ', fixture);
-              return null;
-            }
+      <Routes>
+        {fixtures.map((fixture) => {
+          const path = computePath(fixture);
+          const Component = fixture.Component;
+          if (Component === undefined) {
+            console.warn('Missing `Component` for ', fixture);
+            return null;
+          }
 
-            return (
-              <Route
-                key={path}
-                exact
-                path={path}
-                element={<FixtureRenderer component={FixtureComponent} path={path} />}
-              />
-            );
-          })}
-        </Routes>
-      ) : null}
+          // Composites are authored for the Next.js docs site; wrap them in
+          // the branding theme here rather than threading a flag through
+          // `FixtureRenderer`.
+          const FixtureComponent = fixture.isComposite
+            ? () => (
+                <MarketingWrapper>
+                  <Component />
+                </MarketingWrapper>
+              )
+            : Component;
+
+          return (
+            <Route
+              key={path}
+              exact
+              path={path}
+              element={<FixtureRenderer component={FixtureComponent} path={path} />}
+            />
+          );
+        })}
+      </Routes>
 
       {isDev ? (
         <div>
-          <div data-webfontloader={fontState}>webfontloader: {fontState}</div>
           <p>
             Devtools can be enabled by appending <code>#dev</code> in the addressbar or disabled by
             appending <code>#no-dev</code>.
@@ -346,7 +201,7 @@ App.propTypes = {
 const container = document.getElementById('react-root');
 const children = (
   <Router>
-    <App fixtures={regressionFixtures.concat(demoFixtures)} />
+    <App fixtures={allFixtures} />
   </Router>
 );
 const reactRoot = ReactDOMClient.createRoot(container);

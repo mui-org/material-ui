@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import extractEventHandlers from '@mui/utils/extractEventHandlers';
 
 describe('extractEventHandlers', () => {
@@ -28,16 +28,5 @@ describe('extractEventHandlers', () => {
   it('returns an empty object if undefined is passed in', () => {
     const result = extractEventHandlers(undefined);
     expect(result).to.deep.equal({});
-  });
-
-  it('excludes the provided handlers from the result', () => {
-    const input = {
-      onClick: () => {},
-      onChange: () => {},
-      onFocus: () => {},
-    };
-
-    const result = extractEventHandlers(input, ['onClick', 'onFocus']);
-    expect(result).to.deep.equal({ onChange: input.onChange });
   });
 });

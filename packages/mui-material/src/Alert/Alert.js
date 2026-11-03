@@ -6,6 +6,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import { applyChildrenFocusVisible } from '../styles/focusVisible';
 import useSlot from '../utils/useSlot';
 import capitalize from '../utils/capitalize';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
@@ -22,12 +23,7 @@ const useUtilityClasses = (ownerState) => {
   const { variant, color, severity, classes } = ownerState;
 
   const slots = {
-    root: [
-      'root',
-      `color${capitalize(color || severity)}`,
-      `${variant}${capitalize(color || severity)}`,
-      `${variant}`,
-    ],
+    root: ['root', `color${capitalize(color || severity)}`, `${variant}`],
     icon: ['icon'],
     message: ['message'],
     action: ['action'],
@@ -42,11 +38,7 @@ const AlertRoot = styled(Paper, {
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
 
-    return [
-      styles.root,
-      styles[ownerState.variant],
-      styles[`${ownerState.variant}${capitalize(ownerState.color || ownerState.severity)}`],
-    ];
+    return [styles.root, styles[ownerState.variant]];
   },
 })(
   memoTheme(({ theme }) => {
@@ -97,6 +89,10 @@ const AlertRoot = styled(Paper, {
           .map(([color]) => ({
             props: { colorSeverity: color, variant: 'filled' },
             style: {
+              ...(theme.focusVisible &&
+                applyChildrenFocusVisible(
+                  `0 0 0 4px ${(theme.vars || theme).palette.background.default}`,
+                )),
               fontWeight: theme.typography.fontWeightMedium,
               ...(theme.vars
                 ? {
@@ -163,8 +159,6 @@ const Alert = React.forwardRef(function Alert(inProps, ref) {
     className,
     closeText = 'Close',
     color,
-    components = {},
-    componentsProps = {},
     icon,
     iconMapping = defaultIconMapping,
     onClose,
@@ -187,15 +181,8 @@ const Alert = React.forwardRef(function Alert(inProps, ref) {
   const classes = useUtilityClasses(ownerState);
 
   const externalForwardedProps = {
-    slots: {
-      closeButton: components.CloseButton,
-      closeIcon: components.CloseIcon,
-      ...slots,
-    },
-    slotProps: {
-      ...componentsProps,
-      ...slotProps,
-    },
+    slots,
+    slotProps,
   };
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
@@ -311,29 +298,6 @@ Alert.propTypes /* remove-proptypes */ = {
     PropTypes.oneOf(['error', 'info', 'success', 'warning']),
     PropTypes.string,
   ]),
-  /**
-   * The components used for each slot inside.
-   *
-   * @deprecated use the `slots` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   *
-   * @default {}
-   */
-  components: PropTypes.shape({
-    CloseButton: PropTypes.elementType,
-    CloseIcon: PropTypes.elementType,
-  }),
-  /**
-   * The extra props for the slot components.
-   * You can override the existing props or add new ones.
-   *
-   * @deprecated use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   *
-   * @default {}
-   */
-  componentsProps: PropTypes.shape({
-    closeButton: PropTypes.object,
-    closeIcon: PropTypes.object,
-  }),
   /**
    * Override the icon displayed before the children.
    * Unless provided, the icon is mapped to the value of the `severity` prop.

@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 /**
  * Update all `theme.spacing.unit` usages to use `theme.spacing()`.
  * Find and replace string literal AST nodes to ensure all spacing API usages get updated, regardless
@@ -44,13 +43,19 @@ function transformThemeSpacingApi(j, root) {
           const expression = path.parent.node;
           const operation = expression.operator;
 
-          // check if it's a variable
+          // Check if it's a variable
           if (j.Identifier.check(expression.right)) {
             param = expression.right;
           } else if (j.Literal.check(expression.right)) {
             const value = expression.right.value;
-            if (operation === '*' || operation === '/') {
-              param = j.literal(eval(`1 ${operation} ${value}`));
+            if (operation === '*') {
+              param = j.literal(1 * value);
+            } else if (operation === '/') {
+              param = j.literal(1 / value);
+            } else if (operation === '**') {
+              param = j.literal(1);
+            } else if (operation === '%') {
+              param = j.literal(1);
             }
           }
         }
@@ -119,13 +124,19 @@ function transformThemeSpacingApiDestructured(j, root) {
           const expression = path.parent.node;
           const operation = expression.operator;
 
-          // check if it's a variable
+          // Check if it's a variable
           if (j.Identifier.check(expression.right)) {
             param = expression.right;
           } else if (j.Literal.check(expression.right)) {
             const value = expression.right.value;
-            if (operation === '*' || operation === '/') {
-              param = j.literal(eval(`1 ${operation} ${value}`));
+            if (operation === '*') {
+              param = j.literal(1 * value);
+            } else if (operation === '/') {
+              param = j.literal(1 / value);
+            } else if (operation === '**') {
+              param = j.literal(1);
+            } else if (operation === '%') {
+              param = j.literal(1);
             }
           }
         }

@@ -20,17 +20,6 @@
       }
     },
     "open": { "type": { "name": "bool" }, "default": "false" },
-    "PaperProps": {
-      "type": { "name": "object" },
-      "default": "{}",
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.paper</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
-    "SlideProps": {
-      "type": { "name": "object" },
-      "deprecated": true,
-      "deprecationInfo": "use the <code>slotProps.transition</code> prop instead. This prop will be removed in a future major release. See <a href=\"https://mui.com/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
-    },
     "slotProps": {
       "type": {
         "name": "shape",
@@ -99,7 +88,7 @@
     },
     {
       "name": "transition",
-      "description": "The component used for the transition.\n[Follow this guide](https://mui.com/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.",
+      "description": "The component used for the transition.\n[Follow this guide](/material-ui/transitions/#transition-slots) to learn more about the requirements for this component.",
       "default": "Slide",
       "class": null
     }
@@ -134,62 +123,6 @@
       "className": "MuiDrawer-modal",
       "description": "Styles applied to the Modal component.",
       "isGlobal": false
-    },
-    {
-      "key": "paperAnchorBottom",
-      "className": "MuiDrawer-paperAnchorBottom",
-      "description": "Styles applied to the Paper component if `anchor=\"bottom\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedBottom",
-      "className": "MuiDrawer-paperAnchorDockedBottom",
-      "description": "Styles applied to the Paper component if `anchor=\"bottom\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedLeft",
-      "className": "MuiDrawer-paperAnchorDockedLeft",
-      "description": "Styles applied to the Paper component if `anchor=\"left\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedRight",
-      "className": "MuiDrawer-paperAnchorDockedRight",
-      "description": "Styles applied to the Paper component if `anchor=\"right\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorDockedTop",
-      "className": "MuiDrawer-paperAnchorDockedTop",
-      "description": "Styles applied to the Paper component if `anchor=\"top\"` and `variant` is not \"temporary\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorLeft",
-      "className": "MuiDrawer-paperAnchorLeft",
-      "description": "Styles applied to the Paper component if `anchor=\"left\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorRight",
-      "className": "MuiDrawer-paperAnchorRight",
-      "description": "Styles applied to the Paper component if `anchor=\"right\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "paperAnchorTop",
-      "className": "MuiDrawer-paperAnchorTop",
-      "description": "Styles applied to the Paper component if `anchor=\"top\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     }
   ],
   "spread": true,
@@ -198,6 +131,5 @@
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/Drawer/Drawer.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-drawer/\">Drawer</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-drawer/\">Drawer</a></li></ul>"
 }

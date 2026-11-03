@@ -2,7 +2,7 @@
 
 <p class="description">Yeah, v4 has been released!</p>
 
-Looking for the v3 docs? You can [find the latest version here](https://mui.com/versions/).
+Looking for the v3 docs? You can [find the latest version here](https://mui.com/material-ui/getting-started/versions/).
 
 :::info
 This document is a work in progress.

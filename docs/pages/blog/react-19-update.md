@@ -79,7 +79,7 @@ To address this, we added a `forwardRef` shim that enforces the correct prop ord
 
 ```tsx
 // Compatibility shim that ensures stable props object for forwardRef components
-// Fixes https://github.com/facebook/react/issues/31613
+// Fixes https://github.com/react/react/issues/31613
 // We ensure that the ref is always present in the props object (even if that's not the case for older versions of React) to avoid the footgun of spreading props over the ref in the newer versions of React.
 export const forwardRef = <T, P = {}>(
   render: React.ForwardRefRenderFunction<T, P & { ref: React.Ref<T> }>,

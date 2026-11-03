@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 
 export function renderSparkline(params) {

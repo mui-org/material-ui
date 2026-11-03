@@ -1,6 +1,6 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import IconImage, { IconImageProps } from 'docs/src/components/icon/IconImage';
+import type { IconImageProps } from '@mui/internal-core-docs/IconImage';
+import IconImage from '@mui/internal-core-docs/IconImage';
 
 export const CORE_CUSTOMERS: Array<IconImageProps> = [
   {

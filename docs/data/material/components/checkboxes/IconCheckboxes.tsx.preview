@@ -1,6 +1,0 @@
-<Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-<Checkbox
-  {...label}
-  icon={<BookmarkBorderIcon />}
-  checkedIcon={<BookmarkIcon />}
-/>

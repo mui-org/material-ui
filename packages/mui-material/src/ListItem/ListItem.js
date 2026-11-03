@@ -3,18 +3,15 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import elementTypeAcceptingRef from '@mui/utils/elementTypeAcceptingRef';
-import chainPropTypes from '@mui/utils/chainPropTypes';
-import isHostComponent from '@mui/utils/isHostComponent';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
-import isMuiElement from '../utils/isMuiElement';
-import useForkRef from '../utils/useForkRef';
+import useSlot from '../utils/useSlot';
 import ListContext from '../List/ListContext';
 import { getListItemUtilityClass } from './listItemClasses';
 import { listItemButtonClasses } from '../ListItemButton';
 import ListItemSecondaryAction from '../ListItemSecondaryAction';
+import { getTransitionStyles } from '../transitions/utils';
 
 export const overridesResolver = (props, styles) => {
   const { ownerState } = props;
@@ -26,20 +23,11 @@ export const overridesResolver = (props, styles) => {
     ownerState.divider && styles.divider,
     !ownerState.disableGutters && styles.gutters,
     !ownerState.disablePadding && styles.padding,
-    ownerState.hasSecondaryAction && styles.secondaryAction,
   ];
 };
 
 const useUtilityClasses = (ownerState) => {
-  const {
-    alignItems,
-    classes,
-    dense,
-    disableGutters,
-    disablePadding,
-    divider,
-    hasSecondaryAction,
-  } = ownerState;
+  const { alignItems, classes, dense, disableGutters, disablePadding, divider } = ownerState;
 
   const slots = {
     root: [
@@ -49,9 +37,8 @@ const useUtilityClasses = (ownerState) => {
       !disablePadding && 'padding',
       divider && 'divider',
       alignItems === 'flex-start' && 'alignItemsFlexStart',
-      hasSecondaryAction && 'secondaryAction',
     ],
-    container: ['container'],
+    secondaryAction: ['secondaryAction'],
   };
 
   return composeClasses(slots, getListItemUtilityClass, classes);
@@ -127,7 +114,7 @@ export const ListItemRoot = styled('div', {
       {
         props: ({ ownerState }) => ownerState.button,
         style: {
-          transition: theme.transitions.create('background-color', {
+          ...getTransitionStyles(theme, 'background-color', {
             duration: theme.transitions.duration.shortest,
           }),
           '&:hover': {
@@ -140,39 +127,22 @@ export const ListItemRoot = styled('div', {
           },
         },
       },
-      {
-        props: ({ ownerState }) => ownerState.hasSecondaryAction,
-        style: {
-          // Add some space to avoid collision as `ListItemSecondaryAction`
-          // is absolutely positioned.
-          paddingRight: 48,
-        },
-      },
     ],
   })),
 );
 
-const ListItemContainer = styled('li', {
+const StyledListItemSecondaryAction = styled(ListItemSecondaryAction, {
   name: 'MuiListItem',
-  slot: 'Container',
-})({
-  position: 'relative',
-});
+  slot: 'secondaryAction',
+})({});
 
-/**
- * Uses an additional container component if `ListItemSecondaryAction` is the last child.
- */
 const ListItem = React.forwardRef(function ListItem(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiListItem' });
   const {
     alignItems = 'center',
     children: childrenProp,
     className,
-    component: componentProp,
-    components = {},
-    componentsProps = {},
-    ContainerComponent = 'li',
-    ContainerProps: { className: ContainerClassName, ...ContainerProps } = {},
+    component: componentProp = 'li',
     dense = false,
     disableGutters = false,
     disablePadding = false,
@@ -193,14 +163,6 @@ const ListItem = React.forwardRef(function ListItem(inProps, ref) {
     [alignItems, context.dense, dense, disableGutters],
   );
 
-  const listItemRef = React.useRef(null);
-
-  const children = React.Children.toArray(childrenProp);
-
-  // v4 implementation, deprecated in v6, will be removed in a future major release
-  const hasSecondaryAction =
-    children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
-
   const ownerState = {
     ...props,
     alignItems,
@@ -208,76 +170,44 @@ const ListItem = React.forwardRef(function ListItem(inProps, ref) {
     disableGutters,
     disablePadding,
     divider,
-    hasSecondaryAction,
+    secondaryAction,
   };
 
   const classes = useUtilityClasses(ownerState);
 
-  const handleRef = useForkRef(listItemRef, ref);
-
-  const Root = slots.root || components.Root || ListItemRoot;
-  const rootProps = slotProps.root || componentsProps.root || {};
-
-  const componentProps = {
-    className: clsx(classes.root, rootProps.className, className),
-    ...other,
+  const externalForwardedProps = {
+    slots,
+    slotProps,
   };
 
-  let Component = componentProp || 'li';
+  const [RootSlot, rootSlotProps] = useSlot('root', {
+    ref,
+    elementType: ListItemRoot,
+    externalForwardedProps: {
+      component: componentProp,
+      ...externalForwardedProps,
+      ...other,
+    },
+    ownerState,
+    className: clsx(classes.root, className),
+  });
 
-  // v4 implementation, deprecated in v6, will be removed in a future major release
-  if (hasSecondaryAction) {
-    // Use div by default.
-    Component = !componentProps.component && !componentProp ? 'div' : Component;
-
-    // Avoid nesting of li > li.
-    if (ContainerComponent === 'li') {
-      if (Component === 'li') {
-        Component = 'div';
-      } else if (componentProps.component === 'li') {
-        componentProps.component = 'div';
-      }
-    }
-
-    return (
-      <ListContext.Provider value={childContext}>
-        <ListItemContainer
-          as={ContainerComponent}
-          className={clsx(classes.container, ContainerClassName)}
-          ref={handleRef}
-          ownerState={ownerState}
-          {...ContainerProps}
-        >
-          <Root
-            {...rootProps}
-            {...(!isHostComponent(Root) && {
-              as: Component,
-              ownerState: { ...ownerState, ...rootProps.ownerState },
-            })}
-            {...componentProps}
-          >
-            {children}
-          </Root>
-          {children.pop()}
-        </ListItemContainer>
-      </ListContext.Provider>
-    );
-  }
+  const [SecondaryActionSlot, secondaryActionSlotProps] = useSlot('secondaryAction', {
+    elementType: StyledListItemSecondaryAction,
+    shouldForwardComponentProp: true,
+    externalForwardedProps,
+    ownerState,
+    className: classes.secondaryAction,
+  });
 
   return (
     <ListContext.Provider value={childContext}>
-      <Root
-        {...rootProps}
-        as={Component}
-        ref={handleRef}
-        {...(!isHostComponent(Root) && {
-          ownerState: { ...ownerState, ...rootProps.ownerState },
-        })}
-        {...componentProps}
-      >
-        {children}
-        {secondaryAction && <ListItemSecondaryAction>{secondaryAction}</ListItemSecondaryAction>}
-      </Root>
+      <RootSlot {...rootSlotProps}>
+        {childrenProp}
+        {secondaryAction && (
+          <SecondaryActionSlot {...secondaryActionSlotProps}>{secondaryAction}</SecondaryActionSlot>
+        )}
+      </RootSlot>
     </ListContext.Provider>
   );
 });
@@ -293,33 +223,9 @@ ListItem.propTypes /* remove-proptypes */ = {
    */
   alignItems: PropTypes.oneOf(['center', 'flex-start']),
   /**
-   * The content of the component if a `ListItemSecondaryAction` is used it must
-   * be the last child.
+   * The content of the component.
    */
-  children: chainPropTypes(PropTypes.node, (props) => {
-    const children = React.Children.toArray(props.children);
-
-    // React.Children.toArray(props.children).findLastIndex(isListItemSecondaryAction)
-    let secondaryActionIndex = -1;
-    for (let i = children.length - 1; i >= 0; i -= 1) {
-      const child = children[i];
-      if (isMuiElement(child, ['ListItemSecondaryAction'])) {
-        secondaryActionIndex = i;
-        break;
-      }
-    }
-
-    //  is ListItemSecondaryAction the last child of ListItem
-    if (secondaryActionIndex !== -1 && secondaryActionIndex !== children.length - 1) {
-      return new Error(
-        'MUI: You used an element after ListItemSecondaryAction. ' +
-          'For ListItem to detect that it has a secondary action ' +
-          'you must pass it as the last child to ListItem.',
-      );
-    }
-
-    return null;
-  }),
+  children: PropTypes.node,
   /**
    * Override or extend the styles applied to the component.
    */
@@ -333,37 +239,6 @@ ListItem.propTypes /* remove-proptypes */ = {
    * Either a string to use a HTML element or a component.
    */
   component: PropTypes.elementType,
-  /**
-   * The components used for each slot inside.
-   *
-   * @deprecated Use the `slots` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default {}
-   */
-  components: PropTypes.shape({
-    Root: PropTypes.elementType,
-  }),
-  /**
-   * The extra props for the slot components.
-   * You can override the existing props or add new ones.
-   *
-   * @deprecated Use the `slotProps` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   * @default {}
-   */
-  componentsProps: PropTypes.shape({
-    root: PropTypes.object,
-  }),
-  /**
-   * The container component used when a `ListItemSecondaryAction` is the last child.
-   * @default 'li'
-   * @deprecated Use the `component` or `slots.root` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  ContainerComponent: elementTypeAcceptingRef,
-  /**
-   * Props applied to the container component if used.
-   * @default {}
-   * @deprecated Use the `slotProps.root` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
-   */
-  ContainerProps: PropTypes.object,
   /**
    * If `true`, compact vertical padding designed for keyboard and mouse input is used.
    * The prop defaults to the value inherited from the parent List component.
@@ -396,7 +271,8 @@ ListItem.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   slotProps: PropTypes.shape({
-    root: PropTypes.object,
+    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    secondaryAction: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   }),
   /**
    * The components used for each slot inside.
@@ -405,6 +281,7 @@ ListItem.propTypes /* remove-proptypes */ = {
    */
   slots: PropTypes.shape({
     root: PropTypes.elementType,
+    secondaryAction: PropTypes.elementType,
   }),
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

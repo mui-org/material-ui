@@ -2,13 +2,13 @@ import * as CSS from 'csstype';
 import { Breakpoints } from '@mui/system';
 
 export type NormalCssProperties = CSS.Properties<number | string>;
-export type Fontface = CSS.AtRule.FontFace & { fallbacks?: CSS.AtRule.FontFace[] };
+export type Fontface = CSS.AtRule.FontFace & { fallbacks?: CSS.AtRule.FontFace[] | undefined };
 
 /**
  * Allows the user to augment the properties available
  */
 export interface BaseCSSProperties extends NormalCssProperties {
-  '@font-face'?: Fontface | Fontface[];
+  '@font-face'?: Fontface | Fontface[] | undefined;
 }
 
 export interface CSSProperties extends BaseCSSProperties {

@@ -38,11 +38,10 @@
     }
   ],
   "spread": true,
-  "themeDefaultProps": false,
+  "themeDefaultProps": true,
   "muiName": "MuiRadioGroup",
   "forwardsRefTo": "HTMLDivElement",
   "filename": "/packages/mui-material/src/RadioGroup/RadioGroup.js",
   "inheritance": { "component": "FormGroup", "pathname": "/material-ui/api/form-group/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-radio-button/\">Radio Group</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-radio-button/\">Radio Group</a></li></ul>"
 }

@@ -6,6 +6,9 @@
 /sign-up / 301
 /auth* / 301
 
+# Shortlink to Netlify deploy previews
+/pr/:number https://deploy-preview-:number--material-ui.netlify.app/ 302
+
 /size-snapshot https://s3.eu-central-1.amazonaws.com/mui-org-ci/artifacts/master/latest/size-snapshot.json 200
 
 # For links that we can't edit later on, for example hosted in the code published on npm
@@ -20,8 +23,9 @@
 /r/ts-issue-template https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAKjgQwM5wEoFNkGN4BmUEIcA5FDvmQNwBQokscA3nXHAPSdwwAWWOLhKQAdllEx0ATwgBXOHNRYAJnQC+cIiXIABEHOCcQyGFijBkAGzJ06BOaPzAIouABEsICAAoAlKzsXDwAmvJQQhAqWBpAA 302
 /r/custom-component-variants /material-ui/customization/how-to-customize/#adding-new-component-variants 302
 /r/migration-v4 /material-ui/migration/migration-v4/ 302
-/r/discord https://discord.com/invite/tewQuNeUyS 302
 /r/pigment /blog/introducing-pigment-css/ 302
+# The Discord server is closed, point the stale links to the support page.
+/r/discord /material-ui/getting-started/support/ 302
 
 # Legacy redirection
 # Added in chronological order (the last line is the most recent one)
@@ -380,12 +384,11 @@ https://v4.material-ui.com/* https://v4.mui.com/:splat 301!
 /joy-ui/customization/one-off-styling/ /joy-ui/customization/approaches/#one-off-customization 301
 /:lang/joy-ui/customization/theme-components/ /:lang/joy-ui/customization/themed-components/ 301
 /joy-ui/customization/theme-components/ /joy-ui/customization/themed-components/ 301
-/:lang/joy-ui/customization/theme-components/ /:lang/joy-ui/customization/themed-components/ 301
 /base/react-chip/ /material-ui/react-chip/ 301
 /system/api/ /system/properties/ 301
 /:lang/system/api/ /:lang/system/properties/ 301
 /joy-ui/core-features/global-variant/ /joy-ui/main-features/global-variants/ 301
-/:lang/joy-ui/core-features/global-variant/ /:langjoy-ui/main-features/global-variants/ 301
+/:lang/joy-ui/core-features/global-variant/ /:lang/joy-ui/main-features/global-variants/ 301
 /joy-ui/core-features/automatic-adjustment/ /joy-ui/main-features/automatic-adjustment/ 301
 /:lang/joy-ui/core-features/automatic-adjustment/ /:lang/joy-ui/main-features/automatic-adjustment/ 301
 /joy-ui/core-features/perfect-dark-mode/ /joy-ui/main-features/dark-mode-optimization/ 301
@@ -480,7 +483,6 @@ https://v4.material-ui.com/* https://v4.mui.com/:splat 301!
 /base-ui/api/:component/ /base-ui/react-:component/components-api/#:component 301
 /joy-ui/customization/theme-tokens/ /joy-ui/customization/theme-colors/ 301
 /joy-ui/guides/apply-dark-mode/ /joy-ui/customization/dark-mode/ 301
-/material-ui/experimental-api/css-variables/ /material-ui/experimental-api/css-theme-variables/overview/ 301
 /material-ui/experimental-api/css-theme-variables/ /material-ui/experimental-api/css-theme-variables/overview/ 302
 /material-ui/getting-started/overview/ /material-ui/getting-started/ 301
 /joy-ui/getting-started/overview/ /joy-ui/getting-started/ 301
@@ -512,11 +514,19 @@ https://v4.material-ui.com/* https://v4.mui.com/:splat 301!
 /material-ui/experimental-api/css-theme-variables/usage/ /material-ui/customization/css-theme-variables/usage/ 301
 /material-ui/experimental-api/css-theme-variables/customization/ /material-ui/customization/css-theme-variables/configuration/ 301
 /base-ui/ https://base-ui.com/ 301
-#2025
+/material-ui/discover-more/design-kits/ /design-kits/ 301
+/material-ui/api/loading-button/ https://v5.mui.com/material-ui/api/loading-button/ 301
+/material-ui/getting-started/templates/landing-page/ /material-ui/getting-started/templates/marketing-page/ 301
+# 2025
 /system/styles/basics/ https://v6.mui.com/system/styles/basics/ 301
 /system/styles/advanced/ https://v6.mui.com/system/styles/advanced/ 301
 /system/styles/api/ https://v6.mui.com/system/styles/api/ 301
 /base-ui/* https://v6.mui.com/base-ui/:splat 301
+/material-ui/react-grid2/ https://v6.mui.com/material-ui/react-grid2/ 301
+# 2026
+/joy-ui/* https://v7.mui.com/joy-ui/:splat 301
+/versions/ /material-ui/getting-started/versions/ 301
+/material-ui/react-grid-legacy/ https://v7.mui.com/material-ui/react-grid-legacy/ 301
 
 # Proxies
 

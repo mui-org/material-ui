@@ -3,7 +3,6 @@
   "propDescriptions": {
     "checked": { "description": "If <code>true</code>, the component appears selected." },
     "classes": { "description": "Override or extend the styles applied to the component." },
-    "componentsProps": { "description": "The props used for each slot inside." },
     "control": {
       "description": "A control element. For instance, it can be a <code>Radio</code>, a <code>Switch</code> or a <code>Checkbox</code>."
     },
@@ -11,7 +10,6 @@
     "disableTypography": {
       "description": "If <code>true</code>, the label is rendered as it is passed without an additional typography node."
     },
-    "inputRef": { "description": "Pass a ref to the <code>input</code> element." },
     "label": { "description": "A text or an element to be used in an enclosing label element." },
     "labelPlacement": { "description": "The position of the label." },
     "onChange": {
@@ -56,6 +54,11 @@
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "<code>labelPlacement=\"bottom\"</code>"
+    },
+    "labelPlacementEnd": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>labelPlacement=\"end\"</code>"
     },
     "labelPlacementStart": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",

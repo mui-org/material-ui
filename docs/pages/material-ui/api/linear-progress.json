@@ -8,6 +8,8 @@
       },
       "default": "'primary'"
     },
+    "max": { "type": { "name": "number" }, "default": "100" },
+    "min": { "type": { "name": "number" }, "default": "0" },
     "sx": {
       "type": {
         "name": "union",
@@ -44,59 +46,10 @@
       "isGlobal": false
     },
     {
-      "key": "bar1Buffer",
-      "className": "MuiLinearProgress-bar1Buffer",
-      "description": "Styles applied to the bar1 element if `variant=\"buffer\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "bar1Determinate",
-      "className": "MuiLinearProgress-bar1Determinate",
-      "description": "Styles applied to the bar1 element if `variant=\"determinate\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "bar1Indeterminate",
-      "className": "MuiLinearProgress-bar1Indeterminate",
-      "description": "Styles applied to the bar1 element if `variant=\"indeterminate or query\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
       "key": "bar2",
       "className": "MuiLinearProgress-bar2",
       "description": "Styles applied to the bar2 element.",
       "isGlobal": false
-    },
-    {
-      "key": "bar2Buffer",
-      "className": "MuiLinearProgress-bar2Buffer",
-      "description": "Styles applied to the bar2 element if `variant=\"buffer\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "bar2Indeterminate",
-      "className": "MuiLinearProgress-bar2Indeterminate",
-      "description": "Styles applied to the bar2 element if `variant=\"indeterminate or query\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "barColorPrimary",
-      "className": "MuiLinearProgress-barColorPrimary",
-      "description": "Styles applied to the bar elements if `color=\"primary\"`; bar2 if `variant` not \"buffer\".",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "barColorSecondary",
-      "className": "MuiLinearProgress-barColorSecondary",
-      "description": "Styles applied to the bar elements if `color=\"secondary\"`; bar2 if `variant` not \"buffer\".",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "buffer",
@@ -121,20 +74,6 @@
       "className": "MuiLinearProgress-dashed",
       "description": "Styles applied to the additional bar element if `variant=\"buffer\"`.",
       "isGlobal": false
-    },
-    {
-      "key": "dashedColorPrimary",
-      "className": "MuiLinearProgress-dashedColorPrimary",
-      "description": "Styles applied to the additional bar element if `variant=\"buffer\"` and `color=\"primary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
-    },
-    {
-      "key": "dashedColorSecondary",
-      "className": "MuiLinearProgress-dashedColorSecondary",
-      "description": "Styles applied to the additional bar element if `variant=\"buffer\"` and `color=\"secondary\"`.",
-      "isGlobal": false,
-      "isDeprecated": true
     },
     {
       "key": "determinate",
@@ -167,6 +106,5 @@
   "forwardsRefTo": "HTMLSpanElement",
   "filename": "/packages/mui-material/src/LinearProgress/LinearProgress.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-progress/\">Progress</a></li></ul>",
-  "cssComponent": false
+  "demos": "<ul><li><a href=\"/material-ui/react-progress/\">Progress</a></li></ul>"
 }

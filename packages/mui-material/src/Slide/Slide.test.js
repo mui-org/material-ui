@@ -1,13 +1,14 @@
+import { describe, expect, it } from 'vitest';
 import * as React from 'react';
-import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-import { act, createRenderer } from '@mui/internal-test-utils';
-import { Transition } from 'react-transition-group';
+import { act, createRenderer, isJsdom, screen } from '@mui/internal-test-utils';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Slide from '@mui/material/Slide';
+import Transition from '../internal/Transition';
 import { setTranslateValue } from './Slide';
 import { useForkRef } from '../utils';
 import describeConformance from '../../test/describeConformance';
+import describeTransitionConformance from '../../test/describeTransitionConformance';
 
 describe('<Slide />', () => {
   const { clock, render } = createRenderer();
@@ -27,15 +28,63 @@ describe('<Slide />', () => {
       classes: {},
       inheritComponent: Transition,
       refInstanceof: window.HTMLDivElement,
-      skip: [
-        'componentProp',
-        'componentsProp',
-        'themeDefaultProps',
-        'themeStyleOverrides',
-        'themeVariants',
-      ],
+      skip: ['componentProp', 'themeDefaultProps', 'themeStyleOverrides', 'themeVariants'],
     }),
   );
+
+  describeTransitionConformance('Slide', () => ({
+    Component: Slide,
+    render,
+    clock,
+    defaultProps: {
+      direction: 'down',
+    },
+    lifecycle: {
+      addEndListener: true,
+      assertEntering: (node) => {
+        expect(node.style.transform).to.match(/none/);
+      },
+    },
+    themeDuration: {
+      renderElement: (props) => (
+        <Slide in appear {...props}>
+          <div data-testid="child">Foo</div>
+        </Slide>
+      ),
+    },
+    propTimeout: {
+      enter: {
+        timeout: 556,
+        callback: 'onEntering',
+        assertStyle: (node) => {
+          expect(node.style.transition).to.match(
+            /transform 556ms cubic-bezier\(0(.0)?, 0, 0.2, 1\)( 0ms)?/,
+          );
+        },
+      },
+      exit: {
+        timeout: 446,
+        callback: 'onExit',
+        assertStyle: (node) => {
+          expect(node.style.transition).to.match(
+            /transform 446ms cubic-bezier\(0.4, 0, 0.6, 1\)( 0ms)?/,
+          );
+        },
+      },
+    },
+    reducedMotion: {
+      assertReducedTiming: (node) => {
+        if (isJsdom()) {
+          expect(node.style.transition).to.include('0ms');
+        } else {
+          expect(node.style.transitionDuration).to.equal('0ms');
+        }
+      },
+      testReflow: true,
+      testOptOut: true,
+      testNoDomPropLeak: true,
+    },
+  }));
 
   it('should not override children styles', () => {
     const { container } = render(
@@ -53,150 +102,6 @@ describe('<Slide />', () => {
     expect(slide.style).to.have.property('backgroundColor', 'yellow');
     expect(slide.style).to.have.property('color', 'blue');
     expect(slide.style).to.have.property('visibility', '');
-  });
-
-  describe('transition lifecycle', () => {
-    clock.withFakeTimers();
-
-    it('tests', () => {
-      const handleAddEndListener = spy();
-      const handleEnter = spy();
-      const handleEntering = spy();
-      const handleEntered = spy();
-      const handleExit = spy();
-      const handleExiting = spy();
-      const handleExited = spy();
-
-      let child;
-      const { setProps } = render(
-        <Slide
-          addEndListener={handleAddEndListener}
-          onEnter={handleEnter}
-          onEntering={handleEntering}
-          onEntered={handleEntered}
-          onExit={handleExit}
-          onExiting={handleExiting}
-          onExited={handleExited}
-        >
-          <div
-            ref={(ref) => {
-              child = ref;
-            }}
-          />
-        </Slide>,
-      );
-
-      setProps({ in: true });
-
-      expect(handleAddEndListener.callCount).to.equal(1);
-      expect(handleAddEndListener.args[0][0]).to.equal(child);
-      expect(typeof handleAddEndListener.args[0][1]).to.equal('function');
-
-      expect(handleEntering.callCount).to.equal(1);
-      expect(handleEntering.args[0][0]).to.equal(child);
-
-      expect(handleEntering.args[0][0].style.transform).to.match(/none/);
-
-      expect(handleEntering.callCount).to.equal(1);
-      expect(handleEntering.args[0][0]).to.equal(child);
-
-      clock.tick(1000);
-      expect(handleEntered.callCount).to.equal(1);
-
-      setProps({ in: false });
-
-      expect(handleExiting.callCount).to.equal(1);
-      expect(handleExiting.args[0][0]).to.equal(child);
-
-      expect(handleExiting.callCount).to.equal(1);
-      expect(handleExiting.args[0][0]).to.equal(child);
-
-      clock.tick(1000);
-      expect(handleExited.callCount).to.equal(1);
-      expect(handleExited.args[0][0]).to.equal(child);
-    });
-  });
-
-  describe('prop: timeout', () => {
-    it('should create proper enter animation onEntering', () => {
-      const handleEntering = spy();
-
-      render(
-        <Slide
-          {...defaultProps}
-          timeout={{
-            enter: 556,
-          }}
-          onEntering={handleEntering}
-        />,
-      );
-
-      expect(handleEntering.args[0][0].style.transition).to.match(
-        /transform 556ms cubic-bezier\(0(.0)?, 0, 0.2, 1\)( 0ms)?/,
-      );
-    });
-
-    it('should create proper exit animation', () => {
-      const handleExit = spy();
-      const { setProps } = render(
-        <Slide
-          {...defaultProps}
-          timeout={{
-            exit: 446,
-          }}
-          onExit={handleExit}
-        />,
-      );
-
-      setProps({ in: false });
-
-      expect(handleExit.args[0][0].style.transition).to.match(
-        /transform 446ms cubic-bezier\(0.4, 0, 0.6, 1\)( 0ms)?/,
-      );
-    });
-
-    it('should render the default theme values by default', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-      const theme = createTheme();
-      const enteringScreenDurationInSeconds = theme.transitions.duration.enteringScreen / 1000;
-
-      const { getByTestId } = render(
-        <Slide in appear>
-          <div data-testid="child">Foo</div>
-        </Slide>,
-      );
-
-      const child = getByTestId('child');
-      expect(child).toHaveComputedStyle({
-        transitionDuration: `${enteringScreenDurationInSeconds}s`,
-      });
-    });
-
-    it('should render the custom theme values', function test() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
-      const theme = createTheme({
-        transitions: {
-          duration: {
-            enteringScreen: 1,
-          },
-        },
-      });
-
-      const { getByTestId } = render(
-        <ThemeProvider theme={theme}>
-          <Slide in appear>
-            <div data-testid="child">Foo</div>
-          </Slide>
-        </ThemeProvider>,
-      );
-
-      const child = getByTestId('child');
-      expect(child).toHaveComputedStyle({ transitionDuration: '0.001s' });
-    });
   });
 
   describe('prop: easing', () => {
@@ -237,10 +142,7 @@ describe('<Slide />', () => {
       );
     });
 
-    it('should render the default theme values by default', function test() {
-      if (!/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(!isJsdom())('should render the default theme values by default', function test() {
       const theme = createTheme();
       const handleEntering = spy();
       render(<Slide {...defaultProps} onEntering={handleEntering} />);
@@ -250,10 +152,7 @@ describe('<Slide />', () => {
       );
     });
 
-    it('should render the custom theme values', function test() {
-      if (!/jsdom/.test(window.navigator.userAgent)) {
-        this.skip();
-      }
+    it.skipIf(!isJsdom())('should render the custom theme values', function test() {
       const theme = createTheme({
         transitions: {
           easing: {
@@ -293,27 +192,34 @@ describe('<Slide />', () => {
   });
 
   describe('transform styling', () => {
-    const FakeDiv = React.forwardRef((props, ref) => {
+    const RealDiv = React.forwardRef(({ rect, ...props }, ref) => {
+      return (
+        <div {...props} style={{ height: 300, width: 500, background: 'red', ...rect }} ref={ref} />
+      );
+    });
+    const FakeDiv = React.forwardRef(({ rect, ...props }, ref) => {
       const stubBoundingClientRect = (element) => {
         if (element !== null) {
-          element.fakeTransform = 'none';
           try {
-            stub(element, 'getBoundingClientRect').callsFake(() => ({
-              width: 500,
-              height: 300,
-              left: 300,
-              right: 800,
-              top: 200,
-              bottom: 500,
-              ...props.rect,
-            }));
+            stub(element, 'getBoundingClientRect').callsFake(() => {
+              const r = {
+                width: 500,
+                height: 300,
+                left: 300,
+                right: 800,
+                top: 200,
+                bottom: 500,
+                ...rect,
+              };
+              return r;
+            });
           } catch (error) {
-            // already stubbed
+            // The test may render this element more than once.
           }
         }
       };
       const handleRef = useForkRef(ref, stubBoundingClientRect);
-      return <div {...props} style={{ height: 300, width: 500 }} ref={handleRef} />;
+      return <RealDiv {...props} ref={handleRef} />;
     });
 
     describe('handleEnter()', () => {
@@ -332,7 +238,7 @@ describe('<Slide />', () => {
 
         setProps({ in: true });
 
-        expect(nodeEnterTransformStyle).to.equal(`translateX(${global.innerWidth - 300}px)`);
+        expect(nodeEnterTransformStyle).to.equal(`translateX(${globalThis.innerWidth - 300}px)`);
       });
 
       it('should set element transform and transition in the `right` direction', () => {
@@ -368,7 +274,7 @@ describe('<Slide />', () => {
 
         setProps({ in: true });
 
-        expect(nodeEnterTransformStyle).to.equal(`translateY(${global.innerHeight - 200}px)`);
+        expect(nodeEnterTransformStyle).to.equal(`translateY(${globalThis.innerHeight - 200}px)`);
       });
 
       it('should set element transform and transition in the `down` direction', () => {
@@ -425,7 +331,7 @@ describe('<Slide />', () => {
 
         setProps({ in: true });
 
-        expect(nodeEnterTransformStyle).to.equal(`translateY(${global.innerHeight + 100}px)`);
+        expect(nodeEnterTransformStyle).to.equal(`translateY(${globalThis.innerHeight + 100}px)`);
       });
 
       it('should set element transform in the `left` direction when element is offscreen', () => {
@@ -444,11 +350,61 @@ describe('<Slide />', () => {
 
         setProps({ in: true });
 
-        expect(nodeEnterTransformStyle).to.equal(`translateX(${global.innerWidth + 100}px)`);
+        expect(nodeEnterTransformStyle).to.equal(`translateX(${globalThis.innerWidth + 100}px)`);
       });
     });
 
     describe('handleExiting()', () => {
+      const draggedOffset = 170;
+      const elementTop = 200;
+
+      const TouchDraggedFakeDiv = React.forwardRef(function TouchDraggedFakeDiv(props, ref) {
+        const [translateY, setTranslateY] = React.useState(0);
+        const startYRef = React.useRef(null);
+        const stubbedElementRef = React.useRef(null);
+        const stubBoundingClientRect = React.useCallback((element) => {
+          if (element === null || stubbedElementRef.current === element) {
+            return;
+          }
+
+          stubbedElementRef.current = element;
+          stub(element, 'getBoundingClientRect').callsFake(() => ({
+            width: 500,
+            height: 300,
+            left: 300,
+            right: 800,
+            top: elementTop,
+            bottom: 500,
+          }));
+        }, []);
+        const handleRef = useForkRef(ref, stubBoundingClientRect);
+
+        return (
+          <div
+            data-testid="drag-target"
+            {...props}
+            ref={handleRef}
+            onPointerDown={(event) => {
+              startYRef.current = event.clientY;
+            }}
+            onPointerMove={(event) => {
+              if (startYRef.current !== null) {
+                setTranslateY(event.clientY - startYRef.current);
+              }
+            }}
+            onPointerUp={() => {
+              startYRef.current = null;
+            }}
+            style={{
+              width: 500,
+              height: 300,
+              background: 'red',
+              transform: `translate(0px, ${translateY}px)`,
+            }}
+          />
+        );
+      });
+
       it('should set element transform and transition in the `left` direction', () => {
         let nodeExitingTransformStyle;
         const { setProps } = render(
@@ -465,7 +421,7 @@ describe('<Slide />', () => {
 
         setProps({ in: false });
 
-        expect(nodeExitingTransformStyle).to.equal(`translateX(${global.innerWidth - 300}px)`);
+        expect(nodeExitingTransformStyle).to.equal(`translateX(${globalThis.innerWidth - 300}px)`);
       });
 
       it('should set element transform and transition in the `right` direction', () => {
@@ -503,7 +459,7 @@ describe('<Slide />', () => {
 
         setProps({ in: false });
 
-        expect(nodeExitingTransformStyle).to.equal(`translateY(${global.innerHeight - 200}px)`);
+        expect(nodeExitingTransformStyle).to.equal(`translateY(${globalThis.innerHeight - 200}px)`);
       });
 
       it('should set element transform and transition in the `down` direction', () => {
@@ -524,44 +480,77 @@ describe('<Slide />', () => {
 
         expect(nodeExitingTransformStyle).to.equal('translateY(-500px)');
       });
+
+      it('should account for a touch-dragged position when exiting', async () => {
+        function Test() {
+          const [open, setOpen] = React.useState(true);
+
+          return (
+            <React.Fragment>
+              <button type="button" onClick={() => setOpen(false)}>
+                Close
+              </button>
+              <Slide appear={false} direction="up" in={open}>
+                <TouchDraggedFakeDiv />
+              </Slide>
+            </React.Fragment>
+          );
+        }
+
+        const { user } = render(<Test />);
+        const dragTarget = screen.getByTestId('drag-target');
+
+        await user.pointer([
+          { keys: '[TouchA>]', target: dragTarget, coords: { clientY: 200 } },
+          { pointerName: 'TouchA', target: dragTarget, coords: { clientY: 370 } },
+          { keys: '[/TouchA]', target: dragTarget, coords: { clientY: 370 } },
+        ]);
+
+        expect(dragTarget.style.transform).to.equal(`translate(0px, ${draggedOffset}px)`);
+
+        await user.click(screen.getByRole('button', { name: 'Close' }));
+
+        expect(dragTarget.style.transform).to.equal(
+          `translateY(${globalThis.innerHeight + draggedOffset - elementTop}px)`,
+        );
+      });
     });
 
     describe('prop: container', () => {
-      it('should set element transform and transition in the `up` direction', function test() {
-        if (/jsdom/.test(window.navigator.userAgent)) {
-          // Need layout
-          this.skip();
-        }
-
-        let nodeExitingTransformStyle;
-        const height = 200;
-        function Test(props) {
-          const [container, setContainer] = React.useState(null);
-          return (
-            <div
-              ref={(node) => {
-                setContainer(node);
-              }}
-              style={{ height, width: 200 }}
-            >
-              <Slide
-                direction="up"
-                in
-                {...props}
-                container={container}
-                onExit={(node) => {
-                  nodeExitingTransformStyle = node.style.transform;
+      // This test needs real layout measurements.
+      it.skipIf(isJsdom())(
+        'should set element transform and transition in the `up` direction',
+        async function test() {
+          let nodeExitingTransformStyle;
+          const height = 200;
+          function Test(props) {
+            const [container, setContainer] = React.useState(null);
+            return (
+              <div
+                ref={(node) => {
+                  setContainer(node);
                 }}
+                style={{ height, width: 200 }}
               >
-                <FakeDiv rect={{ top: 8 }} />
-              </Slide>
-            </div>
-          );
-        }
-        const { setProps } = render(<Test />);
-        setProps({ in: false });
-        expect(nodeExitingTransformStyle).to.equal(`translateY(${height}px)`);
-      });
+                <Slide
+                  direction="up"
+                  in
+                  {...props}
+                  container={container}
+                  onExit={(node) => {
+                    nodeExitingTransformStyle = node.style.transform;
+                  }}
+                >
+                  <RealDiv rect={{ top: 8 }} />
+                </Slide>
+              </div>
+            );
+          }
+          const { setProps } = render(<Test />);
+          setProps({ in: false });
+          expect(nodeExitingTransformStyle).to.equal(`translateY(${height}px)`);
+        },
+      );
     });
 
     describe('mount', () => {
@@ -598,21 +587,30 @@ describe('<Slide />', () => {
         expect(child.style.transform).not.to.equal(undefined);
       });
 
-      it('should take existing transform into account', () => {
-        const element = {
-          fakeTransform: 'transform matrix(1, 0, 0, 1, 0, 420)',
-          getBoundingClientRect: () => ({
-            width: 500,
-            height: 300,
-            left: 300,
-            right: 800,
-            top: 1200,
-            bottom: 1500,
-          }),
-          style: {},
-        };
+      // Browsers resolve CSS transforms from stylesheets to matrix() values,
+      // which Slide parses to include existing offsets. jsdom does not resolve
+      // CSS values. The transform must come from a CSS rule, not inline style,
+      // because Slide clears inline transforms before reading computed style.
+      it.skipIf(isJsdom())('should take existing transform into account', function test() {
+        const styleEl = document.createElement('style');
+        styleEl.textContent = '#slide-test-transform { transform: matrix(1, 0, 0, 1, 0, 420); }';
+        document.head.appendChild(styleEl);
+        const element = document.createElement('div');
+        element.id = 'slide-test-transform';
+        document.body.appendChild(element);
+        stub(element, 'getBoundingClientRect').callsFake(() => ({
+          width: 500,
+          height: 300,
+          left: 300,
+          right: 800,
+          top: 1200,
+          bottom: 1500,
+        }));
         setTranslateValue('up', element);
-        expect(element.style.transform).to.equal(`translateY(${global.innerHeight - 780}px)`);
+        expect(element.style.transform).to.equal(`translateY(${globalThis.innerHeight - 780}px)`);
+
+        document.body.removeChild(element);
+        document.head.removeChild(styleEl);
       });
 
       it('should do nothing when visible', () => {

@@ -13,6 +13,7 @@ import ButtonBase from '../ButtonBase';
 import CircularProgress from '../CircularProgress';
 import capitalize from '../utils/capitalize';
 import iconButtonClasses, { getIconButtonUtilityClass } from './iconButtonClasses';
+import { getTransitionStyles } from '../transitions/utils';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, disabled, color, edge, size, loading } = ownerState;
@@ -55,7 +56,7 @@ const IconButtonRoot = styled(ButtonBase, {
     padding: 8,
     borderRadius: '50%',
     color: (theme.vars || theme).palette.action.active,
-    transition: theme.transitions.create('background-color', {
+    ...getTransitionStyles(theme, 'background-color', {
       duration: theme.transitions.duration.shortest,
     }),
     variants: [
@@ -115,13 +116,6 @@ const IconButtonRoot = styled(ButtonBase, {
           props: { color },
           style: {
             color: (theme.vars || theme).palette[color].main,
-          },
-        })),
-      ...Object.entries(theme.palette)
-        .filter(createSimplePaletteValueFilter()) // check all the used fields in the style below
-        .map(([color]) => ({
-          props: { color },
-          style: {
             '--IconButton-hoverBg': theme.alpha(
               (theme.vars || theme).palette[color].main,
               (theme.vars || theme).palette.action.hoverOpacity,
@@ -210,6 +204,7 @@ const IconButton = React.forwardRef(function IconButton(inProps, ref) {
       id={loading ? loadingId : idProp}
       className={clsx(classes.root, className)}
       centerRipple
+      internalNativeButton
       focusRipple={!disableFocusRipple}
       disabled={disabled || loading}
       ref={ref}

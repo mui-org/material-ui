@@ -287,18 +287,18 @@ All of the Autocomplete's slot (`*Component`) props were deprecated in favor of 
 
 ```diff
  <Autocomplete
--    PaperComponent={CustomPaperComponent}
--    PopperComponent={CustomPopperComponent}
--    ListboxComponent={CustomListboxComponent}
-+    slots={{
-+        paper: CustomPaperComponent,
-+        popper: CustomPopperComponent,
-+    }}
-+    slotProps={{
-+        listbox: {
-+            component: CustomListboxComponent,
-+        },
-+    }}
+-  PaperComponent={CustomPaperComponent}
+-  PopperComponent={CustomPopperComponent}
+-  ListboxComponent={CustomListboxComponent}
++  slots={{
++    paper: CustomPaperComponent,
++    popper: CustomPopperComponent,
++  }}
++  slotProps={{
++    listbox: {
++      component: CustomListboxComponent,
++    },
++  }}
  />
 ```
 
@@ -313,12 +313,12 @@ All of the Autocomplete's slot props (`*Props`) props were deprecated in favor o
 
 ```diff
  <Autocomplete
--    ChipProps={CustomChipProps}
--    ListboxProps={CustomListboxProps}
-+    slotProps={{
-+        chip: CustomChipProps,
-+        listbox: CustomListboxProps,
-+    }}
+-  ChipProps={CustomChipProps}
+-  ListboxProps={CustomListboxProps}
++  slotProps={{
++    chip: CustomChipProps,
++    listbox: CustomListboxProps,
++  }}
  />
 ```
 
@@ -2289,23 +2289,23 @@ Here's how to migrate:
 
 ### ScrollButtonComponent
 
-The Tabs's `ScrollButtonComponent` prop was deprecated in favor of `slots.scrollButton`:
+The Tabs's `ScrollButtonComponent` prop was deprecated in favor of `slots.scrollButtons`:
 
 ```diff
  <Tabs
 -  ScrollButtonComponent={ScrollButtonComponent}
-+  slots={{ scrollButton: ScrollButtonComponent }}
++  slots={{ scrollButtons: ScrollButtonComponent }}
  />
 ```
 
 ### TabScrollButtonProps
 
-The Tabs's `TabScrollButtonProps` prop was deprecated in favor of `slotProps.scrollButton`:
+The Tabs's `TabScrollButtonProps` prop was deprecated in favor of `slotProps.scrollButtons`:
 
 ```diff
  <Tabs
 -  TabScrollButtonProps={TabScrollButtonProps}
-+  slotProps={{ scrollButton: TabScrollButtonProps }}
++  slotProps={{ scrollButtons: TabScrollButtonProps }}
  />
 ```
 
@@ -2647,7 +2647,7 @@ The StepContent's `TransitionProps` prop was deprecated in favor of `slotProps.t
 Use the [codemod](https://github.com/mui/material-ui/tree/HEAD/packages/mui-codemod#speed-dial-props) below to migrate the code as described in the following sections:
 
 ```bash
-npx @mui/codemod@next deprecations/speed-dial-props <path>
+npx @mui/codemod@latest deprecations/speed-dial-props <path>
 ```
 
 ### TransitionComponent

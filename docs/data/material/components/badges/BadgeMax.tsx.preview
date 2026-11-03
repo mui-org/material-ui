@@ -1,9 +1,0 @@
-<Badge color="secondary" badgeContent={99}>
-  <MailIcon />
-</Badge>
-<Badge color="secondary" badgeContent={100}>
-  <MailIcon />
-</Badge>
-<Badge color="secondary" badgeContent={1000} max={999}>
-  <MailIcon />
-</Badge>

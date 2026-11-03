@@ -1,12 +1,13 @@
 import * as React from 'react';
 import copy from 'clipboard-copy';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';
 import ContentCopyRounded from '@mui/icons-material/ContentCopyRounded';
 import CheckRounded from '@mui/icons-material/CheckRounded';
-import { Link } from '@mui/docs/Link';
-import NpmCopyButton from 'docs/src/components/action/NpmCopyButton';
+import { Link } from '@mui/internal-core-docs/Link';
+import { NpmCopyButton } from '@mui/internal-core-docs/AppLayout';
 
 interface GetStartedButtonsProps extends BoxProps {
   primaryLabel?: string;
@@ -68,7 +69,7 @@ export default function GetStartedButtons(props: GetStartedButtonsProps) {
         </Button>
         {installation ? (
           <Button
-            // @ts-expect-error
+            // @ts-expect-error: The branding theme provides codeOutlined without global Button variant augmentation.
             variant="codeOutlined"
             endIcon={copied ? <CheckRounded color="primary" /> : <ContentCopyRounded />}
             onClick={handleCopy}

@@ -12,11 +12,11 @@ export interface TableHeadOwnProps {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: Partial<TableHeadClasses>;
+  classes?: Partial<TableHeadClasses> | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 }
 
 export interface TableHeadTypeMap<
@@ -30,11 +30,11 @@ export interface TableHeadTypeMap<
  *
  * Demos:
  *
- * - [Table](https://mui.com/material-ui/react-table/)
+ * - [Table](https://next.mui.com/material-ui/react-table/)
  *
  * API:
  *
- * - [TableHead API](https://mui.com/material-ui/api/table-head/)
+ * - [TableHead API](https://next.mui.com/material-ui/api/table-head/)
  */
 declare const TableHead: OverridableComponent<TableHeadTypeMap>;
 
@@ -42,7 +42,7 @@ export type TableHeadProps<
   RootComponent extends React.ElementType = TableHeadTypeMap['defaultComponent'],
   AdditionalProps = {},
 > = OverrideProps<TableHeadTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  component?: React.ElementType;
+  component?: React.ElementType | undefined;
 };
 
 export default TableHead;
