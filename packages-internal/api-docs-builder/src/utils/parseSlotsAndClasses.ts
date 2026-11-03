@@ -4,6 +4,7 @@ import { renderMarkdown } from '../buildApi';
 import { getSymbolDescription, getSymbolJSDocTags } from '../buildApiUtils';
 import type { TypeScriptProject } from './createTypeScriptProject';
 import { getPropsFromComponentNode } from './getPropsFromComponentNode';
+import { getOrderedProperties } from './getOrderedProperties';
 import { resolveExportSpecifier } from './resolveExportSpecifier';
 import type { ProjectSettings } from '../ProjectSettings';
 import type { Slot } from '../types/utils.types';
@@ -240,7 +241,7 @@ function extractSlots(
   }
 
   const slots: Record<string, Slot> = {};
-  const propertiesOnProject = type.getProperties();
+  const propertiesOnProject = getOrderedProperties(project.checker, type);
   const classDefMap = new Map(classDefinitions.map((classDef) => [classDef.key, classDef]));
 
   propertiesOnProject.forEach((propertySymbol) => {
