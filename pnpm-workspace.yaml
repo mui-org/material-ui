@@ -38,10 +38,10 @@ catalogs:
     '@emotion/react': '^11.14.0'
     '@emotion/server': '^11.11.0'
     '@emotion/styled': '^11.14.1'
-    '@mui/internal-docs-infra': '0.13.1-canary.19'
+    '@mui/internal-docs-infra': '0.13.1-canary.29'
 
 overrides:
-  '@mui/internal-docs-infra': '0.13.1-canary.19'
+  '@mui/internal-docs-infra': '0.13.1-canary.29'
   # Both were bundled twice in the docs build
   'docs>stylis': '4.2.0'
   'docs>react-is': '19.3.1'
