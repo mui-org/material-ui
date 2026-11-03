@@ -463,9 +463,6 @@ export function AppSearch(props: AppSearchProps) {
               backgroundColor: alpha(theme.palette.grey[700], 0.5),
               backdropFilter: 'blur(2px)',
             },
-            '& .DocSearch-StartScreen': {
-              display: 'none',
-            },
             '& .DocSearch-NewStartScreen': {
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
