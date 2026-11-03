@@ -42,13 +42,13 @@
   },
   "devDependencies": {
     "@mui/material": "workspace:^",
-    "@types/prop-types": "15.7.15",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0",
-    "@types/sinon": "22.0.2",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "sinon": "22.1.0"
+    "@types/prop-types": "^15.7.15",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/sinon": "^22.0.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sinon": "^22.1.0"
   },
   "peerDependencies": {
     "@emotion/react": "^11.5.0",

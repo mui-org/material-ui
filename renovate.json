@@ -54,7 +54,7 @@
     },
     {
       "groupName": "lerna",
-      "description": "Keep the root nx pin (needed by nx.json) on the version lerna depends on, so pnpm installs a single copy of nx.",
+      "description": "Keep the root nx version (needed by nx.json) on the version lerna depends on, so pnpm installs a single copy of nx.",
       "matchPackageNames": ["lerna", "nx"]
     },
     {

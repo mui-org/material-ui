@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "@mui/types": "workspace:^",
-    "@types/prop-types": "15.7.15",
-    "@types/react": "19.3.0",
-    "react": "19.3.1"
+    "@types/prop-types": "^15.7.15",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",

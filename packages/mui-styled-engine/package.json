@@ -39,12 +39,12 @@
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@mui/styled-engine": "workspace:*",
-    "@types/prop-types": "15.7.15",
-    "@types/react": "19.3.0",
-    "react": "19.3.1"
+    "@types/prop-types": "^15.7.15",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1"
   },
   "peerDependencies": {
     "@emotion/react": "^11.4.1",

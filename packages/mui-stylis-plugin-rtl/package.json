@@ -35,9 +35,9 @@
     "cssjanus": "^2.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.20.5",
-    "@types/stylis": "4.2.7",
-    "stylis": "4.4.0"
+    "@types/node": "^22.20.5",
+    "@types/stylis": "^4.2.7",
+    "stylis": "^4.4.0"
   },
   "peerDependencies": {
     "stylis": "4.x"

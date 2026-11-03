@@ -33,12 +33,12 @@
     "@babel/runtime": "^7.29.7 || ^8.0.5"
   },
   "devDependencies": {
-    "@emotion/cache": "11.14.0",
-    "@emotion/react": "11.14.0",
-    "@emotion/server": "11.11.0",
-    "@types/react": "19.3.0",
-    "next": "16.4.3",
-    "react": "19.3.1"
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
+    "@types/react": "^19.3.0",
+    "next": "^16.4.3",
+    "react": "^19.3.1"
   },
   "peerDependencies": {
     "@emotion/cache": "^11.11.0",
