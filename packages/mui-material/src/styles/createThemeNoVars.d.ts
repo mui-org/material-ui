@@ -103,7 +103,7 @@ export interface BaseTheme extends SystemTheme {
    *   root: ({ theme }) => theme.applyFocusVisibleOffset('outside'),
    * }
    */
-  applyFocusVisibleOffset: (position: 'inside' | 'outside') => CSSObject;
+  applyFocusVisibleOffset: (offset: 'inside' | 'outside') => CSSObject;
 }
 
 // shut off automatic exporting for the `BaseTheme` above
