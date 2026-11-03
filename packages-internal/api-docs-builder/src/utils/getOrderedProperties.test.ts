@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import * as ts from 'typescript';
 import { getOrderedProperties } from './getOrderedProperties';
 
@@ -49,41 +49,29 @@ function createChecker() {
   return { checker, getDeclaredType };
 }
 
-function namesInDefaultOrder(warmup: boolean) {
-  const { getDeclaredType } = createChecker();
+function getNames(typeName: string, { warmup = false, ordered = false } = {}) {
+  const { checker, getDeclaredType } = createChecker();
   if (warmup) {
     // Creates the 'avatar' and 'indicator' literal types before the `Pick` keys.
     getDeclaredType('Warmup');
   }
-  return getDeclaredType('GroupSlots')
-    .getProperties()
-    .map((symbol) => symbol.name);
-}
-
-function namesInStableOrder(warmup: boolean) {
-  const { checker, getDeclaredType } = createChecker();
-  if (warmup) {
-    getDeclaredType('Warmup');
-  }
-  return getOrderedProperties(checker, getDeclaredType('GroupSlots')).map((symbol) => symbol.name);
+  const type = getDeclaredType(typeName);
+  const properties = ordered ? getOrderedProperties(checker, type) : type.getProperties();
+  return properties.map((symbol) => symbol.name);
 }
 
 describe('getOrderedProperties', () => {
   it('reproduces the unstable order of `type.getProperties()` for a `Pick`', () => {
-    expect(namesInDefaultOrder(true)).not.to.deep.equal(namesInDefaultOrder(false));
+    expect(getNames('GroupSlots', { warmup: true })).not.to.deep.equal(getNames('GroupSlots'));
   });
 
   it('orders `Pick` members by declaration, regardless of checker state', () => {
     const expected = ['own', 'group', 'indicator', 'root', 'avatar'];
-    expect(namesInStableOrder(false)).to.deep.equal(expected);
-    expect(namesInStableOrder(true)).to.deep.equal(expected);
+    expect(getNames('GroupSlots', { ordered: true })).to.deep.equal(expected);
+    expect(getNames('GroupSlots', { ordered: true, warmup: true })).to.deep.equal(expected);
   });
 
   it('keeps the checker order for interface inheritance', () => {
-    const { checker, getDeclaredType } = createChecker();
-    const type = getDeclaredType('BoxSlots');
-    expect(getOrderedProperties(checker, type).map((symbol) => symbol.name)).to.deep.equal(
-      type.getProperties().map((symbol) => symbol.name),
-    );
+    expect(getNames('BoxSlots', { ordered: true })).to.deep.equal(getNames('BoxSlots'));
   });
 });

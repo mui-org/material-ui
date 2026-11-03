@@ -6,14 +6,11 @@ const MEMBER_FLAGS = ts.SymbolFlags.Property | ts.SymbolFlags.Method | ts.Symbol
 function compareByDeclaration(a: ts.Symbol, b: ts.Symbol): number {
   const declarationA = a.declarations?.[0];
   const declarationB = b.declarations?.[0];
-  if (!declarationA || !declarationB) {
-    if (declarationA) {
-      return -1;
-    }
-    if (declarationB) {
-      return 1;
-    }
-    return a.name.localeCompare(b.name);
+  if (!declarationA) {
+    return declarationB ? 1 : a.name.localeCompare(b.name);
+  }
+  if (!declarationB) {
+    return -1;
   }
   const fileA = declarationA.getSourceFile().fileName;
   const fileB = declarationB.getSourceFile().fileName;
