@@ -120,6 +120,7 @@ const NumberField = React.forwardRef(function NumberField(
       value={value}
     >
       <BaseNumberField.Input
+        form={form}
         render={(baseProps, baseState) => (
           <InputSlot
             baseProps={baseProps}

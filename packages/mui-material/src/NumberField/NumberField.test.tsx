@@ -2852,8 +2852,8 @@ describe('<NumberField />', () => {
     });
   });
 
-  // External form association must reach Base UI's submission input and contribute
-  // one raw value while the visible Material input displays formatted text.
+  // External forms own the visible input for validation and Enter submission, and
+  // Base UI's submission input for contributing one raw numeric value.
   describe('form submission', () => {
     it('submits one raw numeric value to an external form from a formatted field', async () => {
       const submissions: FormData[] = [];
@@ -2884,6 +2884,47 @@ describe('<NumberField />', () => {
 
       expect(submissions).to.have.length(1);
       expect(Array.from(submissions[0].entries())).to.deep.equal([['amount', '1234.5']]);
+    });
+
+    it('uses visible input validation and Enter submission with an external form', async () => {
+      const submissions: FormData[] = [];
+      const { user } = render(
+        <React.Fragment>
+          <form
+            id="number-form"
+            aria-label="Order"
+            onSubmit={(event) => {
+              event.preventDefault();
+              submissions.push(new FormData(event.currentTarget));
+            }}
+          >
+            <button type="submit">Submit</button>
+          </form>
+          <NumberField
+            label="Amount"
+            name="amount"
+            form="number-form"
+            defaultValue={12}
+            slotProps={{ htmlInput: { pattern: '[0-9]' } }}
+          />
+        </React.Fragment>,
+      );
+      const form = screen.getByRole<HTMLFormElement>('form', { name: 'Order' });
+      const input = screen.getByRole('textbox', { name: 'Amount' });
+
+      // The visible input's pattern must participate in the associated form's validation.
+      expect(form.checkValidity()).to.equal(false);
+      await user.click(input);
+      await user.keyboard('{Enter}');
+      expect(submissions).to.have.length(0);
+
+      await user.clear(input);
+      await user.keyboard('7');
+      expect(form.checkValidity()).to.equal(true);
+      await user.keyboard('{Enter}');
+
+      expect(submissions).to.have.length(1);
+      expect(Array.from(submissions[0].entries())).to.deep.equal([['amount', '7']]);
     });
   });
 
