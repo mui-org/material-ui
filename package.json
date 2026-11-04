@@ -23,6 +23,7 @@
     "docs:build": "pnpm docs:llms:build && pnpm --filter docs build",
     "docs:build-color-preview": "babel-node scripts/buildColorTypes",
     "docs:deploy": "pnpm --filter docs run deploy",
+    "docs:deploy:cherry-picks": "node scripts/deployDocsCherryPicks.mjs",
     "docs:dev": "pnpm --filter docs dev",
     "docs:icons": "pnpm --filter docs icons",
     "docs:start": "pnpm --filter docs start",
