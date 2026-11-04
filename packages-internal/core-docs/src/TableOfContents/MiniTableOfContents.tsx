@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { styled, alpha, type Theme } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import type { SxProps } from '@mui/system';
 import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
@@ -7,7 +8,8 @@ import Paper from '@mui/material/Paper';
 import Fade from '@mui/material/Fade';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { samePageLinkNavigation } from '../Link';
-import { TableOfContents, TOC_WIDTH, type TocItem } from './TableOfContents';
+import { TableOfContents, TOC_WIDTH } from './TableOfContents';
+import type { TocItem } from './TableOfContents';
 
 interface FlatTocItem extends TocItem {
   level: number;

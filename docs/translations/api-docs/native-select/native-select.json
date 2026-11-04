@@ -47,11 +47,6 @@
       "nodeName": "the icon component",
       "conditions": "<code>variant=\"filled\"</code>"
     },
-    "iconOpen": {
-      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
-      "nodeName": "the icon component",
-      "conditions": "the popup is open"
-    },
     "iconOutlined": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the icon component",

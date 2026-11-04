@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Alert from '@mui/material/Alert';
-import { IconButton, IconButtonProps, svgIconClasses } from '@mui/material';
+import type { IconButtonProps } from '@mui/material';
+import { IconButton, svgIconClasses } from '@mui/material';
 
 declare module '@mui/material/Alert' {
   interface AlertCloseButtonSlotPropsOverrides {

@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider';
 import CustomersSpotlight from 'docs/src/components/customers/CustomersSpotlight';
 import CustomersLogoSlider from 'docs/src/components/customers/CustomersLogoSlider';
 import { getCaseStudies } from 'docs/lib/sourcing';
-import { InferGetStaticPropsType } from 'next';
+import type { InferGetStaticPropsType } from 'next';
 import CustomersTestimonials from 'docs/src/components/customers/CustomersTestimonials';
 import CustomersHeroEnd from 'docs/src/components/customers/CustomersHeroEnd';
 

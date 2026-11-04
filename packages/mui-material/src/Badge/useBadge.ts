@@ -1,7 +1,7 @@
 'use client';
-import * as React from 'react';
+import type * as React from 'react';
 import usePreviousProps from '@mui/utils/usePreviousProps';
-import { UseBadgeParameters, UseBadgeReturnValue } from './useBadge.types';
+import type { UseBadgeParameters, UseBadgeReturnValue } from './useBadge.types';
 
 function useBadge(parameters: UseBadgeParameters): UseBadgeReturnValue {
   const {

@@ -20,5 +20,8 @@
   "19": "MUI: The `experimental_sx` has been moved to `theme.unstable_sx`.For more details, see https://github.com/mui/material-ui/pull/35150.",
   "20": "MUI: `vars` is a private field used for CSS variables support.\nPlease use another name or follow the [docs](https://mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.",
   "21": "MUI: The `colorSchemes.%s` option is either missing or invalid.",
-  "22": "MUI: `vars` is a private field used for CSS variables support.\nPlease use another name or follow the [docs](https://next.mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature."
+  "22": "MUI: `vars` is a private field used for CSS variables support.\nPlease use another name or follow the [docs](https://next.mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.",
+  "23": "MUI: No TabContext provided. TabList must be used within a TabContext. Wrap your Tabs with <TabContext value={...}>. See https://mui.com/material-ui/react-tabs/#experimental-api for more info.",
+  "24": "MUI: No TabContext provided. TabPanel must be used within a TabContext. Wrap your TabPanel with <TabContext value={...}>. See https://mui.com/material-ui/react-tabs/#experimental-api for more info.",
+  "25": "MUI: The `colorSchemes.%s` option is either missing or invalid. Ensure the default color scheme is defined in colorSchemes with a valid palette configuration."
 }

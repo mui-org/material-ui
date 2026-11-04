@@ -1,6 +1,7 @@
-import { Symbol, isPropertySignature } from '@typescript/typescript6';
-import { TypeScriptProject } from './createTypeScriptProject';
-import { ParsedProperty } from '../types/ApiBuilder.types';
+import type { Symbol } from '@typescript/typescript6';
+import { isPropertySignature } from '@typescript/typescript6';
+import type { TypeScriptProject } from './createTypeScriptProject';
+import type { ParsedProperty } from '../types/ApiBuilder.types';
 import { getSymbolDescription, getSymbolJSDocTags, stringifySymbol } from '../buildApiUtils';
 
 const parseProperty = async (

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled, useTheme, useColorScheme } from '@mui/material/styles';
-import Drawer, { type DrawerProps } from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
+import type { DrawerProps } from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';

@@ -1,4 +1,5 @@
-import { createTheme, ThemeOptions, FocusVisible } from '@mui/material/styles';
+import type { ThemeOptions, FocusVisible } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { buttonClasses } from '@mui/material/Button';
 
 const theme = createTheme();

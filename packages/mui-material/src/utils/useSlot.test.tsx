@@ -3,7 +3,7 @@ import * as React from 'react';
 import { createRenderer, screen } from '@mui/internal-test-utils';
 import Popper from '../Popper/BasePopper';
 import { styled } from '../styles';
-import { SlotProps } from './types';
+import type { SlotProps } from './types';
 import useSlot from './useSlot';
 
 describe('useSlot', () => {

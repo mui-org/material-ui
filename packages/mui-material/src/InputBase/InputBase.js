@@ -117,18 +117,6 @@ export const InputBaseRoot = styled('div', {
         },
       },
       {
-        props: ({ ownerState }) => ownerState.multiline,
-        style: {
-          padding: '4px 0 5px',
-        },
-      },
-      {
-        props: ({ ownerState, size }) => ownerState.multiline && size === 'small',
-        style: {
-          paddingTop: 1,
-        },
-      },
-      {
         props: ({ ownerState }) => ownerState.fullWidth,
         style: {
           width: '100%',
@@ -236,8 +224,6 @@ export const InputBaseInput = styled('input', {
           style: {
             height: 'auto',
             resize: 'none',
-            padding: 0,
-            paddingTop: 0,
           },
         },
         {

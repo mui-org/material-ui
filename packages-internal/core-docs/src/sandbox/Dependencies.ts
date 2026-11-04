@@ -1,6 +1,6 @@
 import { CODE_VARIANTS } from '../constants/constants';
 import type { SandboxConfig } from '../DemoContext/DemoContext';
-import { type DemoData } from './types';
+import type { DemoData } from './types';
 
 const packagesWithBundledTypes = [
   'date-fns',

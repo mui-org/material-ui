@@ -1,5 +1,5 @@
 import { expectType } from '@mui/types';
-import { ColorFormat, ColorObject } from '@mui/system';
+import type { ColorFormat, ColorObject } from '@mui/system';
 
 import {
   hexToRgb,

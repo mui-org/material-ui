@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
-import { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
+import type { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
 
 interface MyOverrideProps {
   className: string;

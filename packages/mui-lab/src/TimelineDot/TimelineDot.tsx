@@ -2,17 +2,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import { capitalize } from '@mui/material/utils';
 import composeClasses from '@mui/utils/composeClasses';
 import type { OverridableStringUnion } from '@mui/types';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
-import {
-  getTimelineDotUtilityClass,
-  type TimelineDotClasses,
-  type TimelineDotClassKey,
-} from './timelineDotClasses';
+import { getTimelineDotUtilityClass } from './timelineDotClasses';
+import type { TimelineDotClasses, TimelineDotClassKey } from './timelineDotClasses';
 
 export interface TimelineDotPropsVariantOverrides {}
 

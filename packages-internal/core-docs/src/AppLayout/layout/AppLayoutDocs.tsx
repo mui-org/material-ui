@@ -12,7 +12,8 @@ import { AppLayoutHead as Head } from './AppLayoutHead';
 import { BackToTop } from '../components/BackToTop';
 import { convertProductIdToName } from '../../utils/convertProductIdToName';
 import { getProductInfoFromUrl } from '../../utils/getProductInfoFromUrl';
-import { TOC_WIDTH, type TocItem, AppTableOfContents } from '../../TableOfContents';
+import { TOC_WIDTH, AppTableOfContents } from '../../TableOfContents';
+import type { TocItem } from '../../TableOfContents';
 
 // Opt in to the `data-frame-indent` attribute that DemoContent's CSS uses
 // to shift highlighted/focus frames left when collapsed. This mirrors the

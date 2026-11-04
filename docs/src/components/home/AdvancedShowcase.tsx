@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { DataGrid, GridCellParams, GridRenderEditCellParams, GridColDef } from '@mui/x-data-grid';
+import type { GridCellParams, GridRenderEditCellParams, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';

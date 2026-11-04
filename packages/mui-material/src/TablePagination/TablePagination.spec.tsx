@@ -1,6 +1,8 @@
-import TablePagination, { TablePaginationOwnerState } from '@mui/material/TablePagination';
+import type { TablePaginationOwnerState } from '@mui/material/TablePagination';
+import TablePagination from '@mui/material/TablePagination';
 import SvgIcon from '@mui/material/SvgIcon';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import type { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import { expectType } from '@mui/types';
 
 function SampleIcon() {

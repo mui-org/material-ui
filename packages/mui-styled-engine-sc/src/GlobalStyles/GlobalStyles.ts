@@ -1,6 +1,7 @@
 import type * as React from 'react';
 import PropTypes from 'prop-types';
-import { createGlobalStyle, type CSSObject, type StyleFunction } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+import type { CSSObject, StyleFunction } from 'styled-components';
 
 export interface GlobalStylesProps<Theme extends object = {}> {
   defaultTheme?: object | undefined;

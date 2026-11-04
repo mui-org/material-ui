@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import { mergeSlotProps } from '@mui/material/utils';
-import Accordion, { AccordionProps } from '@mui/material/Accordion';
+import type { AccordionProps } from '@mui/material/Accordion';
+import Accordion from '@mui/material/Accordion';
 
 function testOnChange() {
   function handleAccordionChange(event: React.SyntheticEvent, tabsValue: unknown) {}

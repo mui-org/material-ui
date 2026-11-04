@@ -1,6 +1,7 @@
 import querystring from 'node:querystring';
-import { App, AwsLambdaReceiver, BlockAction, ButtonAction } from '@slack/bolt';
-import { Handler, type Config } from '@netlify/functions';
+import type { BlockAction, ButtonAction } from '@slack/bolt';
+import { App, AwsLambdaReceiver } from '@slack/bolt';
+import type { Handler, Config } from '@netlify/functions';
 
 // Rate-limit this public, unauthenticated endpoint so one client can't flood Slack with posts.
 export const config: Config = {

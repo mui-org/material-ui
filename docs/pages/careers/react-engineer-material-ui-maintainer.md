@@ -4,9 +4,9 @@
 
 ## Details of the role
 
-- **Location**: Remote (preference for UTC-6 to UTC+5).
-- **Type of work**: Full-time (contractor or employee [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
-- **Level**: [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
+- **Location:** Remote (preference for UTC-6 to UTC+5).
+- **Type of work:** Full-time (employee or contractor [depending on circumstances](https://mui-org.notion.site/Hiring-FAQ-64763b756ae44c37b47b081f98915501#494af1f358794028beb4b7697b5d3102)).
+- **Level:** [IC4 or above](https://mui-org.notion.site/Leveling-at-MUI-5c30f9bfe65149d697f346447cef9db1).
 - We're a **remote** company, operating mostly asynchronously.
 
 ## The company
@@ -51,7 +51,7 @@ You will be a key member of the Core team and will directly impact the project's
 You will troubleshoot and depending on your bandwidth also fix complex issues related to MUI.
 At MUI a Community Engineer is considered a developer, it's a person that enjoys optimizing what already exists but is also eager to help our users with features that are requested by the community.
 
-Our products empower React developers to build awesome applications faster – we see millions of developers on MUI's docs every year, one million a month.
+Our products empower React developers to build awesome applications faster – we see millions of developers using our libraries every year.
 
 ### Key responsibilities
 

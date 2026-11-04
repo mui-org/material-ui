@@ -9,7 +9,8 @@ import { SideNavigationBanner } from '../AppLayout/navigation/SideNavigationBann
 import { useTranslate } from '../i18n';
 import { samePageLinkNavigation } from '../Link';
 import { MiniTableOfContents } from './MiniTableOfContents';
-import { NavItem, TableOfContents, TOC_WIDTH, type TocItem } from './TableOfContents';
+import { NavItem, TableOfContents, TOC_WIDTH } from './TableOfContents';
+import type { TocItem } from './TableOfContents';
 
 const Nav = styled('nav', {
   shouldForwardProp: (prop) => prop !== 'wideLayout',
