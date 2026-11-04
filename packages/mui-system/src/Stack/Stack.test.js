@@ -523,5 +523,47 @@ describe('<Stack />', () => {
         '@media (min-width:1536px)',
       ]);
     });
+
+    it('should keep the spacing on the breakpoints that only set the direction', () => {
+      expect(
+        style({
+          ownerState: {
+            direction: { xs: 'row', sm: 'column', md: 'row' },
+            spacing: { xs: 1 },
+          },
+          theme,
+        }),
+      ).to.deep.equal({
+        '@media (min-width:0px)': {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginLeft: '8px',
+          },
+          flexDirection: 'row',
+        },
+        [`@media (min-width:${theme.breakpoints.values.sm}px)`]: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginTop: '8px',
+          },
+          flexDirection: 'column',
+        },
+        [`@media (min-width:${theme.breakpoints.values.md}px)`]: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginLeft: '8px',
+          },
+          flexDirection: 'row',
+        },
+        display: 'flex',
+        flexDirection: 'column',
+      });
+    });
   });
 });
