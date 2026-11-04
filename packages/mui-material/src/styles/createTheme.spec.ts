@@ -364,6 +364,16 @@ const theme = createTheme();
     // @ts-expect-error inside and outside take a number or a CSS length
     focusVisible: { outlineOffset: { inside: true } },
   });
+
+  createTheme({
+    focusVisible: { boxShadow: { outside: '0 0 0 1px #fff', inside: 'inset 0 0 0 3px #fff' } },
+  });
+  createTheme({ focusVisible: { boxShadow: { inside: 'inset 0 0 0 3px #fff' } } });
+
+  createTheme({
+    // @ts-expect-error box-shadow positions take a CSS string
+    focusVisible: { boxShadow: { inside: 3 } },
+  });
 }
 
 // theme.applyFocusVisibleOffset

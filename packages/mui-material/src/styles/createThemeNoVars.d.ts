@@ -44,16 +44,25 @@ export interface CssThemeVariables {}
 export type FocusVisible = React.CSSProperties;
 
 /**
- * The `focusVisible` theme option. `outlineOffset` also takes `{ inside, outside }`: `outside`
- * applies by default and `inside` on components that draw the ring inside their edge. With a single
- * value, it is the `outside` offset and `inside` is `-max(outlineOffset, outlineWidth)`.
+ * The `focusVisible` theme option. `outlineOffset` and `boxShadow` also take `{ inside, outside }`:
+ * `outside` applies by default and `inside` on components that draw the ring inside their edge.
+ * With a single `outlineOffset`, it is the `outside` offset and `inside` is
+ * `-max(outlineOffset, outlineWidth)`. With a single `boxShadow`, `inside` is the same shadow drawn
+ * `inset`.
  */
-export type FocusVisibleOptions = Omit<React.CSSProperties, 'outlineOffset'> & {
+export type FocusVisibleOptions = Omit<React.CSSProperties, 'outlineOffset' | 'boxShadow'> & {
   outlineOffset?:
     | React.CSSProperties['outlineOffset']
     | {
         inside?: string | number | undefined;
         outside?: string | number | undefined;
+      }
+    | undefined;
+  boxShadow?:
+    | React.CSSProperties['boxShadow']
+    | {
+        inside?: string | undefined;
+        outside?: string | undefined;
       }
     | undefined;
 };

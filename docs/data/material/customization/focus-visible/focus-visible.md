@@ -119,13 +119,29 @@ createTheme({
 When `outlineOffset` is a single value, it sets `outside`, and `inside` is `-max(outlineOffset, outlineWidth)` so that the whole outline stays inside the edge.
 With a keyword `outlineWidth` (`thin`, `medium`, or `thick`), `inside` is the negative `outlineOffset`.
 
+`boxShadow` accepts the same object.
+Use it when the box-shadow needs a different size inside, for example to draw the outline at the edge with a light line inside it:
+
+```js
+createTheme({
+  focusVisible: {
+    outlineWidth: 2,
+    outlineOffset: { outside: 1, inside: -2 },
+    boxShadow: { outside: '0 0 0 1px #fff', inside: 'inset 0 0 0 3px #fff' },
+  },
+});
+```
+
+The outline covers the first 2px of the inside box-shadow, so a 1px line shows inside the outline.
+When `boxShadow` is a single value, `inside` is the same box-shadow drawn `inset`.
+
 :::info
 `Tab` draws the indicator at least 6px inside its edge, so the indicator does not overlap the selected tab indicator.
 :::
 
 ### Moving the indicator of a component
 
-Use `theme.applyFocusVisibleOffset('outside')` or `theme.applyFocusVisibleOffset('inside')` to choose which offset a component uses.
+Use `theme.applyFocusVisibleOffset('outside')` or `theme.applyFocusVisibleOffset('inside')` to choose which offset and box-shadow a component uses.
 For example, a menu with padding leaves room to draw the indicator of `MenuItem` outside:
 
 {{"component": "file://./demos/offset/index.ts"}}

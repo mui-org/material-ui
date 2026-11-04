@@ -539,6 +539,71 @@ describe('createTheme', () => {
       });
     });
 
+    describe('boxShadow inside and outside', () => {
+      const resolve = (boxShadow) =>
+        createTheme({ cssVariables: false, focusVisible: { boxShadow } }).focusVisible;
+
+      it('takes `{ inside, outside }` as written', () => {
+        const ring = resolve({ outside: '0 0 0 1px #fff', inside: 'inset 0 0 0 3px #fff' });
+        expect(ring.boxShadow).to.equal('var(--_focusVisible-boxShadow, 0 0 0 1px #fff)');
+        expect(ring['--_focusVisible-inside-boxShadow']).to.equal('inset 0 0 0 3px #fff');
+      });
+
+      it('draws an `inside` shadow inset when it is not already', () => {
+        const ring = resolve({ outside: '0 0 0 1px #fff', inside: '0 0 0 3px #fff' });
+        expect(ring['--_focusVisible-inside-boxShadow']).to.equal('inset 0 0 0 3px #fff');
+      });
+
+      it('defaults a missing `outside` to the curated shadow', () => {
+        const ring = resolve({ inside: 'inset 0 0 0 3px #fff' });
+        expect(ring.boxShadow).to.equal(
+          'var(--_focusVisible-boxShadow, var(--_focusVisible-shadow, 0 0))',
+        );
+        expect(ring['--_focusVisible-inside-boxShadow']).to.equal('inset 0 0 0 3px #fff');
+      });
+
+      it('derives a missing `inside` from `outside`', () => {
+        const ring = resolve({ outside: '0 0 0 1px #fff' });
+        expect(ring['--_focusVisible-inside-boxShadow']).to.equal('inset 0 0 0 1px #fff');
+      });
+
+      it('switches between a keyword `outside` and an `inside` shadow', () => {
+        const ring = resolve({ outside: 'none', inside: 'inset 0 0 0 3px #fff' });
+        expect(ring.boxShadow).to.equal('var(--_focusVisible-boxShadow, none)');
+        expect(ring['--_focusVisible-inside-boxShadow']).to.equal('inset 0 0 0 3px #fff');
+      });
+
+      it.skipIf(isJSDOM)('draws a thicker inside shadow under a flush outline', () => {
+        const theme = createTheme({
+          focusVisible: {
+            outlineWidth: 2,
+            outlineOffset: { outside: 1, inside: -2 },
+            boxShadow: {
+              outside: '0 0 0 1px rgb(255, 255, 255)',
+              inside: 'inset 0 0 0 3px rgb(255, 255, 255)',
+            },
+          },
+        });
+        render(
+          <ThemeProvider theme={theme}>
+            <Box data-testid="outside" sx={theme.focusVisible} />
+            <Box
+              data-testid="inside"
+              sx={[theme.focusVisible, theme.applyFocusVisibleOffset('inside')]}
+            />
+          </ThemeProvider>,
+        );
+        expect(screen.getByTestId('outside')).toHaveComputedStyle({
+          outlineOffset: '1px',
+          boxShadow: 'rgb(255, 255, 255) 0px 0px 0px 1px',
+        });
+        expect(screen.getByTestId('inside')).toHaveComputedStyle({
+          outlineOffset: '-2px',
+          boxShadow: 'rgb(255, 255, 255) 0px 0px 0px 3px inset',
+        });
+      });
+    });
+
     it('`false` and `undefined` leave focusVisible off (non-breaking)', () => {
       expect(createTheme({ cssVariables: false, focusVisible: false }).focusVisible).to.equal(
         false,

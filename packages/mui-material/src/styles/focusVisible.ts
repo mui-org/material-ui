@@ -9,6 +9,7 @@ const insideOutlineOffsetVar = '--_focusVisible-inside-outlineOffset';
 const insideBoxShadowVar = '--_focusVisible-inside-boxShadow';
 
 const defaultOutlineOffset = 2;
+const defaultBoxShadow = `var(${focusVisibleShadowVar}, 0 0)`;
 
 export function applyFocusVisibleOffset(offset: 'inside' | 'outside') {
   if (offset === 'inside') {
@@ -89,7 +90,7 @@ export function resolveFocusVisible(
     outlineWidth: 2,
     outlineOffset: defaultOutlineOffset,
     // invisible shadow for parent component with solid background (AppBar, Snackbar, Alert) can control the ring color.
-    boxShadow: `var(${focusVisibleShadowVar}, 0 0)`,
+    boxShadow: defaultBoxShadow,
     ...(input === true ? null : input),
   });
 }
@@ -115,6 +116,20 @@ const standaloneBoxShadows = new Set([
   'revert',
   'revert-layer',
 ]);
+
+function toInsetBoxShadow(boxShadow: string) {
+  return standaloneBoxShadows.has(boxShadow.trim().toLowerCase()) || /\binset\b/.test(boxShadow)
+    ? boxShadow
+    : `inset ${boxShadow}`;
+}
+
+function splitBoxShadow(boxShadow: FocusVisibleOptions['boxShadow']) {
+  if (boxShadow != null && typeof boxShadow === 'object') {
+    const { outside = defaultBoxShadow, inside = outside } = boxShadow;
+    return { outside, inside };
+  }
+  return { outside: boxShadow, inside: boxShadow };
+}
 
 function deriveInsideOutlineOffset(
   outside: string | number,
@@ -149,15 +164,18 @@ export function wireFocusVisibleVars({
     wired[insideOutlineOffsetVar] = toPx(inside);
     wired.outlineOffset = `var(${outlineOffsetVar}, ${toPx(outside)})`;
   }
-  const { boxShadow } = ring;
+  const { outside: outsideShadow, inside: insideShadow } = splitBoxShadow(ring.boxShadow);
+  wired.boxShadow = outsideShadow;
   if (
-    typeof boxShadow === 'string' &&
-    !standaloneBoxShadows.has(boxShadow.trim().toLowerCase()) &&
-    !/\binset\b/.test(boxShadow) &&
-    !boxShadow.includes(boxShadowVar)
+    typeof outsideShadow === 'string' &&
+    typeof insideShadow === 'string' &&
+    !outsideShadow.includes(boxShadowVar)
   ) {
-    wired[insideBoxShadowVar] = `inset ${boxShadow}`;
-    wired.boxShadow = `var(${boxShadowVar}, ${boxShadow})`;
+    const insetShadow = toInsetBoxShadow(insideShadow);
+    if (insetShadow !== outsideShadow) {
+      wired[insideBoxShadowVar] = insetShadow;
+      wired.boxShadow = `var(${boxShadowVar}, ${outsideShadow})`;
+    }
   }
   return wired as React.CSSProperties;
 }
