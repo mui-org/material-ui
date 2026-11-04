@@ -13,7 +13,7 @@ import OpenInFullIcon from '../internal/svg-icons/OpenInFull';
 import type { NumberFieldOwnerState, NumberFieldProps } from './NumberField.types';
 import useSlot from '../utils/useSlot';
 import OutlinedInput from '../OutlinedInput';
-import type {OutlinedInputProps} from '../OutlinedInput';
+import type { OutlinedInputProps } from '../OutlinedInput';
 import FilledInput from '../FilledInput';
 import Input from '../Input';
 import InputAdornment from '../InputAdornment';
