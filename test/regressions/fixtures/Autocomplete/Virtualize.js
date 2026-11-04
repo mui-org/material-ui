@@ -11,12 +11,10 @@ import Typography from '@mui/material/Typography';
 
 const LISTBOX_PADDING = 8; // px
 
-function RowComponent({ index, itemData, style }) {
+function RowComponent({ index, itemData, optionCount, style }) {
   const dataSet = itemData[index];
-  const inlineStyle = {
-    ...style,
-    top: (style.top ?? 0) + LISTBOX_PADDING,
-  };
+  // Rows are absolutely positioned, so offset them by the List's top padding
+  const inlineStyle = { ...style, top: LISTBOX_PADDING };
 
   if ('group' in dataSet) {
     return (
@@ -28,8 +26,17 @@ function RowComponent({ index, itemData, style }) {
 
   const { key, ...optionProps } = dataSet[0];
 
+  // Only some options are rendered, so expose the position within all options
   return (
-    <Typography key={key} component="li" {...optionProps} noWrap style={inlineStyle}>
+    <Typography
+      key={key}
+      component="li"
+      {...optionProps}
+      aria-posinset={dataSet[2] + 1}
+      aria-setsize={optionCount}
+      noWrap
+      style={inlineStyle}
+    >
       {`#${dataSet[2] + 1} - ${dataSet[1]}`}
     </Typography>
   );
@@ -51,6 +58,7 @@ RowComponent.propTypes = {
       }),
     ]).isRequired,
   ).isRequired,
+  optionCount: PropTypes.number.isRequired,
   style: PropTypes.object.isRequired,
 };
 
@@ -112,13 +120,14 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
         rowCount={itemCount}
         rowHeight={(index) => getChildSize(itemData[index])}
         rowComponent={RowComponent}
-        rowProps={{ itemData }}
+        rowProps={{ itemData, optionCount: itemData.filter(Array.isArray).length }}
         style={{
-          height: getHeight() + 2 * LISTBOX_PADDING,
+          height: getHeight(),
           width: '100%',
         }}
         overscanCount={5}
         tagName="ul"
+        role="presentation"
       />
     </div>
   );
@@ -142,11 +151,9 @@ ListboxComponent.propTypes = {
 
 const StyledPopper = styled(Popper)({
   [`& .${autocompleteClasses.listbox}`]: {
-    boxSizing: 'border-box',
-    '& ul': {
-      padding: 0,
-      margin: 0,
-    },
+    // react-window scrolls within the List's style height, so the padding must not be part of it
+    boxSizing: 'content-box',
+    padding: `${LISTBOX_PADDING}px 0`,
   },
 });
 
@@ -169,8 +176,9 @@ export default function Virtualize() {
   }, []);
 
   // Handle keyboard navigation by scrolling to highlighted option
-  const handleHighlightChange = (event, option) => {
-    if (option && internalListRef.current) {
+  // (like the non-virtualized listbox, mouse and touch highlights don't scroll)
+  const handleHighlightChange = (event, option, reason) => {
+    if (reason === 'keyboard' && option && internalListRef.current) {
       const index = optionIndexMapRef.current.get(option);
       if (index !== undefined) {
         internalListRef.current.scrollToRow({ index, align: 'auto' });

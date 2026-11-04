@@ -16,7 +16,7 @@
     "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "@mui/internal-benchmark": "0.1.1-canary.9",
+    "@mui/internal-benchmark": "0.1.1-canary.13",
     "@playwright/test": "1.63.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

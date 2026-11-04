@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
+import type { AutocompleteHighlightChangeReason } from '@mui/material/useAutocomplete';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
@@ -23,15 +24,15 @@ type ItemData = Array<
 function RowComponent({
   index,
   itemData,
+  optionCount,
   style,
 }: RowComponentProps & {
   itemData: ItemData;
+  optionCount: number;
 }) {
   const dataSet = itemData[index];
-  const inlineStyle = {
-    ...style,
-    top: ((style.top as number) ?? 0) + LISTBOX_PADDING,
-  };
+  // Rows are absolutely positioned, so offset them by the List's top padding
+  const inlineStyle = { ...style, top: LISTBOX_PADDING };
 
   if ('group' in dataSet) {
     return (
@@ -43,8 +44,17 @@ function RowComponent({
 
   const { key, ...optionProps } = dataSet[0];
 
+  // Only some options are rendered, so expose the position within all options
   return (
-    <Typography key={key} component="li" {...optionProps} noWrap style={inlineStyle}>
+    <Typography
+      key={key}
+      component="li"
+      {...optionProps}
+      aria-posinset={dataSet[2] + 1}
+      aria-setsize={optionCount}
+      noWrap
+      style={inlineStyle}
+    >
       {`#${dataSet[2] + 1} - ${dataSet[1]}`}
     </Typography>
   );
@@ -115,13 +125,14 @@ const ListboxComponent = React.forwardRef<
         rowCount={itemCount}
         rowHeight={(index) => getChildSize(itemData[index])}
         rowComponent={RowComponent}
-        rowProps={{ itemData }}
+        rowProps={{ itemData, optionCount: itemData.filter(Array.isArray).length }}
         style={{
-          height: getHeight() + 2 * LISTBOX_PADDING,
+          height: getHeight(),
           width: '100%',
         }}
         overscanCount={5}
         tagName="ul"
+        role="presentation"
       />
     </div>
   );
@@ -141,11 +152,9 @@ function random(length: number) {
 
 const StyledPopper = styled(Popper)({
   [`& .${autocompleteClasses.listbox}`]: {
-    boxSizing: 'border-box',
-    '& ul': {
-      padding: 0,
-      margin: 0,
-    },
+    // react-window scrolls within the List's style height, so the padding must not be part of it
+    boxSizing: 'content-box',
+    padding: `${LISTBOX_PADDING}px 0`,
   },
 });
 
@@ -167,11 +176,13 @@ export default function Virtualize() {
   );
 
   // Handle keyboard navigation by scrolling to highlighted option
+  // (like the non-virtualized listbox, mouse and touch highlights don't scroll)
   const handleHighlightChange = (
     event: React.SyntheticEvent,
     option: string | null,
+    reason: AutocompleteHighlightChangeReason,
   ) => {
-    if (option && internalListRef.current) {
+    if (reason === 'keyboard' && option && internalListRef.current) {
       const index = optionIndexMapRef.current.get(option);
       if (index !== undefined) {
         internalListRef.current.scrollToRow({ index, align: 'auto' });
