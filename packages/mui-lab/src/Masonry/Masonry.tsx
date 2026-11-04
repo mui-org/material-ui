@@ -15,7 +15,8 @@ import * as React from 'react';
 import type { ResponsiveStyleValue, SxProps } from '@mui/system';
 import type { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
 import type { Theme } from '@mui/material/styles';
-import { getMasonryUtilityClass, type MasonryClasses } from './masonryClasses';
+import { getMasonryUtilityClass } from './masonryClasses';
+import type { MasonryClasses } from './masonryClasses';
 
 export interface MasonryOwnProps {
   /**

@@ -68,6 +68,7 @@ export default defineConfig(
     enableReactCompiler: ENABLE_REACT_COMPILER_PLUGIN,
     baseDirectory: dirname,
     materialUi: true,
+    consistentTypeImports: true,
   }),
   // eslint-plugin-mdx loads `.remarkrc.mjs` itself, but ESLint doesn't know
   // that file is a config dependency, so `--cache` doesn't invalidate when

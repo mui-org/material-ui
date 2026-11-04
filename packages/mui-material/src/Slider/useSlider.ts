@@ -10,7 +10,7 @@ import isFocusVisible from '@mui/utils/isFocusVisible';
 import visuallyHidden from '@mui/utils/visuallyHidden';
 import clamp from '@mui/utils/clamp';
 import extractEventHandlers from '@mui/utils/extractEventHandlers';
-import {
+import type {
   Mark,
   UseSliderHiddenInputProps,
   UseSliderParameters,
@@ -18,7 +18,7 @@ import {
   UseSliderRootSlotProps,
   UseSliderThumbSlotProps,
 } from './useSlider.types';
-import { EventHandlers } from '../utils/types';
+import type { EventHandlers } from '../utils/types';
 import areArraysEqual from '../utils/areArraysEqual';
 import contains from '../utils/contains';
 import getActiveElement from '../utils/getActiveElement';
@@ -384,6 +384,8 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     if (onChangeCommitted) {
       onChangeCommitted(event, lastChangedValueRef.current ?? newValue);
     }
+
+    lastChangedValueRef.current = null;
   };
 
   const createHandleHiddenInputKeyDown =
@@ -646,6 +648,7 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
 
     touchIdRef.current = undefined;
     activePointerIdRef.current = -1;
+    lastChangedValueRef.current = null;
 
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopListening();
@@ -723,6 +726,7 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     if (disabled) {
       stopListening();
       cancelFocusFrame();
+      lastChangedValueRef.current = null;
     }
   }, [disabled, stopListening, cancelFocusFrame]);
 

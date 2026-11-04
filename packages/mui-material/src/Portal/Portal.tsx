@@ -8,7 +8,7 @@ import setRef from '@mui/utils/setRef';
 import getReactElementRef from '@mui/utils/getReactElementRef';
 import exactProp from '@mui/utils/exactProp';
 import HTMLElementType from '@mui/utils/HTMLElementType';
-import { PortalProps } from './Portal.types';
+import type { PortalProps } from './Portal.types';
 
 function getContainer(container: PortalProps['container']) {
   return typeof container === 'function' ? container() : container;

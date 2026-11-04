@@ -19,6 +19,10 @@ function Textarea() {
             fontSize: 13,
             boxSizing: 'border-box',
             border: '10px solid black',
+            padding: 0,
+          },
+          '&.MuiInput-root': {
+            padding: '4px 0 5px',
           },
         }}
         multiline
@@ -29,6 +33,9 @@ function Textarea() {
         sx={{
           width: 200,
           '& .MuiInput-input': { fontSize: 13, boxSizing: 'content-box', padding: '10px' },
+          '&.MuiInput-root': {
+            padding: '4px 0 5px',
+          },
         }}
         multiline
         value={value}

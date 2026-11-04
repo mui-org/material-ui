@@ -1,4 +1,5 @@
-import { alpha, type Theme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 
 export type AdBodyStyles = Record<string, Record<string, unknown>>;
 

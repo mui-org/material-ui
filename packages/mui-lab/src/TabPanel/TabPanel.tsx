@@ -2,11 +2,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
-import { getTabPanelUtilityClass, type TabPanelClasses } from './tabPanelClasses';
+import { getTabPanelUtilityClass } from './tabPanelClasses';
+import type { TabPanelClasses } from './tabPanelClasses';
 import { getPanelId, getTabId, useTabContext } from '../TabContext';
 
 export interface TabPanelProps extends StandardProps<React.ComponentPropsWithRef<'div'>> {
@@ -79,7 +81,12 @@ const TabPanel = React.forwardRef(function TabPanel(
 
   const context = useTabContext();
   if (context === null) {
-    throw new TypeError('No TabContext provided');
+    throw /* minify-error */ new TypeError(
+      'MUI: No TabContext provided. ' +
+        'TabPanel must be used within a TabContext. ' +
+        'Wrap your TabPanel with <TabContext value={...}>. ' +
+        'See https://mui.com/material-ui/react-tabs/#experimental-api for more info.',
+    );
   }
   const id = getPanelId(context, value as string);
   const tabId = getTabId(context, value as string);

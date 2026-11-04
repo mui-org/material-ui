@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
-import createCache, { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
+import type { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
+import createCache from '@emotion/cache';
 import { CacheProvider as DefaultCacheProvider } from '@emotion/react';
 import { useServerInsertedHTML } from './nextNavigation.cjs';
 import { useRouter as usePagesRouter } from '../nextCompatRouter.cjs';

@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {
-  DataGridPro,
-  GridColDef,
-  GridCellParams,
-  GridRenderEditCellParams,
-} from '@mui/x-data-grid-pro';
+import type { GridColDef, GridCellParams, GridRenderEditCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro } from '@mui/x-data-grid-pro';
 import { useDemoData } from '@mui/x-data-grid-generator';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';

@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { afterEach, beforeEach, describe, it, expect, vi, type MockInstance } from 'vitest';
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
+import type { MockInstance } from 'vitest';
 import main from './testModuleAugmentation';
 
 const { compile, glob } = vi.hoisted(() => ({

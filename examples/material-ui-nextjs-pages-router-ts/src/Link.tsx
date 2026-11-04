@@ -1,8 +1,10 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
+import type { LinkProps as NextLinkProps } from 'next/link';
+import NextLink from 'next/link';
+import type { LinkProps as MuiLinkProps } from '@mui/material/Link';
+import MuiLink from '@mui/material/Link';
 
 interface NextLinkComposedProps
   extends
