@@ -109,7 +109,7 @@ Read this section before citing the report.
 - **Component coverage is partial.** 13 components are assessed. Widely used components including Select, Autocomplete, Dialog, Menu, Table, Tabs, Slider, Tooltip, Snackbar, and Drawer are **not yet assessed**, and this report says nothing about them.
 - **No assistive-technology testing.** No screen-reader passes have been performed. Criteria that depend on how a specific assistive technology behaves are assessed from the exposed accessibility tree, not from observed behavior.
 - **Level AAA is out of scope**, as it is for a standard VPAT.
-- **These layout and utility components are out of scope.** They add no roles or states of their own, so the report assesses them only through the components that use them. You are responsible for the semantics of the content in them.
+- **These layout and utility components are out of scope.** They add no roles or states of their own. When a rated component uses one of them, the report of that component covers it. For example, the Accordion report covers Collapse. You are responsible for the semantics of the content in them.
   - Box, Stack, Grid, and Container lay out their children in a `div` that has no role by default.
   - The transitions (Fade, Grow, Slide, Zoom, and Collapse) animate their child and hide it when it exits. They reduce motion only when `theme.motion.reducedMotion` is `system` or `always`. See [Reduced motion](/material-ui/customization/transitions/#reduced-motion).
   - Collapse adds wrapper `div` elements that have no role. When `collapsedSize` is set, Collapse does not hide its content. The clipped content stays in the accessibility tree and in the tab order.
