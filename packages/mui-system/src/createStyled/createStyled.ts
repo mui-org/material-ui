@@ -2,15 +2,19 @@ import type * as React from 'react';
 import styledEngineStyled, {
   internal_mutateStyles as mutateStyles,
   internal_serializeStyles as serializeStyles,
-  type CreateMUIStyled as CreateMUIStyledStyledEngine,
-  type CSSInterpolation,
+} from '@mui/styled-engine';
+import type {
+  CreateMUIStyled as CreateMUIStyledStyledEngine,
+  CSSInterpolation,
 } from '@mui/styled-engine';
 import isObjectEmpty from '@mui/utils/isObjectEmpty';
 import { isPlainObject } from '@mui/utils/deepmerge';
 import capitalize from '@mui/utils/capitalize';
 import getDisplayName from '@mui/utils/getDisplayName';
-import createTheme, { type Theme as DefaultTheme } from '../createTheme';
-import styleFunctionSx, { type SxProps } from '../styleFunctionSx';
+import createTheme from '../createTheme';
+import type { Theme as DefaultTheme } from '../createTheme';
+import styleFunctionSx from '../styleFunctionSx';
+import type { SxProps } from '../styleFunctionSx';
 import preprocessStyles from '../preprocessStyles';
 
 /* eslint-disable no-underscore-dangle */

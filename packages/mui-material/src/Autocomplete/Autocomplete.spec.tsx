@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { expectType, PartiallyRequired } from '@mui/types';
-import Autocomplete, {
+import type { PartiallyRequired } from '@mui/types';
+import { expectType } from '@mui/types';
+import type {
   AutocompleteOwnerState,
   AutocompleteProps,
   AutocompleteChangeReason,
@@ -10,10 +11,11 @@ import Autocomplete, {
   AutocompleteMappedValue,
   AutocompleteRenderOptionState,
 } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { ChipTypeMap } from '@mui/material/Chip';
+import type { ChipTypeMap } from '@mui/material/Chip';
 import { createTheme, styled } from '@mui/material/styles';
-import { AutocompleteValueOrFreeSoloValueMapping } from '../useAutocomplete';
+import type { AutocompleteValueOrFreeSoloValueMapping } from '../useAutocomplete';
 
 interface MyAutocompleteProps<
   T,

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Tabs } from '@base-ui/react/tabs';
 import IconButton from '@mui/material/IconButton';
-import { alpha, styled, type CSSObject, type Theme } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
+import type { CSSObject, Theme } from '@mui/material/styles';
 import { useTranslate } from '../i18n';
 import { DemoComponentTheme } from '../DemoThemeProviders';
 import { DemoErrorBoundary } from './DemoErrorBoundary';

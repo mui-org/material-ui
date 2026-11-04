@@ -1,14 +1,14 @@
-import { LoadingButtonClassKey } from '../LoadingButton';
-import { MasonryClassKey } from '../Masonry';
-import { TabListClassKey } from '../TabList';
-import { TabPanelClassKey } from '../TabPanel';
-import { TimelineClassKey } from '../Timeline';
-import { TimelineConnectorClassKey } from '../TimelineConnector';
-import { TimelineContentClassKey } from '../TimelineContent';
-import { TimelineDotClassKey } from '../TimelineDot';
-import { TimelineItemClassKey } from '../TimelineItem';
-import { TimelineOppositeContentClassKey } from '../TimelineOppositeContent';
-import { TimelineSeparatorClassKey } from '../TimelineSeparator';
+import type { LoadingButtonClassKey } from '../LoadingButton';
+import type { MasonryClassKey } from '../Masonry';
+import type { TabListClassKey } from '../TabList';
+import type { TabPanelClassKey } from '../TabPanel';
+import type { TimelineClassKey } from '../Timeline';
+import type { TimelineConnectorClassKey } from '../TimelineConnector';
+import type { TimelineContentClassKey } from '../TimelineContent';
+import type { TimelineDotClassKey } from '../TimelineDot';
+import type { TimelineItemClassKey } from '../TimelineItem';
+import type { TimelineOppositeContentClassKey } from '../TimelineOppositeContent';
+import type { TimelineSeparatorClassKey } from '../TimelineSeparator';
 
 // prettier-ignore
 export interface LabComponentNameToClassKey {

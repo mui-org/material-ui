@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
-import FormControlContext, { type FormControlState } from './FormControlContext';
+import FormControlContext from './FormControlContext';
+import type { FormControlState } from './FormControlContext';
 
 type FormControlStateKey = keyof FormControlState;
 

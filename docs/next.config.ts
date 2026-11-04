@@ -4,7 +4,7 @@ import * as url from 'url';
 import * as fs from 'fs';
 import * as semver from 'semver';
 import { createRequire } from 'module';
-import { NextConfig } from 'next';
+import type { NextConfig } from 'next';
 import { withDeploymentConfig } from '@mui/internal-docs-infra/withDocsInfra';
 import { findPages } from './src/modules/utils/find';
 
@@ -316,6 +316,9 @@ export default withDeploymentConfig({
   // falls back to the pnpm symlink (→ `packages/mui-material/build/`), which
   // is empty unless the package has been built.
   transpilePackages: [
+    // ESM-only, and its CJS `@algolia/autocomplete-core` dependency breaks
+    // named-export interop when Next externalizes it for SSR.
+    '@docsearch/react',
     '@mui/x-charts',
     '@mui/x-data-grid',
     '@mui/x-data-grid-pro',
@@ -341,10 +344,6 @@ export default withDeploymentConfig({
           (page.pathname.startsWith('/experiments/') || page.pathname === '/experiments') &&
           process.env.DEPLOY_ENV === 'production'
         ) {
-          return;
-        }
-        // getStaticPaths provides the concrete URLs for this dynamic page.
-        if (page.pathname === '/careers/roles/[slug]') {
           return;
         }
         if (!page.children) {

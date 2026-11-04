@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { OverrideProps } from '@mui/types';
-import { ResponsiveStyleValue, SxProps } from '../styleFunctionSx';
-import { Theme } from '../createTheme';
+import type * as React from 'react';
+import type { OverrideProps } from '@mui/types';
+import type { ResponsiveStyleValue, SxProps } from '../styleFunctionSx';
+import type { Theme } from '../createTheme';
 
 export interface StackBaseProps {
   /**

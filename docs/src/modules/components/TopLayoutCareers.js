@@ -32,7 +32,7 @@ const StyledAppContainer = styled(AppContainer)(({ theme }) => ({
 }));
 
 export default function TopLayoutCareers(props) {
-  const { docs, children } = props;
+  const { docs } = props;
   const { description, rendered, title } = docs.en;
   const t = useTranslate();
 
@@ -57,10 +57,9 @@ export default function TopLayoutCareers(props) {
             <KeyboardArrowLeftIcon fontSize="small" />
             {t('backToOpenRoles')}
           </Link>
-          {children ??
-            rendered.map((chunk, index) => {
-              return <MarkdownElement key={index} renderedMarkdown={chunk} />;
-            })}
+          {rendered.map((chunk, index) => {
+            return <MarkdownElement key={index} renderedMarkdown={chunk} />;
+          })}
         </StyledAppContainer>
         <Divider />
         <AppFooter />
@@ -70,6 +69,5 @@ export default function TopLayoutCareers(props) {
 }
 
 TopLayoutCareers.propTypes = {
-  children: PropTypes.node,
   docs: PropTypes.object.isRequired,
 };

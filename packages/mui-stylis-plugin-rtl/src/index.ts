@@ -7,6 +7,7 @@
 
 // @ts-expect-error: cssjanus does not ship TypeScript declarations.
 import cssjanus from 'cssjanus';
+import type { Middleware } from 'stylis';
 import {
   COMMENT,
   compile,
@@ -15,7 +16,6 @@ import {
   RULESET,
   serialize,
   strlen,
-  Middleware,
   KEYFRAMES,
   MEDIA,
   SUPPORTS,

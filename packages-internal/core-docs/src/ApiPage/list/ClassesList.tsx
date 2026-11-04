@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { useTranslate } from '../../i18n';
 import { brandingDarkTheme as darkTheme, brandingLightTheme as lightTheme } from '../../branding';
 import { ApiItemContainer, ExpandableApiItem } from './ExpandableApiItem';
-import { type ClassDefinition } from '../definitions/types';
+import type { ClassDefinition } from '../definitions/types';
 import { ApiWarningAlert } from '../ApiWarningAlert';
 
 const StyledApiItem = styled(ExpandableApiItem)(

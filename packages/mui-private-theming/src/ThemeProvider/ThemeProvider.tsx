@@ -4,7 +4,6 @@ import exactProp from '@mui/utils/exactProp';
 import type { DefaultTheme } from '../defaultTheme';
 import ThemeContext from '../useTheme/ThemeContext';
 import useTheme from '../useTheme';
-import nested from './nested';
 
 export interface ThemeProviderProps<Theme = DefaultTheme> {
   children?: React.ReactNode;
@@ -59,16 +58,10 @@ function ThemeProvider<T = DefaultTheme>(
     }
   }
 
-  const theme = React.useMemo(() => {
-    const output =
-      outerTheme === null ? { ...localTheme } : mergeOuterLocalTheme(outerTheme, localTheme);
-
-    if (output != null) {
-      output[nested] = outerTheme !== null;
-    }
-
-    return output;
-  }, [localTheme, outerTheme]);
+  const theme = React.useMemo(
+    () => (outerTheme === null ? { ...localTheme } : mergeOuterLocalTheme(outerTheme, localTheme)),
+    [localTheme, outerTheme],
+  );
 
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 }

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import ButtonBase, { type ButtonBaseProps } from '@mui/material/ButtonBase';
+import ButtonBase from '@mui/material/ButtonBase';
+import type { ButtonBaseProps } from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import KeyboardArrowRightRounded from '@mui/icons-material/KeyboardArrowRightRounded';

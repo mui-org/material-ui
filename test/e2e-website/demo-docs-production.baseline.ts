@@ -1,10 +1,12 @@
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { test as base, expect, Locator, Page } from '@playwright/test';
-import { TestFixture } from './playwright.config';
+import type { Locator, Page } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
+import type * as LZStringModule from 'lz-string';
+import type { TestFixture } from './playwright.config';
 
 const requireFromDocs = createRequire(path.resolve('docs/package.json'));
-const LZString = requireFromDocs('lz-string') as typeof import('lz-string');
+const LZString = requireFromDocs('lz-string') as typeof LZStringModule;
 
 const test = base.extend<TestFixture>({});
 

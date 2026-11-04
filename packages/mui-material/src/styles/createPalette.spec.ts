@@ -1,6 +1,7 @@
-import { Color } from '@mui/material';
+import type { Color } from '@mui/material';
 import { blue, common } from '@mui/material/colors';
-import { createTheme, Theme } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 {
   const palette = createTheme().palette;

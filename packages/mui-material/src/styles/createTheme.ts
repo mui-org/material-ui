@@ -6,16 +6,14 @@ import {
   isResolvedFocusVisible,
 } from './focusVisible';
 import type { ColorSystemOptions } from './createThemeFoundation';
-import createThemeWithVars, {
-  CssVarsThemeOptions,
-  ColorSystem,
-  DefaultColorScheme,
-} from './createThemeWithVars';
-import createThemeNoVars, {
+import type { CssVarsThemeOptions, ColorSystem, DefaultColorScheme } from './createThemeWithVars';
+import createThemeWithVars from './createThemeWithVars';
+import type {
   Theme,
   CssThemeVariables,
   ThemeOptions as ThemeNoVarsOptions,
 } from './createThemeNoVars';
+import createThemeNoVars from './createThemeNoVars';
 
 export type { Theme, CssThemeVariables, FocusVisible } from './createThemeNoVars';
 

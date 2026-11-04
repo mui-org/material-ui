@@ -3,13 +3,12 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
-import {
-  getTimelineConnectorUtilityClass,
-  type TimelineConnectorClasses,
-} from './timelineConnectorClasses';
+import { getTimelineConnectorUtilityClass } from './timelineConnectorClasses';
+import type { TimelineConnectorClasses } from './timelineConnectorClasses';
 
 export interface TimelineConnectorProps extends StandardProps<React.ComponentPropsWithRef<'span'>> {
   /**

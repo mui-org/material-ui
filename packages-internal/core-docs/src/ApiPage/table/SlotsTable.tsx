@@ -1,7 +1,7 @@
 import { styled, alpha } from '@mui/material/styles';
 import { brandingDarkTheme as darkTheme, brandingLightTheme as lightTheme } from '../../branding';
 import { useTranslate } from '../../i18n';
-import { type SlotDefinition } from '../definitions/types';
+import type { SlotDefinition } from '../definitions/types';
 import { StyledTableContainer } from './StyledTableContainer';
 
 const StyledTable = styled('table')(

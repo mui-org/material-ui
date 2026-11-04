@@ -43,7 +43,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/react-is": "19.3.0",
-    "@types/sinon": "22.0.0",
+    "@types/sinon": "22.0.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "sinon": "22.1.0"

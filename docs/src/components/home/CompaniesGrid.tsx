@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Grid';
-import IconImage, { IconImageProps } from '@mui/internal-core-docs/IconImage';
+import type { IconImageProps } from '@mui/internal-core-docs/IconImage';
+import IconImage from '@mui/internal-core-docs/IconImage';
 
 export const CORE_CUSTOMERS: Array<IconImageProps> = [
   {

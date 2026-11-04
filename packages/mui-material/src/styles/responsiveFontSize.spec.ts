@@ -1,10 +1,5 @@
-import {
-  responsiveFontSizes,
-  extendTheme,
-  createTheme,
-  Theme,
-  CssVarsTheme,
-} from '@mui/material/styles';
+import type { Theme, CssVarsTheme } from '@mui/material/styles';
+import { responsiveFontSizes, extendTheme, createTheme } from '@mui/material/styles';
 import { expectType } from '@mui/types';
 
 const cssVarsTheme = responsiveFontSizes(extendTheme());

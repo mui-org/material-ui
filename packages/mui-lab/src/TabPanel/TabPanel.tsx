@@ -2,11 +2,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import composeClasses from '@mui/utils/composeClasses';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
-import { getTabPanelUtilityClass, type TabPanelClasses } from './tabPanelClasses';
+import { getTabPanelUtilityClass } from './tabPanelClasses';
+import type { TabPanelClasses } from './tabPanelClasses';
 import { getPanelId, getTabId, useTabContext } from '../TabContext';
 
 export interface TabPanelProps extends StandardProps<React.ComponentPropsWithRef<'div'>> {

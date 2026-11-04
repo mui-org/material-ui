@@ -1,7 +1,7 @@
 import { alpha, styled } from '@mui/material/styles';
 import { brandingDarkTheme as darkTheme, brandingLightTheme as lightTheme } from '../../branding';
 import { useTranslate } from '../../i18n';
-import { type SlotDefinition } from '../definitions';
+import type { SlotDefinition } from '../definitions';
 import { ApiItemContainer, ExpandableApiItem } from './ExpandableApiItem';
 
 const StyledApiItem = styled(ExpandableApiItem)(

@@ -1,7 +1,8 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Tabs, { type TabsTypeMap } from '@mui/material/Tabs';
+import Tabs from '@mui/material/Tabs';
+import type { TabsTypeMap } from '@mui/material/Tabs';
 import type { DistributiveOmit } from '@mui/types';
 import type { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
 import { useTabContext, getTabId, getPanelId } from '../TabContext';

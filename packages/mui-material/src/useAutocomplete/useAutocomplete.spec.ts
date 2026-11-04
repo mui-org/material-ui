@@ -1,12 +1,13 @@
-import { expectType, PartiallyRequired } from '@mui/types';
-import {
-  useAutocomplete,
+import type { PartiallyRequired } from '@mui/types';
+import { expectType } from '@mui/types';
+import type {
   FilterOptionsState,
   AutocompleteGroupedOption,
   UseAutocompleteProps,
   UseAutocompleteParameters,
   AutocompleteMappedValue,
 } from '@mui/material/useAutocomplete';
+import { useAutocomplete } from '@mui/material/useAutocomplete';
 
 interface Person {
   id: string;

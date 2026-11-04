@@ -1,18 +1,15 @@
 import 'docs/src/modules/components/bootstrap';
 // --- Post bootstrap -----
 import * as React from 'react';
-import { AdConfig } from '@mui/internal-core-docs/Ad';
-import { SandboxConfig } from '@mui/internal-core-docs/DemoContext';
+import type { AdConfig } from '@mui/internal-core-docs/Ad';
+import type { SandboxConfig } from '@mui/internal-core-docs/DemoContext';
 import {
   DocsApp,
   printConsoleBanner,
   reportWebVitals as _reportWebVitals,
 } from '@mui/internal-core-docs/DocsApp';
-import {
-  DEFAULT_DOCS_CONFIG,
-  type DocsConfig,
-  VersionEntry,
-} from '@mui/internal-core-docs/DocsProvider';
+import type { DocsConfig, VersionEntry } from '@mui/internal-core-docs/DocsProvider';
+import { DEFAULT_DOCS_CONFIG } from '@mui/internal-core-docs/DocsProvider';
 import type { NotificationMessage } from '@mui/internal-core-docs/AppLayout';
 import findActivePage from '@mui/internal-core-docs/findActivePage';
 import { getProductInfoFromUrl } from '@mui/internal-core-docs/utils';

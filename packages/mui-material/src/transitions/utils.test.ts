@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as React from 'react';
+import type * as React from 'react';
 import { spy } from 'sinon';
 import {
   getReducedMotionStyles,

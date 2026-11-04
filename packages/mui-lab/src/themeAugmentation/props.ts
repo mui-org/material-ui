@@ -1,14 +1,14 @@
-import { LoadingButtonProps } from '../LoadingButton';
-import { TabListProps } from '../TabList';
-import { TabPanelProps } from '../TabPanel';
-import { TimelineConnectorProps } from '../TimelineConnector';
-import { TimelineContentProps } from '../TimelineContent';
-import { TimelineDotProps } from '../TimelineDot';
-import { TimelineItemProps } from '../TimelineItem';
-import { TimelineOppositeContentProps } from '../TimelineOppositeContent';
-import { TimelineProps } from '../Timeline';
-import { TimelineSeparatorProps } from '../TimelineSeparator';
-import { MasonryProps } from '../Masonry';
+import type { LoadingButtonProps } from '../LoadingButton';
+import type { TabListProps } from '../TabList';
+import type { TabPanelProps } from '../TabPanel';
+import type { TimelineConnectorProps } from '../TimelineConnector';
+import type { TimelineContentProps } from '../TimelineContent';
+import type { TimelineDotProps } from '../TimelineDot';
+import type { TimelineItemProps } from '../TimelineItem';
+import type { TimelineOppositeContentProps } from '../TimelineOppositeContent';
+import type { TimelineProps } from '../Timeline';
+import type { TimelineSeparatorProps } from '../TimelineSeparator';
+import type { MasonryProps } from '../Masonry';
 
 export interface LabComponentsPropsList {
   MuiLoadingButton: LoadingButtonProps;

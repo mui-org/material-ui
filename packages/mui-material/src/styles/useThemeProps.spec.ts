@@ -1,5 +1,6 @@
-import { Theme, useThemeProps } from '@mui/material/styles';
-import { SliderProps } from '@mui/material/Slider';
+import type { Theme } from '@mui/material/styles';
+import { useThemeProps } from '@mui/material/styles';
+import type { SliderProps } from '@mui/material/Slider';
 
 function ThemedComponent() {
   const props = useThemeProps<Theme, SliderProps, 'MuiSlider'>({

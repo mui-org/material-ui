@@ -1,7 +1,6 @@
 import * as React from 'react';
-import Autocomplete, {
-  type AutocompleteRenderInputParams,
-} from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
+import type { AutocompleteRenderInputParams } from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 const slotProps = {
