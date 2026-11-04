@@ -13,7 +13,8 @@ export default function StackedNumberField() {
       sx={{
         width: 220,
         [`& .${numberFieldClasses.controls}`]: {
-          flexDirection: 'column',
+          // Put increment above decrement when stacking the default button order.
+          flexDirection: 'column-reverse',
           height: 'auto',
           // Let the full button stack determine the adornment's height.
           maxHeight: 'none',

@@ -19,7 +19,7 @@ const customTheme = (outerTheme: Theme) =>
         },
         styleOverrides: {
           controls: {
-            flexDirection: 'column',
+            flexDirection: 'column-reverse',
             height: 'auto',
             // Remove InputAdornment's height cap so the full stack is centered.
             maxHeight: 'none',

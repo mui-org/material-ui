@@ -38,8 +38,8 @@ function getControlElements({
         startControls: null,
         endControls: (
           <Controls position="end" {...controlProps}>
-            {IncrementButton}
             {DecrementButton}
+            {IncrementButton}
           </Controls>
         ),
       };
@@ -60,8 +60,8 @@ function getControlElements({
       return {
         startControls: (
           <Controls position="start" {...controlProps}>
-            {IncrementButton}
             {DecrementButton}
+            {IncrementButton}
           </Controls>
         ),
         endControls: null,

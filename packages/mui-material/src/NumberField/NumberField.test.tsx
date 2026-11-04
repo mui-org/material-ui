@@ -1319,22 +1319,23 @@ describe('<NumberField />', () => {
   });
 
   // Controls must occupy the requested adornment, with consumer adornments kept
-  // beside the input. Check DOM order and grouping without depending on layout measurements.
+  // beside the input. Shared groups put decrement before increment; check DOM order
+  // and grouping without depending on layout measurements.
   describe('controls placement', () => {
     const placements = [
       {
         controlsPosition: undefined,
         startButtons: [],
-        endButtons: ['Increase', 'Decrease'],
+        endButtons: ['Decrease', 'Increase'],
       },
       {
         controlsPosition: 'end',
         startButtons: [],
-        endButtons: ['Increase', 'Decrease'],
+        endButtons: ['Decrease', 'Increase'],
       },
       {
         controlsPosition: 'start',
-        startButtons: ['Increase', 'Decrease'],
+        startButtons: ['Decrease', 'Increase'],
         endButtons: [],
       },
       {
@@ -3047,13 +3048,13 @@ describe('<NumberField />', () => {
           const suffix = screen.getByText('kg');
           const wrapper = input.closest('.MuiInputBase-root')!;
           const startButtons = {
-            start: [increase, decrease],
+            start: [decrease, increase],
             end: [],
             split: [decrease],
           }[controlsPosition];
           const endButtons = {
             start: [],
-            end: [increase, decrease],
+            end: [decrease, increase],
             split: [increase],
           }[controlsPosition];
           const expectedOrder = [
