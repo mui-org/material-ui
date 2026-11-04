@@ -72,7 +72,38 @@ const getSideFromDirection = (direction: StackOwnerState['direction']) => {
   }[direction as string];
 };
 
-export const style = ({ ownerState, theme }: StyleFunctionProps) => {
+/**
+ * Turn a responsive array into an object keyed by breakpoint, so it can be combined with the
+ * responsive value of the other prop.
+ *
+ * > toBreakpointObject(['column', null, 'row'], breakpoints)
+ * { xs: 'column', md: 'row' }
+ */
+function toBreakpointObject<T>(
+  value: T | ReadonlyArray<T | null> | undefined,
+  breakpoints: Breakpoints,
+): T | Record<string, T> | undefined {
+  if (!Array.isArray(value)) {
+    return value as T | undefined;
+  }
+
+  const result: Record<string, T> = {};
+  value.forEach((item: T | null, index: number) => {
+    if (item != null && index < breakpoints.keys.length) {
+      result[breakpoints.keys[index]] = item;
+    }
+  });
+
+  return result;
+}
+
+export const style = ({ ownerState: ownerStateProp, theme }: StyleFunctionProps) => {
+  const ownerState = {
+    ...ownerStateProp,
+    direction: toBreakpointObject(ownerStateProp.direction, theme.breakpoints),
+    spacing: toBreakpointObject(ownerStateProp.spacing, theme.breakpoints),
+  } as StackOwnerState;
+
   let styles = {
     display: 'flex',
     flexDirection: 'column',

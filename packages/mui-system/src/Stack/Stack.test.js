@@ -397,6 +397,38 @@ describe('<Stack />', () => {
         flexDirection: 'column',
       });
     });
+    it('should place the margin on the side of a responsive array direction', () => {
+      expect(
+        style({
+          ownerState: {
+            direction: ['column', 'row'],
+            spacing: 2,
+          },
+          theme,
+        }),
+      ).to.deep.equal({
+        '@media (min-width:0px)': {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginTop: '16px',
+          },
+          flexDirection: 'column',
+        },
+        [`@media (min-width:${theme.breakpoints.values.sm}px)`]: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginLeft: '16px',
+          },
+          flexDirection: 'row',
+        },
+        display: 'flex',
+        flexDirection: 'column',
+      });
+    });
   });
 
   describe('prop: spacing', () => {
@@ -522,6 +554,78 @@ describe('<Stack />', () => {
         '@media (min-width:1200px)',
         '@media (min-width:1536px)',
       ]);
+    });
+
+    it('should map a responsive array spacing to the breakpoints', () => {
+      expect(
+        style({
+          ownerState: {
+            direction: { xs: 'column', md: 'row' },
+            spacing: [1, 2, 3],
+          },
+          theme,
+        }),
+      ).to.deep.equal({
+        '@media (min-width:0px)': {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginTop: '8px',
+          },
+          flexDirection: 'column',
+        },
+        [`@media (min-width:${theme.breakpoints.values.sm}px)`]: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginTop: '16px',
+          },
+        },
+        [`@media (min-width:${theme.breakpoints.values.md}px)`]: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginLeft: '24px',
+          },
+          flexDirection: 'row',
+        },
+        display: 'flex',
+        flexDirection: 'column',
+      });
+    });
+
+    it('should skip the null values of a responsive array spacing', () => {
+      expect(
+        style({
+          ownerState: {
+            direction: 'column',
+            spacing: [2, null, 4],
+          },
+          theme,
+        }),
+      ).to.deep.equal({
+        '@media (min-width:0px)': {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginTop: '16px',
+          },
+        },
+        [`@media (min-width:${theme.breakpoints.values.md}px)`]: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
+          '& > :not(style) ~ :not(style)': {
+            marginTop: '32px',
+          },
+        },
+        display: 'flex',
+        flexDirection: 'column',
+      });
     });
   });
 });
