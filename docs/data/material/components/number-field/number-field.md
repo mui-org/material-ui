@@ -187,6 +187,12 @@ The built-in controls retain their labels, stepping behavior, and disabled state
 
 {{"component": "file://./demos/spinner-demo/index.ts"}}
 
+### Stacked controls
+
+Use the button slots to replace the icons with chevrons, and style the controls to stack them vertically at the end of the input.
+
+{{"component": "file://./demos/stacked-controls/index.ts"}}
+
 ### Theme overrides
 
 Use `MuiNumberField` in the theme to set default props or override the `root`, `controls`, `incrementButton`, and `decrementButton` styles.
