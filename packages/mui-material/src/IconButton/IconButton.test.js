@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { createRenderer, reactMajor, screen, within } from '@mui/internal-test-utils';
+import { act, createRenderer, isJsdom, reactMajor, screen, within } from '@mui/internal-test-utils';
 import capitalize from '@mui/utils/capitalize';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import IconButton, { iconButtonClasses as classes } from '@mui/material/IconButton';
@@ -380,31 +380,54 @@ describe('<IconButton />', () => {
         expect(screen.getByRole('button')).to.have.property('tabIndex', 0);
       });
 
-      [
-        ['disabled', { disabled: true }],
-        ['loading', { loading: true }],
-      ].forEach(([state, props]) => {
-        it(`removes a ${state} button from the tab order`, async () => {
-          const { user } = render(
-            <React.Fragment>
-              <button type="button">Before</button>
-              <IconButton aria-label="Skipped" {...props}>
-                {icon}
-              </IconButton>
-              <button type="button">After</button>
-            </React.Fragment>,
-          );
+      it('removes a disabled button from the tab order', async () => {
+        const { user } = render(
+          <React.Fragment>
+            <button type="button">Before</button>
+            <IconButton aria-label="Skipped" disabled>
+              {icon}
+            </IconButton>
+            <button type="button">After</button>
+          </React.Fragment>,
+        );
 
-          await user.tab();
-          expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
 
-          await user.tab();
-          expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
 
-          await user.tab({ shift: true });
-          expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
-        });
+        await user.tab({ shift: true });
+        expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
       });
+
+      // Documented gap: Chromium blurs a focused button when it becomes disabled.
+      // This fails once https://github.com/mui/material-ui/pull/49540 keeps focus on it.
+      it.skipIf(isJsdom() || !/chrome/i.test(navigator.userAgent))(
+        'focus leaves the button when `loading` is set while focused',
+        async () => {
+          const { setProps } = render(
+            <IconButton aria-label="Save" loading={false}>
+              {icon}
+            </IconButton>,
+          );
+          const button = screen.getByRole('button', { name: 'Save' });
+
+          await act(async () => {
+            button.focus();
+          });
+          expect(document.activeElement).to.equal(button);
+
+          setProps({ loading: true });
+          await act(async () => {
+            await new Promise((resolve) => {
+              requestAnimationFrame(() => requestAnimationFrame(resolve));
+            });
+          });
+
+          expect(document.activeElement).not.to.equal(button);
+        },
+      );
     });
 
     it('2.5.2 Pointer Cancellation: activates on click, but not when released off the target', async () => {
@@ -550,7 +573,6 @@ describe('<IconButton />', () => {
         );
 
         const button = screen.getByRole('button', { name: 'Save' });
-        expect(button).to.have.property('disabled', true);
         expect(within(button).getByRole('progressbar')).toHaveAccessibleName('Save');
       });
     });

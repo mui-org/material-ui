@@ -50,6 +50,7 @@
     "gap": "Indefinite animation cannot be paused",
     "criteria": ["2.2.2"],
     "affected": [
+      { "component": "Button", "note": "`loading`" },
       { "component": "CircularProgress", "note": "`indeterminate`" },
       { "component": "IconButton", "note": "`loading`" },
       { "component": "LinearProgress", "note": "`indeterminate`, `query`, `buffer`" }

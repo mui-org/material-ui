@@ -7,15 +7,16 @@ Rated against WCAG 2.2 Level A and AA. See the [reports legend](../accessibility
 | Result                | Count |
 | :-------------------- | :---- |
 | ✅ Supports           | 23    |
-| ⚠️ Partially Supports | 4     |
+| ⚠️ Partially Supports | 5     |
 | ❌ Does Not Support   | 0     |
-| ➖ Not Applicable     | 28    |
-| 🚩 Flagged            | 8/27  |
+| ➖ Not Applicable     | 27    |
+| 🚩 Flagged            | 9/28  |
 
 ## Known gaps
 
 - ⚠️ **1.4.3 Contrast (Minimum).** <!-- 1.4.3:gap:start -->`info` and `warning` buttons fall short of 4.5:1 in every variant.<!-- 1.4.3:gap:end -->
 - ⚠️ **1.4.11 Non-text Contrast.** <!-- 1.4.11:gap:start -->Focus-indicator, border, and icon contrast are untested; `disableRipple`/`disableFocusRipple` remove the `text`/`outlined` focus indicator, and `disableElevation` removes the `contained` one, unless the theme enables `focusVisible`.<!-- 1.4.11:gap:end -->
+- ⚠️ **2.2.2 Pause, Stop, Hide.** <!-- 2.2.2:gap:start -->The `loading` spinner turns until `loading` ends, and the user cannot pause it.<!-- 2.2.2:gap:end -->
 - ⚠️ **2.4.3 Focus Order.** <!-- 2.4.3:gap:start -->A focused button that turns `loading` becomes disabled, and the browser moves focus to the page body.<!-- 2.4.3:gap:end -->
 - ⚠️ **4.1.3 Status Messages.** <!-- 4.1.3:gap:start -->The `loading` state adds no live region, so the change may go unannounced.<!-- 4.1.3:gap:end -->
 
@@ -75,6 +76,25 @@ Rated against WCAG 2.2 Level A and AA. See the [reports legend](../accessibility
 <!-- 1.4.5:end -->
 
 **Pass:** <!-- 1.4.5:pass:start -->no button renders its label as an image of text (a logo with an accessible name is exempt).<!-- 1.4.5:pass:end -->
+
+#### 2.2.2 Pause, Stop, Hide · A
+
+`🚩` · `⚠️ Partially Supports` · `◐ Shared`
+
+<!-- 2.2.2:start -->
+
+- While `loading`, the button shows a spinning `CircularProgress`. It turns until the application sets `loading` to `false`, and the user cannot pause it. The application can set `loading` without user input.
+- If the spinner shows for more than five seconds next to other content, this criterion applies. The essential exception does not apply, because the rest of the page stays interactive.
+- The IconButton report has the same gap.
+
+**Manual testing steps**
+
+1. Set `loading` on a button for a task that takes more than five seconds.
+2. Look for a way to pause or hide the spinner.
+
+<!-- 2.2.2:end -->
+
+**Pass:** <!-- 2.2.2:pass:start -->the spinner shows for less than five seconds, or the user can pause or hide it. With the default styles, the user cannot pause it. Keep `loading` short, or show the progress elsewhere.<!-- 2.2.2:pass:end -->
 
 #### 2.4.11 Focus Not Obscured (Minimum) · AA
 
@@ -507,7 +527,6 @@ Tested by: unit `Button.test.js`
 - **1.4.13 Content on Hover or Focus (AA).** Shows no additional content on hover or focus; a `Tooltip` wrapper would own this.
 - **2.1.4 Character Key Shortcuts (A).** <!-- 2.1.4:start -->The only keys are <kbd>Enter</kbd> and <kbd>Space</kbd> which are not shortcuts.<!-- 2.1.4:end -->
 - **2.2.1 Timing Adjustable (A).** Sets no time limit.
-- **2.2.2 Pause, Stop, Hide (A).** <!-- 2.2.2:start -->The loading spinner is user-triggered, and the button is disabled while loading.<!-- 2.2.2:end -->
 - **2.3.1 Three Flashes or Below Threshold (A).** Nothing flashes.
 - **2.4.1 Bypass Blocks (A), 2.4.2 Page Titled (A), 2.4.5 Multiple Ways (AA).** Page or site structure, not a single component.
 - **2.5.1 Pointer Gestures (A), 2.5.4 Motion Actuation (A).** Activates on a simple click; reads no device motion.

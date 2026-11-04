@@ -139,7 +139,7 @@
       "level": "A",
       "conformance": "Partially Supports",
       "flagged": true,
-      "affected": ["CircularProgress", "IconButton", "LinearProgress"]
+      "affected": ["Button", "CircularProgress", "IconButton", "LinearProgress"]
     },
     {
       "number": "2.3.1",
@@ -866,11 +866,11 @@
       "component": "Button",
       "counts": {
         "supports": 23,
-        "partiallySupports": 4,
+        "partiallySupports": 5,
         "doesNotSupport": 0,
-        "notApplicable": 28,
-        "flagged": 8,
-        "rated": 27
+        "notApplicable": 27,
+        "flagged": 9,
+        "rated": 28
       },
       "gaps": [
         {
@@ -881,6 +881,11 @@
         {
           "number": "1.4.11",
           "name": "Non-text Contrast",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "2.2.2",
+          "name": "Pause, Stop, Hide",
           "conformance": "Partially Supports"
         },
         {
@@ -1013,6 +1018,15 @@
           "flagged": false
         },
         {
+          "number": "2.2.2",
+          "name": "Pause, Stop, Hide",
+          "level": "A",
+          "conformance": "Partially Supports",
+          "responsibility": "Shared",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
           "number": "2.4.3",
           "name": "Focus Order",
           "level": "A",
@@ -1140,11 +1154,11 @@
         }
       ],
       "summary": {
-        "rated": 27,
-        "levelA": 15,
+        "rated": 28,
+        "levelA": 16,
         "levelAA": 12,
         "supports": 23,
-        "partiallySupports": 4,
+        "partiallySupports": 5,
         "doesNotSupport": 0,
         "verified": 19,
         "automated": 10

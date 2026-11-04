@@ -275,8 +275,8 @@ Tested by: unit `IconButton.test.js`
 
 <!-- 2.4.3:start -->
 
-- The button is one tab stop in DOM order, with no positive `tabIndex`. A disabled or loading button leaves the tab order. Unit tests confirm this.
-- A focused button that turns `loading` becomes disabled. Chromium then moves focus to the page body, so the next <kbd>Tab</kbd> starts again from the top of the page. The unit tests run in jsdom too, which keeps focus on the button, so they do not show this.
+- The button is one tab stop in DOM order, with no positive `tabIndex`. A disabled button leaves the tab order. Unit tests confirm this.
+- A focused button that turns `loading` becomes disabled. Chromium then moves focus to the page body, so the next <kbd>Tab</kbd> starts again from the top of the page. A unit test in Chromium confirms this.
 - To prevent this, move focus to a nearby element before you set `loading`.
 
 **Manual testing steps**

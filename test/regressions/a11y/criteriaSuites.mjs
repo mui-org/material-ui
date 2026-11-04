@@ -22,14 +22,14 @@ export const CSS_LAYOUT_SUITES = [
   },
   { component: 'Button', route: '/docs-components-buttons/BasicButtons' },
   { component: 'Checkbox', route: '/docs-components-checkboxes/Checkboxes' },
-  // The badge count is the only documented text inside an IconButton.
-  { component: 'IconButton', route: '/docs-components-buttons/IconButtonWithBadge' },
   {
     component: 'CircularProgress',
     route: '/docs-components-progress/CircularDeterminate',
     // The spinner renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.
     skipCriteria: ['1.4.4', '1.4.12'],
   },
+  // The badge count is the only documented text inside an IconButton.
+  { component: 'IconButton', route: '/docs-components-buttons/IconButtonWithBadge' },
   {
     component: 'LinearProgress',
     route: '/docs-components-progress/LinearDeterminate',
