@@ -20,7 +20,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 ## Generated files
 
 - [ ] **propTypes are generated, not written.** `pnpm proptypes` leaves no diff after your final commit.
-- [ ] **No propTypes on internal components.** `grep -n "propTypes /\* remove-proptypes \*/" <part file>` lists only the public component. [adapter.md, Slot adapter]
+- [ ] **Internal components live in their own files.** Slot adapters and `RenderElement` are in separate files marked `@ignore - internal component`, and `pnpm proptypes` added no `propTypes` to them. [adapter.md, Files]
 - [ ] **No giant propTypes from Base UI types.** A `handle` or other Base UI class instance is `/* @typescript-to-proptypes-ignore */`; `children` and `slots` are not. [adapter.md, Public component]
 - [ ] **The API JSON is complete.** For each part, `docs/pages/material-ui/api/<kebab-part>.json` has non-empty `props`, its classes under `classes` or under `slots`, both `@mui/material/<Name><Part>` and `@mui/material` imports, and a non-empty `componentDescription` in the matching translations file. [adapter.md, Public component]
 - [ ] **`docs:api` deleted nothing.** `git status` shows no deleted files under `docs/pages/system/api/`. A failed `docs:api` run deletes them; fix the failure and run it again.

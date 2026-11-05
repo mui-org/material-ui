@@ -10,7 +10,9 @@ Every public part follows one shape:
 
 One folder per public part, `packages/mui-material/src/<Name><Part>/` (the root part's folder is `<Name>/`):
 
-- `<Name><Part>.tsx`: types, styled slots, slot adapters, and the public component. Keep them in this one file; `pnpm proptypes` and `pnpm docs:api` read the component and its props type from it.
+- `<Name><Part>.tsx`: the props types and the public component. `pnpm proptypes` and `pnpm docs:api` read both from this file.
+- `<Name><Part><Slot>Slot.tsx`: one file per slot adapter, holding its styled slot and the adapter (`PreviewCardPopupRootSlot.tsx`). Internal components live in their own files across the codebase (`ButtonBase/Ripple.js`, `Radio/RadioButtonIcon.js`), and the proptypes generator skips files whose name differs from the folder.
+- `RenderElement.tsx` for the part's `useRender` wrapper, when the part has a public `render` on a styled slot.
 - `<name><Part>Classes.ts`, for parts with styles.
 - `index.ts`.
 - `<Name><Part>.test.tsx`, and `<Name><Part>.spec.tsx` for type tests.
@@ -247,7 +249,7 @@ const PreviewCardPopupRootSlot = React.forwardRef(function PreviewCardPopupRootS
 
 - `getSlotProps: (externalHandlers) => mergeProps(baseProps, externalHandlers)` keeps Base UI's handlers, ARIA attributes, data attributes, and ref working, and chains the user's handlers after them.
 - `ownerState` holds the Material UI props plus live Base UI state (`open`, `highlighted`, `checked`, `disabled`), read from the `state` argument of `render`. Never parse `data-*` attributes to get state.
-- Declare each adapter's props as a named interface in the same file, as above, and mark the adapter `@ignore - internal component`.
+- Each adapter lives in its own file, with its props as a named interface, and is marked `@ignore - internal component`.
 - Slot names are lowercase (`slot: 'root'`, `slot: 'indicator'`). Lowercase is the direction for new code: `createStyled` still lowercases capitalized names, with a `TODO v6` to drop that (`packages/mui-system/src/createStyled/createStyled.ts`, [#37908](https://github.com/mui/material-ui/pull/37908)). Most existing components still use `'Root'`; do not copy them. `styleOverrides` accepts slot keys only. Live state gets a utility class (`open` above), which users target in `styleOverrides`.
 - Build slots on existing Material UI components (`Paper`, `List`, `ButtonBase`, `FormControl`, `Divider`), so their theme styles apply. When the slot's base is a Material component, set `shouldForwardComponentProp: true`, as `Alert` and `Accordion` do for their `Paper` roots.
 - Write Base UI layout variables (`--transform-origin`, `--available-height`, `--available-width`) into styles instead of measuring.
