@@ -47,7 +47,7 @@
   },
   "classDescriptions": {},
   "slotDescriptions": {
-    "backdrop": "The component used for the optional backdrop beneath the menu. Providing this slot or <code>slotProps.backdrop</code> renders it. Set to <code>null</code> to omit it, including when configured in the theme.",
+    "backdrop": "The component used for the backdrop beneath the menu. A modal menu renders it to block outside clicks. Providing this slot or <code>slotProps.backdrop</code> also renders it. Set to <code>null</code> to omit it, including when configured in the theme. A modal menu then allows outside clicks and keeps the scroll lock.",
     "list": "The component used for the presentational list wrapper.",
     "portal": "The component used for the portal element, which contains the menu and its backdrops.",
     "positioner": "The component used to position the menu surface.",

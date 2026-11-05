@@ -148,9 +148,9 @@ Checkbox and radio items own their `indicator` slot. Set `icon` and `checkedIcon
 | Paper surface (`role="menu"`) | `ref`, `className`, `style`, `sx`, `elevation`, event handlers, HTML attributes | `root`       |
 | Presentational list           | None                                                                            | `list`       |
 | Animation                     | `transitionDuration`                                                            | `transition` |
-| Optional root-menu backdrop   | None                                                                            | `backdrop`   |
+| Root-menu backdrop            | None                                                                            | `backdrop`   |
 
-These props and slots belong to the popup, not the behavioral root. The `portal` slot carries `theme.zIndex.modal` and contains both the positioner and Base UI's modal interaction layer. This keeps the click blocker above Dialog when the menu is inside it. The optional visual backdrop also stays inside this stacking layer, behind the menu. Submenus use the parent menu's stacking context by default, so their `zIndex` cannot change the whole menu's stacking level. A `styled(Menu2Popup)` class attaches to the Paper surface. Root slot `sx` takes precedence over top-level `sx` for conflicting properties.
+These props and slots belong to the popup, not the behavioral root. The `portal` slot carries `theme.zIndex.modal` and contains both the positioner and the backdrop. This keeps the click blocker above Dialog when the menu is inside it. The backdrop stays behind the menu. Submenus use the parent menu's stacking context by default, so their `zIndex` cannot change the whole menu's stacking level. A `styled(Menu2Popup)` class attaches to the Paper surface. Root slot `sx` takes precedence over top-level `sx` for conflicting properties.
 
 Each slot's ref targets its own element. Use `slotProps.positioner` for positioning props, styles, and the positioned element's ref; placement attributes such as `data-side` are on that element. The popup also accepts positioning props directly. Its forwarded ref targets the surface. With `keepMounted`, the default portal hides when its direct positioner becomes hidden, after the exit transition. Replacing `slots.portal` removes both its stacking and closed-state styles, so the replacement must supply them. The positioner is a slot, not a separate public component.
 
@@ -171,7 +171,7 @@ Popup event handlers observe navigation keys that Base UI stops before they rea
 | Escape                 | Closes and restores trigger focus   | Same at the root; submenus close one level         |
 | Tab                    | Closes and returns focus to trigger | Closes and moves focus to the next element         |
 | Body scrolling         | Locked                              | Locked                                             |
-| Material backdrop      | Rendered                            | Opt-in                                             |
+| Material backdrop      | Rendered                            | Transparent popup backdrop when modal              |
 | Sibling `aria-hidden`  | Applied                             | Not applied                                        |
 | Default placement      | Below trigger, aligned to start     | Same                                               |
 
@@ -179,8 +179,8 @@ Keep these differences and document them:
 
 - **Initial focus:** keep Base UI's pointer-open behavior. No item is ready for accidental Enter activation. This differs from the [APG menu pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/), which places focus on an item when a menu opens. Menu has no public `initialFocus` prop, so matching the classic behavior would require a local focus override.
 - **Disabled items and Tab:** focusable disabled items and Tab leaving the menu follow the APG pattern.
-- **Page treatment:** Base UI owns outside interaction and does not use Material's modal stack. The absence of sibling `aria-hidden` is a DOM observation, not a complete screen-reader accessibility test.
-- **Modality:** `modal` defaults to `true`. Base UI menus opened by hover are non-modal. On touch devices, outside taps are blocked, but page scrolling can remain available unless the popup spans nearly the full viewport width. Do not generalize the desktop scroll-lock result to those cases.
+- **Page treatment:** Menu2 does not use Material's modal stack. It shares only the page scroll lock with Modal and does not set `aria-hidden` on siblings. The absence of sibling `aria-hidden` is a DOM observation, not a complete screen-reader accessibility test.
+- **Modality:** `modal` defaults to `true`. A modal menu locks page scroll for mouse, keyboard, and touch input, and its backdrop blocks outside clicks. Menus opened by hover are non-modal.
 
 `variant="selectedMenu"` has no direct replacement. It makes the selected item the initial focus target in the classic Menu. A checked radio item records a value, but does not control initial focus in Menu2. The benchmark verifies that distinction. See the [upstream discussion of initial focus](https://github.com/mui/base-ui/issues/2143).
 
@@ -200,6 +200,7 @@ Other behavior and caveats:
 
 - **Closing menus:** in Base UI 1.9.0, focus can stay on an item until its exit animation ends. Pressing Escape, then Enter during exit, can still activate that item. This affects Grow and CSS transitions, with or without `keepMounted`. Pointer blocking does not remove the closing menu from the accessibility tree. Track [Base UI issue #5519](https://github.com/mui/base-ui/issues/5519) and [draft PR #5537](https://github.com/mui/base-ui/pull/5537), which combines earlier focus return with native `inert`. Do not add `inert` alone: it can leave focus on the document body.
 - **Portal-container refs on mount:** with `defaultOpen` or `keepMounted`, Base UI 1.9.0 can read a container ref before its element is attached. The portal then uses `document.body` instead of the requested container. Use a callback ref with state and pass the resolved element as `container`; an initial `null` makes the portal wait. The accessibility fixtures use this pattern. A general ref-resolution fix belongs upstream; no local runtime patch is included.
+- **Scroll lock limits:** Menu2 uses the Modal scroll lock, so it has the same limits as Dialog. It does not lock a page where `html` scrolls the viewport, for example with `html { overflow-x: hidden }`. If other code changes the body overflow while the menu is open, the menu can restore an old value at close. A separate change can fix both for every Modal.
 - **Retained menus in dialogs:** a `Menu2Popup` with `keepMounted` inside a kept-mounted Material Dialog can remain under `aria-hidden="true"` when it uses the default portal container. The menu is visible, but can be hidden from assistive technology. Leave `keepMounted` disabled on `Menu2Popup` in this configuration. Automatic integration is deferred. [Base UI issue #5577](https://github.com/mui/base-ui/issues/5577) describes a related portal limitation, but not this exact composition: Material's modal manager hides the retained Menu2 portal.
 
 ### Compatibility
@@ -234,16 +235,16 @@ These choices are proposed for maintainer review.
 | Animation          | Grow by default. Base UI owns mounting and completion. Compatible transition components or CSS remain options. See the transition contract below.                              |
 | Ripple             | Keep ButtonBase as the item root, not a nested interactive child. Forward `disableRipple` only when supplied so theme defaults apply. Base UI owns Enter and Space activation. |
 | Elevation          | Keep the popup's `elevation` prop, default 8, with a root slot override.                                                                                                       |
-| Backdrop           | Opt-in visual layer through `Menu2Popup` slots or slot props. `slots.backdrop: null` omits it. Default styles are transparent and click-through. No submenu backdrop.          |
+| Backdrop           | A modal root menu renders a transparent backdrop that blocks outside clicks. Slots and slot props customize it. `slots.backdrop: null` omits it. No submenu backdrop.          |
 | Imperative actions | Keep Base UI's `actionsRef`, which exposes `close()` and `unmount()`. There is no `action.updatePosition()` equivalent.                                                        |
 | Theme and refs     | Item parts use `OverridableComponent`; their refs and HTML props follow `component`. Popup refs target the `HTMLDivElement` menu surface. Behavioral roots have no DOM ref.    |
 | Item descriptions  | Use Material UI Tooltip for supplementary text or images, without links, buttons, or other controls. Preview Card is outside the initial release.                              |
 | Context menu       | A separate component later, with the correct accessibility behavior and touch long-press. Menu2 doesn't support context menus, and the docs and recipes don't show them.       |
-| Behavior defaults  | Keep Base UI behavior unless an integration requirement needs a change. Material presentation adds start alignment, submenu offsets, Grow, and an opt-in backdrop.             |
+| Behavior defaults  | Keep Base UI behavior unless an integration requirement needs a change. Material UI owns the modal layer and adds start alignment, submenu offsets, and Grow.                  |
 | Open tint on close | Track the popup's ending state internally. Clear the exit tint when exit ends or the popup unmounts; do not add a timer or wait for focus return.                              |
 | Forced colors      | `enhanceHighContrast` styles the item parts and indicators. Disabled cues take precedence over highlight styling.                                                              |
 
-Base UI's internal backdrop handles modal interaction. It is absent for hover-opened menus and `modal={false}`. The optional visual backdrop is separate and is not hidden on hover. Setting its slot to `null` overrides theme defaults without changing modal behavior.
+Menu2 passes `modal={false}` to Base UI and implements `modal` with Material UI parts. The scroll lock uses the `ModalManager` instance that Modal uses, so a menu and a Modal on one page share one lock. The backdrop slot blocks outside clicks for a modal root menu. Both are absent for hover-opened menus and `modal={false}`. Setting the backdrop slot to `null` lets outside clicks through and keeps the scroll lock.
 
 ### Resolved review questions
 
@@ -328,8 +329,8 @@ Trigger behavior belongs to the trigger component.
 | `variant="selectedMenu"`                  | No direct equivalent         | Checkbox and radio items express checked state, not initial focus.                                                              |
 | `disableAutoFocus`, `disableEnforceFocus` | No direct equivalent         | `modal` controls outside interaction, not each classic focus option independently.                                              |
 | `disableRestoreFocus`                     | `finalFocus={false}`         | A ref or function can instead set the return target.                                                                            |
-| `disableScrollLock`                       | No independent equivalent    | `modal={false}` also permits outside interaction. Touch and hover behavior differ; see the benchmark caveat.                    |
-| `hideBackdrop`                            | `slots={{ backdrop: null }}` | Omits the optional visual layer, not Base UI's internal modal layer.                                                            |
+| `disableScrollLock`                       | No independent equivalent    | `modal={false}` also permits outside interaction. Hover-opened menus do not lock.                                               |
+| `hideBackdrop`                            | `slots={{ backdrop: null }}` | Omits the backdrop. Outside clicks reach the page, and the scroll lock stays.                                                   |
 | `disablePortal`                           | No equivalent                | The popup always uses a portal.                                                                                                 |
 | `keepMounted`, `container`                | Same props                   | Client-side portal controls; they do not render the popup on the server. `container` takes an element or a ref, not a function. |
 
@@ -388,7 +389,7 @@ This example follows the system preference. The playground also shows the theme 
 | No direct equivalent                   | `positioner` slot                                  | Positioning styles, attributes, and ref.     |
 | `elevation`                            | Same prop, default 8                               | Forwarded to Paper.                          |
 | Paper viewport height limit            | `min(calc(100vh - 96px), var(--available-height))` | Also respects available collision space.     |
-| `BackdropProps`                        | `slotProps.backdrop`                               | Renders the optional visual backdrop.        |
+| `BackdropProps`                        | `slotProps.backdrop`                               | Customizes the backdrop.                     |
 | `PopoverClasses`                       | No equivalent                                      | Menu2 does not render Popover.               |
 
 </details>

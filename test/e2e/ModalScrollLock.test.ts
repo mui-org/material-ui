@@ -42,6 +42,40 @@ describe('Modal native scroll lock', () => {
     );
   }
 
+  it('blocks the first outside click of a modal Menu2 and keeps its trigger working', async () => {
+    const menu = page.getByRole('menu');
+    const center = async (name: string) => {
+      const box = (await page.getByRole('button', { name, exact: true }).boundingBox())!;
+      return [box.x + box.width / 2, box.y + box.height / 2] as const;
+    };
+    // Real mouse input. The open menu's backdrop covers the trigger and the page.
+    const trigger = await center('Open menu');
+    const outside = await center('Open dialog');
+
+    await page.mouse.click(...trigger);
+    await expect(menu).toBeVisible();
+    expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
+
+    await page.mouse.click(...outside);
+    await expect(menu).toBeHidden();
+    await expect(page.getByRole('dialog')).toBeHidden();
+    expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+
+    await page.mouse.click(...trigger);
+    await expect(menu).toBeVisible();
+    await page.mouse.click(...trigger);
+    await expect(menu).toBeHidden();
+    await expect(page.getByRole('button', { name: 'Open menu', exact: true })).toBeFocused();
+    // Two frames let a release that reopens the menu show its effect.
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+        }),
+    );
+    await expect(menu).toBeHidden();
+  });
+
   ['hidden', 'clip'].forEach((htmlOverflow) => {
     ['auto', 'scroll'].forEach((bodyOverflow) => {
       [false, true].forEach((fromMenu) => {

@@ -1,6 +1,5 @@
-import { describe, beforeAll, afterAll, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, beforeAll, afterAll, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import getScrollbarSize from '@mui/utils/getScrollbarSize';
-import { isJsdom, waitFor } from '@mui/internal-test-utils';
 import { ModalManager } from './ModalManager';
 
 interface Modal {
@@ -285,388 +284,6 @@ describe('ModalManager', () => {
     });
   });
 
-  describe('existing scroll locks', () => {
-    let container: HTMLDivElement;
-    let manager: ModalManager;
-    let modals: Modal[];
-
-    function mountModal(disableScrollLock = false) {
-      const modal = getDummyModal();
-      modals.push(modal);
-      manager.add(modal, container);
-      manager.mount(modal, { disableScrollLock });
-      return modal;
-    }
-
-    beforeEach(() => {
-      container = document.createElement('div');
-      container.style.overflow = 'hidden';
-      document.body.appendChild(container);
-      manager = new ModalManager();
-      modals = [];
-    });
-
-    afterEach(() => {
-      modals.forEach((modal) => manager.remove(modal));
-      container.remove();
-    });
-
-    it('takes over a released lock and restores the styles from before its own lock', async () => {
-      container.style.paddingRight = '12px';
-      const modal = mountModal();
-      expect(container.style.paddingRight).to.equal('12px');
-
-      container.style.overflow = 'scroll';
-      container.style.paddingRight = '20px';
-      await waitFor(() => expect(container.style.overflow).to.equal('hidden'));
-
-      manager.remove(modal);
-      expect(container.style.overflow).to.equal('scroll');
-      expect(container.style.paddingRight).to.equal('20px');
-    });
-
-    ['hidden', 'clip'].forEach((overflow) => {
-      it(`preserves an existing overflow=${overflow} lock`, () => {
-        container.style.overflow = overflow;
-        const originalStyle = container.style.cssText;
-        const modal = mountModal();
-        expect(container.style.cssText).to.equal(originalStyle);
-
-        manager.remove(modal);
-        expect(container.style.cssText).to.equal(originalStyle);
-      });
-    });
-
-    it('does not take over after the modal closes', async () => {
-      const modal = mountModal();
-      manager.remove(modal);
-      container.style.overflow = '';
-      await Promise.resolve();
-
-      expect(container.style.overflow).to.equal('');
-    });
-
-    it('keeps a deferred lock until the last modal closes', async () => {
-      const first = mountModal();
-      const second = mountModal();
-      manager.remove(first);
-      container.style.overflow = '';
-      await waitFor(() => expect(container.style.overflow).to.equal('hidden'));
-
-      manager.remove(second);
-      expect(container.style.overflow).to.equal('');
-    });
-
-    it('does not take over when scroll locking is disabled', async () => {
-      mountModal(true);
-      container.style.overflow = '';
-      await Promise.resolve();
-
-      expect(container.style.overflow).to.equal('');
-    });
-
-    it('locks both axes when only vertical scrolling is hidden', () => {
-      container.style.overflow = 'scroll hidden';
-      const modal = mountModal();
-      expect(container.style.overflow).to.equal('hidden');
-
-      manager.remove(modal);
-      expect(container.style.overflow).to.equal('scroll hidden');
-    });
-
-    // Base UI's inset-scrollbar fallback locks body and gives html `overflow-y: scroll`.
-    it('waits for a lock on body while html only scrolls', async () => {
-      const html = document.documentElement;
-      const body = document.body;
-      const initialStyles = { html: html.style.cssText, body: body.style.cssText };
-      html.style.overflowY = 'scroll';
-      html.setAttribute('data-base-ui-scroll-locked', '');
-      body.style.overflow = 'hidden';
-      const bodyModal = getDummyModal();
-      modals.push(bodyModal);
-
-      try {
-        manager.add(bodyModal, body);
-        manager.mount(bodyModal, {});
-        expect(html.style.overflowY).to.equal('scroll');
-        expect(body.style.overflow).to.equal('hidden');
-
-        html.style.cssText = initialStyles.html;
-        body.style.cssText = initialStyles.body;
-        html.removeAttribute('data-base-ui-scroll-locked');
-        await waitFor(() => expect(body.style.overflow).to.equal('hidden'));
-        expect(html.style.overflowY).to.equal('');
-
-        manager.remove(bodyModal);
-        expect(body.style.overflow).to.equal('');
-        expect(html.style.overflowY).to.equal('');
-      } finally {
-        manager.remove(bodyModal);
-        html.style.cssText = initialStyles.html;
-        body.style.cssText = initialStyles.body;
-        html.removeAttribute('data-base-ui-scroll-locked');
-      }
-    });
-
-    it('locks html when body only clips its own overflow', () => {
-      const html = document.documentElement;
-      const body = document.body;
-      const initialStyles = { html: html.style.cssText, body: body.style.cssText };
-      html.style.overflowY = 'scroll';
-      body.style.overflow = 'hidden';
-      const bodyModal = getDummyModal();
-      modals.push(bodyModal);
-
-      try {
-        manager.add(bodyModal, body);
-        manager.mount(bodyModal, {});
-        expect(html.style.overflow).to.equal('hidden');
-
-        manager.remove(bodyModal);
-        expect(html.style.overflowY).to.equal('scroll');
-        expect(body.style.overflow).to.equal('hidden');
-      } finally {
-        manager.remove(bodyModal);
-        html.style.cssText = initialStyles.html;
-        body.style.cssText = initialStyles.body;
-      }
-    });
-
-    [
-      { overflow: 'scroll', marked: false },
-      { overflow: 'scroll hidden', marked: false },
-      { overflow: 'scroll', marked: true },
-    ].forEach(({ overflow, marked }) => {
-      it.skipIf(isJsdom())(
-        `takes over html overflow=${overflow}, marked=${marked}, while it owns the body lock`,
-        async () => {
-          const html = document.documentElement;
-          const body = document.body;
-          const initialStyles = { html: html.style.cssText, body: body.style.cssText };
-          const initialScrollLock = html.getAttribute('data-base-ui-scroll-locked');
-          html.style.overflow = 'hidden';
-          if (marked) {
-            html.setAttribute('data-base-ui-scroll-locked', '');
-          }
-          body.style.cssText = 'height: auto; overflow: auto;';
-          const content = document.createElement('div');
-          content.style.height = '200vh';
-          body.appendChild(content);
-          const bodyModal = getDummyModal();
-          modals.push(bodyModal);
-
-          try {
-            expect(body.scrollHeight).to.equal(body.clientHeight);
-            expect(html.scrollHeight).to.be.greaterThan(html.clientHeight);
-            manager.add(bodyModal, body);
-            manager.mount(bodyModal, {});
-            expect(body.style.overflow).to.equal('hidden');
-
-            html.style.overflow = overflow;
-            await waitFor(() => expect(html.style.overflow).to.equal('hidden'));
-            expect(body.style.overflow).to.equal('hidden');
-
-            manager.remove(bodyModal);
-            expect(html.style.overflow).to.equal(overflow);
-            expect(body.style.overflow).to.equal('auto');
-          } finally {
-            manager.remove(bodyModal);
-            content.remove();
-            html.style.cssText = initialStyles.html;
-            body.style.cssText = initialStyles.body;
-            if (initialScrollLock === null) {
-              html.removeAttribute('data-base-ui-scroll-locked');
-            } else {
-              html.setAttribute('data-base-ui-scroll-locked', initialScrollLock);
-            }
-          }
-        },
-      );
-    });
-
-    it('keeps its own lock when a stylesheet lock is removed from an ancestor', () => {
-      const parent = document.createElement('div');
-      const stylesheet = document.createElement('style');
-      stylesheet.textContent = '.modal-manager-lock > div { overflow: hidden; }';
-      parent.className = 'modal-manager-lock';
-      container.style.overflow = '';
-      document.head.appendChild(stylesheet);
-      document.body.appendChild(parent);
-      parent.appendChild(container);
-
-      try {
-        expect(window.getComputedStyle(container).overflow).to.equal('hidden');
-        const modal = mountModal();
-        parent.className = '';
-        expect(window.getComputedStyle(container).overflow).to.equal('hidden');
-
-        manager.remove(modal);
-        expect(container.style.overflow).to.equal('');
-      } finally {
-        stylesheet.remove();
-        parent.remove();
-      }
-    });
-  });
-
-  describe.skipIf(isJsdom())('independent body scroll container', () => {
-    let manager: ModalManager;
-    let modal: Modal;
-    let bodyStyle: string;
-    let htmlStyle: string;
-    let content: HTMLDivElement;
-    let stylesheet: HTMLStyleElement;
-
-    beforeEach(() => {
-      manager = new ModalManager();
-      modal = getDummyModal();
-      bodyStyle = document.body.style.cssText;
-      htmlStyle = document.documentElement.style.cssText;
-      document.body.style.cssText =
-        'height: 100px; min-height: 0; width: 400px; margin: 0; padding-right: 12px; overflow: auto; transform: translateZ(0);';
-      content = document.createElement('div');
-      content.style.height = '200px';
-      document.body.appendChild(content);
-      stylesheet = document.createElement('style');
-      document.head.appendChild(stylesheet);
-    });
-
-    afterEach(() => {
-      manager.remove(modal);
-      content.remove();
-      stylesheet.remove();
-      document.body.style.cssText = bodyStyle;
-      document.documentElement.style.cssText = htmlStyle;
-    });
-
-    it('locks horizontal-only body scrolling under clipped html', () => {
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflowX = 'auto';
-      document.body.style.overflowY = 'hidden';
-      content.style.height = '50px';
-      content.style.width = '800px';
-      const initialBodyStyle = document.body.style.cssText;
-      const initialHtmlStyle = document.documentElement.style.cssText;
-      expect(document.body.scrollHeight).to.equal(document.body.clientHeight);
-      expect(document.body.scrollWidth).to.be.greaterThan(document.body.clientWidth);
-
-      manager.add(modal, document.body);
-      manager.mount(modal, {});
-
-      expect(document.body.style.overflowX).to.equal('hidden');
-      expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-
-      manager.remove(modal);
-      expect(document.body.style.cssText).to.equal(initialBodyStyle);
-      expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-    });
-
-    it('keeps a constrained body locked when its content grows after mount', async () => {
-      document.documentElement.style.overflow = 'hidden';
-      content.style.height = '50px';
-      const initialBodyStyle = document.body.style.cssText;
-      const initialHtmlStyle = document.documentElement.style.cssText;
-      expect(document.body.scrollHeight).to.equal(document.body.clientHeight);
-
-      manager.add(modal, document.body);
-      manager.mount(modal, {});
-      content.style.height = '200px';
-      expect(document.body.scrollHeight).to.be.greaterThan(document.body.clientHeight);
-
-      await waitFor(() => expect(document.body.style.overflow).to.equal('hidden'));
-      expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-
-      manager.remove(modal);
-      expect(document.body.style.cssText).to.equal(initialBodyStyle);
-      expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-    });
-
-    ['hidden auto', 'scroll'].forEach((overflow) => {
-      it(`locks html and a body that scrolls on its own under html overflow=${overflow}`, () => {
-        document.documentElement.style.overflow = overflow;
-        content.style.height = '50px';
-        const initialBodyStyle = document.body.style.cssText;
-        const initialHtmlStyle = document.documentElement.style.cssText;
-        expect(document.body.scrollHeight).to.equal(document.body.clientHeight);
-
-        manager.add(modal, document.body);
-        manager.mount(modal, {});
-        content.style.height = '200px';
-        expect(document.body.scrollHeight).to.be.greaterThan(document.body.clientHeight);
-
-        expect(document.documentElement.style.overflow).to.equal('hidden');
-        expect(document.body.style.overflow).to.equal('hidden');
-
-        manager.remove(modal);
-        expect(document.body.style.cssText).to.equal(initialBodyStyle);
-        expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-      });
-    });
-
-    it('does not take over a released html lock after the modal closes', async () => {
-      document.documentElement.style.overflow = 'hidden';
-      manager.add(modal, document.body);
-      manager.mount(modal, {});
-      expect(document.body.style.overflow).to.equal('hidden');
-
-      manager.remove(modal);
-      expect(document.body.style.overflow).to.equal('auto');
-      document.documentElement.style.overflow = 'scroll';
-      await Promise.resolve();
-
-      expect(document.documentElement.style.overflow).to.equal('scroll');
-      expect(document.body.style.overflow).to.equal('auto');
-    });
-
-    ['hidden', 'clip'].forEach((overflow) => {
-      ['inline', 'stylesheet'].forEach((source) => {
-        it(`locks body under ${source} html overflow=${overflow} and restores its styles`, () => {
-          if (source === 'inline') {
-            document.documentElement.style.overflow = overflow;
-          } else {
-            document.documentElement.style.overflow = '';
-            stylesheet.textContent = `html { overflow: ${overflow}; }`;
-          }
-          const initialBodyStyle = document.body.style.cssText;
-          const initialHtmlStyle = document.documentElement.style.cssText;
-          expect(window.getComputedStyle(document.documentElement).overflowY).to.equal(overflow);
-          expect(document.body.scrollHeight).to.be.greaterThan(document.body.clientHeight);
-
-          manager.add(modal, document.body);
-          manager.mount(modal, {});
-
-          expect(document.body.style.overflow).to.equal('hidden');
-          expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-
-          manager.remove(modal);
-          expect(document.body.style.cssText).to.equal(initialBodyStyle);
-          expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-        });
-      });
-
-      it(`takes over a released body lock under html overflow=${overflow}`, async () => {
-        document.documentElement.style.overflow = overflow;
-        const initialHtmlStyle = document.documentElement.style.cssText;
-        const initialBodyStyle = document.body.style.cssText;
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = '32px';
-
-        manager.add(modal, document.body);
-        manager.mount(modal, {});
-        expect(document.body.style.paddingRight).to.equal('32px');
-
-        document.body.style.cssText = initialBodyStyle;
-        await waitFor(() => expect(document.body.style.overflow).to.equal('hidden'));
-        expect(document.body.style.paddingRight).to.equal('12px');
-        expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-
-        manager.remove(modal);
-        expect(document.body.style.cssText).to.equal(initialBodyStyle);
-        expect(document.documentElement.style.cssText).to.equal(initialHtmlStyle);
-      });
-    });
-  });
-
   describe('multi container', () => {
     let container3: HTMLDivElement;
     let container4: HTMLDivElement;
@@ -943,6 +560,110 @@ describe('ModalManager', () => {
       expect(wrapper).toBeInaccessible();
       expect(appContent.getAttribute('aria-hidden')).to.equal(null);
       expect(portalRef).not.toBeInaccessible();
+    });
+  });
+
+  describe('scroll lock', () => {
+    let container: HTMLDivElement;
+    let sibling: HTMLDivElement;
+
+    beforeEach(() => {
+      modalManager = new ModalManager();
+      container = document.createElement('div');
+      container.style.overflow = 'scroll';
+      sibling = document.createElement('div');
+      container.appendChild(sibling);
+      document.body.appendChild(container);
+    });
+
+    afterEach(() => {
+      document.body.removeChild(container);
+    });
+
+    function countOverflowRestores() {
+      const setProperty = vi.spyOn(container.style, 'setProperty');
+      return () => setProperty.mock.calls.filter(([property]) => property === 'overflow').length;
+    }
+
+    it('locks the container without changing aria-hidden', () => {
+      const release = modalManager.lockScroll(container);
+      expect(container.style.overflow).to.equal('hidden');
+      expect(sibling).not.toBeInaccessible();
+
+      release();
+      expect(container.style.overflow).to.equal('scroll');
+    });
+
+    it('keeps the lock until the last scroll lock is released', () => {
+      const restores = countOverflowRestores();
+      const release1 = modalManager.lockScroll(container);
+      const release2 = modalManager.lockScroll(container);
+
+      release1();
+      expect(container.style.overflow).to.equal('hidden');
+
+      release2();
+      expect(container.style.overflow).to.equal('scroll');
+      expect(restores()).to.equal(1);
+    });
+
+    it('shares the lock with a modal that closes first', () => {
+      const restores = countOverflowRestores();
+      const modal = { ...getDummyModal(), modalRef: document.createElement('div') };
+      container.appendChild(modal.modalRef);
+      const release = modalManager.lockScroll(container);
+
+      modalManager.add(modal, container);
+      modalManager.mount(modal, {});
+      expect(sibling).toBeInaccessible();
+
+      modalManager.remove(modal);
+      expect(container.style.overflow).to.equal('hidden');
+      expect(sibling).not.toBeInaccessible();
+
+      release();
+      expect(container.style.overflow).to.equal('scroll');
+      expect(restores()).to.equal(1);
+    });
+
+    it('shares the lock with a modal that closes last', () => {
+      const restores = countOverflowRestores();
+      const modal = getDummyModal();
+      modalManager.add(modal, container);
+      modalManager.mount(modal, {});
+
+      const release = modalManager.lockScroll(container);
+      release();
+      expect(container.style.overflow).to.equal('hidden');
+      expect(modalManager.isTopModal(modal)).to.equal(true);
+
+      modalManager.remove(modal);
+      expect(container.style.overflow).to.equal('scroll');
+      expect(restores()).to.equal(1);
+    });
+
+    it('locks separate containers separately', () => {
+      const other = document.createElement('div');
+      other.style.overflow = 'auto';
+      document.body.appendChild(other);
+      const modal = getDummyModal();
+
+      try {
+        const release = modalManager.lockScroll(container);
+        modalManager.add(modal, other);
+        modalManager.mount(modal, {});
+        expect(container.style.overflow).to.equal('hidden');
+        expect(other.style.overflow).to.equal('hidden');
+
+        release();
+        expect(container.style.overflow).to.equal('scroll');
+        expect(other.style.overflow).to.equal('hidden');
+
+        modalManager.remove(modal);
+        expect(other.style.overflow).to.equal('auto');
+      } finally {
+        document.body.removeChild(other);
+      }
     });
   });
 });

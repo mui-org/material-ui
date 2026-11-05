@@ -2,10 +2,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import exactProp from '@mui/utils/exactProp';
+import useEventCallback from '@mui/utils/useEventCallback';
 import { useRtl } from '@mui/system/RtlProvider';
 import { DirectionProvider } from '@base-ui/react/direction-provider';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { useDefaultProps } from '../DefaultPropsProvider';
+import Menu2ModalContext from './Menu2ModalContext';
 
 /**
  * Controls a menu without rendering an element.
@@ -13,7 +15,7 @@ import { useDefaultProps } from '../DefaultPropsProvider';
  */
 export interface Menu2Props extends Pick<
   BaseMenu.Root.Props,
-  'defaultOpen' | 'disabled' | 'highlightItemOnHover' | 'loopFocus' | 'modal' | 'open'
+  'defaultOpen' | 'disabled' | 'highlightItemOnHover' | 'loopFocus' | 'open'
 > {
   /**
    * A ref to imperative actions.
@@ -27,6 +29,15 @@ export interface Menu2Props extends Pick<
    * The menu trigger and popup.
    */
   children?: React.ReactNode;
+  /**
+   * Determines if the menu enters a modal state when open.
+   * - `true`: the page scroll is locked, and the popup backdrop blocks pointer interactions outside the menu.
+   * - `false`: user interaction with the rest of the document is allowed.
+   *
+   * Nested menus ignore this prop, and menus opened by hover are never modal.
+   * @default true
+   */
+  modal?: boolean | undefined;
   /**
    * Event handler called when the menu is opened or closed.
    * @param {boolean} open The new open state.
@@ -61,12 +72,23 @@ function Menu2(inProps: Menu2Props) {
     disabled,
     highlightItemOnHover,
     loopFocus,
-    modal,
+    modal = true,
     onOpenChange,
     onOpenChangeComplete,
     open,
   } = props;
   const isRtl = useRtl();
+  // Like Base UI, use the reason of the last change that is not canceled.
+  // A menu opened by hover is not modal.
+  const [hoverOpen, setHoverOpen] = React.useState(false);
+  const handleOpenChange = useEventCallback<NonNullable<Menu2Props['onOpenChange']>>(
+    (nextOpen, eventDetails) => {
+      onOpenChange?.(nextOpen, eventDetails);
+      if (!eventDetails.isCanceled) {
+        setHoverOpen(eventDetails.reason === 'trigger-hover');
+      }
+    },
+  );
 
   return (
     <DirectionProvider direction={isRtl ? 'rtl' : 'ltr'}>
@@ -76,12 +98,16 @@ function Menu2(inProps: Menu2Props) {
         disabled={disabled}
         highlightItemOnHover={highlightItemOnHover}
         loopFocus={loopFocus}
-        modal={modal}
-        onOpenChange={onOpenChange}
+        // Material UI owns the modal state. ModalManager locks the scroll and
+        // the popup backdrop blocks outside clicks.
+        modal={false}
+        onOpenChange={handleOpenChange}
         onOpenChangeComplete={onOpenChangeComplete}
         open={open}
       >
-        {children}
+        <Menu2ModalContext.Provider value={modal && !hoverOpen}>
+          {children}
+        </Menu2ModalContext.Provider>
       </BaseMenu.Root>
     </DirectionProvider>
   );
@@ -135,10 +161,8 @@ Menu2.propTypes /* remove-proptypes */ = {
   loopFocus: PropTypes.bool,
   /**
    * Determines if the menu enters a modal state when open.
-   * - `true`: user interaction is limited to the menu: document page scroll is locked and pointer interactions on outside elements are disabled.
+   * - `true`: the page scroll is locked, and the popup backdrop blocks pointer interactions outside the menu.
    * - `false`: user interaction with the rest of the document is allowed.
-   *
-   * On touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.
    *
    * Nested menus ignore this prop, and menus opened by hover are never modal.
    * @default true

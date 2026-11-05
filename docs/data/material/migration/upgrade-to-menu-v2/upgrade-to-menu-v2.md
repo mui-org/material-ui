@@ -490,7 +490,7 @@ These changes are intentional and mostly bring the menu in line with the [WAI-AR
 - **Sibling content:** Menu hides it from screen readers with `aria-hidden`.
   Menu v2 keeps it in the accessibility tree.
 - **Backdrop:** Menu renders one by default.
-  Menu v2 uses an internal modal layer, with an optional visual backdrop slot.
+  Menu v2 renders one for modal menus.
   See [Backdrop](#backdrop).
 - **Tab while open:** Menu closes, and focus returns to the trigger.
   Menu v2 closes, and focus moves to the next element.
@@ -507,16 +507,14 @@ See [Submenu](/material-ui/react-menu2/#submenu).
 
 ### Backdrop
 
-Base UI supplies a transparent backdrop for modal interaction, except when the menu opens on hover or has `modal={false}`.
-The separate visual backdrop is absent by default.
-Set `slots.backdrop` or `slotProps.backdrop` on `MenuPopup` to render it.
-This optional layer is not hidden on hover.
+A modal menu renders a transparent backdrop that blocks outside clicks.
+It is absent when the menu opens on hover or has `modal={false}`.
+Set `slots.backdrop` or `slotProps.backdrop` on `MenuPopup` to customize it, or `slots={{ backdrop: null }}` to omit it.
 
 ### Scroll locking
 
-`modal` defaults to `true`, which locks page scrolling for a menu opened by a mouse or keyboard.
+`modal` defaults to `true`, which locks page scrolling, also for touch input.
 Menus opened by hover are non-modal.
-On touch devices, the menu blocks outside taps, but page scrolling can stay available unless the popup spans nearly the full viewport width.
 
 ### Retained menus in dialogs
 

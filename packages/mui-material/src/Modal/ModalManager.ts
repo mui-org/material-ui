@@ -29,24 +29,6 @@ function getPaddingRight(element: Element): number {
   return parseFloat(ownerWindow(element).getComputedStyle(element).paddingRight) || 0;
 }
 
-function getOverflowValues(element: HTMLElement): string[] {
-  const { overflow, overflowX, overflowY } = ownerWindow(element).getComputedStyle(element);
-  return [overflow, overflowX, overflowY];
-}
-
-function getScrollContainer(container: HTMLElement): HTMLElement {
-  if (container.parentNode instanceof DocumentFragment) {
-    return ownerDocument(container).body;
-  }
-
-  const parent = container.parentElement;
-  // Clipped html can contain an independently scrolling body.
-  return parent?.nodeName === 'HTML' &&
-    getOverflowValues(parent).some((overflow) => /auto|scroll/.test(overflow))
-    ? parent
-    : container;
-}
-
 function isAriaHiddenForbiddenOnElement(element: Element): boolean {
   // The forbidden HTML tags are the ones from ARIA specification that
   // can be children of body and can't have aria-hidden attribute.
@@ -144,11 +126,7 @@ function syncAriaHidden(containerInfo: Container): void {
   containerInfo.hiddenSet = next;
 }
 
-function handleContainer(
-  containerInfo: Container,
-  props: ManagedModalProps,
-  ownedScrollContainer?: HTMLElement,
-) {
+function handleContainer(containerInfo: Container, props: ManagedModalProps) {
   const restoreStyle: Array<{
     /**
      * CSS property name (HYPHEN CASE) to be modified.
@@ -158,65 +136,22 @@ function handleContainer(
     value: string;
   }> = [];
   const container = containerInfo.container;
-  const restore = () => {
-    restoreStyle.forEach(({ value, el, property }) => {
-      if (value) {
-        el.style.setProperty(property, value);
-      } else {
-        el.style.removeProperty(property);
-      }
-    });
-  };
 
   if (!props.disableScrollLock) {
-    const scrollContainer = getScrollContainer(container);
-    const containerDocument = ownerDocument(scrollContainer);
-    const containerWindow = containerDocument.defaultView || window;
-    // Observe both viewport elements because another overlay can change the scroller.
-    const viewportElements = [containerDocument.documentElement, containerDocument.body];
-    const lockCandidates = viewportElements.includes(scrollContainer)
-      ? viewportElements.filter((element) => element !== ownedScrollContainer)
-      : [scrollContainer];
-    const isHidden = (overflow: string) => overflow === 'hidden' || overflow === 'clip';
-    const isScrollLocked = () => {
-      // Recheck the target after another overlay restores its overflow styles.
-      const currentScrollContainer = getScrollContainer(container);
-      const bodyScrollsIndependently =
-        currentScrollContainer === containerDocument.body &&
-        getOverflowValues(containerDocument.body).some((overflow) => /auto|scroll/.test(overflow));
+    let scrollContainer: HTMLElement;
 
-      return lockCandidates.some(
-        (element) =>
-          // Body clipping does not lock a scrolling html element. Base UI's marked
-          // inset-scrollbar fallback is different: it also limits body to the viewport.
-          (element !== containerDocument.body ||
-            currentScrollContainer !== containerDocument.documentElement ||
-            containerDocument.documentElement.hasAttribute('data-base-ui-scroll-locked')) &&
-          // Html clipping does not lock a separate body scroll container.
-          (element !== containerDocument.documentElement || !bodyScrollsIndependently) &&
-          [element.style, containerWindow.getComputedStyle(element)].every(
-            (styles) =>
-              isHidden(styles.overflow) || [styles.overflowX, styles.overflowY].every(isHidden),
-          ),
-      );
-    };
-
-    // Wait for the other overlay to release its inline lock, then read the
-    // restored styles before we apply ours.
-    if (isScrollLocked()) {
-      let restoreLock: (() => void) | undefined;
-      const observer = new containerWindow.MutationObserver(() => {
-        if (!isScrollLocked()) {
-          observer.disconnect();
-          restoreLock = handleContainer(containerInfo, props, ownedScrollContainer);
-        }
-      });
-      lockCandidates.forEach((element) => observer.observe(element, { attributes: true }));
-
-      return () => {
-        observer.disconnect();
-        restoreLock?.();
-      };
+    if (container.parentNode instanceof DocumentFragment) {
+      scrollContainer = ownerDocument(container).body;
+    } else {
+      // Support html overflow-y: auto for scroll stability between pages
+      // https://css-tricks.com/snippets/css/force-vertical-scrollbar/
+      const parent = container.parentElement;
+      const containerWindow = ownerWindow(container);
+      scrollContainer =
+        parent?.nodeName === 'HTML' &&
+        containerWindow.getComputedStyle(parent).overflowY === 'scroll'
+          ? parent
+          : container;
     }
 
     if (isOverflowing(scrollContainer)) {
@@ -264,43 +199,17 @@ function handleContainer(
     );
 
     scrollContainer.style.overflow = 'hidden';
-
-    const body = containerDocument.body;
-    if (
-      scrollContainer === containerDocument.documentElement &&
-      getOverflowValues(body).some((overflow) => /auto|scroll/.test(overflow))
-    ) {
-      // Body can scroll on its own inside html, e.g. with `html, body { height: 100% }`.
-      restoreStyle.push(
-        { value: body.style.overflow, property: 'overflow', el: body },
-        { value: body.style.overflowX, property: 'overflow-x', el: body },
-        { value: body.style.overflowY, property: 'overflow-y', el: body },
-      );
-      body.style.overflow = 'hidden';
-    }
-
-    if (
-      scrollContainer === containerDocument.body &&
-      getOverflowValues(containerDocument.documentElement).some(isHidden)
-    ) {
-      // Body and html can scroll independently. Keep our body lock if another
-      // overlay releases html, and take over the restored viewport lock too.
-      let restoreViewport: (() => void) | undefined;
-      const observer = new containerWindow.MutationObserver(() => {
-        if (getScrollContainer(container) === containerDocument.documentElement) {
-          observer.disconnect();
-          restoreViewport = handleContainer(containerInfo, props, scrollContainer);
-        }
-      });
-      observer.observe(containerDocument.documentElement, { attributes: true });
-
-      return () => {
-        observer.disconnect();
-        restoreViewport?.();
-        restore();
-      };
-    }
   }
+
+  const restore = () => {
+    restoreStyle.forEach(({ value, el, property }) => {
+      if (value) {
+        el.style.setProperty(property, value);
+      } else {
+        el.style.removeProperty(property);
+      }
+    });
+  };
 
   return restore;
 }
@@ -315,6 +224,7 @@ interface Container {
   hiddenSet: Set<Element>;
   modals: Modal[];
   restore: null | (() => void);
+  scrollLocks?: number | undefined;
 }
 
 /**
@@ -388,7 +298,8 @@ export class ModalManager {
     // If that was the last modal in a container, clean up the container.
     if (containerInfo.modals.length === 0) {
       // The modal might be closed before it had the chance to be mounted in the DOM.
-      if (containerInfo.restore) {
+      // A scroll lock keeps the container locked until it is released.
+      if (containerInfo.restore && !containerInfo.scrollLocks) {
         containerInfo.restore();
       }
 
@@ -399,7 +310,9 @@ export class ModalManager {
 
       containerInfo.hiddenSet.forEach((element) => ariaHidden(element, false));
       containerInfo.hiddenSet.clear();
-      this.containers.splice(containerIndex, 1);
+      if (!containerInfo.scrollLocks) {
+        this.containers.splice(containerIndex, 1);
+      }
     } else {
       syncAriaHidden(containerInfo);
 
@@ -409,6 +322,35 @@ export class ModalManager {
     }
 
     return modalIndex;
+  }
+
+  /**
+   * Locks the container scroll without the aria-hidden work. Modals on the same
+   * container share the lock. Returns the function that releases it.
+   */
+  lockScroll(container: HTMLElement): () => void {
+    let containerInfo = this.containers.find((item) => item.container === container);
+
+    if (!containerInfo) {
+      containerInfo = { modals: [], container, restore: null, hiddenSet: new Set() };
+      this.containers.push(containerInfo);
+    }
+
+    const lockedContainer = containerInfo;
+    lockedContainer.scrollLocks = (lockedContainer.scrollLocks ?? 0) + 1;
+
+    if (!lockedContainer.restore) {
+      lockedContainer.restore = handleContainer(lockedContainer, {});
+    }
+
+    return () => {
+      lockedContainer.scrollLocks! -= 1;
+
+      if (lockedContainer.scrollLocks === 0 && lockedContainer.modals.length === 0) {
+        lockedContainer.restore!();
+        this.containers.splice(this.containers.indexOf(lockedContainer), 1);
+      }
+    };
   }
 
   isTopModal(modal: Modal): boolean {

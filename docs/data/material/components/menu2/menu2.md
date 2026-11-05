@@ -432,12 +432,12 @@ Without it, they unmount.
 
 ### Backdrop
 
-Base UI uses an internal, transparent backdrop for modal menus.
-This layer is absent when a menu opens on hover or has `modal={false}`.
+A modal menu renders a transparent backdrop inside the portal, behind the menu.
+The backdrop blocks clicks outside the menu, so the first outside click only closes the menu.
+It is absent when a menu opens on hover or has `modal={false}`.
 
-The optional visual backdrop is separate and is not rendered by default.
-Set `slots.backdrop` or `slotProps.backdrop` on `MenuPopup` to render it inside the portal, behind the menu.
-Its default styles are transparent and do not capture pointer events.
+Set `slots.backdrop` or `slotProps.backdrop` on `MenuPopup` to customize it.
+For a non-modal menu, these props render the backdrop, and it does not capture pointer events.
 To dim the page:
 
 ```jsx
@@ -446,9 +446,8 @@ To dim the page:
 </MenuPopup>
 ```
 
-Set `slots={{ backdrop: null }}` to omit this layer, including when the theme supplies backdrop slot props.
-This does not change modal behavior.
-Base UI does not hide this optional layer when the menu opens on hover.
+Set `slots={{ backdrop: null }}` to omit the backdrop, including when the theme supplies backdrop slot props.
+Outside clicks then reach the page and close the menu, and the page scroll stays locked.
 Submenus have no backdrop slot.
 
 ## Accessibility

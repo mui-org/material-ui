@@ -113,7 +113,7 @@
     },
     {
       "name": "backdrop",
-      "description": "The component used for the optional backdrop beneath the menu.\nProviding this slot or `slotProps.backdrop` renders it.\nSet to `null` to omit it, including when configured in the theme.",
+      "description": "The component used for the backdrop beneath the menu.\nA modal menu renders it to block outside clicks. Providing this slot or `slotProps.backdrop` also renders it.\nSet to `null` to omit it, including when configured in the theme. A modal menu then allows outside clicks and keeps the scroll lock.",
       "class": "MuiMenu2Popup-backdrop"
     },
     {

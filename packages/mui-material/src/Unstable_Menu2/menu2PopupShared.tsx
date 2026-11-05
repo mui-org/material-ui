@@ -3,7 +3,9 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
+import ownerDocument from '@mui/utils/ownerDocument';
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
+import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import useForkRef from '@mui/utils/useForkRef';
 import appendOwnerState from '@mui/utils/appendOwnerState';
 import isHostComponent from '@mui/utils/isHostComponent';
@@ -16,8 +18,28 @@ import type { GrowProps } from '../Grow';
 import Grow from '../Grow';
 import type { PaperProps } from '../Paper';
 import type { ListProps } from '../List';
+import { manager as modalManager } from '../Modal/useModal';
 import type { SlotProps } from './menu2Utils';
 import { Menu2SubmenuClosingState } from './Menu2SubmenuClosingContext';
+
+function Menu2ScrollLock({
+  locked,
+  popupRef,
+}: {
+  locked: boolean;
+  popupRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  useEnhancedEffect(() => {
+    if (!locked) {
+      return undefined;
+    }
+
+    // Body is the default Modal container, so a Modal on the page shares this lock.
+    return modalManager.lockScroll(ownerDocument(popupRef.current).body);
+  }, [locked, popupRef]);
+
+  return null;
+}
 
 type ExternalSlotProps<Props> = Omit<Partial<Props>, 'className' | 'render' | 'style'> & {
   className?: string | undefined;
@@ -90,9 +112,10 @@ export interface Menu2PopupSharedSlots {
    */
   positioner?: React.ElementType | undefined;
   /**
-   * The component used for the optional backdrop beneath the menu.
-   * Providing this slot or `slotProps.backdrop` renders it.
-   * Set to `null` to omit it. The default backdrop is transparent and click-through.
+   * The component used for the backdrop beneath the menu.
+   * A modal menu renders it to block outside clicks. Providing this slot or `slotProps.backdrop` also renders it.
+   * Set to `null` to omit it. A modal menu then allows outside clicks and keeps the scroll lock.
+   * The default backdrop is transparent.
    */
   backdrop?: React.ElementType | null | undefined;
   /**
@@ -204,6 +227,7 @@ export interface Menu2PopupSharedProps<OwnerState>
   classes?:
     Partial<Record<'root' | 'portal' | 'positioner' | 'backdrop' | 'list', string>> | undefined;
   ownerState: OwnerState;
+  modal?: boolean | undefined;
   onClosingChange?: ((closing: boolean) => void) | undefined;
   slots?: Menu2PopupSharedSlots | undefined;
   slotProps?: Menu2PopupSharedSlotProps<OwnerState> | undefined;
@@ -228,6 +252,7 @@ export const Menu2PopupBase = React.forwardRef(function Menu2PopupBase<OwnerStat
     className,
     classes,
     ownerState,
+    modal = false,
     onClosingChange,
     slots,
     slotProps,
@@ -267,12 +292,12 @@ export const Menu2PopupBase = React.forwardRef(function Menu2PopupBase<OwnerStat
       ?.muiSupportAuto
       ? undefined
       : transitionDuration;
-  // Base UI owns modality and outside dismissal. Slot configuration enables
-  // this optional visual layer; null overrides that configuration.
+  // A modal menu renders the backdrop to block outside clicks. Slot configuration
+  // also renders it; null overrides both.
   const BackdropSlot =
     slots?.backdrop === null
       ? null
-      : (slots?.backdrop ?? (slotProps?.backdrop ? defaultSlots.backdrop : undefined));
+      : (slots?.backdrop ?? (modal || slotProps?.backdrop ? defaultSlots.backdrop : undefined));
   const resolvedRootProps = mergeSlotProps(resolveComponentProps(slotProps?.root, ownerState), {
     sx,
   });
@@ -302,8 +327,13 @@ export const Menu2PopupBase = React.forwardRef(function Menu2PopupBase<OwnerStat
     sx: positionerSlotSx,
     ...positionerSlotOtherProps
   } = resolvedPositionerProps ?? {};
-  const { sx: backdropSlotSx, ...backdropSlotOtherProps } = resolvedBackdropProps ?? {};
-  const handleRootRef = useForkRef(ref, rootSlotRef);
+  const {
+    sx: backdropSlotSx,
+    style: backdropSlotStyle,
+    ...backdropSlotOtherProps
+  } = resolvedBackdropProps ?? {};
+  const popupRef = React.useRef<HTMLDivElement>(null);
+  const handleRootRef = useForkRef(ref, rootSlotRef, popupRef);
   const rootStyle =
     style === undefined && rootSlotStyle === undefined ? undefined : { ...style, ...rootSlotStyle };
   const positionerProps = {
@@ -371,7 +401,16 @@ export const Menu2PopupBase = React.forwardRef(function Menu2PopupBase<OwnerStat
     >
       {BackdropSlot ? (
         <BaseMenu.Backdrop
+          // With marked elements on the page, Base UI ignores presses on unmarked layers.
+          // The mark makes a press on the backdrop close the menu.
+          data-base-ui-inert={modal ? '' : undefined}
           {...backdropSlotOtherProps}
+          // A modal backdrop blocks outside clicks while the menu is open.
+          style={
+            modal
+              ? (state) => ({ pointerEvents: state.open ? 'auto' : 'none', ...backdropSlotStyle })
+              : backdropSlotStyle
+          }
           render={
             <BackdropSlot
               {...getSlotProps(
@@ -432,7 +471,10 @@ export const Menu2PopupBase = React.forwardRef(function Menu2PopupBase<OwnerStat
                 {surface}
               </Menu2SubmenuClosingState>
             ) : (
-              surface
+              <React.Fragment>
+                {surface}
+                <Menu2ScrollLock locked={modal && state.open} popupRef={popupRef} />
+              </React.Fragment>
             );
           }}
           className={clsx(classes?.root, className, rootSlotClassName)}

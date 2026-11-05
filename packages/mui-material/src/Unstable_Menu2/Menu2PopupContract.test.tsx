@@ -565,7 +565,7 @@ describe.skipIf(isJsdom())('Menu2 popup contract', () => {
             <button type="button">Options</button>
           </Menu2Trigger>
           <Menu2Popup
-            slots={{ backdrop: null, transition: null }}
+            slots={{ transition: null }}
             slotProps={{ portal: { 'data-testid': 'root', sx: { zIndex: 2000 } } }}
           >
             <Menu2Item>Alpha</Menu2Item>

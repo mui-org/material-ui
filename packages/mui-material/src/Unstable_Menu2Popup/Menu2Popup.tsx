@@ -13,6 +13,7 @@ import type {
   Menu2PopupSharedSlotProps,
 } from '../Unstable_Menu2/menu2PopupShared';
 import { Menu2PopupBase } from '../Unstable_Menu2/menu2PopupShared';
+import Menu2ModalContext from '../Unstable_Menu2/Menu2ModalContext';
 import {
   Menu2ListBase,
   Menu2PortalBase,
@@ -28,6 +29,7 @@ export interface Menu2PopupProps extends Omit<
   | 'defaultPositionerProps'
   | 'defaultSlots'
   | 'ownerState'
+  | 'modal'
   | 'onClosingChange'
   | keyof Menu2PopupPublicProps
 > {
@@ -156,9 +158,9 @@ export interface Menu2PopupSlots {
    */
   positioner?: React.ElementType | undefined;
   /**
-   * The component used for the optional backdrop beneath the menu.
-   * Providing this slot or `slotProps.backdrop` renders it.
-   * Set to `null` to omit it, including when configured in the theme.
+   * The component used for the backdrop beneath the menu.
+   * A modal menu renders it to block outside clicks. Providing this slot or `slotProps.backdrop` also renders it.
+   * Set to `null` to omit it, including when configured in the theme. A modal menu then allows outside clicks and keeps the scroll lock.
    */
   backdrop?: React.ElementType | null | undefined;
   /**
@@ -214,8 +216,7 @@ const Menu2PopupBackdrop = styled('div', {
   inset: 0,
   // The portal controls page stacking. The positioner sits above this layer.
   zIndex: 0,
-  // Transparent and click-through. Base UI handles modal interaction and
-  // outside dismissal independently of this optional visual layer.
+  // Transparent and click-through. A modal menu makes it block clicks while open.
   backgroundColor: 'transparent',
   pointerEvents: 'none',
   WebkitTapHighlightColor: 'transparent',
@@ -241,6 +242,7 @@ const Menu2Popup = React.forwardRef(function Menu2Popup(
 ) {
   const props = useDefaultProps({ props: inProps, name: 'MuiMenu2Popup' });
   const { children, ...other } = props;
+  const modal = React.useContext(Menu2ModalContext);
 
   const ownerState: Menu2PopupOwnerState = {
     side: 'bottom',
@@ -254,6 +256,7 @@ const Menu2Popup = React.forwardRef(function Menu2Popup(
       ref={ref}
       {...other}
       ownerState={ownerState}
+      modal={modal}
       classes={classes}
       defaultSlots={{
         root: Menu2PopupRoot,

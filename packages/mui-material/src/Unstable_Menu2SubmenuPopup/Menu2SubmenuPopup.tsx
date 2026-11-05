@@ -31,6 +31,7 @@ export interface Menu2SubmenuPopupProps extends Omit<
   | 'defaultPositionerProps'
   | 'defaultSlots'
   | 'ownerState'
+  | 'modal'
   | 'onClosingChange'
   | keyof Menu2PopupPublicProps
 > {

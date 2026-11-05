@@ -67,7 +67,7 @@ const useExternalDocumentation: Record<string, '*' | readonly string[]> = {
   FilledInput: useExternalPropsFromInputBase,
   IconButton: ['disableRipple'],
   Input: useExternalPropsFromInputBase,
-  Menu2: ['defaultOpen', 'disabled', 'highlightItemOnHover', 'loopFocus', 'modal', 'open'],
+  Menu2: ['defaultOpen', 'disabled', 'highlightItemOnHover', 'loopFocus', 'open'],
   Menu2Trigger: ['closeDelay', 'delay', 'disabled', 'openOnHover'],
   Menu2Submenu: ['closeParentOnEsc', 'defaultOpen', 'highlightItemOnHover', 'loopFocus', 'open'],
   MenuItem: ['dense'],

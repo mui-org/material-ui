@@ -26,7 +26,8 @@ const noop = () => {};
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
-const manager = new ModalManager();
+// Menu2 uses it for its scroll lock, so the page has one lock owner.
+export const manager = new ModalManager();
 
 function useModal(parameters: UseModalParameters): UseModalReturnValue {
   const {
