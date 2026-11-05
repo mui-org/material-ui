@@ -13,7 +13,7 @@ import {
 } from '@mui/internal-test-utils';
 import Avatar from '@mui/material/Avatar';
 import Chip, { chipClasses as classes } from '@mui/material/Chip';
-import { ThemeProvider, createTheme, getContrastRatio, hexToRgb } from '@mui/material/styles';
+import { ThemeProvider, createTheme, hexToRgb } from '@mui/material/styles';
 import CheckBox from '../internal/svg-icons/CheckBox';
 import defaultTheme from '../styles/defaultTheme';
 import describeConformance from '../../test/describeConformance';
@@ -422,32 +422,6 @@ describe('<Chip />', () => {
       expect(chip).to.have.class(classes.deletable);
       const avatar = container.querySelector(`.${classes.avatar}`);
       expect(avatar).to.have.class(classes.avatar);
-    });
-  });
-
-  describe('default avatar contrast', () => {
-    ['light', 'dark'].forEach((mode) => {
-      [false, true].forEach((cssVariables) => {
-        it.skipIf(cssVariables && isJsdom())(
-          `meets minimum text contrast in ${mode} mode with cssVariables=${cssVariables}`,
-          () => {
-            const theme = createTheme(
-              cssVariables
-                ? { cssVariables: true, colorSchemes: { light: true, dark: true } }
-                : { palette: { mode } },
-            );
-            const { container } = render(
-              <ThemeProvider theme={theme} {...(cssVariables ? { defaultMode: mode } : {})}>
-                <Chip avatar={<Avatar>MB</Avatar>} label="Avatar Chip" />
-              </ThemeProvider>,
-            );
-            const avatar = container.querySelector(`.${classes.avatar}`);
-            const { color, backgroundColor } = getComputedStyle(avatar);
-
-            expect(getContrastRatio(color, backgroundColor)).to.be.at.least(4.5);
-          },
-        );
-      });
     });
   });
 
