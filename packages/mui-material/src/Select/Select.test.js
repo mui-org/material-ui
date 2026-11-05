@@ -282,7 +282,11 @@ describe('<Select />', () => {
       );
 
       const trigger = screen.getByRole('combobox');
-      await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+      await user.pointer({
+        keys: '[MouseLeft>]',
+        target: trigger,
+        coords: { clientX: 20, clientY: 20 },
+      });
 
       await act(async () => {
         // Well past the 200ms drag window; a tight margin flakes on slow CI.
@@ -291,11 +295,44 @@ describe('<Select />', () => {
       await user.pointer({
         keys: '[/MouseLeft]',
         target: screen.getByRole('option', { name: 'Twenty' }),
+        coords: { clientX: 20, clientY: 60 },
       });
 
       expect(trigger).to.have.text('Twenty');
       expect(onChange.callCount).to.equal(1);
       expect(screen.queryByRole('listbox', { hidden: false })).to.equal(null);
+    });
+
+    it('does not select an option when the opening mouseup lands on it after the drag delay without moving', async () => {
+      const onChange = spy();
+      const { user } = render(
+        <Select defaultValue={10} onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>,
+      );
+
+      const trigger = screen.getByRole('combobox');
+      await user.pointer({
+        keys: '[MouseLeft>]',
+        target: trigger,
+        coords: { clientX: 20, clientY: 20 },
+      });
+
+      await act(async () => {
+        // Past the 200ms drag window, like a touchpad tap whose mouseup is delayed.
+        await sleep(400);
+      });
+      await user.pointer({
+        keys: '[/MouseLeft]',
+        target: screen.getByRole('option', { name: 'Twenty' }),
+        coords: { clientX: 20, clientY: 20 },
+      });
+
+      expect(trigger).to.have.text('Ten');
+      expect(onChange.callCount).to.equal(0);
+      expect(screen.queryByRole('listbox', { hidden: false })).not.to.equal(null);
     });
 
     it('does not double-toggle a multiple select option on a regular click', async () => {
@@ -332,7 +369,11 @@ describe('<Select />', () => {
       );
 
       const trigger = screen.getByRole('combobox');
-      await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+      await user.pointer({
+        keys: '[MouseLeft>]',
+        target: trigger,
+        coords: { clientX: 20, clientY: 20 },
+      });
 
       await act(async () => {
         // Well past the 200ms drag window; a tight margin flakes on slow CI.
@@ -341,6 +382,7 @@ describe('<Select />', () => {
       await user.pointer({
         keys: '[/MouseLeft]',
         target: screen.getByRole('option', { name: 'Twenty' }),
+        coords: { clientX: 20, clientY: 60 },
       });
 
       expect(trigger).to.have.text('Ten, Twenty');

@@ -30,6 +30,9 @@ const OPENING_MOUSE_UP_BOUNDARY_OFFSET = 2;
 // The initial mouseup may land on an item when the menu opens over the trigger.
 const SELECTED_MOUSE_UP_DELAY = 400;
 const UNSELECTED_MOUSE_UP_DELAY = 200;
+// A release that didn't move away from the press, like a touchpad tap whose mouseup is
+// delayed, shouldn't select an unselected item that opened under the pointer.
+const UNSELECTED_MOUSE_UP_DISTANCE = 4;
 const TYPEAHEAD_RESET_MS = 750;
 const SPACE = ' ';
 const ARROW_UP = 'ArrowUp';
@@ -202,6 +205,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
   const hasSelectedItemInListRef = React.useRef(false);
   const openingMouseUpListenerCleanupRef = React.useRef(null);
   const didPointerDownOnItemRef = React.useRef(false);
+  const openingMouseDownRef = React.useRef(null);
   const selectionRef = React.useRef({
     allowSelectedMouseUp: false,
     allowUnselectedMouseUp: false,
@@ -266,6 +270,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
   const resetMouseUpSelection = React.useCallback(() => {
     clearSelectionTimers();
     didPointerDownOnItemRef.current = false;
+    openingMouseDownRef.current = null;
     selectionRef.current = {
       allowSelectedMouseUp: false,
       allowUnselectedMouseUp: false,
@@ -424,6 +429,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
     const doc = ownerDocument(event.currentTarget);
 
     scheduleMouseUpSelection();
+    openingMouseDownRef.current = { clientX: event.clientX, clientY: event.clientY };
     clearOpeningMouseUpListener();
 
     const handleMouseUp = (mouseEvent) => {
@@ -541,6 +547,16 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
     const disallowUnselectedMouseUp = !selectionRef.current.allowUnselectedMouseUp && !selected;
 
     if (disallowSelectedMouseUp || disallowUnselectedMouseUp) {
+      return;
+    }
+
+    const mouseDown = openingMouseDownRef.current;
+    if (
+      !selected &&
+      (!mouseDown ||
+        (Math.abs(event.clientX - mouseDown.clientX) <= UNSELECTED_MOUSE_UP_DISTANCE &&
+          Math.abs(event.clientY - mouseDown.clientY) <= UNSELECTED_MOUSE_UP_DISTANCE))
+    ) {
       return;
     }
 
