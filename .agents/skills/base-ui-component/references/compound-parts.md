@@ -39,6 +39,7 @@ return (
 ## Trigger
 
 - `render` is required and has no default. Forward it to the Base UI trigger unchanged.
+- Declare `children?: React.ReactNode | undefined` with the JSDoc `@ignore`, so the API page leaves it out, and pass it as the Base UI trigger's JSX children. When both the `render` element and the trigger have children, the `render` element's children win, because Base UI merges the element's own props last. That is why the docs show only the `render` form.
 - Pick only the props the Base UI trigger declares (for example `delay`, `closeDelay`, `handle`, `payload`, and `disabled`, `openOnHover`, `nativeButton` where they exist), plus `id` when the root has a `triggerId` prop. Other attributes go on the `render` element.
 - The trigger has no Material styles. Its theme entry supports `defaultProps` only.
 

@@ -9,6 +9,10 @@ export interface PreviewCardTriggerProps extends Pick<
   'closeDelay' | 'delay' | 'payload'
 > {
   /**
+   * @ignore
+   */
+  children?: React.ReactNode | undefined;
+  /**
    * A handle that connects the trigger with a `PreviewCard` rendered elsewhere.
    * Create one with `createPreviewCardHandle()`.
    */
@@ -40,7 +44,7 @@ const PreviewCardTrigger = React.forwardRef(function PreviewCardTrigger(
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   const props = useDefaultProps({ props: inProps, name: 'MuiPreviewCardTrigger' });
-  const { closeDelay, delay, handle, id, payload, render } = props;
+  const { children, closeDelay, delay, handle, id, payload, render } = props;
 
   return (
     <BasePreviewCard.Trigger
@@ -51,7 +55,9 @@ const PreviewCardTrigger = React.forwardRef(function PreviewCardTrigger(
       id={id}
       payload={payload}
       render={render}
-    />
+    >
+      {children}
+    </BasePreviewCard.Trigger>
   );
 });
 
@@ -60,6 +66,10 @@ PreviewCardTrigger.propTypes /* remove-proptypes */ = {
   // │ These PropTypes are generated from the TypeScript type definitions. │
   // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
   // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * @ignore
+   */
+  children: PropTypes.node,
   /**
    * How long to wait before closing the preview card. Specified in milliseconds.
    * @default 300

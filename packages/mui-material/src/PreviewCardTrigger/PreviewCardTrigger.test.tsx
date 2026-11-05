@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { spy } from 'sinon';
 import { act, createRenderer, fireEvent, screen, waitFor } from '@mui/internal-test-utils';
+import Link from '@mui/material/Link';
 import PreviewCard from '@mui/material/PreviewCard';
 import PreviewCardTrigger, {
   PreviewCardTriggerDataAttributes,
@@ -107,5 +108,25 @@ describe('<PreviewCardTrigger />', () => {
       </PreviewCard>,
     );
     expect(screen.getByText('Link')).to.have.attribute('id', 'trigger-id');
+  });
+
+  it('renders its children inside the render element', async () => {
+    await render(
+      <PreviewCard>
+        <PreviewCardTrigger render={<Link href="#" data-testid="trigger" />}>
+          Link
+        </PreviewCardTrigger>
+      </PreviewCard>,
+    );
+    expect(screen.getByTestId('trigger')).to.have.text('Link');
+  });
+
+  it('keeps the render element children when both have children', async () => {
+    await render(
+      <PreviewCard>
+        <PreviewCardTrigger render={<a href="#">From render</a>}>From trigger</PreviewCardTrigger>
+      </PreviewCard>,
+    );
+    expect(screen.getByRole('link')).to.have.text('From render');
   });
 });

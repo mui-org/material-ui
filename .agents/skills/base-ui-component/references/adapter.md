@@ -100,7 +100,7 @@ export interface PreviewCardPopupOwnerState extends PreviewCardPopupProps {
 }
 ```
 
-- A part that renders an element accepts the HTML attributes of that element (`Omit<React.HTMLAttributes<…>, 'children' | 'color'>`), like `Popover` and `Paper`. A trigger accepts only its picked props; users put attributes on the `render` element.
+- A part that renders an element accepts the HTML attributes of that element (`Omit<React.HTMLAttributes<…>, 'children' | 'color'>`), like `Popover` and `Paper`. A trigger accepts only its picked props plus `children`; users put attributes on the `render` element.
 - Behavior props come from `Pick<Base….Props, …>` or indexed access (`BaseNumberField.Root.Props['min']`). Write each picked name out. A new upstream prop then reaches neither our types nor the DOM until someone adds it on purpose.
 - Pick behavior props only. ARIA and HTML props that Base UI computes (`aria-valuetext`, `id`) come through the HTML attributes, so they override Base UI only when the user sets them.
 - A picked prop whose default you change (`sideOffset` above) leaves `Pick` and is redeclared with indexed access and its own JSDoc `@default`. `pnpm docs:api` fails when the JSDoc default and the runtime default disagree.

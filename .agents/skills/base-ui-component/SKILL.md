@@ -18,7 +18,7 @@ A Base UI successor to an existing component (Menu v2 replacing Menu) ships unde
 
 These rules were decided by the Material UI team on 2026-11-04. Apply every one of them.
 
-1. **`render`, not `children` or `component`.** Parts that change their rendered element take a public `render` prop. A trigger requires `render`, because users choose the styled trigger they want (`<PreviewCardTrigger render={<Button>Open</Button>} />`). No part accepts `component`. Parts keep `slots.root`.
+1. **`render`, not `component`.** Parts that change their rendered element take a public `render` prop. A trigger requires `render`, because users choose the styled trigger they want (`<PreviewCardTrigger render={<Button>Open</Button>} />`). A trigger also passes `children` through to Base UI, which places them inside the `render` element; blocking them takes more code than it saves. Keep trigger `children` out of the docs, demos, and API page. No part accepts `component`. Parts keep `slots.root`.
 2. **Open parts.** When users assemble the component (a root, a trigger, a popup, items), each piece is its own public part. One public part may wrap several Base UI parts for ease of use, as a popup wraps Portal, Positioner, and Popup. `slots` and `slotProps` reach each wrapped part.
 3. **Flat names.** Export PascalCase parts (`PreviewCardTrigger`). There is no namespace object (`PreviewCard.Trigger`).
 4. **Base UI names for behavior.** Props for logic and event handlers keep Base UI names and signatures (`onOpenChange(open, eventDetails)`, `side`, `align`, `delay`), selected from Base UI types with `Pick`. Presentation props keep Material UI names (`size`, `color`, `variant`, `elevation`, `disableRipple`).

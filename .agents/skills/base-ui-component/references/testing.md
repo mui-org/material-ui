@@ -55,6 +55,7 @@ jsdom runs no CSS animations, so a closing popup unmounts at once; in Chromium t
 For each part with a public `render` prop:
 
 - A trigger renders the user's element with Base UI's attributes and handlers, the user's handlers still run, and opening works.
+- A trigger's `children` render inside the `render` element, and the `render` element's own children win when both are set.
 - A styled part rendered with `render={<section />}` is a `<section>` that keeps its own root class, the classes of its Material base (`MuiPaper-root`, `MuiPaper-elevation8`), its theme styles, and its Base UI behavior and data attributes. No Material prop such as `elevation` appears as a DOM attribute.
 - A render function receives the Base UI state (`state.open`, `state.side`).
 - The user's `render` element's own children replace the part's children, as Base UI defines.
