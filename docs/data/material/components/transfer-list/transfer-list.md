@@ -1,15 +1,20 @@
 ---
 productId: material-ui
-title: Transfer list React component
-components: List, ListItem, Checkbox, Switch
+title: React Transfer List composition example
+components: MenuList, MenuItem, ListItemIcon, ListItemText, Checkbox, Button
 githubLabel: 'scope: transfer list'
 ---
 
 # Transfer List
 
-<p class="description">A Transfer List (or "shuttle") enables the user to move one or more list items between lists.</p>
+<p class="description">A transfer list (or "shuttle") lets users move items between lists. Material UI has no Transfer List component; these demos build one by composition.</p>
 
 {{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
+
+:::info
+Transfer lists aren't part of the [Material Design](https://m2.material.io/) guidelines, and `@mui/material` doesn't export a `TransferList` component.
+The demos below are built with [Menu List](/material-ui/react-menu/#composition-with-menu-list), [Button](/material-ui/react-button/), and [Checkbox](/material-ui/react-checkbox/). Copy them into your project and adapt them as needed.
+:::
 
 ## Basic transfer list
 
@@ -25,13 +30,9 @@ This example exchanges the "move all" buttons for a "select all / select none" c
 
 ## Limitations
 
-The component comes with a couple of limitations:
-
-- It only works on desktop.
-  If you have a limited amount of options to select, prefer the [Autocomplete](/material-ui/react-autocomplete/#multiple-values) component.
-  If mobile support is important for you, have a look at [#27579](https://github.com/mui/material-ui/issues/27579).
-- There are no high-level components exported from npm. The demos are based on composition.
-  If this is important for you, have a look at [#27579](https://github.com/mui/material-ui/issues/27579).
+These demos only work well on desktop.
+If you have a limited amount of options to select, prefer the [Autocomplete](/material-ui/react-autocomplete/#multiple-values) component.
+If mobile support is important for you, have a look at [#27579](https://github.com/mui/material-ui/issues/27579).
 
 ## Accessibility
 
