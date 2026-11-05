@@ -141,22 +141,21 @@ urgent docs updates).
 - `next`: `https://next.mui.com/`
 - `v*.x`: `https://v*.mui.com/`
 
-### Using the script
+### Using the workflow
 
-`scripts/deployDocsCherryPicks.mjs` automates the steps below for merged PRs:
+The [Deploy docs cherry-picks](https://github.com/mui/material-ui/actions/workflows/deploy-docs-picks.yml) workflow deploys merged PRs without deploying everything else on the source branch.
 
-```bash
-pnpm docs:deploy:cherry-picks        # deploys to latest
-pnpm docs:deploy:cherry-picks next   # deploys to another docs branch
-```
+1. Choose "Run workflow" and fill in:
 
-1. Paste the PR numbers or URLs, one per line, in any order. Finish with an empty line. The script cherry-picks them in merge order.
-2. The script resolves the source branch from the `deploy` script in each branch's `docs/package.json` (for `latest` it is `v9.x`).
-   Every PR must be merged into that branch. For a change merged into `master`, use its backport PR.
-3. It cherry-picks the merge commits onto `material-ui-docs/<branch>` in a temporary worktree, so your checkout is untouched.
-4. Confirm the prompt to push. Answer `N` to abort without pushing. After a push it prints the Netlify deploys URL to monitor the build.
+   > - **Merged PR numbers or URLs:** separated by spaces, commas or newlines, in any order. They are cherry-picked in merge order.
+   > - **material-ui-docs branch:** defaults to `latest` (https://mui.com/).
 
-You may be required to sign in to Github if running the script for the first time.
+2. The `prepare` job resolves the source branch from the `deploy` script in each branch's `docs/package.json` (for `latest` it is `v9.x`). Every PR must be merged into that branch. For a change merged into `master`, use its backport PR.
+3. It cherry-picks the merge commits onto `material-ui-docs/<branch>`.
+4. On a conflict, a Claude step resolves it, keeping the docs branch's content. The job then checks that the tree is clean, the sequence is finished and no conflict markers remain. The job summary lists the commits and the diff stat; review it.
+5. The `push` job pushes the result to `material-ui-docs/<branch>` without force. It fails if the docs branch moved in the meantime. The job summary links to the Netlify deploys page.
+
+The push uses the `DOCS_DEPLOY_TOKEN` secret, a token with Contents write on `mui/material-ui-docs`. The Claude step runs in a job that never sees it.
 
 ### Manually
 
