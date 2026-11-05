@@ -8,7 +8,6 @@ import type { Theme } from '@mui/material/styles';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2Item from '@mui/material/Unstable_Menu2Item';
-import Menu2LinkItem from '@mui/material/Unstable_Menu2LinkItem';
 import Menu2CheckboxItem from '@mui/material/Unstable_Menu2CheckboxItem';
 import Menu2RadioGroup from '@mui/material/Unstable_Menu2RadioGroup';
 import Menu2RadioItem from '@mui/material/Unstable_Menu2RadioItem';
@@ -26,7 +25,6 @@ interface StylingProps {
 }
 
 const parts: Record<string, (props: StylingProps) => React.ReactNode> = {
-  Menu2LinkItem: (props) => <Menu2LinkItem {...props}>Link</Menu2LinkItem>,
   Menu2CheckboxItem: (props) => <Menu2CheckboxItem {...props}>Checkbox</Menu2CheckboxItem>,
   Menu2RadioItem: (props) => (
     <Menu2RadioGroup>

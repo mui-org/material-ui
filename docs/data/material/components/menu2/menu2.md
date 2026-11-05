@@ -191,6 +191,17 @@ Use `MenuSeparator` between groups.
 A link item doesn't close the menu on click by default.
 Set `closeOnClick` to close it, for example with client-side routing.
 
+Use `render` for a router link that forwards props, ref, and children to an anchor:
+
+```jsx
+<MenuLinkItem render={<RouterLink to="/projects" />} closeOnClick>
+  Projects
+</MenuLinkItem>
+```
+
+`MenuLinkItem` follows the same [render contract as MenuItem](#item), including Material styles and ripple.
+Its render function receives anchor props and the item state.
+
 :::warning
 Unlike a classic `MenuItem` with `href`, `MenuLinkItem` does not support `disabled`.
 :::

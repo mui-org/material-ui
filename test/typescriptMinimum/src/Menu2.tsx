@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2CheckboxItem from '@mui/material/Unstable_Menu2CheckboxItem';
 import Menu2Group from '@mui/material/Unstable_Menu2Group';
@@ -53,7 +54,7 @@ export default function Menu2Consumer() {
         <Menu2Group>
           <Menu2GroupLabel>Projects</Menu2GroupLabel>
           <Menu2Item>Open project</Menu2Item>
-          <Menu2LinkItem href="/projects" ref={React.createRef<HTMLAnchorElement>()}>
+          <Menu2LinkItem href="/projects" ref={React.createRef<HTMLElement>()}>
             All projects
           </Menu2LinkItem>
           <Menu2CheckboxItem
@@ -172,6 +173,75 @@ const CustomButton = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
 <Menu2Item render="li" />;
 // @ts-expect-error Omit render to use the default element.
 <Menu2Item render={null} />;
+
+<Menu2LinkItem
+  href="/projects"
+  target="_blank"
+  rel="noopener"
+  render={undefined}
+  onClick={(event) => {
+    event.currentTarget satisfies HTMLAnchorElement;
+  }}
+  ref={(node) => {
+    node satisfies HTMLElement | null;
+    // @ts-expect-error The root ref does not promise a specific HTML element.
+    node satisfies HTMLAnchorElement | null;
+  }}
+/>;
+<Menu2LinkItem
+  render={<a href="/projects" aria-label="Projects" ref={React.createRef<HTMLAnchorElement>()} />}
+/>;
+<Menu2LinkItem
+  href="/projects"
+  render={(props, state) => {
+    props.href satisfies string | undefined;
+    props.target satisfies React.HTMLAttributeAnchorTarget | undefined;
+    state.highlighted satisfies boolean;
+    state.disabled satisfies boolean;
+    state.dense satisfies boolean;
+    state.disableGutters satisfies boolean;
+    state.divider satisfies boolean;
+    // @ts-expect-error Highlighted is a boolean.
+    state.highlighted satisfies string;
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color satisfies string | undefined;
+    return <Link {...props} underline={state.highlighted ? 'always' : 'none'} />;
+  }}
+>
+  Projects
+</Menu2LinkItem>;
+
+interface RouterLinkProps extends Omit<React.ComponentPropsWithoutRef<'a'>, 'href'> {
+  to: string;
+}
+const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function RouterLink(
+  { to, ...props },
+  ref,
+) {
+  return (
+    <a {...props} href={to} ref={ref}>
+      {props.children}
+    </a>
+  );
+});
+<Menu2LinkItem render={<RouterLink to="/projects" ref={React.createRef<HTMLAnchorElement>()} />} />;
+<Menu2LinkItem render={(props) => <RouterLink {...props} to="/projects" />} />;
+// @ts-expect-error Router props belong to the render element.
+<Menu2LinkItem to="/projects" render={<RouterLink to="/projects" />} />;
+// @ts-expect-error The router link requires its own destination.
+<Menu2LinkItem render={<RouterLink />} />;
+// @ts-expect-error Use render to select the link item root.
+<Menu2LinkItem component="a" />;
+// @ts-expect-error Use render instead of the root slot.
+<Menu2LinkItem slots={{ root: 'a' }} />;
+// @ts-expect-error Put root props on the link item or its render element.
+<Menu2LinkItem slotProps={{ root: { title: 'Projects' } }} />;
+// @ts-expect-error Link items do not support disabled.
+<Menu2LinkItem disabled />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2LinkItem render="a" />;
+// @ts-expect-error Omit render to use the default anchor.
+<Menu2LinkItem render={null} />;
 
 <Menu2Trigger render={<Button />}>Project actions</Menu2Trigger>;
 

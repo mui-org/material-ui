@@ -2,6 +2,7 @@ import * as React from 'react';
 import { expectType } from '@mui/types';
 import type { Menu as BaseMenu } from '@base-ui/react/menu';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import type { Menu2Props } from '@mui/material/Unstable_Menu2';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2Trigger from '@mui/material/Unstable_Menu2Trigger';
@@ -185,13 +186,15 @@ function Menu2Composition() {
           </Menu2Item>
           <Menu2LinkItem
             href="/profile"
-            slotProps={{
-              root: (ownerState) => {
-                expectType<boolean, typeof ownerState.highlighted>(ownerState.highlighted);
-                // @ts-expect-error Visual selection is not part of the link item state.
-                expectType<boolean, typeof ownerState.selected>(ownerState.selected);
-                return {};
-              },
+            render={(props, state) => {
+              expectType<boolean, typeof state.highlighted>(state.highlighted);
+              expectType<boolean, typeof state.disabled>(state.disabled);
+              expectType<boolean, typeof state.dense>(state.dense);
+              expectType<boolean, typeof state.disableGutters>(state.disableGutters);
+              expectType<boolean, typeof state.divider>(state.divider);
+              // @ts-expect-error Visual selection is not part of the link item state.
+              state.selected;
+              return <a {...props} data-active={state.highlighted} />;
             }}
           >
             Profile
@@ -789,7 +792,7 @@ const controlledPopupProps: Menu2PopupProps = {
   </Menu2Popup>
 </Menu2>;
 
-// Menu2Item uses render for a custom root. Other parts still support component.
+// Item and LinkItem use render for a custom root. Other parts still support component.
 <Menu2>
   <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
@@ -802,7 +805,7 @@ const controlledPopupProps: Menu2PopupProps = {
     </Menu2Item>
     <Menu2LinkItem
       href="/profile"
-      ref={(node) => expectType<HTMLAnchorElement | null, typeof node>(node)}
+      ref={(node) => expectType<HTMLElement | null, typeof node>(node)}
     >
       Link
     </Menu2LinkItem>
@@ -877,3 +880,69 @@ const CustomItemRoot = React.forwardRef<HTMLDivElement, CustomItemRootProps>(
 <Menu2Item render="li" />;
 // @ts-expect-error Omit render to use the default element.
 <Menu2Item render={null} />;
+
+<Menu2LinkItem render={undefined} href="/profile" target="_blank" rel="noopener" />;
+<Menu2LinkItem
+  render={
+    <a
+      href="/profile"
+      aria-label="Profile"
+      ref={(node) => expectType<HTMLAnchorElement | null, typeof node>(node)}
+      onClick={(event) => {
+        expectType<EventTarget & HTMLAnchorElement, typeof event.currentTarget>(
+          event.currentTarget,
+        );
+      }}
+    />
+  }
+>
+  Profile
+</Menu2LinkItem>;
+<Menu2LinkItem
+  href="/profile"
+  onClick={(event) => {
+    expectType<EventTarget & HTMLAnchorElement, typeof event.currentTarget>(event.currentTarget);
+  }}
+  render={(props, state) => {
+    expectType<string | undefined, typeof props.href>(props.href);
+    expectType<React.HTMLAttributeAnchorTarget | undefined, typeof props.target>(props.target);
+    expectType<boolean, typeof state.highlighted>(state.highlighted);
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color;
+    return <Link {...props} underline={state.highlighted ? 'always' : 'none'} />;
+  }}
+>
+  Profile
+</Menu2LinkItem>;
+
+interface RouterLinkProps extends Omit<React.ComponentPropsWithoutRef<'a'>, 'href'> {
+  to: string;
+}
+const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function RouterLink(
+  { to, ...props },
+  ref,
+) {
+  return (
+    <a {...props} href={to} ref={ref}>
+      {props.children}
+    </a>
+  );
+});
+<Menu2LinkItem render={<RouterLink to="/profile" ref={React.createRef<HTMLAnchorElement>()} />} />;
+<Menu2LinkItem render={(props) => <RouterLink {...props} to="/profile" />} />;
+// @ts-expect-error Router props belong to the render element.
+<Menu2LinkItem to="/profile" render={<RouterLink to="/profile" />} />;
+// @ts-expect-error The router link requires its own destination.
+<Menu2LinkItem render={<RouterLink />} />;
+// @ts-expect-error Use render to select the link item root.
+<Menu2LinkItem component="a" />;
+// @ts-expect-error Use render instead of the root slot.
+<Menu2LinkItem slots={{ root: 'a' }} />;
+// @ts-expect-error Put root props on the link item or its render element.
+<Menu2LinkItem slotProps={{ root: { title: 'Profile' } }} />;
+// @ts-expect-error Link items do not support disabled.
+<Menu2LinkItem disabled />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2LinkItem render="a" />;
+// @ts-expect-error Omit render to use the default anchor.
+<Menu2LinkItem render={null} />;

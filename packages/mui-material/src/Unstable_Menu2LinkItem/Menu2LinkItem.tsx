@@ -1,14 +1,14 @@
 'use client';
 import * as React from 'react';
-import type { OverridableComponent, OverrideProps } from '@mui/types';
 import PropTypes from 'prop-types';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
+import type { ComponentRenderFn } from '@base-ui/react/types';
 import ListContext from '../List/ListContext';
 import { styled } from '../zero-styled';
 import Menu2ItemBase from '../internal/Menu2ItemBase';
+import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import { menuItemOverridesResolver } from '../MenuItem/menuItemStyles';
-import type { Menu2RootSlotProps } from '../Unstable_Menu2/menu2Utils';
 import type {
   Menu2ItemBaseOwnerState,
   Menu2LinkItemBaseProps,
@@ -29,20 +29,11 @@ export interface Menu2LinkItemOwnerState extends Menu2ItemBaseOwnerState {
   highlighted: boolean;
 }
 
-export interface Menu2LinkItemSlots {
-  /**
-   * The component that renders the root.
-   * @default 'a'
-   */
-  root?: React.ElementType | undefined;
-}
-
-export interface Menu2LinkItemSlotProps extends Menu2RootSlotProps<Menu2LinkItemOwnerState> {}
-
-export interface Menu2LinkItemOwnProps
+export interface Menu2LinkItemProps
   extends
+    Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'color'>,
     Menu2LinkItemBaseProps,
-    Menu2ItemVisualProps<Menu2LinkItemClasses, Menu2LinkItemSlots, Menu2LinkItemSlotProps> {
+    Omit<Menu2ItemVisualProps<Menu2LinkItemClasses>, 'slots' | 'slotProps'> {
   /**
    * The content of the component.
    */
@@ -70,28 +61,19 @@ export interface Menu2LinkItemOwnProps
    */
   disableRipple?: boolean | undefined;
   /**
+   * The element to render, or a function that returns it.
+   * Forward the props, ref, and children to an anchor element to preserve link behavior, Material styles, and ripple.
+   * Put content in the children prop of Menu2LinkItem. Replacing the supplied children can remove the ripple.
+   */
+  render?:
+    | React.ReactElement
+    | ComponentRenderFn<Omit<React.ComponentPropsWithRef<'a'>, 'color'>, Menu2LinkItemOwnerState>
+    | undefined;
+  /**
    * Styles applied to the root element.
    */
   style?: React.CSSProperties | undefined;
 }
-
-export interface Menu2LinkItemTypeMap<
-  AdditionalProps = {},
-  RootComponent extends React.ElementType = 'a',
-> {
-  props: AdditionalProps & Menu2LinkItemOwnProps;
-  defaultComponent: RootComponent;
-}
-
-export type Menu2LinkItemProps<
-  RootComponent extends React.ElementType = Menu2LinkItemTypeMap['defaultComponent'],
-  AdditionalProps = {},
-> = OverrideProps<Menu2LinkItemTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  /**
-   * The component used for the root node.
-   */
-  component?: React.ElementType | undefined;
-};
 
 const Menu2LinkItemRoot = styled(Menu2ItemBase, {
   name: 'MuiMenu2LinkItem',
@@ -111,7 +93,7 @@ const Menu2LinkItemRoot = styled(Menu2ItemBase, {
  */
 const Menu2LinkItem = React.forwardRef(function Menu2LinkItem(
   inProps: Menu2LinkItemProps,
-  ref: React.ForwardedRef<Element>,
+  ref: React.ForwardedRef<HTMLElement>,
 ) {
   const props = useDefaultProps({
     props: inProps,
@@ -121,13 +103,11 @@ const Menu2LinkItem = React.forwardRef(function Menu2LinkItem(
   const {
     className,
     classes: classesProp,
-    component,
     dense: denseProp = false,
     disableGutters = false,
     disableRipple,
     divider = false,
-    slotProps,
-    slots,
+    render: renderProp,
     sx,
     style,
     ...other
@@ -159,10 +139,16 @@ const Menu2LinkItem = React.forwardRef(function Menu2LinkItem(
             ownerState={{ ...ownerState, ...state }}
             elementType={Menu2LinkItemRoot}
             defaultComponent="a"
-            component={component}
+            component={renderProp ? Menu2ItemRenderRoot : undefined}
             disableRipple={disableRipple}
-            slotProps={slotProps}
-            slots={slots}
+            internalRender={renderProp}
+            internalRenderState={{
+              dense,
+              disabled: false,
+              disableGutters,
+              divider,
+              highlighted: state.highlighted,
+            }}
             sx={sx}
           />
         )}
@@ -172,7 +158,7 @@ const Menu2LinkItem = React.forwardRef(function Menu2LinkItem(
       />
     </ListContext.Provider>
   );
-}) as OverridableComponent<Menu2LinkItemTypeMap>;
+});
 
 Menu2LinkItem.propTypes /* remove-proptypes */ = {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
@@ -196,11 +182,6 @@ Menu2LinkItem.propTypes /* remove-proptypes */ = {
    * @default false
    */
   closeOnClick: PropTypes.bool,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
   /**
    * If `true`, compact vertical padding designed for keyboard and mouse input is used.
    * @default false
@@ -230,17 +211,11 @@ Menu2LinkItem.propTypes /* remove-proptypes */ = {
    */
   label: PropTypes.string,
   /**
-   * The props used for each slot inside.
+   * The element to render, or a function that returns it.
+   * Forward the props, ref, and children to an anchor element to preserve link behavior, Material styles, and ripple.
+   * Put content in the children prop of Menu2LinkItem. Replacing the supplied children can remove the ripple.
    */
-  slotProps: PropTypes.shape({
-    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  }),
-  /**
-   * The components used for each slot inside.
-   */
-  slots: PropTypes.shape({
-    root: PropTypes.elementType,
-  }),
+  render: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   /**
    * Styles applied to the root element.
    */

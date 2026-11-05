@@ -321,7 +321,7 @@ Separators, groups, links, and checked items become dedicated parts:
 - `<Divider />` between items becomes `MenuSeparator`, which controls its own margins.
 - `ListSubheader` becomes `MenuGroup` with `MenuGroupLabel`, which adds the correct ARIA relationship.
 - Items with `href`, `LinkComponent`, or `component="a"` become `MenuLinkItem`, which renders a real `<a role="menuitem">`.
-  For a router link, pass the link component to its `component` prop.
+  For a router link, use `render={<RouterLink to="/profile" />}` and forward props, ref, and children to an anchor.
 - Items with `role="menuitemcheckbox"` become `MenuCheckboxItem`.
   Its `checked` or `defaultChecked` prop replaces `selected`, and it reports the new state through `onCheckedChange(checked, eventDetails)`.
 - Items with `role="menuitemradio"` become `MenuRadioItem` inside a `MenuRadioGroup`.
@@ -334,15 +334,15 @@ Its target can be a descendant of the item.
 `MenuCheckboxItem`, `MenuRadioItem`, and `MenuLinkItem` keep the menu open by default.
 Set `closeOnClick` on these items to close the menu after selection.
 
-On `MenuItem`, replace `component` with `render`, and put element-specific props on the supplied element:
+On `MenuItem` and `MenuLinkItem`, replace `component` with `render`, and put custom component props on the supplied element:
 
 ```diff
 -<MenuItem component="li">File</MenuItem>
 +<MenuItem render={<li />}>File</MenuItem>
 ```
 
-`MenuItem` has no root slot API.
-Put root attributes on `MenuItem` or its render element instead of `slotProps.root`.
+Neither part has a root slot API.
+Put root attributes on the item or its render element instead of `slotProps.root`.
 A render function also receives the typed item state.
 Forward its supplied props, ref, and children to the root element to preserve Material styles and ripple.
 See [Item customization](/material-ui/react-menu2/#item).

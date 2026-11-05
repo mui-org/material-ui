@@ -34,7 +34,14 @@ const cases = [
   {
     name: 'MuiMenu2LinkItem',
     item: (
-      <Menu2LinkItem href="#target" slotProps={slotProps}>
+      <Menu2LinkItem
+        href="#target"
+        render={(props, state) => (
+          <a {...props} {...slotProps.root(state)}>
+            {props.children}
+          </a>
+        )}
+      >
         Target
       </Menu2LinkItem>
     ),
