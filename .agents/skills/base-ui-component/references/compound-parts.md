@@ -40,7 +40,8 @@ return (
 
 - `render` is required and has no default. Forward it to the Base UI trigger unchanged.
 - Declare `children?: React.ReactNode | undefined` with the JSDoc `@ignore`, so the API page leaves it out, and pass it as the Base UI trigger's JSX children. When both the `render` element and the trigger have children, the `render` element's children win, because Base UI merges the element's own props last. That is why the docs show only the `render` form.
-- Pick only the props the Base UI trigger declares (for example `delay`, `closeDelay`, `handle`, `payload`, and `disabled`, `openOnHover`, `nativeButton` where they exist), plus `id` when the root has a `triggerId` prop. Other attributes go on the `render` element.
+- Pick only the props the Base UI trigger declares (for example `delay`, `closeDelay`, `handle`, `payload`, and `disabled` or `openOnHover` where they exist), plus `id` when the root has a `triggerId` prop. Other attributes go on the `render` element.
+- Pick `nativeButton` whenever the Base UI trigger declares it. A user who renders a non-button element (`render={<div />}`) sets `nativeButton={false}`. Without it, keyboard activation breaks and Base UI logs a dev-mode error.
 - The trigger has no Material styles. Its theme entry supports `defaultProps` only.
 
 ## Popup
@@ -130,6 +131,8 @@ return (
 ## Items
 
 - Build the item root on `ButtonBase` (or the existing Material item styles), so ripple, focus-visible, and `disableRipple` behave like other Material UI items.
+- Pick `nativeButton` on every item part that declares it (`Item`, `CheckboxItem`, `RadioItem`, `SubmenuTrigger`). Base UI defaults it to `false` for items, so a user who renders a real `<button>` must set it to `true`.
+- Build links on Base UI `LinkItem` as their own public part (`<Name>LinkItem`), not as an item with `render={<a />}`. Base UI added `LinkItem` because items rendered as `<a>` broke Enter and Space navigation and allowed disabled links ([base-ui#1225](https://github.com/mui/base-ui/issues/1225), [#1746](https://github.com/mui/base-ui/issues/1746), [#2126](https://github.com/mui/base-ui/issues/2126)).
 - Set `event.defaultMuiPrevented = true` in the slot's `onKeyDown` and `onKeyUp`. Base UI already activates the item on Enter and Space; without this, `ButtonBase` activates it a second time.
 - Merge Base UI item state (`highlighted`, `checked`, `disabled`) into `ownerState` and add utility classes for it (`highlighted`, plus the global `Mui-disabled`).
 - Style keyboard focus with `.Mui-focusVisible` and pointer hover with `:hover`. The highlighted state follows both, so it is not a hover style.

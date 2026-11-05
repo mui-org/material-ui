@@ -61,6 +61,7 @@ For each part with a public `render` prop:
 - The user's `render` element's own children replace the part's children, as Base UI defines.
 - With `slots.root` set, the custom root receives no `render` or `component` prop.
 - A `component` prop passed without types (`// @ts-expect-error`) does not change the element.
+- For a part that declares `nativeButton`: rendered as a different tag with the matching `nativeButton` (`render={<div />}` with `nativeButton={false}` on a trigger, `render={<button />}` with `nativeButton` on an item), it still activates with Enter and Space.
 
 ## Data attributes
 

@@ -40,6 +40,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 ## Behavior
 
 - [ ] **Items activate once.** Enter and Space on an item built on `ButtonBase` call the action once. [compound-parts.md, Items]
+- [ ] **Swapping the element keeps keyboard activation.** Every part that declares `nativeButton` exposes it, the `nativeButton` test passes, and the console shows no Base UI `nativeButton` error. Links use a `LinkItem` part. [compound-parts.md, Trigger and Items]
 - [ ] **Spacing survives focus guards.** No style relies on a sibling combinator (`item + divider`); each part owns its spacing.
 - [ ] **State selectors use presence.** Styles and tests select `[data-open]`, not `[data-open="true"]`.
 - [ ] **Closing tests pass in both jsdom and Chromium.** [testing.md, Behavior]
