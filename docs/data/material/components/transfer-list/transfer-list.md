@@ -1,20 +1,19 @@
 ---
 productId: material-ui
-title: Transfer list composition example
+title: React Transfer List composition example
 components: List, ListItem, Checkbox, Switch
 githubLabel: 'scope: transfer list'
 ---
 
 # Transfer List
 
-<p class="description">A transfer list (or "shuttle") lets users move one or more items between lists. This page is a composition example. Material UI does not export a dedicated Transfer List component.</p>
+<p class="description">A transfer list (or "shuttle") lets users move items between lists. Material UI has no Transfer List component; these demos build one by composition.</p>
 
-{{"component": "@mui/internal-core-docs/ComponentLinkHeader", "design": false}}
+{{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
 :::info
-Transfer lists are **not** part of the [Material Design](https://m2.material.io/) guidelines, and there is no `<TransferList />` package export.
-
-The demos below show what's possible by composing [`List`](/material-ui/react-list/), [`Checkbox`](/material-ui/react-checkbox/), and buttons. Copy the pattern and adapt it to your product rather than expecting a drop-in component.
+Transfer lists aren't part of the [Material Design](https://m2.material.io/) guidelines, and `@mui/material` doesn't export a `TransferList` component.
+The demos below are built with [Menu List](/material-ui/react-menu/#composition-with-menu-list), [Button](/material-ui/react-button/), and [Checkbox](/material-ui/react-checkbox/). Copy them into your project and adapt them as needed.
 :::
 
 ## Basic transfer list
@@ -31,13 +30,9 @@ This example exchanges the "move all" buttons for a "select all / select none" c
 
 ## Limitations
 
-These demos come with a couple of limitations:
-
-- They only work well on desktop.
-  If you have a limited amount of options to select, prefer the [Autocomplete](/material-ui/react-autocomplete/#multiple-values) component.
-  If mobile support is important for you, have a look at [#27579](https://github.com/mui/material-ui/issues/27579).
-- There is no high-level Transfer List component on npm; the demos rely on composition.
-  If packaging this pattern as a reusable component is important for you, have a look at [#27579](https://github.com/mui/material-ui/issues/27579).
+These demos only work well on desktop.
+If you have a limited amount of options to select, prefer the [Autocomplete](/material-ui/react-autocomplete/#multiple-values) component.
+If mobile support is important for you, have a look at [#27579](https://github.com/mui/material-ui/issues/27579).
 
 ## Accessibility
 
