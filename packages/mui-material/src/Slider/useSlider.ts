@@ -102,9 +102,19 @@ function trackFinger(
 }
 
 // The browser can take over a touch to scroll the page when the slider's `touch-action` allows
-// panning, for example `pan-y` on a horizontal slider.
-function allowsTouchPanning(slider: HTMLElement) {
-  return ownerWindow(slider).getComputedStyle(slider).touchAction !== 'none';
+// panning across it, for example `pan-y` on a horizontal slider.
+function allowsTouchPanning(slider: HTMLElement, orientation: 'horizontal' | 'vertical') {
+  const touchAction = ownerWindow(slider).getComputedStyle(slider).touchAction;
+  const panAcross = orientation === 'vertical' ? 'pan-x' : 'pan-y';
+  return (
+    touchAction === 'auto' ||
+    touchAction === 'manipulation' ||
+    touchAction.split(' ').includes(panAcross)
+  );
+}
+
+function copyValue(value: number | readonly number[]): number | number[] {
+  return typeof value === 'number' ? value : value.slice();
 }
 
 export function valueToPercent(value: number, min: number, max: number) {
@@ -247,6 +257,9 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
   // Where a touch press started, while its value is held back because the browser may still claim
   // the touch to scroll the page.
   const pendingTouchPressRef = React.useRef<{ x: number; y: number } | null>(null);
+  // The value before a held back touch press, to restore it if the browser claims the touch after
+  // the finger already moved the thumb.
+  const valueBeforeTouchPressRef = React.useRef<{ value: number | number[] } | null>(null);
   const cancelFocusFrame = useEventCallback(() => {
     if (focusFrameRef.current != null) {
       cancelAnimationFrame(focusFrameRef.current);
@@ -654,8 +667,10 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
 
     const newFingerValue = getValueAtFinger(finger);
     // `pointercancel` fires when the browser takes over the gesture, for example to scroll the
-    // page, so the pointer position doesn't pick a value. Only commit what the drag already changed.
+    // page, so the pointer position doesn't pick a value.
     const cancelled = nativeEvent.type === 'pointercancel';
+    const valueBeforeTouchPress = valueBeforeTouchPressRef.current;
+    valueBeforeTouchPressRef.current = null;
 
     if (pendingTouchPressRef.current && !cancelled && newFingerValue) {
       // A tap the browser didn't claim for scrolling, so apply the held back press now.
@@ -669,14 +684,28 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     }
     pendingTouchPressRef.current = null;
 
+    if (cancelled && valueBeforeTouchPress) {
+      // The browser claimed a held back press to scroll the page, possibly after the finger had
+      // already moved the thumb a little, so undo the gesture.
+      setValueState(valueBeforeTouchPress.value);
+
+      if (onChange && !areValuesEqual(valueBeforeTouchPress.value, valueDerived)) {
+        handleChange(nativeEvent, valueBeforeTouchPress.value, lastUsedThumbIndexRef.current);
+      }
+    }
+
     setActive(-1);
     if (nativeEvent.type === 'touchend') {
       setOpen(-1);
     }
 
-    const committedValue = cancelled
-      ? lastChangedValueRef.current
-      : (lastChangedValueRef.current ?? newFingerValue?.newValue);
+    let committedValue: number | number[] | null | undefined;
+    if (!cancelled) {
+      committedValue = lastChangedValueRef.current ?? newFingerValue?.newValue;
+    } else if (!valueBeforeTouchPress) {
+      // A drag the browser cancelled ends where the thumb is.
+      committedValue = lastChangedValueRef.current ?? copyValue(valueDerived);
+    }
     if (newFingerValue && committedValue != null && onChangeCommitted) {
       onChangeCommitted(nativeEvent, committedValue);
     }
@@ -798,9 +827,17 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
         finger !== false &&
         event.pointerType === 'touch' &&
         sliderRef.current != null &&
-        allowsTouchPanning(sliderRef.current)
+        allowsTouchPanning(sliderRef.current, orientation)
           ? finger
           : null;
+      valueBeforeTouchPressRef.current = pendingTouchPressRef.current
+        ? { value: copyValue(valueDerived) }
+        : null;
+
+      if (finger !== false && pendingTouchPressRef.current) {
+        // Pick the thumb closest to the press now, not to wherever the finger is when it first moves.
+        getValueAtFinger(finger);
+      }
 
       if (finger !== false && !pendingTouchPressRef.current) {
         const newFingerValue = getValueAtFinger(finger);
