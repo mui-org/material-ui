@@ -309,9 +309,7 @@ describe('Menu2 indicator slots', () => {
         const states: IndicatorState[] = [];
         const { user } = render(
           <Menu2>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup transitionDuration={0}>
               <Menu2Item>Before</Menu2Item>
               {createItem({

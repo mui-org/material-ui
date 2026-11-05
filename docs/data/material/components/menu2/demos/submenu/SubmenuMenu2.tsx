@@ -13,9 +13,7 @@ export default function SubmenuMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>File</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>File</Button>} />
       <MenuPopup>
         <MenuItem>New file</MenuItem>
         <MenuItem>Open recent</MenuItem>

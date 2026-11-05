@@ -23,13 +23,15 @@ export default function AccountMenu2() {
       <Typography sx={{ minWidth: 100 }}>Contact</Typography>
       <Typography sx={{ minWidth: 100 }}>Profile</Typography>
       <Menu>
-        <MenuTrigger>
-          <Tooltip title="Account settings">
-            <IconButton id={triggerId} size="small" sx={{ ml: 2 }}>
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-            </IconButton>
-          </Tooltip>
-        </MenuTrigger>
+        <MenuTrigger
+          render={
+            <Tooltip title="Account settings">
+              <IconButton id={triggerId} size="small" sx={{ ml: 2 }}>
+                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              </IconButton>
+            </Tooltip>
+          }
+        />
         <MenuPopup
           align="end"
           sideOffset={4}

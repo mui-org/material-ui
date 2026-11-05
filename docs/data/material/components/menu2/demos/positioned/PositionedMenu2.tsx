@@ -104,9 +104,7 @@ export default function PositionedMenu2() {
             }
           }}
         >
-          <MenuTrigger>
-            <Button variant="outlined">Open menu</Button>
-          </MenuTrigger>
+          <MenuTrigger render={<Button variant="outlined">Open menu</Button>} />
           <MenuPopup
             side={side}
             align={align}

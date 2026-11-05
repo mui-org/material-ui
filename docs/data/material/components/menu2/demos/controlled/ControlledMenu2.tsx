@@ -22,11 +22,13 @@ export default function ControlledMenu2() {
           setReason(eventDetails.reason);
         }}
       >
-        <MenuTrigger>
-          <IconButton aria-label="More actions">
-            <MoreVertIcon />
-          </IconButton>
-        </MenuTrigger>
+        <MenuTrigger
+          render={
+            <IconButton aria-label="More actions">
+              <MoreVertIcon />
+            </IconButton>
+          }
+        />
         <MenuPopup>
           <MenuItem>Rename</MenuItem>
           <MenuItem>Duplicate</MenuItem>

@@ -1,6 +1,10 @@
 {
   "props": {
-    "children": { "type": { "name": "custom", "description": "element" }, "required": true },
+    "render": {
+      "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" },
+      "required": true
+    },
+    "children": { "type": { "name": "node" } },
     "closeDelay": { "type": { "name": "number" }, "default": "0" },
     "delay": { "type": { "name": "number" }, "default": "100" },
     "disabled": { "type": { "name": "bool" }, "default": "false" },

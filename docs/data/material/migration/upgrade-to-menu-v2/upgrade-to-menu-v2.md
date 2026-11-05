@@ -91,9 +91,7 @@ After, with Menu v2:
 
 ```jsx
 <Menu>
-  <MenuTrigger>
-    <Button>Dashboard</Button>
-  </MenuTrigger>
+  <MenuTrigger render={<Button>Dashboard</Button>} />
   <MenuPopup>
     <MenuItem>Profile</MenuItem>
   </MenuPopup>
@@ -129,14 +127,16 @@ const open = Boolean(anchorEl);
 Selecting a `MenuItem` closes the menu by default, so its `onClick={handleClose}` is no longer necessary.
 Set `closeOnClick={false}` on a `MenuItem` to keep the menu open.
 
-`MenuTrigger` takes one element as its child and merges the trigger behavior into it, so you keep your own component:
+Pass your component to the required `render` prop of `MenuTrigger` to add the trigger behavior:
 
 ```jsx
-<MenuTrigger>
-  <IconButton aria-label="More actions">
-    <MoreVertIcon />
-  </IconButton>
-</MenuTrigger>
+<MenuTrigger
+  render={
+    <IconButton aria-label="More actions">
+      <MoreVertIcon />
+    </IconButton>
+  }
+/>
 ```
 
 There's no default trigger, so the element is always yours.
@@ -288,9 +288,7 @@ Use the anchor height to move Menu v2 up by the same distance:
 
 ```jsx
 <Menu>
-  <MenuTrigger>
-    <Button>Options</Button>
-  </MenuTrigger>
+  <MenuTrigger render={<Button>Options</Button>} />
   <MenuPopup side="bottom" align="start" sideOffset={({ anchor }) => -anchor.height}>
     <MenuItem>Profile</MenuItem>
   </MenuPopup>
@@ -540,9 +538,7 @@ const [container, setContainer] = React.useState(null);
 
 <div ref={setContainer}>
   <Menu defaultOpen>
-    <MenuTrigger>
-      <Button>Options</Button>
-    </MenuTrigger>
+    <MenuTrigger render={<Button>Options</Button>} />
     <MenuPopup container={container}>
       <MenuItem>Profile</MenuItem>
     </MenuPopup>

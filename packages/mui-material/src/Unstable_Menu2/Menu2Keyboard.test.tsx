@@ -14,9 +14,7 @@ describe('Menu2 keyboard accessibility', () => {
     it(`opens with ${key === ' ' ? 'Space' : key} and returns focus to the trigger`, async () => {
       const { user } = render(
         <Menu2>
-          <Menu2Trigger>
-            <Button disableRipple>Actions</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button disableRipple>Actions</Button>} />
           <Menu2Popup transitionDuration={0}>
             <Menu2Item disabled>Unavailable first action</Menu2Item>
             <Menu2Item>Profile</Menu2Item>
@@ -62,9 +60,7 @@ describe('Menu2 keyboard accessibility', () => {
           <React.Fragment>
             <Button disableRipple>Before</Button>
             <Menu2 modal={false}>
-              <Menu2Trigger>
-                <Button disableRipple>Actions</Button>
-              </Menu2Trigger>
+              <Menu2Trigger render={<Button disableRipple>Actions</Button>} />
               <Menu2Popup transitionDuration={0}>
                 <Menu2Item>Profile</Menu2Item>
               </Menu2Popup>

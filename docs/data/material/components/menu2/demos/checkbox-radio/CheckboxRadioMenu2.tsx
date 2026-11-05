@@ -18,9 +18,7 @@ export default function CheckboxRadioMenu2() {
   return (
     <Stack direction="row" spacing={2} useFlexGap>
       <Menu>
-        <MenuTrigger>
-          <Button>View</Button>
-        </MenuTrigger>
+        <MenuTrigger render={<Button>View</Button>} />
         <MenuPopup>
           <MenuCheckboxItem checked={ruler} onCheckedChange={setRuler}>
             Ruler
@@ -34,9 +32,7 @@ export default function CheckboxRadioMenu2() {
         </MenuPopup>
       </Menu>
       <Menu>
-        <MenuTrigger>
-          <Button>Zoom</Button>
-        </MenuTrigger>
+        <MenuTrigger render={<Button>Zoom</Button>} />
         <MenuPopup>
           <MenuRadioGroup value={zoom} onValueChange={setZoom}>
             <MenuRadioItem value="50">50%</MenuRadioItem>

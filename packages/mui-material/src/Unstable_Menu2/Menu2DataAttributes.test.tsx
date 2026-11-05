@@ -27,9 +27,7 @@ describe('Menu2 state data attributes', () => {
     async () => {
       const { user } = render(
         <Menu2>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup transitionDuration={0}>
             <Menu2Item>Action</Menu2Item>
           </Menu2Popup>
@@ -56,9 +54,7 @@ describe('Menu2 state data attributes', () => {
     async () => {
       const { user } = render(
         <Menu2>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup transitionDuration={0}>
             <Menu2Submenu>
               <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>

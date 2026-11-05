@@ -19,9 +19,7 @@ describe.skipIf(isJsdom())('Menu2 with Tooltip', () => {
     const handleChange = vi.fn();
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button>Options</Button>} />
         <Menu2Popup>
           <Menu2Item>Before</Menu2Item>
           <Tooltip title="Unavailable while offline" describeChild enterDelay={0} leaveDelay={0}>

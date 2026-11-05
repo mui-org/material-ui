@@ -14,9 +14,7 @@ export default function IndependentBodyScrollLock() {
         Open dialog
       </button>
       <Menu2>
-        <Menu2Trigger>
-          <button type="button">Open menu</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Open menu</button>} />
         <Menu2Popup transitionDuration={0}>
           <Menu2Item onClick={() => setOpen(true)}>Open dialog from menu</Menu2Item>
         </Menu2Popup>

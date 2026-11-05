@@ -128,11 +128,13 @@ function Menu2Demo({ settings }: { settings: MenuSettings }) {
 
   return (
     <Menu2 modal={settings.modal} disabled={settings.disabled}>
-      <Menu2Trigger>
-        <Button variant="contained" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
-          File
-        </Button>
-      </Menu2Trigger>
+      <Menu2Trigger
+        render={
+          <Button variant="contained" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
+            File
+          </Button>
+        }
+      />
       <Menu2Popup sideOffset={8}>
         <Menu2Item onClick={handleItemClick}>New document</Menu2Item>
         <Menu2Item onClick={handleItemClick}>Open…</Menu2Item>
@@ -240,11 +242,13 @@ function Menu2WithTooltipsDemo({ submenusOpenOnHover }: { submenusOpenOnHover: b
 
   return (
     <Menu2>
-      <Menu2Trigger>
-        <Button variant="contained" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
-          Tools
-        </Button>
-      </Menu2Trigger>
+      <Menu2Trigger
+        render={
+          <Button variant="contained" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
+            Tools
+          </Button>
+        }
+      />
       <Menu2Popup sideOffset={8}>
         <MenuTooltip title="Create a blank document">
           <Menu2Item>New document</Menu2Item>
@@ -434,9 +438,7 @@ function MenuInDialogRecipe({ menuType }: { menuType: 'classic' | 'menu2' }) {
                     setMenuEvent(`${nextOpen ? 'open' : 'closed'} (${details.reason})`);
                   }}
                 >
-                  <Menu2Trigger>
-                    <Button variant="contained">Actions</Button>
-                  </Menu2Trigger>
+                  <Menu2Trigger render={<Button variant="contained">Actions</Button>} />
                   <Menu2Popup>
                     <Menu2Item onClick={() => handleSelect('Rename document')}>
                       Rename document
@@ -553,11 +555,13 @@ function MenuOpensDialogRecipe({
         </React.Fragment>
       ) : (
         <Menu2>
-          <Menu2Trigger>
-            <Button ref={triggerRef} variant="outlined">
-              Menu2 actions
-            </Button>
-          </Menu2Trigger>
+          <Menu2Trigger
+            render={
+              <Button ref={triggerRef} variant="outlined">
+                Menu2 actions
+              </Button>
+            }
+          />
           <Menu2Popup>
             <Menu2Item aria-haspopup="dialog" onClick={openDialog}>
               Edit settings
@@ -705,9 +709,7 @@ function MenuIconWidthExample({
             }
           }}
         >
-          <Menu2Trigger>
-            <Button variant="outlined">Open Menu2</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button variant="outlined">Open Menu2</Button>} />
           <Menu2Popup sx={{ width: 280 }}>
             <Menu2LinkItem
               href="https://github.com/mui/material-ui"

@@ -13,9 +13,7 @@ export default function LinkItemsMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>Help</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Help</Button>} />
       <MenuPopup>
         <MenuLinkItem href="/material-ui/getting-started/">
           Getting started

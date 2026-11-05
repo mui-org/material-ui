@@ -64,7 +64,7 @@ See [Upgrade to Menu v2](/material-ui/migration/upgrade-to-menu-v2/) for the arc
 ## Basic menu
 
 Put `MenuTrigger` and `MenuPopup` inside `Menu`.
-Give `MenuTrigger` one element, and put the items inside `MenuPopup`.
+Pass the trigger element to the required `render` prop of `MenuTrigger`, and put the items inside `MenuPopup`.
 
 {{"component": "file://./demos/basic/index.ts"}}
 
@@ -74,7 +74,7 @@ Checkbox, radio, and link items stay open by default; set `closeOnClick` to clos
 
 :::warning
 A custom trigger component must forward props and ref to its element, the same as [Tooltip](/material-ui/react-tooltip/), or the menu doesn't open.
-Set `nativeButton={false}` on `MenuTrigger` when its child doesn't render a native `<button>`.
+Set `nativeButton={false}` on `MenuTrigger` when the supplied element doesn't render a native `<button>`.
 :::
 
 ## Account menu
@@ -239,9 +239,7 @@ This works for controlled and uncontrolled menus:
     }
   }}
 >
-  <MenuTrigger>
-    <Button>Options</Button>
-  </MenuTrigger>
+  <MenuTrigger render={<Button>Options</Button>} />
   <MenuPopup>{/* Menu items */}</MenuPopup>
 </Menu>
 ```
@@ -305,9 +303,17 @@ This demo wraps `MenuPopup` in `styled()` to set defaults, style the surface dir
 
 ### Trigger
 
-`MenuTrigger` merges its behavior into the element you supply as its child.
+`MenuTrigger` merges its behavior into the element you supply through `render`.
 Style that element directly, or use a scoped state selector such as `.MuiMenu2Trigger-root.Mui-open`.
-Trigger props, event handlers, and the ref belong on `MenuTrigger` or its child, not on `Menu`.
+Trigger props, event handlers, and the ref belong on `MenuTrigger` or the supplied element, not on `Menu`.
+The `render` prop also accepts a function with props and the trigger state as arguments.
+Spread those props, including the ref, onto the element returned by the function.
+
+This example uses `open` to rotate an arrow when the menu opens.
+TypeScript infers the props and state types; no separate open state is needed.
+The arrow transition follows [the reduced-motion setting](/material-ui/customization/transitions/#reduced-motion).
+
+{{"component": "file://./demos/trigger-state/index.ts"}}
 
 :::warning
 While a menu or submenu is open, Base UI renders hidden `span` elements next to its trigger for focus and accessibility.
@@ -467,5 +473,5 @@ Matching attributes on `slotProps.root` take precedence over the top-level ones.
 
 Two things stay your responsibility:
 
-- **Label an icon-only trigger.** Pass `aria-label` to `MenuTrigger` or its child.
+- **Label an icon-only trigger.** Pass `aria-label` to `MenuTrigger` or the supplied element.
 - **Keep custom item content readable.** Icons, secondary text, and shortcut hints in an item need sufficient contrast.

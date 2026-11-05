@@ -17,48 +17,43 @@ describe('<Menu2Trigger />', () => {
     resetMenu2WarningFlags();
   });
 
-  describeConformance(
-    <Menu2Trigger>
-      <button type="button">Actions</button>
-    </Menu2Trigger>,
-    () => ({
-      classes: menu2TriggerClasses,
-      inheritComponent: 'button',
-      render: (node) => render(node, { wrapper: BaseMenu.Root }),
-      refInstanceof: window.HTMLButtonElement,
-      muiName: 'MuiMenu2Trigger',
-      // This behavioral wrapper styles its child through className, not a
-      // classes/component prop or styled slots. Theme default props still apply.
-      skip: ['classesRoot', 'componentProp', 'themeStyleOverrides', 'themeVariants'],
-    }),
-  );
+  describeConformance(<Menu2Trigger render={<button type="button">Actions</button>} />, () => ({
+    classes: menu2TriggerClasses,
+    inheritComponent: 'button',
+    render: (node) => render(node, { wrapper: BaseMenu.Root }),
+    refInstanceof: window.HTMLButtonElement,
+    muiName: 'MuiMenu2Trigger',
+    // This behavioral wrapper styles its render element through className, not a
+    // classes/component prop or styled slots. Theme default props still apply.
+    skip: ['classesRoot', 'componentProp', 'themeStyleOverrides', 'themeVariants'],
+  }));
 
   it('warns once for a fragment without a secondary missing-ref warning', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     try {
       const { setProps } = render(
-        <Menu2Trigger>
-          <React.Fragment>
-            <button type="button">First</button>
-            <button type="button">Second</button>
-          </React.Fragment>
-        </Menu2Trigger>,
+        <Menu2Trigger
+          render={
+            <React.Fragment>
+              <button type="button">First</button>
+              <button type="button">Second</button>
+            </React.Fragment>
+          }
+        />,
         { wrapper: BaseMenu.Root },
       );
       setProps({ 'aria-label': 'Updated actions' });
 
       const warnings = error.mock.calls.filter(([message]) => String(message).startsWith('MUI:'));
       expect(warnings).to.have.length(1);
-      expect(warnings[0][0]).to.contain(
-        'The `children` prop of `Menu2Trigger` cannot be a fragment',
-      );
+      expect(warnings[0][0]).to.contain('The `render` prop of `Menu2Trigger` cannot be a fragment');
     } finally {
       error.mockRestore();
     }
   });
 
-  it('warns once when a forwardRef child drops the ref', () => {
+  it('warns once when a render element drops the ref', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     const RefDroppingChild = React.forwardRef<HTMLButtonElement, React.ComponentProps<'button'>>(
       function RefDroppingChild(props, _ref) {
@@ -68,9 +63,7 @@ describe('<Menu2Trigger />', () => {
 
     try {
       const { setProps } = render(
-        <Menu2Trigger>
-          <RefDroppingChild>Actions</RefDroppingChild>
-        </Menu2Trigger>,
+        <Menu2Trigger render={<RefDroppingChild>Actions</RefDroppingChild>} />,
         { wrapper: BaseMenu.Root },
       );
       setProps({ 'aria-label': 'Updated actions' });
@@ -78,14 +71,14 @@ describe('<Menu2Trigger />', () => {
       const warnings = error.mock.calls.filter(([message]) => String(message).startsWith('MUI:'));
       expect(warnings).to.have.length(1);
       expect(warnings[0][0]).to.contain(
-        'The `children` element of `Menu2Trigger` did not receive a ref',
+        'The element rendered by the `render` prop of `Menu2Trigger` did not receive a ref',
       );
     } finally {
       error.mockRestore();
     }
   });
 
-  it('forwards props and merges child refs and handlers without a wrapping element', async () => {
+  it('forwards props and merges render element refs and handlers without a wrapping element', async () => {
     const childRef = React.createRef<HTMLButtonElement>();
     const triggerRef = React.createRef<HTMLElement>();
     const childClick = vi.fn();
@@ -99,11 +92,12 @@ describe('<Menu2Trigger />', () => {
             data-testid="trigger"
             title="Open actions"
             onClick={triggerClick}
-          >
-            <Button ref={childRef} className="child-class" onClick={childClick} disableRipple>
-              Actions
-            </Button>
-          </Menu2Trigger>
+            render={
+              <Button ref={childRef} className="child-class" onClick={childClick} disableRipple>
+                Actions
+              </Button>
+            }
+          />
         </div>
         <Menu2Popup transitionDuration={0}>
           <Menu2Item>Item</Menu2Item>
@@ -134,13 +128,11 @@ describe('<Menu2Trigger />', () => {
     expect(triggerRef.current).to.equal(null);
   });
 
-  it('forwards Tooltip props and its ref to the child', async () => {
+  it('forwards Tooltip props and its ref to the render element', async () => {
     const { user } = render(
       <BaseMenu.Root>
         <Tooltip title="Document actions" describeChild enterDelay={0} leaveDelay={0}>
-          <Menu2Trigger>
-            <Button disableRipple>Actions</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button disableRipple>Actions</Button>} />
         </Tooltip>
         <Menu2Popup transitionDuration={0}>
           <Menu2Item>Rename</Menu2Item>
@@ -161,14 +153,17 @@ describe('<Menu2Trigger />', () => {
     expect(await screen.findByRole('menu', { name: 'Actions' })).not.to.equal(null);
   });
 
-  it('supports a non-native button child', async () => {
+  it('supports a non-native button render element', async () => {
     const { user } = render(
       <BaseMenu.Root>
-        <Menu2Trigger nativeButton={false}>
-          <span role="button" tabIndex={0}>
-            Actions
-          </span>
-        </Menu2Trigger>
+        <Menu2Trigger
+          nativeButton={false}
+          render={
+            <span role="button" tabIndex={0}>
+              Actions
+            </span>
+          }
+        />
         <Menu2Popup transitionDuration={0}>
           <Menu2Item>Item</Menu2Item>
         </Menu2Popup>
@@ -187,13 +182,80 @@ describe('<Menu2Trigger />', () => {
     );
   });
 
+  it('passes children as content to the render element', () => {
+    render(<Menu2Trigger render={<Button disableRipple />}>Actions</Menu2Trigger>, {
+      wrapper: BaseMenu.Root,
+    });
+
+    expect(screen.getByRole('button', { name: 'Actions' })).to.have.class(menu2TriggerClasses.root);
+  });
+
+  it('passes props, ref, and live state to a render callback', async () => {
+    const triggerRef = React.createRef<HTMLElement>();
+    const onClick = vi.fn();
+    const { user } = render(
+      <BaseMenu.Root>
+        <Menu2Trigger
+          ref={triggerRef}
+          onClick={onClick}
+          className="trigger-class"
+          render={(props, state) => (
+            <button {...props} data-open={state.open} data-disabled={state.disabled}>
+              Actions
+            </button>
+          )}
+        />
+        <Menu2Popup transitionDuration={0}>
+          <Menu2Item>Item</Menu2Item>
+        </Menu2Popup>
+      </BaseMenu.Root>,
+    );
+    const button = screen.getByRole('button', { name: 'Actions' });
+
+    expect(triggerRef.current).to.equal(button);
+    expect(button).to.have.class('trigger-class');
+    expect(button).to.have.class(menu2TriggerClasses.root);
+    expect(button).to.have.attribute('data-open', 'false');
+    expect(button).to.have.attribute('data-disabled', 'false');
+
+    await user.click(button);
+
+    expect(await screen.findByRole('menu', { name: 'Actions' })).not.to.equal(null);
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(button).to.have.attribute('data-open', 'true');
+    expect(button).to.have.class(menu2TriggerClasses.open);
+
+    await user.keyboard('{Escape}');
+
+    await waitFor(() => expect(screen.queryByRole('menu')).to.equal(null));
+    expect(button).to.have.attribute('data-open', 'false');
+    expect(button).not.to.have.class(menu2TriggerClasses.open);
+    await waitFor(() => expect(document.activeElement).to.equal(button));
+  });
+
+  it('warns when a render callback does not forward the ref', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    try {
+      render(<Menu2Trigger render={() => <button type="button">Actions</button>} />, {
+        wrapper: BaseMenu.Root,
+      });
+
+      const warnings = error.mock.calls.filter(([message]) => String(message).startsWith('MUI:'));
+      expect(warnings).to.have.length(1);
+      expect(warnings[0][0]).to.contain(
+        'The element rendered by the `render` prop of `Menu2Trigger` did not receive a ref',
+      );
+    } finally {
+      error.mockRestore();
+    }
+  });
+
   it('does not open the menu from a disabled trigger', async () => {
     const changed = vi.fn();
     const { user } = render(
       <BaseMenu.Root onOpenChange={changed}>
-        <Menu2Trigger disabled>
-          <button type="button">Disabled</button>
-        </Menu2Trigger>
+        <Menu2Trigger disabled render={<button type="button">Disabled</button>} />
         <Menu2Popup transitionDuration={0}>
           <Menu2Item>Item</Menu2Item>
         </Menu2Popup>
@@ -217,9 +279,7 @@ describe('<Menu2Trigger />', () => {
             Enable menu
           </button>
           <BaseMenu.Root disabled={disabled}>
-            <Menu2Trigger>
-              <button type="button">Actions</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Actions</button>} />
             <Menu2Popup transitionDuration={0}>
               <Menu2Item>Item</Menu2Item>
             </Menu2Popup>
@@ -246,9 +306,12 @@ describe('<Menu2Trigger />', () => {
     it.skipIf(isJsdom())(`respects openOnHover=${openOnHover}`, async () => {
       const { user } = render(
         <BaseMenu.Root>
-          <Menu2Trigger openOnHover={openOnHover} delay={0} closeDelay={0}>
-            <Button disableRipple>Actions</Button>
-          </Menu2Trigger>
+          <Menu2Trigger
+            openOnHover={openOnHover}
+            delay={0}
+            closeDelay={0}
+            render={<Button disableRipple>Actions</Button>}
+          />
           <Menu2Popup transitionDuration={0}>
             <Menu2Item>Item</Menu2Item>
           </Menu2Popup>

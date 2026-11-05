@@ -12,9 +12,7 @@ export default function GroupedMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>Insert</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Insert</Button>} />
       <MenuPopup>
         <MenuGroup>
           <MenuGroupLabel>Media</MenuGroupLabel>

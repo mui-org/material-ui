@@ -256,11 +256,7 @@ describe.skipIf(isJsdom())('Menu2 without a trigger', () => {
       const [hasTrigger, setHasTrigger] = React.useState(false);
       return (
         <Menu2 defaultOpen modal={false} onOpenChange={changed}>
-          {hasTrigger && (
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
-          )}
+          {hasTrigger && <Menu2Trigger render={<button type="button">Options</button>} />}
           <Menu2Popup anchor={document.body}>
             <Menu2Submenu>
               <Menu2SubmenuTrigger

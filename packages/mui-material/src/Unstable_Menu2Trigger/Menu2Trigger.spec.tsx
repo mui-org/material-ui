@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import type { Menu2TriggerProps } from '@mui/material/Unstable_Menu2Trigger';
 import Menu2Trigger from '@mui/material/Unstable_Menu2Trigger';
 import { createTheme } from '@mui/material/styles';
@@ -21,22 +22,54 @@ import {
   delay={100}
   closeDelay={50}
   ref={(node) => expectType<HTMLElement | null, typeof node>(node)}
->
-  <Button variant="outlined" size="small" sx={{ color: 'primary.main' }}>
-    Profile
-  </Button>
-</Menu2Trigger>;
+  render={
+    <Button variant="outlined" size="small" sx={{ color: 'primary.main' }}>
+      Profile
+    </Button>
+  }
+/>;
 
-<Menu2Trigger>
-  <button type="button">Profile</button>
-</Menu2Trigger>;
+<Menu2Trigger render={<button type="button">Profile</button>} />;
 
-<Menu2Trigger nativeButton={false} ref={React.createRef<HTMLAnchorElement>()}>
-  <a href="/profile">Profile</a>
-</Menu2Trigger>;
+<Menu2Trigger
+  nativeButton={false}
+  ref={React.createRef<HTMLAnchorElement>()}
+  render={<a href="/profile">Profile</a>}
+/>;
+
+<Menu2Trigger render={<Button />}>Profile</Menu2Trigger>;
+
+<Menu2Trigger
+  render={(props, { open }) => <Button {...props}>{open ? 'Close' : 'Open'}</Button>}
+/>;
+
+<Menu2Trigger render={(props) => <IconButton {...props} aria-label="Profile actions" />} />;
+
+<Menu2Trigger
+  nativeButton={false}
+  render={(props) => (
+    <Button {...props} component="a" href="/profile">
+      Profile
+    </Button>
+  )}
+/>;
+
+<Menu2Trigger
+  render={(props, state) => {
+    expectType<boolean, typeof state.open>(state.open);
+    expectType<boolean, typeof state.disabled>(state.disabled);
+    // @ts-expect-error The render element owns its color prop, not the trigger.
+    props.color;
+    return (
+      <button type="button" {...props}>
+        {state.open ? 'Close profile' : 'Open profile'}
+      </button>
+    );
+  }}
+/>;
 
 const triggerProps: Menu2TriggerProps = {
-  children: <button type="button">Profile</button>,
+  render: <button type="button">Profile</button>,
   onClick: (event) => {
     expectType<EventTarget & HTMLElement, typeof event.currentTarget>(event.currentTarget);
   },
@@ -61,7 +94,7 @@ createTheme({
 createTheme({
   components: {
     MuiMenu2Trigger: {
-      // @ts-expect-error The child component owns the trigger styles.
+      // @ts-expect-error The render element owns the trigger styles.
       styleOverrides: { root: { color: 'red' } },
     },
   },
@@ -70,7 +103,7 @@ createTheme({
 createTheme({
   components: {
     MuiMenu2Trigger: {
-      // @ts-expect-error The child component owns the trigger variants.
+      // @ts-expect-error The render element owns the trigger variants.
       variants: [],
     },
   },
@@ -79,62 +112,65 @@ createTheme({
 <Menu2Trigger
   // @ts-expect-error Detached triggers are not part of the Menu2 API.
   handle={{}}
->
-  <button type="button">Profile</button>
-</Menu2Trigger>;
+  render={<button type="button">Profile</button>}
+/>;
 
 <Menu2Trigger
   // @ts-expect-error Trigger payloads are not part of the Menu2 API.
   payload={{ id: 1, label: 'Profile' }}
->
-  <button type="button">Profile</button>
-</Menu2Trigger>;
+  render={<button type="button">Profile</button>}
+/>;
 
-// @ts-expect-error A trigger wraps one element.
+// @ts-expect-error A trigger requires a render element or function.
 <Menu2Trigger />;
-// @ts-expect-error A trigger cannot wrap plain text.
-<Menu2Trigger>Profile</Menu2Trigger>;
-// @ts-expect-error A trigger cannot wrap null.
-<Menu2Trigger>{null}</Menu2Trigger>;
-// @ts-expect-error A trigger cannot wrap several elements.
+// @ts-expect-error An element child does not replace the required render prop.
 <Menu2Trigger>
-  <button type="button">One</button>
-  <button type="button">Two</button>
-</Menu2Trigger>;
-// @ts-expect-error A trigger wraps an element, not a render callback.
-<Menu2Trigger>{() => <button type="button">Profile</button>}</Menu2Trigger>;
-
-<Menu2Trigger
-  // @ts-expect-error Set visual props on the child button.
-  variant="outlined"
->
-  <button type="button">Profile</button>
-</Menu2Trigger>;
-
-<Menu2Trigger
-  // @ts-expect-error Set sx on the child component.
-  sx={{ color: 'primary.main' }}
->
   <Button>Profile</Button>
 </Menu2Trigger>;
+// @ts-expect-error A render element cannot be plain text.
+<Menu2Trigger render="Profile" />;
+// @ts-expect-error A render element cannot be null.
+<Menu2Trigger render={null} />;
+// @ts-expect-error The render prop cannot be undefined.
+<Menu2Trigger render={undefined} />;
+<Menu2Trigger
+  // @ts-expect-error The render prop cannot be an array of elements.
+  render={[
+    <button type="button" key="one">
+      One
+    </button>,
+    <button type="button" key="two">
+      Two
+    </button>,
+  ]}
+/>;
 
 <Menu2Trigger
-  // @ts-expect-error The child determines the element type.
-  component="button"
->
-  <button type="button">Profile</button>
-</Menu2Trigger>;
-
-<Menu2Trigger
-  // @ts-expect-error Use children instead of the Base UI render prop.
+  // @ts-expect-error Set visual props on the render element.
+  variant="outlined"
   render={<button type="button">Profile</button>}
->
-  <button type="button">Profile</button>
-</Menu2Trigger>;
+/>;
+
+<Menu2Trigger
+  // @ts-expect-error Set sx on the render element.
+  sx={{ color: 'primary.main' }}
+  render={<Button>Profile</Button>}
+/>;
+
+<Menu2Trigger
+  // @ts-expect-error Set color on the render element.
+  color="primary"
+  render={<Button>Profile</Button>}
+/>;
+
+<Menu2Trigger
+  // @ts-expect-error The render prop determines the element type.
+  component="button"
+  render={<button type="button">Profile</button>}
+/>;
 
 <Menu2Trigger
   // @ts-expect-error The ref points to a DOM element.
   ref={React.createRef<SVGSVGElement>()}
->
-  <button type="button">Profile</button>
-</Menu2Trigger>;
+  render={<button type="button">Profile</button>}
+/>;

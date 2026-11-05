@@ -26,9 +26,7 @@ export function Menu2A11yFixture({ nested = false }: Menu2A11yFixtureProps) {
   return (
     <div ref={setContainer} style={{ width: 700, height: 600 }}>
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <Button>Document options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button>Document options</Button>} />
         <Menu2Popup container={container} slotProps={{ root: { 'data-testid': 'root-menu' } }}>
           <Menu2Group>
             <Menu2GroupLabel>Document</Menu2GroupLabel>

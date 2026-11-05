@@ -13,9 +13,7 @@ export default function DenseMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>Options</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Options</Button>} />
       <MenuPopup slotProps={{ list: { dense: true } }}>
         <MenuItem>Single</MenuItem>
         <MenuItem>1.15</MenuItem>

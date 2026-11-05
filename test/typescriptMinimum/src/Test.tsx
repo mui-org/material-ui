@@ -47,7 +47,7 @@ createTheme({
       },
     },
     MuiMenu2Trigger: {
-      // @ts-expect-error The trigger child owns its styles.
+      // @ts-expect-error The render element owns its styles.
       styleOverrides: { root: { color: 'red' } },
     },
   },

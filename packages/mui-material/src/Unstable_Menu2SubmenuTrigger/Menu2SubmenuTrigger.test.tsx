@@ -227,9 +227,7 @@ describe('<Menu2SubmenuTrigger />', () => {
       const [hidden, setHidden] = React.useState(false);
       return (
         <Menu2 defaultOpen modal={false}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup transitionDuration={0}>
             <Menu2Item closeOnClick={false} onClick={() => setHidden(!hidden)}>
               Toggle indicator
@@ -311,9 +309,7 @@ describe('<Menu2SubmenuTrigger />', () => {
     async () => {
       const { user } = render(
         <Menu2>
-          <Menu2Trigger>
-            <Button>Open</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button>Open</Button>} />
           <Menu2Popup>
             <Menu2Item>Alpha</Menu2Item>
             <Menu2Submenu>
@@ -357,9 +353,7 @@ describe('<Menu2SubmenuTrigger />', () => {
       const onOpenChange = vi.fn();
       const { user } = render(
         <Menu2>
-          <Menu2Trigger>
-            <Button>Open</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button>Open</Button>} />
           <Menu2Popup>
             <Menu2Submenu onOpenChange={onOpenChange}>
               <Tooltip title="Unavailable" describeChild>
@@ -401,9 +395,7 @@ describe('<Menu2SubmenuTrigger />', () => {
     // A page-sized anchor leaves no space for the popup and can cause resize loops.
     const { user } = render(
       <Menu2 defaultOpen modal={false}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu>
             <Menu2SubmenuTrigger

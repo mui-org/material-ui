@@ -44,9 +44,7 @@ export default function LongMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>Country</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Country</Button>} />
       <MenuPopup
         sx={{ maxHeight: 'min(320px, var(--available-height))', width: 240 }}
         slotProps={{ list: { dense: true } }}

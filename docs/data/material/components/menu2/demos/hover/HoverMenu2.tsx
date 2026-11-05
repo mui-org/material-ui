@@ -10,9 +10,11 @@ export default function HoverMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger openOnHover closeDelay={150}>
-        <Button endIcon={<KeyboardArrowDownIcon />}>Products</Button>
-      </MenuTrigger>
+      <MenuTrigger
+        openOnHover
+        closeDelay={150}
+        render={<Button endIcon={<KeyboardArrowDownIcon />}>Products</Button>}
+      />
       <MenuPopup>
         <MenuItem>Material UI</MenuItem>
         <MenuItem>Base UI</MenuItem>

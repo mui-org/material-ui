@@ -18,20 +18,22 @@ describe.skipIf(isJsdom())('Menu2 animation origin', () => {
           const { user } = render(
             <ThemeProvider theme={createTheme({ direction })}>
               <Menu2 onOpenChangeComplete={completed}>
-                <Menu2Trigger>
-                  <button
-                    type="button"
-                    style={{
-                      position: 'fixed',
-                      left: 240,
-                      ...(flip ? { bottom: 16 } : { top: 100 }),
-                      width: 80,
-                      height: 32,
-                    }}
-                  >
-                    Options
-                  </button>
-                </Menu2Trigger>
+                <Menu2Trigger
+                  render={
+                    <button
+                      type="button"
+                      style={{
+                        position: 'fixed',
+                        left: 240,
+                        ...(flip ? { bottom: 16 } : { top: 100 }),
+                        width: 80,
+                        height: 32,
+                      }}
+                    >
+                      Options
+                    </button>
+                  }
+                />
                 <Menu2Popup
                   align={align}
                   side="bottom"

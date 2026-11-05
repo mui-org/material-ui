@@ -38,15 +38,17 @@ export default function CustomizedMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button
-          variant="contained"
-          disableElevation
-          endIcon={<KeyboardArrowDownIcon />}
-        >
-          Options
-        </Button>
-      </MenuTrigger>
+      <MenuTrigger
+        render={
+          <Button
+            variant="contained"
+            disableElevation
+            endIcon={<KeyboardArrowDownIcon />}
+          >
+            Options
+          </Button>
+        }
+      />
       <StyledPopup>
         <MenuItem>
           <EditIcon />

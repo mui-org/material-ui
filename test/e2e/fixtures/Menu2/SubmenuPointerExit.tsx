@@ -27,9 +27,7 @@ export default function SubmenuPointerExit() {
         Focus ring
       </label>
       <Menu2>
-        <Menu2Trigger>
-          <Button>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button>Options</Button>} />
         <Menu2Popup slots={{ transition: null }}>
           <Menu2Item>Plain</Menu2Item>
           <Menu2Submenu>

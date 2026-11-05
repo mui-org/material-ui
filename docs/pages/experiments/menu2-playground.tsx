@@ -207,11 +207,14 @@ function PlaygroundDemo({
       onOpenChange={handleOpenChange}
       onOpenChangeComplete={handleOpenChangeComplete}
     >
-      <Menu2Trigger openOnHover={settings.triggerOpenOnHover}>
-        <Button variant="contained" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
-          Project
-        </Button>
-      </Menu2Trigger>
+      <Menu2Trigger
+        openOnHover={settings.triggerOpenOnHover}
+        render={
+          <Button variant="contained" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
+            Project
+          </Button>
+        }
+      />
       <Menu2Popup
         side={settings.side}
         align={settings.align}
@@ -337,11 +340,13 @@ function ClassicVersusSuccessorDemo({ settings }: { settings: PlaygroundSettings
         </ClassicMenu>
       </div>
       <Menu2>
-        <Menu2Trigger>
-          <Button variant="outlined" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
-            Successor
-          </Button>
-        </Menu2Trigger>
+        <Menu2Trigger
+          render={
+            <Button variant="outlined" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
+              Successor
+            </Button>
+          }
+        />
         <Menu2Popup
           {...popupKnobProps}
           slots={{
@@ -411,9 +416,7 @@ function FocusRingComparisonDemo({ settings }: { settings: PlaygroundSettings })
           Menu2 + Menu2Item
         </Typography>
         <Menu2 modal={false} open={open} onOpenChange={(nextOpen) => setOpen(nextOpen)}>
-          <Menu2Trigger>
-            <Button variant="outlined">Open the successor menu</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button variant="outlined">Open the successor menu</Button>} />
           <Menu2Popup sideOffset={4}>
             {parityItems.map((item) => (
               <Menu2Item
@@ -534,11 +537,13 @@ const typeaheadEntries = [
 function TypeaheadScrollDemo() {
   return (
     <Menu2>
-      <Menu2Trigger>
-        <Button variant="outlined" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
-          Country
-        </Button>
-      </Menu2Trigger>
+      <Menu2Trigger
+        render={
+          <Button variant="outlined" endIcon={<KeyboardArrowDownRoundedIcon fontSize="small" />}>
+            Country
+          </Button>
+        }
+      />
       <Menu2Popup sx={{ maxHeight: 320 }} sideOffset={4}>
         {typeaheadEntries.map((entry) => (
           <Menu2Item key={entry} dense>

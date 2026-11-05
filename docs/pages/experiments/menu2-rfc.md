@@ -99,9 +99,7 @@ The classic `Menu` keeps its API. Classic and successor items share `MenuItemBas
 
 ```jsx
 <Menu2>
-  <Menu2Trigger>
-    <Button>Options</Button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<Button>Options</Button>} />
   <Menu2Popup elevation={4}>
     <Menu2Item onClick={handleCut}>Cut</Menu2Item>
     <Menu2Submenu>
@@ -117,9 +115,9 @@ The classic `Menu` keeps its API. Classic and successor items share `MenuItemBas
 
 The trigger components have different presentation contracts:
 
-- `Menu2Trigger` takes one element as its child and merges behavior through Base UI's `render` prop internally. A wrapper must forward props and its ref. Put `openOnHover`, `delay`, and `closeDelay` on `Menu2Trigger`. Put event handlers and trigger attributes on this component or its child.
+- `Menu2Trigger` requires a `render` prop with an element or a render function. A custom component must forward props and its ref. A render function must pass the supplied props and ref to its element. Put `openOnHover`, `delay`, and `closeDelay` on `Menu2Trigger`. Put event handlers and trigger attributes on this component or the supplied element.
 - `Menu2SubmenuTrigger` is a styled menu item, optionally inside a `Tooltip`. Put `disabled`, `label`, and hover props on that trigger. `Menu2Submenu` has no `disabled` prop or trigger slot.
-- Items and submenu triggers infer `nativeButton` from their root slot and `component`. `Menu2Trigger` cannot infer it from an arbitrary child; set its `nativeButton` prop when needed.
+- Items and submenu triggers infer `nativeButton` from their root slot and `component`. `Menu2Trigger` cannot infer it from a custom renderer; set its `nativeButton` prop when needed.
 
 The explicit submenu trigger avoids registering one DOM node as both an item and a submenu trigger. It costs one public component and theme key, but gives the trigger one behavioral owner. An alternative would make a generic item switch its behavior according to context; this proposal keeps that distinction explicit.
 
@@ -222,7 +220,7 @@ The experiment implements the API above, shared styles, theme registration, RTL 
 Menu2 requires Base UI 1.9.0 or later. Version 1.9.0 includes the [menu tree fix](https://github.com/mui/base-ui/pull/5645) and the [transition state fix for retained menus](https://github.com/mui/base-ui/pull/5738). No local patch is needed. The regression tests remain in place.
 
 The playground compares classic Menu and Menu2, focus indicators, transition choices, and reduced motion. [Public demos](/material-ui/react-menu2/), [generated API docs](/material-ui/api/menu-2/), and a [migration guide](/material-ui/migration/upgrade-to-menu-v2/) are available. The API generator covers the public components and excludes the private defaults.
-Detached-trigger support has been removed. `Menu2Trigger` provides the single-child adapter in the explicit composition API.
+Detached-trigger support has been removed. `Menu2Trigger` connects the supplied `render` element to the menu in the explicit composition API.
 
 Remaining release work is listed once in the rollout plan.
 
@@ -272,7 +270,7 @@ Keep the numbering for existing review references. "Resolved" means chosen in th
 
 6. ✅ **Open parent tint:** use `action.hover` while open. Keep it through exit except for hover-driven closes. Keep `Mui-open` tied to the logical open state. Exit timing has no public class, style override key, or slot callback state. A new open-state color token would be a separate design choice.
 
-7. ✅ **Explicit composition:** keep one behavioral owner per trigger. Expose root, trigger, and popup components for both menus and submenus. Keep the trigger's single-child API and use Base UI's `render` internally. A Material Menubar remains separate work.
+7. ✅ **Explicit composition:** keep one behavioral owner per trigger. Expose root, trigger, and popup components for both menus and submenus. Require `render` on `Menu2Trigger`. Keep the styled default and slots on `Menu2SubmenuTrigger`. A Material Menubar remains separate work.
 
 8. ✅ **TypeScript minimum:** Material UI supports TypeScript 5 and later ([#49323](https://github.com/mui/material-ui/pull/49323)). This supports the `const` type parameters in Base UI declarations. Include all `MuiMenu2*` theme types in the standard Material UI theme types; no extra import is needed.
 

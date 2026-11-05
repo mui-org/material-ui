@@ -165,9 +165,7 @@ describe.skipIf(isJsdom())('Menu2 theme style inheritance', () => {
         it(`updates common highlighted overrides and variants during keyboard navigation in ${name}`, async () => {
           const { user } = renderWithTheme(
             <Menu2>
-              <Menu2Trigger>
-                <button type="button">Options</button>
-              </Menu2Trigger>
+              <Menu2Trigger render={<button type="button">Options</button>} />
               <Menu2Popup slots={{ transition: null }}>
                 <Menu2Item>Before</Menu2Item>
                 {renderItem({ 'data-testid': 'target' })}

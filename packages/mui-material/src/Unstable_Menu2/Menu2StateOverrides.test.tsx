@@ -259,9 +259,7 @@ describe.skipIf(isJsdom())('Menu2 state style overrides', () => {
         it(`applies ${name}.${slot} highlight styles only while the item is highlighted`, async () => {
           const { user, unmount } = renderWithTheme(
             <Menu2>
-              <Menu2Trigger>
-                <button type="button">Options</button>
-              </Menu2Trigger>
+              <Menu2Trigger render={<button type="button">Options</button>} />
               <Menu2Popup transitionDuration={0}>
                 <Menu2Item>Before</Menu2Item>
                 {item}
@@ -339,9 +337,7 @@ describe.skipIf(isJsdom())('Menu2 state style overrides', () => {
             };
             const { user, unmount } = renderWithTheme(
               <Menu2>
-                <Menu2Trigger>
-                  <button type="button">Options</button>
-                </Menu2Trigger>
+                <Menu2Trigger render={<button type="button">Options</button>} />
                 <Menu2Popup transitionDuration={0}>
                   {kind === 'item' ? (
                     <Menu2Item data-testid="target" sx={sx}>
@@ -469,9 +465,7 @@ describe.skipIf(isJsdom())('Menu2 state style overrides', () => {
         const ownerStates: object[] = [];
         const { user, unmount } = renderWithTheme(
           <Menu2>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup transitionDuration={0}>
               <Menu2Submenu onOpenChangeComplete={completed}>
                 <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>
@@ -538,9 +532,7 @@ describe.skipIf(isJsdom())('Menu2 state style overrides', () => {
             const [open, setOpen] = React.useState(false);
             return (
               <Menu2>
-                <Menu2Trigger>
-                  <button type="button">Options</button>
-                </Menu2Trigger>
+                <Menu2Trigger render={<button type="button">Options</button>} />
                 <Menu2Popup transitionDuration={0}>
                   <Menu2Submenu open={open} onOpenChange={setOpen} onOpenChangeComplete={completed}>
                     <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>

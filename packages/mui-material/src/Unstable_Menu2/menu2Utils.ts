@@ -14,7 +14,7 @@ export function resetMenu2WarningFlags() {
 }
 
 export function warnMenu2FragmentTrigger(
-  trigger: React.ReactNode,
+  trigger: unknown,
   componentName: string,
   triggerExample: string,
   propName = 'trigger',
@@ -23,8 +23,8 @@ export function warnMenu2FragmentTrigger(
   // merge the trigger behavior into a fragment, and the trigger renders as
   // bare content instead.
   if (
-    trigger == null ||
-    (trigger as React.ReactElement).type !== React.Fragment ||
+    !React.isValidElement(trigger) ||
+    trigger.type !== React.Fragment ||
     warnedFragmentTrigger.has(componentName)
   ) {
     return;
@@ -37,16 +37,12 @@ export function warnMenu2FragmentTrigger(
   );
 }
 
-export function warnMenu2TriggerRef(
-  trigger: React.ReactNode,
-  componentName: string,
-  propName = 'trigger',
-) {
+export function warnMenu2TriggerRef(trigger: unknown, componentName: string, propName = 'trigger') {
   // A wrapper that does not forward the ref also swallows the trigger behavior,
   // and nothing else reports it.
   if (
     trigger == null ||
-    (trigger as React.ReactElement).type === React.Fragment ||
+    (React.isValidElement(trigger) && trigger.type === React.Fragment) ||
     warnedTriggerRef.has(componentName)
   ) {
     return;
@@ -54,7 +50,7 @@ export function warnMenu2TriggerRef(
 
   warnedTriggerRef.add(componentName);
   console.error(
-    `MUI: The \`${propName}\` element of \`${componentName}\` did not receive a ref. ` +
+    `MUI: The element rendered by the \`${propName}\` prop of \`${componentName}\` did not receive a ref. ` +
       'A component used as the trigger must forward its props and its ref to ' +
       'the element that it renders, the way Tooltip does. Without them the ' +
       'menu behavior does not reach the element.',

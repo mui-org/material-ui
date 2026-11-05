@@ -25,9 +25,7 @@ export default function IconMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>Edit</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Edit</Button>} />
       <MenuPopup sx={{ width: 320 }}>
         <MenuItem>
           <ListItemIcon>

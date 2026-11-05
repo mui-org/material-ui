@@ -65,9 +65,7 @@ describe('<Menu2Submenu />', () => {
   it('renders the trigger element as-is and opens the menu', async () => {
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup>
           <Menu2Item>Profile</Menu2Item>
         </Menu2Popup>
@@ -108,9 +106,7 @@ describe('<Menu2Submenu />', () => {
         if (componentName === 'Menu2Submenu') {
           return (
             <Menu2 defaultOpen modal={false}>
-              <Menu2Trigger>
-                <Button disableRipple>Options</Button>
-              </Menu2Trigger>
+              <Menu2Trigger render={<Button disableRipple>Options</Button>} />
               <Menu2Popup>
                 <Menu2Submenu
                   open={open}
@@ -518,9 +514,7 @@ describe('<Menu2Submenu />', () => {
   it('preserves positioning when the portal slot is a host element', async () => {
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup slots={{ portal: 'div' }} slotProps={{ portal: { 'data-testid': 'root' } }}>
           <Menu2Item>Profile</Menu2Item>
         </Menu2Popup>
@@ -542,9 +536,7 @@ describe('<Menu2Submenu />', () => {
     const submenuRef = React.createRef<HTMLDivElement>();
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup ref={menuRef}>
           <Menu2Submenu>
             <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -577,9 +569,7 @@ describe('<Menu2Submenu />', () => {
         const onSubmenuOpenChange = vi.fn();
         const { user } = render(
           <Menu2 defaultOpen modal={false} onOpenChange={onParentOpenChange}>
-            <Menu2Trigger>
-              <Button disableRipple>Options</Button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<Button disableRipple>Options</Button>} />
             <Menu2Popup>
               <Menu2Submenu closeParentOnEsc={closeParentOnEsc} onOpenChange={onSubmenuOpenChange}>
                 <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>
@@ -635,9 +625,7 @@ describe('<Menu2Submenu />', () => {
     async () => {
       const { user } = render(
         <Menu2 defaultOpen modal={false}>
-          <Menu2Trigger>
-            <Button disableRipple>Options</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button disableRipple>Options</Button>} />
           <Menu2Popup>
             <Menu2Item>One</Menu2Item>
             <Menu2Submenu>
@@ -700,9 +688,7 @@ describe('<Menu2Submenu />', () => {
         const onOpenChangeComplete = vi.fn();
         const { user } = render(
           <Menu2 defaultOpen modal={false}>
-            <Menu2Trigger>
-              <Button disableRipple>Options</Button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<Button disableRipple>Options</Button>} />
             <Menu2Popup>
               <Menu2Item>One</Menu2Item>
               <Menu2Submenu onOpenChangeComplete={onOpenChangeComplete}>
@@ -769,7 +755,7 @@ describe('<Menu2Submenu />', () => {
   });
 
   ['object', 'callback'].forEach((refType) => {
-    it(`composes trigger child and ${refType} adapter refs without warning`, async () => {
+    it(`composes render element and ${refType} adapter refs without warning`, async () => {
       const elementRef = React.createRef<HTMLButtonElement>();
       const slotRef = vi.fn();
       const adapterRef = React.createRef<HTMLButtonElement>();
@@ -778,11 +764,14 @@ describe('<Menu2Submenu />', () => {
       try {
         const { user, unmount } = render(
           <Menu2>
-            <Menu2Trigger ref={refType === 'callback' ? slotRef : adapterRef}>
-              <Button ref={elementRef} disableRipple>
-                Options
-              </Button>
-            </Menu2Trigger>
+            <Menu2Trigger
+              ref={refType === 'callback' ? slotRef : adapterRef}
+              render={
+                <Button ref={elementRef} disableRipple>
+                  Options
+                </Button>
+              }
+            />
             <Menu2Popup>
               <Menu2Item>Profile</Menu2Item>
             </Menu2Popup>
@@ -836,9 +825,7 @@ describe('<Menu2Submenu />', () => {
     const { user } = render(
       <ThemeProvider theme={theme}>
         <Menu2>
-          <Menu2Trigger>
-            <Button disableRipple>Options</Button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<Button disableRipple>Options</Button>} />
           <Menu2Popup slotProps={{ root: { 'data-testid': 'paper' } }}>
             <Menu2Submenu>
               <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -876,12 +863,14 @@ describe('<Menu2Submenu />', () => {
     try {
       render(
         <Menu2>
-          <Menu2Trigger>
-            <React.Fragment>
-              <span>Options</span>
-              <span>More</span>
-            </React.Fragment>
-          </Menu2Trigger>
+          <Menu2Trigger
+            render={
+              <React.Fragment>
+                <span>Options</span>
+                <span>More</span>
+              </React.Fragment>
+            }
+          />
           <Menu2Popup>
             <Menu2Item>Profile</Menu2Item>
           </Menu2Popup>
@@ -902,12 +891,14 @@ describe('<Menu2Submenu />', () => {
     function Demo({ label }: { label: string }) {
       return (
         <Menu2>
-          <Menu2Trigger>
-            <React.Fragment>
-              <span>{label}</span>
-              <span>More</span>
-            </React.Fragment>
-          </Menu2Trigger>
+          <Menu2Trigger
+            render={
+              <React.Fragment>
+                <span>{label}</span>
+                <span>More</span>
+              </React.Fragment>
+            }
+          />
           <Menu2Popup>
             <Menu2Item>Profile</Menu2Item>
           </Menu2Popup>
@@ -943,9 +934,7 @@ describe('<Menu2Submenu />', () => {
       });
       const { user } = render(
         <Menu2 defaultOpen>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup>
             <Menu2Submenu onOpenChange={onOpenChange}>
               <Menu2SubmenuTrigger delay={delay} onMouseEnter={onMouseEnter}>
@@ -982,9 +971,7 @@ describe('<Menu2Submenu />', () => {
     const onOpenChangeComplete = vi.fn();
     const { user } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu onOpenChange={onOpenChange} onOpenChangeComplete={onOpenChangeComplete}>
             <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -1023,9 +1010,7 @@ describe('<Menu2Submenu />', () => {
   it.skipIf(isJsdom())('does not open on hover when openOnHover is false', async () => {
     const { user } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu>
             <Menu2SubmenuTrigger delay={0} openOnHover={false}>
@@ -1054,9 +1039,7 @@ describe('<Menu2Submenu />', () => {
     const onOpenChangeComplete = vi.fn();
     const { user } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu onOpenChange={onOpenChange} onOpenChangeComplete={onOpenChangeComplete}>
             <Menu2SubmenuTrigger delay={0} closeDelay={closeDelay}>
@@ -1120,9 +1103,7 @@ describe('<Menu2Submenu />', () => {
     const onOpenChangeComplete = vi.fn();
     const { user } = render(
       <Menu2 defaultOpen highlightItemOnHover={false}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu onOpenChange={onOpenChange} onOpenChangeComplete={onOpenChangeComplete}>
             <Menu2SubmenuTrigger delay={0} closeDelay={closeDelay}>
@@ -1175,9 +1156,7 @@ describe('<Menu2Submenu />', () => {
 
     const { user } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu>
             <Wrapper>
@@ -1208,11 +1187,13 @@ describe('<Menu2Submenu />', () => {
     try {
       render(
         <Menu2 defaultOpen>
-          <Menu2Trigger>
-            <SwallowingWrapper>
-              <button type="button">Options</button>
-            </SwallowingWrapper>
-          </Menu2Trigger>
+          <Menu2Trigger
+            render={
+              <SwallowingWrapper>
+                <button type="button">Options</button>
+              </SwallowingWrapper>
+            }
+          />
           <Menu2Popup>
             <Menu2Item>Profile</Menu2Item>
           </Menu2Popup>
@@ -1231,9 +1212,7 @@ describe('<Menu2Submenu />', () => {
   it.skipIf(isJsdom())('highlights the submenu trigger like a plain item', async () => {
     const { user } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Item>Plain</Menu2Item>
           <Menu2Submenu>
@@ -1285,9 +1264,7 @@ describe('<Menu2Submenu />', () => {
     // past the end of the test and trips the act() check.
     const { user } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup slotProps={{ root: { 'data-testid': 'paper' } }}>
           <Menu2Submenu>
             <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -1325,9 +1302,7 @@ describe('<Menu2Submenu />', () => {
       <ThemeProvider theme={theme}>
         <div dir="rtl" style={{ padding: '96px 400px' }}>
           <Menu2 defaultOpen>
-            <Menu2Trigger>
-              <Button disableRipple>Options</Button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<Button disableRipple>Options</Button>} />
             <Menu2Popup>
               <Menu2Submenu>
                 <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -1359,9 +1334,7 @@ describe('<Menu2Submenu />', () => {
   it('renders the caller element as the trigger at both levels', async () => {
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup>
           <Menu2Submenu>
             <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -1396,9 +1369,7 @@ describe('<Menu2Submenu />', () => {
   it('marks the trigger open while the menu is open', async () => {
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup>
           <Menu2Item>Profile</Menu2Item>
         </Menu2Popup>
@@ -1442,9 +1413,7 @@ describe('<Menu2Submenu />', () => {
   it.skipIf(isJsdom())('uses the same shape for submenus', async () => {
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <Button disableRipple>Options</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button disableRipple>Options</Button>} />
         <Menu2Popup>
           <Menu2Item>Cut</Menu2Item>
           <Menu2Submenu>
@@ -1478,9 +1447,7 @@ describe('<Menu2Submenu />', () => {
       const onOpenChange = vi.fn();
       const { user } = render(
         <Menu2 defaultOpen>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup>
             <Menu2Submenu onOpenChange={onOpenChange}>
               <Menu2SubmenuTrigger onClick={onClick}>More</Menu2SubmenuTrigger>
@@ -1551,9 +1518,7 @@ describe('<Menu2Submenu />', () => {
   it.skipIf(isJsdom())('tints an open trigger below the highlight', async () => {
     const { user } = render(
       <Menu2 defaultOpen modal={false}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Item>Plain</Menu2Item>
           <Menu2Submenu>
@@ -1596,9 +1561,7 @@ describe('<Menu2Submenu />', () => {
   // the focus back to, and it closes itself about 200ms after a submenu opens.
   const nestedChain = (
     <Menu2 defaultOpen modal={false}>
-      <Menu2Trigger>
-        <Button disableRipple>Options</Button>
-      </Menu2Trigger>
+      <Menu2Trigger render={<Button disableRipple>Options</Button>} />
       <Menu2Popup>
         {/* Each trigger is index 0 of its own list, so the indices collide. */}
         <Menu2Submenu>

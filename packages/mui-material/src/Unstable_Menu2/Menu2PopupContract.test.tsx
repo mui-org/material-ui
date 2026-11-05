@@ -58,9 +58,7 @@ describe.skipIf(isJsdom())('Menu2 popup contract', () => {
             <span id="slot-description">Choose a slot action</span>
             {submenu ? (
               <Menu2 modal={false}>
-                <Menu2Trigger>
-                  <button type="button">Options</button>
-                </Menu2Trigger>
+                <Menu2Trigger render={<button type="button">Options</button>} />
                 <Menu2Popup slotProps={{ portal: { sx: { zIndex: 2000 } } }} transitionDuration={0}>
                   <Menu2Submenu
                     open={open}
@@ -81,9 +79,7 @@ describe.skipIf(isJsdom())('Menu2 popup contract', () => {
                 onOpenChange={onOpenChange}
                 onOpenChangeComplete={onOpenChangeComplete}
               >
-                <Menu2Trigger>
-                  <button type="button">Options</button>
-                </Menu2Trigger>
+                <Menu2Trigger render={<button type="button">Options</button>} />
                 <Menu2Popup ref={ref} transitionDuration={0} {...props}>
                   {children}
                 </Menu2Popup>
@@ -561,9 +557,7 @@ describe.skipIf(isJsdom())('Menu2 popup contract', () => {
           style={{ position: 'fixed', inset: 0, zIndex: 1500, pointerEvents: 'none' }}
         />
         <Menu2>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup
             slots={{ transition: null }}
             slotProps={{ portal: { 'data-testid': 'root', sx: { zIndex: 2000 } } }}

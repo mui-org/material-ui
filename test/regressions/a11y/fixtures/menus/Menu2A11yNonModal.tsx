@@ -12,9 +12,7 @@ export default function Menu2A11yNonModal() {
     <div ref={setContainer} style={{ width: 700, height: 300 }}>
       <Button>Before</Button>
       <Menu2 defaultOpen modal={false}>
-        <Menu2Trigger>
-          <Button>Document actions</Button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<Button>Document actions</Button>} />
         <Menu2Popup
           container={container}
           transitionDuration={0}

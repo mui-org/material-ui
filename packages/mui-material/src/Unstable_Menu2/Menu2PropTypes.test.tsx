@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
+import * as React from 'react';
 import { describe, expect, it } from 'vitest';
+import { reactMajor } from '@mui/internal-test-utils';
 import Menu2 from './Menu2';
 import Menu2Popup from '../Unstable_Menu2Popup';
 import Menu2SubmenuPopup from '../Unstable_Menu2SubmenuPopup';
@@ -30,6 +32,51 @@ const popupProps = [
   'sx',
   'transitionDuration',
 ];
+
+describe('Menu2Trigger render prop validation', () => {
+  function checkProps(props: Record<string, unknown>) {
+    PropTypes.resetWarningCache();
+    PropTypes.checkPropTypes(Menu2Trigger.propTypes, props, 'prop', 'Menu2Trigger');
+  }
+
+  // React 19 does not validate prop types, and prop-types only recognizes older elements.
+  it.skipIf(reactMajor >= 19)('accepts a render element without children', () => {
+    expect(() => checkProps({ render: <button type="button">Actions</button> })).not.toErrorDev();
+  });
+
+  it('accepts a render callback without children', () => {
+    expect(() =>
+      checkProps({ render: (props: React.ComponentProps<'button'>) => <button {...props} /> }),
+    ).not.toErrorDev();
+  });
+
+  it('accepts children as content for the render element', () => {
+    expect(() =>
+      checkProps({
+        render: (props: React.ComponentProps<'button'>) => <button {...props} />,
+        children: 'Actions',
+      }),
+    ).not.toErrorDev();
+  });
+
+  it('requires render even when children are supplied', () => {
+    expect(() => checkProps({ children: 'Actions' })).toErrorDev(
+      'The prop `render` is marked as required in `Menu2Trigger`',
+    );
+  });
+
+  it('rejects a null render prop', () => {
+    expect(() => checkProps({ render: null })).toErrorDev(
+      'The prop `render` is marked as required in `Menu2Trigger`',
+    );
+  });
+
+  it('rejects a string render prop', () => {
+    expect(() => checkProps({ render: 'button' })).toErrorDev(
+      'Invalid prop `render` supplied to `Menu2Trigger`',
+    );
+  });
+});
 
 describe('Menu2 selection callback prop validation', () => {
   [

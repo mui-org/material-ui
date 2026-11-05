@@ -1,10 +1,7 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "children": {
-      "description": "The element that opens the menu. It must forward its props and ref. Set visual props, such as <code>sx</code> and <code>variant</code>, on this element.",
-      "requiresRef": true
-    },
+    "children": { "description": "The content of the trigger." },
     "closeDelay": {
       "description": "How long to wait before closing the menu that was opened on hover. Specified in milliseconds.<br>Requires the <code>openOnHover</code> prop."
     },
@@ -13,10 +10,13 @@
     },
     "disabled": { "description": "Whether the component should ignore user interaction." },
     "nativeButton": {
-      "description": "Whether the child renders a native <code>&lt;button&gt;</code> element. Set to <code>false</code> when the child renders a different element."
+      "description": "Whether the trigger renders a native <code>&lt;button&gt;</code> element. Set to <code>false</code> when the trigger renders a different element."
     },
     "openOnHover": {
       "description": "Whether the menu should also open when the trigger is hovered."
+    },
+    "render": {
+      "description": "The element that opens the menu, or a function that returns it. Forward the props and ref to the element. Set visual props, such as <code>color</code>, <code>sx</code>, and <code>variant</code>, on this element."
     }
   },
   "classDescriptions": {

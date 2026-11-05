@@ -39,9 +39,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
         const [open, setOpen] = React.useState(false);
         return (
           <Menu2 defaultOpen modal={false}>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup>
               <Menu2Submenu
                 open={open}
@@ -126,9 +124,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
         const [open, setOpen] = React.useState(false);
         return (
           <Menu2 defaultOpen modal={false}>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup>
               <Menu2Submenu
                 open={mode === 'reject controlled' ? open : undefined}
@@ -168,9 +164,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
       const [open, setOpen] = React.useState(false);
       return (
         <Menu2 defaultOpen modal={false}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup>
             <Menu2Submenu
               open={open}
@@ -223,9 +217,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
     const onOpenChangeComplete = vi.fn();
     const { user } = render(
       <Menu2 defaultOpen modal={false}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu onOpenChangeComplete={onOpenChangeComplete}>
             <Menu2SubmenuTrigger openOnHover={false} onFocus={onFocus}>
@@ -263,9 +255,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
   it('keeps the exit transition local to the submenu that closes', async () => {
     const { user } = render(
       <Menu2 defaultOpen modal={false}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Submenu>
             <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>

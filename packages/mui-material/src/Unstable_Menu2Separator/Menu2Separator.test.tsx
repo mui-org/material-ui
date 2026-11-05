@@ -74,9 +74,7 @@ describe('<Menu2Separator />', () => {
             <StyledEngineProvider enableCssLayer={modularCssLayers}>
               <ThemeProvider theme={theme}>
                 <Menu2 defaultOpen modal={false}>
-                  <Menu2Trigger>
-                    <button type="button">Options</button>
-                  </Menu2Trigger>
+                  <Menu2Trigger render={<button type="button">Options</button>} />
                   <Menu2Popup>
                     <Menu2Item>Item</Menu2Item>
                     <Menu2Separator {...props} />

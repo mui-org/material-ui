@@ -193,9 +193,7 @@ describe.skipIf(isJsdom())('Menu2 backdrop slots', () => {
     const changed = vi.fn();
     const { user, unmount } = render(
       <Menu2 onOpenChange={changed}>
-        <Menu2Trigger openOnHover delay={0}>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger openOnHover delay={0} render={<button type="button">Options</button>} />
         <Menu2Popup
           slotProps={{
             backdrop: { 'data-testid': 'backdrop', sx: { backgroundColor: 'rgb(0, 0, 0)' } },
@@ -234,9 +232,7 @@ describe.skipIf(isJsdom())('Menu2 backdrop slots', () => {
       const { user, unmount } = render(
         <div style={{ paddingTop: 96 }}>
           <Menu2 onOpenChangeComplete={completed}>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup
               keepMounted
               transitionDuration={{ enter: 0, exit: 300 }}
@@ -321,9 +317,7 @@ describe.skipIf(isJsdom())('Menu2 backdrop slots', () => {
         })}
       >
         <Menu2>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup slotProps={{ backdrop: { 'data-testid': 'backdrop', sx: { opacity: 0.5 } } }}>
             <Menu2Item>Profile</Menu2Item>
           </Menu2Popup>
@@ -368,9 +362,7 @@ describe.skipIf(isJsdom())('Menu2 backdrop slots', () => {
     );
     const { user, unmount } = render(
       <Menu2 defaultOpen>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup
           keepMounted
           side="top"

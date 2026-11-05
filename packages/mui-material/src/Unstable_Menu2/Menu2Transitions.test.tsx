@@ -49,9 +49,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
       const completed = vi.fn();
       const { user } = render(
         <Menu2 onOpenChangeComplete={completed}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup transitionDuration={duration} slotProps={slotProps}>
             <Menu2Item>Item</Menu2Item>
           </Menu2Popup>
@@ -76,9 +74,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
       const completed = vi.fn();
       const { user } = render(
         <Menu2 onOpenChangeComplete={completed}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup
             slots={{ transition: TransitionSlot }}
             slotProps={{
@@ -110,9 +106,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
     const completed = vi.fn();
     const { user } = render(
       <Menu2 onOpenChangeComplete={completed}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup
           slots={{ transition: null }}
           slotProps={{
@@ -145,9 +139,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
     const completed = vi.fn();
     const { user } = render(
       <Menu2 onOpenChangeComplete={completed}>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup transitionDuration={0}>
           <Menu2Item>Item</Menu2Item>
         </Menu2Popup>
@@ -168,9 +160,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
       const completed = vi.fn();
       const { user } = render(
         <Menu2 defaultOpen onOpenChangeComplete={completed}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup keepMounted={keepMounted} slotProps={{ transition: { onEnter: entering } }}>
             <Menu2Item>Item</Menu2Item>
           </Menu2Popup>
@@ -214,9 +204,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
       const entering = vi.fn();
       const { user } = render(
         <Menu2 onOpenChangeComplete={completed}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup keepMounted={keepMounted} slotProps={{ transition: { onEnter: entering } }}>
             <Menu2Item>Item</Menu2Item>
           </Menu2Popup>
@@ -250,9 +238,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
       updateOpen = setOpen;
       return (
         <Menu2 open={open} onOpenChange={setOpen} onOpenChangeComplete={completed}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup>
             <Menu2Item>Item</Menu2Item>
           </Menu2Popup>
@@ -281,9 +267,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
     const { user } = render(
       <ThemeProvider theme={createTheme({ motion: { reducedMotion: 'always' } })}>
         <Menu2 onOpenChangeComplete={completed}>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup>
             <Menu2Item>Item</Menu2Item>
           </Menu2Popup>
@@ -307,9 +291,7 @@ describe.skipIf(isJsdom())('Menu2 transitions', () => {
   it('does not let a plain sx transition override disable the Grow transition', async () => {
     const { user } = render(
       <Menu2>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup slotProps={{ root: { sx: { transition: 'none' } } }}>
           <Menu2Item>Item</Menu2Item>
         </Menu2Popup>

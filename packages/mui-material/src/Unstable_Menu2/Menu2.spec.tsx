@@ -134,9 +134,8 @@ function Menu2Composition() {
         delay={100}
         closeDelay={0}
         {...{ nativeButton: true, className: 'trigger' }}
-      >
-        <button type="button">Options</button>
-      </Menu2Trigger>
+        render={<button type="button">Options</button>}
+      />
       <Menu2Popup
         anchor={null}
         side="bottom"
@@ -608,9 +607,7 @@ createTheme({
 </Menu2>;
 
 <Menu2 open>
-  <Menu2Trigger>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup
     ref={(node) => expectType<HTMLDivElement | null, typeof node>(node)}
     slotProps={{
@@ -698,23 +695,17 @@ const controlledPopupProps: Menu2PopupProps = {
 <Menu2Popup orientation="horizontal" />;
 
 <Menu2>
-  <Menu2Trigger {...{ openOnHover: true }}>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger {...{ openOnHover: true }} render={<button type="button">Open</button>} />
   <Menu2Popup>
     <Menu2Item>Item</Menu2Item>
   </Menu2Popup>
 </Menu2>;
 
-// @ts-expect-error Button props belong to the trigger child.
-<Menu2Trigger variant="outlined">
-  <button type="button">Open</button>
-</Menu2Trigger>;
+// @ts-expect-error Button props belong to the render element.
+<Menu2Trigger variant="outlined" render={<button type="button">Open</button>} />;
 
 <Menu2>
-  <Menu2Trigger>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<button type="button">Open</button>} />
   {/* @ts-expect-error The surface slot is named root. */}
   <Menu2Popup slots={{ popup: 'div' }}>
     <Menu2Item>Item</Menu2Item>
@@ -722,9 +713,7 @@ const controlledPopupProps: Menu2PopupProps = {
 </Menu2>;
 
 <Menu2>
-  <Menu2Trigger>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup slotProps={{ portal: { className: 'portal' } }}>
     <Menu2Item>Item</Menu2Item>
   </Menu2Popup>
@@ -758,9 +747,7 @@ const controlledPopupProps: Menu2PopupProps = {
 </Menu2>;
 
 <Menu2>
-  <Menu2Trigger>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
     <Menu2Submenu>
       <Menu2SubmenuTrigger>More</Menu2SubmenuTrigger>
@@ -775,9 +762,7 @@ const controlledPopupProps: Menu2PopupProps = {
 // The ref and the HTML attributes follow the `component` prop, the same as the
 // classic parts.
 <Menu2>
-  <Menu2Trigger>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
     <Menu2Item ref={(node) => expectType<HTMLDivElement | null, typeof node>(node)}>Item</Menu2Item>
     <Menu2Item component="li" ref={(node) => expectType<HTMLLIElement | null, typeof node>(node)}>
@@ -817,9 +802,7 @@ const controlledPopupProps: Menu2PopupProps = {
 </Menu2>;
 
 <Menu2>
-  <Menu2Trigger>
-    <button type="button">Open</button>
-  </Menu2Trigger>
+  <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
     {/* @ts-expect-error `href` is an anchor attribute, and the default root is a div. */}
     <Menu2Item href="/anchor">Item</Menu2Item>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2CheckboxItem from '@mui/material/Unstable_Menu2CheckboxItem';
 import Menu2Group from '@mui/material/Unstable_Menu2Group';
@@ -26,9 +27,7 @@ export default function Menu2Consumer() {
         eventDetails.cancel();
       }}
     >
-      <Menu2Trigger>
-        <Button>Project actions</Button>
-      </Menu2Trigger>
+      <Menu2Trigger render={<Button>Project actions</Button>} />
       <Menu2Popup
         ref={(node) => {
           node satisfies HTMLDivElement | null;
@@ -77,12 +76,73 @@ export default function Menu2Consumer() {
     // @ts-expect-error The trigger ref does not point to an SVG element.
     node satisfies SVGElement | null;
   }}
->
+  render={<Button>Project actions</Button>}
+/>;
+
+<Menu2Trigger
+  render={(props, state) => {
+    state.open satisfies boolean;
+    state.disabled satisfies boolean;
+    // @ts-expect-error The open state is a boolean.
+    state.open satisfies string;
+    return (
+      <button type="button" {...props}>
+        {state.open ? 'Close' : 'Open'}
+      </button>
+    );
+  }}
+/>;
+
+<Menu2Trigger
+  render={(props, state) => {
+    state.open satisfies boolean;
+    state.disabled satisfies boolean;
+    // @ts-expect-error The callback props do not include the legacy HTML color attribute.
+    props.color satisfies string | undefined;
+    return <Button {...props}>{state.open ? 'Close' : 'Open'}</Button>;
+  }}
+/>;
+
+<Menu2Trigger
+  render={(props, state) => {
+    state.open satisfies boolean;
+    state.disabled satisfies boolean;
+    return <IconButton {...props} aria-label={state.open ? 'Close menu' : 'Open menu'} />;
+  }}
+/>;
+
+const CustomButton = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
+  function CustomButton(props, ref) {
+    return <Button {...props} ref={ref} />;
+  },
+);
+
+<Menu2Trigger render={(props) => <CustomButton {...props}>Project actions</CustomButton>} />;
+
+<Menu2Trigger render={<Button />}>Project actions</Menu2Trigger>;
+
+// @ts-expect-error Set color on the render element.
+<Menu2Trigger color="primary" render={<Button>Project actions</Button>} />;
+
+// @ts-expect-error Use render to select the trigger component.
+<Menu2Trigger component="button" render={<Button>Project actions</Button>} />;
+
+// @ts-expect-error A trigger requires a render prop.
+<Menu2Trigger>Project actions</Menu2Trigger>;
+
+// @ts-expect-error A trigger element must be supplied through render.
+<Menu2Trigger>
   <Button>Project actions</Button>
 </Menu2Trigger>;
 
-// @ts-expect-error A trigger wraps one element.
-<Menu2Trigger>Project actions</Menu2Trigger>;
+// @ts-expect-error The render prop cannot be undefined.
+<Menu2Trigger render={undefined} />;
+
+// @ts-expect-error The render prop cannot be null.
+<Menu2Trigger render={null} />;
+
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2Trigger render="button" />;
 
 // @ts-expect-error Detached triggers are not part of the Menu2 API.
 <Menu2 handle={{}} />;
@@ -97,9 +157,7 @@ export default function Menu2Consumer() {
 <Menu2 trigger={<Button>Project actions</Button>} />;
 
 // @ts-expect-error Trigger payloads are not part of the Menu2 API.
-<Menu2Trigger payload={{ id: 1 }}>
-  <Button>Project actions</Button>
-</Menu2Trigger>;
+<Menu2Trigger payload={{ id: 1 }} render={<Button>Project actions</Button>} />;
 
 // @ts-expect-error Menu2 children are nodes, not a payload callback.
 <Menu2>{() => <Menu2Item>Open project</Menu2Item>}</Menu2>;

@@ -34,9 +34,7 @@ export default function ComposedMenu2() {
 
   return (
     <Menu>
-      <MenuTrigger>
-        <Button>Format</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Format</Button>} />
       <MenuPopup sx={{ width: 260 }}>
         <MenuCheckboxItem checked={bold} onCheckedChange={setBold}>
           <ListItemText>Bold</ListItemText>

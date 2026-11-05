@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import type { Menu2Props } from '@mui/material/Unstable_Menu2';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import type { Menu2PopupProps } from '@mui/material/Unstable_Menu2Popup';
@@ -13,12 +15,57 @@ export { Menu2, Menu2Trigger, Menu2Popup, Menu2SubmenuPopup };
 
 export const triggerProps: Menu2TriggerProps = {
   disabled: false,
-  children: React.createElement('button', { type: 'button' }, 'Profile'),
+  render: React.createElement('button', { type: 'button' }, 'Profile'),
   onClick: (event) => {
     event.currentTarget satisfies HTMLElement;
     // @ts-expect-error The trigger event targets an HTML element.
     event.currentTarget satisfies SVGElement;
   },
+};
+
+export const callbackTriggerProps: Menu2TriggerProps = {
+  render: (props, state) => {
+    state.open satisfies boolean;
+    state.disabled satisfies boolean;
+    return React.createElement(
+      'button',
+      { type: 'button', ...props },
+      state.open ? 'Close' : 'Open',
+    );
+  },
+};
+
+export const buttonCallbackTriggerProps: Menu2TriggerProps = {
+  render: (props, state) => {
+    state.open satisfies boolean;
+    state.disabled satisfies boolean;
+    // @ts-expect-error The callback props do not include the legacy HTML color attribute.
+    props.color satisfies string | undefined;
+    return React.createElement(Button, { ...props }, state.open ? 'Close' : 'Open');
+  },
+};
+
+export const iconButtonCallbackTriggerProps: Menu2TriggerProps = {
+  render: (props, state) => {
+    state.open satisfies boolean;
+    state.disabled satisfies boolean;
+    return React.createElement(IconButton, {
+      ...props,
+      'aria-label': state.open ? 'Close menu' : 'Open menu',
+    });
+  },
+};
+
+export const invalidColorTriggerProps: Menu2TriggerProps = {
+  ...triggerProps,
+  // @ts-expect-error Set color on the render element.
+  color: 'primary',
+};
+
+export const invalidComponentTriggerProps: Menu2TriggerProps = {
+  ...triggerProps,
+  // @ts-expect-error Use render to select the trigger component.
+  component: 'button',
 };
 
 export const invalidTriggerProps: Menu2TriggerProps = {

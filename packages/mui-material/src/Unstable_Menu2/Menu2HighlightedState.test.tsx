@@ -74,9 +74,7 @@ describe.skipIf(isJsdom())('Menu2 live highlighted ownerState', () => {
       const { user } = render(
         <ThemeProvider theme={theme}>
           <Menu2>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup transitionDuration={0}>
               <Menu2Item>Before</Menu2Item>
               {item}

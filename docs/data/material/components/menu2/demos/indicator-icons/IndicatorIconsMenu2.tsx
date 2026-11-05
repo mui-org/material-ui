@@ -20,9 +20,7 @@ export default function IndicatorIconsMenu2() {
 
   return (
     <Menu>
-      <MenuTrigger>
-        <Button>Options</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Options</Button>} />
       <MenuPopup>
         <MenuCheckboxItem
           checked={favorite}

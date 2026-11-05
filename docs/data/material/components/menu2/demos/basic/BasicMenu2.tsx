@@ -9,9 +9,7 @@ export default function BasicMenu2() {
   return (
     // @focus-start @padding 2
     <Menu>
-      <MenuTrigger>
-        <Button>Dashboard</Button>
-      </MenuTrigger>
+      <MenuTrigger render={<Button>Dashboard</Button>} />
       <MenuPopup>
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>

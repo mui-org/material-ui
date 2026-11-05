@@ -398,9 +398,7 @@ export default function FullFocusVisibleDemo() {
               and compare the indicator with the MenuItem row above. */}
           <Row label="Menu2Item">
             <Menu2>
-              <Menu2Trigger>
-                <Button variant="outlined">Open menu</Button>
-              </Menu2Trigger>
+              <Menu2Trigger render={<Button variant="outlined">Open menu</Button>} />
               <Menu2Popup>
                 <Menu2Item>Profile</Menu2Item>
                 <Menu2Item>Settings</Menu2Item>

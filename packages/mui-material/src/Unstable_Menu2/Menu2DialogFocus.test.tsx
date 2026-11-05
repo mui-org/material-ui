@@ -44,11 +44,13 @@ describe.skipIf(isJsdom())('Menu2 opening a Material Dialog', () => {
             return (
               <React.Fragment>
                 <Menu2 onOpenChangeComplete={menuCompleted}>
-                  <Menu2Trigger>
-                    <button type="button" ref={triggerRef}>
-                      Options
-                    </button>
-                  </Menu2Trigger>
+                  <Menu2Trigger
+                    render={
+                      <button type="button" ref={triggerRef}>
+                        Options
+                      </button>
+                    }
+                  />
                   <Menu2Popup {...props}>
                     <Menu2Item onClick={() => setDialogOpen(true)}>Open dialog</Menu2Item>
                   </Menu2Popup>

@@ -63,9 +63,7 @@ function Menu2Harness() {
   return (
     <div>
       <Menu2>
-        <Menu2Trigger>
-          <button type="button">Options</button>
-        </Menu2Trigger>
+        <Menu2Trigger render={<button type="button">Options</button>} />
         <Menu2Popup>
           <Menu2Item>Alpha</Menu2Item>
           <Menu2Item disabled>Beta</Menu2Item>
@@ -139,9 +137,7 @@ describe.skipIf(isJsdom())('Menu behavior benchmark: classic vs Menu2', () => {
       it(`Menu2 skips disabled items on ${key} opening but keeps them focusable`, async () => {
         const { user } = render(
           <Menu2>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup>
               <Menu2Item disabled>Unavailable first</Menu2Item>
               <Menu2Item>Alpha</Menu2Item>
@@ -195,9 +191,7 @@ describe.skipIf(isJsdom())('Menu behavior benchmark: classic vs Menu2', () => {
     it('the successor highlights the first enabled item on ArrowDown, not the checked one', async () => {
       const { user } = render(
         <Menu2>
-          <Menu2Trigger>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger render={<button type="button">Options</button>} />
           <Menu2Popup>
             <Menu2RadioGroup defaultValue="200">
               <Menu2RadioItem disabled value="50">
@@ -380,11 +374,13 @@ describe.skipIf(isJsdom())('Menu behavior benchmark: classic vs Menu2', () => {
             <ThemeProvider theme={theme}>
               <div style={layout}>
                 <Menu2>
-                  <Menu2Trigger>
-                    <button type="button" style={{ height: triggerHeight }}>
-                      Options
-                    </button>
-                  </Menu2Trigger>
+                  <Menu2Trigger
+                    render={
+                      <button type="button" style={{ height: triggerHeight }}>
+                        Options
+                      </button>
+                    }
+                  />
                   <Menu2Popup
                     dir={direction}
                     side="bottom"

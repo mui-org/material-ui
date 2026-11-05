@@ -42,9 +42,7 @@ describe.skipIf(isJsdom())('Menu2 inside a Material Dialog', () => {
       >
         <div style={{ display: 'flex', gap: 32, padding: 24 }}>
           <Menu2 modal={modal}>
-            <Menu2Trigger {...triggerProps}>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger {...triggerProps} render={<button type="button">Options</button>} />
             <Menu2Popup {...menuProps}>
               {menuProps?.children ?? <Menu2Item>Profile</Menu2Item>}
             </Menu2Popup>
@@ -255,9 +253,7 @@ describe.skipIf(isJsdom())('Menu2 and Material Modal scroll locking', () => {
         return (
           <div style={{ minHeight: '200vh' }}>
             <Menu2>
-              <Menu2Trigger>
-                <button type="button">Options</button>
-              </Menu2Trigger>
+              <Menu2Trigger render={<button type="button">Options</button>} />
               <Menu2Popup>
                 <Menu2Item onClick={() => setDialogOpen(true)}>Open dialog</Menu2Item>
               </Menu2Popup>
@@ -312,9 +308,7 @@ describe.skipIf(isJsdom())('Menu2 and Material Modal scroll locking', () => {
       return (
         <Dialog open={dialogOpen} transitionDuration={0}>
           <Menu2>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup>
               <Menu2Item>Profile</Menu2Item>
             </Menu2Popup>
@@ -353,9 +347,7 @@ describe.skipIf(isJsdom())('Menu2 and Material Modal scroll locking', () => {
       return (
         <Dialog open={dialogOpen} transitionDuration={0}>
           <Menu2>
-            <Menu2Trigger>
-              <button type="button">Options</button>
-            </Menu2Trigger>
+            <Menu2Trigger render={<button type="button">Options</button>} />
             <Menu2Popup>
               <Menu2Item>Profile</Menu2Item>
             </Menu2Popup>
@@ -408,9 +400,11 @@ describe.skipIf(isJsdom())('Menu2 modal state', () => {
         style={{ minHeight: '200vh', display: 'flex', alignItems: 'start', gap: 32, padding: 24 }}
       >
         <Menu2 modal={modal} onOpenChange={onOpenChange}>
-          <Menu2Trigger openOnHover={openOnHover} delay={0}>
-            <button type="button">Options</button>
-          </Menu2Trigger>
+          <Menu2Trigger
+            openOnHover={openOnHover}
+            delay={0}
+            render={<button type="button">Options</button>}
+          />
           <Menu2Popup slots={nullBackdrop ? { backdrop: null } : undefined}>
             {children ?? <Menu2Item>Profile</Menu2Item>}
           </Menu2Popup>
