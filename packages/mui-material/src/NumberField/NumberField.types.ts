@@ -260,7 +260,8 @@ export interface BaseNumberFieldProps extends StandardProps<
    */
   label?: React.ReactNode | undefined;
   /**
-   * The large step value for the number input element.
+   * The amount to increment or decrement while holding the Shift key.
+   * @default 10
    */
   largeStep?: BaseNumberField.Root.Props['largeStep'] | undefined;
   /**
@@ -290,11 +291,24 @@ export interface BaseNumberFieldProps extends StandardProps<
    */
   onFocus?: React.FocusEventHandler<HTMLInputElement> | undefined;
   /**
-   * The change event handler of the number input element.
+   * Callback fired when the numeric value changes.
+   * Call `eventDetails.cancel()` to reject the proposed change.
+   *
+   * @param {number|null} value The new numeric value, or `null` when the input is empty.
+   * @param {object} eventDetails The interaction details, including the native `event` and a `reason`:
+   * `"input-change"`, `"input-clear"`, `"input-blur"`, `"input-paste"`, `"keyboard"`,
+   * `"increment-press"`, `"decrement-press"`, `"wheel"`, `"scrub"`, or `"none"`.
    */
   onValueChange?: BaseNumberField.Root.Props['onValueChange'] | undefined;
   /**
-   * The committed value event handler of the number input element.
+   * Callback fired when a value is committed.
+   * Typing commits on blur. Button and scrub interactions commit on pointer release.
+   * Keyboard and wheel changes commit immediately.
+   *
+   * @param {number|null} value The committed numeric value, or `null` when the input is empty.
+   * @param {object} eventDetails The interaction details, including the native `event` and a `reason`:
+   * `"input-blur"`, `"input-clear"`, `"keyboard"`, `"increment-press"`, `"decrement-press"`,
+   * `"wheel"`, `"scrub"`, or `"none"`.
    */
   onValueCommitted?: BaseNumberField.Root.Props['onValueCommitted'] | undefined;
   /**
@@ -318,7 +332,8 @@ export interface BaseNumberFieldProps extends StandardProps<
    */
   size?: OverridableStringUnion<'small' | 'medium', NumberFieldPropsSizeOverrides> | undefined;
   /**
-   * The small step value for the number input element.
+   * The amount to increment or decrement while holding the Alt key (Option on macOS).
+   * @default 0.1
    */
   smallStep?: BaseNumberField.Root.Props['smallStep'] | undefined;
   /**
@@ -327,7 +342,11 @@ export interface BaseNumberFieldProps extends StandardProps<
    */
   snapOnStep?: BaseNumberField.Root.Props['snapOnStep'] | undefined;
   /**
-   * The step attribute of the number input element.
+   * The amount to increment or decrement with the buttons, arrow keys, or scrub area.
+   * Set `min` explicitly to enable step validation on form submission.
+   * Set to `"any"` to disable step validation; interactive stepping then uses `1`,
+   * while the Alt and Shift keys still use `smallStep` and `largeStep`.
+   * @default 1
    */
   step?: BaseNumberField.Root.Props['step'] | undefined;
   /**
@@ -381,9 +400,12 @@ export type NumberFieldProps<Variant extends NumberFieldVariants = NumberFieldVa
 
 export interface NumberFieldOwnerState
   extends BaseNumberFieldProps, Pick<NumberFieldProps, 'slots' | 'slotProps'> {
+  autoFocus: boolean;
   controlsPosition: NonNullable<NumberFieldProps['controlsPosition']>;
   color: NonNullable<NumberFieldProps['color']>;
   disabled: boolean;
+  error: boolean;
+  fullWidth: boolean;
   readOnly: boolean;
   required: boolean;
   scrubArea: NonNullable<NumberFieldProps['scrubArea']>;

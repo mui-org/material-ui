@@ -12,6 +12,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import type { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import NumberField, { numberFieldClasses as classes } from '@mui/material/NumberField';
 import type { NumberFieldOwnerState, NumberFieldProps } from '@mui/material/NumberField';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
 
 interface TestSlotProps {
@@ -282,7 +283,10 @@ describe('<NumberField />', () => {
             size: 'medium',
             color: 'primary',
             controlsPosition: 'end',
+            autoFocus: false,
             disabled: false,
+            error: false,
+            fullWidth: false,
             required: false,
             readOnly: false,
             allowOutOfRange: false,
@@ -290,6 +294,39 @@ describe('<NumberField />', () => {
             snapOnStep: false,
             id: input.id,
           });
+        });
+      });
+
+      it('matches theme variants for omitted and explicitly false Material flags', () => {
+        const theme = createTheme({
+          components: {
+            MuiNumberField: {
+              styleOverrides: {
+                root: {
+                  variants: [
+                    { props: { autoFocus: false }, style: { '--auto-focus-default': 'matched' } },
+                    { props: { error: false }, style: { '--error-default': 'matched' } },
+                    { props: { fullWidth: false }, style: { '--full-width-default': 'matched' } },
+                  ],
+                },
+              },
+            },
+          },
+        });
+        render(
+          <ThemeProvider theme={theme}>
+            <NumberField data-testid="omitted" />
+            <NumberField data-testid="explicit" autoFocus={false} error={false} fullWidth={false} />
+          </ThemeProvider>,
+        );
+
+        [screen.getByTestId('omitted'), screen.getByTestId('explicit')].forEach((root) => {
+          const style = window.getComputedStyle(root);
+          ['--auto-focus-default', '--error-default', '--full-width-default'].forEach(
+            (property) => {
+              expect(style.getPropertyValue(property).trim(), property).to.equal('matched');
+            },
+          );
         });
       });
 

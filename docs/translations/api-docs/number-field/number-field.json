@@ -31,7 +31,9 @@
     "id": { "description": "The id of the input element." },
     "inputRef": { "description": "The ref of the input element." },
     "label": { "description": "The label content." },
-    "largeStep": { "description": "The large step value for the number input element." },
+    "largeStep": {
+      "description": "The amount to increment or decrement while holding the Shift key."
+    },
     "locale": {
       "description": "The locale used for number formatting and parsing.<br>See <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat\">MDN - Intl Number Format</a>."
     },
@@ -40,9 +42,31 @@
     "name": { "description": "Name attribute of the <code>input</code> element." },
     "onBlur": { "description": "The blur event handler of the input element." },
     "onFocus": { "description": "The focus event handler of the input element." },
-    "onValueChange": { "description": "The change event handler of the number input element." },
+    "onValueChange": {
+      "description": "Callback fired when the numeric value changes. Call <code>eventDetails.cancel()</code> to reject the proposed change.",
+      "typeDescriptions": {
+        "value": {
+          "name": "value",
+          "description": "The new numeric value, or <code>null</code> when the input is empty."
+        },
+        "eventDetails": {
+          "name": "eventDetails",
+          "description": "The interaction details, including the native <code>event</code> and a <code>reason</code>: <code>&quot;input-change&quot;</code>, <code>&quot;input-clear&quot;</code>, <code>&quot;input-blur&quot;</code>, <code>&quot;input-paste&quot;</code>, <code>&quot;keyboard&quot;</code>, <code>&quot;increment-press&quot;</code>, <code>&quot;decrement-press&quot;</code>, <code>&quot;wheel&quot;</code>, <code>&quot;scrub&quot;</code>, or <code>&quot;none&quot;</code>."
+        }
+      }
+    },
     "onValueCommitted": {
-      "description": "The committed value event handler of the number input element."
+      "description": "Callback fired when a value is committed. Typing commits on blur. Button and scrub interactions commit on pointer release. Keyboard and wheel changes commit immediately.",
+      "typeDescriptions": {
+        "value": {
+          "name": "value",
+          "description": "The committed numeric value, or <code>null</code> when the input is empty."
+        },
+        "eventDetails": {
+          "name": "eventDetails",
+          "description": "The interaction details, including the native <code>event</code> and a <code>reason</code>: <code>&quot;input-blur&quot;</code>, <code>&quot;input-clear&quot;</code>, <code>&quot;keyboard&quot;</code>, <code>&quot;increment-press&quot;</code>, <code>&quot;decrement-press&quot;</code>, <code>&quot;wheel&quot;</code>, <code>&quot;scrub&quot;</code>, or <code>&quot;none&quot;</code>."
+        }
+      }
     },
     "readOnly": { "description": "If <code>true</code>, the input element is read-only." },
     "required": {
@@ -54,11 +78,15 @@
     "size": { "description": "The size of the component." },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
-    "smallStep": { "description": "The small step value for the number input element." },
+    "smallStep": {
+      "description": "The amount to increment or decrement while holding the Alt key (Option on macOS)."
+    },
     "snapOnStep": {
       "description": "If <code>true</code>, the number input element will snap to the nearest step value."
     },
-    "step": { "description": "The step attribute of the number input element." },
+    "step": {
+      "description": "The amount to increment or decrement with the buttons, arrow keys, or scrub area. Set <code>min</code> explicitly to enable step validation on form submission. Set to <code>&quot;any&quot;</code> to disable step validation; interactive stepping then uses <code>1</code>, while the Alt and Shift keys still use <code>smallStep</code> and <code>largeStep</code>."
+    },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     },

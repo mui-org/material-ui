@@ -72,7 +72,10 @@ const invalidVariant: NumberFieldProps<'custom'> = {};
   slotProps={{
     input: (ownerState) => {
       expectType<NumberFieldOwnerState, typeof ownerState>(ownerState);
+      expectType<boolean, typeof ownerState.autoFocus>(ownerState.autoFocus);
       expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
+      expectType<boolean, typeof ownerState.error>(ownerState.error);
+      expectType<boolean, typeof ownerState.fullWidth>(ownerState.fullWidth);
       expectType<boolean, typeof ownerState.required>(ownerState.required);
       return { slotProps: { notchedOutline: { className: 'outline' } } };
     },

@@ -30,12 +30,15 @@ const NumberField = React.forwardRef(function NumberField(
   const {
     allowOutOfRange = false,
     allowWheelScrub = false,
+    autoFocus = false,
     color = 'primary',
     controlsPosition = 'end',
     defaultValue,
     disabled = false,
+    error = false,
     form,
     format,
+    fullWidth = false,
     helperText,
     id: idProp,
     inputRef,
@@ -69,9 +72,12 @@ const NumberField = React.forwardRef(function NumberField(
     ...props,
     allowOutOfRange,
     allowWheelScrub,
+    autoFocus,
     color,
     controlsPosition,
     disabled,
+    error,
+    fullWidth,
     id,
     readOnly,
     required,
@@ -243,7 +249,8 @@ NumberField.propTypes /* remove-proptypes */ = {
    */
   label: PropTypes.node,
   /**
-   * The large step value for the number input element.
+   * The amount to increment or decrement while holding the Shift key.
+   * @default 10
    */
   largeStep: PropTypes.number,
   /**
@@ -310,11 +317,24 @@ NumberField.propTypes /* remove-proptypes */ = {
    */
   onFocus: PropTypes.func,
   /**
-   * The change event handler of the number input element.
+   * Callback fired when the numeric value changes.
+   * Call `eventDetails.cancel()` to reject the proposed change.
+   *
+   * @param {number|null} value The new numeric value, or `null` when the input is empty.
+   * @param {object} eventDetails The interaction details, including the native `event` and a `reason`:
+   * `"input-change"`, `"input-clear"`, `"input-blur"`, `"input-paste"`, `"keyboard"`,
+   * `"increment-press"`, `"decrement-press"`, `"wheel"`, `"scrub"`, or `"none"`.
    */
   onValueChange: PropTypes.func,
   /**
-   * The committed value event handler of the number input element.
+   * Callback fired when a value is committed.
+   * Typing commits on blur. Button and scrub interactions commit on pointer release.
+   * Keyboard and wheel changes commit immediately.
+   *
+   * @param {number|null} value The committed numeric value, or `null` when the input is empty.
+   * @param {object} eventDetails The interaction details, including the native `event` and a `reason`:
+   * `"input-blur"`, `"input-clear"`, `"keyboard"`, `"increment-press"`, `"decrement-press"`,
+   * `"wheel"`, `"scrub"`, or `"none"`.
    */
   onValueCommitted: PropTypes.func,
   /**
@@ -349,6 +369,8 @@ NumberField.propTypes /* remove-proptypes */ = {
     input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     inputLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    scrubArea: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    scrubAreaCursor: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   }),
   /**
    * The components used for each slot inside.
@@ -366,7 +388,8 @@ NumberField.propTypes /* remove-proptypes */ = {
     scrubAreaCursor: PropTypes.elementType,
   }),
   /**
-   * The small step value for the number input element.
+   * The amount to increment or decrement while holding the Alt key (Option on macOS).
+   * @default 0.1
    */
   smallStep: PropTypes.number,
   /**
@@ -375,7 +398,11 @@ NumberField.propTypes /* remove-proptypes */ = {
    */
   snapOnStep: PropTypes.bool,
   /**
-   * The step attribute of the number input element.
+   * The amount to increment or decrement with the buttons, arrow keys, or scrub area.
+   * Set `min` explicitly to enable step validation on form submission.
+   * Set to `"any"` to disable step validation; interactive stepping then uses `1`,
+   * while the Alt and Shift keys still use `smallStep` and `largeStep`.
+   * @default 1
    */
   step: PropTypes.oneOfType([PropTypes.oneOf(['any']), PropTypes.number]),
   /**

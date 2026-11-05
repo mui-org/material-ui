@@ -35,7 +35,7 @@
       "type": { "name": "union", "description": "func<br>&#124;&nbsp;{ current?: object }" }
     },
     "label": { "type": { "name": "node" } },
-    "largeStep": { "type": { "name": "number" } },
+    "largeStep": { "type": { "name": "number" }, "default": "10" },
     "locale": {
       "type": {
         "name": "union",
@@ -47,8 +47,20 @@
     "name": { "type": { "name": "string" } },
     "onBlur": { "type": { "name": "func" } },
     "onFocus": { "type": { "name": "func" } },
-    "onValueChange": { "type": { "name": "func" } },
-    "onValueCommitted": { "type": { "name": "func" } },
+    "onValueChange": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(value: number | null, eventDetails: object) => void",
+        "describedArgs": ["value", "eventDetails"]
+      }
+    },
+    "onValueCommitted": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(value: number | null, eventDetails: object) => void",
+        "describedArgs": ["value", "eventDetails"]
+      }
+    },
     "readOnly": { "type": { "name": "bool" }, "default": "false" },
     "required": { "type": { "name": "bool" }, "default": "false" },
     "scrubArea": {
@@ -65,7 +77,7 @@
     "slotProps": {
       "type": {
         "name": "shape",
-        "description": "{ decrementButton?: func<br>&#124;&nbsp;object, formHelperText?: func<br>&#124;&nbsp;object, htmlInput?: func<br>&#124;&nbsp;object, incrementButton?: func<br>&#124;&nbsp;object, input?: func<br>&#124;&nbsp;object, inputLabel?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
+        "description": "{ decrementButton?: func<br>&#124;&nbsp;object, formHelperText?: func<br>&#124;&nbsp;object, htmlInput?: func<br>&#124;&nbsp;object, incrementButton?: func<br>&#124;&nbsp;object, input?: func<br>&#124;&nbsp;object, inputLabel?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object, scrubArea?: func<br>&#124;&nbsp;object, scrubAreaCursor?: func<br>&#124;&nbsp;object }"
       },
       "default": "{}"
     },
@@ -76,9 +88,12 @@
       },
       "default": "{}"
     },
-    "smallStep": { "type": { "name": "number" } },
+    "smallStep": { "type": { "name": "number" }, "default": "0.1" },
     "snapOnStep": { "type": { "name": "bool" }, "default": "false" },
-    "step": { "type": { "name": "union", "description": "'any'<br>&#124;&nbsp;number" } },
+    "step": {
+      "type": { "name": "union", "description": "'any'<br>&#124;&nbsp;number" },
+      "default": "1"
+    },
     "sx": {
       "type": {
         "name": "union",
