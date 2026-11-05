@@ -371,7 +371,7 @@ export default function createThemeWithVars(options = {}, ...args) {
       setColor(palette.Button, 'inheritContainedBg', setCssVarColor('palette-grey-300'));
       setColor(palette.Button, 'inheritContainedHoverBg', setCssVarColor('palette-grey-A100'));
       setColor(palette.Chip, 'defaultBorder', setCssVarColor('palette-grey-400'));
-      setColor(palette.Chip, 'defaultAvatarColor', setCssVarColor('palette-grey-700'));
+      setColor(palette.Chip, 'defaultAvatarColor', setCssVarColor('palette-common-black'));
       setColor(palette.Chip, 'defaultIconColor', setCssVarColor('palette-grey-700'));
       setColor(palette.FilledInput, 'bg', 'rgba(0, 0, 0, 0.06)');
       setColor(palette.FilledInput, 'hoverBg', 'rgba(0, 0, 0, 0.09)');
@@ -697,7 +697,7 @@ export default function createThemeWithVars(options = {}, ...args) {
       setColor(palette.Button, 'inheritContainedBg', setCssVarColor('palette-grey-800'));
       setColor(palette.Button, 'inheritContainedHoverBg', setCssVarColor('palette-grey-700'));
       setColor(palette.Chip, 'defaultBorder', setCssVarColor('palette-grey-700'));
-      setColor(palette.Chip, 'defaultAvatarColor', setCssVarColor('palette-grey-300'));
+      setColor(palette.Chip, 'defaultAvatarColor', setCssVarColor('palette-common-white'));
       setColor(palette.Chip, 'defaultIconColor', setCssVarColor('palette-grey-300'));
       setColor(palette.FilledInput, 'bg', 'rgba(255, 255, 255, 0.09)');
       setColor(palette.FilledInput, 'hoverBg', 'rgba(255, 255, 255, 0.13)');
