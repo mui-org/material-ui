@@ -7,7 +7,7 @@ githubLabel: 'scope: transfer list'
 
 # Transfer List
 
-<p class="description">A transfer list (or "shuttle") lets users move items between lists. Material UI has no Transfer List component; these demos build one by composition.</p>
+<p class="description">A transfer list (or "shuttle") lets users move items between lists. Material UI has no Transfer List component; these demos build one by composition.</p>
 
 {{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
