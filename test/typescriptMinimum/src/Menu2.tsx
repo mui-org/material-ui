@@ -16,6 +16,17 @@ import Menu2SubmenuPopup from '@mui/material/Unstable_Menu2SubmenuPopup';
 import Menu2SubmenuTrigger from '@mui/material/Unstable_Menu2SubmenuTrigger';
 import Menu2Trigger from '@mui/material/Unstable_Menu2Trigger';
 
+<Menu2Popup slotProps={{ list: { dense: true } }} />;
+<Menu2Popup slotProps={{ list: () => ({ dense: false }) }} />;
+<Menu2SubmenuPopup slotProps={{ list: { disablePadding: true, sx: { py: 1 } } }} />;
+<Menu2SubmenuPopup
+  slotProps={{ list: (ownerState) => ({ disablePadding: true, 'data-side': ownerState.side }) }}
+/>;
+// @ts-expect-error Submenu list density is inherited from the parent menu.
+<Menu2SubmenuPopup slotProps={{ list: { dense: true } }} />;
+// @ts-expect-error Submenu list density cannot be changed through callback slot props.
+<Menu2SubmenuPopup slotProps={{ list: () => ({ dense: false }) }} />;
+
 export default function Menu2Consumer() {
   return (
     <Menu2

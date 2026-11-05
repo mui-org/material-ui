@@ -145,9 +145,8 @@ Compose the same list primitives that you use with the current Menu: `ListItemIc
 
 ## Dense menu
 
-Set `dense` on the popup's `list` slot to make all the items compact.
-Submenus inherit their parent list's density.
-Set `slotProps.list.dense` on `MenuSubmenuPopup` to override it, including `false` for regular spacing.
+Set `slotProps.list.dense` on `MenuPopup` to make all the items compact.
+Submenus inherit the parent list density and cannot override it.
 An item can also set its own `dense` prop.
 
 {{"component": "file://./demos/dense/index.ts"}}

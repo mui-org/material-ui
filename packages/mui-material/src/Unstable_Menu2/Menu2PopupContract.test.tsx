@@ -19,7 +19,8 @@ interface TestMenuProps
   extends
     Omit<Menu2SubmenuPopupProps, 'slotProps'>,
     Pick<Menu2SubmenuProps, 'open' | 'onOpenChange' | 'onOpenChangeComplete'> {
-  slotProps?: Menu2PopupSharedSlotProps<Menu2PopupProps | Menu2SubmenuPopupProps>;
+  slotProps?: Menu2PopupSharedSlotProps<Menu2PopupProps | Menu2SubmenuPopupProps> &
+    Menu2SubmenuPopupProps['slotProps'];
 }
 
 const CustomPositioner = React.forwardRef<

@@ -25,7 +25,8 @@ interface TestMenuProps
   extends
     Pick<Menu2SubmenuProps, 'open' | 'onOpenChange' | 'loopFocus' | 'highlightItemOnHover'>,
     Omit<Menu2SubmenuPopupProps, 'slotProps'> {
-  slotProps?: Menu2PopupSharedSlotProps<Menu2PopupProps | Menu2SubmenuPopupProps>;
+  slotProps?: Menu2PopupSharedSlotProps<Menu2PopupProps | Menu2SubmenuPopupProps> &
+    Menu2SubmenuPopupProps['slotProps'];
 }
 
 describe('<Menu2Submenu />', () => {
@@ -191,16 +192,18 @@ describe('<Menu2Submenu />', () => {
               highlightItemOnHover={false}
               keepMounted
               slotProps={{
-                portal: (state) => ({
+                portal: (state: Menu2PopupProps | Menu2SubmenuPopupProps) => ({
                   'data-align-prop': state.align,
                 }),
-                root: (state) => ({
+                root: (state: Menu2PopupProps | Menu2SubmenuPopupProps) => ({
                   'data-has-root-behavior': String(
                     'open' in state || 'loopFocus' in state || 'highlightItemOnHover' in state,
                   ),
                   style: { transition: 'none' },
                 }),
-                list: (state) => ({ 'data-align-prop': state.align }),
+                list: (state: Menu2PopupProps | Menu2SubmenuPopupProps) => ({
+                  'data-align-prop': state.align,
+                }),
               }}
             >
               <Menu2Item closeOnClick={false} onClick={() => setOpen(false)}>

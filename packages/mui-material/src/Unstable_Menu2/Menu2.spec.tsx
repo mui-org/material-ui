@@ -464,6 +464,33 @@ createTheme({
 // @ts-expect-error Submenu popups have no backdrop slot.
 <Menu2SubmenuPopup slotProps={{ backdrop: {} }} />;
 
+<Menu2Popup slotProps={{ list: { dense: true } }} />;
+<Menu2Popup slotProps={{ list: () => ({ dense: false }) }} />;
+<Menu2SubmenuPopup slotProps={{ list: { disablePadding: true, sx: { py: 1 } } }} />;
+<Menu2SubmenuPopup
+  slotProps={{ list: (ownerState) => ({ disablePadding: true, 'data-side': ownerState.side }) }}
+/>;
+interface CustomSubmenuListProps {
+  customValue: string;
+}
+const customSubmenuListProps: CustomSubmenuListProps = {
+  customValue: 'custom',
+};
+<Menu2SubmenuPopup slotProps={{ list: customSubmenuListProps }} />;
+<Menu2SubmenuPopup slotProps={{ list: () => customSubmenuListProps }} />;
+// @ts-expect-error Submenu list density is inherited from the parent menu.
+<Menu2SubmenuPopup slotProps={{ list: { dense: true } }} />;
+// @ts-expect-error Submenu list density cannot be changed through callback slot props.
+<Menu2SubmenuPopup slotProps={{ list: () => ({ dense: false }) }} />;
+createTheme({
+  components: {
+    MuiMenu2SubmenuPopup: {
+      // @ts-expect-error Submenu list density cannot be changed through theme defaults.
+      defaultProps: { slotProps: { list: { dense: true } } },
+    },
+  },
+});
+
 <Menu2SubmenuTrigger slots={{ indicator: null }}>More</Menu2SubmenuTrigger>;
 <Menu2Submenu>
   <Menu2SubmenuTrigger slots={{ indicator: null }}>More</Menu2SubmenuTrigger>

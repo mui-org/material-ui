@@ -542,16 +542,19 @@ describe('<Menu2 />', () => {
     });
 
     it.each([false, true])(
-      'propagates an explicit dense=%s list override to descendant submenus',
+      'preserves inherited dense=%s despite a submenu list override',
       async (dense) => {
         const { user } = render(
           <Menu2>
             <Menu2Trigger render={<Button>Options</Button>} />
-            <Menu2Popup slotProps={{ list: { dense: !dense } }}>
+            <Menu2Popup slotProps={{ list: { dense } }}>
               <Menu2Submenu>
                 <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>
                 <Menu2SubmenuPopup
-                  slotProps={{ list: { dense, 'data-testid': 'overridden-list' } }}
+                  slotProps={{
+                    // @ts-expect-error Test an unsupported density override from JavaScript.
+                    list: { dense: !dense, 'data-testid': 'overridden-list' },
+                  }}
                 >
                   <Menu2Item>Nested</Menu2Item>
                   <Menu2Submenu>
@@ -591,24 +594,25 @@ describe('<Menu2 />', () => {
       },
     );
 
-    it.each([undefined, false])(
-      'preserves callback list props and owner state with dense=%s',
+    it.each([false, true])(
+      'preserves callback list props and owner state with inherited dense=%s',
       async (dense) => {
         const listRef = React.createRef<HTMLUListElement>();
         const handleClick = vi.fn();
         const { user } = render(
           <Menu2>
             <Menu2Trigger render={<Button>Options</Button>} />
-            <Menu2Popup slotProps={{ list: { dense: true } }}>
+            <Menu2Popup slotProps={{ list: { dense } }}>
               <Menu2Submenu>
                 <Menu2SubmenuTrigger openOnHover={false}>More</Menu2SubmenuTrigger>
                 <Menu2SubmenuPopup
                   align="end"
                   slotProps={{
+                    // @ts-expect-error Test an unsupported density override from JavaScript.
                     list: (ownerState) => ({
                       component: 'ul',
                       ref: listRef,
-                      dense,
+                      dense: !dense,
                       disablePadding: true,
                       className: 'custom-list',
                       'data-testid': 'callback-list',
@@ -633,22 +637,23 @@ describe('<Menu2 />', () => {
         expect(list).to.have.attribute('data-align', 'end');
         expect(list).to.have.class('custom-list');
         expect(list).not.to.have.class(listClasses.padding);
-        expect(list.classList.contains(listClasses.dense)).to.equal(dense ?? true);
+        expect(list.classList.contains(listClasses.dense)).to.equal(dense);
         expect(
           screen
             .getByRole('menuitem', { name: 'Nested' })
             .classList.contains(menu2ItemClasses.dense),
-        ).to.equal(dense ?? true);
+        ).to.equal(dense);
 
         await user.click(screen.getByRole('menuitem', { name: 'Nested' }));
         expect(handleClick).toHaveBeenCalledTimes(1);
       },
     );
 
-    it('uses theme default list density before inherited density', async () => {
+    it('preserves inherited density despite a submenu theme default', async () => {
       const theme = createTheme({
         components: {
           MuiMenu2SubmenuPopup: {
+            // @ts-expect-error Test an unsupported density override from JavaScript.
             defaultProps: { slotProps: { list: { dense: false } } },
           },
         },
@@ -672,8 +677,8 @@ describe('<Menu2 />', () => {
       await user.click(screen.getByRole('button', { name: 'Options' }));
       await user.click(await screen.findByRole('menuitem', { name: 'More' }));
 
-      expect(await screen.findByTestId('themed-list')).not.to.have.class(listClasses.dense);
-      expect(screen.getByRole('menuitem', { name: 'Nested' })).not.to.have.class(
+      expect(await screen.findByTestId('themed-list')).to.have.class(listClasses.dense);
+      expect(screen.getByRole('menuitem', { name: 'Nested' })).to.have.class(
         menu2ItemClasses.dense,
       );
     });
