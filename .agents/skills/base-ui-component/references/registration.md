@@ -45,6 +45,7 @@ export { PreviewCardPopupDataAttributes } from '@base-ui/react/preview-card';
 ```
 
 - Re-export the namespace of every Base UI part that the Material part renders, including the ones behind its slots (`PreviewCardPositionerDataAttributes` from `PreviewCardPopup`).
+- Re-export the `*CssVariables` namespaces the same way (`PreviewCardPositionerCssVariables`).
 - A Base UI part without a `DataAttributes` export (Meter) has none to re-export.
 - The API docs generator does not read re-exported constants. List the attributes on the docs page instead (see [docs.md](docs.md)).
 
@@ -66,6 +67,7 @@ export {
 In `packages/mui-material/package.json`:
 
 - Add `"@base-ui/react"` to `dependencies` if it is not there yet, with the same range as the `docs` catalog in `pnpm-workspace.yaml`. It is a direct dependency, not a peer.
+- Run `pnpm install` (not frozen) after adding the dependency, and commit the `pnpm-lock.yaml` change.
 - Add one `exports` entry per public part: `"./PreviewCardPopup": "./src/PreviewCardPopup/index.ts"`. The `./*` wildcard only resolves `index.js` files.
 
 In `packages/mui-material/src/index.js` and `index.d.ts`, add each part in alphabetical order:

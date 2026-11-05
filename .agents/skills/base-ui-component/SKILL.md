@@ -36,17 +36,17 @@ Choose the shape:
 - **Single component**: users render one element tree and configure it with props, like `TextField` or `LinearProgress`. Read [references/single-component.md](references/single-component.md).
 - **Compound parts**: users compose a trigger, a popup, and items. Read [references/compound-parts.md](references/compound-parts.md).
 
-Done when a table lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
+Done when a table, written into the PR description, lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
 
 ### 2. Write the types
 
 Follow [references/adapter.md](references/adapter.md#types).
 
-Done when every public prop of every part is accounted for as one of: a picked Base UI prop, a Material UI presentation prop, or a common prop (`render`, `slots`, `slotProps`, `classes`, `className`, `style`, `sx`), and each has a JSDoc comment.
+Done when every public prop of every part is accounted for as one of: a picked Base UI prop, a Material UI presentation prop, a common prop (`render`, `slots`, `slotProps`, `classes`, `className`, `style`, `sx`), or an HTML attribute of the rendered element, and each declared prop has a JSDoc comment.
 
 ### 3. Implement each part
 
-Follow [references/adapter.md](references/adapter.md).
+Read [references/verify.md](references/verify.md) once, then follow [references/adapter.md](references/adapter.md).
 Every Base UI part renders through its `render` callback into a Material styled slot, and every slot goes through `useSlot`.
 
 Done when each row of the step 1 table has its part or slot implemented, and no Base UI prop reaches the DOM unless it was picked.
@@ -55,7 +55,7 @@ Done when each row of the step 1 table has its part or slot implemented, and no 
 
 Follow [references/registration.md](references/registration.md): classes, data attributes, theme types, exports, and the `@base-ui/react` dependency.
 
-Done when a `createTheme({ components: { Mui<Name><Part>: { defaultProps, styleOverrides, variants } } })` call type-checks for every styled part, and every part imports from both `@mui/material/<Name><Part>` and `@mui/material`.
+Done when a `createTheme({ components: { Mui<Name><Part>: { defaultProps, styleOverrides, variants } } })` call type-checks for every styled part, and every part imports from both its subpath (`@mui/material/<Name><Part>`, or `@mui/material/<Name>` for a single component) and `@mui/material`.
 
 ### 5. Test
 
@@ -79,14 +79,6 @@ Run, in this order:
 3. `pnpm typescript` and `pnpm test:unit <Name>`.
 4. `pnpm exec eslint --max-warnings 0 <changed files>`. The full `pnpm eslint` run also reports errors from outside your change.
 
-Done when every command passes, the generated API JSON for each part lists its props, classes, and the `@mui/material` imports, and `git status` shows no generated file left out of the change.
+Then go through every check in [references/verify.md](references/verify.md).
 
-## Pitfalls
-
-- A Base UI `render` element's own props win over the part's props, including `children`. Event handlers are chained, and `className` and `style` are merged.
-- `ButtonBase` emulates a click on Enter and Space. When a Base UI part already handles those keys, set `event.defaultMuiPrevented = true` in the slot's key handlers, or the action runs twice.
-- Base UI animates the popup root with CSS (`data-starting-style`, `data-ending-style`). A Material transition must clone that element without adding a wrapper.
-- Base UI focus-guard elements sit between siblings, so sibling combinators such as `item + divider` break. Each part owns its own spacing.
-- Base UI states are present-or-absent attributes: select `[data-open]`, not `[data-open="true"]`.
-- `Intl` formatting without a `locale` renders different text on the server and in the browser. Pass `locale` in demos and tests that format numbers or dates.
-- Repo lint rules that new code trips: optional props are typed `| undefined`; demos wrap their focus code in `@focus-start` and `@focus-end` comments; tests render to a string with `createRenderer().renderToString`, not `react-dom/server`.
+Done when every command passes and every check in `verify.md` is ticked, with the evidence (test name, command output, or file and line) written next to it in your final report.

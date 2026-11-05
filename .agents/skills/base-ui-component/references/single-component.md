@@ -27,7 +27,8 @@ Base Root  → slot `root`  (an existing Material container, for example FormCon
 A display component (meter, progress) shows state and takes no input:
 
 - Render an optional part (a label, a visible value) only when its prop is set, and give each its own slot.
-- When a Base UI part takes a `children` function (`Meter.Value` receives `(formattedValue, value)`), expose it as a prop named after the closest Material precedent: `renderValue` (`Select`) for custom rendering, `valueLabelFormat` (`Slider`) for formatting. Document the choice in the PR description.
+- When a Base UI part takes a `children` function (`Meter.Value` receives `(formattedValue, value)`), expose it as a prop named after the closest Material precedent, such as `renderValue` (`Select`). Pair it with a boolean that shows the part (`showValue`); setting the render prop alone also shows it.
+- Visible text that Base UI marks `aria-hidden` (the meter value) is not what screen readers announce. When the docs show `renderValue`, also show `getAriaValueText` returning the same text.
 - Match colors and sizes to the closest existing component (`LinearProgress` for a meter). Component-specific palette tokens such as `palette.LinearProgress.*` belong to that component; derive colors from `(theme.vars || theme).palette[color].main` with `theme.alpha()`.
 
 ## Form fields

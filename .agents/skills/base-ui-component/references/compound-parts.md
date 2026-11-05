@@ -39,7 +39,7 @@ return (
 ## Trigger
 
 - `render` is required and has no default. Forward it to the Base UI trigger unchanged.
-- Pick the trigger's behavior props (`disabled`, `delay`, `closeDelay`, `openOnHover`, `nativeButton`, `handle`, `payload`).
+- Pick only the props the Base UI trigger declares (for example `delay`, `closeDelay`, `handle`, `payload`, and `disabled`, `openOnHover`, `nativeButton` where they exist), plus `id` when the root has a `triggerId` prop. Other attributes go on the `render` element.
 - The trigger has no Material styles. Its theme entry supports `defaultProps` only.
 
 ## Popup
@@ -54,7 +54,9 @@ Base Popup      → slot `transition`  (Grow by default)
                     → slot `list`    (styled List), when the popup holds items
 ```
 
-- `slots` and `slotProps` reach every element in the chain. An optional `backdrop` slot renders only when the user provides it.
+- `slots` and `slotProps` reach every element in the chain.
+- Expose a `backdrop` slot only for click-opened overlays, rendered only when the user provides it. A hover-opened overlay has none: the backdrop would catch the pointer leaving the trigger.
+- A slot whose Base UI part has no state (the portal) gets the props-only `ownerState`, without live fields such as `open`.
 - Positioning props (`side`, `align`, `sideOffset`, `alignOffset`, `collisionPadding`, `anchor`) are picked from the Base UI `Positioner` and passed to it. Portal props (`container`, `keepMounted`) are picked from the Base UI `Portal`.
 - `elevation` (default 8) passes to the `Paper` root.
 
@@ -117,7 +119,7 @@ return (
 
 - `Grow` clones its child and injects `style` and `ref`. The root slot adapter accepts those extra props and merges them: `getSlotProps: (handlers) => mergeProps(baseProps, transitionChildProps, handlers)`.
 - `slots.transition = null` renders the root without a Material transition; users then animate with CSS on the start and end style data attributes. `useSlot` falls back to `elementType` for a `null` slot, so check `slots?.transition === null` first and render the root slot directly in that case.
-- Expose `transitionDuration` (default `'auto'` for `Grow`).
+- Expose `transitionDuration` (default `'auto'` for `Grow`). Drop `'auto'` when the transition does not support it, as `Popover` does: `if (transitionDuration === 'auto' && !TransitionSlot.muiSupportAuto) { transitionDuration = undefined; }`.
 - Users run code after the transition with `onOpenChangeComplete`, not `onEntered` or `onExited`.
 
 ## Items

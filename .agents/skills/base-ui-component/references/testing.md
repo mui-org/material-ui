@@ -2,6 +2,8 @@
 
 Unit tests live next to each part: `packages/mui-material/src/<Name><Part>/<Name><Part>.test.tsx`. Run them with `pnpm test:unit <Name>`; each file runs in jsdom and in Chromium.
 
+Import `describe`, `it`, and `expect` from `vitest`. Mark tests that need real layout or computed styles `it.skipIf(isJsdom())`, with `isJsdom` from `@mui/internal-test-utils`.
+
 ## Conformance
 
 Every part that renders an element runs `describeConformance` from `packages/mui-material/test/describeConformance`:
@@ -46,7 +48,7 @@ Test through the Material UI parts, not the Base UI ones:
 - Theme `defaultProps`, `styleOverrides`, and `variants` reaching each part, and a `styleOverrides` rule that targets a live-state class.
 - Server rendering with `createRenderer().renderToString` for parts whose first render depends on state (form fields, formatted values).
 
-jsdom runs no CSS animations, so a closing popup unmounts at once. Assert the close through `onOpenChange` and the absence of the popup, not through the closing data attribute.
+jsdom runs no CSS animations, so a closing popup unmounts at once; in Chromium the exit transition keeps it mounted with the closed data attribute. Assert the close through `onOpenChange`, plus "absent, or present with the closed data attribute".
 
 ## `render`
 
@@ -57,6 +59,7 @@ For each part with a public `render` prop:
 - A render function receives the Base UI state (`state.open`, `state.side`).
 - The user's `render` element's own children replace the part's children, as Base UI defines.
 - With `slots.root` set, the custom root receives no `render` or `component` prop.
+- A `component` prop passed without types (`// @ts-expect-error`) does not change the element.
 
 ## Data attributes
 
@@ -73,6 +76,7 @@ expect(popup).to.have.attribute(PreviewCardPopupDataAttributes.open);
 
 - The trigger rejects a missing `render`.
 - Parts reject `component`, including `slotProps.root.component`, and any Base UI prop that was not picked.
+- Parts that render an element accept HTML attributes (`id`, `onClick`, `aria-label`).
 - Theme entries accept `defaultProps`, `styleOverrides`, and `variants` for each part.
 
 ## Visual and accessibility
