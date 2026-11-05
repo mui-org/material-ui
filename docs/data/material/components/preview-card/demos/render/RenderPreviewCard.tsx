@@ -9,7 +9,9 @@ export default function RenderPreviewCard() {
     <Typography>
       Hover the {/* @focus-start */}
       <PreviewCard>
-        <PreviewCardTrigger render={<Link href="#render">link</Link>} />
+        <PreviewCardTrigger
+          render={<Link href="#render-a-different-element">link</Link>}
+        />
         <PreviewCardPopup
           render={(props, state) => (
             <aside

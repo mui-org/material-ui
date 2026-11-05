@@ -55,6 +55,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 
 - [ ] **Every demo has `@focus-start` and `@focus-end`.** Detect: eslint `docs-infra/require-demo-focus`. [docs.md, Demos]
 - [ ] **Every demo renders without console errors**, in `pnpm docs:dev` or, when no browser is available, in a temporary test that renders each demo in Chromium and fails on `console.error`. The first Chromium run can fail with "Vite unexpectedly reloaded" while dependencies are optimized; run it again before reading the result. Delete that test before committing.
+- [ ] **Demo links resolve.** Every `href="#…"` in the demos matches a heading anchor on the page. Detect: `grep -rn 'href="#' docs/data/material/components/<kebab-name>` and compare with the page headings, or run `pnpm docs:build`, which ends with the link check. [docs.md, Demos]
 - [ ] **Vale passes on the docs page.** `pnpm code-infra vale --vale-version <config.valeVersion in package.json> --filter='.Level=="error"' <page>.md` reports 0 errors. The usual failure is a normal space in a brand name. [docs.md]
 - [ ] **The anatomy is a `text` block**, and the route file has no leftover name from the file it was copied from. [docs.md]
 

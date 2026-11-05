@@ -30,13 +30,13 @@ export default function DetachedTriggers() {
         <PreviewCardTrigger
           handle={handle}
           payload={mars}
-          render={<Link href="#mars">Mars</Link>}
+          render={<Link href="#detached-triggers">Mars</Link>}
         />{' '}
         and{' '}
         <PreviewCardTrigger
           handle={handle}
           payload={venus}
-          render={<Link href="#venus">Venus</Link>}
+          render={<Link href="#detached-triggers">Venus</Link>}
         />
         .
       </Typography>
