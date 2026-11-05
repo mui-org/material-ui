@@ -139,7 +139,9 @@ export const style = ({ ownerState, theme }: StyleFunctionProps) => {
         },
         '& > :not(style) ~ :not(style)': {
           [`margin${getSideFromDirection(
-            breakpoint ? directionValues[breakpoint] : ownerState.direction,
+            breakpoint && typeof directionValues === 'object'
+              ? directionValues[breakpoint]
+              : ownerState.direction,
           )}`]: getValue(transformer, propValue),
         },
       };
