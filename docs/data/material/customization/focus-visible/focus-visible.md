@@ -82,6 +82,8 @@ For a two-color ring, stack `outlineColor` and `boxShadow` as shown above rather
 
 {{"component": "file://./demos/box-shadow/index.ts"}}
 
+To draw a different box-shadow on the inner focus indicator components, see [Customizing the inner focus indicator](#customizing-the-inner-focus-indicator).
+
 ### Replace outline with box-shadow
 
 To replace the outline entirely with a box-shadow indicator, hide the outline with `outlineColor: 'transparent'`:
@@ -111,14 +113,13 @@ createTheme({
     outlineOffset: 1,
     boxShadow: '0 0 0 1px #fff',
     insetOverrides: {
-      outlineOffset: -2,
       boxShadow: 'inset 0 0 0 3px #fff',
     },
   },
 });
 ```
 
-In this example, the outline sits just inside the edge and covers the first 2px of the inset box-shadow, so a 1px light line shows inside the outline.
+{{"component": "file://./demos/inset-overrides/index.ts"}}
 
 Without `insetOverrides`, the inner focus indicator components use `outlineOffset: -outlineWidth`, so the outline sits just inside the edge.
 They also draw the `boxShadow` inset.
