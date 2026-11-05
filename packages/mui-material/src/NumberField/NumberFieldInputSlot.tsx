@@ -23,6 +23,7 @@ import type { IconButtonProps } from '../IconButton';
 import NumberFieldButtonSlot from './NumberFieldButtonSlot';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
+import slotShouldForwardProp from '../styles/slotShouldForwardProp';
 
 interface NumberFieldInputProps {
   baseProps: React.ComponentPropsWithRef<'input'>;
@@ -31,10 +32,31 @@ interface NumberFieldInputProps {
   externalForwardedProps: Required<Pick<NumberFieldProps, 'slots' | 'slotProps'>>;
 }
 
+// Control buttons provide their own spacing against the input's outer edges.
+const inputStyles = {
+  variants: [
+    {
+      props: ({ ownerState }: { ownerState: NumberFieldOwnerState }) =>
+        ownerState.controlsPosition === 'start' || ownerState.controlsPosition === 'split',
+      style: { paddingLeft: 0 },
+    },
+    {
+      props: ({ ownerState }: { ownerState: NumberFieldOwnerState }) =>
+        ownerState.controlsPosition === 'end' || ownerState.controlsPosition === 'split',
+      style: { paddingRight: 0 },
+    },
+  ],
+};
+
+const inputOptions = {
+  // Forward `as` so changing the input's root element preserves the Material input.
+  shouldForwardProp: (prop: string) => prop === 'as' || slotShouldForwardProp(prop),
+};
+
 const variantComponent = {
-  standard: Input,
-  filled: FilledInput,
-  outlined: OutlinedInput,
+  standard: styled(Input, inputOptions)(inputStyles),
+  filled: styled(FilledInput, inputOptions)(inputStyles),
+  outlined: styled(OutlinedInput, inputOptions)(inputStyles),
 };
 
 const buttonStyles = {
