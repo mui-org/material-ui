@@ -1,0 +1,26 @@
+{
+  "props": {
+    "render": {
+      "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" },
+      "required": true
+    },
+    "closeDelay": { "type": { "name": "number" }, "default": "300" },
+    "delay": { "type": { "name": "number" }, "default": "600" },
+    "handle": { "type": { "name": "object" } },
+    "id": { "type": { "name": "string" } },
+    "payload": { "type": { "name": "any" } }
+  },
+  "name": "PreviewCardTrigger",
+  "imports": [
+    "import PreviewCardTrigger from '@mui/material/PreviewCardTrigger';",
+    "import { PreviewCardTrigger } from '@mui/material';"
+  ],
+  "classes": [],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiPreviewCardTrigger",
+  "forwardsRefTo": "HTMLAnchorElement",
+  "filename": "/packages/mui-material/src/PreviewCardTrigger/PreviewCardTrigger.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-preview-card/\">Preview Card</a></li></ul>"
+}

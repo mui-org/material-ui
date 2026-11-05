@@ -64,6 +64,7 @@ const pages: MuiPage[] = [
           { pathname: '/material-ui/material-icons', title: 'Material Icons' },
           { pathname: '/material-ui/react-list' },
           { pathname: '/material-ui/react-table' },
+          { pathname: '/material-ui/react-preview-card', title: 'Preview Card', newFeature: true },
           { pathname: '/material-ui/react-tooltip' },
           { pathname: '/material-ui/react-typography' },
         ],

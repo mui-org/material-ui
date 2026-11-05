@@ -1,0 +1,31 @@
+{
+  "componentDescription": "Groups the trigger and the popup of a preview card and holds its open state.",
+  "propDescriptions": {
+    "actionsRef": {
+      "description": "<p>A ref to imperative actions.</p>\n<ul>\n<li><code>unmount</code>: Ends the closing phase of the preview card after an externally controlled closing animation finishes.\nCall <code>preventUnmountOnClose()</code> in <code>onOpenChange</code> first, otherwise the preview card completes closing on its own.\nWhether it leaves the DOM is decided by <code>keepMounted</code> on the portal.</li>\n<li><code>close</code>: Closes the preview card imperatively when called.</li>\n</ul>\n"
+    },
+    "children": {
+      "description": "The content of the preview card. This can be a regular React node or a render function that receives the <code>payload</code> of the active trigger."
+    },
+    "defaultOpen": {
+      "description": "Whether the preview card is initially open.<br>To render a controlled preview card, use the <code>open</code> prop instead."
+    },
+    "defaultTriggerId": {
+      "description": "ID of the trigger that the preview card is associated with. This is useful in conjunction with the <code>defaultOpen</code> prop to create an initially open preview card."
+    },
+    "handle": {
+      "description": "A handle that connects the preview card with triggers rendered outside of it. Create one with <code>createPreviewCardHandle()</code>."
+    },
+    "onOpenChange": {
+      "description": "Event handler called when the preview card is opened or closed."
+    },
+    "onOpenChangeComplete": {
+      "description": "Event handler called after any animations complete when the preview card is opened or closed."
+    },
+    "open": { "description": "Whether the preview card is currently open." },
+    "triggerId": {
+      "description": "ID of the trigger that the preview card is associated with. This is useful in conjunction with the <code>open</code> prop to create a controlled preview card. There&#39;s no need to specify this prop when the preview card is uncontrolled (that is, when the <code>open</code> prop is not set)."
+    }
+  },
+  "classDescriptions": {}
+}

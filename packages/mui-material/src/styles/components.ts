@@ -546,6 +546,23 @@ export interface Components<Theme = unknown> {
         variants?: ComponentsVariants<Theme>['MuiPopover'] | undefined;
       }
     | undefined;
+  MuiPreviewCard?:
+    | {
+        defaultProps?: ComponentsProps['MuiPreviewCard'] | undefined;
+      }
+    | undefined;
+  MuiPreviewCardPopup?:
+    | {
+        defaultProps?: ComponentsProps['MuiPreviewCardPopup'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiPreviewCardPopup'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiPreviewCardPopup'] | undefined;
+      }
+    | undefined;
+  MuiPreviewCardTrigger?:
+    | {
+        defaultProps?: ComponentsProps['MuiPreviewCardTrigger'] | undefined;
+      }
+    | undefined;
   MuiRadio?:
     | {
         defaultProps?: ComponentsProps['MuiRadio'] | undefined;

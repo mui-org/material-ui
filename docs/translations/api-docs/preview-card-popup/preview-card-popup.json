@@ -1,0 +1,52 @@
+{
+  "componentDescription": "The floating surface of a preview card, positioned next to its trigger.",
+  "propDescriptions": {
+    "align": { "description": "How to align the popup relative to the specified side." },
+    "alignOffset": {
+      "description": "Additional offset along the alignment axis in pixels. Also accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment.<br>The function takes a <code>data</code> object parameter with the following properties: - <code>data.anchor</code>: the dimensions of the anchor element with properties <code>width</code> and <code>height</code>. - <code>data.positioner</code>: the dimensions of the positioner element with properties <code>width</code> and <code>height</code>. - <code>data.side</code>: which side of the anchor element the positioner is aligned against. - <code>data.align</code>: how the positioner is aligned relative to the specified side."
+    },
+    "anchor": {
+      "description": "An element to position the popup against. By default, the popup will be positioned against the trigger."
+    },
+    "children": { "description": "The content of the component." },
+    "classes": { "description": "Override or extend the styles applied to the component." },
+    "collisionPadding": {
+      "description": "Additional space to maintain from the edge of the collision boundary."
+    },
+    "container": { "description": "A parent element to render the portal element into." },
+    "elevation": { "description": "The elevation of the popup surface." },
+    "keepMounted": {
+      "description": "Whether to keep the portal mounted in the DOM while the popup is hidden."
+    },
+    "render": {
+      "description": "Replaces the rendered element while keeping the popup styles. Accepts an element or a function that receives the props and the Base UI state."
+    },
+    "side": {
+      "description": "Which side of the anchor element to align the popup against. May automatically change to avoid collisions."
+    },
+    "sideOffset": {
+      "description": "Distance between the anchor and the popup in pixels. Also accepts a function that returns the distance from the anchor and positioner dimensions."
+    },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    },
+    "transitionDuration": {
+      "description": "The duration of the transition, in milliseconds. Set to &#39;auto&#39; to calculate the duration from the popup height."
+    }
+  },
+  "classDescriptions": {
+    "open": {
+      "description": "Styles applied to {{nodeName}} when {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "the popup is open"
+    }
+  },
+  "slotDescriptions": {
+    "portal": "The component that renders the portal element.",
+    "positioner": "The component that positions the popup next to the trigger.",
+    "root": "The component that renders the popup surface.",
+    "transition": "The component used for the transition. Set to <code>null</code> to render the popup without a Material UI transition."
+  }
+}

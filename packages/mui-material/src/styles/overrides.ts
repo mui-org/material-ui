@@ -76,6 +76,7 @@ import type { PaginationClassKey } from '../Pagination';
 import type { PaginationItemClassKey } from '../PaginationItem';
 import type { PaperClassKey } from '../Paper';
 import type { PopoverClassKey } from '../Popover';
+import type { PreviewCardPopupClassKey } from '../PreviewCardPopup';
 import type { RadioClassKey } from '../Radio';
 import type { RadioGroupClassKey } from '../RadioGroup';
 import type { RatingClassKey } from '../Rating';
@@ -223,6 +224,7 @@ export interface ComponentNameToClassKey {
   MuiPaper: PaperClassKey;
   MuiPopover: PopoverClassKey;
   MuiPopper: PopperClassKey;
+  MuiPreviewCardPopup: PreviewCardPopupClassKey;
   MuiRadio: RadioClassKey;
   MuiRadioGroup: RadioGroupClassKey;
   MuiRating: RatingClassKey;

@@ -1,0 +1,22 @@
+{
+  "componentDescription": "The link that opens a preview card on hover or focus.",
+  "propDescriptions": {
+    "closeDelay": {
+      "description": "How long to wait before closing the preview card. Specified in milliseconds."
+    },
+    "delay": {
+      "description": "How long to wait before the preview card opens. Specified in milliseconds."
+    },
+    "handle": {
+      "description": "A handle that connects the trigger with a <code>PreviewCard</code> rendered elsewhere. Create one with <code>createPreviewCardHandle()</code>."
+    },
+    "id": {
+      "description": "The id of the trigger. Pass it to <code>triggerId</code> on <code>PreviewCard</code> to open the card from this trigger."
+    },
+    "payload": { "description": "A payload to pass to the preview card when it is opened." },
+    "render": {
+      "description": "The element that opens the preview card, usually a link. Accepts an element or a function that receives the props and the Base UI state."
+    }
+  },
+  "classDescriptions": {}
+}
