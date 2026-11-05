@@ -16,7 +16,7 @@ waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/meter/
 Use a meter for a measurement that has a known minimum and maximum.
 For the progress of a task, use [Progress](/material-ui/react-progress/) instead.
 
-The meter is built on the [Base UI Meter](https://base-ui.com/react/components/meter), which provides the `meter` role and its ARIA attributes.
+The meter is built on the [Base UI Meter](https://base-ui.com/react/components/meter), which provides the `meter` role and its ARIA attributes.
 
 ## Basic meter
 
@@ -66,7 +66,7 @@ Meter
 ### Render prop
 
 The `render` prop replaces the root element while keeping the meter styles and behavior.
-It accepts an element, or a function that receives the props and the Base UI state.
+It accepts an element, or a function that receives the props and the Base UI state.
 
 {{"component": "file://./demos/render/index.ts"}}
 
@@ -89,5 +89,5 @@ See the [CSS section of the API page](/material-ui/api/meter/#classes) for the f
 
 ### Data attributes
 
-The Base UI Meter sets no data attributes, so there are no state attributes to style.
+The Base UI Meter sets no data attributes, so there are no state attributes to style.
 Style the value range with the `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` attributes on the root element when needed.

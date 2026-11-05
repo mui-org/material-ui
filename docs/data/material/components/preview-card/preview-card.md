@@ -12,8 +12,8 @@ githubSource: packages/mui-material/src/PreviewCard
 
 {{"component": "@mui/internal-core-docs/ComponentLinkHeader"}}
 
-The preview card is built on the [Base UI Preview Card](https://base-ui.com/react/components/preview-card).
-Base UI handles opening, closing, and positioning; Material UI handles the styles.
+The preview card is built on the [Base UI Preview Card](https://base-ui.com/react/components/preview-card).
+Base UI handles opening, closing, and positioning; Material UI handles the styles.
 
 The preview is a visual enhancement for sighted mouse and keyboard users.
 Screen readers only announce the link, so keep every piece of information in the popup available on the linked page too.
@@ -77,7 +77,7 @@ The popup grows from the trigger with the `Grow` transition.
 Use `transitionDuration` to change the duration.
 To run code after the transition ends, use the `onOpenChangeComplete` prop on `PreviewCard`.
 
-Set `slots.transition` to `null` to render the popup without a Material UI transition.
+Set `slots.transition` to `null` to render the popup without a Material UI transition.
 You can then animate it with CSS on the `data-starting-style` and `data-ending-style` attributes.
 
 ## Customization
@@ -85,8 +85,8 @@ You can then animate it with CSS on the `data-starting-style` and `data-ending-s
 ### Render a different element
 
 Use the `render` prop on `PreviewCardPopup` to change the rendered element.
-The popup keeps its Material UI styles.
-A render function receives the props and the Base UI state, such as `state.open` and `state.side`.
+The popup keeps its Material UI styles.
+A render function receives the props and the Base UI state, such as `state.open` and `state.side`.
 
 {{"component": "file://./demos/render/index.ts"}}
 
@@ -115,8 +115,8 @@ To style the live state, target the utility classes and the data attributes in `
 
 ### Data attributes
 
-Base UI sets data attributes on each element.
-Import them as constants from the matching Material UI part, for example `PreviewCardPopupDataAttributes.side`.
+Base UI sets data attributes on each element.
+Import them as constants from the matching Material UI part, for example `PreviewCardPopupDataAttributes.side`.
 
 `PreviewCardTriggerDataAttributes` (from `@mui/material/PreviewCardTrigger`):
 
