@@ -154,7 +154,7 @@
         "event": { "name": "event", "description": "The event source of the callback." },
         "reason": {
           "name": "reason",
-          "description": "Can be: <code>&quot;toggleInput&quot;</code>, <code>&quot;escape&quot;</code>, <code>&quot;selectOption&quot;</code>, <code>&quot;removeOption&quot;</code>, <code>&quot;blur&quot;</code>."
+          "description": "Can be: <code>&quot;toggleInput&quot;</code>, <code>&quot;escape&quot;</code>, <code>&quot;selectOption&quot;</code>, <code>&quot;removeOption&quot;</code>, <code>&quot;createOption&quot;</code>, <code>&quot;blur&quot;</code>."
         }
       }
     },
@@ -172,11 +172,14 @@
     "onInputChange": {
       "description": "Callback fired when the input value changes.",
       "typeDescriptions": {
-        "event": { "name": "event", "description": "The event source of the callback." },
+        "event": {
+          "name": "event",
+          "description": "The event source of the callback, or <code>null</code> when the input value is reset programmatically."
+        },
         "value": { "name": "value", "description": "The new value of the text input." },
         "reason": {
           "name": "reason",
-          "description": "Can be: <code>&quot;input&quot;</code> (user input), <code>&quot;reset&quot;</code> (programmatic change), <code>&quot;clear&quot;</code>, <code>&quot;blur&quot;</code>, <code>&quot;selectOption&quot;</code>, <code>&quot;removeOption&quot;</code>"
+          "description": "Can be: <code>&quot;input&quot;</code> (user input), <code>&quot;reset&quot;</code> (programmatic change), <code>&quot;clear&quot;</code>, <code>&quot;blur&quot;</code>, <code>&quot;selectOption&quot;</code>, <code>&quot;removeOption&quot;</code>, <code>&quot;createOption&quot;</code>"
         }
       }
     },
