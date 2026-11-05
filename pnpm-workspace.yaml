@@ -33,15 +33,15 @@ catalogs:
   docs:
     stylis: '4.2.0'
     '@base-ui/react': '^1.9.0'
-    '@docsearch/react': '^5.2.0'
+    '@docsearch/react': '^5.0.1'
     '@emotion/cache': '^11.14.0'
     '@emotion/react': '^11.14.0'
     '@emotion/server': '^11.11.0'
     '@emotion/styled': '^11.14.1'
-    '@mui/internal-docs-infra': '0.13.1-canary.29'
+    '@mui/internal-docs-infra': '0.13.1-canary.19'
 
 overrides:
-  '@mui/internal-docs-infra': '0.13.1-canary.29'
+  '@mui/internal-docs-infra': '0.13.1-canary.19'
   # Both were bundled twice in the docs build
   'docs>stylis': '4.2.0'
   'docs>react-is': '19.3.1'
@@ -66,3 +66,5 @@ allowBuilds:
 
 lockfile:
   includeResolutionSettings: true
+
+verifyDepsBeforeRun: false
