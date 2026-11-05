@@ -119,8 +119,9 @@ export interface ListItemTextProps<
  *
  * Demos:
  *
- * - [Lists](https://mui.com/material-ui/react-list/)
- * - [Menubar](https://mui.com/material-ui/react-menubar/)
+ * - [Lists](https://next.mui.com/material-ui/react-list/)
+ * - [Menubar](https://next.mui.com/material-ui/react-menubar/)
+ * - [Transfer List](https://next.mui.com/material-ui/react-transfer-list/)
  *
  * API:
  *
