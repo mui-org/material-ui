@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { describe, it, expect, vi } from 'vitest';
-import { act, createRenderer, screen } from '@mui/internal-test-utils';
+import { act, createRenderer, screen, waitFor } from '@mui/internal-test-utils';
 import { Field as BaseField } from '@base-ui/react/field';
 import type { BaseUIEvent } from '@base-ui/react/types';
 import FormControl from '@mui/material/FormControl';
@@ -3284,7 +3284,10 @@ describe('<NumberField />', () => {
           expect(onValueCommitted).toHaveBeenCalledTimes(0);
 
           await user.pointer({ keys: '[/MouseLeft]', target: scrub });
-          expect(onValueCommitted).toHaveBeenCalledTimes(1);
+          // Base UI delays pointer-lock release and the commit callback in Firefox.
+          await waitFor(() => {
+            expect(onValueCommitted).toHaveBeenCalledTimes(1);
+          });
           expect(onValueCommitted.mock.calls[0][0]).to.equal(5);
           expect(onValueCommitted.mock.calls[0][1].reason).to.equal('scrub');
         });
