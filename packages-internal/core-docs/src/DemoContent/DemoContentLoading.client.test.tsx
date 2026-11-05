@@ -1,5 +1,6 @@
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import * as React from 'react';
+import * as ReactDOM from 'react-dom/server';
 import { createRenderer, screen, waitFor } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@mui/material/styles';
 import { brandingLightTheme } from '../branding';
@@ -19,7 +20,7 @@ vi.mock('./loadDemoContent', () => ({
   loadDemoContent: mocks.loadDemoContent,
 }));
 
-describe('DemoContentLoading client behavior', () => {
+describe('DemoContentLoading', () => {
   const { render } = createRenderer();
 
   function renderLoading() {
@@ -35,6 +36,22 @@ describe('DemoContentLoading client behavior', () => {
   beforeEach(() => {
     mocks.canLoadContent = false;
     mocks.loadDemoContent.mockClear();
+  });
+
+  it('renders inert toolbar controls before hydration', () => {
+    const view = ReactDOM.renderToString(
+      <UserLanguageProvider defaultUserLanguage="en">
+        <ThemeProvider theme={brandingLightTheme}>
+          <DemoContentLoading component={<span>Demo preview</span>} />
+        </ThemeProvider>
+      </UserLanguageProvider>,
+    );
+
+    expect(view).to.contain('Demo preview');
+    expect(view).to.contain('aria-busy="true"');
+    expect(view).to.contain('inert=""');
+    expect(view).to.contain('aria-label="Copy the source"');
+    expect(view).to.contain('>Show code</button>');
   });
 
   it('renders inert toolbar controls until live content is ready', () => {
