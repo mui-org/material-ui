@@ -3966,6 +3966,7 @@ describe('<Autocomplete />', () => {
 
       await view.user.click(screen.getByText('Reset'));
 
+      expect(handleInputChange.lastCall.args[0]).to.equal(null);
       expect(handleInputChange.lastCall.args[1]).to.equal(options[1].name);
       expect(handleInputChange.lastCall.args[2]).to.equal('reset');
     });
@@ -4046,6 +4047,24 @@ describe('<Autocomplete />', () => {
 
       expect(handleInputChange.lastCall.args[1]).to.equal('');
       expect(handleInputChange.lastCall.args[2]).to.equal('removeOption');
+    });
+
+    it('provides a reason on create option', async () => {
+      const handleInputChange = spy();
+      const view = render(
+        <Autocomplete
+          onInputChange={handleInputChange}
+          options={['one', 'two']}
+          renderInput={(params) => <TextField {...params} autoFocus />}
+          freeSolo
+          multiple
+        />,
+      );
+
+      await view.user.type(screen.getByRole('combobox'), 'three{Enter}');
+
+      expect(handleInputChange.lastCall.args[1]).to.equal('');
+      expect(handleInputChange.lastCall.args[2]).to.equal('createOption');
     });
   });
 
