@@ -75,7 +75,7 @@ export default function createGrid(
   };
 
   function parseResponsiveProp<T extends GridSize | GridOffset>(
-    propValue: T | null | (T | null)[] | { [key in Breakpoint]?: T | null },
+    propValue: T | null | ReadonlyArray<T | null> | { [key in Breakpoint]?: T | null },
     breakpoints: Breakpoints,
     shouldUseValue: (val: T) => boolean = () => true,
   ): { [key in Breakpoint]: T } {
@@ -93,7 +93,7 @@ export default function createGrid(
       });
     } else if (typeof propValue === 'object') {
       Object.keys(propValue).forEach((key) => {
-        const value = propValue[key as Breakpoint];
+        const value = (propValue as { [key in Breakpoint]?: T | null })[key as Breakpoint];
         if (value !== null && value !== undefined && shouldUseValue(value)) {
           parsedProp[key as Breakpoint] = value;
         }

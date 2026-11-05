@@ -89,5 +89,5 @@
   "forwardsRefTo": "HTMLLIElement",
   "filename": "/packages/mui-material/src/ListItem/ListItem.js",
   "inheritance": null,
-  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>"
+  "demos": "<ul><li><a href=\"/material-ui/react-list/\">Lists</a></li></ul>"
 }
