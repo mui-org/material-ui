@@ -1,7 +1,7 @@
 ---
 productId: material-ui
 title: React Transfer List composition example
-components: List, ListItem, Checkbox, Switch
+components: MenuList, MenuItem, ListItemIcon, ListItemText, Checkbox, Button
 githubLabel: 'scope: transfer list'
 ---
 
