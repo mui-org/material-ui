@@ -106,7 +106,7 @@ export interface ListItemTypeMap<AdditionalProps, RootComponent extends React.El
  *
  * Demos:
  *
- * - [Lists](https://next.mui.com/material-ui/react-list/)
+ * - [Lists](https://mui.com/material-ui/react-list/)
  *
  * API:
  *

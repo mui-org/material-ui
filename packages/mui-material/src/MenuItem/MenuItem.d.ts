@@ -61,8 +61,8 @@ export type MenuItemTypeMap<
  *
  * Demos:
  *
- * - [Menu](https://next.mui.com/material-ui/react-menu/)
- * - [Transfer List](https://next.mui.com/material-ui/react-transfer-list/)
+ * - [Menu](https://mui.com/material-ui/react-menu/)
+ * - [Transfer List](https://mui.com/material-ui/react-transfer-list/)
  *
  * API:
  *

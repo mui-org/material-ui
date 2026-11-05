@@ -135,7 +135,7 @@ export interface SwitchProps
  *
  * Demos:
  *
- * - [Switch](https://next.mui.com/material-ui/react-switch/)
+ * - [Switch](https://mui.com/material-ui/react-switch/)
  *
  * API:
  *
