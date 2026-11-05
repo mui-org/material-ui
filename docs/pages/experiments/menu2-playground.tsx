@@ -59,7 +59,7 @@ interface PlaygroundSettings {
   keepMounted: boolean;
   // Appearance
   elevation: number;
-  backdrop: 'none' | 'dimmed';
+  backdrop: 'default' | 'none' | 'dimmed';
   animation: 'grow' | 'fade' | 'zoom' | 'css' | 'off';
   reducedMotion: 'never' | 'system' | 'always';
   dense: boolean;
@@ -85,7 +85,7 @@ const defaultSettings: PlaygroundSettings = {
   alignOffset: 0,
   keepMounted: false,
   elevation: 8,
-  backdrop: 'none',
+  backdrop: 'default',
   animation: 'grow',
   reducedMotion: 'never',
   dense: false,
@@ -226,7 +226,10 @@ function PlaygroundDemo({
           backdrop: settings.backdrop === 'none' ? null : undefined,
         }}
         slotProps={{
-          backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.5)' } },
+          backdrop:
+            settings.backdrop === 'dimmed'
+              ? { sx: { backgroundColor: 'rgba(0, 0, 0, 0.5)' } }
+              : undefined,
         }}
       >
         <Menu2Group>
@@ -354,7 +357,10 @@ function ClassicVersusSuccessorDemo({ settings }: { settings: PlaygroundSettings
             backdrop: settings.backdrop === 'none' ? null : undefined,
           }}
           slotProps={{
-            backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.5)' } },
+            backdrop:
+              settings.backdrop === 'dimmed'
+                ? { sx: { backgroundColor: 'rgba(0, 0, 0, 0.5)' } }
+                : undefined,
           }}
         >
           {parityItems.map((item) => (
@@ -708,10 +714,13 @@ function SettingsPanel({
           visual backdrop{' '}
           <select
             value={settings.backdrop}
-            onChange={(event) => setSetting('backdrop', event.target.value as 'none' | 'dimmed')}
+            onChange={(event) =>
+              setSetting('backdrop', event.target.value as PlaygroundSettings['backdrop'])
+            }
           >
-            <option value="none">none (default)</option>
-            <option value="dimmed">dimmed via slotProps.backdrop</option>
+            <option value="default">Default (undefined)</option>
+            <option value="none">None (null)</option>
+            <option value="dimmed">Dimmed</option>
           </select>
         </label>
         {renderCheckbox('dense', 'dense items')}
