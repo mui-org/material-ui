@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import * as React from 'react';
 import { describe, it, expect } from 'vitest';
-import { createRenderer, screen } from '@mui/internal-test-utils';
+import { createRenderer, screen, within } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,37 +13,163 @@ import TextField from '@mui/material/TextField';
 import * as locales from '@mui/material/locale';
 import type { Localization } from './utils/LocaleTextApi';
 
-type LocalizedComponents = NonNullable<Localization['components']>;
+type LocalizedComponentName = keyof NonNullable<Localization['components']>;
+
+interface LocalizedStrings {
+  // shown as text
+  texts: React.ReactNode[];
+  // shown as accessible labels
+  labels: React.ReactNode[];
+}
 
 const localeFiles = import.meta.glob<Record<string, Localization>>(['./*.ts', '!./index.ts'], {
   eager: true,
 });
 
+// `enUS` is empty since the components already default to English, see #21098.
 const localeEntries = Object.entries(locales).filter(
-  (entry): entry is [string, Localization] => typeof entry[1] === 'object',
+  (entry): entry is [string, Localization] => typeof entry[1] === 'object' && entry[0] !== 'enUS',
+);
+
+/**
+ * Gets the strings a locale translates for each component, as they show up in the components
+ * rendered below. A locale can leave a string out, in which case the component falls back to English.
+ */
+function getLocalizedStrings({
+  components = {},
+}: Localization): Partial<Record<LocalizedComponentName, LocalizedStrings>> {
+  const {
+    MuiAlert,
+    MuiAutocomplete,
+    MuiBreadcrumbs,
+    MuiPagination,
+    MuiRating,
+    MuiTablePagination,
+  } = components;
+  const strings: Partial<Record<LocalizedComponentName, LocalizedStrings>> = {};
+
+  if (MuiAlert) {
+    strings.MuiAlert = { texts: [], labels: [MuiAlert.defaultProps.closeText] };
+  }
+
+  if (MuiAutocomplete) {
+    const { clearText, closeText, loadingText, noOptionsText, openText } =
+      MuiAutocomplete.defaultProps;
+    strings.MuiAutocomplete = {
+      texts: [noOptionsText, loadingText],
+      labels: [clearText, closeText, openText],
+    };
+  }
+
+  if (MuiBreadcrumbs) {
+    strings.MuiBreadcrumbs = { texts: [], labels: [MuiBreadcrumbs.defaultProps.expandText] };
+  }
+
+  if (MuiPagination) {
+    const { 'aria-label': ariaLabel, getItemAriaLabel } = MuiPagination.defaultProps;
+    strings.MuiPagination = {
+      texts: [],
+      labels: [
+        ariaLabel,
+        getItemAriaLabel?.('page', 1, false),
+        getItemAriaLabel?.('page', 2, true),
+        getItemAriaLabel?.('first', 1, false),
+        getItemAriaLabel?.('previous', 1, false),
+        getItemAriaLabel?.('next', 3, false),
+        getItemAriaLabel?.('last', 3, false),
+      ],
+    };
+  }
+
+  if (MuiRating) {
+    const { emptyLabelText, getLabelText } = MuiRating.defaultProps;
+    strings.MuiRating = {
+      texts: [],
+      labels: [emptyLabelText, getLabelText?.(1), getLabelText?.(5)],
+    };
+  }
+
+  if (MuiTablePagination) {
+    const { getItemAriaLabel, labelDisplayedRows, labelRowsPerPage } =
+      MuiTablePagination.defaultProps;
+    strings.MuiTablePagination = {
+      texts: [labelRowsPerPage, labelDisplayedRows?.({ from: 11, to: 20, count: 100, page: 1 })],
+      labels: [
+        getItemAriaLabel?.('first'),
+        getItemAriaLabel?.('previous'),
+        getItemAriaLabel?.('next'),
+        getItemAriaLabel?.('last'),
+      ],
+    };
+  }
+
+  return strings;
+}
+
+function renderInput(params: object) {
+  return <TextField {...params} />;
+}
+
+// Every component a locale can translate, each in its own container since locales reuse strings
+// across components, in a state that shows each translated string.
+const localizedComponents = (
+  <React.Fragment>
+    <div data-testid="MuiAlert">
+      <Alert onClose={() => {}}>message</Alert>
+    </div>
+    <div data-testid="MuiAutocomplete">
+      <Autocomplete open disablePortal options={[]} renderInput={renderInput} />
+      <Autocomplete open disablePortal loading options={[]} renderInput={renderInput} />
+      <Autocomplete options={['option']} defaultValue="option" renderInput={renderInput} />
+    </div>
+    <div data-testid="MuiBreadcrumbs">
+      <Breadcrumbs maxItems={2}>
+        <span>first</span>
+        <span>second</span>
+        <span>third</span>
+      </Breadcrumbs>
+    </div>
+    <div data-testid="MuiPagination">
+      <Pagination count={3} defaultPage={2} showFirstButton showLastButton />
+    </div>
+    <div data-testid="MuiRating">
+      <Rating name="rating" />
+    </div>
+    <div data-testid="MuiTablePagination">
+      <TablePagination
+        component="div"
+        count={100}
+        page={1}
+        rowsPerPage={10}
+        onPageChange={() => {}}
+        showFirstButton
+        showLastButton
+      />
+    </div>
+  </React.Fragment>
 );
 
 // Match text exactly, since some locales use non-breaking spaces that the default normalizer would collapse.
 const exact = { normalizer: (text: string) => text };
 
-function expectText(text: React.ReactNode) {
-  if (typeof text === 'string') {
-    expect(screen.getAllByText(text, exact).length).to.be.greaterThan(0);
-  }
-}
-
-function expectLabel(label: React.ReactNode) {
-  if (typeof label === 'string') {
-    expect(screen.getAllByLabelText(label, exact).length).to.be.greaterThan(0);
-  }
+function expectLocalized(locale: Localization) {
+  Object.entries(getLocalizedStrings(locale)).forEach(([name, { texts, labels }]) => {
+    const component = within(screen.getByTestId(name));
+    texts.forEach((text) => {
+      if (text !== undefined) {
+        expect(component.getAllByText(text as string, exact).length).to.be.greaterThan(0);
+      }
+    });
+    labels.forEach((label) => {
+      if (label !== undefined) {
+        expect(component.getAllByLabelText(label as string, exact).length).to.be.greaterThan(0);
+      }
+    });
+  });
 }
 
 describe('locale', () => {
   const { render } = createRenderer();
-
-  function renderWithLocale(locale: Localization, element: React.ReactElement) {
-    return render(<ThemeProvider theme={createTheme({}, locale)}>{element}</ThemeProvider>);
-  }
 
   it('exports every locale file from the index', () => {
     const fileExports = Object.values(localeFiles).flatMap((module) => Object.keys(module));
@@ -52,113 +178,35 @@ describe('locale', () => {
     expect(Object.keys(locales)).to.include.members(fileExports);
   });
 
-  describe.each(localeEntries)('%s', (_, locale) => {
-    const components: LocalizedComponents = locale.components ?? {};
+  it.each(localeEntries)('%s translates to non-empty strings', (_, locale) => {
+    const strings = Object.values(getLocalizedStrings(locale)).flatMap(({ texts, labels }) => [
+      ...texts,
+      ...labels,
+    ]);
 
-    it.skipIf(!components.MuiAlert)('localizes Alert', () => {
-      const { closeText } = components.MuiAlert!.defaultProps;
-      renderWithLocale(locale, <Alert onClose={() => {}}>message</Alert>);
-
-      expectLabel(closeText);
-    });
-
-    it.skipIf(!components.MuiAutocomplete)('localizes Autocomplete', () => {
-      const { clearText, closeText, loadingText, noOptionsText, openText } =
-        components.MuiAutocomplete!.defaultProps;
-      const renderInput = (params: object) => <TextField {...params} />;
-
-      const { unmount } = renderWithLocale(
-        locale,
-        <Autocomplete open options={[]} renderInput={renderInput} />,
-      );
-      expectText(noOptionsText);
-      expectLabel(closeText);
-      unmount();
-
-      const { unmount: unmountLoading } = renderWithLocale(
-        locale,
-        <Autocomplete open loading options={[]} renderInput={renderInput} />,
-      );
-      expectText(loadingText);
-      unmountLoading();
-
-      renderWithLocale(
-        locale,
-        <Autocomplete options={['option']} defaultValue="option" renderInput={renderInput} />,
-      );
-      expectLabel(clearText);
-      expectLabel(openText);
-    });
-
-    it.skipIf(!components.MuiBreadcrumbs)('localizes Breadcrumbs', () => {
-      const { expandText } = components.MuiBreadcrumbs!.defaultProps;
-      renderWithLocale(
-        locale,
-        <Breadcrumbs maxItems={2}>
-          <span>first</span>
-          <span>second</span>
-          <span>third</span>
-        </Breadcrumbs>,
-      );
-
-      expectLabel(expandText);
-    });
-
-    it.skipIf(!components.MuiPagination)('localizes Pagination', () => {
-      const { 'aria-label': ariaLabel, getItemAriaLabel } = components.MuiPagination!.defaultProps;
-      renderWithLocale(
-        locale,
-        <Pagination count={3} defaultPage={2} showFirstButton showLastButton />,
-      );
-
-      expectLabel(ariaLabel);
-      if (getItemAriaLabel) {
-        expectLabel(getItemAriaLabel('page', 1, false));
-        expectLabel(getItemAriaLabel('page', 2, true));
-        expectLabel(getItemAriaLabel('first', 1, false));
-        expectLabel(getItemAriaLabel('previous', 1, false));
-        expectLabel(getItemAriaLabel('next', 3, false));
-        expectLabel(getItemAriaLabel('last', 3, false));
+    expect(strings.length).to.be.greaterThan(0);
+    strings.forEach((text) => {
+      if (text !== undefined) {
+        expect(text).to.be.a('string').and.not.equal('');
       }
     });
+  });
 
-    it.skipIf(!components.MuiRating)('localizes Rating', () => {
-      const { emptyLabelText, getLabelText } = components.MuiRating!.defaultProps;
-      renderWithLocale(locale, <Rating name="rating" />);
+  it('localizes components through the theme', () => {
+    render(
+      <ThemeProvider theme={createTheme({}, locales.deDE)}>{localizedComponents}</ThemeProvider>,
+    );
 
-      expectLabel(emptyLabelText);
-      if (getLabelText) {
-        expectLabel(getLabelText(1));
-        expectLabel(getLabelText(5));
-      }
-    });
+    expectLocalized(locales.deDE);
+  });
 
-    it.skipIf(!components.MuiTablePagination)('localizes TablePagination', () => {
-      const { getItemAriaLabel, labelDisplayedRows, labelRowsPerPage } =
-        components.MuiTablePagination!.defaultProps;
-      renderWithLocale(
-        locale,
-        <TablePagination
-          component="div"
-          count={100}
-          page={1}
-          rowsPerPage={10}
-          onPageChange={() => {}}
-          showFirstButton
-          showLastButton
-        />,
-      );
+  it('localizes components through a CSS variables theme', () => {
+    render(
+      <ThemeProvider theme={createTheme({ cssVariables: true }, locales.deDE)}>
+        {localizedComponents}
+      </ThemeProvider>,
+    );
 
-      expectText(labelRowsPerPage);
-      if (labelDisplayedRows) {
-        expectText(labelDisplayedRows({ from: 11, to: 20, count: 100, page: 1 }));
-      }
-      if (getItemAriaLabel) {
-        expectLabel(getItemAriaLabel('first'));
-        expectLabel(getItemAriaLabel('previous'));
-        expectLabel(getItemAriaLabel('next'));
-        expectLabel(getItemAriaLabel('last'));
-      }
-    });
+    expectLocalized(locales.deDE);
   });
 });

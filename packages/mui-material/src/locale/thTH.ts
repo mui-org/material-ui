@@ -52,7 +52,6 @@ export const thTH: Localization = {
     },
     MuiPagination: {
       defaultProps: {
-        'aria-label': '',
         getItemAriaLabel: (type, page, selected) => {
           if (type === 'page') {
             return `${selected ? '' : 'ไปที่'}หน้า ${page}`;
