@@ -223,6 +223,9 @@ export * from './MenuItem';
 export { default as MenuList } from './MenuList';
 export * from './MenuList';
 
+export { default as Meter } from './Meter';
+export * from './Meter';
+
 export { default as MobileStepper } from './MobileStepper';
 export * from './MobileStepper';
 

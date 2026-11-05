@@ -74,6 +74,7 @@ const pages: MuiPage[] = [
         children: [
           { pathname: '/material-ui/react-alert' },
           { pathname: '/material-ui/react-dialog' },
+          { pathname: '/material-ui/react-meter', newFeature: true },
           { pathname: '/material-ui/react-progress' },
           { pathname: '/material-ui/react-skeleton' },
           { pathname: '/material-ui/react-snackbar' },

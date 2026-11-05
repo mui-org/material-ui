@@ -73,6 +73,7 @@ export default [
   { pathname: '/material-ui/api/menu' },
   { pathname: '/material-ui/api/menu-item' },
   { pathname: '/material-ui/api/menu-list' },
+  { pathname: '/material-ui/api/meter' },
   { pathname: '/material-ui/api/mobile-stepper' },
   { pathname: '/material-ui/api/modal' },
   { pathname: '/material-ui/api/native-select' },

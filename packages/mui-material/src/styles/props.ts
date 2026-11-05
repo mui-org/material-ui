@@ -65,6 +65,7 @@ import type { ListSubheaderProps } from '../ListSubheader';
 import type { MenuItemProps } from '../MenuItem';
 import type { MenuListProps } from '../MenuList';
 import type { MenuProps } from '../Menu';
+import type { MeterProps } from '../Meter';
 import type { MobileStepperProps } from '../MobileStepper';
 import type { ModalProps } from '../Modal';
 import type { NativeSelectProps } from '../NativeSelect';
@@ -191,6 +192,7 @@ export interface ComponentsPropsList {
   MuiMenu: MenuProps;
   MuiMenuItem: MenuItemProps;
   MuiMenuList: MenuListProps;
+  MuiMeter: MeterProps;
   MuiMobileStepper: MobileStepperProps;
   MuiModal: ModalProps;
   MuiNativeSelect: NativeSelectProps;

@@ -1,0 +1,44 @@
+{
+  "componentDescription": "A graphical display of a numeric value within a known range, such as storage used or battery level.",
+  "propDescriptions": {
+    "classes": { "description": "Override or extend the styles applied to the component." },
+    "color": {
+      "description": "The color of the component. It supports both default and custom theme colors, which can be added as shown in the <a href=\"https://mui.com/material-ui/customization/palette/#custom-colors\">palette customization guide</a>."
+    },
+    "format": { "description": "Options to format the value." },
+    "getAriaValueText": {
+      "description": "A function that returns a string value that provides a human-readable text alternative for <code>aria-valuenow</code>, the current value of the meter."
+    },
+    "label": {
+      "description": "The label of the meter. Screen readers announce it as the meter&#39;s name."
+    },
+    "locale": {
+      "description": "The locale used by <code>Intl.NumberFormat</code> when formatting the value. Defaults to the user&#39;s runtime locale."
+    },
+    "max": { "description": "The maximum value" },
+    "min": { "description": "The minimum value" },
+    "render": {
+      "description": "Replaces the rendered root element while keeping the meter styles. Accepts an element or a function that receives the props and the Base UI state."
+    },
+    "renderValue": {
+      "description": "Renders the visible value. Receives the formatted value and the raw value. Setting it also shows the value."
+    },
+    "showValue": {
+      "description": "If <code>true</code>, the formatted value is displayed next to the label."
+    },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    },
+    "value": { "description": "The current value." }
+  },
+  "classDescriptions": {},
+  "slotDescriptions": {
+    "indicator": "The component that renders the indicator.",
+    "label": "The component that renders the label.",
+    "root": "The component that renders the root.",
+    "track": "The component that renders the track.",
+    "value": "The component that renders the formatted value."
+  }
+}

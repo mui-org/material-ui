@@ -67,6 +67,7 @@ import type { ListSubheaderClassKey } from '../ListSubheader';
 import type { MenuClassKey } from '../Menu';
 import type { MenuItemClassKey } from '../MenuItem';
 import type { MenuListClassKey } from '../MenuList';
+import type { MeterClassKey } from '../Meter';
 import type { MobileStepperClassKey } from '../MobileStepper';
 import type { ModalClassKey } from '../Modal';
 import type { NativeSelectClassKey } from '../NativeSelect';
@@ -212,6 +213,7 @@ export interface ComponentNameToClassKey {
   MuiMenu: MenuClassKey;
   MuiMenuItem: MenuItemClassKey;
   MuiMenuList: MenuListClassKey;
+  MuiMeter: MeterClassKey;
   MuiMobileStepper: MobileStepperClassKey;
   MuiModal: ModalClassKey;
   MuiNativeSelect: NativeSelectClassKey;

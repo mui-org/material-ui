@@ -477,6 +477,13 @@ export interface Components<Theme = unknown> {
         variants?: ComponentsVariants<Theme>['MuiMenuList'] | undefined;
       }
     | undefined;
+  MuiMeter?:
+    | {
+        defaultProps?: ComponentsProps['MuiMeter'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMeter'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMeter'] | undefined;
+      }
+    | undefined;
   MuiMobileStepper?:
     | {
         defaultProps?: ComponentsProps['MuiMobileStepper'] | undefined;
