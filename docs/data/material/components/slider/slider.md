@@ -145,6 +145,16 @@ Increasing _x_ by one increases the represented value by factor _2_.
 
 {{"component": "file://./demos/non-linear/index.ts"}}
 
+## Scrolling on touch devices
+
+By default, a touch that starts on the slider moves the slider, so the page doesn't scroll.
+To let a swipe across the slider scroll the page, allow panning with the CSS `touch-action` property: `pan-y` for a horizontal slider, or `pan-x` for a vertical one.
+The slider then waits until the finger moves along it, or lifts, before it changes the value.
+
+```jsx
+<Slider sx={{ touchAction: 'pan-y' }} />
+```
+
 ## Accessibility
 
 (WAI-ARIA: https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/)

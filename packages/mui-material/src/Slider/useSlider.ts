@@ -2,6 +2,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import ownerDocument from '@mui/utils/ownerDocument';
+import ownerWindow from '@mui/utils/ownerWindow';
 import useControlled from '@mui/utils/useControlled';
 import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import useEventCallback from '@mui/utils/useEventCallback';
@@ -98,6 +99,12 @@ function trackFinger(
     x: (event as MouseEvent).clientX,
     y: (event as MouseEvent).clientY,
   };
+}
+
+// The browser can take over a touch to scroll the page when the slider's `touch-action` allows
+// panning, for example `pan-y` on a horizontal slider.
+function allowsTouchPanning(slider: HTMLElement) {
+  return ownerWindow(slider).getComputedStyle(slider).touchAction !== 'none';
 }
 
 export function valueToPercent(value: number, min: number, max: number) {
@@ -237,6 +244,9 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
   // Tracks which pointer owns the current drag session, so stray pointerup/pointermove
   // events from a second pointer don't interfere.
   const activePointerIdRef = React.useRef<number>(-1);
+  // Where a touch press started, while its value is held back because the browser may still claim
+  // the touch to scroll the page.
+  const pendingTouchPressRef = React.useRef<{ x: number; y: number } | null>(null);
   const cancelFocusFrame = useEventCallback(() => {
     if (focusFrameRef.current != null) {
       cancelAnimationFrame(focusFrameRef.current);
@@ -581,6 +591,21 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
       return;
     }
 
+    const pressStart = pendingTouchPressRef.current;
+    if (pressStart) {
+      // The browser pans in the direction the finger mostly moves, and fires `pointercancel` once it
+      // does, which can take a few moves. Keep holding the press back until the finger moves more
+      // along the slider than across it.
+      const deltaX = Math.abs(finger.x - pressStart.x);
+      const deltaY = Math.abs(finger.y - pressStart.y);
+      const alongSlider = orientation === 'vertical' ? deltaY : deltaX;
+      const acrossSlider = orientation === 'vertical' ? deltaX : deltaY;
+      if (alongSlider <= acrossSlider) {
+        return;
+      }
+      pendingTouchPressRef.current = null;
+    }
+
     moveCountRef.current += 1;
 
     // Cancel move in case some other element consumed a pointerup event and it was not fired.
@@ -628,14 +653,32 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     }
 
     const newFingerValue = getValueAtFinger(finger);
+    // `pointercancel` fires when the browser takes over the gesture, for example to scroll the
+    // page, so the pointer position doesn't pick a value. Only commit what the drag already changed.
+    const cancelled = nativeEvent.type === 'pointercancel';
+
+    if (pendingTouchPressRef.current && !cancelled && newFingerValue) {
+      // A tap the browser didn't claim for scrolling, so apply the held back press now.
+      focusThumb(sliderRef, newFingerValue.activeIndex, undefined, false);
+      lastUsedThumbIndexRef.current = newFingerValue.activeIndex;
+      setValueState(newFingerValue.newValue);
+
+      if (onChange && !areValuesEqual(newFingerValue.newValue, valueDerived)) {
+        handleChange(nativeEvent, newFingerValue.newValue, newFingerValue.activeIndex);
+      }
+    }
+    pendingTouchPressRef.current = null;
 
     setActive(-1);
     if (nativeEvent.type === 'touchend') {
       setOpen(-1);
     }
 
-    if (newFingerValue && onChangeCommitted) {
-      onChangeCommitted(nativeEvent, lastChangedValueRef.current ?? newFingerValue.newValue);
+    const committedValue = cancelled
+      ? lastChangedValueRef.current
+      : (lastChangedValueRef.current ?? newFingerValue?.newValue);
+    if (newFingerValue && committedValue != null && onChangeCommitted) {
+      onChangeCommitted(nativeEvent, committedValue);
     }
 
     // Release pointer capture if applicable
@@ -701,6 +744,7 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
     const doc = ownerDocument(sliderRef.current);
     doc.removeEventListener('pointermove', handleTouchMove);
     doc.removeEventListener('pointerup', handleTouchEnd);
+    doc.removeEventListener('pointercancel', handleTouchEnd);
     doc.removeEventListener('touchmove', handleTouchMove);
     doc.removeEventListener('touchend', handleTouchEnd);
   }, [handleTouchEnd, handleTouchMove]);
@@ -745,9 +789,20 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
         return;
       }
 
+      previousIndexRef.current = -1;
       const finger = trackFinger(event, touchIdRef);
-      if (finger !== false) {
-        previousIndexRef.current = -1;
+
+      // If the browser may still claim this touch to scroll the page, hold the value back until the
+      // finger moves along the slider or lifts, so scrolling over the slider doesn't move it.
+      pendingTouchPressRef.current =
+        finger !== false &&
+        event.pointerType === 'touch' &&
+        sliderRef.current != null &&
+        allowsTouchPanning(sliderRef.current)
+          ? finger
+          : null;
+
+      if (finger !== false && !pendingTouchPressRef.current) {
         const newFingerValue = getValueAtFinger(finger);
         if (newFingerValue) {
           const thumbInput = sliderRef.current?.querySelector(
@@ -793,6 +848,7 @@ export function useSlider(parameters: UseSliderParameters): UseSliderReturnValue
 
       doc.addEventListener('pointermove', handleTouchMove, { passive: true });
       doc.addEventListener('pointerup', handleTouchEnd);
+      doc.addEventListener('pointercancel', handleTouchEnd);
     };
 
   const trackOffset = valueToPercent(range ? values[0] : min, min, max);
