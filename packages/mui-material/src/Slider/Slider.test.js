@@ -288,6 +288,62 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
     expect(handleChange.callCount).to.equal(2);
   });
 
+  it.skipIf(isJsdom())('should commit a cancelled drag without onChange', () => {
+    const handleChangeCommitted = spy();
+    const { container } = render(
+      <Slider defaultValue={0} onChangeCommitted={handleChangeCommitted} />,
+    );
+    stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+      width: 100,
+      left: 0,
+    }));
+
+    fireEvent.pointerDown(container.firstChild, {
+      buttons: 1,
+      clientX: 10,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    fireEvent.pointerMove(document.body, {
+      buttons: 1,
+      clientX: 20,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    fireEvent.pointerCancel(document.body, {
+      clientX: 0,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+
+    expect(handleChangeCommitted.callCount).to.equal(1);
+    expect(handleChangeCommitted.args[0][1]).to.equal(20);
+  });
+
+  it.skipIf(isJsdom())(
+    'should not hold back a touch press when touch-action only allows zooming',
+    () => {
+      const handleChange = spy();
+      const { container } = render(
+        <Slider defaultValue={0} onChange={handleChange} sx={{ touchAction: 'pinch-zoom' }} />,
+      );
+      stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+        width: 100,
+        left: 0,
+      }));
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(10);
+    },
+  );
+
   describe.skipIf(isJsdom())('when touch-action allows panning', () => {
     function renderPannableSlider(props) {
       const view = render(<Slider defaultValue={0} sx={{ touchAction: 'pan-y' }} {...props} />);
@@ -399,6 +455,73 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
       expect(handleChange.args[0][1]).to.equal(20);
       expect(handleChangeCommitted.callCount).to.equal(1);
       expect(handleChangeCommitted.args[0][1]).to.equal(20);
+    });
+
+    it('should undo the moves when the browser claims the touch after the thumb moved', () => {
+      const handleChange = spy();
+      const handleChangeCommitted = spy();
+      const { container } = renderPannableSlider({
+        onChange: handleChange,
+        onChangeCommitted: handleChangeCommitted,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        clientY: 40,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      // The finger settles slightly along the slider before the swipe turns vertical.
+      [
+        [12, 41],
+        [12, 30],
+      ].forEach(([clientX, clientY]) => {
+        fireEvent.pointerMove(document.body, {
+          buttons: 1,
+          clientX,
+          clientY,
+          pointerId: 1,
+          pointerType: 'touch',
+        });
+      });
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(12);
+
+      fireEvent.pointerCancel(document.body, {
+        clientX: 0,
+        clientY: 0,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      expect(handleChange.callCount).to.equal(2);
+      expect(handleChange.args[1][1]).to.equal(0);
+      expect(handleChangeCommitted.callCount).to.equal(0);
+      expect(screen.getByRole('slider')).to.have.attribute('aria-valuenow', '0');
+    });
+
+    it('should move the thumb closest to the press in a range slider', () => {
+      const handleChange = spy();
+      const { container } = renderPannableSlider({
+        defaultValue: [40, 60],
+        onChange: handleChange,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 49,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      fireEvent.pointerMove(document.body, {
+        buttons: 1,
+        clientX: 52,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.deep.equal([52, 60]);
     });
   });
 
