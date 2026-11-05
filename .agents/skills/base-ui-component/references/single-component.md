@@ -29,15 +29,22 @@ A display component (meter, progress) shows state and takes no input:
 - Render an optional part (a label, a visible value) only when its prop is set, and give each its own slot.
 - When a Base UI part takes a `children` function (`Meter.Value` receives `(formattedValue, value)`), expose it as a prop named after the closest Material precedent, such as `renderValue` (`Select`). Pair it with a boolean that shows the part (`showValue`); setting the render prop alone also shows it.
 - Visible text that Base UI marks `aria-hidden` (the meter value) is not what screen readers announce. When the docs show `renderValue`, also show `getAriaValueText` returning the same text.
-- Match colors and sizes to the closest existing component (`LinearProgress` for a meter). Component-specific palette tokens such as `palette.LinearProgress.*` belong to that component; derive colors from `(theme.vars || theme).palette[color].main` with `theme.alpha()`. Map over a typed tuple so TypeScript accepts the palette lookup:
+- Match colors and sizes to the closest existing component (`LinearProgress` for a meter). Component-specific palette tokens such as `palette.LinearProgress.*` belong to that component; derive colors from the palette with `theme.alpha()`. Build the color variants the way `LinearProgress` does, so custom theme colors added through `<Name>PropsColorOverrides` get styles too. In TypeScript, read the palette entry through a small typed helper, and build the variants inside `memoTheme(({ theme }) => ({ … }))`:
 
   ```ts
-  variants: (['primary', 'secondary', 'error', 'info', 'success', 'warning'] as const).map(
-    (color) => ({
+  import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
+
+  type PaletteMainColors = Record<string, { main: string }>;
+
+  const getMainColor = (theme: Theme, color: string) =>
+    ((theme.vars || theme).palette as unknown as PaletteMainColors)[color].main;
+
+  variants: Object.entries(theme.palette)
+    .filter(createSimplePaletteValueFilter())
+    .map(([color]) => ({
       props: { color },
-      style: { backgroundColor: (theme.vars || theme).palette[color].main },
-    }),
-  ),
+      style: { backgroundColor: theme.alpha(getMainColor(theme, color), 0.3) },
+    })),
   ```
 
 ## Form fields

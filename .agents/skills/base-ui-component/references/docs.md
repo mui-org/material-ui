@@ -45,6 +45,8 @@ githubSource: packages/mui-material/src/PreviewCard
    - Utility classes.
    - Data attributes: one list per part, each item naming the attribute and when it is present, taken from the Base UI `DataAttributes` JSDoc.
 
+In page prose, write the brand names with a non-breaking space (`Material UI`, `Base UI`). Vale's `MUI.MuiBrandName` rule fails on a normal space. Code spans, code blocks, and link targets keep normal spaces.
+
 ## Demos
 
 - Import each part from its subpath: `import PreviewCardTrigger from '@mui/material/PreviewCardTrigger';`.
