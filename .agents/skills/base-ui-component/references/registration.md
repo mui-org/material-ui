@@ -2,7 +2,7 @@
 
 ## Classes
 
-One file per public part, `<name><Part>Classes.ts`, in the standard Material UI form:
+One file per public part that has styles, `<name><Part>Classes.ts`, in the standard Material UI form:
 
 ```ts
 import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
@@ -13,6 +13,10 @@ export interface PreviewCardPopupClasses {
   root: string;
   /** Styles applied to the root element when the popup is open. */
   open: string;
+  /** Styles applied to the portal element. */
+  portal: string;
+  /** Styles applied to the positioner element. */
+  positioner: string;
 }
 
 export type PreviewCardPopupClassKey = keyof PreviewCardPopupClasses;
@@ -23,38 +27,26 @@ export function getPreviewCardPopupUtilityClass(slot: string): string {
 
 const previewCardPopupClasses: PreviewCardPopupClasses = generateUtilityClasses(
   'MuiPreviewCardPopup',
-  ['root', 'open'],
+  ['root', 'open', 'portal', 'positioner'],
 );
 
 export default previewCardPopupClasses;
 ```
 
-Add a class for each slot and for each Base UI state that users style (`open`, `highlighted`, `checked`). Use the global `Mui-disabled` and `Mui-focusVisible` classes where they apply.
+Add a class for each slot and for each Base UI state that users style (`open`, `highlighted`, `checked`). Use the global `Mui-disabled` and `Mui-focusVisible` classes where they apply. Parts without styles (a root, a trigger) have no classes file.
 
 ## Data attributes
 
-Base UI documents the `data-*` attributes of each part in `<part>/<Part>DataAttributes.d.ts` inside the installed `@base-ui/react`, but does not export them. Export them from the part's folder, next to its classes:
+Base UI exports the data attributes of each part as a namespace of constants, for example `PreviewCardPopupDataAttributes.open === 'data-open'`. Re-export them from the matching Material part, so users style live state without writing attribute strings:
 
 ```ts
-// previewCardPopupDataAttributes.ts
-export const previewCardPopupDataAttributes = {
-  /** Present when the preview card is open. */
-  open: 'data-open',
-  /** Present when the preview card is closed. */
-  closed: 'data-closed',
-  /** Present when the preview card begins animating in. */
-  startingStyle: 'data-starting-style',
-  /** Present when the preview card is animating out. */
-  endingStyle: 'data-ending-style',
-  /** The side the popup is positioned on. */
-  side: 'data-side',
-  /** The alignment of the popup relative to its side. */
-  align: 'data-align',
-} as const;
+// PreviewCardPopup/index.ts
+export { PreviewCardPopupDataAttributes } from '@base-ui/react/preview-card';
 ```
 
-Copy the names and descriptions from the Base UI `DataAttributes` file of each part that renders an element.
-This object's shape is proposed; Lukas owns the final decision. Keep it in this one file per part so a rename is a one-place edit.
+- Re-export the namespace of every Base UI part that the Material part renders, including the ones behind its slots (`PreviewCardPositionerDataAttributes` from `PreviewCardPopup`).
+- A Base UI part without a `DataAttributes` export (Meter) has none to re-export.
+- The API docs generator does not read re-exported constants. List the attributes on the docs page instead (see [docs.md](docs.md)).
 
 ## Part `index.ts`
 
@@ -63,17 +55,25 @@ export { default } from './PreviewCardPopup';
 export * from './PreviewCardPopup';
 export { default as previewCardPopupClasses } from './previewCardPopupClasses';
 export * from './previewCardPopupClasses';
-export * from './previewCardPopupDataAttributes';
+export {
+  PreviewCardPopupDataAttributes,
+  PreviewCardPositionerDataAttributes,
+} from '@base-ui/react/preview-card';
 ```
 
 ## Exports and dependency
 
 In `packages/mui-material/package.json`:
 
-- Add `"@base-ui/react": "^1.9.0"` to `dependencies` if it is not there yet. It is a direct dependency, not a peer. Use the same range as the `docs` catalog in `pnpm-workspace.yaml`.
-- Add one `exports` entry per public part: `"./Unstable_PreviewCardPopup": "./src/Unstable_PreviewCardPopup/index.ts"`.
+- Add `"@base-ui/react"` to `dependencies` if it is not there yet, with the same range as the `docs` catalog in `pnpm-workspace.yaml`. It is a direct dependency, not a peer.
+- Add one `exports` entry per public part: `"./PreviewCardPopup": "./src/PreviewCardPopup/index.ts"`. The `./*` wildcard only resolves `index.js` files.
 
-Do not add the parts to `packages/mui-material/src/index.js` or `index.d.ts`. The root barrel export waits until the component is stable.
+In `packages/mui-material/src/index.js` and `index.d.ts`, add each part in alphabetical order:
+
+```ts
+export { default as PreviewCardPopup } from './PreviewCardPopup';
+export * from './PreviewCardPopup';
+```
 
 ## Theme types
 
@@ -90,19 +90,25 @@ MuiPreviewCardPopup?:
   | undefined;
 
 // props.ts
-import type { PreviewCardPopupProps } from '../Unstable_PreviewCardPopup';
+import type { PreviewCardPopupProps } from '../PreviewCardPopup';
 MuiPreviewCardPopup: PreviewCardPopupProps;
 
 // overrides.ts
-import type { PreviewCardPopupClassKey } from '../Unstable_PreviewCardPopup';
+import type { PreviewCardPopupClassKey } from '../PreviewCardPopup';
 MuiPreviewCardPopup: PreviewCardPopupClassKey;
 ```
 
 Parts without styles (root, trigger) get only `defaultProps` in `components.ts` and an entry in `props.ts`.
 
-Theme types are registered by default; users need no augmentation import. TypeScript 5 is the supported minimum.
+Theme `variants` type `ownerState` as the component's props, so a `variants` matcher cannot read live Base UI state. Users style live state in `styleOverrides` with the classes and data attribute constants:
 
-## Unstable naming
-
-- Folders and subpaths carry `Unstable_` (`Unstable_PreviewCardPopup`).
-- Component identifiers, types, classes, theme keys, and the docs route do not (`PreviewCardPopup`, `MuiPreviewCardPopup`, `/material-ui/react-preview-card/`).
+```ts
+MuiPreviewCardPopup: {
+  styleOverrides: {
+    root: {
+      [`&.${previewCardPopupClasses.open}`]: { boxShadow: 'none' },
+      [`&[${PreviewCardPopupDataAttributes.side}="top"]`]: { marginBottom: 4 },
+    },
+  },
+},
+```

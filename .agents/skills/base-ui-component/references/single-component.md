@@ -1,11 +1,14 @@
 # Single component
 
-Use this shape when users render one element tree and configure it with props, like `TextField` (number field, OTP field, meter, slider).
+Use this shape when users render one element tree and configure it with props, like `TextField` or `LinearProgress` (number field, OTP field, meter, slider).
 One public component wraps every Base UI part. Each wrapped part is a slot of that component.
+The root takes the public `render` prop; inner parts are reached through `slots` and `slotProps`.
 
 ## Structure
 
-```
+The example is a form field:
+
+```text
 Base Root  → slot `root`  (an existing Material container, for example FormControl)
   ├─ slot `label`        (InputLabel / FormLabel), when the component has a label
   ├─ Base Input → slot `input` (Input / FilledInput / OutlinedInput by `variant`)
@@ -17,7 +20,15 @@ Base Root  → slot `root`  (an existing Material container, for example FormCon
 - The public component renders the Base UI `Root` and passes each picked behavior prop to it.
 - `Root`'s `render` callback renders the root slot adapter. Each inner Base UI part has its own `render` callback and adapter.
 - Slots that have no Base UI part (label, helper text) still go through `useSlot`, with `elementType` set to the Material component.
-- Presentation props follow the closest existing Material component: a field takes `variant`, `size`, `color`, `fullWidth`, `label`, `helperText`, and `error` like `TextField`.
+- Presentation props follow the closest existing Material component: a field takes `variant`, `size`, `color`, `fullWidth`, `label`, `helperText`, and `error` like `TextField`; a meter takes `color` like `LinearProgress`.
+
+## Display components
+
+A display component (meter, progress) shows state and takes no input:
+
+- Render an optional part (a label, a visible value) only when its prop is set, and give each its own slot.
+- When a Base UI part takes a `children` function (`Meter.Value` receives `(formattedValue, value)`), expose it as a prop named after the closest Material precedent: `renderValue` (`Select`) for custom rendering, `valueLabelFormat` (`Slider`) for formatting. Document the choice in the PR description.
+- Match colors and sizes to the closest existing component (`LinearProgress` for a meter). Component-specific palette tokens such as `palette.LinearProgress.*` belong to that component; derive colors from `(theme.vars || theme).palette[color].main` with `theme.alpha()`.
 
 ## Form fields
 

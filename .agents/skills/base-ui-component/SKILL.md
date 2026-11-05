@@ -9,10 +9,10 @@ Base UI owns behavior; Material UI owns presentation.
 The finished component is _indistinguishable_ from any other Material UI component in theming, imports, tests, and docs.
 The only new thing is the Base UI part underneath.
 
-Scope: new components without a Material UI predecessor.
-A successor to an existing component (for example, Menu v2 replacing Menu) also needs a migration guide, which this skill does not cover.
+Scope: **new components**, ones Material UI has never had (number field, preview card, menubar).
+A Base UI successor to an existing component (Menu v2 replacing Menu) ships under `Unstable_<Name>2` subpaths with a migration guide; this skill does not cover it.
 
-`<Name>` below stands for the component name, such as `PreviewCard`; `<name>` is its camelCase form.
+`<Name>` below stands for the component name, such as `PreviewCard`; `<name>` is its camelCase form and `<kebab-name>` its kebab-case form.
 
 ## API rules
 
@@ -20,31 +20,29 @@ These rules were decided by the Material UI team on 2026-11-04. Apply every one 
 
 1. **`render`, not `children` or `component`.** Parts that change their rendered element take a public `render` prop. A trigger requires `render`, because users choose the styled trigger they want (`<PreviewCardTrigger render={<Button>Open</Button>} />`). No part accepts `component`. Parts keep `slots.root`.
 2. **Open parts.** When users assemble the component (a root, a trigger, a popup, items), each piece is its own public part. One public part may wrap several Base UI parts for ease of use, as a popup wraps Portal, Positioner, and Popup. `slots` and `slotProps` reach each wrapped part.
-3. **Flat names.** Export PascalCase parts (`PreviewCardTrigger`), one subpath each. There is no namespace object (`PreviewCard.Trigger`).
+3. **Flat names.** Export PascalCase parts (`PreviewCardTrigger`). There is no namespace object (`PreviewCard.Trigger`).
 4. **Base UI names for behavior.** Props for logic and event handlers keep Base UI names and signatures (`onOpenChange(open, eventDetails)`, `side`, `align`, `delay`), selected from Base UI types with `Pick`. Presentation props keep Material UI names (`size`, `color`, `variant`, `elevation`, `disableRipple`).
-5. **No proptypes.** New components ship without generated `propTypes`.
-6. **Styling hooks.** Utility classes and `ownerState` carry live Base UI state, and the Base UI `data-*` attributes are a public styling contract, exported the way classes are.
-7. **Unstable subpaths.** Ship under `@mui/material/Unstable_<Name>` subpaths only, with theme keys `Mui<Name>` and an unstable docs page.
+5. **Styling hooks.** Utility classes and `ownerState` carry live Base UI state. The Base UI data attributes are re-exported from Base UI and documented. Users style live state with these classes and data attribute constants in `styleOverrides`; `variants` match props only.
+6. **Stable exports.** Each public part is a `@mui/material/<Name><Part>` subpath and a root `@mui/material` export, with a `Mui<Name><Part>` theme key.
 
 ## Steps
 
 ### 1. Map the Base UI parts
 
-Read the Base UI docs and types for the component.
-They ship with the package: `docs/react/components/<kebab-name>.md` and `<kebab-name>/**/*.d.ts` inside the installed `@base-ui/react` (find it with `pnpm -F @mui/material exec node -p "require.resolve('@base-ui/react/package.json')"`).
+Read the Base UI docs and types for the component. They ship with the package installed for the docs: `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` and `docs/node_modules/@base-ui/react/<kebab-name>/**/*.d.ts`.
 
 Choose the shape:
 
-- **Single component**: users render one element tree and configure it with props, like a text field. Read [references/single-component.md](references/single-component.md).
+- **Single component**: users render one element tree and configure it with props, like `TextField` or `LinearProgress`. Read [references/single-component.md](references/single-component.md).
 - **Compound parts**: users compose a trigger, a popup, and items. Read [references/compound-parts.md](references/compound-parts.md).
 
-Done when a table lists every Base UI part with its role (public part, slot of a named part, or internal), the existing Material UI component it renders (`Paper`, `ButtonBase`, `FormControl`, `List`) or the new styled element, and its slot name.
+Done when a table lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
 
 ### 2. Write the types
 
 Follow [references/adapter.md](references/adapter.md#types).
 
-Done when every public prop of every part is accounted for as one of: a picked Base UI prop, a Material UI presentation prop, or a common prop (`render`, `slots`, `slotProps`, `classes`, `className`, `style`, `sx`).
+Done when every public prop of every part is accounted for as one of: a picked Base UI prop, a Material UI presentation prop, or a common prop (`render`, `slots`, `slotProps`, `classes`, `className`, `style`, `sx`), and each has a JSDoc comment.
 
 ### 3. Implement each part
 
@@ -55,15 +53,15 @@ Done when each row of the step 1 table has its part or slot implemented, and no 
 
 ### 4. Register the component
 
-Follow [references/registration.md](references/registration.md): classes, data attributes, theme types, subpath exports, and the `@base-ui/react` dependency.
+Follow [references/registration.md](references/registration.md): classes, data attributes, theme types, exports, and the `@base-ui/react` dependency.
 
-Done when a `createTheme({ components: { Mui<Name>: { defaultProps, styleOverrides, variants } } })` call type-checks for every part, and every part imports from its `@mui/material/Unstable_<Name>…` subpath.
+Done when a `createTheme({ components: { Mui<Name><Part>: { defaultProps, styleOverrides, variants } } })` call type-checks for every styled part, and every part imports from both `@mui/material/<Name><Part>` and `@mui/material`.
 
 ### 5. Test
 
 Follow [references/testing.md](references/testing.md).
 
-Done when every rendered part passes `describeConformance`, every behavior the docs page shows has a test through the Material UI part, and the documented `data-*` attributes are pinned by a test.
+Done when every rendered part passes `describeConformance`, every behavior the docs page shows has a test through the Material UI part, and each re-exported data attribute is asserted in a test.
 
 ### 6. Document
 
@@ -74,9 +72,14 @@ Done when the page has a demo for each feature in the Base UI docs that the comp
 
 ### 7. Verify
 
-Run the commands from `AGENTS.md`: `pnpm prettier`, `pnpm eslint`, `pnpm typescript`, `pnpm test:unit <Name>`, and `pnpm docs:api`.
+Run, in this order:
 
-Done when all five pass and `git status` shows no generated file left out of the change.
+1. `pnpm proptypes`, then `pnpm docs:api`. Both write files; keep their output.
+2. `pnpm prettier`. `docs:api` writes JSDoc into component files, so format after it.
+3. `pnpm typescript` and `pnpm test:unit <Name>`.
+4. `pnpm exec eslint --max-warnings 0 <changed files>`. The full `pnpm eslint` run also reports errors from outside your change.
+
+Done when every command passes, the generated API JSON for each part lists its props, classes, and the `@mui/material` imports, and `git status` shows no generated file left out of the change.
 
 ## Pitfalls
 
@@ -85,4 +88,5 @@ Done when all five pass and `git status` shows no generated file left out of the
 - Base UI animates the popup root with CSS (`data-starting-style`, `data-ending-style`). A Material transition must clone that element without adding a wrapper.
 - Base UI focus-guard elements sit between siblings, so sibling combinators such as `item + divider` break. Each part owns its own spacing.
 - Base UI states are present-or-absent attributes: select `[data-open]`, not `[data-open="true"]`.
-- A form control that renders `FormControl` needs a placeholder child with `muiName = 'Input'` so the label shrink state is right during server rendering. See [references/single-component.md](references/single-component.md).
+- `Intl` formatting without a `locale` renders different text on the server and in the browser. Pass `locale` in demos and tests that format numbers or dates.
+- Repo lint rules that new code trips: optional props are typed `| undefined`; demos wrap their focus code in `@focus-start` and `@focus-end` comments; tests render to a string with `createRenderer().renderToString`, not `react-dom/server`.
