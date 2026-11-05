@@ -178,7 +178,7 @@ describe('<Menu2 />', () => {
         <Menu2>
           <Menu2Trigger render={<Button disableRipple>Options</Button>} />
           <Menu2Popup>
-            <Menu2Item component={NativeButton} nativeButton>
+            <Menu2Item render={<NativeButton />} nativeButton>
               Item
             </Menu2Item>
             <Menu2CheckboxItem component={NativeButton} nativeButton>
@@ -197,7 +197,7 @@ describe('<Menu2 />', () => {
                 <Menu2Item>Nested</Menu2Item>
               </Menu2SubmenuPopup>
             </Menu2Submenu>
-            <Menu2Item nativeButton slots={{ root: 'button' }}>
+            <Menu2Item nativeButton render={<button type="button" />}>
               Host slot
             </Menu2Item>
           </Menu2Popup>
@@ -233,7 +233,7 @@ describe('<Menu2 />', () => {
             }
           />
           <Menu2Popup>
-            <Menu2Item closeOnClick={false} slots={{ root: 'button' }}>
+            <Menu2Item closeOnClick={false} render={<button type="button" />}>
               Native item
             </Menu2Item>
             <Menu2CheckboxItem closeOnClick={false} slots={{ root: 'button' }}>
@@ -313,7 +313,7 @@ describe('<Menu2 />', () => {
             }
           />
           <Menu2Popup>
-            <Menu2Item closeOnClick={false} nativeButton slots={{ root: CustomButtonRoot }}>
+            <Menu2Item closeOnClick={false} nativeButton render={<CustomButtonRoot />}>
               Custom native item
             </Menu2Item>
             <Menu2Submenu>

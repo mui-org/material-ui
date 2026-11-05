@@ -14,6 +14,58 @@ import Menu2RadioItem from '@mui/material/Unstable_Menu2RadioItem';
 describe.skipIf(isJsdom())('Menu2 with Tooltip', () => {
   const { render } = createRenderer();
 
+  it('supports Tooltip composition through render on pointer hover and keyboard focus', async () => {
+    const itemRef = React.createRef<HTMLElement>();
+    const onClick = vi.fn();
+    const { user } = render(
+      <Menu2>
+        <Menu2Trigger render={<Button>Options</Button>} />
+        <Menu2Popup transitionDuration={0}>
+          <Menu2Item>Before</Menu2Item>
+          <Menu2Item
+            ref={itemRef}
+            closeOnClick={false}
+            onClick={onClick}
+            render={(props) => (
+              <Tooltip title="Create a new file" describeChild enterDelay={0} leaveDelay={0}>
+                <div {...props} />
+              </Tooltip>
+            )}
+          >
+            File
+          </Menu2Item>
+          <Menu2Item>After</Menu2Item>
+        </Menu2Popup>
+      </Menu2>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Options' }));
+    const item = await screen.findByRole('menuitem', { name: 'File' });
+    await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
+    expect(itemRef.current).to.equal(item);
+    expect(item.parentElement).to.equal(
+      screen.getByRole('menuitem', { name: 'Before' }).parentElement,
+    );
+
+    await user.hover(item);
+    await waitFor(() => {
+      const tooltip = screen.getByRole('tooltip');
+      expect(tooltip).to.have.text('Create a new file');
+      expect(item).to.have.attribute('aria-describedby', tooltip.id);
+    });
+    await user.unhover(item);
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('menu')).to.equal(null));
+    await user.keyboard('{Enter}');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Before' })).toHaveFocus());
+    await user.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'File' })).toHaveFocus());
+    await waitFor(() => expect(screen.getByRole('tooltip')).to.have.text('Create a new file'));
+    await user.keyboard('{Enter}');
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('menu')).not.to.equal(null);
+  });
+
   it('describes disabled items on keyboard focus without activating them', async () => {
     const handleClick = vi.fn();
     const handleChange = vi.fn();

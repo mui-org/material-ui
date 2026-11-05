@@ -321,6 +321,31 @@ Style each part directly instead, and set `useFlexGap` on a `Stack` that contain
 The focus guards have a `data-base-ui-focus-guard` attribute.
 :::
 
+### Item
+
+`MenuItem` renders a styled `<div>` by default.
+Use its optional `render` prop to change the root element or compose it with another component.
+Material styles, theme overrides, and ripple remain available.
+
+A render function receives props and the `highlighted`, `disabled`, `dense`, `disableGutters`, and `divider` states.
+Put item content in `MenuItem` children and forward the supplied props, ref, and `children` to the root element.
+Children set on the render element, or replacement of `props.children` in a render function, can remove the ripple.
+
+```jsx
+<MenuItem
+  render={(props) => (
+    <Tooltip title="Create a file">
+      <div {...props} />
+    </Tooltip>
+  )}
+>
+  File
+</MenuItem>
+```
+
+An element such as `render={<button />}` sets `nativeButton` automatically.
+For a custom component or render function that returns a native button, set `nativeButton` on `MenuItem`.
+
 ### Shared theme styles
 
 `MuiMenu2Popup.styleOverrides` also applies to matching submenu popup slots.

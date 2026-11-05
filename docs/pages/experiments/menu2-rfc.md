@@ -24,7 +24,7 @@ We propose a Base UI-backed successor with Material visuals and full theme supp
 1. **Correct behavior at any nesting depth:** trigger semantics, RTL-aware arrow keys, Escape that closes one level, focus return to the parent item, and typeahead at each level.
 2. **Pointer support:** hover-open delays and safe diagonal travel from a trigger to its submenu.
 3. **Positioning:** flip at boundaries, track the anchor, and limit the popup to the available space.
-4. **Material presentation and customization:** shared styles, `sx`, utility classes, slots, and theme `defaultProps`/`styleOverrides`/`variants`. Caller-rendered parts also support `component`.
+4. **Material presentation and customization:** shared styles, `sx`, utility classes, root composition, slots, and theme `defaultProps`/`styleOverrides`/`variants`.
 5. **Low cost for existing users:** preserve the classic API and behavior. Keep Base UI out of bundles that do not use the successor. Measure the shared-style and barrel costs separately.
 6. **Familiar API where possible:** document changed behavior and features with no direct replacement.
 7. **Related menu features:** checkbox and radio items, labeled groups, and hover-open. A dedicated context menu follows separately.
@@ -84,13 +84,13 @@ The classic `Menu` keeps its API. Classic and successor items share `MenuItemBas
 
 ### Rules for Base UI-backed components (Menu is the first)
 
-- **Customization:** use Material UI `slots`/`slotProps`. Base UI's `render` is an internal composition mechanism, not the public customization API.
+- **Customization:** use `render` for `Menu2Trigger` and `Menu2Item`. The item keeps Material styles and ripple without a `component` prop or root slot API. Use Material UI `slots`/`slotProps` for internal parts, such as popup layers and indicators.
 - **Slot handling:** use `useSlot` for the popup list. At Base UI render boundaries, reuse `appendOwnerState`, `resolveComponentProps`, and Material UI's `mergeSlotProps`. Use Base UI's `mergeProps` for behavioral props and compose refs. Keep adapters local until another integration needs them. These adapters filter Material props from host elements, combine state-based classes, infer native buttons, and prevent duplicate keyboard activation.
 - **Style reuse:** share styled elements where practical; otherwise share style functions. Audit each consumer. Viewport-relative heights and item-adjacent divider rules do not transfer unchanged to Base UI's popup tree. New parts own their spacing; use `Menu2Separator` between items.
 - **Presentation:** retain `dense`, `disableGutters`, and `divider`. Omit the visual-only `selected` prop; checkbox and radio items express checked state. Base UI owns behavior; Material UI owns styles.
 - **Density:** set `slotProps.list.dense` on `Menu2Popup`. Submenus inherit this density and cannot override it. Item-level `dense` props remain available.
 - **Dependency:** make `@base-ui/react` a direct dependency of `@mui/material`. Review version updates rather than auto-merge them. Test the upstream states used by the integration, including checked indicators, starting and ending transitions, and resolved placement.
-- **Theme state:** keep `Mui-*` classes and `ownerState` as the Material customization contract. All item parts resolve their root slot from the live Base UI state, so slot callbacks and theme variants receive the highlighted state and, where applicable, the checked or open state. Exit-tint tracking stays internal. Popup slot callbacks receive resolved public props, not live uncontrolled open state. Internal animation and placement styles can use Base UI attributes.
+- **Theme state:** keep `Mui-*` classes and `ownerState` as the Material customization contract. Item render callbacks, slot callbacks, and theme variants receive the live highlighted state and, where applicable, the checked or open state. Exit-tint tracking stays internal. Popup slot callbacks receive resolved public props, not live uncontrolled open state. Internal animation and placement styles can use Base UI attributes.
 - **API boundary:** explicitly pick the forwarded root, trigger, and positioner props. New upstream props require API and routing review. This is not complete type isolation: changes to an exposed upstream type still reach Material UI. Keep Base UI's callback names and signatures: `onOpenChange(open, eventDetails)`, `onCheckedChange(checked, eventDetails)`, and `onValueChange(value, eventDetails)`.
 - **Tooling and tests:** use normal theme type registration, API generation, and `describeConformance` for rendered parts. Test behavior differences and the integration boundary as well as the individual parts. Root components have behavior tests; popup conformance tests target the menu surface.
 
@@ -118,7 +118,7 @@ The trigger components have different presentation contracts:
 
 - `Menu2Trigger` requires a `render` prop with an element or a render function. A custom component must forward props and its ref. A render function must pass the supplied props and ref to its element. Put `openOnHover`, `delay`, and `closeDelay` on `Menu2Trigger`. Put event handlers and trigger attributes on this component or the supplied element.
 - `Menu2SubmenuTrigger` is a styled menu item, optionally inside a `Tooltip`. Put `disabled`, `label`, and hover props on that trigger. `Menu2Submenu` has no `disabled` prop or trigger slot.
-- Items and submenu triggers infer `nativeButton` from their root slot and `component`. `Menu2Trigger` cannot infer it from a custom renderer; set its `nativeButton` prop when needed.
+- `Menu2Item` infers `nativeButton` from a host render element. For a custom component or render function that returns a native button, set `nativeButton`. Other item parts and submenu triggers infer it from their root slot and `component`. `Menu2Trigger` cannot infer it from a custom renderer; set its `nativeButton` prop when needed.
 
 The explicit submenu trigger avoids registering one DOM node as both an item and a submenu trigger. It costs one public component and theme key, but gives the trigger one behavioral owner. An alternative would make a generic item switch its behavior according to context; this proposal keeps that distinction explicit.
 
@@ -129,6 +129,8 @@ A registered trigger supplies these handlers and focuses the first enabled item 
 `Menu2Trigger` supplies that registration without a detached handle.
 
 #### Customization targets
+
+`Menu2Item` renders a styled `div` by default. Its optional `render` prop accepts an element or a function with props and typed item state. Custom renderers must forward props, ref, and children to preserve the ripple. Root attributes belong on the item or the supplied element; element-specific props and refs belong on that element. The `MuiMenu2Item` theme key and utility classes stay unchanged.
 
 `MuiMenu2` and `MuiMenu2Submenu` configure behavioral `defaultProps`. They have no DOM ref, `sx`, slots, style overrides, or theme variants. `MuiMenu2Trigger` also supports `defaultProps` only. The surface theme keys are `MuiMenu2Popup` and `MuiMenu2SubmenuPopup`, with their own exported class hooks.
 
@@ -229,19 +231,19 @@ Remaining release work is listed once in the rollout plan.
 
 These choices are proposed for maintainer review.
 
-| Topic              | Decision and limit                                                                                                                                                             |
-| :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Animation          | Grow by default. Base UI owns mounting and completion. Compatible transition components or CSS remain options. See the transition contract below.                              |
-| Ripple             | Keep ButtonBase as the item root, not a nested interactive child. Forward `disableRipple` only when supplied so theme defaults apply. Base UI owns Enter and Space activation. |
-| Elevation          | Keep the popup's `elevation` prop, default 8, with a root slot override.                                                                                                       |
-| Backdrop           | A modal root menu renders a transparent backdrop that blocks outside clicks. Slots and slot props customize it. `slots.backdrop: null` omits it. No submenu backdrop.          |
-| Imperative actions | Keep Base UI's `actionsRef`, which exposes `close()` and `unmount()`. There is no `action.updatePosition()` equivalent.                                                        |
-| Theme and refs     | Item parts use `OverridableComponent`; their refs and HTML props follow `component`. Popup refs target the `HTMLDivElement` menu surface. Behavioral roots have no DOM ref.    |
-| Item descriptions  | Use Material UI Tooltip for supplementary text or images, without links, buttons, or other controls. Preview Card is outside the initial release.                              |
-| Context menu       | A separate component later, with the correct accessibility behavior and touch long-press. Menu2 doesn't support context menus, and the docs and recipes don't show them.       |
-| Behavior defaults  | Keep Base UI behavior unless an integration requirement needs a change. Material UI owns the modal layer and adds start alignment, submenu offsets, and Grow.                  |
-| Open tint on close | Track the popup's ending state internally. Clear the exit tint when exit ends or the popup unmounts; do not add a timer or wait for focus return.                              |
-| Forced colors      | `enhanceHighContrast` styles the item parts and indicators. Disabled cues take precedence over highlight styling.                                                              |
+| Topic              | Decision and limit                                                                                                                                                                                                                       |
+| :----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Animation          | Grow by default. Base UI owns mounting and completion. Compatible transition components or CSS remain options. See the transition contract below.                                                                                        |
+| Ripple             | Keep ButtonBase as the item root, not a nested interactive child. Forward `disableRipple` only when supplied so theme defaults apply. Base UI owns Enter and Space activation.                                                           |
+| Elevation          | Keep the popup's `elevation` prop, default 8, with a root slot override.                                                                                                                                                                 |
+| Backdrop           | A modal root menu renders a transparent backdrop that blocks outside clicks. Slots and slot props customize it. `slots.backdrop: null` omits it. No submenu backdrop.                                                                    |
+| Imperative actions | Keep Base UI's `actionsRef`, which exposes `close()` and `unmount()`. There is no `action.updatePosition()` equivalent.                                                                                                                  |
+| Theme and refs     | `Menu2Item` has an `HTMLElement` ref; element-specific props and refs belong on its render element. Other item parts still use `OverridableComponent`. Popup refs target the `HTMLDivElement` surface. Behavioral roots have no DOM ref. |
+| Item descriptions  | Use Material UI Tooltip for supplementary text or images, without links, buttons, or other controls. Preview Card is outside the initial release.                                                                                        |
+| Context menu       | A separate component later, with the correct accessibility behavior and touch long-press. Menu2 doesn't support context menus, and the docs and recipes don't show them.                                                                 |
+| Behavior defaults  | Keep Base UI behavior unless an integration requirement needs a change. Material UI owns the modal layer and adds start alignment, submenu offsets, and Grow.                                                                            |
+| Open tint on close | Track the popup's ending state internally. Clear the exit tint when exit ends or the popup unmounts; do not add a timer or wait for focus return.                                                                                        |
+| Forced colors      | `enhanceHighContrast` styles the item parts and indicators. Disabled cues take precedence over highlight styling.                                                                                                                        |
 
 Menu2 passes `modal={false}` to Base UI and implements `modal` with Material UI parts. The scroll lock uses the `ModalManager` instance that Modal uses, so a menu and a Modal on one page share one lock. The backdrop slot blocks outside clicks for a modal root menu. Both are absent for hover-opened menus and `modal={false}`. Setting the backdrop slot to `null` lets outside clicks through and keeps the scroll lock.
 

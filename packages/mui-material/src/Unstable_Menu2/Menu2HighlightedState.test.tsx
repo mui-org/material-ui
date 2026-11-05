@@ -14,7 +14,7 @@ import Menu2Submenu from '../Unstable_Menu2Submenu';
 import Menu2SubmenuTrigger from '../Unstable_Menu2SubmenuTrigger';
 import Menu2 from './Menu2';
 
-// Every item part gives its slots and its theme variants the live Base UI state.
+// Every item part gives its render or slot callback and theme variants the live state.
 const slotProps = {
   root: (ownerState: { highlighted?: boolean }) => ({
     'data-testid': 'target',
@@ -23,7 +23,14 @@ const slotProps = {
 };
 
 const cases = [
-  { name: 'MuiMenu2Item', item: <Menu2Item slotProps={slotProps}>Target</Menu2Item> },
+  {
+    name: 'MuiMenu2Item',
+    item: (
+      <Menu2Item render={(props, state) => <div {...props} {...slotProps.root(state)} />}>
+        Target
+      </Menu2Item>
+    ),
+  },
   {
     name: 'MuiMenu2LinkItem',
     item: (
@@ -65,7 +72,7 @@ describe.skipIf(isJsdom())('Menu2 live highlighted ownerState', () => {
   const { render } = createRenderer();
 
   cases.forEach(({ name, item }) => {
-    it(`${name} gives its root slot and its theme variants the live highlighted state`, async () => {
+    it(`${name} gives its root customization and theme variants the live highlighted state`, async () => {
       const theme = createTheme({
         components: {
           [name]: { variants: [{ props: { highlighted: true }, style: { paddingRight: '23px' } }] },

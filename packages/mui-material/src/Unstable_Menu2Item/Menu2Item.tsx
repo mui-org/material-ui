@@ -1,11 +1,12 @@
 'use client';
 import * as React from 'react';
-import type { OverridableComponent, OverrideProps } from '@mui/types';
 import PropTypes from 'prop-types';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
+import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/types';
 import ListContext from '../List/ListContext';
 import { styled } from '../zero-styled';
 import Menu2ItemBase from '../internal/Menu2ItemBase';
+import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import type {
   Menu2ItemBaseOwnerState,
@@ -19,8 +20,6 @@ import {
   useMenu2ItemListContext,
   useMenu2ItemUtilityClasses,
 } from '../Unstable_Menu2/menu2ItemShared';
-import type { Menu2RootSlotProps } from '../Unstable_Menu2/menu2Utils';
-import { isMenu2RootNativeButton } from '../Unstable_Menu2/menu2Utils';
 import type { Menu2ItemClasses } from '../Unstable_Menu2/menu2Classes';
 import { getMenu2ItemUtilityClass } from '../Unstable_Menu2/menu2Classes';
 
@@ -29,20 +28,11 @@ export interface Menu2ItemOwnerState extends Menu2ItemBaseOwnerState {
   highlighted: boolean;
 }
 
-export interface Menu2ItemSlots {
-  /**
-   * The component that renders the root.
-   * @default 'div'
-   */
-  root?: React.ElementType | undefined;
-}
-
-export interface Menu2ItemSlotProps extends Menu2RootSlotProps<Menu2ItemOwnerState> {}
-
-export interface Menu2ItemOwnProps
+export interface Menu2ItemProps
   extends
+    Omit<React.HTMLAttributes<HTMLElement>, 'color'>,
     Menu2ItemBaseProps,
-    Menu2ItemVisualProps<Menu2ItemClasses, Menu2ItemSlots, Menu2ItemSlotProps> {
+    Omit<Menu2ItemVisualProps<Menu2ItemClasses>, 'slots' | 'slotProps'> {
   /**
    * The content of the component.
    */
@@ -71,28 +61,26 @@ export interface Menu2ItemOwnProps
    */
   disableRipple?: boolean | undefined;
   /**
+   * Whether the item renders a native `<button>` element.
+   * Inferred from a button element passed to `render`.
+   * Set to `true` for a custom component or render function that returns a button.
+   * @default false
+   */
+  nativeButton?: boolean | undefined;
+  /**
+   * The element to render, or a function that returns it.
+   * Forward the props, ref, and children to the element to preserve Material styles and ripple.
+   * Put content in the children prop of Menu2Item. Replacing the supplied children can remove the ripple.
+   */
+  render?:
+    | React.ReactElement
+    | ComponentRenderFn<Omit<HTMLProps, 'color'>, Menu2ItemOwnerState>
+    | undefined;
+  /**
    * Styles applied to the root element.
    */
   style?: React.CSSProperties | undefined;
 }
-
-export interface Menu2ItemTypeMap<
-  AdditionalProps = {},
-  RootComponent extends React.ElementType = 'div',
-> {
-  props: AdditionalProps & Menu2ItemOwnProps;
-  defaultComponent: RootComponent;
-}
-
-export type Menu2ItemProps<
-  RootComponent extends React.ElementType = Menu2ItemTypeMap['defaultComponent'],
-  AdditionalProps = {},
-> = OverrideProps<Menu2ItemTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
-  /**
-   * The component used for the root node.
-   */
-  component?: React.ElementType | undefined;
-};
 
 // Keep sx on the final styled component, after the shared theme styles.
 const Menu2ItemRoot = styled(Menu2ItemBase, { slot: 'root' })({});
@@ -119,15 +107,13 @@ const Menu2Item = React.forwardRef(function Menu2Item(
   const {
     className,
     classes: classesProp,
-    component,
     dense: denseProp = false,
     disabled = false,
     disableGutters = false,
     disableRipple,
     divider = false,
     nativeButton: nativeButtonProp,
-    slotProps,
-    slots,
+    render: renderProp,
     sx,
     style,
     ...other
@@ -143,7 +129,8 @@ const Menu2Item = React.forwardRef(function Menu2Item(
     ownerState,
     getMenu2ItemUtilityClass,
   );
-  const RootSlot = slots?.root ?? Menu2ItemRoot;
+  const nativeButton =
+    nativeButtonProp ?? (React.isValidElement(renderProp) && renderProp.type === 'button');
 
   return (
     <ListContext.Provider value={childContext}>
@@ -154,23 +141,29 @@ const Menu2Item = React.forwardRef(function Menu2Item(
             baseProps={renderProps}
             ownerState={{ ...ownerState, ...state }}
             elementType={Menu2ItemRoot}
-            component={component}
+            component={renderProp ? Menu2ItemRenderRoot : undefined}
             disableRipple={disableRipple}
-            nativeButton={nativeButtonProp}
-            slotProps={slotProps}
-            slots={slots}
+            nativeButton={nativeButton}
+            internalRender={renderProp}
+            internalRenderState={{
+              dense,
+              disabled: state.disabled,
+              disableGutters,
+              divider,
+              highlighted: state.highlighted,
+            }}
             sx={sx}
           />
         )}
         className={mergeMenu2ItemClassName(className, classes, ownerState)}
         disabled={disabled}
-        nativeButton={nativeButtonProp ?? isMenu2RootNativeButton(RootSlot, component)}
+        nativeButton={nativeButton}
         style={style}
         {...other}
       />
     </ListContext.Provider>
   );
-}) as OverridableComponent<Menu2ItemTypeMap>;
+});
 
 Menu2Item.propTypes /* remove-proptypes */ = {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
@@ -194,11 +187,6 @@ Menu2Item.propTypes /* remove-proptypes */ = {
    * @default true
    */
   closeOnClick: PropTypes.bool,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
   /**
    * If `true`, compact vertical padding designed for keyboard and mouse input is used.
    * @default false
@@ -229,23 +217,18 @@ Menu2Item.propTypes /* remove-proptypes */ = {
    */
   label: PropTypes.string,
   /**
-   * Whether the component is rendered as a native button.
-   *
-   * By default, this is inferred from the root slot and `component` prop.
+   * Whether the item renders a native `<button>` element.
+   * Inferred from a button element passed to `render`.
+   * Set to `true` for a custom component or render function that returns a button.
+   * @default false
    */
   nativeButton: PropTypes.bool,
   /**
-   * The props used for each slot inside.
+   * The element to render, or a function that returns it.
+   * Forward the props, ref, and children to the element to preserve Material styles and ripple.
+   * Put content in the children prop of Menu2Item. Replacing the supplied children can remove the ripple.
    */
-  slotProps: PropTypes.shape({
-    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  }),
-  /**
-   * The components used for each slot inside.
-   */
-  slots: PropTypes.shape({
-    root: PropTypes.elementType,
-  }),
+  render: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   /**
    * Styles applied to the root element.
    */

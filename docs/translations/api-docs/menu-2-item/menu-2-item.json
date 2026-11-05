@@ -5,9 +5,6 @@
     "classes": { "description": "Override or extend the styles applied to the component." },
     "className": { "description": "CSS class applied to the element." },
     "closeOnClick": { "description": "Whether to close the menu when the item is clicked." },
-    "component": {
-      "description": "The component used for the root node. Either a string to use a HTML element or a component."
-    },
     "dense": {
       "description": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used."
     },
@@ -23,10 +20,11 @@
       "description": "Overrides the text label to use when the item is matched during keyboard text navigation."
     },
     "nativeButton": {
-      "description": "Whether the component is rendered as a native button.<br>By default, this is inferred from the root slot and <code>component</code> prop."
+      "description": "Whether the item renders a native <code>&lt;button&gt;</code> element. Inferred from a button element passed to <code>render</code>. Set to <code>true</code> for a custom component or render function that returns a button."
     },
-    "slotProps": { "description": "The props used for each slot inside." },
-    "slots": { "description": "The components used for each slot inside." },
+    "render": {
+      "description": "The element to render, or a function that returns it. Forward the props, ref, and children to the element to preserve Material styles and ripple. Put content in the children prop of Menu2Item. Replacing the supplied children can remove the ripple."
+    },
     "style": { "description": "Styles applied to the root element." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
@@ -57,7 +55,7 @@
       "description": "State class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "highlighted"
-    }
-  },
-  "slotDescriptions": { "root": "The component that renders the root." }
+    },
+    "root": { "description": "Styles applied to the root element." }
+  }
 }

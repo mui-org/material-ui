@@ -130,6 +130,49 @@ const CustomButton = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
 
 <Menu2Trigger render={(props) => <CustomButton {...props}>Project actions</CustomButton>} />;
 
+<Menu2Item
+  ref={(node) => {
+    node satisfies HTMLElement | null;
+    // @ts-expect-error The item ref does not point to an SVG element.
+    node satisfies SVGElement | null;
+  }}
+>
+  Default item
+</Menu2Item>;
+<Menu2Item render={undefined}>Default item</Menu2Item>;
+<Menu2Item render={<li ref={React.createRef<HTMLLIElement>()} />}>List item</Menu2Item>;
+<Menu2Item nativeButton render={<CustomButton ref={React.createRef<HTMLButtonElement>()} />} />;
+<Menu2Item
+  nativeButton
+  render={(props, state) => {
+    state.highlighted satisfies boolean;
+    state.disabled satisfies boolean;
+    state.dense satisfies boolean;
+    state.disableGutters satisfies boolean;
+    state.divider satisfies boolean;
+    // @ts-expect-error Highlighted is a boolean.
+    state.highlighted satisfies string;
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color satisfies string | undefined;
+    return <Button {...props} />;
+  }}
+>
+  Button item
+</Menu2Item>;
+<Menu2Item nativeButton render={(props) => <CustomButton {...props} />} />;
+// @ts-expect-error Use render to select the item root.
+<Menu2Item component="li" />;
+// @ts-expect-error Use render instead of the root slot.
+<Menu2Item slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the item or its render element.
+<Menu2Item slotProps={{ root: { title: 'Item' } }} />;
+// @ts-expect-error Put element-specific attributes on the render element.
+<Menu2Item href="/profile" />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2Item render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2Item render={null} />;
+
 <Menu2Trigger render={<Button />}>Project actions</Menu2Trigger>;
 
 // @ts-expect-error Set color on the render element.

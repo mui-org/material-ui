@@ -26,7 +26,6 @@ interface StylingProps {
 }
 
 const parts: Record<string, (props: StylingProps) => React.ReactNode> = {
-  Menu2Item: (props) => <Menu2Item {...props}>Item</Menu2Item>,
   Menu2LinkItem: (props) => <Menu2LinkItem {...props}>Link</Menu2LinkItem>,
   Menu2CheckboxItem: (props) => <Menu2CheckboxItem {...props}>Checkbox</Menu2CheckboxItem>,
   Menu2RadioItem: (props) => (

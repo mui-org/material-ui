@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { expectType } from '@mui/types';
 import type { Menu as BaseMenu } from '@base-ui/react/menu';
+import Button from '@mui/material/Button';
 import type { Menu2Props } from '@mui/material/Unstable_Menu2';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2Trigger from '@mui/material/Unstable_Menu2Trigger';
@@ -169,13 +170,15 @@ function Menu2Composition() {
           <Menu2Item
             dense
             nativeButton={false}
-            slotProps={{
-              root: (ownerState) => {
-                expectType<boolean, typeof ownerState.highlighted>(ownerState.highlighted);
-                // @ts-expect-error Visual selection is not part of the item state.
-                expectType<boolean, typeof ownerState.selected>(ownerState.selected);
-                return {};
-              },
+            render={(props, state) => {
+              expectType<boolean, typeof state.highlighted>(state.highlighted);
+              expectType<boolean, typeof state.disabled>(state.disabled);
+              expectType<boolean, typeof state.dense>(state.dense);
+              expectType<boolean, typeof state.disableGutters>(state.disableGutters);
+              expectType<boolean, typeof state.divider>(state.divider);
+              // @ts-expect-error Visual selection is not part of the item state.
+              state.selected;
+              return <div {...props} data-active={state.highlighted} />;
             }}
           >
             Menu2Item
@@ -786,16 +789,15 @@ const controlledPopupProps: Menu2PopupProps = {
   </Menu2Popup>
 </Menu2>;
 
-// The ref and the HTML attributes follow the `component` prop, the same as the
-// classic parts.
+// Menu2Item uses render for a custom root. Other parts still support component.
 <Menu2>
   <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
-    <Menu2Item ref={(node) => expectType<HTMLDivElement | null, typeof node>(node)}>Item</Menu2Item>
-    <Menu2Item component="li" ref={(node) => expectType<HTMLLIElement | null, typeof node>(node)}>
+    <Menu2Item ref={(node) => expectType<HTMLElement | null, typeof node>(node)}>Item</Menu2Item>
+    <Menu2Item render={<li ref={(node) => expectType<HTMLLIElement | null, typeof node>(node)} />}>
       List item
     </Menu2Item>
-    <Menu2Item component="a" href="/anchor">
+    <Menu2Item render={<a href="/anchor" aria-label="Anchor attributes" />}>
       Anchor attributes
     </Menu2Item>
     <Menu2LinkItem
@@ -831,7 +833,47 @@ const controlledPopupProps: Menu2PopupProps = {
 <Menu2>
   <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
-    {/* @ts-expect-error `href` is an anchor attribute, and the default root is a div. */}
+    {/* @ts-expect-error Put element-specific attributes on the render element. */}
     <Menu2Item href="/anchor">Item</Menu2Item>
   </Menu2Popup>
 </Menu2>;
+
+<Menu2Item render={undefined}>Default item</Menu2Item>;
+<Menu2Item
+  nativeButton
+  render={(props, state) => {
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color satisfies string | undefined;
+    // @ts-expect-error Highlighted is a boolean.
+    expectType<string, typeof state.highlighted>(state.highlighted);
+    return <Button {...props} />;
+  }}
+>
+  Button item
+</Menu2Item>;
+
+interface CustomItemRootProps extends React.HTMLAttributes<HTMLDivElement> {
+  trackingId: string;
+}
+const CustomItemRoot = React.forwardRef<HTMLDivElement, CustomItemRootProps>(
+  function CustomItemRoot({ trackingId, ...props }, ref) {
+    return <div {...props} ref={ref} data-tracking-id={trackingId} />;
+  },
+);
+<Menu2Item render={<CustomItemRoot trackingId="item" ref={React.createRef<HTMLDivElement>()} />}>
+  Custom item
+</Menu2Item>;
+<Menu2Item render={(props) => <CustomItemRoot {...props} trackingId="item" />} />;
+
+// @ts-expect-error Use render to select the item root.
+<Menu2Item component="li" />;
+// @ts-expect-error Use render instead of the root slot.
+<Menu2Item slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the item or its render element.
+<Menu2Item slotProps={{ root: { title: 'Item' } }} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2Item trackingId="item" render={<CustomItemRoot trackingId="item" />} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2Item render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2Item render={null} />;

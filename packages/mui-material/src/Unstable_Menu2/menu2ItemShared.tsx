@@ -5,7 +5,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
 import type { SxProps } from '@mui/system';
 import { mergeProps } from '@base-ui/react/merge-props';
-import type { HTMLProps } from '@base-ui/react/types';
+import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/types';
 import type { Theme } from '../styles';
 import ListContext from '../List/ListContext';
 import type { MuiKeyboardEvent } from '../ButtonBase/useButtonBase';
@@ -203,6 +203,9 @@ export interface Menu2ItemRootSlotProps<OwnerState extends object> {
   defaultComponent?: React.ElementType | undefined;
   component?: React.ElementType | undefined;
   disableRipple?: boolean | undefined;
+  internalRender?:
+    React.ReactElement | ComponentRenderFn<Omit<HTMLProps, 'color'>, OwnerState> | undefined;
+  internalRenderState?: OwnerState | undefined;
   nativeButton?: boolean | undefined;
   slots?: Menu2RootSlots | undefined;
   slotProps?: Menu2RootSlotProps<OwnerState> | undefined;
@@ -223,6 +226,8 @@ export function Menu2ItemRootSlot<OwnerState extends object>(
     disableRipple,
     elementType,
     endIndicator,
+    internalRender,
+    internalRenderState,
     nativeButton,
     ownerState,
     slotProps,
@@ -250,6 +255,7 @@ export function Menu2ItemRootSlot<OwnerState extends object>(
     ownerState,
     {
       ...rootProps,
+      ...(internalRender && { internalRender, internalRenderState }),
       // ButtonBase renders a <button> by default; the items keep their element.
       component: component ?? defaultComponent,
       // Pass it only when the caller sets it. An explicit prop beats the
