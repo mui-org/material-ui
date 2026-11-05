@@ -20,6 +20,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 ## Generated files
 
 - [ ] **propTypes are generated, not written.** `pnpm proptypes` leaves no diff after your final commit.
+- [ ] **Public part files are visible to `docs:api`.** `grep -l "@ignore - internal component" <public part files>` prints nothing; the API builder skips any file containing that marker, silently. [adapter.md, Files]
 - [ ] **Internal components live in their own files.** Slot adapters and `RenderElement` are in separate files marked `@ignore - internal component`, and `pnpm proptypes` added no `propTypes` to them. [adapter.md, Files]
 - [ ] **No giant propTypes from Base UI types.** A `handle` or other Base UI class instance is `/* @typescript-to-proptypes-ignore */`; `children` and `slots` are not. [adapter.md, Public component]
 - [ ] **The API JSON is complete.** For each part, `docs/pages/material-ui/api/<kebab-part>.json` has non-empty `props`, its classes under `classes` or under `slots`, both `@mui/material/<Name><Part>` and `@mui/material` imports, and a non-empty `componentDescription` in the matching translations file. [adapter.md, Public component]
@@ -29,6 +30,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 ## Overlays
 
 - [ ] **`slots.transition = null` renders no `Grow`.** [compound-parts.md, Transition]
+- [ ] **Refs reach the popup element.** The forwarded ref, the Base UI popup ref, and the transition's ref all point at the popup element. [compound-parts.md, Transition]
 - [ ] **The transition's styles land on the popup.** In Chromium, the popup has the `transform` that `Grow` sets while opening. [compound-parts.md, Transition]
 - [ ] **`transitionDuration="auto"` works with a custom transition slot** that lacks `muiSupportAuto`. [compound-parts.md, Transition]
 - [ ] **The stacking layer matches the closest Material component**: `zIndex.tooltip` for hover-opened, `zIndex.modal` for click-opened. [compound-parts.md, Popup]
@@ -52,7 +54,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 ## Docs
 
 - [ ] **Every demo has `@focus-start` and `@focus-end`.** Detect: eslint `docs-infra/require-demo-focus`. [docs.md, Demos]
-- [ ] **Every demo renders without console errors**, in `pnpm docs:dev` or, when no browser is available, in a temporary test that renders each demo in Chromium and fails on `console.error`. Delete that test before committing.
+- [ ] **Every demo renders without console errors**, in `pnpm docs:dev` or, when no browser is available, in a temporary test that renders each demo in Chromium and fails on `console.error`. The first Chromium run can fail with "Vite unexpectedly reloaded" while dependencies are optimized; run it again before reading the result. Delete that test before committing.
 - [ ] **The anatomy is a `text` block**, and the route file has no leftover name from the file it was copied from. [docs.md]
 
 ## Repository

@@ -36,7 +36,7 @@ Choose the shape:
 - **Single component**: users render one element tree and configure it with props, like `TextField` or `LinearProgress`. Read [references/single-component.md](references/single-component.md).
 - **Compound parts**: users compose a trigger, a popup, and items. Read [references/compound-parts.md](references/compound-parts.md).
 
-Done when a table, written into the PR description, lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
+Done when a table, written into the PR description (or your final report when there is no PR), lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
 
 ### 2. Write the types
 

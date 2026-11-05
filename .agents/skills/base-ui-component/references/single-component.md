@@ -18,7 +18,7 @@ Base Root  → slot `root`  (an existing Material container, for example FormCon
 ```
 
 - The public component renders the Base UI `Root` and passes each picked behavior prop to it.
-- `Root`'s `render` callback renders the root slot adapter. Each inner Base UI part has its own `render` callback and adapter.
+- `Root`'s `render` callback renders the root slot adapter. Each inner Base UI part has its own `render` callback. Inner slots that differ only in slot name and styled element can share one adapter that takes the slot name.
 - Slots that have no Base UI part (label, helper text) still go through `useSlot`, with `elementType` set to the Material component.
 - Presentation props follow the closest existing Material component: a field takes `variant`, `size`, `color`, `fullWidth`, `label`, `helperText`, and `error` like `TextField`; a meter takes `color` like `LinearProgress`.
 
@@ -29,7 +29,16 @@ A display component (meter, progress) shows state and takes no input:
 - Render an optional part (a label, a visible value) only when its prop is set, and give each its own slot.
 - When a Base UI part takes a `children` function (`Meter.Value` receives `(formattedValue, value)`), expose it as a prop named after the closest Material precedent, such as `renderValue` (`Select`). Pair it with a boolean that shows the part (`showValue`); setting the render prop alone also shows it.
 - Visible text that Base UI marks `aria-hidden` (the meter value) is not what screen readers announce. When the docs show `renderValue`, also show `getAriaValueText` returning the same text.
-- Match colors and sizes to the closest existing component (`LinearProgress` for a meter). Component-specific palette tokens such as `palette.LinearProgress.*` belong to that component; derive colors from `(theme.vars || theme).palette[color].main` with `theme.alpha()`.
+- Match colors and sizes to the closest existing component (`LinearProgress` for a meter). Component-specific palette tokens such as `palette.LinearProgress.*` belong to that component; derive colors from `(theme.vars || theme).palette[color].main` with `theme.alpha()`. Map over a typed tuple so TypeScript accepts the palette lookup:
+
+  ```ts
+  variants: (['primary', 'secondary', 'error', 'info', 'success', 'warning'] as const).map(
+    (color) => ({
+      props: { color },
+      style: { backgroundColor: (theme.vars || theme).palette[color].main },
+    }),
+  ),
+  ```
 
 ## Form fields
 

@@ -36,7 +36,7 @@ describeConformance(<PreviewCardPopup>Content</PreviewCardPopup>, () => ({
 
 - `skip: ['componentProp']` on every part, because no part accepts `component`.
 - Parts that live in a portal need `getRootElement`. Parts that need a parent (a popup needs its root) wrap the node in `render`.
-- A trigger only forwards its picked props to the user's element, so it runs `only: ['refForwarding']` with `classes: {}`.
+- A trigger only forwards its picked props to the user's element, so it runs `only: ['refForwarding']` with `classes: { root: '' }`.
 - Parts that render no element (root) get behavior tests only.
 
 ## Behavior
@@ -83,3 +83,8 @@ expect(popup).to.have.attribute(PreviewCardPopupDataAttributes.open);
 
 - Every docs demo is a visual regression fixture automatically (`test/regressions/README.md`). Add a fixture under `test/regressions/fixtures/<Name>/` only for a state no demo shows, such as an open popup on each side.
 - For an overlay, add accessibility fixtures under `test/regressions/a11y/fixtures/<kebab-name>/` that render the open state.
+- CI runs the visual and accessibility suites; a local run needs a build and is optional.
+
+## Components without Base UI state
+
+Some Base UI components have an empty state and no data attributes (Meter). Assert that a render function receives an object, skip the data attribute tests, and say on the docs page that the component has no data attributes.

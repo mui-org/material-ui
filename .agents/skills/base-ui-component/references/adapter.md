@@ -105,7 +105,8 @@ export interface PreviewCardPopupOwnerState extends PreviewCardPopupProps {
 - Pick behavior props only. ARIA and HTML props that Base UI computes (`aria-valuetext`, `id`) come through the HTML attributes, so they override Base UI only when the user sets them.
 - A picked prop whose default you change (`sideOffset` above) leaves `Pick` and is redeclared with indexed access and its own JSDoc `@default`. `pnpm docs:api` fails when the JSDoc default and the runtime default disagree.
 - Every prop gets a JSDoc comment with its `@default`; optional props are typed `| undefined`. `pnpm proptypes` and the API docs read these comments.
-- Type `slotProps.<slot>` with `SlotComponentProps<'<tag>', { sx?: … }, OwnerState>` from `@mui/utils/types`. The repo's `SlotProps` type includes `component`, which no part accepts.
+- Picked props bring Base UI's JSDoc, which can name Base UI APIs (`PreviewCard.createHandle()`). Redeclare such a prop with indexed access and Material wording (`createPreviewCardHandle()`).
+- Type `slotProps.<slot>` with `SlotComponentProps<'<tag>', { sx?: … }, OwnerState>` from `@mui/utils/types`. The repo's `SlotProps` type includes `component`, which no part accepts. For a slot built on a Material component, pass that component's props without `component` as the second argument: `SlotComponentProps<'div', Omit<PaperProps, 'component'>, OwnerState>`, so users can still set `variant` or `square`.
 - Export `<Name><Part>Props`, `<Name><Part>OwnerState`, `<Name><Part>Slots`, and `<Name><Part>SlotProps`.
 
 ## Public component
@@ -180,7 +181,14 @@ PreviewCardPopup.propTypes /* remove-proptypes */ = {
 - Pass `component: undefined` in `externalForwardedProps`. The types already reject `component`, but `useSlot` would still honor one passed from JavaScript.
 - Pass each picked behavior prop to the Base UI part by name. `undefined` is fine for these; Base UI applies its own default.
 - Choose Material defaults where Material design differs from Base UI (a popup offset of 8, `elevation` 8), and document them with `@default`.
-- Run `pnpm proptypes` to generate `propTypes`; never write them by hand. When a Base UI type is a class instance (a `handle` from `createHandle`), the generator expands its internal fields: mark that one prop `/* @typescript-to-proptypes-ignore */` with `PropTypes.object`. Leave `children` and `slots` to the generator.
+- Run `pnpm proptypes` to generate `propTypes`; never write them by hand. Some Base UI types expand into huge or machine-specific shapes. For these props, write the value yourself with the ignore marker inside it, and the generator keeps it:
+
+  | Prop type                                            | Value                                                                                                         |
+  | :--------------------------------------------------- | :------------------------------------------------------------------------------------------------------------ |
+  | A class instance: a `handle`, `Intl.LocalesArgument` | `PropTypes /* @typescript-to-proptypes-ignore */.object` (or `.oneOfType` with `string`/`array` for a locale) |
+  | `children` that is a node or a function              | `PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.node, PropTypes.func])`                 |
+
+  A `slots.transition` typed `React.ElementType | null` expands into every HTML tag; type it `React.JSXElementConstructor<TransitionProps & { children: React.ReactElement }> | null` instead.
 
 ## Slot adapter
 
@@ -248,10 +256,10 @@ const PreviewCardPopupRootSlot = React.forwardRef(function PreviewCardPopupRootS
 ```
 
 - `getSlotProps: (externalHandlers) => mergeProps(baseProps, externalHandlers)` keeps Base UI's handlers, ARIA attributes, data attributes, and ref working, and chains the user's handlers after them.
-- `ownerState` holds the Material UI props plus live Base UI state (`open`, `highlighted`, `checked`, `disabled`), read from the `state` argument of `render`. Never parse `data-*` attributes to get state.
+- `ownerState` holds the Material UI props plus live Base UI state (`open`, `highlighted`, `checked`, `disabled`), read from the `state` argument of `render`. Leave out state whose name matches a prop (`side`, `align` on a popup); the prop already carries it. Never parse `data-*` attributes to get state.
 - Each adapter lives in its own file, with its props as a named interface, and is marked `@ignore - internal component`.
 - Slot names are lowercase (`slot: 'root'`, `slot: 'indicator'`). Lowercase is the direction for new code: `createStyled` still lowercases capitalized names, with a `TODO v6` to drop that (`packages/mui-system/src/createStyled/createStyled.ts`, [#37908](https://github.com/mui/material-ui/pull/37908)). Most existing components still use `'Root'`; do not copy them. `styleOverrides` accepts slot keys only. Live state gets a utility class (`open` above), which users target in `styleOverrides`.
-- Build slots on existing Material UI components (`Paper`, `List`, `ButtonBase`, `FormControl`, `Divider`), so their theme styles apply. When the slot's base is a Material component, set `shouldForwardComponentProp: true`, as `Alert` and `Accordion` do for their `Paper` roots.
+- Build slots on existing Material UI components (`Paper`, `List`, `ButtonBase`, `FormControl`, `Divider`), so their theme styles apply. For text with no matching component (a label, a value), use `styled('span')` with a `theme.typography` variant rather than `Typography`, which would pull in the `MuiTypography` theme entry. When the slot's base is a Material component, set `shouldForwardComponentProp: true`, as `Alert` and `Accordion` do for their `Paper` roots.
 - Write Base UI layout variables (`--transform-origin`, `--available-height`, `--available-width`) into styles instead of measuring.
 
 ## Public `render`

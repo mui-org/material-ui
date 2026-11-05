@@ -33,7 +33,7 @@ const previewCardPopupClasses: PreviewCardPopupClasses = generateUtilityClasses(
 export default previewCardPopupClasses;
 ```
 
-Add a class for each slot and for each Base UI state that users style (`open`, `highlighted`, `checked`). Use the global `Mui-disabled` and `Mui-focusVisible` classes where they apply. Parts without styles (a root, a trigger) have no classes file.
+Add a class for each slot and for each Base UI state that users style (`open`, `highlighted`, `checked`). State names in `generateUtilityClass`'s global list (`open`, `disabled`, `checked`, `selected`, `focusVisible`, …) produce the global class (`Mui-open`), not `Mui<Name><Part>-open`, so scope selectors under the part's `root` key. Parts without styles (a root, a trigger) have no classes file.
 
 ## Data attributes
 

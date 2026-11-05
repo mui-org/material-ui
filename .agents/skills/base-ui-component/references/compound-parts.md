@@ -106,20 +106,24 @@ const [TransitionSlot, transitionSlotProps] = useSlot('transition', {
   additionalProps: {
     appear: false,
     in: baseState.open && baseState.transitionStatus !== 'starting',
-    timeout: transitionDuration,
   },
 });
 
+const timeout =
+  transitionDuration === 'auto' && !TransitionSlot.muiSupportAuto ? undefined : transitionDuration;
+
 return (
-  <TransitionSlot {...transitionSlotProps}>
+  <TransitionSlot {...transitionSlotProps} timeout={timeout}>
     <PreviewCardPopupRootSlot baseProps={baseProps} baseState={baseState} ownerState={ownerState} />
   </TransitionSlot>
 );
 ```
 
 - `Grow` clones its child and injects `style` and `ref`. The root slot adapter accepts those extra props and merges them: `getSlotProps: (handlers) => mergeProps(baseProps, transitionChildProps, handlers)`.
+- Base UI `mergeProps` does not merge `ref`. Combine the transition's ref, the Base UI popup ref (`baseProps.ref`), and the forwarded ref with `useForkRef`.
+- `useSlot`'s types reject `slotProps.transition`, because transition props share no keys with its slot props; cast `externalForwardedProps` for this one call.
 - `slots.transition = null` renders the root without a Material transition; users then animate with CSS on the start and end style data attributes. `useSlot` falls back to `elementType` for a `null` slot, so check `slots?.transition === null` first and render the root slot directly in that case.
-- Expose `transitionDuration` (default `'auto'` for `Grow`). Drop `'auto'` when the transition does not support it, as `Popover` does: `if (transitionDuration === 'auto' && !TransitionSlot.muiSupportAuto) { transitionDuration = undefined; }`.
+- Expose `transitionDuration` (default `'auto'` for `Grow`). The snippet drops `'auto'` when the transition does not support it, as `Popover` does.
 - Users run code after the transition with `onOpenChangeComplete`, not `onEntered` or `onExited`.
 
 ## Items
