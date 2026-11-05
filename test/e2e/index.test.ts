@@ -364,7 +364,8 @@ describe('e2e', () => {
       await page.waitForSelector('[role="listbox"]');
       await page.waitForTimeout(250);
 
-      const option = page.getByRole('option', { name: '20', exact: true });
+      // Option 20 opens under the pointer, so drag further to 30.
+      const option = page.getByRole('option', { name: '30', exact: true });
       const optionBox = await option.boundingBox();
       expect(optionBox).not.toEqual(null);
 
@@ -374,8 +375,41 @@ describe('e2e', () => {
       );
       await page.mouse.up();
 
-      await expect(page.getByTestId('select-value')).toHaveText('20', { timeout: 1000 });
+      await expect(page.getByTestId('select-value')).toHaveText('30', { timeout: 1000 });
       await expect(page.getByRole('listbox')).toBeHidden({ timeout: 1000 });
+    });
+
+    it('should not select the option under the pointer when releasing late without moving', async () => {
+      await page.setViewportSize({ width: 800, height: 600 });
+      await renderFixture('Select/SelectPointerFlow');
+
+      const trigger = page.getByRole('combobox');
+      const box = await trigger.boundingBox();
+      expect(box).not.toEqual(null);
+
+      const x = box!.x + box!.width / 2;
+      const y = box!.y + box!.height / 2;
+
+      await page.mouse.move(x, y);
+      const value = await page.getByTestId('select-value').textContent();
+
+      await page.mouse.down();
+      await page.waitForSelector('[role="listbox"]');
+      // A touchpad tap can release this late, see #48956.
+      await page.waitForTimeout(250);
+
+      const optionAtPointer = await page.evaluate(
+        (point) =>
+          document.elementFromPoint(point.x, point.y)?.closest('[role="option"]')?.textContent,
+        { x, y },
+      );
+      expect(optionAtPointer).not.toEqual(null);
+      expect(optionAtPointer).not.toEqual(value);
+
+      await page.mouse.up();
+
+      await expect(page.getByRole('listbox')).toBeVisible();
+      await expect(page.getByTestId('select-value')).toHaveText(value!);
     });
   });
 });
