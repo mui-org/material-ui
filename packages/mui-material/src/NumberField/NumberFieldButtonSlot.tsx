@@ -32,10 +32,12 @@ const NumberFieldButtonSlot = React.forwardRef<HTMLButtonElement, NumberFieldBut
     // Material should also display read-only controls as unavailable.
     const disabled = baseState.disabled || baseState.readOnly;
 
-    // Unset consumer handlers must preserve Base UI's internal handlers.
+    // Keep nativeButton off the DOM and prevent unset handlers from replacing Base UI handlers.
     const consumerButtonProps = Object.fromEntries(
       Object.entries(buttonProps).filter(
-        ([key, value]) => !(/^on[A-Z]/.test(key) && value == null),
+        ([key, value]) =>
+          !(key === 'nativeButton' && typeof ButtonSlot === 'string') &&
+          !(/^on[A-Z]/.test(key) && value == null),
       ),
     );
 

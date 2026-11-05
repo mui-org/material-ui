@@ -86,7 +86,8 @@ export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotPro
   {
     decrementButton: SlotProps<
       React.ElementType<IconButtonProps>,
-      NumberFieldDecrementButtonSlotPropsOverrides,
+      NumberFieldDecrementButtonSlotPropsOverrides &
+        Pick<BaseNumberField.Decrement.Props, 'nativeButton'>,
       NumberFieldOwnerState
     >;
     /**
@@ -113,7 +114,8 @@ export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotPro
      */
     incrementButton: SlotProps<
       React.ElementType<IconButtonProps>,
-      NumberFieldIncrementButtonSlotPropsOverrides,
+      NumberFieldIncrementButtonSlotPropsOverrides &
+        Pick<BaseNumberField.Increment.Props, 'nativeButton'>,
       NumberFieldOwnerState
     >;
     /**

@@ -280,6 +280,7 @@ const NumberFieldInputSlot = React.forwardRef(
     const incrementButton = (
       <BaseNumberField.Increment
         disabled={incrementButtonDisabled}
+        nativeButton={restIncrementButtonProps.nativeButton}
         render={(buttonBaseProps, buttonBaseState) => (
           <NumberFieldButtonSlot
             ButtonSlot={IncrementButtonSlot}
@@ -294,6 +295,7 @@ const NumberFieldInputSlot = React.forwardRef(
     const decrementButton = (
       <BaseNumberField.Decrement
         disabled={decrementButtonDisabled}
+        nativeButton={restDecrementButtonProps.nativeButton}
         render={(buttonBaseProps, buttonBaseState) => (
           <NumberFieldButtonSlot
             ButtonSlot={DecrementButtonSlot}

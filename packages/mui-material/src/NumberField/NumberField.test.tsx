@@ -1052,6 +1052,12 @@ describe('<NumberField />', () => {
     >(function NativeButton(props, ref) {
       return <button {...props} ref={ref} data-testid="button-component" />;
     });
+    const NonNativeButton = React.forwardRef<
+      HTMLSpanElement,
+      React.ComponentPropsWithoutRef<'span'>
+    >(function NonNativeButton(props, ref) {
+      return <span {...props} ref={ref} />;
+    });
 
     (
       [
@@ -1151,6 +1157,55 @@ describe('<NumberField />', () => {
             expect(screen.getByRole('textbox', { name: 'Amount' })).to.have.value(
               String(nextValue),
             );
+          });
+
+          // Host slots rely on Base UI for button semantics; Material replacements
+          // add ButtonBase's own handlers, which must not duplicate activation.
+          [
+            { configuration: 'host slot', component: undefined },
+            { configuration: 'Material component', component: 'span' as const },
+            { configuration: 'custom Material component', component: NonNativeButton },
+          ].forEach(({ configuration, component }) => {
+            it(`supports a non-native ${configuration} with one activation per gesture`, async () => {
+              const onValueChange = vi.fn();
+              const onValueCommitted = vi.fn();
+              const { user } = render(
+                <NumberField
+                  label="Amount"
+                  defaultValue={5}
+                  slots={component === undefined ? { [slot]: 'span' } : undefined}
+                  slotProps={{
+                    [slot]: { nativeButton: false, tabIndex: 0, component },
+                  }}
+                  onValueChange={onValueChange}
+                  onValueCommitted={onValueCommitted}
+                />,
+              );
+              const button = screen.getByRole('button', { name });
+              const input = screen.getByRole('textbox', { name: 'Amount' });
+              const step = nextValue - 5;
+
+              expect(button.tagName).to.equal('SPAN');
+              expect(button).not.to.have.attribute('nativebutton');
+              await user.tab();
+              await user.tab();
+              expect(document.activeElement).to.equal(button);
+
+              await user.keyboard('{Enter}');
+              expect(input).to.have.value(String(nextValue));
+              await user.keyboard(' ');
+              expect(input).to.have.value(String(nextValue + step));
+              await user.click(button);
+              expect(input).to.have.value(String(nextValue + step * 2));
+
+              const expectedValues = [nextValue, nextValue + step, nextValue + step * 2];
+              expect(onValueChange.mock.calls.map(([value]) => value)).to.deep.equal(
+                expectedValues,
+              );
+              expect(onValueCommitted.mock.calls.map(([value]) => value)).to.deep.equal(
+                expectedValues,
+              );
+            });
           });
         });
 

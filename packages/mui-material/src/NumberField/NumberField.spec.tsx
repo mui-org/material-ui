@@ -218,6 +218,20 @@ function ValueCallbacks(props: NumberFieldProps) {
 
 // @ts-expect-error InputLabel's shrink prop is boolean.
 <NumberField slotProps={{ inputLabel: { shrink: 'true' } }} />;
+
+// Both stepper slots expose Base UI's native-button mode, including callback props.
+<NumberField
+  slots={{ incrementButton: 'span', decrementButton: 'span' }}
+  slotProps={{
+    incrementButton: { nativeButton: false },
+    decrementButton: () => ({ nativeButton: false }),
+  }}
+/>;
+// @ts-expect-error nativeButton must be boolean.
+<NumberField slotProps={{ incrementButton: { nativeButton: 'false' } }} />;
+// @ts-expect-error nativeButton must be boolean for the decrement slot too.
+<NumberField slotProps={{ decrementButton: { nativeButton: 'false' } }} />;
+
 // @ts-expect-error controls is an internal adornment, not a replaceable slot.
 <NumberField slots={{ controls: 'div' }} />;
 // @ts-expect-error Internal controls do not expose public slot props.
