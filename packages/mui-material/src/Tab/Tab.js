@@ -11,7 +11,7 @@ import { useDefaultProps } from '../DefaultPropsProvider';
 import unsupportedProp from '../utils/unsupportedProp';
 import { useRovingTabIndexContext, useRovingTabIndexItem } from '../utils/useRovingTabIndex';
 import tabClasses, { getTabUtilityClass } from './tabClasses';
-import { applyInsetFocusVisibleAtLeast } from '../styles/focusVisible';
+import { insetFocusVisibleAtLeast } from '../styles/focusVisible';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, textColor, fullWidth, wrapped, icon, label, selected, disabled } = ownerState;
@@ -63,7 +63,12 @@ const TabRoot = styled(ButtonBase, {
     textAlign: 'center',
     lineHeight: 1.25,
     // Inset the ring: the Tabs scroller clips an outset ring.
-    ...(theme.focusVisible && applyInsetFocusVisibleAtLeast(6)),
+    ...(theme.focusVisible && {
+      [`&.${buttonBaseClasses.focusVisible}`]: insetFocusVisibleAtLeast(
+        theme.applyFocusVisible('inside'),
+        6,
+      ),
+    }),
     variants: [
       {
         props: ({ ownerState }) =>

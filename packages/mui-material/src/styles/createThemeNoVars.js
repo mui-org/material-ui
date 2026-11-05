@@ -20,7 +20,11 @@ import createTransitions from './createTransitions';
 import createMotion from './createMotion';
 import zIndex from './zIndex';
 import { stringifyTheme } from './stringifyTheme';
-import { resolveFocusVisible, applyFocusVisibleOffset } from './focusVisible';
+import {
+  resolveFocusVisible,
+  mergeFocusVisibleInsetOverrides,
+  applyFocusVisible,
+} from './focusVisible';
 
 function coefficientToPercentage(coefficient) {
   if (typeof coefficient === 'number') {
@@ -171,6 +175,12 @@ function createThemeNoVars(options = {}, ...args) {
       muiTheme.focusVisible,
       muiTheme.palette.primary.main,
     );
+    muiTheme.unstable_focusVisibleInsetOverrides = mergeFocusVisibleInsetOverrides([
+      options,
+      ...args,
+    ]);
+  } else {
+    delete muiTheme.unstable_focusVisibleInsetOverrides;
   }
 
   if (process.env.NODE_ENV !== 'production') {
@@ -245,7 +255,7 @@ function createThemeNoVars(options = {}, ...args) {
     });
   };
   muiTheme.toRuntimeSource = stringifyTheme; // for Pigment CSS integration
-  muiTheme.applyFocusVisibleOffset = applyFocusVisibleOffset;
+  muiTheme.applyFocusVisible = applyFocusVisible;
 
   attachColorManipulators(muiTheme);
 

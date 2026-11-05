@@ -354,54 +354,53 @@ const theme = createTheme();
   });
 }
 
-// focusVisible outlineOffset inside and outside
+// focusVisible insetOverrides
 {
-  createTheme({ focusVisible: { outlineOffset: { outside: 1, inside: -3 } } });
-  createTheme({ focusVisible: { outlineOffset: { inside: '-0.25rem' } } });
-  createTheme({ focusVisible: { outlineOffset: { outside: 1 } } });
+  createTheme({
+    focusVisible: {
+      outlineOffset: 1,
+      boxShadow: '0 0 0 1px #fff',
+      insetOverrides: { outlineOffset: -2, boxShadow: 'inset 0 0 0 3px #fff' },
+    },
+  });
+  createTheme({ focusVisible: { insetOverrides: { borderRadius: 4, outlineColor: 'red' } } });
 
   createTheme({
-    // @ts-expect-error inside and outside take a number or a CSS length
-    focusVisible: { outlineOffset: { inside: true } },
+    // @ts-expect-error insetOverrides takes CSS properties
+    focusVisible: { insetOverrides: { outlineOffset: true } },
   });
 
-  createTheme({
-    focusVisible: { boxShadow: { outside: '0 0 0 1px #fff', inside: 'inset 0 0 0 3px #fff' } },
-  });
-  createTheme({ focusVisible: { boxShadow: { inside: 'inset 0 0 0 3px #fff' } } });
-
-  createTheme({
-    // @ts-expect-error box-shadow positions take a CSS string
-    focusVisible: { boxShadow: { inside: 3 } },
-  });
+  const insetOverrides: React.CSSProperties | undefined =
+    createTheme().unstable_focusVisibleInsetOverrides;
+  createTheme({ focusVisible: { insetOverrides } });
 }
 
-// theme.applyFocusVisibleOffset
+// theme.applyFocusVisible
 {
-  const offsetTheme = createTheme({ focusVisible: true });
-  // @ts-expect-error the offset is required
-  offsetTheme.applyFocusVisibleOffset();
-  offsetTheme.applyFocusVisibleOffset('inside');
-  offsetTheme.applyFocusVisibleOffset('outside');
-  createTheme({ cssVariables: true }).applyFocusVisibleOffset('inside');
+  const ringTheme = createTheme({ focusVisible: true });
+  // @ts-expect-error the position is required
+  ringTheme.applyFocusVisible();
+  ringTheme.applyFocusVisible('inside');
+  ringTheme.applyFocusVisible('outside');
+  createTheme({ cssVariables: true }).applyFocusVisible('inside');
 
   createTheme({
     components: {
       MuiMenuItem: {
         styleOverrides: {
-          root: ({ theme: t }) => t.applyFocusVisibleOffset('outside'),
+          root: ({ theme: t }) => ({ '&.Mui-focusVisible': t.applyFocusVisible('outside') }),
         },
       },
     },
   });
 
-  // @ts-expect-error the offset is `inside` or `outside`, not a number
-  offsetTheme.applyFocusVisibleOffset(-1);
+  // @ts-expect-error the position is `inside` or `outside`, not a number
+  ringTheme.applyFocusVisible(-1);
 
-  offsetTheme.components = {
+  ringTheme.components = {
     MuiMenuItem: {
       styleOverrides: {
-        root: ({ theme: t }) => t.applyFocusVisibleOffset('outside'),
+        root: ({ theme: t }) => ({ '&.Mui-focusVisible': t.applyFocusVisible('outside') }),
       },
     },
   };

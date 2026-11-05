@@ -335,7 +335,7 @@ describe('<Tab />', () => {
         `keeps the ring clear of the indicator (inside: ${inside} → ${expected})`,
         () => {
           const theme = createTheme({
-            focusVisible: { outlineOffset: { outside: 1, inside } },
+            focusVisible: { outlineOffset: 1, insetOverrides: { outlineOffset: inside } },
             components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
           });
           render(

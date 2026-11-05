@@ -106,14 +106,12 @@ const MenuItemRoot = styled(ButtonBase, {
         ),
       },
     },
-    ...(theme.focusVisible
+    [`&.${menuItemClasses.focusVisible}`]: theme.focusVisible
       ? // Inset the ring: a scrolling Menu/MenuList clips an outset ring.
-        theme.applyFocusVisibleOffset('inside')
+        theme.applyFocusVisible('inside')
       : {
-          [`&.${menuItemClasses.focusVisible}`]: {
-            backgroundColor: (theme.vars || theme).palette.action.focus,
-          },
-        }),
+          backgroundColor: (theme.vars || theme).palette.action.focus,
+        },
     [`&.${menuItemClasses.disabled}`]: {
       opacity: (theme.vars || theme).palette.action.disabledOpacity,
     },

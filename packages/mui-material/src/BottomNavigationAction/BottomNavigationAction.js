@@ -6,7 +6,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
-import ButtonBase from '../ButtonBase';
+import ButtonBase, { buttonBaseClasses } from '../ButtonBase';
 import unsupportedProp from '../utils/unsupportedProp';
 import { getTransitionStyles } from '../transitions/utils';
 import bottomNavigationActionClasses, {
@@ -47,7 +47,9 @@ const BottomNavigationActionRoot = styled(ButtonBase, {
     [`&.${bottomNavigationActionClasses.selected}`]: {
       color: (theme.vars || theme).palette.primary.main,
     },
-    ...(theme.focusVisible && theme.applyFocusVisibleOffset('inside')),
+    ...(theme.focusVisible && {
+      [`&.${buttonBaseClasses.focusVisible}`]: theme.applyFocusVisible('inside'),
+    }),
     variants: [
       {
         props: ({ showLabel, selected }) => !showLabel && !selected,

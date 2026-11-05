@@ -44,27 +44,12 @@ export interface CssThemeVariables {}
 export type FocusVisible = React.CSSProperties;
 
 /**
- * The `focusVisible` theme option. `outlineOffset` and `boxShadow` also take `{ inside, outside }`:
- * `outside` applies by default and `inside` on components that draw the ring inside their edge.
- * With a single `outlineOffset`, it is the `outside` offset and `inside` is
- * `-max(outlineOffset, outlineWidth)`. With a single `boxShadow`, `inside` is the same shadow drawn
- * `inset`.
+ * The `focusVisible` theme option. `insetOverrides` holds the styles that change on components that
+ * draw the ring inside their edge. Without it, those components use `outlineOffset: -outlineWidth`
+ * and the same `boxShadow` drawn `inset`.
  */
-export type FocusVisibleOptions = Omit<React.CSSProperties, 'outlineOffset' | 'boxShadow'> & {
-  outlineOffset?:
-    | React.CSSProperties['outlineOffset']
-    | {
-        inside?: string | number | undefined;
-        outside?: string | number | undefined;
-      }
-    | undefined;
-  boxShadow?:
-    | React.CSSProperties['boxShadow']
-    | {
-        inside?: string | undefined;
-        outside?: string | undefined;
-      }
-    | undefined;
+export type FocusVisibleOptions = React.CSSProperties & {
+  insetOverrides?: React.CSSProperties | undefined;
 };
 
 type CssVarsOptions = CssThemeVariables extends {
@@ -103,16 +88,19 @@ export interface BaseTheme extends SystemTheme {
   unstable_strictMode?: boolean | undefined;
   applyStyles: ApplyStyles<SupportedColorScheme>;
   /**
-   * Draws the `theme.focusVisible` ring outside or inside the element's edge, using the theme's
-   * `outlineOffset.outside` or `outlineOffset.inside`. `inside` also insets the ring's `boxShadow`.
+   * Returns the `theme.focusVisible` ring for a focus selector. `'outside'` is `theme.focusVisible`,
+   * and `'inside'` merges the inset ring over it. Returns `{}` when `theme.focusVisible` is off.
+   * Call it on the theme (`theme.applyFocusVisible(…)`), not destructured.
    *
-   * @param offset `'outside'` or `'inside'`.
+   * @param position `'outside'` or `'inside'`.
    * @example
    * styleOverrides: {
-   *   root: ({ theme }) => theme.applyFocusVisibleOffset('outside'),
+   *   root: ({ theme }) => ({ '&.Mui-focusVisible': theme.applyFocusVisible('outside') }),
    * }
    */
-  applyFocusVisibleOffset: (offset: 'inside' | 'outside') => CSSObject;
+  applyFocusVisible: (position: 'inside' | 'outside') => CSSObject;
+  /** The `focusVisible.insetOverrides` the theme was created with. */
+  unstable_focusVisibleInsetOverrides?: React.CSSProperties | undefined;
 }
 
 // shut off automatic exporting for the `BaseTheme` above
