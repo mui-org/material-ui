@@ -116,7 +116,7 @@
     "onInputChange": {
       "type": { "name": "func" },
       "signature": {
-        "type": "function(event: React.SyntheticEvent, value: string, reason: string) => void",
+        "type": "function(event: React.SyntheticEvent | null, value: string, reason: string) => void",
         "describedArgs": ["event", "value", "reason"]
       }
     },
