@@ -47,5 +47,5 @@
   "forwardsRefTo": "HTMLUListElement",
   "filename": "/packages/mui-material/src/MenuList/MenuList.js",
   "inheritance": { "component": "List", "pathname": "/material-ui/api/list/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-menu/\">Menu</a></li></ul>"
+  "demos": "<ul><li><a href=\"/material-ui/react-menu/\">Menu</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>"
 }

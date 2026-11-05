@@ -248,7 +248,7 @@ export interface ResolveBreakpointValuesOptions<T> {
 
 export function resolveBreakpointValues<T>(
   options: ResolveBreakpointValuesOptions<T>,
-): Record<string, T> {
+): Record<string, T> | T {
   const { values: breakpointValues, breakpoints: themeBreakpoints, base: customBase } = options;
   const base =
     customBase ||
@@ -256,7 +256,7 @@ export function resolveBreakpointValues<T>(
   const keys = Object.keys(base);
 
   if (keys.length === 0) {
-    return breakpointValues as unknown as Record<string, T>;
+    return breakpointValues as T;
   }
 
   let previous: any;
