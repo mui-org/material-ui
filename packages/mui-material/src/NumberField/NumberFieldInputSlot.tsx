@@ -59,15 +59,20 @@ const variantComponent = {
   outlined: styled(OutlinedInput, inputOptions)(inputStyles),
 };
 
-const buttonStyles = {
+const buttonStyles = memoTheme(({ theme }) => ({
+  borderRadius: (theme.vars || theme).shape.borderRadius,
   variants: [
     {
+      props: ({ size }: Pick<IconButtonProps, 'size'>) => size === 'medium',
+      style: { padding: 6, fontSize: theme.typography.pxToRem(20) },
+    },
+    {
       props: { variant: 'standard' },
-      // The standard input has no vertical padding to accommodate a full-size IconButton.
+      // The standard input has no vertical padding to accommodate taller controls.
       style: { padding: 4 },
     },
   ],
-};
+}));
 const NumberFieldIncrementButton = styled(IconButton, {
   name: 'MuiNumberField',
   slot: 'IncrementButton',
