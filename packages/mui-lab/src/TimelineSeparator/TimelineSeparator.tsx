@@ -3,13 +3,12 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
-import { styled, useThemeProps, type Theme } from '@mui/material/styles';
+import { styled, useThemeProps } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
 import type { SxProps } from '@mui/system';
-import {
-  getTimelineSeparatorUtilityClass,
-  type TimelineSeparatorClasses,
-} from './timelineSeparatorClasses';
+import { getTimelineSeparatorUtilityClass } from './timelineSeparatorClasses';
+import type { TimelineSeparatorClasses } from './timelineSeparatorClasses';
 
 export interface TimelineSeparatorProps extends StandardProps<React.ComponentPropsWithRef<'div'>> {
   /**

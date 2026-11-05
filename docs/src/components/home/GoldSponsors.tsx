@@ -62,6 +62,11 @@ const BACKLINKs = [
     description: 'Premium TikTok Growth.',
     href: 'https://tokboostly.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
   },
+  {
+    name: 'SocialBoosting',
+    description: 'Instagram & TikTok followers, likes, views.',
+    href: 'https://www.socialboosting.com/?utm_source=mui.com&utm_medium=referral&utm_content=homepage',
+  },
 ];
 
 export default function GoldSponsors() {

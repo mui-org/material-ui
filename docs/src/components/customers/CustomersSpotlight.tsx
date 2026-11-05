@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BlogPost } from 'docs/lib/sourcing';
+import type { BlogPost } from 'docs/lib/sourcing';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link } from '@mui/internal-core-docs/Link';

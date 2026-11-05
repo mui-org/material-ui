@@ -260,6 +260,60 @@ describe('createTheme', () => {
       );
     });
 
+    it('should generate variables for a palette color added in a second call', () => {
+      let theme = createTheme({ cssVariables: true });
+      // `cssVariables` isn't stored on the theme, so it's passed again
+      theme = createTheme(
+        { ...theme, cssVariables: true },
+        {
+          palette: {
+            salmon: theme.palette.augmentColor({ color: { main: '#FF5733' }, name: 'salmon' }),
+          },
+        },
+      );
+
+      expect(theme.palette.salmon.main).to.equal('#FF5733');
+      expect(theme.vars.palette.salmon.main).to.equal('var(--mui-palette-salmon-main, #FF5733)');
+      expect(theme.vars.palette.salmon.mainChannel).to.equal(
+        'var(--mui-palette-salmon-mainChannel, 255 87 51)',
+      );
+
+      expect(() =>
+        render(
+          <ThemeProvider theme={theme}>
+            <Button color="salmon">Salmon</Button>
+          </ThemeProvider>,
+        ),
+      ).not.to.throw();
+    });
+
+    it('should add a palette color from a second call to the default color scheme', () => {
+      let theme = createTheme({ cssVariables: true, colorSchemes: { light: true, dark: true } });
+      theme = createTheme(
+        { ...theme, cssVariables: true },
+        {
+          palette: {
+            salmon: theme.palette.augmentColor({ color: { main: '#FF5733' }, name: 'salmon' }),
+          },
+        },
+      );
+
+      // Like the `palette` option, it goes to the default color scheme only
+      expect(theme.colorSchemes.light.palette.salmon.main).to.equal('#FF5733');
+      expect(theme.colorSchemes.dark.palette.salmon).to.equal(undefined);
+    });
+
+    it('should generate the channels of palette colors replaced in a second call', () => {
+      let theme = createTheme({ cssVariables: true });
+      theme = createTheme(
+        { ...theme, cssVariables: true },
+        { palette: { primary: { main: '#ff0000' }, divider: '#00ff00' } },
+      );
+
+      expect(theme.palette.primary.mainChannel).to.equal('255 0 0');
+      expect(theme.palette.dividerChannel).to.equal('0 255 0');
+    });
+
     describe('spacing', () => {
       it('should provide the default spacing', () => {
         const theme = createTheme({ cssVariables: true });

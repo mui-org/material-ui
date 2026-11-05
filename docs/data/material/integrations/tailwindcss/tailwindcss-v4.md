@@ -45,6 +45,10 @@ export default function RootLayout() {
 @import 'tailwindcss';
 ```
 
+<!-- #target-branch-reference -->
+
+The [`material-ui-nextjs-tailwind-ts` example](https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-tailwind-ts) is a complete Next.js App Router project with this setup.
+
 ### Next.js Pages Router
 
 To integrate Tailwind CSS v4 with Material UI in a Next.js Pages Router project, start by configuring Material UI with Next.js in the [Pages Router integration guide](/material-ui/integrations/nextjs/#pages-router).

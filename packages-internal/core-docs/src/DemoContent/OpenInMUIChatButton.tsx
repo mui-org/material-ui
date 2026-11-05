@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled, keyframes, alpha } from '@mui/material/styles';
-import Button, { type ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
+import type { ButtonProps } from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';

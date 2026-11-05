@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { exportVariant, exportVariantAsCra } from '@mui/internal-docs-infra/useDemo';
 import type { ExportConfig } from '@mui/internal-docs-infra/useDemo';
 import type { VariantCode } from '@mui/internal-docs-infra/CodeHighlighter/types';

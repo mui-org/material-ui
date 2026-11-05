@@ -13,7 +13,7 @@ import outlinedInputClasses from '../OutlinedInput/outlinedInputClasses';
 import radioClasses from '../Radio/radioClasses';
 import sliderClasses from '../Slider/sliderClasses';
 import toggleButtonClasses from '../ToggleButton/toggleButtonClasses';
-import { Theme } from './createTheme';
+import type { Theme } from './createTheme';
 
 export interface HighContrastTokens {
   /**

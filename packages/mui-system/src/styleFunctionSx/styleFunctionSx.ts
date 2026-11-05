@@ -1,6 +1,6 @@
 import merge from '@mui/utils/fastDeepAssign';
 import type * as CSS from 'csstype';
-import { type CSSObject } from '@mui/styled-engine';
+import type { CSSObject } from '@mui/styled-engine';
 import { getPath, getStyleValue2 } from '../style';
 import {
   hasBreakpoint,
@@ -11,9 +11,9 @@ import {
 } from '../breakpoints';
 import { sortContainerQueries } from '../cssContainerQueries';
 import defaultSxConfig from './defaultSxConfig';
-import { type StandardCSSProperties } from './StandardCssProperties';
-import { type AliasesCSSProperties } from './AliasesCSSProperties';
-import { type OverwriteCSSProperties } from './OverwriteCSSProperties';
+import type { StandardCSSProperties } from './StandardCssProperties';
+import type { AliasesCSSProperties } from './AliasesCSSProperties';
+import type { OverwriteCSSProperties } from './OverwriteCSSProperties';
 
 /**
  * The `css` function accepts arrays as values for mobile-first responsive styles.

@@ -58,16 +58,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { pathToFileURL } from 'node:url';
-import yargs, { ArgumentsCamelCase } from 'yargs';
+import type { ArgumentsCamelCase } from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { kebabCase } from 'es-toolkit/string';
 import { processMarkdownFile, processApiFile } from '@mui/internal-scripts/generate-llms-txt';
-import {
-  ComponentInfo,
-  ProjectSettings,
-  findComponents,
-  findPagesMarkdown,
-} from '@mui/internal-api-docs-builder';
+import type { ComponentInfo, ProjectSettings } from '@mui/internal-api-docs-builder';
+import { findComponents, findPagesMarkdown } from '@mui/internal-api-docs-builder';
 import { getHeaders } from '@mui/internal-markdown';
 
 // Determine the host based on environment variables

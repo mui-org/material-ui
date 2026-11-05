@@ -5,9 +5,10 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled, useThemeProps } from '@mui/material/styles';
 import TimelineContext from './TimelineContext';
-import { TimelineClassKey, getTimelineUtilityClass } from './timelineClasses';
+import type { TimelineClassKey } from './timelineClasses';
+import { getTimelineUtilityClass } from './timelineClasses';
 import convertTimelinePositionToClass from '../internal/convertTimelinePositionToClass';
-import { TimelineProps } from './Timeline.types';
+import type { TimelineProps } from './Timeline.types';
 
 type OwnerState = TimelineProps;
 

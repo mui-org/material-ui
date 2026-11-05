@@ -1,7 +1,9 @@
 import type { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
-import { parse as parseDoctrine, Annotation } from 'doctrine';
-import { utils, type Handler } from 'react-docgen';
+import type { Annotation } from 'doctrine';
+import { parse as parseDoctrine } from 'doctrine';
+import { utils } from 'react-docgen';
+import type { Handler } from 'react-docgen';
 
 const { getPropertyName, isReactForwardRefCall, printValue, resolveToValue } = utils;
 

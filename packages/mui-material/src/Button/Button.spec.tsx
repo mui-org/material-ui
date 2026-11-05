@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { Link as ReactRouterLink, LinkProps } from 'react-router';
+import type { LinkProps } from 'react-router';
+import { Link as ReactRouterLink } from 'react-router';
 import { expectType } from '@mui/types';
-import Button, { ButtonProps } from '@mui/material/Button';
-import MaterialUiLink, { LinkProps as MaterialUiLinkProps } from '@mui/material/Link';
+import type { ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
+import type { LinkProps as MaterialUiLinkProps } from '@mui/material/Link';
+import MaterialUiLink from '@mui/material/Link';
 
 const log = console.log;
 

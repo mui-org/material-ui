@@ -1,8 +1,9 @@
 import * as babel from '@babel/core';
 import * as babelTypes from '@babel/types';
 import { randomUUID } from 'node:crypto';
-import { generatePropTypes, GeneratePropTypesOptions } from './generatePropTypes';
-import { PropTypesComponent, PropTypeDefinition, LiteralType } from './models';
+import type { GeneratePropTypesOptions } from './generatePropTypes';
+import { generatePropTypes } from './generatePropTypes';
+import type { PropTypesComponent, PropTypeDefinition, LiteralType } from './models';
 
 export interface InjectPropTypesInFileOptions extends Pick<
   GeneratePropTypesOptions,

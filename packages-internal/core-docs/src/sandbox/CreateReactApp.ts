@@ -1,5 +1,5 @@
 import type { SandboxConfig } from '../DemoContext/DemoContext';
-import { type DemoData } from './types';
+import type { DemoData } from './types';
 
 export const getHtml = ({
   title,

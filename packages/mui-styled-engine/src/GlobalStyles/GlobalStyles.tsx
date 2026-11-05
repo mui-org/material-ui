@@ -1,7 +1,8 @@
 'use client';
 import type * as React from 'react';
 import PropTypes from 'prop-types';
-import { Global, type Interpolation } from '@emotion/react';
+import { Global } from '@emotion/react';
+import type { Interpolation } from '@emotion/react';
 
 export interface GlobalStylesProps<Theme = {}> {
   defaultTheme?: object | undefined;

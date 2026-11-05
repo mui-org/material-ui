@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { expectType, PartiallyRequired } from '@mui/types';
-import Autocomplete, {
+import type { PartiallyRequired } from '@mui/types';
+import { expectType } from '@mui/types';
+import type {
   AutocompleteOwnerState,
   AutocompleteProps,
   AutocompleteChangeReason,
+  AutocompleteInputChangeReason,
   AutocompleteRenderGetTagProps,
   AutocompleteRenderValue,
   AutocompleteRenderValueGetItemProps,
   AutocompleteMappedValue,
   AutocompleteRenderOptionState,
 } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { ChipTypeMap } from '@mui/material/Chip';
+import type { ChipTypeMap } from '@mui/material/Chip';
 import { createTheme, styled } from '@mui/material/styles';
-import { AutocompleteValueOrFreeSoloValueMapping } from '../useAutocomplete';
+import type { AutocompleteValueOrFreeSoloValueMapping } from '../useAutocomplete';
 
 interface MyAutocompleteProps<
   T,
@@ -764,3 +767,27 @@ const literalMappedProps = {
     return option.label === value.label;
   }}
 />;
+
+// onInputChange receives a null event on programmatic resets and a createOption reason in freeSolo
+<Autocomplete
+  freeSolo
+  multiple
+  options={['one', 'two']}
+  onInputChange={(event, value, reason) => {
+    expectType<React.SyntheticEvent | null, typeof event>(event);
+    expectType<string, typeof value>(value);
+    expectType<AutocompleteInputChangeReason, typeof reason>(reason);
+    if (reason === 'createOption') {
+      expectType<'createOption', typeof reason>(reason);
+    }
+  }}
+  renderInput={() => null}
+/>;
+
+// Existing handlers that annotate the event as non-nullable remain assignable
+function handleInputChange(
+  event: React.SyntheticEvent,
+  value: string,
+  reason: AutocompleteInputChangeReason,
+) {}
+<Autocomplete options={['one']} onInputChange={handleInputChange} renderInput={() => null} />;

@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { ThemeProvider, createTheme, type ThemeOptions } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import type { ThemeOptions } from '@mui/material/styles';
 
 /**
  * Branded theme: you might want to export this as a separate file

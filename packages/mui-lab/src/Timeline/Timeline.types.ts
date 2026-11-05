@@ -1,7 +1,7 @@
-import { InternalStandardProps as StandardProps } from '@mui/material/internal';
-import { Theme } from '@mui/material/styles';
-import { SxProps } from '@mui/system';
-import { TimelineClasses } from './timelineClasses';
+import type { InternalStandardProps as StandardProps } from '@mui/material/internal';
+import type { Theme } from '@mui/material/styles';
+import type { SxProps } from '@mui/system';
+import type { TimelineClasses } from './timelineClasses';
 
 export interface TimelineProps extends StandardProps<React.ComponentProps<'ul'>> {
   /**

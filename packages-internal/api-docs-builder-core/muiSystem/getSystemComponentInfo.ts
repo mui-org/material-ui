@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { kebabCase } from 'es-toolkit/string';
 import { getHeaders, getTitle } from '@mui/internal-markdown';
+import type { ComponentInfo } from '@mui/internal-api-docs-builder';
 import {
-  ComponentInfo,
   extractPackageFile,
   getMuiName,
   parseFile,

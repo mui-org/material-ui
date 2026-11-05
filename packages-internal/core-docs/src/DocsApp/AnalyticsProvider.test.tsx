@@ -4,11 +4,12 @@ import { act, createRenderer, screen } from '@mui/internal-test-utils';
 import Router from 'next/router';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AnalyticsProvider, useAnalyticsConsent } from './AnalyticsProvider';
+import type * as BrandingCssVarsProviderModule from '../branding/BrandingCssVarsProvider';
 
 const theme = createTheme();
 
 vi.mock('../branding/BrandingCssVarsProvider', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../branding/BrandingCssVarsProvider')>()),
+  ...(await importOriginal<typeof BrandingCssVarsProviderModule>()),
   BrandingCssThemeProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
