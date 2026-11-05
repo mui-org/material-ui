@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { CacheProvider, EmotionCache } from '@emotion/react';
+import type { EmotionCache } from '@emotion/react';
+import { CacheProvider } from '@emotion/react';
 import createEmotionCache from './createCache';
 import { useRouter as usePagesRouter } from '../nextCompatRouter.cjs';
 

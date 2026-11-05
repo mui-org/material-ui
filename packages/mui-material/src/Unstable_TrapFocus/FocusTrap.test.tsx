@@ -473,6 +473,37 @@ describe('<FocusTrap />', () => {
         expect(screen.getByRole('textbox')).toHaveFocus();
       });
 
+      it('keeps enforcing focus when a child is focused before the trap effect runs', async () => {
+        function Test() {
+          const focusRef = React.useRef<HTMLInputElement>(null);
+
+          React.useLayoutEffect(() => {
+            focusRef.current?.focus();
+          }, []);
+
+          return (
+            <div>
+              <input data-testid="outside-input" />
+              <FocusTrap open disableAutoFocus>
+                <div tabIndex={-1} data-testid="root">
+                  <input ref={focusRef} data-testid="focus-input" />
+                </div>
+              </FocusTrap>
+            </div>
+          );
+        }
+
+        render(<Test />, { strictEffects: false });
+
+        expect(screen.getByTestId('focus-input')).toHaveFocus();
+
+        await act(async () => {
+          screen.getByTestId('outside-input').focus();
+        });
+
+        expect(screen.getByTestId('root')).toHaveFocus();
+      });
+
       it('should trap once the focus moves inside', async () => {
         render(
           <div>

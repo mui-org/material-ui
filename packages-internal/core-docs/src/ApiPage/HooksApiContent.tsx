@@ -2,14 +2,14 @@
 import * as React from 'react';
 import type { HookApiContent, HooksTranslations } from '@mui/internal-api-docs-builder';
 import { kebabCase } from 'es-toolkit/string';
-import { type Translate, useTranslate, useUserLanguage } from '../i18n';
-import { SectionTitle, type SectionTitleProps } from '../SectionTitle';
+import { useTranslate, useUserLanguage } from '../i18n';
+import type { Translate } from '../i18n';
+import { SectionTitle } from '../SectionTitle';
+import type { SectionTitleProps } from '../SectionTitle';
 import type { LayoutStorageKeys } from './types';
 import { getHookApiDefinitions } from './definitions/properties';
-import {
-  type ApiDisplayLayout,
-  DEFAULT_API_LAYOUT_STORAGE_KEYS,
-} from './sections/ToggleDisplayOption';
+import { DEFAULT_API_LAYOUT_STORAGE_KEYS } from './sections/ToggleDisplayOption';
+import type { ApiDisplayLayout } from './sections/ToggleDisplayOption';
 import { PropertiesSection } from './sections/PropertiesSection';
 import { HighlightedCode } from '../HighlightedCode';
 import { MarkdownElement } from '../MarkdownDocs/MarkdownElement';

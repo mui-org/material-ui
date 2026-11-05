@@ -56,7 +56,7 @@ Then follow these steps:
 
 ```tsx title="pages/_document.tsx"
 import {
-  createCache,
+  createEmotionCache,
   documentGetInitialProps,
 } from '@mui/material-nextjs/v15-pagesRouter';
 
@@ -64,22 +64,28 @@ import {
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const finalProps = await documentGetInitialProps(ctx, {
-    emotionCache: createCache({ enableCssLayer: true }),
+    emotionCache: createEmotionCache({ enableCssLayer: true }),
   });
   return finalProps;
 };
 ```
 
-2. Configure the layer order with the `GlobalStyles` component to work with Tailwind CSS v4—it must be the first child of the `AppCacheProvider`:
+2. Enable it on the client too, in a custom `_app`, and configure the layer order with the `GlobalStyles` component to work with Tailwind CSS v4—it must be the first child of the `AppCacheProvider`:
 
 ```tsx title="pages/_app.tsx"
-import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
+import {
+  AppCacheProvider,
+  createEmotionCache,
+} from '@mui/material-nextjs/v15-pagesRouter';
 import GlobalStyles from '@mui/material/GlobalStyles';
+
+// Used on the client. On the server, `props` carries the cache created in `_document`.
+const clientCache = createEmotionCache({ enableCssLayer: true });
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
   return (
-    <AppCacheProvider {...props}>
+    <AppCacheProvider emotionCache={clientCache} {...props}>
       <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
       <Component {...pageProps} />
     </AppCacheProvider>
@@ -188,12 +194,19 @@ export default function AppTheme({ children }: { children: ReactNode }) {
 ```
 
 ```tsx title="pages/_app.tsx"
+import {
+  AppCacheProvider,
+  createEmotionCache,
+} from '@mui/material-nextjs/v15-pagesRouter';
 import AppTheme from '../src/theme';
+
+// Used on the client. On the server, `props` carries the cache created in `_document`.
+const clientCache = createEmotionCache({ enableCssLayer: true });
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
   return (
-    <AppCacheProvider {...props}>
+    <AppCacheProvider emotionCache={clientCache} {...props}>
       <AppTheme>
         <Component {...pageProps} />
       </AppTheme>
@@ -204,13 +217,13 @@ export default function MyApp(props: AppProps) {
 
 ```tsx title="pages/_document.tsx"
 import {
-  createCache,
+  createEmotionCache,
   documentGetInitialProps,
 } from '@mui/material-nextjs/v15-pagesRouter';
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const finalProps = await documentGetInitialProps(ctx, {
-    emotionCache: createCache({ enableCssLayer: true }),
+    emotionCache: createEmotionCache({ enableCssLayer: true }),
   });
   return finalProps;
 };

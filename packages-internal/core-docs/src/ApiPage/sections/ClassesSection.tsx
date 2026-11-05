@@ -1,18 +1,12 @@
 /* eslint-disable react/no-danger */
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {
-  type PropsTranslations,
-  type ComponentClassDefinition,
-} from '@mui/internal-api-docs-builder';
+import type { PropsTranslations, ComponentClassDefinition } from '@mui/internal-api-docs-builder';
 import { SectionTitle } from '../../SectionTitle';
 import { useTranslate } from '../../i18n';
 import type { ClassDefinition } from '../definitions/types';
-import {
-  type ApiDisplayLayout,
-  ToggleDisplayOption,
-  useApiPageOption,
-} from './ToggleDisplayOption';
+import { ToggleDisplayOption, useApiPageOption } from './ToggleDisplayOption';
+import type { ApiDisplayLayout } from './ToggleDisplayOption';
 import { getClassApiDefinitions } from '../definitions/classes';
 import ClassesTable from '../table/ClassesTable';
 import ClassesList from '../list/ClassesList';

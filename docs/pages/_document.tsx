@@ -4,8 +4,8 @@ import { ServerStyleSheet } from 'styled-components';
 import {
   Document as MuiDocsDocument,
   createGetInitialProps,
-  type DocumentProps,
 } from '@mui/internal-core-docs/Document';
+import type { DocumentProps } from '@mui/internal-core-docs/Document';
 
 export default class MuiDocument extends NextDocument {
   static getInitialProps = createGetInitialProps({

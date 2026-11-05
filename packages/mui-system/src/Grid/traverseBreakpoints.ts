@@ -1,4 +1,4 @@
-import { Breakpoints, Breakpoint } from '../createBreakpoints/createBreakpoints';
+import type { Breakpoints, Breakpoint } from '../createBreakpoints/createBreakpoints';
 
 export const filterBreakpointKeys = (breakpointsKeys: Breakpoint[], responsiveKeys: string[]) =>
   breakpointsKeys.filter((key: string) => responsiveKeys.includes(key));

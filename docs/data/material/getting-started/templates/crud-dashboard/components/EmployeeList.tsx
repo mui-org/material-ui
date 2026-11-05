@@ -5,16 +5,14 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
-import {
-  DataGrid,
-  GridActionsCellItem,
+import type {
   GridColDef,
   GridFilterModel,
   GridPaginationModel,
   GridSortModel,
   GridEventListener,
-  gridClasses,
 } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, gridClasses } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import EditIcon from '@mui/icons-material/Edit';
@@ -25,8 +23,8 @@ import useNotifications from '../hooks/useNotifications/useNotifications';
 import {
   deleteOne as deleteEmployee,
   getMany as getEmployees,
-  type Employee,
 } from '../data/employees';
+import type { Employee } from '../data/employees';
 import PageContainer from './PageContainer';
 
 const INITIAL_PAGE_SIZE = 10;

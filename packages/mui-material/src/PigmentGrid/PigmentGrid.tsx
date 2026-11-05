@@ -2,8 +2,8 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { OverridableComponent, OverrideProps } from '@mui/types';
-import { SxProps } from '@mui/system';
+import type { OverridableComponent, OverrideProps } from '@mui/types';
+import type { SxProps } from '@mui/system';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- The peer is resolvable only after its build.
 // @ts-ignore: material-pigment-css links to its build directory, which is absent in a fresh checkout.
 import Grid from '@mui/material-pigment-css/Grid';
@@ -14,7 +14,7 @@ import {
   unstable_generateSizeClassNames as generateSizeClassNames,
   unstable_generateSpacingClassNames as generateSpacingClassNames,
 } from '@mui/system/Grid';
-import { Breakpoint, Theme } from '../styles';
+import type { Breakpoint, Theme } from '../styles';
 
 type ResponsiveStyleValue<T> = T | Array<T | null> | { [key in Breakpoint]?: T | null };
 

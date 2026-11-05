@@ -2,6 +2,7 @@ import * as React from 'react';
 import { deepmerge, unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/utils';
 import { ThemeProvider as SystemThemeProvider } from '@mui/system';
 import { ThemeProvider, createTheme, useTheme, enhanceHighContrast } from '@mui/material/styles';
+import type * as JsxRuntime from 'react/jsx-runtime';
 import { ThemeOptionsContext, highDensity } from '../ThemeContext';
 import { BrandingCssVarsProvider } from '../branding';
 import { DemoIframe, IsolatedDemo } from '../DemoContent/DemoSandbox';
@@ -28,7 +29,7 @@ function loadInjectedTheme(): Promise<Record<string, unknown> | undefined> {
   }
   const runtimeWindow = window as typeof window & {
     React?: typeof React;
-    jsx?: typeof import('react/jsx-runtime');
+    jsx?: typeof JsxRuntime;
     getInjectTheme?: GetInjectTheme;
   };
   const source = runtimeWindow.getInjectTheme;

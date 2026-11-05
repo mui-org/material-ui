@@ -1,12 +1,12 @@
 'use client';
 import PropTypes from 'prop-types';
+import type { Interpolation } from '@mui/styled-engine';
 import {
   GlobalStyles as MuiGlobalStyles,
-  Interpolation,
   internal_serializeStyles as serializeStyles,
 } from '@mui/styled-engine';
 import useTheme from '../useTheme';
-import { Theme as SystemTheme } from '../createTheme';
+import type { Theme as SystemTheme } from '../createTheme';
 
 export interface GlobalStylesProps<Theme = SystemTheme> {
   styles: Interpolation<Theme>;

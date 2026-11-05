@@ -2220,6 +2220,21 @@ describe('<Select />', () => {
       expect(options[2]).not.to.have.attribute('aria-selected', 'true');
     });
 
+    it('should deselect an option whose value matches the selection by stringified equality', () => {
+      const onChange = spy();
+      render(
+        <Select multiple open value={['10', '20']} onChange={onChange}>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+        </Select>,
+      );
+
+      fireEvent.click(screen.getAllByRole('option')[0]);
+
+      expect(onChange.callCount).to.equal(1);
+      expect(onChange.firstCall.args[0].target.value).to.deep.equal(['20']);
+    });
+
     it("selects values based on strict equality if they're objects", () => {
       const obj1 = { id: 1 };
       const obj2 = { id: 2 };
@@ -2506,6 +2521,44 @@ describe('<Select />', () => {
     expect(screen.getByRole('combobox')).to.have.text('France');
   });
 
+  it('should handle the browser autofill event for non-string option values', () => {
+    const onChangeHandler = spy();
+    const { container } = render(
+      <Select onChange={onChangeHandler} defaultValue={20} name="age">
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={20}>Twenty</MenuItem>
+      </Select>,
+    );
+    fireEvent.change(container.querySelector('input[name="age"]'), {
+      target: {
+        value: '10',
+      },
+    });
+
+    expect(onChangeHandler.callCount).to.equal(1);
+    expect(onChangeHandler.firstCall.args[0].target.value).to.equal(10);
+    expect(screen.getByRole('combobox')).to.have.text('Ten');
+  });
+
+  it('should handle the browser autofill event when multiple', () => {
+    const onChangeHandler = spy();
+    const { container } = render(
+      <Select multiple onChange={onChangeHandler} defaultValue={[]} name="age">
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={20}>Twenty</MenuItem>
+      </Select>,
+    );
+    fireEvent.change(container.querySelector('input[name="age"]'), {
+      target: {
+        value: '10',
+      },
+    });
+
+    expect(onChangeHandler.callCount).to.equal(1);
+    expect(onChangeHandler.firstCall.args[0].target.value).to.deep.equal([10]);
+    expect(screen.getByRole('combobox')).to.have.text('Ten');
+  });
+
   // see https://github.com/jsdom/jsdom/issues/123
   it.skipIf(isJsdom())('should support native form validation', function test() {
     const handleSubmit = spy((event) => {
@@ -2772,6 +2825,13 @@ describe('<Select />', () => {
         fontWeight: '200',
       });
     });
+  });
+
+  it('should rotate the icon when open', () => {
+    const { container } = render(<Select open value="" />);
+    const icon = container.querySelector(`.${classes.icon}`);
+    expect(icon).to.have.class(classes.iconOpen);
+    expect(icon).not.toHaveComputedStyle({ transform: 'none' });
   });
 
   describe('prop: input', () => {

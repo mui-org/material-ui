@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import exactProp from '@mui/utils/exactProp';
-import { NoSsrProps } from './NoSsr.types';
+import type { NoSsrProps } from './NoSsr.types';
 
 /**
  * NoSsr purposely removes components from the subject of Server Side Rendering (SSR).

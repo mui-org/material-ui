@@ -2,8 +2,9 @@ import * as React from 'react';
 import { spy } from 'sinon';
 import { describe, it, expect } from 'vitest';
 import { act, createRenderer } from '@mui/internal-test-utils';
-import useLazyRipple, { LazyRipple } from './useLazyRipple';
-import { TouchRippleActions } from '../ButtonBase/TouchRipple';
+import type { LazyRipple } from './useLazyRipple';
+import useLazyRipple from './useLazyRipple';
+import type { TouchRippleActions } from '../ButtonBase/TouchRipple';
 
 describe('useLazyRipple', () => {
   const { render } = createRenderer();

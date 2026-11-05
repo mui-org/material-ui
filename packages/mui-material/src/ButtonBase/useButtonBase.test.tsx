@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
 import { act, createRenderer, fireEvent, screen } from '@mui/internal-test-utils';
-import useButtonBase, { UseButtonBaseParameters } from './useButtonBase';
+import type { UseButtonBaseParameters } from './useButtonBase';
+import useButtonBase from './useButtonBase';
 
 interface ButtonProps extends Omit<UseButtonBaseParameters, 'nativeButton' | 'disabled'> {
   id?: string | undefined;

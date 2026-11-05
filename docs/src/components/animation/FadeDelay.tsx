@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Fade, { FadeProps } from '@mui/material/Fade';
+import type { FadeProps } from '@mui/material/Fade';
+import Fade from '@mui/material/Fade';
 
 export default function FadeDelay({ delay, ...props }: { delay: number } & FadeProps) {
   const [fadeIn, setFadeIn] = React.useState(false);

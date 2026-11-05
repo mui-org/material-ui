@@ -5,9 +5,9 @@ import useForkRef from '@mui/utils/useForkRef';
 import useEventCallback from '@mui/utils/useEventCallback';
 import createChainedFunction from '@mui/utils/createChainedFunction';
 import extractEventHandlers from '@mui/utils/extractEventHandlers';
-import { EventHandlers } from '../utils/types';
+import type { EventHandlers } from '../utils/types';
 import { ModalManager, ariaHidden } from './ModalManager';
-import {
+import type {
   UseModalParameters,
   UseModalReturnValue,
   UseModalRootSlotProps,

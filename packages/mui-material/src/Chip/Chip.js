@@ -427,7 +427,7 @@ const Chip = React.forwardRef(function Chip(inProps, ref) {
   const handleKeyUp = (event) => {
     // Ignore events from children of `Chip`.
     if (event.currentTarget === event.target) {
-      if (onDelete && isDeleteKeyboardEvent(event)) {
+      if (onDelete && !disabled && isDeleteKeyboardEvent(event)) {
         onDelete(event);
       }
     }

@@ -1,4 +1,4 @@
-import { type VersionEntry } from '../DocsProvider';
+import type { VersionEntry } from '../DocsProvider';
 import { mapTranslations } from '../i18n';
 import type { RequireContext } from '../i18n';
 

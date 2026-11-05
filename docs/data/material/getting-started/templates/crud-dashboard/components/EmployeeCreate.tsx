@@ -4,12 +4,10 @@ import useNotifications from '../hooks/useNotifications/useNotifications';
 import {
   createOne as createEmployee,
   validate as validateEmployee,
-  type Employee,
 } from '../data/employees';
-import EmployeeForm, {
-  type FormFieldValue,
-  type EmployeeFormState,
-} from './EmployeeForm';
+import type { Employee } from '../data/employees';
+import EmployeeForm from './EmployeeForm';
+import type { FormFieldValue, EmployeeFormState } from './EmployeeForm';
 import PageContainer from './PageContainer';
 
 const INITIAL_FORM_VALUES: Partial<EmployeeFormState['values']> = {

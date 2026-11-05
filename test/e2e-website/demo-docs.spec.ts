@@ -1,5 +1,6 @@
-import { test as base, expect, type Locator, type Page } from '@playwright/test';
-import { TestFixture } from './playwright.config';
+import { test as base, expect } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
+import type { TestFixture } from './playwright.config';
 
 const test = base.extend<TestFixture>({});
 

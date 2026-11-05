@@ -1,7 +1,8 @@
 'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Tabs, { type TabsTypeMap } from '@mui/material/Tabs';
+import Tabs from '@mui/material/Tabs';
+import type { TabsTypeMap } from '@mui/material/Tabs';
 import type { DistributiveOmit } from '@mui/types';
 import type { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
 import { useTabContext, getTabId, getPanelId } from '../TabContext';
@@ -39,7 +40,12 @@ const TabList = React.forwardRef(function TabList(
   const { children: childrenProp, ...other } = props;
   const context = useTabContext();
   if (context === null) {
-    throw new TypeError('No TabContext provided');
+    throw /* minify-error */ new TypeError(
+      'MUI: No TabContext provided. ' +
+        'TabList must be used within a TabContext. ' +
+        'Wrap your Tabs with <TabContext value={...}>. ' +
+        'See https://mui.com/material-ui/react-tabs/#experimental-api for more info.',
+    );
   }
   const children = React.Children.map(childrenProp, (child) => {
     if (!React.isValidElement<{ value?: string | number | undefined }>(child)) {

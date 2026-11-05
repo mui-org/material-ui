@@ -1,19 +1,17 @@
 /* eslint-disable react/no-danger */
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { type PropsTableItem, type PropsTranslations } from '@mui/internal-api-docs-builder';
+import type { PropsTableItem, PropsTranslations } from '@mui/internal-api-docs-builder';
 import { useTranslate } from '../../i18n';
-import {
-  ToggleDisplayOption,
-  useApiPageOption,
-  type ApiDisplayLayout,
-} from './ToggleDisplayOption';
-import { SectionTitle, type SectionTitleProps } from '../../SectionTitle';
+import { ToggleDisplayOption, useApiPageOption } from './ToggleDisplayOption';
+import type { ApiDisplayLayout } from './ToggleDisplayOption';
+import { SectionTitle } from '../../SectionTitle';
+import type { SectionTitleProps } from '../../SectionTitle';
 import PropertiesTable from '../table/PropertiesTable';
 import PropertiesList from '../list/PropertiesList';
 import { getPropsApiDefinitions } from '../definitions/properties';
-import { type LayoutStorageKeys } from '../types';
-import { type PropertyDefinition } from '../definitions';
+import type { LayoutStorageKeys } from '../types';
+import type { PropertyDefinition } from '../definitions';
 
 type PropertiesSectionProps = (
   | {
