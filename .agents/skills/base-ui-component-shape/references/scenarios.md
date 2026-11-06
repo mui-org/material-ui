@@ -7,15 +7,15 @@ Every option renders the same scenarios. Three categories must be present; the a
 Take the basics from Base UI's own examples for the component: every demo in `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` becomes one scenario, rewritten with Material UI parts.
 They show that each option covers what Base UI supports out of the box.
 
-## 2. Theming with `styleOverrides`
+## 2. Theming
 
-Write three themes and apply each to the basic scenario. Each theme uses `styleOverrides` (and `variants` where they help) on the `Mui<Name><Part>` keys that the option exposes:
+Apply three themes, each to the basic scenario, from no customization to a complete restyle:
 
-1. **Material Design**: the component as the Material Design guidelines describe it, including details the defaults may not cover (density, elevation, motion).
-2. **Simple adjustment**: a brand tweak, such as a primary color, a border radius, and spacing.
-3. **Opposite design**: a visual language far from Material Design, such as a flat, borderless, high-density desktop style.
+1. **Material Design**: the default theme, with no customization (`createTheme()`).
+2. **Brand**: customizes only the theme tokens: `palette`, `shape`, `typography`, and `shadows`. It shows how far the tokens alone carry the component.
+3. **Opposite design**: everything in the brand theme, plus `components` entries (`styleOverrides`, `variants`, `defaultProps`) on the `Mui<Name><Part>` keys that the option exposes, to reach a visual language far from Material Design, such as a flat, borderless, high-density desktop style.
 
-An option whose parts have no theme key for a piece the design needs to restyle shows it here: record what the theme could not reach.
+An option whose parts have no theme key for a piece the opposite design needs to restyle shows it here: record what the theme could not reach.
 
 ## 3. Real-world compositions
 

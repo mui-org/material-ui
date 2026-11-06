@@ -12,7 +12,7 @@ Everything lives in a scratch folder at the repository root that is never commit
   options/balanced.tsx
   options/open.tsx
   user-components.tsx       stand-ins for the user's own components
-  themes.tsx                the three styleOverrides themes and the brand theme
+  themes.tsx                the brand theme and the opposite design theme
   frame.tsx                 renders a scenario in one capture state
   scenarios/<scenario>/<option>.tsx
   screenshots/<scenario>/<option>-<state>.png
@@ -97,7 +97,7 @@ export default function Frame(props: { children: (open: boolean) => React.ReactN
 }
 ```
 
-The four capture states are `default`, `open`, `dark` (open, dark mode), and `brand` (open, the simple adjustment theme). The `styleOverrides` scenarios set their own theme inside the scenario instead.
+The four capture states are `default`, `open`, `dark` (open, dark mode), and `brand` (open, the brand theme). The theming scenarios set their own theme inside the scenario instead, so the opposite design theme stays visible in every state.
 
 ## Render and capture
 
