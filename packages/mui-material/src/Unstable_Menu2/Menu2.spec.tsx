@@ -3,6 +3,8 @@ import { expectType } from '@mui/types';
 import type { Menu as BaseMenu } from '@base-ui/react/menu';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import SvgIcon from '@mui/material/SvgIcon';
+import type { SvgIconProps } from '@mui/material/SvgIcon';
 import type { Menu2Props } from '@mui/material/Unstable_Menu2';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2Trigger from '@mui/material/Unstable_Menu2Trigger';
@@ -28,7 +30,9 @@ import type {
   Menu2CheckboxItemIndicatorClasses,
 } from '@mui/material/Unstable_Menu2CheckboxItem';
 import Menu2CheckboxItem, {
+  getMenu2CheckboxItemUtilityClass,
   getMenu2CheckboxItemIndicatorUtilityClass,
+  menu2CheckboxItemClasses,
   menu2CheckboxItemIndicatorClasses,
   // @ts-expect-error The default indicator is private. Use the item's indicator slot.
   Menu2CheckboxItemIndicator,
@@ -43,7 +47,9 @@ import type {
   Menu2RadioItemIndicatorClasses,
 } from '@mui/material/Unstable_Menu2RadioItem';
 import Menu2RadioItem, {
+  getMenu2RadioItemUtilityClass,
   getMenu2RadioItemIndicatorUtilityClass,
+  menu2RadioItemClasses,
   menu2RadioItemIndicatorClasses,
   // @ts-expect-error The default indicator is private. Use the item's indicator slot.
   Menu2RadioItemIndicator,
@@ -74,20 +80,59 @@ const checkboxIndicatorClassKey: Menu2CheckboxItemIndicatorClassKey = 'checked';
 const radioIndicatorClassKey: Menu2RadioItemIndicatorClassKey = 'checked';
 getMenu2CheckboxItemIndicatorUtilityClass(checkboxIndicatorClassKey);
 getMenu2RadioItemIndicatorUtilityClass(radioIndicatorClassKey);
+getMenu2CheckboxItemUtilityClass('indicatorIcon');
+getMenu2RadioItemUtilityClass('indicatorIcon');
+expectType<string, typeof menu2CheckboxItemClasses.indicatorIcon>(
+  menu2CheckboxItemClasses.indicatorIcon,
+);
+expectType<string, typeof menu2RadioItemClasses.indicatorIcon>(menu2RadioItemClasses.indicatorIcon);
+
+interface CustomIndicatorIconProps extends SvgIconProps {
+  ownerState: { checked: boolean; disabled: boolean; highlighted: boolean };
+}
+const CustomIndicatorIcon = React.forwardRef<SVGSVGElement, CustomIndicatorIconProps>(
+  function CustomIndicatorIcon({ ownerState, ...props }, ref) {
+    return <SvgIcon {...props} ref={ref} data-checked={ownerState.checked} />;
+  },
+);
 
 const indicatorHtmlProps: React.HTMLAttributes<HTMLSpanElement> = { title: 'Indicator' };
 <Menu2CheckboxItem slotProps={{ indicator: indicatorHtmlProps }} />;
 <Menu2RadioItem value="one" slotProps={{ indicator: indicatorHtmlProps }} />;
 <Menu2CheckboxItem slotProps={{ indicator: { 'data-testid': 'indicator' } }} />;
 <Menu2RadioItem value="one" slotProps={{ indicator: { 'data-testid': 'indicator' } }} />;
-<Menu2CheckboxItem icon={<span />} checkedIcon={<span />} />;
-<Menu2RadioItem value="one" icon={<span />} checkedIcon={<span />} />;
-<Menu2CheckboxItem icon={null} checkedIcon={false} />;
-<Menu2RadioItem value="one" icon={null} checkedIcon={false} />;
-// @ts-expect-error Icons must be React nodes, not component types.
-<Menu2CheckboxItem icon={() => <span />} />;
-// @ts-expect-error Icons must be React nodes, not component types.
-<Menu2RadioItem value="one" checkedIcon={() => <span />} />;
+<Menu2CheckboxItem slots={{ indicatorIcon: CustomIndicatorIcon }} />;
+<Menu2RadioItem value="one" slots={{ indicatorIcon: CustomIndicatorIcon }} />;
+<Menu2CheckboxItem slots={{ indicatorIcon: () => null }} />;
+<Menu2RadioItem value="one" slots={{ indicatorIcon: () => null }} />;
+<Menu2CheckboxItem
+  slotProps={{
+    indicatorIcon: {
+      fontSize: 'large',
+      titleAccess: 'Status',
+      viewBox: '0 0 20 20',
+      'data-testid': 'icon',
+    },
+  }}
+/>;
+<Menu2RadioItem
+  value="one"
+  slotProps={{ indicatorIcon: { fontSize: 'medium', title: 'Status', 'data-testid': 'icon' } }}
+/>;
+// @ts-expect-error Use the indicatorIcon slot instead of icon.
+<Menu2CheckboxItem icon={<span />} />;
+// @ts-expect-error Use the indicatorIcon slot instead of checkedIcon.
+<Menu2CheckboxItem checkedIcon={<span />} />;
+// @ts-expect-error Use the indicatorIcon slot instead of icon.
+<Menu2RadioItem value="one" icon={<span />} />;
+// @ts-expect-error Use the indicatorIcon slot instead of checkedIcon.
+<Menu2RadioItem value="one" checkedIcon={<span />} />;
+// @ts-expect-error Slots require component types, not elements.
+<Menu2CheckboxItem slots={{ indicatorIcon: <span /> }} />;
+// @ts-expect-error Slots require component types, not elements.
+<Menu2RadioItem value="one" slots={{ indicatorIcon: <span /> }} />;
+// @ts-expect-error The default radio icon supports small and medium sizes.
+<Menu2RadioItem value="one" slotProps={{ indicatorIcon: { fontSize: 'large' } }} />;
 
 createTheme({
   components: {
@@ -213,6 +258,17 @@ function Menu2Composition() {
               return <div {...props} data-active={state.checked} />;
             }}
             slotProps={{
+              indicatorIcon: (ownerState) => {
+                expectType<boolean, typeof ownerState.checked>(ownerState.checked);
+                expectType<boolean, typeof ownerState.highlighted>(ownerState.highlighted);
+                expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
+                return {
+                  fontSize: 'small',
+                  sx: { opacity: ownerState.checked ? 1 : 0.6 },
+                  'data-highlighted': ownerState.highlighted,
+                  ref: (node) => expectType<SVGSVGElement | null, typeof node>(node),
+                };
+              },
               indicator: (ownerState) => {
                 expectType<boolean, typeof ownerState.checked>(ownerState.checked);
                 expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
@@ -259,6 +315,17 @@ function Menu2Composition() {
                 return <div {...props} data-active={state.checked} />;
               }}
               slotProps={{
+                indicatorIcon: (ownerState) => {
+                  expectType<boolean, typeof ownerState.checked>(ownerState.checked);
+                  expectType<boolean, typeof ownerState.highlighted>(ownerState.highlighted);
+                  expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
+                  return {
+                    fontSize: 'medium',
+                    sx: { opacity: ownerState.checked ? 1 : 0.6 },
+                    'data-highlighted': ownerState.highlighted,
+                    ref: (node) => expectType<HTMLSpanElement | null, typeof node>(node),
+                  };
+                },
                 indicator: (ownerState) => {
                   expectType<boolean, typeof ownerState.checked>(ownerState.checked);
                   expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
@@ -413,15 +480,23 @@ createTheme({
 
     MuiMenu2CheckboxItem: {
       defaultProps: {
-        slotProps: { indicator: { keepMounted: false, sx: { color: 'primary.main' } } },
+        slots: { indicatorIcon: CustomIndicatorIcon },
+        slotProps: {
+          indicator: { keepMounted: false, sx: { color: 'primary.main' } },
+          indicatorIcon: { fontSize: 'small', 'data-testid': 'icon' },
+        },
       },
-      styleOverrides: { indicator: { minWidth: 40 } },
+      styleOverrides: { indicator: { minWidth: 40 }, indicatorIcon: { opacity: 0.8 } },
     },
     MuiMenu2RadioItem: {
       defaultProps: {
-        slotProps: { indicator: { keepMounted: false, sx: { color: 'primary.main' } } },
+        slots: { indicatorIcon: CustomIndicatorIcon },
+        slotProps: {
+          indicator: { keepMounted: false, sx: { color: 'primary.main' } },
+          indicatorIcon: { fontSize: 'small', 'data-testid': 'icon' },
+        },
       },
-      styleOverrides: { indicator: { minWidth: 40 } },
+      styleOverrides: { indicator: { minWidth: 40 }, indicatorIcon: { opacity: 0.8 } },
       variants: [
         {
           props: { value: 'small' },
@@ -975,9 +1050,7 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
     props.color;
     return <Button {...props} variant={state.checked ? 'contained' : 'text'} />;
   }}
-  icon={<span>Unchecked</span>}
-  checkedIcon={<span>Checked</span>}
-  slots={{ indicator: 'span' }}
+  slots={{ indicator: 'span', indicatorIcon: CustomIndicatorIcon }}
 >
   Checkbox item
 </Menu2CheckboxItem>;
@@ -991,7 +1064,7 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
 <Menu2CheckboxItem render={<CustomItemRoot />} />;
 // @ts-expect-error Use render to select the checkbox item root.
 <Menu2CheckboxItem component="li" />;
-// @ts-expect-error Only the indicator slot remains.
+// @ts-expect-error The root is not an internal slot.
 <Menu2CheckboxItem slots={{ root: 'li' }} />;
 // @ts-expect-error Put root props on the checkbox item or its render element.
 <Menu2CheckboxItem slotProps={{ root: { title: 'Checkbox' } }} />;
@@ -1023,9 +1096,7 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
     props.color;
     return <Button {...props} variant={state.checked ? 'contained' : 'text'} />;
   }}
-  icon={<span>Unchecked</span>}
-  checkedIcon={<span>Checked</span>}
-  slots={{ indicator: 'span' }}
+  slots={{ indicator: 'span', indicatorIcon: CustomIndicatorIcon }}
 >
   Radio item
 </Menu2RadioItem>;
@@ -1040,7 +1111,7 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
 <Menu2RadioItem value="one" render={<CustomItemRoot />} />;
 // @ts-expect-error Use render to select the radio item root.
 <Menu2RadioItem value="one" component="li" />;
-// @ts-expect-error Only the indicator slot remains.
+// @ts-expect-error The root is not an internal slot.
 <Menu2RadioItem value="one" slots={{ root: 'li' }} />;
 // @ts-expect-error Put root props on the radio item or its render element.
 <Menu2RadioItem value="one" slotProps={{ root: { title: 'Radio' } }} />;

@@ -1,7 +1,6 @@
 {
   "props": {
     "checked": { "type": { "name": "bool" } },
-    "checkedIcon": { "type": { "name": "node" }, "default": "<CheckBoxIcon fontSize=\"small\" />" },
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "className": { "type": { "name": "string" } },
@@ -12,10 +11,6 @@
     "disableGutters": { "type": { "name": "bool" }, "default": "false" },
     "disableRipple": { "type": { "name": "bool" }, "default": "false" },
     "divider": { "type": { "name": "bool" }, "default": "false" },
-    "icon": {
-      "type": { "name": "node" },
-      "default": "<CheckBoxOutlineBlankIcon fontSize=\"small\" />"
-    },
     "label": { "type": { "name": "string" } },
     "nativeButton": { "type": { "name": "bool" }, "default": "false" },
     "onCheckedChange": {
@@ -27,9 +22,17 @@
     },
     "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
     "slotProps": {
-      "type": { "name": "shape", "description": "{ indicator?: func<br>&#124;&nbsp;object }" }
+      "type": {
+        "name": "shape",
+        "description": "{ indicator?: func<br>&#124;&nbsp;object, indicatorIcon?: func<br>&#124;&nbsp;object }"
+      }
     },
-    "slots": { "type": { "name": "shape", "description": "{ indicator?: elementType }" } },
+    "slots": {
+      "type": {
+        "name": "shape",
+        "description": "{ indicator?: elementType, indicatorIcon?: elementType }"
+      }
+    },
     "style": { "type": { "name": "object" } },
     "sx": {
       "type": {
@@ -47,6 +50,12 @@
       "description": "The component that renders the check indicator.",
       "default": "Menu2CheckboxItemIndicator",
       "class": "MuiMenu2CheckboxItem-indicator"
+    },
+    {
+      "name": "indicatorIcon",
+      "description": "The component that renders the icon inside the indicator.",
+      "default": "Menu2CheckboxItemIndicatorIcon",
+      "class": "MuiMenu2CheckboxItem-indicatorIcon"
     }
   ],
   "classes": [

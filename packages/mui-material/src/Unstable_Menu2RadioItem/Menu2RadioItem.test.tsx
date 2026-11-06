@@ -43,7 +43,10 @@ describe('<Menu2RadioItem />', () => {
     getRootElement: ({ baseElement }) => baseElement.querySelector(`.${classes.root}`),
     refInstanceof: window.HTMLDivElement,
     skip: ['componentProp'],
-    slots: { indicator: { expectedClassName: classes.indicator } },
+    slots: {
+      indicator: { expectedClassName: classes.indicator },
+      indicatorIcon: { expectedClassName: classes.indicatorIcon },
+    },
     muiName: 'MuiMenu2RadioItem',
     testVariantProps: { 'data-variant': 'probe' },
   }));

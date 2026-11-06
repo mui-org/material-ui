@@ -40,7 +40,10 @@ describe('<Menu2CheckboxItem />', () => {
     getRootElement: ({ baseElement }) => baseElement.querySelector(`.${classes.root}`),
     refInstanceof: window.HTMLDivElement,
     skip: ['componentProp'],
-    slots: { indicator: { expectedClassName: classes.indicator } },
+    slots: {
+      indicator: { expectedClassName: classes.indicator },
+      indicatorIcon: { expectedClassName: classes.indicatorIcon },
+    },
     muiName: 'MuiMenu2CheckboxItem',
     testVariantProps: { checked: true },
   }));

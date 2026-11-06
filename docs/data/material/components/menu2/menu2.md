@@ -413,20 +413,28 @@ For example, after the [Tailwind CSS v4 setup](/material-ui/integrations/tailwi
 
 ### Checkbox and radio indicators
 
-Use `icon` and `checkedIcon` on `MenuCheckboxItem` and `MenuRadioItem` to change the unchecked and checked icons.
-Custom icons keep their own size.
+Use `slots.indicatorIcon` on `MenuCheckboxItem` and `MenuRadioItem` to replace the icon.
+The custom component receives the live state in `ownerState`.
+Use `ownerState.checked` to select the icon, then forward the other props and ref without `ownerState`.
 
 {{"component": "file://./demos/indicator-icons/index.ts"}}
 
 Use `slotProps.indicator` to customize the indicator container, or `slots.indicator` to replace it.
-If `slotProps.indicator.children` is neither `null` nor `undefined`, it takes precedence over the icon props.
+If `slotProps.indicator.children` is neither `null` nor `undefined`, it replaces the generated icon.
 Slot callbacks receive the live checked, disabled, and highlighted state.
 A replacement must forward the supplied props and ref, including the state classes in `className`.
 
+Use `slotProps.indicatorIcon` to style the icon or set its size.
+The default checkbox icon accepts `SvgIcon` props and has an SVG ref.
+The default radio icon is a `span` with two SVGs; it accepts `fontSize="small"` or `"medium"`, `sx`, and span props and refs.
+Both default to `fontSize="small"`.
+
 The default indicators use `ListItemIcon`, so its selectors also affect indicators.
 With modular CSS layers, `MuiListItemIcon` theme overrides take precedence over default indicator colors.
-For indicator-specific styles, use the item's `styleOverrides.indicator` or `slotProps.indicator.sx`; indicators have no separate theme keys.
+Use `MuiMenu2CheckboxItem.styleOverrides.indicator` or `MuiMenu2RadioItem.styleOverrides.indicator` for the container, and `styleOverrides.indicatorIcon` for the icon.
+Neither slot has a separate theme key.
 The internal indicator components are not exported, but their owning items export `menu2CheckboxItemIndicatorClasses` and `menu2RadioItemIndicatorClasses` for CSS selectors.
+The icon uses `menu2CheckboxItemClasses.indicatorIcon` or `menu2RadioItemClasses.indicatorIcon`.
 
 ### Transitions
 

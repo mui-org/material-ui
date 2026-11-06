@@ -1,7 +1,6 @@
 {
   "componentDescription": "",
   "propDescriptions": {
-    "checkedIcon": { "description": "The icon to display when the item is checked." },
     "children": { "description": "The content of the component." },
     "classes": { "description": "Override or extend the styles applied to the component." },
     "className": { "description": "CSS class applied to the element." },
@@ -17,7 +16,6 @@
     "divider": {
       "description": "If <code>true</code>, a 1px light border is added to the bottom of the menu item."
     },
-    "icon": { "description": "The icon to display when the item is unchecked." },
     "label": {
       "description": "Overrides the text label to use when the item is matched during keyboard text navigation."
     },
@@ -68,5 +66,8 @@
     },
     "root": { "description": "Styles applied to the root element." }
   },
-  "slotDescriptions": { "indicator": "The component that renders the check indicator." }
+  "slotDescriptions": {
+    "indicator": "The component that renders the check indicator.",
+    "indicatorIcon": "The component that renders the icon inside the indicator."
+  }
 }

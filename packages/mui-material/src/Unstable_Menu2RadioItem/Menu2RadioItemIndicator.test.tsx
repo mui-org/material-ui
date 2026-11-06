@@ -1,7 +1,7 @@
 import Menu2Popup from '@mui/material/Unstable_Menu2Popup';
 import { describe, it, expect } from 'vitest';
 import * as React from 'react';
-import { createRenderer, fireEvent, isJsdom, screen } from '@mui/internal-test-utils';
+import { createRenderer, fireEvent, isJsdom, screen, waitFor } from '@mui/internal-test-utils';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2RadioGroup from '@mui/material/Unstable_Menu2RadioGroup';
 import Menu2RadioItem, {
@@ -68,6 +68,24 @@ describe('Menu2RadioItem indicator slot', () => {
         .getByTestId('checked')
         .querySelector('[data-testid="RadioButtonCheckedIcon"]')!;
       expect(window.getComputedStyle(dot).transitionProperty).to.contain('transform');
+    });
+
+    it('keeps the icon and dot mounted when selection changes', async () => {
+      const { user } = renderGroup();
+      const indicator = screen.getByTestId('unchecked');
+      const icon = indicator.firstElementChild;
+      const dot = indicator.querySelector('[data-testid="RadioButtonCheckedIcon"]')!;
+      expect(getScale(dot)).to.equal(0);
+
+      await user.click(screen.getByRole('menuitemradio', { name: 'Two' }));
+      expect(indicator.firstElementChild).to.equal(icon);
+      expect(indicator.querySelector('[data-testid="RadioButtonCheckedIcon"]')).to.equal(dot);
+      await waitFor(() => expect(getScale(dot)).to.equal(1));
+
+      await user.click(screen.getByRole('menuitemradio', { name: 'One' }));
+      expect(indicator.firstElementChild).to.equal(icon);
+      expect(indicator.querySelector('[data-testid="RadioButtonCheckedIcon"]')).to.equal(dot);
+      await waitFor(() => expect(getScale(dot)).to.equal(0));
     });
 
     it('keeps the highlighted item on the default icons', async () => {

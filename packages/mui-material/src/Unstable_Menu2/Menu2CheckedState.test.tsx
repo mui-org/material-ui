@@ -171,11 +171,11 @@ describe('Menu2 live checked ownerState', () => {
             },
           },
         });
-        const itemProps: Menu2CheckboxItemProps = {
+        const itemProps = {
           className: 'external-class',
           sx: [false, (t) => ({ paddingLeft: t.spacing(3) })],
           slotProps: { indicator: { component: 'strong', 'data-testid': 'indicator' } },
-        };
+        } satisfies Menu2CheckboxItemProps;
         render(
           <ThemeProvider theme={customTheme}>
             <Menu2 defaultOpen modal={false}>
@@ -228,7 +228,7 @@ describe('Menu2 live checked ownerState', () => {
         const onChange = vi.fn();
         function Fixture() {
           const [disabled, setDisabled] = React.useState(false);
-          const itemProps: Menu2CheckboxItemProps = {
+          const itemProps = {
             disabled,
             dense: true,
             divider: true,
@@ -242,7 +242,7 @@ describe('Menu2 live checked ownerState', () => {
                 data-gutters={String(state.disableGutters)}
               />
             ),
-          };
+          } satisfies Menu2CheckboxItemProps;
           return (
             <Menu2 defaultOpen modal={false}>
               <Menu2Popup
@@ -287,11 +287,11 @@ describe('Menu2 live checked ownerState', () => {
         it.skipIf(isJsdom())(
           `retains indicators and ripple through a render callback, disableRipple=${disableRipple}`,
           async () => {
-            const itemProps: Menu2CheckboxItemProps = {
+            const itemProps = {
               disableRipple,
               render: (props, state) => <div {...props} data-checked={String(state.checked)} />,
               slotProps: { indicator: { 'data-testid': 'indicator' } },
-            };
+            } satisfies Menu2CheckboxItemProps;
             const { user } = render(
               <Menu2 defaultOpen modal={false}>
                 <Menu2Popup anchor={document.body}>

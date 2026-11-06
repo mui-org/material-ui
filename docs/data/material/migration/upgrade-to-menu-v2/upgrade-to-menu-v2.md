@@ -346,7 +346,7 @@ These parts have no root slot API.
 Put root attributes on the item or its render element instead of `slotProps.root`.
 A render function also receives the typed item state.
 Forward its supplied props, ref, and children to the root element to preserve Material styles, indicators, and ripple.
-Checkbox and radio items keep their `indicator` slot, `icon`, and `checkedIcon` props.
+Checkbox and radio items have separate `indicator` and `indicatorIcon` slots for the container and icon.
 See [Item customization](/material-ui/react-menu2/#item).
 
 These item props work as before:
