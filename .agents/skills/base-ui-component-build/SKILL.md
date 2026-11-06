@@ -1,6 +1,6 @@
 ---
-name: base-ui-component
-description: Build a new Material UI component on top of a Base UI (`@base-ui/react`) part, from package source through theme registration, tests, and docs demos. Use when adding a Material UI component whose behavior comes from Base UI, such as a preview card, meter, OTP field, or menubar.
+name: base-ui-component-build
+description: Build a new Material UI component on top of a Base UI (`@base-ui/react`) part, from package source through theme registration, tests, and docs demos, following a shape the team approved with base-ui-component-shape. Use when implementing a Material UI component whose behavior comes from Base UI, such as a preview card, meter, OTP field, or menubar.
 ---
 
 # Build a Material UI component on Base UI
@@ -19,7 +19,7 @@ A Base UI successor to an existing component (Menu v2 replacing Menu) ships unde
 These rules were decided by the Material UI team on 2026-11-04. Apply every one of them.
 
 1. **`render`, not `component`.** Parts that change their rendered element take a public `render` prop. A trigger requires `render`, because users choose the styled trigger they want (`<PreviewCardTrigger render={<Button>Open</Button>} />`). A trigger also passes `children` through to Base UI, which places them inside the `render` element; blocking them takes more code than it saves. Keep trigger `children` out of the docs, demos, and API page. No part accepts `component`. Parts keep `slots.root`.
-2. **Open parts.** When users assemble the component (a root, a trigger, a popup, items), each piece is its own public part. One public part may wrap several Base UI parts for ease of use, as a popup wraps Portal, Positioner, and Popup. `slots` and `slotProps` reach each wrapped part.
+2. **Merged parts use slots.** Which parts are public is the approved shape's decision. When it merges several Base UI parts into one public part, as a popup wraps Portal, Positioner, and Popup, `slots` and `slotProps` reach each merged part.
 3. **Flat names.** Export PascalCase parts (`PreviewCardTrigger`). There is no namespace object (`PreviewCard.Trigger`).
 4. **Base UI names for behavior.** Props for logic and event handlers keep Base UI names and signatures (`onOpenChange(open, eventDetails)`, `side`, `align`, `delay`), selected from Base UI types with `Pick`. Presentation props keep Material UI names (`size`, `color`, `variant`, `elevation`, `disableRipple`).
 5. **Styling hooks.** Utility classes and `ownerState` carry live Base UI state. The Base UI data attributes are re-exported from Base UI and documented. Users style live state with these classes and data attribute constants in `styleOverrides`; `variants` match props only.
@@ -27,16 +27,18 @@ These rules were decided by the Material UI team on 2026-11-04. Apply every one 
 
 ## Steps
 
-### 1. Map the Base UI parts
+### 1. Read the approved shape
+
+Find the RFC that `base-ui-component-shape` produced and read its "Approved shape" section: the chosen option and its part table. If there is no RFC, or that section is empty, stop and ask the author to run `base-ui-component-shape` and get the team's decision first.
 
 Read the Base UI docs and types for the component. They ship with the package installed for the docs: `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` and `docs/node_modules/@base-ui/react/<kebab-name>/**/*.d.ts`.
 
-Choose the shape:
+Then read the reference for the approved shape:
 
-- **Single component**: users render one element tree and configure it with props, like `TextField` or `LinearProgress`. Read [references/single-component.md](references/single-component.md).
-- **Compound parts**: users compose a trigger, a popup, and items. Read [references/compound-parts.md](references/compound-parts.md).
+- One public component configured by props, like `TextField` or `LinearProgress`: [references/single-component.md](references/single-component.md).
+- Several public parts that users compose (a trigger, a popup, items): [references/compound-parts.md](references/compound-parts.md).
 
-Done when a table, written into the PR description (or your final report when there is no PR), lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
+Done when a table that matches the approved part table, written into the PR description (or your final report when there is no PR), lists every export of the Base UI component (every part, plus helpers such as `createHandle`) with its role: public part, slot of a named part, internal, or not exposed with the reason. Each rendered row names the existing Material UI component it builds on (`Paper`, `ButtonBase`, `FormControl`, `List`) or says it is a new styled element, and gives its slot name.
 
 ### 2. Write the types
 
