@@ -240,6 +240,8 @@ export type AnnotateItem =
       /** which axis the strip measures: 'x' = its width is the value. */
       measures: 'x' | 'y';
       tone: 'padding' | 'margin' | 'gap';
+      /** the `(px)` part of a side-gutter label renders on its own line. */
+      wrap?: boolean;
       label: string;
       route: Route;
       source: AnnotateSource;
@@ -289,11 +291,13 @@ function LabelText({
   rail,
   anchor,
   label,
+  wrap,
 }: {
   gutter: Gutter;
   rail: number;
   anchor: number;
   label: string;
+  wrap?: boolean;
 }) {
   const a = away(gutter);
   if (!sideways(gutter)) {
@@ -307,6 +311,7 @@ function LabelText({
       </text>
     );
   }
+  const breakAt = wrap ? label.lastIndexOf(' (') : -1;
   return (
     <text
       x={rail + a * 14}
@@ -314,7 +319,18 @@ function LabelText({
       textAnchor={gutter === 'left' ? 'end' : 'start'}
       dominantBaseline="middle"
     >
-      {label}
+      {breakAt > 0 ? (
+        <React.Fragment>
+          <tspan x={rail + a * 14} dy="-0.55em">
+            {label.slice(0, breakAt)}
+          </tspan>
+          <tspan x={rail + a * 14} dy="1.15em">
+            {label.slice(breakAt)}
+          </tspan>
+        </React.Fragment>
+      ) : (
+        label
+      )}
     </text>
   );
 }
@@ -327,12 +343,14 @@ function DiagonalLeader({
   anchor,
   attach,
   label,
+  wrap,
 }: {
   gutter: Gutter;
   rail: number;
   anchor: number;
   attach: { x: number; y: number }[];
   label: string;
+  wrap?: boolean;
 }) {
   const a = away(gutter);
   const end = sideways(gutter)
@@ -350,7 +368,13 @@ function DiagonalLeader({
           y2={end.y}
         />
       ))}
-      <LabelText gutter={gutter} rail={rail} anchor={anchor} label={label} />
+      <LabelText
+        gutter={gutter}
+        rail={rail}
+        anchor={anchor}
+        label={label}
+        wrap={wrap}
+      />
     </React.Fragment>
   );
 }
@@ -364,6 +388,7 @@ function LadderEnding({
   shift = 0,
   covered,
   label,
+  wrap,
 }: {
   gutter: Gutter;
   rail: number;
@@ -373,6 +398,7 @@ function LadderEnding({
    * or the doubled dashes read as a solid streak. */
   covered?: [number, number];
   label: string;
+  wrap?: boolean;
 }) {
   const a = away(gutter);
   const anchor = natural + shift;
@@ -397,7 +423,13 @@ function LadderEnding({
           x2={anchor}
           y2={rail + a * REACH}
         />
-        <LabelText gutter={gutter} rail={rail} anchor={anchor} label={label} />
+        <LabelText
+          gutter={gutter}
+          rail={rail}
+          anchor={anchor}
+          label={label}
+          wrap={wrap}
+        />
       </React.Fragment>
     );
   }
@@ -413,7 +445,13 @@ function LadderEnding({
         x2={rail + a * REACH}
         y2={anchor}
       />
-      <LabelText gutter={gutter} rail={rail} anchor={anchor} label={label} />
+      <LabelText
+        gutter={gutter}
+        rail={rail}
+        anchor={anchor}
+        label={label}
+        wrap={wrap}
+      />
     </React.Fragment>
   );
 }
@@ -427,7 +465,7 @@ function BandView({
   bounds: Rect;
   hatchId: string;
 }) {
-  const { bands, measures, route, label, tone } = item;
+  const { bands, measures, route, label, tone, wrap } = item;
   const g = route.gutter;
   const rail = railOf(bounds, g, route.out ?? 0);
   // A stem leaves a band along the strip's own run, so it can only reach the
@@ -501,6 +539,7 @@ function BandView({
           anchor={natural + (route.shift ?? 0)}
           attach={attach}
           label={label}
+          wrap={wrap}
         />
       </g>
     );
@@ -566,6 +605,7 @@ function BandView({
             bands.length > 1 ? [Math.min(...stems), Math.max(...stems)] : undefined
           }
           label={label}
+          wrap={wrap}
         />
       </g>
     );
@@ -617,6 +657,7 @@ function BandView({
         natural={cross}
         shift={route.shift}
         label={label}
+        wrap={wrap}
       />
     </g>
   );
@@ -924,6 +965,9 @@ export type Claim =
       /** 'all' paints the full ring (every live band) with ONE label, led by a
        * single line from the band facing the route's gutter. */
       axis?: 'inline' | 'block' | 'all';
+      /** render the caption's `(px)` part on its own line — for long
+       * expressions whose one-line label would reach past the demo frame. */
+      wrap?: boolean;
       /** one band only. The way to name a pair whose values differ: the presets
        * author each side's expression separately (details: `xxSmall` top,
        * `small` bottom), so each side gets its own claim carrying its own
@@ -1091,6 +1135,7 @@ export function resolveClaims(
             source: { claim, value: edges[lead], lineHeight, fontSize },
             kind: 'band',
             tone: isPad ? 'padding' : 'margin',
+            wrap: claim.wrap,
             measures: lead === 'left' || lead === 'right' ? 'x' : 'y',
             // one label for the whole ring — only honest when every live band
             // agrees on the value
@@ -1128,6 +1173,7 @@ export function resolveClaims(
             source: { claim, value: signed, lineHeight, fontSize },
             kind: 'band',
             tone: isPad ? 'padding' : 'margin',
+            wrap: claim.wrap,
             measures: axis === 'inline' ? 'x' : 'y',
             label: labelFor(
               signed,

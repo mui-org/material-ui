@@ -123,6 +123,7 @@ export const DENSITY_ANNOTATIONS = {
       aspect: 'touch-target',
       token: 'touchTarget',
       outlined: true,
+      wrap: true,
       label: 'Close button',
     },
   ],
@@ -208,6 +209,7 @@ export const DENSITY_ANNOTATIONS = {
         aspect: 'touch-target',
         axis: 'block',
         token: 'touchTarget - xSmall',
+        wrap: true,
         label: 'Input',
         route: { gutter: 'left' },
       });
@@ -432,6 +434,7 @@ export const DENSITY_ANNOTATIONS = {
         on: '.MuiCheckbox-root',
         aspect: 'touch-target',
         token: small ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
+        wrap: small,
         label: 'Checkbox',
       },
       // The preset sizes the glyph `fontSize: iconSize`, so `medium` names it.
@@ -469,7 +472,7 @@ export const DENSITY_ANNOTATIONS = {
         aspect: 'gap',
         token: small ? 'xxSmall' : 'xSmall',
         label: 'Chip',
-        route: { gutter: 'top' },
+        route: { gutter: 'top', shift: -40 },
       },
       // Two classes deep, so it beats the Avatar root's own 32px box.
       {
@@ -517,6 +520,7 @@ export const DENSITY_ANNOTATIONS = {
       on: '.MuiDialogTitle-root .MuiIconButton-root',
       aspect: 'touch-target',
       token: 'touchTarget',
+      wrap: true,
       label: 'Close button',
     },
     // Without dividers the block padding is 0, so the inline pair is the only
@@ -527,6 +531,7 @@ export const DENSITY_ANNOTATIONS = {
       aspect: 'padding',
       axis: values['DialogContent dividers'] === 'true' ? 'all' : 'inline',
       token: 'medium',
+      wrap: true,
       label: 'Content',
       // The crossing stays under the text; the label rides up to the row's middle.
       route: { gutter: 'left' },
@@ -537,6 +542,7 @@ export const DENSITY_ANNOTATIONS = {
       aspect: 'padding',
       axis: 'all',
       token: 'medium',
+      wrap: true,
       label: 'Actions',
       route: { gutter: 'left', line: 'diagonal' },
     },
@@ -580,6 +586,7 @@ export const DENSITY_ANNOTATIONS = {
         on: '.MuiListItem-root:nth-of-type(2) .MuiListItemButton-root',
         aspect: 'touch-target',
         token: dense ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
+        wrap: dense,
         label: 'Item',
       },
       {
@@ -627,6 +634,7 @@ export const DENSITY_ANNOTATIONS = {
         on: '.MuiMenuItem-root:nth-of-type(2)',
         aspect: 'touch-target',
         token: dense ? 'max(24px, touchTarget - xxSmall)' : 'max(28px, touchTarget)',
+        wrap: true,
         label: 'Item',
       },
       {
@@ -680,8 +688,9 @@ export const DENSITY_ANNOTATIONS = {
               aspect: 'margin',
               side: 'left',
               token: `${iconSlot} + 2 × xSmall`,
+              wrap: true,
               label: 'Inset divider',
-              route: { gutter: 'left' },
+              route: { gutter: 'left', shift: -12 },
             },
           ]
         : []),
@@ -728,6 +737,7 @@ export const DENSITY_ANNOTATIONS = {
         on: '.MuiRadio-root',
         aspect: 'touch-target',
         token: small ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
+        wrap: small,
         label: 'Radio',
       },
       {
@@ -976,6 +986,7 @@ export const DENSITY_ANNOTATIONS = {
         on: '.MuiSwitch-root',
         aspect: 'touch-target',
         token: small ? 'max(24px, touchTarget - xxSmall)' : 'touchTarget',
+        wrap: small,
         label: 'Switch',
         route: { gutter: 'left' },
       },

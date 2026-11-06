@@ -378,7 +378,7 @@ export const DENSITY_COMPONENTS: Record<string, ComponentSpec> = {
     // is what the gap band sits between — a bare string label is a text node.
     // `disablePadding` on the item hands the whole box to the button.
     render: (values) => (
-      <List dense={values.dense === true} sx={{ width: 260 }}>
+      <List dense={values.dense === true} sx={{ width: 180 }}>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -419,7 +419,7 @@ export const DENSITY_COMPONENTS: Record<string, ComponentSpec> = {
     render: (values) => {
       const inset = values.inset === true;
       return (
-        <Paper sx={{ width: 260 }}>
+        <Paper sx={{ width: 220 }}>
           <MenuList dense={values.dense === true}>
             {[
               { label: 'Copy', icon: <ContentCopyIcon />, shortcut: '⌘C' },
@@ -487,7 +487,7 @@ export const DENSITY_COMPONENTS: Record<string, ComponentSpec> = {
     render: (values) => (
       <FormControlLabel
         control={<Radio defaultChecked size={values.size as 'small' | 'medium'} />}
-        label="Ship to billing address"
+        label="Same as billing"
       />
     ),
   },
@@ -746,7 +746,7 @@ export const DENSITY_COMPONENTS: Record<string, ComponentSpec> = {
         </InputAdornment>
       );
       return (
-        <Stack spacing={3} sx={{ width: 260 }}>
+        <Stack spacing={3} sx={{ width: 260, mr: '120px' }}>
           <TextField
             variant="outlined"
             label="Outlined"
@@ -814,7 +814,7 @@ export const DENSITY_COMPONENTS: Record<string, ComponentSpec> = {
     // No `edge="start"` on the icon button: that emits a negative margin, which
     // would pull it into the gutter the padding ring is about.
     render: (values) => (
-      <AppBar position="static" sx={{ width: 360 }}>
+      <AppBar position="static" sx={{ width: 260 }}>
         <Toolbar variant={values.dense === true ? 'dense' : 'regular'}>
           <IconButton color="inherit" aria-label="menu">
             <MenuIcon />

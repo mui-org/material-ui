@@ -205,7 +205,7 @@ function railOf(bounds, g, out) {
 }
 
 /** Just the text, at its gutter address. */
-function LabelText({ gutter, rail, anchor, label }) {
+function LabelText({ gutter, rail, anchor, label, wrap }) {
   const a = away(gutter);
   if (!sideways(gutter)) {
     return (
@@ -218,6 +218,7 @@ function LabelText({ gutter, rail, anchor, label }) {
       </text>
     );
   }
+  const breakAt = wrap ? label.lastIndexOf(' (') : -1;
   return (
     <text
       x={rail + a * 14}
@@ -225,7 +226,18 @@ function LabelText({ gutter, rail, anchor, label }) {
       textAnchor={gutter === 'left' ? 'end' : 'start'}
       dominantBaseline="middle"
     >
-      {label}
+      {breakAt > 0 ? (
+        <React.Fragment>
+          <tspan x={rail + a * 14} dy="-0.55em">
+            {label.slice(0, breakAt)}
+          </tspan>
+          <tspan x={rail + a * 14} dy="1.15em">
+            {label.slice(breakAt)}
+          </tspan>
+        </React.Fragment>
+      ) : (
+        label
+      )}
     </text>
   );
 }
@@ -240,7 +252,7 @@ LabelText.propTypes = {
   rail: PropTypes.number.isRequired,
 };
 
-function DiagonalLeader({ gutter, rail, anchor, attach, label }) {
+function DiagonalLeader({ gutter, rail, anchor, attach, label, wrap }) {
   const a = away(gutter);
   const end = sideways(gutter)
     ? { x: rail + a * REACH, y: anchor }
@@ -257,7 +269,13 @@ function DiagonalLeader({ gutter, rail, anchor, attach, label }) {
           y2={end.y}
         />
       ))}
-      <LabelText gutter={gutter} rail={rail} anchor={anchor} label={label} />
+      <LabelText
+        gutter={gutter}
+        rail={rail}
+        anchor={anchor}
+        label={label}
+        wrap={wrap}
+      />
     </React.Fragment>
   );
 }
@@ -278,7 +296,7 @@ DiagonalLeader.propTypes = {
   rail: PropTypes.number.isRequired,
 };
 
-function LadderEnding({ gutter, rail, natural, shift = 0, covered, label }) {
+function LadderEnding({ gutter, rail, natural, shift = 0, covered, label, wrap }) {
   const a = away(gutter);
   const anchor = natural + shift;
   let runFrom = shift !== 0 ? natural : null;
@@ -302,7 +320,13 @@ function LadderEnding({ gutter, rail, natural, shift = 0, covered, label }) {
           x2={anchor}
           y2={rail + a * REACH}
         />
-        <LabelText gutter={gutter} rail={rail} anchor={anchor} label={label} />
+        <LabelText
+          gutter={gutter}
+          rail={rail}
+          anchor={anchor}
+          label={label}
+          wrap={wrap}
+        />
       </React.Fragment>
     );
   }
@@ -318,7 +342,13 @@ function LadderEnding({ gutter, rail, natural, shift = 0, covered, label }) {
         x2={rail + a * REACH}
         y2={anchor}
       />
-      <LabelText gutter={gutter} rail={rail} anchor={anchor} label={label} />
+      <LabelText
+        gutter={gutter}
+        rail={rail}
+        anchor={anchor}
+        label={label}
+        wrap={wrap}
+      />
     </React.Fragment>
   );
 }
@@ -337,7 +367,7 @@ LadderEnding.propTypes = {
 };
 
 function BandView({ item, bounds, hatchId }) {
-  const { bands, measures, route, label, tone } = item;
+  const { bands, measures, route, label, tone, wrap } = item;
   const g = route.gutter;
   const rail = railOf(bounds, g, route.out ?? 0);
   // A stem leaves a band along the strip's own run, so it can only reach the
@@ -410,6 +440,7 @@ function BandView({ item, bounds, hatchId }) {
           anchor={natural + (route.shift ?? 0)}
           attach={attach}
           label={label}
+          wrap={wrap}
         />
       </g>
     );
@@ -475,6 +506,7 @@ function BandView({ item, bounds, hatchId }) {
             bands.length > 1 ? [Math.min(...stems), Math.max(...stems)] : undefined
           }
           label={label}
+          wrap={wrap}
         />
       </g>
     );
@@ -526,6 +558,7 @@ function BandView({ item, bounds, hatchId }) {
         natural={cross}
         shift={route.shift}
         label={label}
+        wrap={wrap}
       />
     </g>
   );
@@ -1094,6 +1127,7 @@ export function resolveClaims(stage, demo, claims) {
             source: { claim, value: edges[lead], lineHeight, fontSize },
             kind: 'band',
             tone: isPad ? 'padding' : 'margin',
+            wrap: claim.wrap,
             measures: lead === 'left' || lead === 'right' ? 'x' : 'y',
             // one label for the whole ring — only honest when every live band
             // agrees on the value
@@ -1130,6 +1164,7 @@ export function resolveClaims(stage, demo, claims) {
             source: { claim, value: signed, lineHeight, fontSize },
             kind: 'band',
             tone: isPad ? 'padding' : 'margin',
+            wrap: claim.wrap,
             measures: axis === 'inline' ? 'x' : 'y',
             label: labelFor(
               signed,
