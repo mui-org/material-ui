@@ -57,7 +57,7 @@ window.muiFixture = {
       { family: 'Font Awesome 5 Free', weight: 900 },
     ],
   }),
-  // Read by `index.test.js` to evaluate `ScreenshotRule.minReactMajor`. Taken
+  // Read by `index.test.js` to evaluate `REACT_FLOOR_RULES`. Taken
   // from the bundle rather than the test process's own `react` so the two can
   // never disagree about which React the demos actually render with.
   reactVersion: React.version,
@@ -69,7 +69,8 @@ function FixtureRenderer({ component: FixtureComponent, path }) {
     const testRoot = document.createElement('div');
     viewerRoot.appendChild(testRoot);
     const reactRoot = ReactDOMClient.createRoot(testRoot);
-    React.startTransition(() => {
+    // React 17 has no `startTransition`.
+    (React.startTransition ?? ((callback) => callback()))(() => {
       reactRoot.render(
         <TestViewer path={path} FixtureComponent={FixtureComponent}>
           <FixtureComponent />
@@ -94,17 +95,33 @@ FixtureRenderer.propTypes = {
   path: PropTypes.string.isRequired,
 };
 
-function useHash() {
-  const subscribe = React.useCallback((callback) => {
-    window.addEventListener('hashchange', callback);
-    return () => {
-      window.removeEventListener('hashchange', callback);
-    };
-  }, []);
-  const getSnapshot = React.useCallback(() => window.location.hash, []);
-  const getServerSnapshot = React.useCallback(() => '', []);
-  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+function subscribeToHash(callback) {
+  window.addEventListener('hashchange', callback);
+  return () => {
+    window.removeEventListener('hashchange', callback);
+  };
 }
+
+function getHash() {
+  return window.location.hash;
+}
+
+function getServerHash() {
+  return '';
+}
+
+function useHashLegacy() {
+  const [hash, setHash] = React.useState(getHash);
+  React.useEffect(() => subscribeToHash(() => setHash(getHash())), []);
+  return hash;
+}
+
+function useHashModern() {
+  return React.useSyncExternalStore(subscribeToHash, getHash, getServerHash);
+}
+
+// React 17 has no `useSyncExternalStore`.
+const useHash = React.useSyncExternalStore ? useHashModern : useHashLegacy;
 
 function computeIsDev(hash) {
   if (hash === '#dev') {
@@ -200,7 +217,7 @@ App.propTypes = {
 
 const container = document.getElementById('react-root');
 const children = (
-  <Router>
+  <Router useTransitions={React.startTransition !== undefined}>
     <App fixtures={allFixtures} />
   </Router>
 );

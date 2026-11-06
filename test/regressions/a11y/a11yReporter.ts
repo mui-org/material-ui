@@ -30,6 +30,16 @@ function* walkTests(node: TestModule | TestSuite): Generator<TestCase, undefined
   }
 }
 
+// A route below its React floor keeps the results that a run with a newer React committed.
+function readCommittedEntry({ slug, demo }: Pick<A11yMeta, 'slug' | 'demo'>): A11yMeta | undefined {
+  const file = path.join(COMPONENTS_DIR, slug, `${slug}.a11y.json`);
+  if (!fs.existsSync(file)) {
+    return undefined;
+  }
+  const committed: Record<string, DemoEntry> = JSON.parse(fs.readFileSync(file, 'utf8'));
+  return committed[demo] && { slug, demo, rules: committed[demo].rules };
+}
+
 function hasStatus(meta: A11yMeta, status: 'fail' | 'incomplete'): boolean {
   for (const rule of Object.values(meta.rules)) {
     if (rule.status === status) {
@@ -54,7 +64,11 @@ export default class A11yReporter implements Reporter {
     const entries: A11yMeta[] = [];
     for (const mod of testModules) {
       for (const test of walkTests(mod)) {
-        const meta = (test.meta() as { a11y?: A11yMeta }).a11y;
+        const { a11y, a11yKept } = test.meta() as {
+          a11y?: A11yMeta;
+          a11yKept?: Pick<A11yMeta, 'slug' | 'demo'>;
+        };
+        const meta = a11y ?? (a11yKept && readCommittedEntry(a11yKept));
         if (meta) {
           entries.push(meta);
         }

@@ -591,42 +591,28 @@ workflows:
           react-version: ^17.0.0
           name: test_e2e-react@17
 
-  # This workflow is identical to react-17, but scheduled
-  # TODO: The v17 tests have deteriorated to the point of no return. Fix for v18 once we
-  #       deprecate v17, and reenable this workflow.
-  # react-17-cron:
-  #   triggers:
-  #     - schedule:
-  #         cron: '0 0 * * *'
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #               - next
-  #   jobs:
-  #     - test_unit:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_unit-react@17
-  #     - test_browser:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_browser-react@17
-  #     - test_regressions:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_regressions-react@17
-  #     - test_e2e:
-  #         <<: *default-context
-  #         react-version: ^17.0.0
-  #         name: test_e2e-react@17
-
   # Manually-triggered counterpart of nightly-cron — runs the compatibility
-  # suite (react@18, react@next, typescript@next, minimum TypeScript) on the current PR branch.
+  # suite (react@17, react@18, react@next, typescript@next, minimum TypeScript) on the current PR branch.
   nightly:
     when:
       equal: [nightly, << pipeline.parameters.workflow >>]
     jobs:
+      - test_unit:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_unit-react@17
+      - test_browser:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_browser-react@17
+      - test_regressions:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_regressions-react@17
+      - test_e2e:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_e2e-react@17
       - test_unit:
           <<: *default-context
           react-version: ^18.0.0
@@ -667,6 +653,7 @@ workflows:
 
   # Scheduled counterpart of `nightly`. react@18 runs on all listed branches;
   # the react@next and typescript@next jobs skip v5.x via per-job branch filters.
+  # react@17 runs on master only. The weekly `claude-flake-fix.yml` triage reports failures.
   nightly-cron:
     triggers:
       - schedule:
@@ -680,6 +667,42 @@ workflows:
                 - v6.x
                 - v7.x
     jobs:
+      - test_unit:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_unit-react@17
+          filters:
+            branches:
+              only:
+                # #target-branch-reference
+                - master
+      - test_browser:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_browser-react@17
+          filters:
+            branches:
+              only:
+                # #target-branch-reference
+                - master
+      - test_regressions:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_regressions-react@17
+          filters:
+            branches:
+              only:
+                # #target-branch-reference
+                - master
+      - test_e2e:
+          <<: *default-context
+          react-version: ^17.0.0
+          name: test_e2e-react@17
+          filters:
+            branches:
+              only:
+                # #target-branch-reference
+                - master
       - test_unit:
           <<: *default-context
           react-version: ^18.0.0
