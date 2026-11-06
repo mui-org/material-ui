@@ -147,7 +147,7 @@ const MenuList = React.forwardRef(function MenuList(inProps, ref) {
         (item) => currentFocus != null && item.element === currentFocus,
       );
 
-      if (focusedItem) {
+      if (focusedItem && isItemFocusable(focusedItem)) {
         hasFocusedInitialTargetRef.current = true;
         return focusedItem.element;
       }

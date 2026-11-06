@@ -97,17 +97,39 @@ function useSyncExternalStoreOld(
   getStoreSnapshot: () => string | null,
   getServerSnapshot: () => string | null,
 ): string | null {
-  // Start with the server snapshot so that hydration matches, then read the store before paint.
-  const [snapshot, setSnapshot] = React.useState(getServerSnapshot);
+  const [{ store }, forceUpdate] = React.useState(() => ({
+    store: {
+      snapshot: getServerSnapshot(),
+      getSnapshot: getStoreSnapshot,
+      hydrated: false,
+    },
+  }));
+
+  // Only the first render uses the server snapshot. Later renders must read the current
+  // store, including when the key changes before its subscription effect runs.
+  const snapshot = store.hydrated ? getStoreSnapshot() : store.snapshot;
+
+  useEnhancedEffect(() => {
+    store.hydrated = true;
+    store.snapshot = snapshot;
+    store.getSnapshot = getStoreSnapshot;
+
+    if (snapshot !== getStoreSnapshot()) {
+      forceUpdate({ store });
+    }
+  }, [getStoreSnapshot, snapshot, store]);
 
   useEnhancedEffect(() => {
     const update = () => {
-      setSnapshot(getStoreSnapshot());
+      // Compare with the committed snapshot, even if a render changed it without an event.
+      if (store.snapshot !== store.getSnapshot()) {
+        forceUpdate({ store });
+      }
     };
 
     update();
     return subscribeToStore(update);
-  }, [getStoreSnapshot, subscribeToStore]);
+  }, [store, subscribeToStore]);
 
   return snapshot;
 }
