@@ -49,11 +49,11 @@
     "@types/react": "19.3.0",
     "chalk": "6.0.1",
     "cross-fetch": "4.1.0",
-    "es-toolkit": "1.52.0",
+    "es-toolkit": "1.53.1",
     "fast-glob": "3.3.3",
     "mustache": "4.2.0",
     "react": "19.3.1",
-    "rimraf": "6.1.3",
+    "rimraf": "6.1.4",
     "shx": "0.4.0",
     "svgo": "4.1.0",
     "yargs": "18.2.0"

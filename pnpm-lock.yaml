@@ -328,11 +328,11 @@ importers:
         specifier: 10.1.0
         version: 10.1.0
       dotenv:
-        specifier: 18.0.8
-        version: 18.0.8
+        specifier: 18.0.9
+        version: 18.0.9
       es-toolkit:
-        specifier: 1.52.0
-        version: 1.52.0
+        specifier: 1.53.1
+        version: 1.53.1
       eslint:
         specifier: 10.13.0
         version: 10.13.0(jiti@2.7.0)(supports-color@11.0.0)
@@ -355,14 +355,14 @@ importers:
         specifier: 10.1.1
         version: 10.1.1(@types/node@22.20.5)(@typescript/typescript6@6.0.2)(babel-plugin-macros@3.1.0)(supports-color@11.0.0)
       minimatch:
-        specifier: 11.0.3
-        version: 11.0.3
+        specifier: 11.0.4
+        version: 11.0.4
       nx:
         specifier: 23.3.1
         version: 23.3.1
       pkg-pr-new:
-        specifier: 0.0.91
-        version: 0.0.91
+        specifier: 0.0.93
+        version: 0.0.93
       playwright:
         specifier: 1.63.0
         version: 1.63.0
@@ -382,8 +382,8 @@ importers:
         specifier: 19.3.1
         version: 19.3.1(react@19.3.1)
       rimraf:
-        specifier: 6.1.3
-        version: 6.1.3
+        specifier: 6.1.4
+        version: 6.1.4
       serve:
         specifier: 14.2.6
         version: 14.2.6(supports-color@11.0.0)
@@ -551,7 +551,7 @@ importers:
         version: 1.11.23
       es-toolkit:
         specifier: ^1.52.0
-        version: 1.52.0
+        version: 1.53.1
       feed:
         specifier: ^6.0.0
         version: 6.0.0
@@ -638,10 +638,10 @@ importers:
         version: 4.18.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-window:
         specifier: ^2.5.0
-        version: 2.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 2.5.3(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       rimraf:
         specifier: ^6.1.3
-        version: 6.1.3
+        version: 6.1.4
       semver:
         specifier: ^7.8.5
         version: 7.8.5
@@ -768,7 +768,7 @@ importers:
         version: 3.0.0
       es-toolkit:
         specifier: ^1.52.0
-        version: 1.52.0
+        version: 1.53.1
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -827,7 +827,7 @@ importers:
         version: link:../../docs
       es-toolkit:
         specifier: ^1.52.0
-        version: 1.52.0
+        version: 1.53.1
     devDependencies:
       '@types/node':
         specifier: 22.20.5
@@ -891,7 +891,7 @@ importers:
         version: 3.2.3
       es-toolkit:
         specifier: ^1.52.0
-        version: 1.52.0
+        version: 1.53.1
       fg-loadcss:
         specifier: ^3.1.0
         version: 3.1.0
@@ -965,7 +965,7 @@ importers:
         version: 6.0.2
       rimraf:
         specifier: ^6.1.3
-        version: 6.1.3
+        version: 6.1.4
     publishDirectory: build
 
   packages-internal/markdown:
@@ -975,7 +975,7 @@ importers:
         version: 8.0.10
       es-toolkit:
         specifier: ^1.52.0
-        version: 1.52.0
+        version: 1.53.1
       marked:
         specifier: ^18.1.2
         version: 18.1.2
@@ -1014,7 +1014,7 @@ importers:
         version: 3.0.0
       es-toolkit:
         specifier: ^1.52.0
-        version: 1.52.0
+        version: 1.53.1
     devDependencies:
       '@babel/register':
         specifier: 7.29.7
@@ -1038,8 +1038,8 @@ importers:
         specifier: 3.9.10
         version: 3.9.10
       rimraf:
-        specifier: 6.1.3
-        version: 6.1.3
+        specifier: 6.1.4
+        version: 6.1.4
       typescript:
         specifier: npm:@typescript/typescript6@6.0.2
         version: '@typescript/typescript6@6.0.2'
@@ -1135,8 +1135,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(encoding@0.1.13)
       es-toolkit:
-        specifier: 1.52.0
-        version: 1.52.0
+        specifier: 1.53.1
+        version: 1.53.1
       fast-glob:
         specifier: 3.3.3
         version: 3.3.3
@@ -1147,8 +1147,8 @@ importers:
         specifier: 19.3.1
         version: 19.3.1
       rimraf:
-        specifier: 6.1.3
-        version: 6.1.3
+        specifier: 6.1.4
+        version: 6.1.4
       shx:
         specifier: 0.4.0
         version: 0.4.0
@@ -1280,8 +1280,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       es-toolkit:
-        specifier: 1.52.0
-        version: 1.52.0
+        specifier: 1.53.1
+        version: 1.53.1
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -1639,8 +1639,8 @@ importers:
         specifier: workspace:^
         version: link:../docs
       es-toolkit:
-        specifier: 1.52.0
-        version: 1.52.0
+        specifier: 1.53.1
+        version: 1.53.1
       fast-glob:
         specifier: 3.3.3
         version: 3.3.3
@@ -1660,8 +1660,8 @@ importers:
         specifier: 8.5.1
         version: 8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-window:
-        specifier: 2.3.4
-        version: 2.3.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 2.5.3
+        version: 2.5.3(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       sinon:
         specifier: 22.1.0
         version: 22.1.0
@@ -1763,8 +1763,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0
       es-toolkit:
-        specifier: 1.52.0
-        version: 1.52.0
+        specifier: 1.53.1
+        version: 1.53.1
       fast-glob:
         specifier: 3.3.3
         version: 3.3.3
@@ -7351,8 +7351,8 @@ packages:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
-  dotenv@18.0.8:
-    resolution: {integrity: sha512-2KDeoFoK/zRtcnbunCDlLG5VWVMcyqeQc6iK65o231nfNAcuGrKoqUQfJFUtBI+QlShk5HKIHxwebBtUl3rEfA==}
+  dotenv@18.0.9:
+    resolution: {integrity: sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -7492,8 +7492,8 @@ packages:
     resolution: {integrity: sha512-yPDz7wqpg1/mmHLmS3tcfTfbw5f1eryXvyghYBffGdERwe+mV7ZcWzTR8LR17Kvqt3qfPurjlonmnq3MKXIOXw==}
     engines: {node: '>= 0.4'}
 
-  es-toolkit@1.52.0:
-    resolution: {integrity: sha512-XTNEJQh1tY1ZJVcf6ayP/2n4ZPyaHlW2FWs7xvw5ddPuhUVjLD3olQVQS7kf58JbAB48iL0uL/jerTrjtV3lDA==}
+  es-toolkit@1.53.1:
+    resolution: {integrity: sha512-VhMc6IXmexu8iYFfL2aaAww6IvJTdHlqBLruLoEUs33YD4IcP5DdZcLOybMsMmmLsiy1c8PsiLsrM0DdIuuRUA==}
 
   esbuild@0.28.2:
     resolution: {integrity: sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA==}
@@ -8084,6 +8084,10 @@ packages:
 
   glob@13.0.6:
     resolution: {integrity: sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==}
+    engines: {node: 18 || 20 || >=22}
+
+  glob@14.0.3:
+    resolution: {integrity: sha512-A1vjIwC3qpdCso45Iw127gnp7sPhqgY8lUQhDrArIs+GbmfaaVPFuoyy7WyLT9EPZCRZ7j7aLdwUhQmHWesEow==}
     engines: {node: 18 || 20 || >=22}
 
   glob@9.3.5:
@@ -9453,9 +9457,9 @@ packages:
     resolution: {integrity: sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==}
     engines: {node: 18 || 20 || >=22}
 
-  minimatch@11.0.3:
-    resolution: {integrity: sha512-iny/40PEGkNJQ5/Pv6z3nm6FbRAby32GeZRjCUJk2WnNDbgPSTcdI+DDvLqsgBdD4cD5sMtMheqPPnehCCa8Nw==}
-    engines: {node: 18 || 20 || >=22}
+  minimatch@11.0.4:
+    resolution: {integrity: sha512-/UJ1dEoVQTjPNDh6SGlUo+ueLMmoHTas4q+8yaAR/5t6nLAIiBDJtoYUh20IYleix7ehiQkgczb84PE3uzHkxg==}
+    engines: {node: 20 || >=22}
 
   minimatch@3.1.5:
     resolution: {integrity: sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==}
@@ -10033,6 +10037,10 @@ packages:
     resolution: {integrity: sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg==}
     engines: {node: 18 || 20 || >=22}
 
+  path-scurry@3.0.0:
+    resolution: {integrity: sha512-1pTbQqH1wIwMi/eleQ5leFTTCkzFsPcgXNjwOA8YGGW/W4/kHT3dssE7Z6NH+zuqNLOzOB0uaD61yl7cAcVhgg==}
+    engines: {node: 18 || 20 || >=22}
+
   path-to-regexp@3.3.0:
     resolution: {integrity: sha512-qyCH421YQPS2WFDxDjftfc1ZR5WKQzVzqsp4n9M2kQhVOo/ByahFoUNJfl58kOcEGfQ//7weFTDhm+ss8Ecxgw==}
 
@@ -10088,8 +10096,8 @@ packages:
     resolution: {integrity: sha512-NPE8TDbzl/3YQYY7CSS228s3g2ollTFnc+Qi3tqmqJp9Vg2ovUpixcJEo2HJScN2Ez+kEaal6y70c0ehqJBJeA==}
     engines: {node: '>=10'}
 
-  pkg-pr-new@0.0.91:
-    resolution: {integrity: sha512-FQPmjspKRKYV4MlHQnun9snJqlYm6Yhmo12x1O3pgE2Akim/y/BZjMOppK//BFdh222WOj6WGqlmeZfrtUtfgQ==}
+  pkg-pr-new@0.0.93:
+    resolution: {integrity: sha512-JH3HEO+m8sNFpalNAeGrNKjdwxNcXT3yuEuGMU/65dvLojPo+Ofnmc8la2v2ceisjXTOKQw/738Pj4KNFY7F+w==}
     hasBin: true
 
   pkg-up@3.1.0:
@@ -10497,17 +10505,15 @@ packages:
       react: '>=16 || >=17 || >= 18 || >= 19'
       react-dom: '>=16 || >=17 || >= 18 || >=19'
 
-  react-window@2.3.4:
-    resolution: {integrity: sha512-CnRWoRg+ZnQkLcULSNdbgKJnfcexy9x+9ELOATmDlDv3ZoADyLJc22vN3JRvMV651A6gFwYBlxllU9X+H9dyhQ==}
+  react-window@2.5.3:
+    resolution: {integrity: sha512-zN/mX+4cLgwp8xDqQYKmgbzj/oZ2LrF4V8KbAbgkpA9zAt3+q4nWPe0MhvIDIh9c4kHPySSchNcd8DjyR6jItQ==}
     peerDependencies:
+      '@types/react': ^18.2.6 || ^19.0.0
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
-
-  react-window@2.5.0:
-    resolution: {integrity: sha512-2oQiMo+lT5omOYaBJnloTK19yZDXqboDPMJP6li0gER0henua4iEz6BxzENJ1H5pNb6Kb2H4Lu0+YTuvqnw7QA==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   react@19.3.1:
     resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
@@ -10723,8 +10729,8 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rimraf@6.1.3:
-    resolution: {integrity: sha512-LKg+Cr2ZF61fkcaK1UdkH2yEBBKnYjTyWzTJT6KNPcSPaiT7HSdhtMXQuN5wkTX0Xu72KQ1l8S42rlmexS2hSA==}
+  rimraf@6.1.4:
+    resolution: {integrity: sha512-Fk3reQDVPZUMbEm7Zwxz03BWQMW3V5buSk9aU8OckTrO8A1nQtbqvYsAantGNermwsIsXcuOBqcoJ3HuMELctw==}
     engines: {node: 20 || >=22}
     hasBin: true
 
@@ -14668,7 +14674,7 @@ snapshots:
       '@vitest/browser-playwright': 5.0.0(playwright@1.63.0)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1))(vitest@5.0.0)
       chalk: 6.0.1
       env-ci: 11.2.0
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.1
       execa: 10.2.1
       globby: 16.2.4
       react: 19.3.1
@@ -14757,7 +14763,7 @@ snapshots:
       clipboardy: 5.3.2
       content-type: 3.1.1
       env-ci: 11.2.0
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.1
       eslint: 10.13.0(jiti@2.7.0)(supports-color@11.0.0)
       eslint-config-prettier: 10.1.8(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))
       eslint-import-resolver-typescript: 4.4.5(eslint-plugin-import@2.32.0)(eslint@10.13.0(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
@@ -14846,7 +14852,7 @@ snapshots:
       '@wooorm/starry-night': 3.11.0
       autoprefixer: 10.6.1(postcss@8.5.32)
       chalk: 6.0.1
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.1
       fflate: 0.8.3
       hast-util-to-jsx-runtime: 2.3.6(supports-color@11.0.0)
       hast-util-to-text: 4.0.2
@@ -14899,7 +14905,7 @@ snapshots:
       '@wooorm/starry-night': 3.11.0
       autoprefixer: 10.6.1(postcss@8.5.32)
       chalk: 6.0.1
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.1
       fflate: 0.8.3
       hast-util-to-jsx-runtime: 2.3.6(supports-color@11.0.0)
       hast-util-to-text: 4.0.2
@@ -14953,7 +14959,7 @@ snapshots:
       chai: 6.2.2
       chai-dom: 1.12.1(chai@6.2.2)
       dom-accessibility-api: 0.7.1
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.1
       format-util: 1.0.5
       prop-types: 15.8.1
       react: 19.3.1
@@ -18265,7 +18271,7 @@ snapshots:
 
   dotenv@16.4.7: {}
 
-  dotenv@18.0.8: {}
+  dotenv@18.0.9: {}
 
   dunder-proto@1.0.1:
     dependencies:
@@ -18457,7 +18463,7 @@ snapshots:
       is-date-object: 1.1.0
       is-symbol: 1.1.1
 
-  es-toolkit@1.52.0: {}
+  es-toolkit@1.53.1: {}
 
   esbuild@0.28.2:
     optionalDependencies:
@@ -19259,6 +19265,12 @@ snapshots:
       minimatch: 10.2.6
       minipass: 7.1.3
       path-scurry: 2.0.2
+
+  glob@14.0.3:
+    dependencies:
+      minimatch: 11.0.4
+      minipass: 7.1.3
+      path-scurry: 3.0.0
 
   glob@9.3.5:
     dependencies:
@@ -20927,7 +20939,7 @@ snapshots:
     dependencies:
       brace-expansion: 5.0.12
 
-  minimatch@11.0.3:
+  minimatch@11.0.4:
     dependencies:
       '@isaacs/nonrecursive-glob-match': 1.0.3
       brace-expansion: 5.0.12
@@ -21665,6 +21677,11 @@ snapshots:
       lru-cache: 11.5.3
       minipass: 7.1.3
 
+  path-scurry@3.0.0:
+    dependencies:
+      lru-cache: 11.5.3
+      minipass: 7.1.3
+
   path-to-regexp@3.3.0: {}
 
   path-to-regexp@8.4.2: {}
@@ -21706,7 +21723,7 @@ snapshots:
     dependencies:
       find-up: 5.0.0
 
-  pkg-pr-new@0.0.91: {}
+  pkg-pr-new@0.0.93: {}
 
   pkg-up@3.1.0:
     dependencies:
@@ -22095,15 +22112,12 @@ snapshots:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  react-window@2.3.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  react-window@2.5.3(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-
-  react-window@2.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
-    dependencies:
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   react@19.3.1: {}
 
@@ -22480,9 +22494,9 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  rimraf@6.1.3:
+  rimraf@6.1.4:
     dependencies:
-      glob: 13.0.6
+      glob: 14.0.3
       package-json-from-dist: 1.0.1
 
   rolldown@1.2.16:
