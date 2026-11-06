@@ -165,7 +165,7 @@ describe('<Menu2 />', () => {
     await user.unhover(trigger);
   });
 
-  it('passes an explicit nativeButton to the ButtonBase root, not to a custom root slot', async () => {
+  it('passes an explicit nativeButton to ButtonBase, not to a custom render element', async () => {
     const NativeButton = React.forwardRef<HTMLButtonElement, React.ComponentProps<'button'>>(
       function NativeButton(props, ref) {
         return <button type="button" ref={ref} {...props} />;
@@ -190,7 +190,7 @@ describe('<Menu2 />', () => {
               </Menu2RadioItem>
             </Menu2RadioGroup>
             <Menu2Submenu>
-              <Menu2SubmenuTrigger component={NativeButton} nativeButton>
+              <Menu2SubmenuTrigger render={<NativeButton />} nativeButton>
                 More
               </Menu2SubmenuTrigger>
               <Menu2SubmenuPopup>
@@ -218,7 +218,7 @@ describe('<Menu2 />', () => {
     }
   });
 
-  it('derives native button behavior from host root slots', async () => {
+  it('derives native button behavior from host render elements', async () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     try {
@@ -245,7 +245,7 @@ describe('<Menu2 />', () => {
               </Menu2RadioItem>
             </Menu2RadioGroup>
             <Menu2Submenu>
-              <Menu2SubmenuTrigger slots={{ root: 'button' }}>
+              <Menu2SubmenuTrigger render={<button type="button" />}>
                 Native submenu trigger
               </Menu2SubmenuTrigger>
               <Menu2SubmenuPopup>
@@ -286,7 +286,7 @@ describe('<Menu2 />', () => {
     }
   });
 
-  it('allows nativeButton to override root slot inference for custom slots', async () => {
+  it('allows nativeButton to override inference for custom render elements', async () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     const CustomDivRoot = React.forwardRef<
       HTMLDivElement,
@@ -317,7 +317,7 @@ describe('<Menu2 />', () => {
               Custom native item
             </Menu2Item>
             <Menu2Submenu>
-              <Menu2SubmenuTrigger nativeButton slots={{ root: CustomButtonRoot }}>
+              <Menu2SubmenuTrigger nativeButton render={<CustomButtonRoot />}>
                 Custom native submenu trigger
               </Menu2SubmenuTrigger>
               <Menu2SubmenuPopup>

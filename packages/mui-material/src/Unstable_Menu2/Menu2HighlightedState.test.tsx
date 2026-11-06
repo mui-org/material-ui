@@ -71,7 +71,10 @@ const cases = [
     name: 'MuiMenu2SubmenuTrigger',
     item: (
       <Menu2Submenu>
-        <Menu2SubmenuTrigger openOnHover={false} slotProps={slotProps}>
+        <Menu2SubmenuTrigger
+          openOnHover={false}
+          render={(props, state) => <div {...props} {...slotProps.root(state)} />}
+        >
           Target
         </Menu2SubmenuTrigger>
         <Menu2SubmenuPopup>

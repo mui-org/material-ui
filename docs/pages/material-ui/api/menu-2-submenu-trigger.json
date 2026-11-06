@@ -4,7 +4,6 @@
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "className": { "type": { "name": "string" } },
     "closeDelay": { "type": { "name": "number" }, "default": "0" },
-    "component": { "type": { "name": "elementType" } },
     "delay": { "type": { "name": "number" }, "default": "100" },
     "dense": { "type": { "name": "bool" }, "default": "false" },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
@@ -12,17 +11,13 @@
     "disableRipple": { "type": { "name": "bool" }, "default": "false" },
     "divider": { "type": { "name": "bool" }, "default": "false" },
     "label": { "type": { "name": "string" } },
-    "nativeButton": { "type": { "name": "bool" } },
+    "nativeButton": { "type": { "name": "bool" }, "default": "false" },
     "openOnHover": { "type": { "name": "bool" }, "default": "true" },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
     "slotProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ indicator?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
-      }
+      "type": { "name": "shape", "description": "{ indicator?: func<br>&#124;&nbsp;object }" }
     },
-    "slots": {
-      "type": { "name": "shape", "description": "{ indicator?: elementType, root?: elementType }" }
-    },
+    "slots": { "type": { "name": "shape", "description": "{ indicator?: elementType }" } },
     "style": { "type": { "name": "object" } },
     "sx": {
       "type": {
@@ -35,12 +30,6 @@
   "name": "Menu2SubmenuTrigger",
   "imports": ["import MenuSubmenuTrigger from '@mui/material/Unstable_Menu2SubmenuTrigger';"],
   "slots": [
-    {
-      "name": "root",
-      "description": "The component that renders the root.",
-      "default": "'div'",
-      "class": "MuiMenu2SubmenuTrigger-root"
-    },
     {
       "name": "indicator",
       "description": "The component that renders the submenu indicator.\nSet to `null` to omit the indicator. Custom indicators are not mirrored in RTL.",
@@ -84,6 +73,12 @@
       "className": "Mui-open",
       "description": "State class applied to the root element if the submenu is open.",
       "isGlobal": true
+    },
+    {
+      "key": "root",
+      "className": "MuiMenu2SubmenuTrigger-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
     }
   ],
   "spread": true,

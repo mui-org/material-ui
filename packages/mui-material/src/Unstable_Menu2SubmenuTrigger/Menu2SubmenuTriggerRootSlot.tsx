@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useRtl } from '@mui/system/RtlProvider';
 import type { HTMLProps } from '@base-ui/react/types';
 import MenuItemBase from '../internal/MenuItemBase';
+import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
 import KeyboardArrowLeft from '../internal/svg-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '../internal/svg-icons/KeyboardArrowRight';
 import menuItemClasses from '../MenuItem/menuItemClasses';
@@ -68,13 +69,13 @@ const Menu2SubmenuTriggerIndicator = styled('span', {
 function Menu2SubmenuTriggerRootSlot(
   props: Pick<
     Menu2SubmenuTriggerProps,
-    'component' | 'disableRipple' | 'nativeButton' | 'slotProps' | 'slots' | 'sx'
+    'disableRipple' | 'nativeButton' | 'render' | 'slotProps' | 'slots' | 'sx'
   > & {
     baseProps: HTMLProps & { 'data-mui-internal-retain-open-tint'?: string | undefined };
     ownerState: Menu2SubmenuTriggerOwnerState & Pick<Menu2SubmenuTriggerProps, 'classes'>;
   },
 ) {
-  const { ownerState, slotProps, slots } = props;
+  const { ownerState, render: renderProp, slotProps, slots, ...other } = props;
   const isRtl = useRtl();
   const [IndicatorSlot, indicatorProps] = useSlot('indicator', {
     elementType: Menu2SubmenuTriggerIndicator,
@@ -96,8 +97,19 @@ function Menu2SubmenuTriggerRootSlot(
 
   return (
     <Menu2ItemRootSlot
-      {...props}
+      {...other}
+      ownerState={ownerState}
       elementType={Menu2SubmenuTriggerRoot}
+      component={renderProp ? Menu2ItemRenderRoot : undefined}
+      internalRender={renderProp}
+      internalRenderState={{
+        dense: ownerState.dense,
+        disabled: ownerState.disabled,
+        disableGutters: ownerState.disableGutters,
+        divider: ownerState.divider,
+        highlighted: ownerState.highlighted,
+        open: ownerState.open,
+      }}
       endIndicator={slots?.indicator === null ? null : <IndicatorSlot {...indicatorProps} />}
     />
   );

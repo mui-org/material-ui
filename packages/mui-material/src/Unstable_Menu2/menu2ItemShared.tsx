@@ -72,9 +72,9 @@ export interface Menu2ItemBaseProps {
    */
   disabled?: boolean | undefined;
   /**
-   * Whether the component is rendered as a native button.
-   *
-   * By default, this is inferred from the root slot and `component` prop.
+   * Whether the component renders a native `<button>` element.
+   * Inferred from a button element passed to `render`.
+   * Set to `true` for a custom component or render function that returns a button.
    */
   nativeButton?: boolean | undefined;
   /**
@@ -119,9 +119,9 @@ export interface Menu2SubmenuTriggerBaseProps {
    */
   disabled?: boolean | undefined;
   /**
-   * Whether the component is rendered as a native button.
-   *
-   * By default, this is inferred from the root slot and `component` prop.
+   * Whether the component renders a native `<button>` element.
+   * Inferred from a button element passed to `render`.
+   * Set to `true` for a custom component or render function that returns a button.
    */
   nativeButton?: boolean | undefined;
   /**

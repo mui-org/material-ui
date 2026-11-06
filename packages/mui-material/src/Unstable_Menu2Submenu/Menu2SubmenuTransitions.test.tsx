@@ -33,7 +33,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
     it(`tracks external controlled closes without returning focus, keepMounted=${keepMounted}`, async () => {
       const onOpenChange = vi.fn();
       const onOpenChangeComplete = vi.fn();
-      const rootOwnerStates = vi.fn();
+      const renderStates = vi.fn();
       const indicatorOwnerStates = vi.fn();
       function Demo() {
         const [open, setOpen] = React.useState(false);
@@ -51,11 +51,11 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
               >
                 <Menu2SubmenuTrigger
                   openOnHover={false}
+                  render={(props, state) => {
+                    renderStates(state);
+                    return <div {...props} data-owner-open={String(state.open)} />;
+                  }}
                   slotProps={{
-                    root: (state) => {
-                      rootOwnerStates(state);
-                      return { 'data-owner-open': String(state.open) };
-                    },
                     indicator: (state) => {
                       indicatorOwnerStates(state);
                       return { 'data-owner-open': String(state.open) };
@@ -107,7 +107,7 @@ describe.skipIf(isJsdom())('Menu2 submenu transitions', () => {
         expect(getComputedStyle(trigger).backgroundColor).to.equal('rgba(0, 0, 0, 0)');
       });
       expect(popup.isConnected).to.equal(keepMounted);
-      [rootOwnerStates, indicatorOwnerStates].forEach((ownerStates) => {
+      [renderStates, indicatorOwnerStates].forEach((ownerStates) => {
         expect(ownerStates).toHaveBeenCalled();
         ownerStates.mock.calls.forEach(([state]) => {
           expect(state).not.to.have.property('closing');

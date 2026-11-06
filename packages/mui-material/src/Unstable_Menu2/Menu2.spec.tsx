@@ -608,18 +608,22 @@ createTheme({
 </Menu2Submenu>;
 
 <Menu2SubmenuTrigger
+  render={(props, state) => {
+    expectType<boolean, typeof state.open>(state.open);
+    expectType<boolean, typeof state.highlighted>(state.highlighted);
+    expectType<boolean, typeof state.disabled>(state.disabled);
+    expectType<boolean, typeof state.dense>(state.dense);
+    expectType<boolean, typeof state.disableGutters>(state.disableGutters);
+    expectType<boolean, typeof state.divider>(state.divider);
+    // @ts-expect-error Exit timing is internal to the submenu.
+    state.closing;
+    // @ts-expect-error Exit tint handling is internal to the submenu.
+    state.retainClosingTint;
+    // @ts-expect-error Visual selection is not part of the submenu trigger state.
+    state.selected;
+    return <div {...props} data-open={state.open} />;
+  }}
   slotProps={{
-    root: (state) => {
-      expectType<boolean, typeof state.open>(state.open);
-      // @ts-expect-error Exit timing is internal to the submenu.
-      expectType<boolean, typeof state.closing>(state.closing);
-      // @ts-expect-error Exit tint handling is internal to the submenu.
-      expectType<boolean, typeof state.retainClosingTint>(state.retainClosingTint);
-      expectType<boolean, typeof state.highlighted>(state.highlighted);
-      // @ts-expect-error Visual selection is not part of the submenu trigger state.
-      expectType<boolean, typeof state.selected>(state.selected);
-      return { 'data-open': state.open };
-    },
     indicator: (state) => {
       expectType<boolean, typeof state.open>(state.open);
       // @ts-expect-error Exit timing is internal to the submenu.
@@ -881,7 +885,7 @@ const controlledPopupProps: Menu2PopupProps = {
   </Menu2Popup>
 </Menu2>;
 
-// Item roots use render. SubmenuTrigger and other parts still support component.
+// Item roots and submenu triggers use render; structural parts still support component.
 <Menu2>
   <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
@@ -911,8 +915,8 @@ const controlledPopupProps: Menu2PopupProps = {
     <Menu2Separator ref={(node) => expectType<HTMLDivElement | null, typeof node>(node)} />
     <Menu2Submenu>
       <Menu2SubmenuTrigger
-        component="li"
-        ref={(node) => expectType<HTMLLIElement | null, typeof node>(node)}
+        render={<li ref={(node) => expectType<HTMLLIElement | null, typeof node>(node)} />}
+        ref={(node) => expectType<HTMLElement | null, typeof node>(node)}
       >
         More
       </Menu2SubmenuTrigger>
@@ -1119,3 +1123,54 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
 <Menu2RadioItem value="one" render="li" />;
 // @ts-expect-error Omit render to use the default element.
 <Menu2RadioItem value="one" render={null} />;
+
+<Menu2SubmenuTrigger render={undefined}>Default submenu trigger</Menu2SubmenuTrigger>;
+<Menu2SubmenuTrigger
+  render={
+    <button type="button" aria-label="More actions" ref={React.createRef<HTMLButtonElement>()} />
+  }
+/>;
+<Menu2SubmenuTrigger
+  nativeButton
+  render={(props, state) => {
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color;
+    return <Button {...props} variant={state.open ? 'contained' : 'text'} />;
+  }}
+  slots={{ indicator: 'span' }}
+>
+  More actions
+</Menu2SubmenuTrigger>;
+<Menu2SubmenuTrigger
+  render={<CustomItemRoot trackingId="submenu" ref={React.createRef<HTMLDivElement>()} />}
+/>;
+<Menu2SubmenuTrigger render={(props) => <CustomItemRoot {...props} trackingId="submenu" />} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2SubmenuTrigger trackingId="submenu" />;
+// @ts-expect-error The custom root requires its own props.
+<Menu2SubmenuTrigger render={<CustomItemRoot />} />;
+// @ts-expect-error Use render to select the submenu trigger root.
+<Menu2SubmenuTrigger component="li" />;
+// @ts-expect-error The root is not an internal slot.
+<Menu2SubmenuTrigger slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the trigger or its render element.
+<Menu2SubmenuTrigger slotProps={{ root: { title: 'More actions' } }} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2SubmenuTrigger render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2SubmenuTrigger render={null} />;
+
+createTheme({
+  components: {
+    MuiMenu2SubmenuTrigger: {
+      defaultProps: {
+        render: (props, state) => {
+          expectType<boolean, typeof state.open>(state.open);
+          return <div {...props} data-open={state.open} />;
+        },
+        slotProps: { indicator: { children: 'More', sx: { color: 'primary.main' } } },
+      },
+      styleOverrides: { indicator: { marginLeft: 12 } },
+    },
+  },
+});

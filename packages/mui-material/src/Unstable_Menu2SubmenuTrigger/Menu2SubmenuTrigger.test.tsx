@@ -5,10 +5,12 @@ import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
 import { act, createRenderer, isJsdom, screen, waitFor } from '@mui/internal-test-utils';
 import Button from '@mui/material/Button';
+import { touchRippleClasses } from '@mui/material/ButtonBase';
 import Tooltip from '@mui/material/Tooltip';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2Item from '@mui/material/Unstable_Menu2Item';
 import Menu2Submenu from '@mui/material/Unstable_Menu2Submenu';
+import type { Menu2SubmenuTriggerProps } from '@mui/material/Unstable_Menu2SubmenuTrigger';
 import Menu2SubmenuTrigger, {
   menu2SubmenuTriggerClasses as classes,
 } from '@mui/material/Unstable_Menu2SubmenuTrigger';
@@ -17,8 +19,215 @@ import describeConformance from '../../test/describeConformance';
 
 const CustomIndicator = styled('span')({});
 
+const renderCases: {
+  name: string;
+  render: Menu2SubmenuTriggerProps['render'];
+  nativeButton?: boolean;
+}[] = [
+  { name: 'render element', render: <div /> },
+  { name: 'render callback', render: (props) => <div {...props} /> },
+  { name: 'native button', render: <button type="button" /> },
+  {
+    name: 'native button callback',
+    render: (props) => <button {...props} type="button" />,
+    nativeButton: true,
+  },
+];
+
 describe('<Menu2SubmenuTrigger />', () => {
   const { render } = createRenderer();
+
+  it('merges custom render props, handlers, and refs without internal props', async () => {
+    let received: string[] = [];
+    const triggerRef = React.createRef<HTMLElement>();
+    const renderRef = React.createRef<HTMLDivElement>();
+    const onClick = vi.fn();
+    const onRenderClick = vi.fn();
+    const CustomRoot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+      function CustomRoot(props, ref) {
+        received = Object.keys(props);
+        return <div {...props} ref={ref} />;
+      },
+    );
+    const { user, unmount } = render(
+      <Menu2 defaultOpen modal={false}>
+        <Menu2Trigger render={<button type="button">Options</button>} />
+        <Menu2Popup transitionDuration={0}>
+          <Menu2Submenu>
+            <Menu2SubmenuTrigger
+              ref={triggerRef}
+              openOnHover={false}
+              onClick={onClick}
+              className="external-root"
+              title="More actions"
+              render={
+                <CustomRoot
+                  ref={renderRef}
+                  onClick={onRenderClick}
+                  className="custom-root"
+                  data-custom="value"
+                />
+              }
+            >
+              More
+            </Menu2SubmenuTrigger>
+            <Menu2SubmenuPopup transitionDuration={0}>
+              <Menu2Item>Nested</Menu2Item>
+            </Menu2SubmenuPopup>
+          </Menu2Submenu>
+        </Menu2Popup>
+      </Menu2>,
+    );
+    const trigger = screen.getByRole('menuitem', { name: 'More' });
+    expect(triggerRef.current).to.equal(trigger);
+    expect(renderRef.current).to.equal(trigger);
+    expect(trigger).to.have.attribute('title', 'More actions');
+    expect(trigger).to.have.attribute('data-custom', 'value');
+    expect(trigger).to.have.class('external-root');
+    expect(trigger).to.have.class('custom-root');
+    expect(trigger.querySelector(`.${classes.indicator}`)).not.to.equal(null);
+    [
+      'ownerState',
+      'sx',
+      'disableRipple',
+      'nativeButton',
+      'slots',
+      'slotProps',
+      'internalRender',
+      'internalRenderState',
+    ].forEach((prop) => expect(received).not.to.include(prop));
+    await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
+    await user.click(trigger);
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onRenderClick).toHaveBeenCalledTimes(1);
+    expect(await screen.findByRole('menuitem', { name: 'Nested' })).not.to.equal(null);
+    expect(triggerRef.current).to.equal(trigger);
+    expect(renderRef.current).to.equal(trigger);
+    unmount();
+    expect(triggerRef.current).to.equal(null);
+    expect(renderRef.current).to.equal(null);
+  });
+
+  renderCases.forEach(({ name, render: renderProp, nativeButton }) => {
+    (['pointer', 'Enter', 'Space'] as const).forEach((activation) => {
+      it(`opens once after ${activation} activation with a ${name}`, async () => {
+        const onOpenChange = vi.fn();
+        const onClick = vi.fn();
+        const { user } = render(
+          <Menu2 defaultOpen modal={false}>
+            <Menu2Trigger render={<button type="button">Options</button>} />
+            <Menu2Popup transitionDuration={0}>
+              <Menu2Submenu onOpenChange={onOpenChange}>
+                <Menu2SubmenuTrigger
+                  render={renderProp}
+                  nativeButton={nativeButton}
+                  openOnHover={false}
+                  onClick={onClick}
+                >
+                  More
+                </Menu2SubmenuTrigger>
+                <Menu2SubmenuPopup transitionDuration={0}>
+                  <Menu2Item>Nested</Menu2Item>
+                </Menu2SubmenuPopup>
+              </Menu2Submenu>
+            </Menu2Popup>
+          </Menu2>,
+        );
+        const trigger = screen.getByRole('menuitem', { name: 'More' });
+        await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
+        if (activation === 'pointer') {
+          await user.click(trigger);
+        } else {
+          await act(async () => trigger.focus());
+          await user.keyboard(`[${activation}]`);
+        }
+        expect(await screen.findByRole('menuitem', { name: 'Nested' })).not.to.equal(null);
+        expect(onOpenChange).toHaveBeenCalledTimes(1);
+        expect(onOpenChange.mock.calls[0][0]).to.equal(true);
+        expect(onClick).toHaveBeenCalledTimes(1);
+        expect(trigger).to.have.class(classes.open);
+        expect(screen.getAllByRole('menu')).to.have.length(2);
+      });
+    });
+  });
+
+  it('passes disabled state to render and prevents keyboard opening', async () => {
+    const onOpenChange = vi.fn();
+    const { user } = render(
+      <Menu2 defaultOpen modal={false}>
+        <Menu2Trigger render={<button type="button">Options</button>} />
+        <Menu2Popup transitionDuration={0}>
+          <Menu2Submenu onOpenChange={onOpenChange}>
+            <Menu2SubmenuTrigger
+              disabled
+              render={(props, state) => <div {...props} data-disabled={String(state.disabled)} />}
+            >
+              More
+            </Menu2SubmenuTrigger>
+            <Menu2SubmenuPopup transitionDuration={0}>
+              <Menu2Item>Nested</Menu2Item>
+            </Menu2SubmenuPopup>
+          </Menu2Submenu>
+        </Menu2Popup>
+      </Menu2>,
+    );
+    const trigger = screen.getByRole('menuitem', { name: 'More' });
+    expect(trigger).to.have.attribute('data-disabled', 'true');
+    expect(trigger).to.have.attribute('aria-disabled', 'true');
+    await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
+    await act(async () => trigger.focus());
+    await user.keyboard('[Space][Enter]{ArrowRight}');
+    expect(onOpenChange).not.toHaveBeenCalled();
+    expect(screen.queryByRole('menuitem', { name: 'Nested' })).to.equal(null);
+  });
+
+  [false, true].forEach((disableRipple) => {
+    it.skipIf(isJsdom())(
+      `keeps the indicator and ripple in a Tooltip render callback, disableRipple=${disableRipple}`,
+      async () => {
+        const { user } = render(
+          <Menu2 defaultOpen modal={false}>
+            <Menu2Trigger render={<button type="button">Options</button>} />
+            <Menu2Popup transitionDuration={0}>
+              <Menu2Submenu>
+                <Menu2SubmenuTrigger
+                  openOnHover={false}
+                  disableRipple={disableRipple}
+                  render={(props) => (
+                    <Tooltip title="Open more actions" describeChild>
+                      <div {...props} />
+                    </Tooltip>
+                  )}
+                >
+                  More
+                </Menu2SubmenuTrigger>
+                <Menu2SubmenuPopup transitionDuration={0}>
+                  <Menu2Item>Nested</Menu2Item>
+                </Menu2SubmenuPopup>
+              </Menu2Submenu>
+            </Menu2Popup>
+          </Menu2>,
+        );
+        const trigger = screen.getByRole('menuitem', { name: 'More' });
+        const indicator = trigger.querySelector(`.${classes.indicator}`);
+        expect(indicator).not.to.equal(null);
+        await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
+        await user.pointer({ keys: '[MouseLeft>]', target: trigger });
+        if (disableRipple) {
+          expect(trigger.querySelector(`.${touchRippleClasses.root}`)).to.equal(null);
+        } else {
+          await waitFor(() =>
+            expect(trigger.querySelector(`.${touchRippleClasses.rippleVisible}`)).not.to.equal(
+              null,
+            ),
+          );
+        }
+        await user.pointer({ keys: '[/MouseLeft]', target: trigger });
+        expect(await screen.findByRole('menuitem', { name: 'Nested' })).not.to.equal(null);
+        expect(trigger.querySelector(`.${classes.indicator}`)).to.equal(indicator);
+      },
+    );
+  });
 
   it('renders a decorative submenu indicator by default', () => {
     render(
@@ -58,7 +267,7 @@ describe('<Menu2SubmenuTrigger />', () => {
     getRootElement: ({ baseElement }) =>
       baseElement.querySelector('[role="menuitem"][aria-haspopup="menu"]'),
     refInstanceof: window.HTMLDivElement,
-    testComponentPropWith: 'span',
+    skip: ['componentProp'],
     muiName: 'MuiMenu2SubmenuTrigger',
     testVariantProps: { dense: true },
     slots: {
@@ -386,12 +595,10 @@ describe('<Menu2SubmenuTrigger />', () => {
     },
   );
 
-  it('composes public and slot refs and provides live slot state', async () => {
+  it('provides live state to the render callback and indicator slot', async () => {
     const forwardedRef = React.createRef<HTMLDivElement>();
-    const slotRef = React.createRef<HTMLDivElement>();
     const indicatorRef = React.createRef<HTMLSpanElement>();
     const onClick = vi.fn();
-    const onSlotClick = vi.fn();
     // A page-sized anchor leaves no space for the popup and can cause resize loops.
     const { user } = render(
       <Menu2 defaultOpen modal={false}>
@@ -400,15 +607,22 @@ describe('<Menu2SubmenuTrigger />', () => {
           <Menu2Submenu>
             <Menu2SubmenuTrigger
               openOnHover={false}
+              dense
+              divider
+              disableGutters
               ref={forwardedRef}
               onClick={onClick}
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-open-state={String(state.open)}
+                  data-highlighted-state={String(state.highlighted)}
+                  data-dense={String(state.dense)}
+                  data-divider={String(state.divider)}
+                  data-gutters={String(state.disableGutters)}
+                />
+              )}
               slotProps={{
-                root: (state) => ({
-                  ref: slotRef,
-                  onClick: onSlotClick,
-                  'data-open-state': String(state.open),
-                  'data-highlighted-state': String(state.highlighted),
-                }),
                 indicator: (state) => ({
                   ref: indicatorRef,
                   'data-open-state': String(state.open),
@@ -427,7 +641,9 @@ describe('<Menu2SubmenuTrigger />', () => {
     );
     const trigger = screen.getByRole('menuitem', { name: 'More' });
     expect(forwardedRef.current).to.equal(trigger);
-    expect(slotRef.current).to.equal(trigger);
+    expect(trigger).to.have.attribute('data-dense', 'true');
+    expect(trigger).to.have.attribute('data-divider', 'true');
+    expect(trigger).to.have.attribute('data-gutters', 'true');
     expect(indicatorRef.current).to.equal(trigger.querySelector(`.${classes.indicator}`));
     expect(indicatorRef.current).to.have.attribute('data-open-state', 'false');
     expect(getComputedStyle(indicatorRef.current!).color).to.equal('rgb(4, 5, 6)');
@@ -441,14 +657,19 @@ describe('<Menu2SubmenuTrigger />', () => {
     expect(indicatorRef.current).to.have.attribute('data-open-state', 'true');
     expect(getComputedStyle(indicatorRef.current!).color).to.equal('rgb(1, 2, 3)');
     expect(onClick).toHaveBeenCalledTimes(1);
-    expect(onSlotClick).toHaveBeenCalledTimes(1);
+    expect(trigger).to.have.attribute('data-highlighted-state', 'true');
+    expect(forwardedRef.current).to.equal(trigger);
   });
 
   it('themes the trigger independently of its parent list', () => {
     const theme = createTheme({
       components: {
         MuiMenu2SubmenuTrigger: {
-          defaultProps: { dense: true, disableRipple: true },
+          defaultProps: {
+            dense: true,
+            disableRipple: true,
+            render: <li className="custom-trigger" />,
+          },
           styleOverrides: { root: { color: 'rgb(1, 2, 3)' } },
           variants: [{ props: { divider: true }, style: { paddingLeft: 24 } }],
         },
@@ -459,7 +680,13 @@ describe('<Menu2SubmenuTrigger />', () => {
         <Menu2 defaultOpen modal={false}>
           <Menu2Popup anchor={document.body}>
             <Menu2Submenu>
-              <Menu2SubmenuTrigger divider>More</Menu2SubmenuTrigger>
+              <Menu2SubmenuTrigger
+                divider
+                className="external-trigger"
+                sx={[false, (t) => ({ paddingRight: t.spacing(3) })]}
+              >
+                More
+              </Menu2SubmenuTrigger>
               <Menu2SubmenuPopup>
                 <Menu2Item>Nested</Menu2Item>
               </Menu2SubmenuPopup>
@@ -469,9 +696,16 @@ describe('<Menu2SubmenuTrigger />', () => {
       </ThemeProvider>,
     );
     const trigger = screen.getByRole('menuitem', { name: 'More' });
+    expect(trigger.tagName).to.equal('LI');
+    expect(trigger).to.have.class(classes.root);
+    expect(trigger).to.have.class('MuiButtonBase-root');
+    expect(trigger).to.have.class('custom-trigger');
+    expect(trigger).to.have.class('external-trigger');
     expect(trigger).to.have.class(classes.dense);
     expect(trigger).to.have.class(classes.divider);
     expect(getComputedStyle(trigger).color).to.equal('rgb(1, 2, 3)');
     expect(getComputedStyle(trigger).paddingLeft).to.equal('24px');
+    expect(getComputedStyle(trigger).paddingRight).to.equal('24px');
+    expect(trigger.querySelector(`.${classes.indicator}`)).not.to.equal(null);
   });
 });

@@ -1,4 +1,3 @@
-import Menu2SubmenuPopup from '@mui/material/Unstable_Menu2SubmenuPopup';
 import Menu2Popup from '@mui/material/Unstable_Menu2Popup';
 import * as React from 'react';
 import { describe, expect, it } from 'vitest';
@@ -9,8 +8,6 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Menu2 from '@mui/material/Unstable_Menu2';
 import Menu2Item from '@mui/material/Unstable_Menu2Item';
 import Menu2RadioGroup from '@mui/material/Unstable_Menu2RadioGroup';
-import Menu2Submenu from '@mui/material/Unstable_Menu2Submenu';
-import Menu2SubmenuTrigger from '@mui/material/Unstable_Menu2SubmenuTrigger';
 import Menu2Group from '@mui/material/Unstable_Menu2Group';
 import Menu2GroupLabel from '@mui/material/Unstable_Menu2GroupLabel';
 import Menu2Separator from '@mui/material/Unstable_Menu2Separator';
@@ -23,14 +20,6 @@ interface StylingProps {
 }
 
 const parts: Record<string, (props: StylingProps) => React.ReactNode> = {
-  Menu2SubmenuTrigger: (props) => (
-    <Menu2Submenu>
-      <Menu2SubmenuTrigger {...props}>More</Menu2SubmenuTrigger>
-      <Menu2SubmenuPopup>
-        <Menu2Item>Nested</Menu2Item>
-      </Menu2SubmenuPopup>
-    </Menu2Submenu>
-  ),
   Menu2Group: (props) => (
     <Menu2Group {...props}>
       <Menu2Item>Item</Menu2Item>

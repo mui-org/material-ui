@@ -106,7 +106,37 @@ export default function Menu2Consumer() {
           </Menu2CheckboxItem>
           <Menu2Separator />
           <Menu2Submenu>
-            <Menu2SubmenuTrigger>View</Menu2SubmenuTrigger>
+            <Menu2SubmenuTrigger
+              render={(props, state) => {
+                state.open satisfies boolean;
+                state.highlighted satisfies boolean;
+                state.disabled satisfies boolean;
+                state.dense satisfies boolean;
+                state.disableGutters satisfies boolean;
+                state.divider satisfies boolean;
+                // @ts-expect-error Exit timing is internal to the submenu.
+                'closing' satisfies keyof typeof state;
+                // @ts-expect-error Exit tint handling is internal to the submenu.
+                'retainClosingTint' satisfies keyof typeof state;
+                return <div {...props} data-open={state.open} />;
+              }}
+              slotProps={{
+                indicator: (state) => {
+                  state.open satisfies boolean;
+                  state.highlighted satisfies boolean;
+                  state.disabled satisfies boolean;
+                  return {
+                    children: <span>More</span>,
+                    sx: { color: 'primary.main' },
+                    ref: (node) => {
+                      node satisfies HTMLSpanElement | null;
+                    },
+                  };
+                },
+              }}
+            >
+              View
+            </Menu2SubmenuTrigger>
             <Menu2SubmenuPopup>
               <Menu2RadioGroup defaultValue="list">
                 <Menu2RadioItem
@@ -354,6 +384,16 @@ createTheme({
       },
       styleOverrides: { indicatorIcon: { opacity: 0.8 } },
     },
+    MuiMenu2SubmenuTrigger: {
+      defaultProps: {
+        render: (props, state) => {
+          state.open satisfies boolean;
+          return <div {...props} data-open={state.open} />;
+        },
+        slotProps: { indicator: { children: 'More', sx: { color: 'primary.main' } } },
+      },
+      styleOverrides: { indicator: { marginLeft: 12 } },
+    },
   },
 });
 
@@ -438,6 +478,50 @@ createTheme({
   value="one"
   slotProps={{ indicatorIcon: { fontSize: 'medium', title: 'Status' } }}
 />;
+
+<Menu2SubmenuTrigger
+  render={undefined}
+  ref={(node) => {
+    node satisfies HTMLElement | null;
+    // @ts-expect-error The root ref does not promise a specific HTML element.
+    node satisfies HTMLButtonElement | null;
+  }}
+  slots={{ indicator: null }}
+/>;
+<Menu2SubmenuTrigger
+  render={
+    <button type="button" aria-label="More actions" ref={React.createRef<HTMLButtonElement>()} />
+  }
+/>;
+<Menu2SubmenuTrigger
+  nativeButton
+  render={(props, state) => {
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    'color' satisfies keyof typeof props;
+    return <Button {...props} variant={state.open ? 'contained' : 'text'} />;
+  }}
+  slots={{ indicator: 'span' }}
+>
+  More actions
+</Menu2SubmenuTrigger>;
+<Menu2SubmenuTrigger
+  render={<CustomItemRoot trackingId="submenu" ref={React.createRef<HTMLDivElement>()} />}
+/>;
+<Menu2SubmenuTrigger render={(props) => <CustomItemRoot {...props} trackingId="submenu" />} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2SubmenuTrigger trackingId="submenu" />;
+// @ts-expect-error The custom root requires its own props.
+<Menu2SubmenuTrigger render={<CustomItemRoot />} />;
+// @ts-expect-error Use render to select the submenu trigger root.
+<Menu2SubmenuTrigger component="li" />;
+// @ts-expect-error The root is not an internal slot.
+<Menu2SubmenuTrigger slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the trigger or its render element.
+<Menu2SubmenuTrigger slotProps={{ root: { title: 'More actions' } }} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2SubmenuTrigger render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2SubmenuTrigger render={null} />;
 
 <Menu2Trigger render={<Button />}>Project actions</Menu2Trigger>;
 

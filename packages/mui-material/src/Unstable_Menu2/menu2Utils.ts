@@ -110,19 +110,3 @@ export function getMenu2RootRender<OwnerState>(
 
   return React.createElement(RootSlot, appendOwnerState(RootSlot, rootProps, ownerState));
 }
-
-export function isMenu2RootNativeButton(
-  RootSlot: React.ElementType,
-  component: React.ElementType | undefined,
-  defaultNativeButton = false,
-) {
-  if (isHostComponent(RootSlot)) {
-    return RootSlot === 'button';
-  }
-
-  if (component != null) {
-    return component === 'button';
-  }
-
-  return defaultNativeButton;
-}
