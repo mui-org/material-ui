@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import useEnhancedEffect from '../useEnhancedEffect';
 
 // storage events only work across tabs, we'll use an event emitter to announce within the current tab
 const currentTabChangeListeners = new Map<string, Set<() => void>>();
@@ -90,6 +91,33 @@ type UseStorageStateHookResult = [
   React.Dispatch<React.SetStateAction<string | null>>,
 ];
 
+// TODO React 17: Remove `useSyncExternalStoreOld` once React 17 support is removed
+function useSyncExternalStoreOld(
+  subscribeToStore: (onStoreChange: () => void) => () => void,
+  getStoreSnapshot: () => string | null,
+  getServerSnapshot: () => string | null,
+): string | null {
+  // Start with the server snapshot so that hydration matches, then read the store before paint.
+  const [snapshot, setSnapshot] = React.useState(getServerSnapshot);
+
+  useEnhancedEffect(() => {
+    const update = () => {
+      setSnapshot(getStoreSnapshot());
+    };
+
+    update();
+    return subscribeToStore(update);
+  }, [getStoreSnapshot, subscribeToStore]);
+
+  return snapshot;
+}
+
+// See https://github.com/mui/material-ui/issues/41190#issuecomment-2040873379 for why
+const safeReact = { ...React };
+const maybeReactUseSyncExternalStore: undefined | any = safeReact.useSyncExternalStore;
+const useStoreSnapshot: typeof useSyncExternalStoreOld =
+  maybeReactUseSyncExternalStore ?? useSyncExternalStoreOld;
+
 const serverValue: UseStorageStateHookResult = [null, () => {}];
 
 function useLocalStorageStateServer(): UseStorageStateHookResult {
@@ -122,11 +150,7 @@ function useLocalStorageStateBrowser(
   // Start with null for the hydration, and then switch to the actual value.
   const getKeyServerSnapshot = () => null;
 
-  const storedValue = React.useSyncExternalStore(
-    subscribeKey,
-    getKeySnapshot,
-    getKeyServerSnapshot,
-  );
+  const storedValue = useStoreSnapshot(subscribeKey, getKeySnapshot, getKeyServerSnapshot);
 
   const setStoredValue = React.useCallback(
     (value: React.SetStateAction<string | null>) => {
