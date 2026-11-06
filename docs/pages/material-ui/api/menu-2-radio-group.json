@@ -3,7 +3,6 @@
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "className": { "type": { "name": "string" } },
-    "component": { "type": { "name": "elementType" } },
     "defaultValue": { "type": { "name": "any" } },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
     "onValueChange": {
@@ -13,10 +12,7 @@
         "describedArgs": ["value", "eventDetails"]
       }
     },
-    "slotProps": {
-      "type": { "name": "shape", "description": "{ root?: func<br>&#124;&nbsp;object }" }
-    },
-    "slots": { "type": { "name": "shape", "description": "{ root?: elementType }" } },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
     "style": { "type": { "name": "object" } },
     "sx": {
       "type": {
@@ -29,20 +25,18 @@
   },
   "name": "Menu2RadioGroup",
   "imports": ["import MenuRadioGroup from '@mui/material/Unstable_Menu2RadioGroup';"],
-  "slots": [
-    {
-      "name": "root",
-      "description": "The component that renders the root.",
-      "default": "'div'",
-      "class": "MuiMenu2RadioGroup-root"
-    }
-  ],
   "classes": [
     {
       "key": "disabled",
       "className": "Mui-disabled",
       "description": "State class applied to the root element if `disabled={true}`.",
       "isGlobal": true
+    },
+    {
+      "key": "root",
+      "className": "MuiMenu2RadioGroup-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
     }
   ],
   "spread": true,

@@ -350,6 +350,10 @@ Checkbox and radio items have separate `indicator` and `indicatorIcon` slots for
 `MenuSubmenuTrigger` keeps its `indicator` slot and accepts `slots={{ indicator: null }}` to omit it.
 See [Item customization](/material-ui/react-menu2/#item).
 
+`MenuGroup` and `MenuRadioGroup` also use optional `render` instead of `component` or a root slot.
+Forward props, ref, and children to keep group labels and behavior.
+See [Group customization](/material-ui/react-menu2/#groups).
+
 These item props work as before:
 
 - `dense`, `disableGutters`, and `divider` are unchanged.

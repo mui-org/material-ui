@@ -3,11 +3,7 @@
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "className": { "type": { "name": "string" } },
-    "component": { "type": { "name": "elementType" } },
-    "slotProps": {
-      "type": { "name": "shape", "description": "{ root?: func<br>&#124;&nbsp;object }" }
-    },
-    "slots": { "type": { "name": "shape", "description": "{ root?: elementType }" } },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
     "style": { "type": { "name": "object" } },
     "sx": {
       "type": {
@@ -19,15 +15,14 @@
   },
   "name": "Menu2Group",
   "imports": ["import MenuGroup from '@mui/material/Unstable_Menu2Group';"],
-  "slots": [
+  "classes": [
     {
-      "name": "root",
-      "description": "The component that renders the root.",
-      "default": "'div'",
-      "class": "MuiMenu2Group-root"
+      "key": "root",
+      "className": "MuiMenu2Group-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
     }
   ],
-  "classes": [],
   "spread": true,
   "themeDefaultProps": true,
   "muiName": "MuiMenu2Group",

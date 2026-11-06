@@ -76,7 +76,7 @@ import type { Menu2GroupProps } from '../Unstable_Menu2Group';
 import type { Menu2GroupLabelProps } from '../Unstable_Menu2GroupLabel';
 import type { Menu2ItemProps, Menu2ItemOwnerState } from '../Unstable_Menu2Item';
 import type { Menu2LinkItemProps, Menu2LinkItemOwnerState } from '../Unstable_Menu2LinkItem';
-import type { Menu2RadioGroupProps } from '../Unstable_Menu2RadioGroup';
+import type { Menu2RadioGroupProps, Menu2RadioGroupOwnerState } from '../Unstable_Menu2RadioGroup';
 import type { Menu2RadioItemProps, Menu2RadioItemOwnerState } from '../Unstable_Menu2RadioItem';
 import type { Menu2SeparatorProps } from '../Unstable_Menu2Separator';
 import type { Menu2SubmenuProps } from '../Unstable_Menu2Submenu';
@@ -147,6 +147,7 @@ export interface ComponentsOwnerStateList extends ComponentsPropsList {
   MuiMenu2CheckboxItem: Menu2CheckboxItemProps & Menu2CheckboxItemOwnerState;
   MuiMenu2Item: Menu2ItemProps & Menu2ItemOwnerState;
   MuiMenu2LinkItem: Menu2LinkItemProps & Menu2LinkItemOwnerState;
+  MuiMenu2RadioGroup: Menu2RadioGroupProps & Menu2RadioGroupOwnerState;
   MuiMenu2RadioItem: Menu2RadioItemProps & Menu2RadioItemOwnerState;
   MuiMenu2SubmenuTrigger: Menu2SubmenuTriggerProps & Menu2SubmenuTriggerOwnerState;
 }

@@ -8,7 +8,7 @@ import useSlot from '../utils/useSlot';
 import ListContext from '../List/ListContext';
 import { styled } from '../zero-styled';
 import Menu2ItemBase from '../internal/Menu2ItemBase';
-import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
+import Menu2RenderRoot from '../internal/Menu2RenderRoot';
 import Menu2CheckboxItemIcon from '../internal/Menu2CheckboxItemIcon';
 import type SvgIcon from '../SvgIcon';
 import type { SlotProps } from '../utils/types';
@@ -199,7 +199,7 @@ function Menu2CheckboxItemRootSlot(props: Menu2CheckboxItemRootSlotProps) {
       {...other}
       ownerState={ownerState}
       elementType={Menu2CheckboxItemRoot}
-      component={renderProp ? Menu2ItemRenderRoot : undefined}
+      component={renderProp ? Menu2RenderRoot : undefined}
       internalRender={renderProp}
       internalRenderState={{
         checked: ownerState.checked,

@@ -6,7 +6,7 @@ import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/types';
 import ListContext from '../List/ListContext';
 import { styled } from '../zero-styled';
 import Menu2ItemBase from '../internal/Menu2ItemBase';
-import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
+import Menu2RenderRoot from '../internal/Menu2RenderRoot';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import type {
   Menu2ItemBaseOwnerState,
@@ -141,7 +141,7 @@ const Menu2Item = React.forwardRef(function Menu2Item(
             baseProps={renderProps}
             ownerState={{ ...ownerState, ...state }}
             elementType={Menu2ItemRoot}
-            component={renderProp ? Menu2ItemRenderRoot : undefined}
+            component={renderProp ? Menu2RenderRoot : undefined}
             disableRipple={disableRipple}
             nativeButton={nativeButton}
             internalRender={renderProp}

@@ -8,7 +8,7 @@ import useSlot from '../utils/useSlot';
 import ListContext from '../List/ListContext';
 import { styled } from '../zero-styled';
 import Menu2ItemBase from '../internal/Menu2ItemBase';
-import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
+import Menu2RenderRoot from '../internal/Menu2RenderRoot';
 import RadioButtonIcon from '../Radio/RadioButtonIcon';
 import type { SlotProps } from '../utils/types';
 import type { Menu2IndicatorSlotProps } from '../Unstable_Menu2/Menu2IndicatorBase';
@@ -181,7 +181,7 @@ function Menu2RadioItemRootSlot(props: Menu2RadioItemRootSlotProps) {
       {...other}
       ownerState={ownerState}
       elementType={Menu2RadioItemRoot}
-      component={renderProp ? Menu2ItemRenderRoot : undefined}
+      component={renderProp ? Menu2RenderRoot : undefined}
       internalRender={renderProp}
       internalRenderState={{
         checked: ownerState.checked,

@@ -363,6 +363,16 @@ The `open` state becomes false when closing starts, even while the exit animatio
 Forward `props.children` to keep both the indicator and ripple.
 Use `slots.indicator` and `slotProps.indicator` to customize the indicator separately.
 
+### Groups
+
+`MenuGroup` and `MenuRadioGroup` render a `<div>` by default and accept an optional `render` prop.
+Forward props, ref, and children to preserve styles, labels, and group behavior.
+Put root attributes on the group or its render element; neither group has internal slots.
+
+The `MenuGroup` render state has no fields.
+The `MenuRadioGroup` render state contains only `disabled`, not the selected value.
+Use `value` and `onValueChange` to control that value.
+
 ### Shared theme styles
 
 `MuiMenu2Popup.styleOverrides` also applies to matching submenu popup slots.

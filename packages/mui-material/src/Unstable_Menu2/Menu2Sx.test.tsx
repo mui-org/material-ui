@@ -6,8 +6,6 @@ import type { SxProps } from '@mui/system';
 import type { Theme } from '@mui/material/styles';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Menu2 from '@mui/material/Unstable_Menu2';
-import Menu2Item from '@mui/material/Unstable_Menu2Item';
-import Menu2RadioGroup from '@mui/material/Unstable_Menu2RadioGroup';
 import Menu2Group from '@mui/material/Unstable_Menu2Group';
 import Menu2GroupLabel from '@mui/material/Unstable_Menu2GroupLabel';
 import Menu2Separator from '@mui/material/Unstable_Menu2Separator';
@@ -20,17 +18,11 @@ interface StylingProps {
 }
 
 const parts: Record<string, (props: StylingProps) => React.ReactNode> = {
-  Menu2Group: (props) => (
-    <Menu2Group {...props}>
-      <Menu2Item>Item</Menu2Item>
-    </Menu2Group>
-  ),
   Menu2GroupLabel: (props) => (
     <Menu2Group>
       <Menu2GroupLabel {...props}>Label</Menu2GroupLabel>
     </Menu2Group>
   ),
-  Menu2RadioGroup: (props) => <Menu2RadioGroup {...props} />,
   Menu2Separator: (props) => <Menu2Separator {...props} />,
 };
 

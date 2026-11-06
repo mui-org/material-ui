@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useRtl } from '@mui/system/RtlProvider';
 import type { HTMLProps } from '@base-ui/react/types';
 import MenuItemBase from '../internal/MenuItemBase';
-import Menu2ItemRenderRoot from '../internal/Menu2ItemRenderRoot';
+import Menu2RenderRoot from '../internal/Menu2RenderRoot';
 import KeyboardArrowLeft from '../internal/svg-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '../internal/svg-icons/KeyboardArrowRight';
 import menuItemClasses from '../MenuItem/menuItemClasses';
@@ -100,7 +100,7 @@ function Menu2SubmenuTriggerRootSlot(
       {...other}
       ownerState={ownerState}
       elementType={Menu2SubmenuTriggerRoot}
-      component={renderProp ? Menu2ItemRenderRoot : undefined}
+      component={renderProp ? Menu2RenderRoot : undefined}
       internalRender={renderProp}
       internalRenderState={{
         dense: ownerState.dense,

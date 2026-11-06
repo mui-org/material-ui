@@ -4,16 +4,13 @@
     "children": { "description": "The content of the group." },
     "classes": { "description": "Override or extend the styles applied to the component." },
     "className": { "description": "CSS class applied to the element." },
-    "component": {
-      "description": "The component used for the root node. Either a string to use a HTML element or a component."
+    "render": {
+      "description": "The element to render, or a function that returns it. Forward the props, ref, and children to preserve Material styles and the group label."
     },
-    "slotProps": { "description": "The props used for each slot inside." },
-    "slots": { "description": "The components used for each slot inside." },
     "style": { "description": "Styles applied to the root element." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     }
   },
-  "classDescriptions": {},
-  "slotDescriptions": { "root": "The component that renders the root." }
+  "classDescriptions": { "root": { "description": "Styles applied to the root element." } }
 }
