@@ -6,7 +6,6 @@
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "className": { "type": { "name": "string" } },
     "closeOnClick": { "type": { "name": "bool" }, "default": "false" },
-    "component": { "type": { "name": "elementType" } },
     "defaultChecked": { "type": { "name": "bool" }, "default": "false" },
     "dense": { "type": { "name": "bool" }, "default": "false" },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
@@ -18,7 +17,7 @@
       "default": "<CheckBoxOutlineBlankIcon fontSize=\"small\" />"
     },
     "label": { "type": { "name": "string" } },
-    "nativeButton": { "type": { "name": "bool" } },
+    "nativeButton": { "type": { "name": "bool" }, "default": "false" },
     "onCheckedChange": {
       "type": { "name": "func" },
       "signature": {
@@ -26,15 +25,11 @@
         "describedArgs": ["checked", "eventDetails"]
       }
     },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
     "slotProps": {
-      "type": {
-        "name": "shape",
-        "description": "{ indicator?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object }"
-      }
+      "type": { "name": "shape", "description": "{ indicator?: func<br>&#124;&nbsp;object }" }
     },
-    "slots": {
-      "type": { "name": "shape", "description": "{ indicator?: elementType, root?: elementType }" }
-    },
+    "slots": { "type": { "name": "shape", "description": "{ indicator?: elementType }" } },
     "style": { "type": { "name": "object" } },
     "sx": {
       "type": {
@@ -47,12 +42,6 @@
   "name": "Menu2CheckboxItem",
   "imports": ["import MenuCheckboxItem from '@mui/material/Unstable_Menu2CheckboxItem';"],
   "slots": [
-    {
-      "name": "root",
-      "description": "The component that renders the root.",
-      "default": "'div'",
-      "class": "MuiMenu2CheckboxItem-root"
-    },
     {
       "name": "indicator",
       "description": "The component that renders the check indicator.",
@@ -95,6 +84,12 @@
       "key": "highlighted",
       "className": "MuiMenu2CheckboxItem-highlighted",
       "description": "State class applied to the root element if highlighted.",
+      "isGlobal": false
+    },
+    {
+      "key": "root",
+      "className": "MuiMenu2CheckboxItem-root",
+      "description": "Styles applied to the root element.",
       "isGlobal": false
     }
   ],

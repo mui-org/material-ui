@@ -201,14 +201,18 @@ function Menu2Composition() {
           </Menu2LinkItem>
           <Menu2CheckboxItem
             defaultChecked
+            render={(props, state) => {
+              expectType<boolean, typeof state.checked>(state.checked);
+              expectType<boolean, typeof state.highlighted>(state.highlighted);
+              expectType<boolean, typeof state.disabled>(state.disabled);
+              expectType<boolean, typeof state.dense>(state.dense);
+              expectType<boolean, typeof state.disableGutters>(state.disableGutters);
+              expectType<boolean, typeof state.divider>(state.divider);
+              // @ts-expect-error Checkbox items use checked, not selected.
+              state.selected;
+              return <div {...props} data-active={state.checked} />;
+            }}
             slotProps={{
-              root: (ownerState) => {
-                expectType<boolean, typeof ownerState.checked>(ownerState.checked);
-                expectType<boolean, typeof ownerState.highlighted>(ownerState.highlighted);
-                // @ts-expect-error Checkbox items use checked, not selected.
-                expectType<boolean, typeof ownerState.selected>(ownerState.selected);
-                return {};
-              },
               indicator: (ownerState) => {
                 expectType<boolean, typeof ownerState.checked>(ownerState.checked);
                 expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
@@ -243,14 +247,18 @@ function Menu2Composition() {
             <Menu2RadioItem
               value="one"
               nativeButton={false}
+              render={(props, state) => {
+                expectType<boolean, typeof state.checked>(state.checked);
+                expectType<boolean, typeof state.highlighted>(state.highlighted);
+                expectType<boolean, typeof state.disabled>(state.disabled);
+                expectType<boolean, typeof state.dense>(state.dense);
+                expectType<boolean, typeof state.disableGutters>(state.disableGutters);
+                expectType<boolean, typeof state.divider>(state.divider);
+                // @ts-expect-error Radio items use checked, not selected.
+                state.selected;
+                return <div {...props} data-active={state.checked} />;
+              }}
               slotProps={{
-                root: (ownerState) => {
-                  expectType<boolean, typeof ownerState.checked>(ownerState.checked);
-                  expectType<boolean, typeof ownerState.highlighted>(ownerState.highlighted);
-                  // @ts-expect-error Radio items use checked, not selected.
-                  expectType<boolean, typeof ownerState.selected>(ownerState.selected);
-                  return {};
-                },
                 indicator: (ownerState) => {
                   expectType<boolean, typeof ownerState.checked>(ownerState.checked);
                   expectType<boolean, typeof ownerState.disabled>(ownerState.disabled);
@@ -328,7 +336,13 @@ function ControlledMenu2Items() {
 // The root still accepts a DOM change handler.
 <Menu2CheckboxItem
   onChange={(event) => {
-    expectType<React.ChangeEvent<HTMLDivElement>, typeof event>(event);
+    expectType<React.ChangeEvent<HTMLElement>, typeof event>(event);
+  }}
+/>;
+<Menu2RadioItem
+  value="one"
+  onChange={(event) => {
+    expectType<React.ChangeEvent<HTMLElement>, typeof event>(event);
   }}
 />;
 <Menu2RadioGroup
@@ -792,7 +806,7 @@ const controlledPopupProps: Menu2PopupProps = {
   </Menu2Popup>
 </Menu2>;
 
-// Item and LinkItem use render for a custom root. Other parts still support component.
+// Item roots use render. SubmenuTrigger and other parts still support component.
 <Menu2>
   <Menu2Trigger render={<button type="button">Open</button>} />
   <Menu2Popup>
@@ -810,6 +824,7 @@ const controlledPopupProps: Menu2PopupProps = {
       Link
     </Menu2LinkItem>
     <Menu2CheckboxItem
+      ref={(node) => expectType<HTMLElement | null, typeof node>(node)}
       slotProps={{
         indicator: {
           ref: (node) => expectType<HTMLSpanElement | null, typeof node>(node),
@@ -946,3 +961,90 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
 <Menu2LinkItem render="a" />;
 // @ts-expect-error Omit render to use the default anchor.
 <Menu2LinkItem render={null} />;
+
+<Menu2CheckboxItem render={undefined}>Default checkbox item</Menu2CheckboxItem>;
+<Menu2CheckboxItem
+  render={<button type="button" aria-label="Checkbox" ref={React.createRef<HTMLButtonElement>()} />}
+>
+  Button checkbox item
+</Menu2CheckboxItem>;
+<Menu2CheckboxItem
+  nativeButton
+  render={(props, state) => {
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color;
+    return <Button {...props} variant={state.checked ? 'contained' : 'text'} />;
+  }}
+  icon={<span>Unchecked</span>}
+  checkedIcon={<span>Checked</span>}
+  slots={{ indicator: 'span' }}
+>
+  Checkbox item
+</Menu2CheckboxItem>;
+<Menu2CheckboxItem
+  render={<CustomItemRoot trackingId="checkbox" ref={React.createRef<HTMLDivElement>()} />}
+/>;
+<Menu2CheckboxItem render={(props) => <CustomItemRoot {...props} trackingId="checkbox" />} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2CheckboxItem trackingId="checkbox" />;
+// @ts-expect-error The custom root requires its own props.
+<Menu2CheckboxItem render={<CustomItemRoot />} />;
+// @ts-expect-error Use render to select the checkbox item root.
+<Menu2CheckboxItem component="li" />;
+// @ts-expect-error Only the indicator slot remains.
+<Menu2CheckboxItem slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the checkbox item or its render element.
+<Menu2CheckboxItem slotProps={{ root: { title: 'Checkbox' } }} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2CheckboxItem render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2CheckboxItem render={null} />;
+
+<Menu2RadioItem
+  value="one"
+  render={undefined}
+  ref={(node) => {
+    expectType<HTMLElement | null, typeof node>(node);
+  }}
+>
+  Default radio item
+</Menu2RadioItem>;
+<Menu2RadioItem
+  value="one"
+  render={<button type="button" aria-label="Radio" ref={React.createRef<HTMLButtonElement>()} />}
+>
+  Button radio item
+</Menu2RadioItem>;
+<Menu2RadioItem
+  value="one"
+  nativeButton
+  render={(props, state) => {
+    // @ts-expect-error Render props omit the legacy HTML color attribute.
+    props.color;
+    return <Button {...props} variant={state.checked ? 'contained' : 'text'} />;
+  }}
+  icon={<span>Unchecked</span>}
+  checkedIcon={<span>Checked</span>}
+  slots={{ indicator: 'span' }}
+>
+  Radio item
+</Menu2RadioItem>;
+<Menu2RadioItem
+  value="one"
+  render={<CustomItemRoot trackingId="radio" ref={React.createRef<HTMLDivElement>()} />}
+/>;
+<Menu2RadioItem value="one" render={(props) => <CustomItemRoot {...props} trackingId="radio" />} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2RadioItem value="one" trackingId="radio" />;
+// @ts-expect-error The custom root requires its own props.
+<Menu2RadioItem value="one" render={<CustomItemRoot />} />;
+// @ts-expect-error Use render to select the radio item root.
+<Menu2RadioItem value="one" component="li" />;
+// @ts-expect-error Only the indicator slot remains.
+<Menu2RadioItem value="one" slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the radio item or its render element.
+<Menu2RadioItem value="one" slotProps={{ root: { title: 'Radio' } }} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2RadioItem value="one" render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2RadioItem value="one" render={null} />;

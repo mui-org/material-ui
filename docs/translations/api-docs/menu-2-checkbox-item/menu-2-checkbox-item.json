@@ -9,9 +9,6 @@
     "classes": { "description": "Override or extend the styles applied to the component." },
     "className": { "description": "CSS class applied to the element." },
     "closeOnClick": { "description": "Whether to close the menu when the item is clicked." },
-    "component": {
-      "description": "The component used for the root node. Either a string to use a HTML element or a component."
-    },
     "defaultChecked": {
       "description": "Whether the checkbox item is initially ticked.<br>To render a controlled checkbox item, use the <code>checked</code> prop instead."
     },
@@ -31,7 +28,7 @@
       "description": "Overrides the text label to use when the item is matched during keyboard text navigation."
     },
     "nativeButton": {
-      "description": "Whether the component is rendered as a native button.<br>By default, this is inferred from the root slot and <code>component</code> prop."
+      "description": "Whether the item renders a native <code>&lt;button&gt;</code> element. Inferred from a button element passed to <code>render</code>. Set to <code>true</code> for a custom component or render function that returns a button."
     },
     "onCheckedChange": {
       "description": "Event handler called when the checkbox item is ticked or unticked.",
@@ -42,6 +39,9 @@
           "description": "The reason for the change and the native event."
         }
       }
+    },
+    "render": {
+      "description": "The element to render, or a function that returns it. Forward the props, ref, and children to preserve Material styles, the indicator, and ripple. Put content in the children prop of Menu2CheckboxItem. Replacing the supplied children can remove the indicator and ripple."
     },
     "slotProps": { "description": "The props used for each slot inside." },
     "slots": { "description": "The components used for each slot inside." },
@@ -80,10 +80,8 @@
       "description": "State class applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",
       "conditions": "highlighted"
-    }
+    },
+    "root": { "description": "Styles applied to the root element." }
   },
-  "slotDescriptions": {
-    "indicator": "The component that renders the check indicator.",
-    "root": "The component that renders the root."
-  }
+  "slotDescriptions": { "indicator": "The component that renders the check indicator." }
 }

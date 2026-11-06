@@ -357,6 +357,11 @@ Children set on the render element, or replacement of `props.children` in a rend
 An element such as `render={<button />}` sets `nativeButton` automatically.
 For a custom component or render function that returns a native button, set `nativeButton` on `MenuItem`.
 
+`MenuCheckboxItem` and `MenuRadioItem` use the same render contract and native-button detection.
+Their render functions also receive the `checked` state.
+Forward `props.children` to keep both the indicator and ripple.
+Use `slots.indicator` and `slotProps.indicator` to customize the indicator separately.
+
 ### Shared theme styles
 
 `MuiMenu2Popup.styleOverrides` also applies to matching submenu popup slots.

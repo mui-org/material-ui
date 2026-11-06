@@ -59,6 +59,28 @@ export default function Menu2Consumer() {
           </Menu2LinkItem>
           <Menu2CheckboxItem
             defaultChecked
+            nativeButton
+            render={(props, state) => {
+              state.checked satisfies boolean;
+              state.highlighted satisfies boolean;
+              state.disabled satisfies boolean;
+              state.dense satisfies boolean;
+              state.disableGutters satisfies boolean;
+              state.divider satisfies boolean;
+              // @ts-expect-error Render props omit the legacy HTML color attribute.
+              'color' satisfies keyof typeof props;
+              // @ts-expect-error Checkbox items use checked, not selected.
+              state.selected satisfies boolean;
+              return <Button {...props} variant={state.checked ? 'contained' : 'text'} />;
+            }}
+            slotProps={{
+              indicator: (state) => {
+                state.checked satisfies boolean;
+                state.highlighted satisfies boolean;
+                state.disabled satisfies boolean;
+                return { component: 'i', keepMounted: true, sx: { color: 'primary.main' } };
+              },
+            }}
             onCheckedChange={(checked, eventDetails) => {
               checked satisfies boolean;
               eventDetails.cancel();
@@ -71,7 +93,33 @@ export default function Menu2Consumer() {
             <Menu2SubmenuTrigger>View</Menu2SubmenuTrigger>
             <Menu2SubmenuPopup>
               <Menu2RadioGroup defaultValue="list">
-                <Menu2RadioItem value="list">List</Menu2RadioItem>
+                <Menu2RadioItem
+                  value="list"
+                  nativeButton
+                  render={(props, state) => {
+                    state.checked satisfies boolean;
+                    state.highlighted satisfies boolean;
+                    state.disabled satisfies boolean;
+                    state.dense satisfies boolean;
+                    state.disableGutters satisfies boolean;
+                    state.divider satisfies boolean;
+                    // @ts-expect-error Render props omit the legacy HTML color attribute.
+                    'color' satisfies keyof typeof props;
+                    // @ts-expect-error Radio items use checked, not selected.
+                    state.selected satisfies boolean;
+                    return <Button {...props} variant={state.checked ? 'contained' : 'text'} />;
+                  }}
+                  slotProps={{
+                    indicator: (state) => {
+                      state.checked satisfies boolean;
+                      state.highlighted satisfies boolean;
+                      state.disabled satisfies boolean;
+                      return { component: 'i', keepMounted: true, sx: { color: 'primary.main' } };
+                    },
+                  }}
+                >
+                  List
+                </Menu2RadioItem>
                 <Menu2RadioItem value="grid">Grid</Menu2RadioItem>
               </Menu2RadioGroup>
             </Menu2SubmenuPopup>
@@ -242,6 +290,80 @@ const RouterLink = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(function
 <Menu2LinkItem render="a" />;
 // @ts-expect-error Omit render to use the default anchor.
 <Menu2LinkItem render={null} />;
+
+interface CustomItemRootProps extends React.HTMLAttributes<HTMLDivElement> {
+  trackingId: string;
+}
+const CustomItemRoot = React.forwardRef<HTMLDivElement, CustomItemRootProps>(
+  function CustomItemRoot({ trackingId, ...props }, ref) {
+    return <div {...props} ref={ref} data-tracking-id={trackingId} />;
+  },
+);
+
+<Menu2CheckboxItem
+  render={undefined}
+  ref={(node) => {
+    node satisfies HTMLElement | null;
+  }}
+  icon={<span>Unchecked</span>}
+  checkedIcon={<span>Checked</span>}
+  slots={{ indicator: 'span' }}
+/>;
+<Menu2CheckboxItem
+  render={<button type="button" aria-label="Checkbox" ref={React.createRef<HTMLButtonElement>()} />}
+/>;
+<Menu2CheckboxItem
+  render={<CustomItemRoot trackingId="checkbox" ref={React.createRef<HTMLDivElement>()} />}
+/>;
+<Menu2CheckboxItem render={(props) => <CustomItemRoot {...props} trackingId="checkbox" />} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2CheckboxItem trackingId="checkbox" />;
+// @ts-expect-error The custom root requires its own props.
+<Menu2CheckboxItem render={<CustomItemRoot />} />;
+// @ts-expect-error Use render to select the checkbox item root.
+<Menu2CheckboxItem component="li" />;
+// @ts-expect-error Only the indicator slot remains.
+<Menu2CheckboxItem slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the checkbox item or its render element.
+<Menu2CheckboxItem slotProps={{ root: { title: 'Checkbox' } }} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2CheckboxItem render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2CheckboxItem render={null} />;
+
+<Menu2RadioItem
+  value="one"
+  render={undefined}
+  ref={(node) => {
+    node satisfies HTMLElement | null;
+  }}
+  icon={<span>Unchecked</span>}
+  checkedIcon={<span>Checked</span>}
+  slots={{ indicator: 'span' }}
+/>;
+<Menu2RadioItem
+  value="one"
+  render={<button type="button" aria-label="Radio" ref={React.createRef<HTMLButtonElement>()} />}
+/>;
+<Menu2RadioItem
+  value="one"
+  render={<CustomItemRoot trackingId="radio" ref={React.createRef<HTMLDivElement>()} />}
+/>;
+<Menu2RadioItem value="one" render={(props) => <CustomItemRoot {...props} trackingId="radio" />} />;
+// @ts-expect-error Custom props belong to the render element.
+<Menu2RadioItem value="one" trackingId="radio" />;
+// @ts-expect-error The custom root requires its own props.
+<Menu2RadioItem value="one" render={<CustomItemRoot />} />;
+// @ts-expect-error Use render to select the radio item root.
+<Menu2RadioItem value="one" component="li" />;
+// @ts-expect-error Only the indicator slot remains.
+<Menu2RadioItem value="one" slots={{ root: 'li' }} />;
+// @ts-expect-error Put root props on the radio item or its render element.
+<Menu2RadioItem value="one" slotProps={{ root: { title: 'Radio' } }} />;
+// @ts-expect-error The render prop requires an element or a callback.
+<Menu2RadioItem value="one" render="li" />;
+// @ts-expect-error Omit render to use the default element.
+<Menu2RadioItem value="one" render={null} />;
 
 <Menu2Trigger render={<Button />}>Project actions</Menu2Trigger>;
 

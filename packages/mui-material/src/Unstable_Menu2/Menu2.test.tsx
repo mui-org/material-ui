@@ -181,11 +181,11 @@ describe('<Menu2 />', () => {
             <Menu2Item render={<NativeButton />} nativeButton>
               Item
             </Menu2Item>
-            <Menu2CheckboxItem component={NativeButton} nativeButton>
+            <Menu2CheckboxItem render={<NativeButton />} nativeButton>
               Checkbox
             </Menu2CheckboxItem>
             <Menu2RadioGroup defaultValue="a">
-              <Menu2RadioItem component={NativeButton} nativeButton value="a">
+              <Menu2RadioItem render={<NativeButton />} nativeButton value="a">
                 Radio
               </Menu2RadioItem>
             </Menu2RadioGroup>
@@ -236,11 +236,11 @@ describe('<Menu2 />', () => {
             <Menu2Item closeOnClick={false} render={<button type="button" />}>
               Native item
             </Menu2Item>
-            <Menu2CheckboxItem closeOnClick={false} slots={{ root: 'button' }}>
+            <Menu2CheckboxItem closeOnClick={false} render={<button type="button" />}>
               Native checkbox
             </Menu2CheckboxItem>
             <Menu2RadioGroup defaultValue="small">
-              <Menu2RadioItem closeOnClick={false} slots={{ root: 'button' }} value="large">
+              <Menu2RadioItem closeOnClick={false} render={<button type="button" />} value="large">
                 Native radio
               </Menu2RadioItem>
             </Menu2RadioGroup>

@@ -1,19 +1,24 @@
 'use client';
 import * as React from 'react';
 import { useRender } from '@base-ui/react/use-render';
-import type { HTMLProps } from '@base-ui/react/types';
-import type { Menu2ItemOwnerState, Menu2ItemProps } from '../Unstable_Menu2Item/Menu2Item';
+import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/types';
 
-interface Menu2ItemRenderRootProps extends HTMLProps {
-  internalRender: NonNullable<Menu2ItemProps['render']>;
-  internalRenderState: Menu2ItemOwnerState;
+interface Menu2ItemRenderRootProps<OwnerState extends object> extends HTMLProps {
+  internalRender: React.ReactElement | ComponentRenderFn<Omit<HTMLProps, 'color'>, OwnerState>;
+  internalRenderState: OwnerState;
 }
 
 /**
  * @ignore - internal component.
  */
-const Menu2ItemRenderRoot = React.forwardRef(function Menu2ItemRenderRoot(
-  { internalRender: render, internalRenderState: state, ...props }: Menu2ItemRenderRootProps,
+const Menu2ItemRenderRoot = React.forwardRef(function Menu2ItemRenderRoot<
+  OwnerState extends object,
+>(
+  {
+    internalRender: render,
+    internalRenderState: state,
+    ...props
+  }: Menu2ItemRenderRootProps<OwnerState>,
   ref: React.ForwardedRef<HTMLElement>,
 ) {
   // Base UI already supplies the state attributes. This layer composes the

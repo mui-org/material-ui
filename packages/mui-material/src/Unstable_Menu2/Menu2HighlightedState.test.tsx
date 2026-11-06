@@ -48,13 +48,20 @@ const cases = [
   },
   {
     name: 'MuiMenu2CheckboxItem',
-    item: <Menu2CheckboxItem slotProps={slotProps}>Target</Menu2CheckboxItem>,
+    item: (
+      <Menu2CheckboxItem render={(props, state) => <div {...props} {...slotProps.root(state)} />}>
+        Target
+      </Menu2CheckboxItem>
+    ),
   },
   {
     name: 'MuiMenu2RadioItem',
     item: (
       <Menu2RadioGroup defaultValue="target">
-        <Menu2RadioItem value="target" slotProps={slotProps}>
+        <Menu2RadioItem
+          value="target"
+          render={(props, state) => <div {...props} {...slotProps.root(state)} />}
+        >
           Target
         </Menu2RadioItem>
       </Menu2RadioGroup>

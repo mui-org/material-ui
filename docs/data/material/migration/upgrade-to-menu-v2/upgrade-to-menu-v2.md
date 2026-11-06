@@ -334,17 +334,19 @@ Its target can be a descendant of the item.
 `MenuCheckboxItem`, `MenuRadioItem`, and `MenuLinkItem` keep the menu open by default.
 Set `closeOnClick` on these items to close the menu after selection.
 
-On `MenuItem` and `MenuLinkItem`, replace `component` with `render`, and put custom component props on the supplied element:
+On `MenuItem`, `MenuLinkItem`, `MenuCheckboxItem`, and `MenuRadioItem`, replace `component` with `render`.
+Put custom component props on the supplied element:
 
 ```diff
 -<MenuItem component="li">File</MenuItem>
 +<MenuItem render={<li />}>File</MenuItem>
 ```
 
-Neither part has a root slot API.
+These parts have no root slot API.
 Put root attributes on the item or its render element instead of `slotProps.root`.
 A render function also receives the typed item state.
-Forward its supplied props, ref, and children to the root element to preserve Material styles and ripple.
+Forward its supplied props, ref, and children to the root element to preserve Material styles, indicators, and ripple.
+Checkbox and radio items keep their `indicator` slot, `icon`, and `checkedIcon` props.
 See [Item customization](/material-ui/react-menu2/#item).
 
 These item props work as before:

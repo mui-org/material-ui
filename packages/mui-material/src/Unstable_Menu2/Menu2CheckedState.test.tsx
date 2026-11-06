@@ -1,10 +1,12 @@
 import Menu2Popup from '@mui/material/Unstable_Menu2Popup';
 import * as React from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { act, createRenderer, screen } from '@mui/internal-test-utils';
+import { act, createRenderer, isJsdom, screen, waitFor } from '@mui/internal-test-utils';
 import type { BaseUIEvent } from '@base-ui/react/types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { touchRippleClasses } from '@mui/material/ButtonBase';
 import Menu2 from '@mui/material/Unstable_Menu2';
+import type { Menu2CheckboxItemProps } from '@mui/material/Unstable_Menu2CheckboxItem';
 import Menu2CheckboxItem from '@mui/material/Unstable_Menu2CheckboxItem';
 import Menu2RadioGroup from '@mui/material/Unstable_Menu2RadioGroup';
 import Menu2RadioItem from '@mui/material/Unstable_Menu2RadioItem';
@@ -15,16 +17,20 @@ describe('Menu2 live checked ownerState', () => {
   ['checkbox', 'radio'].forEach((kind) => {
     describe(`${kind} item`, () => {
       const role = kind === 'checkbox' ? 'menuitemcheckbox' : 'menuitemradio';
+      const componentName = kind === 'checkbox' ? 'MuiMenu2CheckboxItem' : 'MuiMenu2RadioItem';
+      const renderItem: Menu2CheckboxItemProps['render'] = (props, state) => (
+        <div
+          {...props}
+          data-checked={String(state.checked)}
+          style={{ ...props.style, paddingLeft: state.checked ? '19px' : '11px' }}
+        />
+      );
       const slotProps = {
-        root: (state: { checked?: boolean }) => ({
-          'data-checked': String(state.checked),
-          sx: { paddingLeft: state.checked ? '19px' : '11px' },
-        }),
         indicator: (state: { checked?: boolean }) => ({ 'data-checked': String(state.checked) }),
       };
       const theme = createTheme({
         components: {
-          [kind === 'checkbox' ? 'MuiMenu2CheckboxItem' : 'MuiMenu2RadioItem']: {
+          [componentName]: {
             variants: [{ props: { checked: true }, style: { paddingRight: '23px' } }],
           },
         },
@@ -55,6 +61,7 @@ describe('Menu2 live checked ownerState', () => {
                       }
                     }}
                     slotProps={slotProps}
+                    render={renderItem}
                   >
                     One
                   </Menu2CheckboxItem>
@@ -70,10 +77,10 @@ describe('Menu2 live checked ownerState', () => {
                       }
                     }}
                   >
-                    <Menu2RadioItem value="one" slotProps={slotProps}>
+                    <Menu2RadioItem value="one" slotProps={slotProps} render={renderItem}>
                       One
                     </Menu2RadioItem>
-                    <Menu2RadioItem value="two" slotProps={slotProps}>
+                    <Menu2RadioItem value="two" slotProps={slotProps} render={renderItem}>
                       Two
                     </Menu2RadioItem>
                   </Menu2RadioGroup>
@@ -146,27 +153,198 @@ describe('Menu2 live checked ownerState', () => {
         expectState(one, true);
       });
 
+      it('keeps Material styles, theme defaults, and indicator slots on a custom render element', () => {
+        let received: string[] = [];
+        const CustomRoot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+          function CustomRoot(props, ref) {
+            received = Object.keys(props);
+            return <div {...props} ref={ref} />;
+          },
+        );
+        const customTheme = createTheme({
+          spacing: 10,
+          components: {
+            [componentName]: {
+              defaultProps: { dense: true, render: <CustomRoot className="custom-root" /> },
+              styleOverrides: { root: { paddingTop: '21px' } },
+              variants: [{ props: { dense: true }, style: { paddingBottom: '19px' } }],
+            },
+          },
+        });
+        const itemProps: Menu2CheckboxItemProps = {
+          className: 'external-class',
+          sx: [false, (t) => ({ paddingLeft: t.spacing(3) })],
+          slotProps: { indicator: { component: 'strong', 'data-testid': 'indicator' } },
+        };
+        render(
+          <ThemeProvider theme={customTheme}>
+            <Menu2 defaultOpen modal={false}>
+              <Menu2Popup anchor={document.body}>
+                {kind === 'checkbox' ? (
+                  <Menu2CheckboxItem {...itemProps}>One</Menu2CheckboxItem>
+                ) : (
+                  <Menu2RadioGroup>
+                    <Menu2RadioItem {...itemProps} value="one">
+                      One
+                    </Menu2RadioItem>
+                  </Menu2RadioGroup>
+                )}
+              </Menu2Popup>
+            </Menu2>
+          </ThemeProvider>,
+        );
+        const item = screen.getByRole(role, { name: 'One' });
+        [
+          `${componentName}-root`,
+          `${componentName}-dense`,
+          'MuiButtonBase-root',
+          'custom-root',
+          'external-class',
+        ].forEach((className) => expect(item).to.have.class(className));
+        const styles = getComputedStyle(item);
+        expect(styles.display).to.equal('flex');
+        expect(styles.paddingTop).to.equal('21px');
+        expect(styles.paddingBottom).to.equal('19px');
+        expect(styles.paddingLeft).to.equal('30px');
+        const indicator = screen.getByTestId('indicator');
+        expect(item).to.contain(indicator);
+        expect(indicator.tagName).to.equal('STRONG');
+        expect(indicator).to.have.class(`${componentName}-indicator`);
+        [
+          'checked',
+          'defaultChecked',
+          'ownerState',
+          'sx',
+          'disableRipple',
+          'nativeButton',
+          'slots',
+          'slotProps',
+          'internalRender',
+          'internalRenderState',
+        ].forEach((prop) => expect(received).not.to.include(prop));
+      });
+
+      it('updates disabled render state and prevents keyboard activation', async () => {
+        const onChange = vi.fn();
+        function Fixture() {
+          const [disabled, setDisabled] = React.useState(false);
+          const itemProps: Menu2CheckboxItemProps = {
+            disabled,
+            dense: true,
+            divider: true,
+            disableGutters: true,
+            render: (props, state) => (
+              <div
+                {...props}
+                data-disabled={String(state.disabled)}
+                data-dense={String(state.dense)}
+                data-divider={String(state.divider)}
+                data-gutters={String(state.disableGutters)}
+              />
+            ),
+          };
+          return (
+            <Menu2 defaultOpen modal={false}>
+              <Menu2Popup
+                anchor={document.body}
+                onKeyDown={(event) => {
+                  if (event.key === 'F2') {
+                    setDisabled((value) => !value);
+                  }
+                }}
+              >
+                {kind === 'checkbox' ? (
+                  <Menu2CheckboxItem {...itemProps} onCheckedChange={onChange}>
+                    One
+                  </Menu2CheckboxItem>
+                ) : (
+                  <Menu2RadioGroup onValueChange={onChange}>
+                    <Menu2RadioItem {...itemProps} value="one">
+                      One
+                    </Menu2RadioItem>
+                  </Menu2RadioGroup>
+                )}
+              </Menu2Popup>
+            </Menu2>
+          );
+        }
+        const { user } = render(<Fixture />);
+        const item = screen.getByRole(role, { name: 'One' });
+        expect(item).to.have.attribute('data-disabled', 'false');
+        expect(item).to.have.attribute('data-dense', 'true');
+        expect(item).to.have.attribute('data-divider', 'true');
+        expect(item).to.have.attribute('data-gutters', 'true');
+        await act(async () => item.focus());
+        await user.keyboard('{F2}');
+        expect(item).to.have.attribute('data-disabled', 'true');
+        expect(item).to.have.attribute('aria-disabled', 'true');
+        await user.keyboard('[Space][Enter]');
+        expect(onChange).not.toHaveBeenCalled();
+        expect(item).to.have.attribute('aria-checked', 'false');
+      });
+
+      [false, true].forEach((disableRipple) => {
+        it.skipIf(isJsdom())(
+          `retains indicators and ripple through a render callback, disableRipple=${disableRipple}`,
+          async () => {
+            const itemProps: Menu2CheckboxItemProps = {
+              disableRipple,
+              render: (props, state) => <div {...props} data-checked={String(state.checked)} />,
+              slotProps: { indicator: { 'data-testid': 'indicator' } },
+            };
+            const { user } = render(
+              <Menu2 defaultOpen modal={false}>
+                <Menu2Popup anchor={document.body}>
+                  {kind === 'checkbox' ? (
+                    <Menu2CheckboxItem {...itemProps}>One</Menu2CheckboxItem>
+                  ) : (
+                    <Menu2RadioGroup>
+                      <Menu2RadioItem {...itemProps} value="one">
+                        One
+                      </Menu2RadioItem>
+                    </Menu2RadioGroup>
+                  )}
+                </Menu2Popup>
+              </Menu2>,
+            );
+            const item = screen.getByRole(role, { name: 'One' });
+            const indicator = screen.getByTestId('indicator');
+            expect(item).to.contain(indicator);
+            expect(indicator).not.to.have.attribute('data-checked');
+            await user.pointer({ keys: '[MouseLeft>]', target: item });
+            if (disableRipple) {
+              expect(item.querySelector(`.${touchRippleClasses.root}`)).to.equal(null);
+            } else {
+              await waitFor(() =>
+                expect(item.querySelector(`.${touchRippleClasses.rippleVisible}`)).not.to.equal(
+                  null,
+                ),
+              );
+            }
+            await user.pointer({ keys: '[/MouseLeft]', target: item });
+            expect(item).to.have.attribute('data-checked', 'true');
+            expect(indicator).to.have.attribute('data-checked');
+            expect(screen.getByTestId('indicator')).to.equal(indicator);
+          },
+        );
+      });
+
       it('composes root refs and click handlers without replacing the item after selection', async () => {
         const itemRef = React.createRef<HTMLDivElement>();
-        const slotRef = React.createRef<HTMLDivElement>();
+        const renderRef = React.createRef<HTMLDivElement>();
         const onClick = vi.fn();
-        const onSlotClick = vi.fn();
-        const rootProps = { ref: slotRef, onClick: onSlotClick };
+        const onRenderClick = vi.fn();
+        const rootElement = <div ref={renderRef} onClick={onRenderClick} />;
         const { user, unmount } = render(
           <Menu2 defaultOpen modal={false}>
             <Menu2Popup anchor={document.body}>
               {kind === 'checkbox' ? (
-                <Menu2CheckboxItem ref={itemRef} onClick={onClick} slotProps={{ root: rootProps }}>
+                <Menu2CheckboxItem ref={itemRef} onClick={onClick} render={rootElement}>
                   One
                 </Menu2CheckboxItem>
               ) : (
                 <Menu2RadioGroup>
-                  <Menu2RadioItem
-                    value="one"
-                    ref={itemRef}
-                    onClick={onClick}
-                    slotProps={{ root: rootProps }}
-                  >
+                  <Menu2RadioItem value="one" ref={itemRef} onClick={onClick} render={rootElement}>
                     One
                   </Menu2RadioItem>
                 </Menu2RadioGroup>
@@ -176,35 +354,35 @@ describe('Menu2 live checked ownerState', () => {
         );
         const item = screen.getByRole(role, { name: 'One' });
         expect(itemRef.current).to.equal(item);
-        expect(slotRef.current).to.equal(item);
+        expect(renderRef.current).to.equal(item);
 
         await user.click(item);
         expect(item).to.have.attribute('aria-checked', 'true');
         expect(itemRef.current).to.equal(item);
-        expect(slotRef.current).to.equal(item);
+        expect(renderRef.current).to.equal(item);
         expect(onClick).toHaveBeenCalledTimes(1);
-        expect(onSlotClick).toHaveBeenCalledTimes(1);
+        expect(onRenderClick).toHaveBeenCalledTimes(1);
 
         unmount();
         expect(itemRef.current).to.equal(null);
-        expect(slotRef.current).to.equal(null);
+        expect(renderRef.current).to.equal(null);
       });
 
       for (const cancel of [false, true]) {
-        it(`preserves root slot event order, cancel=${cancel}`, async () => {
+        it(`preserves render element event order, cancel=${cancel}`, async () => {
           const calls: string[] = [];
           const itemProps = {
             onClick: () => calls.push('item'),
-            slotProps: {
-              root: {
-                onClick: (event: BaseUIEvent<React.MouseEvent<HTMLElement>>) => {
-                  calls.push('slot');
+            render: (
+              <div
+                onClick={(event) => {
+                  calls.push('render');
                   if (cancel) {
-                    event.preventBaseUIHandler();
+                    (event as BaseUIEvent<typeof event>).preventBaseUIHandler();
                   }
-                },
-              },
-            },
+                }}
+              />
+            ),
           };
           const { user } = render(
             <Menu2 defaultOpen modal={false}>
@@ -224,7 +402,7 @@ describe('Menu2 live checked ownerState', () => {
 
           const item = screen.getByRole(role, { name: 'One' });
           await user.click(item);
-          expect(calls).to.deep.equal(cancel ? ['slot'] : ['slot', 'item']);
+          expect(calls).to.deep.equal(cancel ? ['render'] : ['render', 'item']);
           expect(item).to.have.attribute('aria-checked', String(!cancel));
         });
       }
