@@ -80,6 +80,44 @@ describe.skipIf(isJsdom())('Menu2 playground backdrop settings', () => {
     });
   });
 
+  it('uses a modal click-away backdrop for the focus comparison', async () => {
+    const { baseElement, user } = await renderPlayground();
+    const initialOverflow = document.body.style.overflowY;
+    const classicTrigger = screen.getByRole('button', {
+      name: 'Open the classic menu',
+    });
+    const successorTrigger = screen.getByRole('button', {
+      name: 'Open the successor menu',
+    });
+    classicTrigger.scrollIntoView({ block: 'center' });
+
+    await user.click(successorTrigger);
+    await screen.findByRole('menu', { name: 'Open the successor menu' });
+
+    const backdrop = baseElement.querySelector<HTMLElement>(
+      `.${menu2PopupClasses.backdrop}`,
+    )!;
+    expect(backdrop).not.to.equal(null);
+    expect(getComputedStyle(backdrop).backgroundColor).to.equal('rgba(0, 0, 0, 0)');
+    expect(getComputedStyle(backdrop).pointerEvents).to.equal('auto');
+    await waitFor(() => expect(document.body.style.overflowY).to.equal('hidden'));
+
+    const classicRect = classicTrigger.getBoundingClientRect();
+    const clientX = classicRect.left + classicRect.width / 2;
+    const clientY = classicRect.top + classicRect.height / 2;
+    const clickTarget = document.elementFromPoint(clientX, clientY)!;
+    expect(clickTarget).to.equal(backdrop);
+    await user.pointer({
+      keys: '[MouseLeft]',
+      target: clickTarget,
+      coords: { clientX, clientY },
+    });
+
+    await waitFor(() => expect(screen.queryByRole('menu')).to.equal(null));
+    expect(successorTrigger).to.have.attribute('aria-expanded', 'false');
+    expect(document.body.style.overflowY).to.equal(initialOverflow);
+  });
+
   it('does not force a backdrop on a non-modal menu with Default selected', async () => {
     const { baseElement, user } = await renderPlayground();
     await user.click(screen.getByRole('checkbox', { name: 'modal' }));

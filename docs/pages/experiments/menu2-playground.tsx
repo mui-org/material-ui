@@ -421,7 +421,7 @@ function FocusRingComparisonDemo({ settings }: { settings: PlaygroundSettings })
         <Typography component="h3" variant="subtitle2" gutterBottom>
           Menu2 + Menu2Item
         </Typography>
-        <Menu2 modal={false} open={open} onOpenChange={(nextOpen) => setOpen(nextOpen)}>
+        <Menu2 open={open} onOpenChange={(nextOpen) => setOpen(nextOpen)}>
           <Menu2Trigger render={<Button variant="outlined">Open the successor menu</Button>} />
           <Menu2Popup sideOffset={4}>
             {parityItems.map((item) => (
@@ -834,8 +834,8 @@ export default function MenuRfcExperiment() {
               page does, so only the ring shows.
             </p>
             <p>
-              The successor menu is not modal, so its trigger and the classic trigger both stay
-              clickable while it is open.
+              Both menus use their default modal behavior. Click outside a menu or press Escape to
+              close it before you open the other.
             </p>
             <p>
               Try this: hover the items with the mouse, then navigate with the arrow keys. Compare
