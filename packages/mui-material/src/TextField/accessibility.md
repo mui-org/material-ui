@@ -14,7 +14,7 @@ Rated against WCAG 2.2 Level A and AA. See the [reports legend](../accessibility
 
 ## Known gaps
 
-- ⚠️ **1.4.3 Contrast (Minimum).** <!-- 1.4.3:gap:start -->The placeholder (about 2.55:1), the focused `warning` label (3.11:1), and the focused color labels on the filled surface (`primary` 4.04:1) fall short of 4.5:1.<!-- 1.4.3:gap:end -->
+- ⚠️ **1.4.3 Contrast (Minimum).** <!-- 1.4.3:gap:start -->The placeholder (about 2.55:1), the focused `warning` label (3.11:1), and the focused color labels on the filled surface (`primary` 4.04:1) fall short of 4.5:1. In dark mode, error text on a Paper with elevation 2 or more also falls short.<!-- 1.4.3:gap:end -->
 - ⚠️ **1.4.11 Non-text Contrast.** <!-- 1.4.11:gap:start -->The default `outlined` resting border (`rgba(0, 0, 0, 0.23)`, about 1.74:1) is below 3:1; the `filled` underline (about 3.03:1) clears it only marginally.<!-- 1.4.11:gap:end -->
 - ⚠️ **4.1.3 Status Messages.** <!-- 4.1.3:gap:start -->A dynamically shown error is associated to the input but is not a live region, so it may go unannounced when focus is elsewhere.<!-- 4.1.3:gap:end -->
 
@@ -234,6 +234,7 @@ Tested by: axe-core `color-contrast` ❌
 
 - This criterion governs the visible text. The input value (`text.primary`, about 16:1), the resting label and helper text (`text.secondary`, `5.74:1`), the `outlined` focused `primary` label on the white page (`4.60:1`), and error text on white (`error.main`, `4.98:1`) pass. The placeholder (about `2.55:1`) and the focused `warning` label (`3.11:1`) fall short, and the `filled` surface (`#f0f0f0`) drops each focused label about `0.5:1` lower, so the focused `primary` (`4.04:1`), `error` (`4.36:1`), and `success` (`4.49:1`) labels also fail there. Covered by axe-core; disabled text is exempt.
 - The placeholder opacity and the failing palette colors are component defaults; custom label colors are the author's to check.
+- In dark mode, the error label and helper text use `error.main` (`#f44336`). On a Paper with elevation 2 or more, such as a Menu or Dialog, the elevation overlay lightens the surface. The contrast then falls below `4.5:1`: about `4.30:1` at elevation 2 and `3.13:1` at elevation 24.
 
 **Manual testing steps**
 
@@ -242,7 +243,7 @@ Tested by: axe-core `color-contrast` ❌
 
 <!-- 1.4.3:end -->
 
-**Pass:** <!-- 1.4.3:pass:start -->label, value, placeholder, and error text meet `4.5:1` (`3:1` for large text) against the actual background. The placeholder, focused `warning`, and filled-surface error text are the known failures.<!-- 1.4.3:pass:end -->
+**Pass:** <!-- 1.4.3:pass:start -->label, value, placeholder, and error text meet `4.5:1` (`3:1` for large text) against the actual background. The placeholder, focused `warning`, filled-surface error text, and dark-mode error text on elevated Paper are the known failures.<!-- 1.4.3:pass:end -->
 
 #### 2.4.6 Headings and Labels · AA
 

@@ -406,6 +406,21 @@ export const A11Y_RULES: A11yRule[] = [
     enabled: true,
     assertions: 'all',
   },
+  // A11y-only fixtures under `test/regressions/a11y/fixtures/form-label/`.
+  // FormLabel has no docs page, so the fixtures own the `form-label` slug.
+  {
+    test: 'test/regressions/a11y/fixtures/form-label/{FormLabelA11yStates,FormLabelA11yColorMatrixDark}',
+    enabled: true,
+    assertions: 'all',
+  },
+  // `color-contrast` is recorded but not asserted: a focused `info` or `warning`
+  // label is a documented gap (1.4.3) in `packages/mui-material/src/FormLabel/accessibility.md`.
+  {
+    test: 'test/regressions/a11y/fixtures/form-label/FormLabelA11yColorMatrix',
+    enabled: true,
+    assertions: 'all',
+    skipAssertions: ['color-contrast'],
+  },
   {
     test: `docs/data/material/components/radio-buttons/{${RADIO_A11Y_DEMOS.join(',')}}`,
     enabled: true,

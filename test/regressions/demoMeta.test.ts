@@ -137,6 +137,19 @@ describe('getConfig', () => {
     ).to.deep.include({ enabled: true, assertions: 'all' });
   });
 
+  it('asserts every rule on the FormLabel fixtures and records the focused-color gap', () => {
+    expect(
+      getConfig(A11Y_RULES, 'test/regressions/a11y/fixtures/form-label/FormLabelA11yStates'),
+    ).to.deep.equal({
+      test: 'test/regressions/a11y/fixtures/form-label/{FormLabelA11yStates,FormLabelA11yColorMatrixDark}',
+      enabled: true,
+      assertions: 'all',
+    });
+    expect(
+      getConfig(A11Y_RULES, 'test/regressions/a11y/fixtures/form-label/FormLabelA11yColorMatrix'),
+    ).to.deep.include({ skipAssertions: ['color-contrast'] });
+  });
+
   it('returns undefined for a radio demo outside the enrolment', () => {
     // The radio-buttons enrolment omits FormControlLabelPlacement.
     expect(
