@@ -256,10 +256,6 @@ function RatingItem(props) {
   const isFocused = itemValue <= focus;
   const isChecked = itemValue === ratingValueRounded;
 
-  // "name" ensures unique IDs across different Rating components in React 17,
-  // preventing one component from affecting another. React 18's useId already handles this.
-  // Update to const id = useId(); when React 17 support is dropped.
-  // More details: https://github.com/mui/material-ui/issues/40997
   const id = `${name}-${useId()}`;
 
   const externalForwardedProps = {

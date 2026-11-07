@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import type { ReducedMotionMode } from '../styles/createMotion';
 
 const MEDIA_QUERY = '(prefers-reduced-motion: reduce)';
@@ -16,87 +15,11 @@ interface TransitionTiming {
   delay: string | undefined;
 }
 
-interface MediaQueryState {
-  /**
-   * When `true` the hook will track OS-level `prefers-reduced-motion`.
-   * This means the theme is in `system` mode and unknown media-query state
-   * is treated as reduced-motion safe until resolved. It does not mean that
-   * reduced motion is in effect.
-   */
-  enabled: boolean;
-  matches: boolean | null;
-}
-
 /**
  * Subscribes to the OS reduced-motion media query only when the theme mode needs it.
- * React 17 reads the media query after mount, matching useMediaQuery's fallback path.
+ * Client renders read it directly, so new transitions skip the SSR-safe default.
  */
-function useReducedMotionMediaQueryOld(enabled: boolean): boolean | null {
-  const [queryState, setQueryState] = React.useState<MediaQueryState>(() => ({
-    enabled,
-    matches: enabled ? null : false,
-  }));
-
-  let matches = queryState.matches;
-  if (queryState.enabled !== enabled) {
-    matches = null;
-    if (!enabled) {
-      matches = false;
-    }
-  }
-
-  useEnhancedEffect(() => {
-    const setResolvedMatches = (nextMatches: boolean | null) => {
-      setQueryState((previousState) => {
-        if (previousState.enabled === enabled && previousState.matches === nextMatches) {
-          return previousState;
-        }
-
-        return {
-          enabled,
-          matches: nextMatches,
-        };
-      });
-    };
-
-    if (!enabled) {
-      if (queryState.enabled) {
-        setResolvedMatches(false);
-      }
-
-      return undefined;
-    }
-
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-      setResolvedMatches(false);
-      return undefined;
-    }
-
-    const mediaQueryList = window.matchMedia(MEDIA_QUERY);
-    const update = () => {
-      setResolvedMatches(mediaQueryList.matches);
-    };
-
-    update();
-    mediaQueryList.addEventListener('change', update);
-
-    return () => {
-      mediaQueryList.removeEventListener('change', update);
-    };
-  }, [enabled, queryState.enabled]);
-
-  return matches;
-}
-
-// See https://github.com/mui/material-ui/issues/41190#issuecomment-2040873379 for why
-const safeReact = { ...React };
-const maybeReactUseSyncExternalStore: undefined | any = safeReact.useSyncExternalStore;
-
-/**
- * React 18+ can read the media query during client renders, so newly mounted
- * transitions do not start from the SSR-safe reduced-motion default.
- */
-function useReducedMotionMediaQueryNew(enabled: boolean): boolean {
+function useReducedMotionMediaQuery(enabled: boolean): boolean {
   const getServerSnapshot = enabled ? getReducedMotionSnapshot : getDefaultSnapshot;
   const [getSnapshot, subscribe] = React.useMemo(() => {
     if (!enabled || typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
@@ -116,13 +39,8 @@ function useReducedMotionMediaQueryNew(enabled: boolean): boolean {
     ];
   }, [enabled]);
 
-  return maybeReactUseSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
-
-const useReducedMotionMediaQuery =
-  maybeReactUseSyncExternalStore !== undefined
-    ? useReducedMotionMediaQueryNew
-    : useReducedMotionMediaQueryOld;
 
 /**
  * Resolves whether a Material UI transition should reduce motion and provides
@@ -137,7 +55,7 @@ export default function useReducedMotion(
   );
   const shouldReduceMotion =
     !disablePrefersReducedMotion &&
-    (mode === 'always' || (mode === 'system' && prefersReducedMotion !== false));
+    (mode === 'always' || (mode === 'system' && prefersReducedMotion));
 
   return React.useMemo(
     () => ({

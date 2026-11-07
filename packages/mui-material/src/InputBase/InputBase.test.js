@@ -2,14 +2,7 @@ import { describe, it, expect } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { spy } from 'sinon';
-import {
-  act,
-  createRenderer,
-  fireEvent,
-  screen,
-  reactMajor,
-  isJsdom,
-} from '@mui/internal-test-utils';
+import { act, createRenderer, fireEvent, screen, isJsdom } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@emotion/react';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -303,17 +296,11 @@ describe('<InputBase />', () => {
         const errorMessage =
           'MUI: You have provided a `inputComponent` to the input component\nthat does not correctly handle the `ref` prop.\nMake sure the `ref` prop is called with a HTMLInputElement.';
 
-        let expectedOccurrences = 1;
-
-        if (reactMajor >= 18) {
-          expectedOccurrences = 2;
-        }
-
         expect(() => {
           render(
             <InputBase inputProps={{ ref: triggerChangeRef }} inputComponent={BadInputComponent} />,
           );
-        }).toErrorDev(Array(expectedOccurrences).fill(errorMessage));
+        }).toErrorDev([errorMessage, errorMessage]);
       });
     });
   });
@@ -678,11 +665,6 @@ describe('<InputBase />', () => {
         const errorMessage =
           'MUI: There are multiple `InputBase` components inside a FormControl.\nThis creates visual inconsistencies, only use one `InputBase`.';
 
-        let expectedOccurrences = 1;
-
-        if (reactMajor >= 18) {
-          expectedOccurrences = 2;
-        }
         expect(() => {
           render(
             <FormControl>
@@ -693,7 +675,7 @@ describe('<InputBase />', () => {
               </div>
             </FormControl>,
           );
-        }).toErrorDev(Array(expectedOccurrences).fill(errorMessage));
+        }).toErrorDev([errorMessage, errorMessage]);
       });
 
       it('should not warn if only one input is rendered', () => {

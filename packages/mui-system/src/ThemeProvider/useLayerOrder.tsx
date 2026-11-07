@@ -10,7 +10,7 @@ import useThemeWithoutDefault from '../useThemeWithoutDefault';
  */
 export default function useLayerOrder(theme: { modularCssLayers?: boolean | string | undefined }) {
   const upperTheme = useThemeWithoutDefault();
-  const id = useId() || '';
+  const id = useId();
   const nonce = useNonce();
   const { modularCssLayers } = theme;
 

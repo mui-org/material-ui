@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import { getThemeProps } from '../useThemeProps';
 import useTheme from '../useThemeWithoutDefault';
 
@@ -30,53 +29,7 @@ export interface UseMediaQueryOptions {
   ssrMatchMedia?: ((query: string) => { matches: boolean }) | undefined;
 }
 
-// TODO React 17: Remove `useMediaQueryOld` once React 17 support is removed
-function useMediaQueryOld(
-  query: string,
-  defaultMatches: boolean,
-  matchMedia: typeof window.matchMedia | null,
-  ssrMatchMedia: ((query: string) => { matches: boolean }) | null,
-  noSsr: boolean,
-): boolean {
-  const [match, setMatch] = React.useState(() => {
-    if (noSsr && matchMedia) {
-      return matchMedia!(query).matches;
-    }
-    if (ssrMatchMedia) {
-      return ssrMatchMedia(query).matches;
-    }
-
-    // Once the component is mounted, we rely on the
-    // event listeners to return the correct matches value.
-    return defaultMatches;
-  });
-
-  useEnhancedEffect(() => {
-    if (!matchMedia) {
-      return undefined;
-    }
-
-    const queryList = matchMedia!(query);
-    const updateMatch = () => {
-      setMatch(queryList.matches);
-    };
-
-    updateMatch();
-    queryList.addEventListener('change', updateMatch);
-
-    return () => {
-      queryList.removeEventListener('change', updateMatch);
-    };
-  }, [query, matchMedia]);
-
-  return match;
-}
-
-// See https://github.com/mui/material-ui/issues/41190#issuecomment-2040873379 for why
-const safeReact = { ...React };
-const maybeReactUseSyncExternalStore: undefined | any = safeReact.useSyncExternalStore;
-
-function useMediaQueryNew(
+function useMediaQueryMatch(
   query: string,
   defaultMatches: boolean,
   matchMedia: typeof window.matchMedia | null,
@@ -112,7 +65,7 @@ function useMediaQueryNew(
       },
     ];
   }, [getDefaultSnapshot, matchMedia, query]);
-  const match = maybeReactUseSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const match = React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return match;
 }
@@ -179,15 +132,7 @@ export function unstable_createUseMediaQuery(params: { themeId?: string | undefi
       );
     }
 
-    const useMediaQueryImplementation =
-      maybeReactUseSyncExternalStore !== undefined ? useMediaQueryNew : useMediaQueryOld;
-    const match = useMediaQueryImplementation(
-      query,
-      defaultMatches,
-      matchMedia,
-      ssrMatchMedia,
-      noSsr,
-    );
+    const match = useMediaQueryMatch(query, defaultMatches, matchMedia, ssrMatchMedia, noSsr);
 
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks

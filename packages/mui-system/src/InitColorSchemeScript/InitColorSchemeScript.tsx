@@ -51,11 +51,6 @@ export interface InitColorSchemeScriptProps {
   nonce?: string | undefined;
 }
 
-// React 17 has no `useSyncExternalStore`; spread into a plain object so reading the
-// missing property returns `undefined` instead of throwing under strict ESM. See #41190 (comment).
-const safeReact = { ...React };
-const maybeReactUseSyncExternalStore: undefined | any = safeReact.useSyncExternalStore;
-
 const subscribe = () => () => {};
 
 // Serialize a value into a JS string literal safe to embed in the inline script. JSON.stringify
@@ -89,14 +84,10 @@ function interpolateScheme(template: string, variable: string) {
  * on every client render afterwards. React warns when a `<script>` is
  * created during a client render (such scripts never execute), so the inline
  * script is only emitted on the server pass and dropped after hydration — the
- * attribute it already set on the document persists. React <18 has no
- * `useSyncExternalStore` and no such warning, so the script is always emitted.
+ * attribute it already set on the document persists.
  */
 function useIsServerRender() {
-  if (maybeReactUseSyncExternalStore === undefined) {
-    return true;
-  }
-  return maybeReactUseSyncExternalStore(
+  return React.useSyncExternalStore(
     subscribe,
     () => false,
     () => true,

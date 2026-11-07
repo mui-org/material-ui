@@ -449,11 +449,8 @@ describe('<SwitchBase />', () => {
       expect(() => {
         setProps({ checked: true });
       }).toErrorDev([
-        reactMajor === 16 &&
-          'Warning: A component is changing an uncontrolled input of type checkbox to be controlled.',
         reactMajor >= 19 && 'A component is changing an uncontrolled input to be controlled.',
         reactMajor < 19 &&
-          reactMajor !== 16 &&
           'Warning: A component is changing an uncontrolled input to be controlled.',
         'MUI: A component is changing the uncontrolled checked state of SwitchBase to be controlled.',
       ]);
@@ -470,11 +467,8 @@ describe('<SwitchBase />', () => {
       expect(() => {
         setProps({ checked: undefined });
       }).toErrorDev([
-        reactMajor === 16 &&
-          'Warning: A component is changing an uncontrolled input of type checkbox to be controlled.',
         reactMajor >= 19 && 'A component is changing a controlled input to be uncontrolled.',
         reactMajor < 19 &&
-          reactMajor !== 16 &&
           'Warning: A component is changing a controlled input to be uncontrolled.',
         'MUI: A component is changing the controlled checked state of SwitchBase to be uncontrolled.',
       ]);

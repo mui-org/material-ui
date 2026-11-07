@@ -902,10 +902,10 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       react:
-        specifier: ^17.0.0 || ^18.0.0 || ^19.0.0
+        specifier: ^18.0.0 || ^19.0.0
         version: 19.3.1
       react-dom:
-        specifier: ^17.0.0 || ^18.0.0 || ^19.0.0
+        specifier: ^18.0.0 || ^19.0.0
         version: 19.3.1(react@19.3.1)
       react-runner:
         specifier: ^1.0.5

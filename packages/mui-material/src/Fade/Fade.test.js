@@ -7,8 +7,6 @@ import Transition from '../internal/Transition';
 import describeConformance from '../../test/describeConformance';
 import describeTransitionConformance from '../../test/describeTransitionConformance';
 
-const safeReact = { ...React };
-const usesUseSyncExternalStore = safeReact.useSyncExternalStore !== undefined;
 const NOOP = () => {};
 
 describe('<Fade />', () => {
@@ -136,27 +134,23 @@ describe('<Fade />', () => {
       const element = container.querySelector('div');
 
       if (isJsdom()) {
-        expect(element.style.transition).to.include(usesUseSyncExternalStore ? '250ms' : '0ms');
+        expect(element.style.transition).to.include('250ms');
       } else {
-        expect(element.style.transitionDuration).to.equal(
-          usesUseSyncExternalStore ? '250ms' : '0ms',
-        );
+        expect(element.style.transitionDuration).to.equal('250ms');
       }
       expect(handleEntered).toHaveBeenCalledTimes(0);
 
       act(() => {
-        clock.tick(usesUseSyncExternalStore ? 249 : 0);
+        clock.tick(249);
       });
 
-      expect(handleEntered).toHaveBeenCalledTimes(usesUseSyncExternalStore ? 0 : 1);
+      expect(handleEntered).toHaveBeenCalledTimes(0);
 
-      if (usesUseSyncExternalStore) {
-        act(() => {
-          clock.tick(1);
-        });
+      act(() => {
+        clock.tick(1);
+      });
 
-        expect(handleEntered).toHaveBeenCalledTimes(1);
-      }
+      expect(handleEntered).toHaveBeenCalledTimes(1);
     });
   });
 });

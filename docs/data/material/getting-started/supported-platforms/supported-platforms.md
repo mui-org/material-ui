@@ -32,7 +32,7 @@ The objective is to support Node.js down to the [last version in maintenance mod
 
 <!-- #react-peer-version -->
 
-Material UI supports the most recent versions of React, starting with ^17.0.0 (the one with event delegation at the React root).
+Material UI supports the most recent versions of React, starting with ^18.0.0.
 Have a look at the older [versions](https://mui.com/material-ui/getting-started/versions/) for backward compatibility.
 
 ## TypeScript
