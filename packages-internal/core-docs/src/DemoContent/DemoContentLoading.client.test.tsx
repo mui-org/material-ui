@@ -1,6 +1,7 @@
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { createRenderer, isJsdom, screen, waitFor } from '@mui/internal-test-utils';
+import * as ReactDOM from 'react-dom/server';
+import { createRenderer, screen, waitFor } from '@mui/internal-test-utils';
 import { ThemeProvider } from '@mui/material/styles';
 import { brandingLightTheme } from '../branding';
 import { UserLanguageProvider } from '../i18n';
@@ -19,7 +20,7 @@ vi.mock('./loadDemoContent', () => ({
   loadDemoContent: mocks.loadDemoContent,
 }));
 
-describe('DemoContentLoading client behavior', () => {
+describe('DemoContentLoading', () => {
   const { render } = createRenderer();
 
   function renderLoading() {
@@ -37,12 +38,23 @@ describe('DemoContentLoading client behavior', () => {
     mocks.loadDemoContent.mockClear();
   });
 
-  // The live toolbar arrives with the code-split `DemoContent` chunk. The
-  // skeleton renders the same buttons, inert, so they are visible from first
-  // paint instead of popping in once the chunk lands.
-  // Skipped in jsdom: without media queries the toolbar stays `display: none`
-  // (it shows from the `sm` breakpoint up), which empties the accessible names.
-  it.skipIf(isJsdom())('renders the toolbar buttons before the live content mounts', () => {
+  it('renders inert toolbar controls before hydration', () => {
+    const view = ReactDOM.renderToString(
+      <UserLanguageProvider defaultUserLanguage="en">
+        <ThemeProvider theme={brandingLightTheme}>
+          <DemoContentLoading component={<span>Demo preview</span>} />
+        </ThemeProvider>
+      </UserLanguageProvider>,
+    );
+
+    expect(view).to.contain('Demo preview');
+    expect(view).to.contain('aria-busy="true"');
+    expect(view).to.contain('inert=""');
+    expect(view).to.contain('aria-label="Copy the source"');
+    expect(view).to.contain('>Show code</button>');
+  });
+
+  it('renders inert toolbar controls until live content is ready', () => {
     render(
       <UserLanguageProvider defaultUserLanguage="en">
         <ThemeProvider theme={brandingLightTheme}>
@@ -51,12 +63,14 @@ describe('DemoContentLoading client behavior', () => {
       </UserLanguageProvider>,
     );
 
-    expect(screen.getByRole('toolbar', { name: 'demo source' })).to.have.attribute(
-      'aria-busy',
-      'true',
+    const toolbar = screen.getByRole('toolbar', { hidden: true });
+
+    expect(toolbar).to.have.attribute('aria-busy', 'true');
+    expect(toolbar).to.have.attribute('inert');
+    expect(screen.getByRole('button', { name: 'Show code', hidden: true })).not.to.equal(null);
+    expect(screen.getByRole('button', { name: 'Copy the source', hidden: true })).not.to.equal(
+      null,
     );
-    expect(screen.getByRole('button', { name: 'Show code' })).not.to.equal(null);
-    expect(screen.getByRole('button', { name: 'Copy the source' })).not.to.equal(null);
   });
 
   // Landing on a source deep link expands the skeleton at hydration, so the

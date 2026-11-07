@@ -84,6 +84,8 @@
   },
   "exports": {
     "./*": "./src/*/index.ts",
-    "./ApiPage/private": "./src/ApiPage/private.ts"
+    "./ApiPage/private": "./src/ApiPage/private.ts",
+    "./utils/createDemo": "./src/utils/createDemo.tsx",
+    "./utils/createDemoClient": "./src/utils/createDemoClient.ts"
   }
 }

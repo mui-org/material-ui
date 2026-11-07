@@ -11,6 +11,10 @@ import type { SandboxConfig } from '../DemoContext';
 
 const PACKAGES_WITH_BUNDLED_TYPES = [
   'date-fns',
+  'date-fns-jalali',
+  '@emotion/cache',
+  'rxjs',
+  '@tanstack/query-core',
   '@emotion/react',
   '@emotion/styled',
   'dayjs',
@@ -109,8 +113,12 @@ function buildSandboxResolvers(options: {
     versions = csbConfig.getVersions(versions, { muiCommitRef: commitRef });
   }
 
-  const resolveDependencies: NonNullable<ExportConfig['resolveDependencies']> = (packageName) => {
-    const result: Record<string, string> = {};
+  const resolveDependencies: NonNullable<ExportConfig['resolveDependencies']> = (
+    packageName: string,
+    _envVars?: Record<string, string>,
+    importedModules: string[] = [packageName],
+  ) => {
+    let result: Record<string, string> = {};
     result[packageName] = versions[packageName] ?? 'latest';
 
     // Peer dep auto-injection.
@@ -122,19 +130,27 @@ function buildSandboxResolvers(options: {
       result['@mui/material'] = versions['@mui/material'] ?? 'latest';
     }
 
-    // TS variant: pull in `@types/*` for non-bundled, non-MUI deps.
-    if (
-      useTypescriptRef.current &&
-      !PACKAGES_WITH_BUNDLED_TYPES.includes(packageName) &&
-      !isMuiPackage(packageName)
-    ) {
-      result[getTypesPackageName(packageName)] = 'latest';
+    if (csbConfig?.postProcessImport) {
+      for (const importName of importedModules) {
+        Object.assign(result, csbConfig.postProcessImport(importName));
+      }
     }
 
-    if (csbConfig?.postProcessImport) {
-      const extra = csbConfig.postProcessImport(packageName);
-      if (extra) {
-        Object.assign(result, extra);
+    if (csbConfig?.includePeerDependencies) {
+      result = csbConfig.includePeerDependencies(result, { versions });
+    }
+
+    if (useTypescriptRef.current) {
+      for (const dependency of Object.keys(result)) {
+        if (
+          PACKAGES_WITH_BUNDLED_TYPES.includes(dependency) ||
+          isMuiPackage(dependency) ||
+          dependency.startsWith('@types/')
+        ) {
+          continue;
+        }
+
+        result[getTypesPackageName(dependency)] = 'latest';
       }
     }
 

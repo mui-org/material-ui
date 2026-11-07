@@ -115,12 +115,7 @@ export default function DemoContentLoading(props: DemoContentLoadingProps) {
     );
   }
 
-  // The live toolbar ships in the code-split `DemoContent` chunk, behind the
-  // highlighter runtime and the demo's precompute (~30kB gz on a 4Mbps link
-  // that is ~0.5s after hydration, vs ~0.2s for master's 8kB lazy toolbar).
-  // Render the same buttons here, inert and `aria-busy`, so they are visible
-  // from first paint and the swap to the live toolbar changes nothing visually.
-  // The label mirrors `DemoContent`'s `showCodeLabel` for the initial state.
+  // Keep controls visible before the live demo state is ready.
   const showCodeLabel = hasSourceFocus
     ? t(expanded ? 'hideFullSource' : 'showFullSource')
     : t(expanded ? 'hideSource' : 'showSource');
