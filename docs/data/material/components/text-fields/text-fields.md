@@ -187,6 +187,34 @@ Below is an example using the [`InputBase`](/material-ui/api/input-base/) compon
 
 {{"component": "file://./demos/customized-input-base/index.ts", "bg": true}}
 
+### Autofill styles
+
+When the browser autofills a field, it paints its own background color on the input.
+The outlined and filled variants can cover it with an inset `box-shadow`, set for each color scheme by the `palette.Input.autofillWebkitBoxShadow` theme token.
+By default, it's `none` in the light color scheme (so the browser's color shows) and `0 0 0 100px #266798 inset` in the dark color scheme.
+
+The token is only applied when [CSS theme variables](/material-ui/customization/css-theme-variables/overview/) are enabled:
+
+```js
+const theme = createTheme({
+  cssVariables: true,
+  colorSchemes: {
+    light: {
+      palette: {
+        Input: { autofillWebkitBoxShadow: '0 0 0 100px #e8f0fe inset' },
+      },
+    },
+    dark: {
+      palette: {
+        Input: { autofillWebkitBoxShadow: '0 0 0 100px #1e3a5f inset' },
+      },
+    },
+  },
+});
+```
+
+The token doesn't affect the text color: the autofilled text and caret stay white in the dark color scheme.
+
 🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/primitive/text-field).
 
 ## `useFormControl`
