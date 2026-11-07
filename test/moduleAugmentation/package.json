@@ -11,7 +11,7 @@
     "@mui/system": "workspace:^",
     "@mui/types": "workspace:^",
     "@types/react": "19.3.0",
-    "es-toolkit": "1.52.0",
+    "es-toolkit": "1.53.1",
     "fast-glob": "3.3.3",
     "react": "19.3.1"
   }
