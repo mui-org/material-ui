@@ -14,14 +14,26 @@ const packageDir = path.resolve(currentDirectory, '..');
 const wildcardExports = {
   './package.json': './package.json',
   '.': {
-    require: './index.js',
-    import: './index.mjs',
-    default: './index.mjs',
+    require: {
+      default: './index.js',
+      types: './index.d.ts',
+    },
+    import: {
+      default: './index.mjs',
+      types: './index.d.mts',
+    },
   },
   './*': {
-    require: './*.js',
-    import: './*.mjs',
-    default: './*.mjs',
+    types: {
+      require: './SvgIconComponent.d.ts',
+      import: './SvgIconComponent.d.mts',
+    },
+    require: {
+      default: './*.js',
+    },
+    import: {
+      default: './*.mjs',
+    },
   },
 };
 
@@ -45,6 +57,16 @@ async function run() {
   };
   mergedPackageJson.main = './index.js';
   mergedPackageJson.types = './index.d.ts';
+  // In the case of `moduleResolution=node10`, the `exports` field is not read,
+  // so typesVersions is used instead for typings resolutions
+  // https://www.typescriptlang.org/docs/handbook/modules/reference.html#packagejson-typesversions
+  // Note: To be removed when support for `moduleResolution=node10` is dropped
+  mergedPackageJson.typesVersions = {
+    '<7.0': {
+      'index.d.ts': ['index.d.ts'],
+      '*': ['SvgIconComponent.d.ts'],
+    },
+  };
   delete mergedPackageJson.publishConfig?.directory;
   // Remove fields that shouldn't be in the published package
   delete mergedPackageJson.devDependencies;
