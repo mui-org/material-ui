@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { SxProps } from '@mui/system';
 import { Theme } from '../styles';
-import { InternalStandardProps as StandardProps } from '../internal';
+import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { DialogContentClasses } from './dialogContentClasses';
 
-export interface DialogContentProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
+export interface DialogContentOwnProps {
   /**
    * The content of the component.
    */
@@ -24,6 +24,14 @@ export interface DialogContentProps extends StandardProps<React.HTMLAttributes<H
   sx?: SxProps<Theme> | undefined;
 }
 
+export interface DialogContentTypeMap<
+  AdditionalProps = {},
+  RootComponent extends React.ElementType = 'div',
+> {
+  props: AdditionalProps & DialogContentOwnProps;
+  defaultComponent: RootComponent;
+}
+
 /**
  *
  * Demos:
@@ -34,4 +42,13 @@ export interface DialogContentProps extends StandardProps<React.HTMLAttributes<H
  *
  * - [DialogContent API](https://next.mui.com/material-ui/api/dialog-content/)
  */
-export default function DialogContent(props: DialogContentProps): React.JSX.Element;
+declare const DialogContent: OverridableComponent<DialogContentTypeMap>;
+
+export type DialogContentProps<
+  RootComponent extends React.ElementType = DialogContentTypeMap['defaultComponent'],
+  AdditionalProps = {},
+> = OverrideProps<DialogContentTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
+  component?: React.ElementType | undefined;
+};
+
+export default DialogContent;

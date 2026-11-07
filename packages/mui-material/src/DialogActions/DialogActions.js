@@ -49,12 +49,13 @@ const DialogActions = React.forwardRef(function DialogActions(inProps, ref) {
     name: 'MuiDialogActions',
   });
 
-  const { className, disableSpacing = false, ...other } = props;
-  const ownerState = { ...props, disableSpacing };
+  const { className, component = 'div', disableSpacing = false, ...other } = props;
+  const ownerState = { ...props, component, disableSpacing };
   const classes = useUtilityClasses(ownerState);
 
   return (
     <DialogActionsRoot
+      as={component}
       className={clsx(classes.root, className)}
       ownerState={ownerState}
       ref={ref}
@@ -80,6 +81,11 @@ DialogActions.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
   /**
    * If `true`, the actions do not have additional margin.
    * @default false

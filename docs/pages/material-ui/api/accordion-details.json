@@ -2,6 +2,7 @@
   "props": {
     "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
+    "component": { "type": { "name": "elementType" } },
     "sx": {
       "type": {
         "name": "union",

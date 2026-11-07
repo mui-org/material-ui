@@ -29,12 +29,13 @@ const AccordionDetailsRoot = styled('div', {
 
 const AccordionDetails = React.forwardRef(function AccordionDetails(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiAccordionDetails' });
-  const { className, ...other } = props;
-  const ownerState = props;
+  const { className, component = 'div', ...other } = props;
+  const ownerState = { ...props, component };
   const classes = useUtilityClasses(ownerState);
 
   return (
     <AccordionDetailsRoot
+      as={component}
       className={clsx(classes.root, className)}
       ref={ref}
       ownerState={ownerState}
@@ -60,6 +61,11 @@ AccordionDetails.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

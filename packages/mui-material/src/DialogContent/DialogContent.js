@@ -68,12 +68,13 @@ const DialogContent = React.forwardRef(function DialogContent(inProps, ref) {
     name: 'MuiDialogContent',
   });
 
-  const { className, dividers = false, ...other } = props;
-  const ownerState = { ...props, dividers };
+  const { className, component = 'div', dividers = false, ...other } = props;
+  const ownerState = { ...props, component, dividers };
   const classes = useUtilityClasses(ownerState);
 
   return (
     <DialogContentRoot
+      as={component}
       className={clsx(classes.root, className)}
       ownerState={ownerState}
       ref={ref}
@@ -99,6 +100,11 @@ DialogContent.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
   /**
    * Display the top and bottom dividers.
    * @default false

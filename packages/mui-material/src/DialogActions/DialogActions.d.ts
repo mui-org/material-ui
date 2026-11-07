@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { SxProps } from '@mui/system';
 import { Theme } from '../styles';
-import { InternalStandardProps as StandardProps } from '../internal';
+import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { DialogActionsClasses } from './dialogActionsClasses';
 
-export interface DialogActionsProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
+export interface DialogActionsOwnProps {
   /**
    * The content of the component.
    */
@@ -24,6 +24,14 @@ export interface DialogActionsProps extends StandardProps<React.HTMLAttributes<H
   disableSpacing?: boolean | undefined;
 }
 
+export interface DialogActionsTypeMap<
+  AdditionalProps = {},
+  RootComponent extends React.ElementType = 'div',
+> {
+  props: AdditionalProps & DialogActionsOwnProps;
+  defaultComponent: RootComponent;
+}
+
 /**
  *
  * Demos:
@@ -34,4 +42,13 @@ export interface DialogActionsProps extends StandardProps<React.HTMLAttributes<H
  *
  * - [DialogActions API](https://next.mui.com/material-ui/api/dialog-actions/)
  */
-export default function DialogActions(props: DialogActionsProps): React.JSX.Element;
+declare const DialogActions: OverridableComponent<DialogActionsTypeMap>;
+
+export type DialogActionsProps<
+  RootComponent extends React.ElementType = DialogActionsTypeMap['defaultComponent'],
+  AdditionalProps = {},
+> = OverrideProps<DialogActionsTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
+  component?: React.ElementType | undefined;
+};
+
+export default DialogActions;

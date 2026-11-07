@@ -14,7 +14,7 @@ describe('<DialogActions />', () => {
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiDialogActions',
     testVariantProps: { disableSpacing: true },
-    skip: ['componentProp'],
+    testComponentPropWith: 'span',
   }));
 
   it.skipIf(isJsdom())('should apply margin to all children but the first one', function test() {

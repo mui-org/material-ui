@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { SxProps } from '@mui/system';
 import { Theme } from '../styles';
-import { InternalStandardProps as StandardProps } from '../internal';
+import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { CardActionsClasses } from './cardActionsClasses';
 
-export interface CardActionsProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
+export interface CardActionsOwnProps {
   /**
    * The content of the component.
    */
@@ -24,6 +24,14 @@ export interface CardActionsProps extends StandardProps<React.HTMLAttributes<HTM
   disableSpacing?: boolean | undefined;
 }
 
+export interface CardActionsTypeMap<
+  AdditionalProps = {},
+  RootComponent extends React.ElementType = 'div',
+> {
+  props: AdditionalProps & CardActionsOwnProps;
+  defaultComponent: RootComponent;
+}
+
 /**
  *
  * Demos:
@@ -34,4 +42,13 @@ export interface CardActionsProps extends StandardProps<React.HTMLAttributes<HTM
  *
  * - [CardActions API](https://next.mui.com/material-ui/api/card-actions/)
  */
-export default function CardActions(props: CardActionsProps): React.JSX.Element;
+declare const CardActions: OverridableComponent<CardActionsTypeMap>;
+
+export type CardActionsProps<
+  RootComponent extends React.ElementType = CardActionsTypeMap['defaultComponent'],
+  AdditionalProps = {},
+> = OverrideProps<CardActionsTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
+  component?: React.ElementType | undefined;
+};
+
+export default CardActions;

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { SxProps } from '@mui/system';
 import { Theme } from '../styles';
-import { InternalStandardProps as StandardProps } from '../internal';
+import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { AccordionDetailsClasses } from './accordionDetailsClasses';
 
-export interface AccordionDetailsProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
+export interface AccordionDetailsOwnProps {
   /**
    * The content of the component.
    */
@@ -19,6 +19,14 @@ export interface AccordionDetailsProps extends StandardProps<React.HTMLAttribute
   sx?: SxProps<Theme> | undefined;
 }
 
+export interface AccordionDetailsTypeMap<
+  AdditionalProps = {},
+  RootComponent extends React.ElementType = 'div',
+> {
+  props: AdditionalProps & AccordionDetailsOwnProps;
+  defaultComponent: RootComponent;
+}
+
 /**
  *
  * Demos:
@@ -29,4 +37,13 @@ export interface AccordionDetailsProps extends StandardProps<React.HTMLAttribute
  *
  * - [AccordionDetails API](https://next.mui.com/material-ui/api/accordion-details/)
  */
-export default function AccordionDetails(props: AccordionDetailsProps): React.JSX.Element;
+declare const AccordionDetails: OverridableComponent<AccordionDetailsTypeMap>;
+
+export type AccordionDetailsProps<
+  RootComponent extends React.ElementType = AccordionDetailsTypeMap['defaultComponent'],
+  AdditionalProps = {},
+> = OverrideProps<AccordionDetailsTypeMap<AdditionalProps, RootComponent>, RootComponent> & {
+  component?: React.ElementType | undefined;
+};
+
+export default AccordionDetails;

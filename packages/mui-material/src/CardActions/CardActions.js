@@ -47,14 +47,15 @@ const CardActions = React.forwardRef(function CardActions(inProps, ref) {
     name: 'MuiCardActions',
   });
 
-  const { disableSpacing = false, className, ...other } = props;
+  const { disableSpacing = false, className, component = 'div', ...other } = props;
 
-  const ownerState = { ...props, disableSpacing };
+  const ownerState = { ...props, component, disableSpacing };
 
   const classes = useUtilityClasses(ownerState);
 
   return (
     <CardActionsRoot
+      as={component}
       className={clsx(classes.root, className)}
       ownerState={ownerState}
       ref={ref}
@@ -80,6 +81,11 @@ CardActions.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
   /**
    * If `true`, the actions do not have additional margin.
    * @default false
