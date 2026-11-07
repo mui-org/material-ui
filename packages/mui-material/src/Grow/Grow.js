@@ -20,7 +20,7 @@ function getScale(value) {
 
 const styles = {
   entering: { opacity: 1, transform: getScale(1) },
-  entered: { opacity: 1, transform: 'none' },
+  entered: { opacity: 1, transform: getScale(1) },
   exiting: { opacity: 0, transform: getScale(0.75) },
   exited: { opacity: 0, transform: getScale(0.75) },
 };
