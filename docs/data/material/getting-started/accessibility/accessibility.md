@@ -109,6 +109,14 @@ Read this section before citing the report.
 - **Component coverage is partial.** 13 components are assessed. Widely used components including Select, Autocomplete, Dialog, Menu, Table, Tabs, Slider, Tooltip, Snackbar, and Drawer are **not yet assessed**, and this report says nothing about them.
 - **No assistive-technology testing.** No screen-reader passes have been performed. Criteria that depend on how a specific assistive technology behaves are assessed from the exposed accessibility tree, not from observed behavior.
 - **Level AAA is out of scope**, as it is for a standard VPAT.
+- **These layout and utility components are out of scope.** They add no roles or states of their own. When a rated component uses one of them, the report of that component covers it. For example, the Accordion report covers Collapse. You are responsible for the semantics of the content in them.
+  - Box, Stack, Grid, and Container lay out their children in a `div` that has no role by default.
+  - The transitions (Fade, Grow, Slide, Zoom, and Collapse) animate their child and hide it when it exits. They reduce motion only when `theme.motion.reducedMotion` is `system` or `always`. See [Reduced motion](/material-ui/customization/transitions/#reduced-motion).
+  - Collapse adds wrapper `div` elements that have no role. When `collapsedSize` is set, Collapse does not hide its content. The clipped content stays in the accessibility tree and in the tab order.
+  - CssBaseline, GlobalStyles, and InitColorSchemeScript add global styles or a script. ScopedCssBaseline adds styles to a `div` that has no role.
+  - Portal moves its children to the end of `body` by default. This changes the reading order and the focus order, so manage focus when you use it. NoSsr changes when its children render.
+  - ClickAwayListener detects clicks and touches outside its child. It does not respond to <kbd>Escape</kbd> or to focus that moves away. Give the user a keyboard method to close content that it closes.
+  - Modal, Popover, Popper, Backdrop, TextareaAutosize, and Image List have semantics or interaction of their own. They are not in this list, and they are not yet assessed.
 - **Components are rated in isolation**, as rendered with default props and the default theme. Customization, composition, and your surrounding page can change the result.
 - **Evidence strength varies.** See the Verified column above; the shortfall is assessed from the source but not yet re-verified.
 - **This is a self-assessment**, not audited by an independent third party.
