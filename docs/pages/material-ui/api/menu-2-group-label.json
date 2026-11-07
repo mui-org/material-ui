@@ -1,0 +1,38 @@
+{
+  "props": {
+    "children": { "type": { "name": "node" } },
+    "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
+    "className": { "type": { "name": "string" } },
+    "component": { "type": { "name": "elementType" } },
+    "slotProps": {
+      "type": { "name": "shape", "description": "{ root?: func<br>&#124;&nbsp;object }" }
+    },
+    "slots": { "type": { "name": "shape", "description": "{ root?: elementType }" } },
+    "style": { "type": { "name": "object" } },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    }
+  },
+  "name": "Menu2GroupLabel",
+  "imports": ["import MenuGroupLabel from '@mui/material/Unstable_Menu2GroupLabel';"],
+  "slots": [
+    {
+      "name": "root",
+      "description": "The component that renders the root.",
+      "default": "ListSubheader",
+      "class": "MuiMenu2GroupLabel-root"
+    }
+  ],
+  "classes": [],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiMenu2GroupLabel",
+  "forwardsRefTo": "HTMLDivElement",
+  "filename": "/packages/mui-material/src/Unstable_Menu2GroupLabel/Menu2GroupLabel.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-menu2/\">Menu v2</a></li></ul>"
+}

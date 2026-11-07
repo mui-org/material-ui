@@ -21,6 +21,7 @@
     "@types/react": "19.3.0",
     "@types/react-is": "19.3.0",
     "@types/sinon": "22.0.2",
+    "@types/stylis": "4.2.7",
     "docs": "workspace:^",
     "es-toolkit": "1.52.0",
     "fast-glob": "3.3.3",

@@ -1,0 +1,49 @@
+{
+  "props": {
+    "children": { "type": { "name": "node" } },
+    "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
+    "className": { "type": { "name": "string" } },
+    "defaultValue": { "type": { "name": "any" } },
+    "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "onValueChange": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(value: any, eventDetails: object) => void",
+        "describedArgs": ["value", "eventDetails"]
+      }
+    },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
+    "style": { "type": { "name": "object" } },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    },
+    "value": { "type": { "name": "any" } }
+  },
+  "name": "Menu2RadioGroup",
+  "imports": ["import MenuRadioGroup from '@mui/material/Unstable_Menu2RadioGroup';"],
+  "classes": [
+    {
+      "key": "disabled",
+      "className": "Mui-disabled",
+      "description": "State class applied to the root element if `disabled={true}`.",
+      "isGlobal": true
+    },
+    {
+      "key": "root",
+      "className": "MuiMenu2RadioGroup-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
+    }
+  ],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiMenu2RadioGroup",
+  "forwardsRefTo": "HTMLDivElement",
+  "filename": "/packages/mui-material/src/Unstable_Menu2RadioGroup/Menu2RadioGroup.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-menu2/\">Menu v2</a></li></ul>"
+}

@@ -165,7 +165,11 @@ function extractClassesFromProps(
 
   const classes: Record<string, ClassInfo> = {};
   classesProp.signatures.forEach((propType) => {
-    const type = typescriptProject.checker.getTypeAtLocation(propType.symbol.declarations![0]);
+    // Read the instantiated prop rather than its potentially generic declaration.
+    const type = typescriptProject.checker.getTypeOfSymbolAtLocation(
+      propType.symbol,
+      propType.symbol.declarations![0],
+    );
     removeUndefinedFromType(type)
       ?.getProperties()
       .forEach((property) => {

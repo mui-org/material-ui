@@ -1,4 +1,4 @@
-import { describe, beforeAll, afterAll, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, beforeAll, afterAll, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import getScrollbarSize from '@mui/utils/getScrollbarSize';
 import { ModalManager } from './ModalManager';
 
@@ -560,6 +560,110 @@ describe('ModalManager', () => {
       expect(wrapper).toBeInaccessible();
       expect(appContent.getAttribute('aria-hidden')).to.equal(null);
       expect(portalRef).not.toBeInaccessible();
+    });
+  });
+
+  describe('scroll lock', () => {
+    let container: HTMLDivElement;
+    let sibling: HTMLDivElement;
+
+    beforeEach(() => {
+      modalManager = new ModalManager();
+      container = document.createElement('div');
+      container.style.overflow = 'scroll';
+      sibling = document.createElement('div');
+      container.appendChild(sibling);
+      document.body.appendChild(container);
+    });
+
+    afterEach(() => {
+      document.body.removeChild(container);
+    });
+
+    function countOverflowRestores() {
+      const setProperty = vi.spyOn(container.style, 'setProperty');
+      return () => setProperty.mock.calls.filter(([property]) => property === 'overflow').length;
+    }
+
+    it('locks the container without changing aria-hidden', () => {
+      const release = modalManager.lockScroll(container);
+      expect(container.style.overflow).to.equal('hidden');
+      expect(sibling).not.toBeInaccessible();
+
+      release();
+      expect(container.style.overflow).to.equal('scroll');
+    });
+
+    it('keeps the lock until the last scroll lock is released', () => {
+      const restores = countOverflowRestores();
+      const release1 = modalManager.lockScroll(container);
+      const release2 = modalManager.lockScroll(container);
+
+      release1();
+      expect(container.style.overflow).to.equal('hidden');
+
+      release2();
+      expect(container.style.overflow).to.equal('scroll');
+      expect(restores()).to.equal(1);
+    });
+
+    it('shares the lock with a modal that closes first', () => {
+      const restores = countOverflowRestores();
+      const modal = { ...getDummyModal(), modalRef: document.createElement('div') };
+      container.appendChild(modal.modalRef);
+      const release = modalManager.lockScroll(container);
+
+      modalManager.add(modal, container);
+      modalManager.mount(modal, {});
+      expect(sibling).toBeInaccessible();
+
+      modalManager.remove(modal);
+      expect(container.style.overflow).to.equal('hidden');
+      expect(sibling).not.toBeInaccessible();
+
+      release();
+      expect(container.style.overflow).to.equal('scroll');
+      expect(restores()).to.equal(1);
+    });
+
+    it('shares the lock with a modal that closes last', () => {
+      const restores = countOverflowRestores();
+      const modal = getDummyModal();
+      modalManager.add(modal, container);
+      modalManager.mount(modal, {});
+
+      const release = modalManager.lockScroll(container);
+      release();
+      expect(container.style.overflow).to.equal('hidden');
+      expect(modalManager.isTopModal(modal)).to.equal(true);
+
+      modalManager.remove(modal);
+      expect(container.style.overflow).to.equal('scroll');
+      expect(restores()).to.equal(1);
+    });
+
+    it('locks separate containers separately', () => {
+      const other = document.createElement('div');
+      other.style.overflow = 'auto';
+      document.body.appendChild(other);
+      const modal = getDummyModal();
+
+      try {
+        const release = modalManager.lockScroll(container);
+        modalManager.add(modal, other);
+        modalManager.mount(modal, {});
+        expect(container.style.overflow).to.equal('hidden');
+        expect(other.style.overflow).to.equal('hidden');
+
+        release();
+        expect(container.style.overflow).to.equal('scroll');
+        expect(other.style.overflow).to.equal('hidden');
+
+        modalManager.remove(modal);
+        expect(other.style.overflow).to.equal('auto');
+      } finally {
+        document.body.removeChild(other);
+      }
     });
   });
 });

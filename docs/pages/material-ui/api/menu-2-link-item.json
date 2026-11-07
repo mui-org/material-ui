@@ -1,0 +1,70 @@
+{
+  "props": {
+    "children": { "type": { "name": "node" } },
+    "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
+    "className": { "type": { "name": "string" } },
+    "closeOnClick": { "type": { "name": "bool" }, "default": "false" },
+    "dense": { "type": { "name": "bool" }, "default": "false" },
+    "disableGutters": { "type": { "name": "bool" }, "default": "false" },
+    "disableRipple": { "type": { "name": "bool" }, "default": "false" },
+    "divider": { "type": { "name": "bool" }, "default": "false" },
+    "href": { "type": { "name": "string" } },
+    "label": { "type": { "name": "string" } },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
+    "style": { "type": { "name": "object" } },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    }
+  },
+  "name": "Menu2LinkItem",
+  "imports": ["import MenuLinkItem from '@mui/material/Unstable_Menu2LinkItem';"],
+  "classes": [
+    {
+      "key": "dense",
+      "className": "MuiMenu2LinkItem-dense",
+      "description": "Styles applied to the root element if `dense={true}`.",
+      "isGlobal": false
+    },
+    {
+      "key": "disabled",
+      "className": "Mui-disabled",
+      "description": "State class applied to the root element if `disabled={true}`.",
+      "isGlobal": true
+    },
+    {
+      "key": "divider",
+      "className": "MuiMenu2LinkItem-divider",
+      "description": "Styles applied to the root element if `divider={true}`.",
+      "isGlobal": false
+    },
+    {
+      "key": "gutters",
+      "className": "MuiMenu2LinkItem-gutters",
+      "description": "Styles applied to the root element unless `disableGutters={true}`.",
+      "isGlobal": false
+    },
+    {
+      "key": "highlighted",
+      "className": "MuiMenu2LinkItem-highlighted",
+      "description": "State class applied to the root element if highlighted.",
+      "isGlobal": false
+    },
+    {
+      "key": "root",
+      "className": "MuiMenu2LinkItem-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
+    }
+  ],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiMenu2LinkItem",
+  "forwardsRefTo": "HTMLAnchorElement",
+  "filename": "/packages/mui-material/src/Unstable_Menu2LinkItem/Menu2LinkItem.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-menu2/\">Menu v2</a></li></ul>"
+}

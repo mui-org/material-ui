@@ -1,0 +1,56 @@
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "align": { "description": "How to align the popup relative to the specified side." },
+    "alignOffset": { "description": "Additional offset along the alignment axis in pixels." },
+    "anchor": {
+      "description": "An element to position the popup against.<br>By default, the popup is positioned against the submenu trigger."
+    },
+    "children": { "description": "The submenu items." },
+    "classes": { "description": "Override or extend the styles applied to the component." },
+    "className": { "description": "CSS class applied to the menu surface." },
+    "collisionAvoidance": {
+      "description": "Determines how to handle collisions when positioning the popup."
+    },
+    "collisionBoundary": {
+      "description": "An element or a rectangle that delimits the area that the popup is confined to."
+    },
+    "collisionPadding": {
+      "description": "Additional space to maintain from the edge of the collision boundary."
+    },
+    "container": { "description": "The container element to portal the popup into." },
+    "disableAnchorTracking": {
+      "description": "Whether to disable the popup from tracking layout shifts of its positioning anchor."
+    },
+    "elevation": { "description": "The elevation of the menu surface." },
+    "finalFocus": { "description": "Determines the element to focus when the menu is closed." },
+    "keepMounted": {
+      "description": "Whether to keep the portal mounted in the DOM while the popup is hidden."
+    },
+    "positionMethod": {
+      "description": "Determines which CSS <code>position</code> property to use."
+    },
+    "side": { "description": "Which side of the anchor element to align the popup against." },
+    "sideOffset": { "description": "Distance between the anchor and the popup in pixels." },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
+    "sticky": {
+      "description": "Whether to maintain the popup in the viewport after the anchor element was scrolled out of view."
+    },
+    "style": { "description": "Inline styles applied to the menu surface." },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles. Applied to the menu surface."
+    },
+    "transitionDuration": {
+      "description": "The transition duration in milliseconds, or separate enter and exit durations. Set to &#39;auto&#39; for height-dependent Grow timing, or 0 to disable the transition. Ignored when slots.transition is null."
+    }
+  },
+  "classDescriptions": {},
+  "slotDescriptions": {
+    "list": "The component used for the presentational list wrapper.",
+    "portal": "The component used for the portal element, which contains the menu.",
+    "positioner": "The component used to position the menu surface.",
+    "root": "The component used for the menu surface. The popup renders as this element.",
+    "transition": "The transition applied to the popup element. Set to null to use CSS animations instead."
+  }
+}

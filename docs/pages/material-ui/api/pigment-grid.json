@@ -56,10 +56,7 @@
     }
   },
   "name": "PigmentGrid",
-  "imports": [
-    "import PigmentGrid from '@mui/material/PigmentGrid';",
-    "import { PigmentGrid } from '@mui/material';"
-  ],
+  "imports": ["import PigmentGrid from '@mui/material/PigmentGrid';"],
   "classes": [],
   "muiName": "MuiPigmentGrid",
   "filename": "/packages/mui-material/src/PigmentGrid/PigmentGrid.tsx",

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="112" viewBox="0 0 240 112" fill="none">
+  <path fill="#EAF2FF" d="M0 0h240v112H0z" />
+  <rect x="32" y="16" width="64" height="80" rx="6" fill="#FFF" stroke="#A8C7FA" stroke-width="2" />
+  <rect
+    x="144"
+    y="16"
+    width="64"
+    height="80"
+    rx="6"
+    fill="#FFF"
+    stroke="#A8C7FA"
+    stroke-width="2"
+  />
+  <path
+    d="M46 36h24m-24 12h36M46 60h36M46 72h24m88-36h24m-24 12h36m-36 12h36m-36 12h24"
+    stroke="#7894BA"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+  <path
+    d="M107 56h26m-8-8 8 8-8 8"
+    stroke="#1967D2"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

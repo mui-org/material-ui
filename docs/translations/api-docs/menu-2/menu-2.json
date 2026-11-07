@@ -1,0 +1,38 @@
+{
+  "componentDescription": "Controls a menu without rendering a DOM element.\nUse `MuiMenu2.defaultProps` to set behavior defaults in the theme.",
+  "propDescriptions": {
+    "actionsRef": {
+      "description": "<p>A ref to imperative actions.</p>\n<ul>\n<li><code>unmount</code>: Ends the closing phase of the menu after an externally controlled closing animation finishes.\nCall <code>preventUnmountOnClose()</code> in <code>onOpenChange</code> first, otherwise the menu completes closing on its own.\nWhether it leaves the DOM is decided by <code>keepMounted</code> on <code>Menu2Popup</code>.</li>\n<li><code>close</code>: Closes the menu imperatively when called.</li>\n</ul>\n"
+    },
+    "children": { "description": "The menu trigger and popup." },
+    "defaultOpen": {
+      "description": "Whether the menu is initially open.<br>To render a controlled menu, use the <code>open</code> prop instead."
+    },
+    "disabled": { "description": "Whether the component should ignore user interaction." },
+    "highlightItemOnHover": {
+      "description": "Whether moving the pointer over items should highlight them. Disabling this prop allows CSS <code>:hover</code> to be differentiated from the <code>:focus</code> (<code>data-highlighted</code>) state."
+    },
+    "loopFocus": {
+      "description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys."
+    },
+    "modal": {
+      "description": "<p>Determines if the menu enters a modal state when open.</p>\n<ul>\n<li><code>true</code>: the page scroll is locked, and the popup backdrop blocks pointer interactions outside the menu.</li>\n<li><code>false</code>: user interaction with the rest of the document is allowed.</li>\n</ul>\n<p>Nested menus ignore this prop, and menus opened by hover are never modal.</p>\n"
+    },
+    "onOpenChange": {
+      "description": "Event handler called when the menu is opened or closed.",
+      "typeDescriptions": {
+        "open": { "name": "open", "description": "The new open state." },
+        "eventDetails": {
+          "name": "eventDetails",
+          "description": "The reason for the change and the native event."
+        }
+      }
+    },
+    "onOpenChangeComplete": {
+      "description": "Event handler called after the opening or closing animation completes.",
+      "typeDescriptions": { "open": { "name": "open", "description": "Whether the menu is open." } }
+    },
+    "open": { "description": "Whether the menu is currently open." }
+  },
+  "classDescriptions": {}
+}

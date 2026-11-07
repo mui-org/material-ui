@@ -9,6 +9,15 @@ import formLabelClasses from '../FormLabel/formLabelClasses';
 import inputClasses from '../Input/inputClasses';
 import listItemButtonClasses from '../ListItemButton/listItemButtonClasses';
 import menuItemClasses from '../MenuItem/menuItemClasses';
+import {
+  menu2CheckboxItemClasses,
+  menu2CheckboxItemIndicatorClasses,
+  menu2ItemClasses,
+  menu2LinkItemClasses,
+  menu2RadioItemClasses,
+  menu2RadioItemIndicatorClasses,
+  menu2SubmenuTriggerClasses,
+} from '../Unstable_Menu2/menu2Classes';
 import nativeSelectClasses from '../NativeSelect/nativeSelectClasses';
 import outlinedInputClasses from '../OutlinedInput/outlinedInputClasses';
 import radioClasses from '../Radio/radioClasses';
@@ -587,6 +596,318 @@ describe('enhanceHighContrast', () => {
     });
   });
 
+  describe('Menu2 item overrides', () => {
+    const itemCases: Array<
+      [component: string, classes: { disabled: string; highlighted: string }, slot: string]
+    > = [
+      ['MuiMenu2Item', menu2ItemClasses, 'root'],
+      ['MuiMenu2LinkItem', menu2LinkItemClasses, 'root'],
+      ['MuiMenu2CheckboxItem', menu2CheckboxItemClasses, 'root'],
+      ['MuiMenu2RadioItem', menu2RadioItemClasses, 'root'],
+      ['MuiMenu2SubmenuTrigger', menu2SubmenuTriggerClasses, 'root'],
+    ];
+
+    test.each(itemCases)(
+      '%s uses keyboard focus and hover for the active state',
+      (component, _classes, slot) => {
+        const theme = enhanceHighContrast(createTheme());
+        const rootOverrides = (theme.components as any)[component].styleOverrides[
+          slot
+        ] as Array<StyleOverride>;
+        const hcmOverride = rootOverrides[rootOverrides.length - 1];
+
+        expect(hcmOverride[`&.${menuItemClasses.focusVisible}, &:hover`]).to.deep.equal({
+          [HCM]: {
+            forcedColorAdjust: 'none',
+            color: 'HighlightText',
+            backgroundColor: 'Highlight',
+            outline: 'none',
+          },
+        });
+      },
+    );
+
+    test.each(itemCases)(
+      '%s covers disabled without selected styling',
+      (component, classes, slot) => {
+        const theme = enhanceHighContrast(createTheme());
+        const rootOverrides = (theme.components as any)[component].styleOverrides[
+          slot
+        ] as Array<StyleOverride>;
+        const hcmOverride = rootOverrides[rootOverrides.length - 1];
+
+        expect(hcmOverride[`&.${classes.disabled}`]).to.deep.equal({
+          [HCM]: { color: 'GrayText', opacity: 1 },
+        });
+        expect(
+          Object.keys(hcmOverride).some((selector) => selector.includes('Mui-selected')),
+        ).to.equal(false);
+      },
+    );
+
+    test.each(itemCases)('%s uses custom tokens', (component, classes, slot) => {
+      const theme = enhanceHighContrast(createTheme(), {
+        disabled: 'ButtonText',
+        activeText: 'Canvas',
+        activeBackground: 'ButtonBorder',
+      });
+      const rootOverrides = (theme.components as any)[component].styleOverrides[
+        slot
+      ] as Array<StyleOverride>;
+      const hcmOverride = rootOverrides[rootOverrides.length - 1];
+
+      expect(hcmOverride[`&.${classes.disabled}`]).to.deep.equal({
+        [HCM]: { color: 'ButtonText', opacity: 1 },
+      });
+      expect(hcmOverride[`&.${menuItemClasses.focusVisible}, &:hover`]).to.deep.equal({
+        [HCM]: {
+          forcedColorAdjust: 'none',
+          color: 'Canvas',
+          backgroundColor: 'ButtonBorder',
+          outline: 'none',
+        },
+      });
+    });
+
+    test.each(itemCases)(
+      '%s keeps the disabled cue during keyboard focus',
+      (component, classes, slot) => {
+        // Base UI keeps disabled items focusable, so this combination is
+        // reachable here even though it is not on the classic item.
+        const theme = enhanceHighContrast(createTheme());
+        const rootOverrides = (theme.components as any)[component].styleOverrides[
+          slot
+        ] as Array<StyleOverride>;
+        const hcmOverride = rootOverrides[rootOverrides.length - 1];
+
+        expect(hcmOverride[`&.${classes.disabled}.${menuItemClasses.focusVisible}`]).to.deep.equal({
+          [HCM]: {
+            forcedColorAdjust: 'none',
+            color: 'GrayText',
+            backgroundColor: 'Canvas',
+            outline: '1px solid ButtonBorder',
+          },
+        });
+      },
+    );
+
+    test.each(itemCases)(
+      '%s orders the disabled rules after the focus styles',
+      (component, classes, slot) => {
+        const theme = enhanceHighContrast(createTheme());
+        const rootOverrides = (theme.components as any)[component].styleOverrides[
+          slot
+        ] as Array<StyleOverride>;
+        const keys = Object.keys(rootOverrides[rootOverrides.length - 1]);
+
+        expect(keys.indexOf(`&.${classes.disabled}`)).to.be.greaterThan(
+          keys.indexOf(`&.${menuItemClasses.focusVisible}, &:hover`),
+        );
+        expect(keys.indexOf(`&.${classes.disabled}`)).to.be.greaterThan(
+          keys.indexOf(`&.${classes.highlighted}`),
+        );
+      },
+    );
+
+    test.each(itemCases)(
+      '%s keeps the active system colors after a root state override',
+      (component, classes) => {
+        const selector = `&.${classes.highlighted}`;
+        const custom = { [selector]: { color: '#111', backgroundColor: '#222' } };
+        const themeInput = createTheme({
+          components: { [component]: { styleOverrides: { root: custom } } },
+        });
+        const theme = enhanceHighContrast(themeInput);
+        const styleOverrides = (theme.components as any)[component].styleOverrides;
+        const rootOverrides = styleOverrides.root as Array<StyleOverride>;
+
+        expect(styleOverrides).not.to.have.property('highlighted');
+        expect(rootOverrides).to.have.length(2);
+        expect(rootOverrides[0]).to.deep.equal(custom);
+        expect(rootOverrides[1][selector]).to.deep.equal({
+          [HCM]: {
+            forcedColorAdjust: 'none',
+            color: 'HighlightText',
+            backgroundColor: 'Highlight',
+          },
+        });
+        expect((themeInput.components as any)[component].styleOverrides.root).to.deep.equal(custom);
+      },
+    );
+
+    test('MuiMenu2SubmenuTrigger owns its open state', () => {
+      const theme = enhanceHighContrast(createTheme());
+      const rootOverrides = theme.components?.MuiMenu2SubmenuTrigger?.styleOverrides
+        ?.root as Array<StyleOverride>;
+      const hcmOverride = rootOverrides[rootOverrides.length - 1] as Record<string, StyleOverride>;
+
+      expect(hcmOverride[`&.${menu2SubmenuTriggerClasses.open}`]).to.deep.equal({
+        [HCM]: {
+          forcedColorAdjust: 'none',
+          color: 'HighlightText',
+          backgroundColor: 'Highlight',
+        },
+      });
+    });
+
+    test('MuiMenu2SubmenuTrigger keeps the exit tint internal', () => {
+      const theme = enhanceHighContrast(createTheme());
+      const styleOverrides = theme.components?.MuiMenu2SubmenuTrigger?.styleOverrides;
+      const rootOverrides = styleOverrides?.root as Array<StyleOverride>;
+      const hcmOverride = rootOverrides[rootOverrides.length - 1];
+
+      expect(styleOverrides).not.to.have.property('closing');
+      expect(hcmOverride).not.to.have.property('variants');
+      expect(hcmOverride['&[data-mui-internal-retain-open-tint]']).to.deep.equal({
+        [HCM]: {
+          forcedColorAdjust: 'none',
+          color: 'HighlightText',
+          backgroundColor: 'Highlight',
+        },
+      });
+    });
+
+    test('MuiMenu2SubmenuTrigger protects its exit tint after a root override', () => {
+      const custom = { color: '#111', backgroundColor: '#222' };
+      const theme = enhanceHighContrast(
+        createTheme({
+          components: { MuiMenu2SubmenuTrigger: { styleOverrides: { root: custom } } },
+        }),
+        { activeText: 'Canvas', activeBackground: 'ButtonBorder' },
+      );
+      const rootOverrides = theme.components?.MuiMenu2SubmenuTrigger?.styleOverrides
+        ?.root as Array<StyleOverride>;
+      expect(rootOverrides[0]).to.deep.equal(custom);
+      const hcmOverride = rootOverrides[rootOverrides.length - 1];
+
+      const activeColors = {
+        forcedColorAdjust: 'none',
+        color: 'Canvas',
+        backgroundColor: 'ButtonBorder',
+      };
+      expect(hcmOverride['&[data-mui-internal-retain-open-tint]']).to.deep.equal({
+        [HCM]: activeColors,
+      });
+      expect(hcmOverride[`&.${menu2SubmenuTriggerClasses.open}`]).to.deep.equal({
+        [HCM]: activeColors,
+      });
+      // A pointer exit does not retain the active tint, but focused
+      // triggers still need their system colors after the custom root rule.
+      expect(hcmOverride[`&.${menuItemClasses.focusVisible}, &:hover`]).to.deep.equal({
+        [HCM]: { ...activeColors, outline: 'none' },
+      });
+      const keys = Object.keys(hcmOverride);
+      expect(keys.indexOf(`&.${menu2SubmenuTriggerClasses.disabled}`)).to.be.greaterThan(
+        keys.indexOf('&[data-mui-internal-retain-open-tint]'),
+      );
+    });
+  });
+
+  describe('Menu2 indicator overrides', () => {
+    const indicatorCases = [
+      ['MuiMenu2CheckboxItem', menu2CheckboxItemIndicatorClasses, menu2CheckboxItemClasses],
+      ['MuiMenu2RadioItem', menu2RadioItemIndicatorClasses, menu2RadioItemClasses],
+    ] as const;
+
+    // The checkmark is a hole in the `CheckBox` icon, so it shows the item
+    // background on its own and needs no override of its own.
+    test.each(indicatorCases)('%s indicators inherit their item colors', (component, classes) => {
+      const theme = enhanceHighContrast(createTheme());
+      const indicatorOverrides = theme.components?.[component]?.styleOverrides
+        ?.indicator as Array<StyleOverride>;
+      const hcmOverride = indicatorOverrides[indicatorOverrides.length - 1][HCM] as StyleOverride;
+      const [selector] = Object.keys(hcmOverride);
+
+      // Match the checked rule's (0,2,0) specificity, and (0,3,0) when a
+      // caller combines checked with highlighted or disabled in a slot override.
+      expect(selector.split(', ')).to.have.members([
+        '&',
+        '&[data-checked]',
+        `&.${classes.disabled}`,
+        `&[data-checked].${classes.disabled}`,
+        `&.${classes.highlighted}`,
+        `&[data-checked].${classes.highlighted}`,
+      ]);
+      expect(hcmOverride[selector]).to.deep.equal({
+        color: 'inherit',
+        backgroundColor: 'transparent',
+      });
+    });
+
+    test.each(indicatorCases)(
+      '%s preserves slot defaults and nested state overrides before its system colors',
+      (component, classes) => {
+        const custom = {
+          color: '#111',
+          backgroundColor: '#222',
+          [`&.${classes.highlighted}`]: { color: '#333', backgroundColor: '#444' },
+          [`&.${classes.checked}.${classes.highlighted}`]: {
+            color: '#555',
+            backgroundColor: '#666',
+          },
+          [`&.${classes.disabled}`]: { color: '#777' },
+        };
+        const defaultProps = { slotProps: { indicator: { sx: { minWidth: 40 } } } };
+        const root = { margin: 2 };
+        const themeInput = createTheme({
+          components: {
+            [component]: { defaultProps, styleOverrides: { root, indicator: custom } },
+          },
+        });
+        const theme = enhanceHighContrast(themeInput);
+        const indicatorOverrides = theme.components?.[component]?.styleOverrides
+          ?.indicator as Array<StyleOverride>;
+
+        expect(indicatorOverrides).to.have.length(2);
+        expect(indicatorOverrides[0]).to.deep.equal(custom);
+        expect(indicatorOverrides[1]).to.have.property(HCM);
+        expect(theme.components?.[component]?.defaultProps).to.deep.equal(defaultProps);
+        expect(theme.components?.[component]?.styleOverrides?.root).to.have.deep.property(
+          '0',
+          root,
+        );
+        expect(themeInput.components?.[component]?.styleOverrides?.indicator).to.deep.equal(custom);
+      },
+    );
+
+    test.each(indicatorCases)(
+      '%s indicators inherit custom system colors',
+      (component, classes, itemClasses) => {
+        const theme = enhanceHighContrast(createTheme(), {
+          disabled: 'ButtonText',
+          activeText: 'Canvas',
+          activeBackground: 'ButtonBorder',
+        });
+        const overrides = theme.components?.[component]?.styleOverrides;
+        const rootOverrides = overrides?.root as Array<StyleOverride>;
+        const indicatorOverrides = overrides?.indicator as Array<StyleOverride>;
+
+        expect(rootOverrides[rootOverrides.length - 1][`&.${classes.disabled}`]).to.deep.equal({
+          [HCM]: { color: 'ButtonText', opacity: 1 },
+        });
+        expect(
+          rootOverrides[rootOverrides.length - 1][`&.${itemClasses.highlighted}`],
+        ).to.deep.equal({
+          [HCM]: {
+            forcedColorAdjust: 'none',
+            color: 'Canvas',
+            backgroundColor: 'ButtonBorder',
+          },
+        });
+        expect(
+          Object.values(indicatorOverrides[indicatorOverrides.length - 1][HCM] as StyleOverride),
+        ).to.deep.equal([{ color: 'inherit', backgroundColor: 'transparent' }]);
+      },
+    );
+
+    test('does not add theme keys for private indicator components', () => {
+      const theme = enhanceHighContrast(createTheme());
+
+      expect(theme.components).not.to.have.property('MuiMenu2CheckboxItemIndicator');
+      expect(theme.components).not.to.have.property('MuiMenu2RadioItemIndicator');
+    });
+  });
+
   describe('MuiNativeSelect overrides', () => {
     test('should apply disabled color to disabled icon', () => {
       const theme = enhanceHighContrast(createTheme());
@@ -880,6 +1201,13 @@ describe('enhanceHighContrast', () => {
       ['MuiLinearProgress', 'bar2'],
       ['MuiListItemButton', 'root'],
       ['MuiMenuItem', 'root'],
+      ['MuiMenu2Item', 'root'],
+      ['MuiMenu2LinkItem', 'root'],
+      ['MuiMenu2CheckboxItem', 'root'],
+      ['MuiMenu2RadioItem', 'root'],
+      ['MuiMenu2SubmenuTrigger', 'root'],
+      ['MuiMenu2CheckboxItem', 'indicator'],
+      ['MuiMenu2RadioItem', 'indicator'],
       ['MuiNativeSelect', 'icon'],
       ['MuiOutlinedInput', 'root'],
       ['MuiRadio', 'root'],

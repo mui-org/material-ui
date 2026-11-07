@@ -102,6 +102,15 @@ export interface UseButtonBaseReturnValue {
 
 const EMPTY = {};
 
+/**
+ * A handler can set `defaultMuiPrevented` to keep `useButtonBase` from
+ * emulating the Enter and Space activation, the same convention that
+ * Autocomplete and Snackbar use.
+ */
+export type MuiKeyboardEvent = React.KeyboardEvent<HTMLElement> & {
+  defaultMuiPrevented?: boolean | undefined;
+};
+
 export default function useButtonBase(
   parameters: UseButtonBaseParameters,
 ): UseButtonBaseReturnValue {
@@ -266,7 +275,7 @@ export default function useButtonBase(
         externalOnClick?.(event);
       };
 
-      const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = (event) => {
+      const handleKeyDown = (event: MuiKeyboardEvent) => {
         if (focusableWhenDisabled) {
           focusableWhenDisabledProps.onKeyDown(event);
         }
@@ -278,7 +287,11 @@ export default function useButtonBase(
         onBeforeKeyDown?.(event);
         externalOnKeyDown?.(event);
 
-        if (event.target !== event.currentTarget || hasNativeKeyboardActivation()) {
+        if (
+          event.defaultMuiPrevented ||
+          event.target !== event.currentTarget ||
+          hasNativeKeyboardActivation()
+        ) {
           return;
         }
 
@@ -293,7 +306,7 @@ export default function useButtonBase(
         }
       };
 
-      const handleKeyUp: React.KeyboardEventHandler<HTMLElement> = (event) => {
+      const handleKeyUp = (event: MuiKeyboardEvent) => {
         if (disabled) {
           return;
         }
@@ -302,6 +315,7 @@ export default function useButtonBase(
         externalOnKeyUp?.(event);
 
         if (
+          !event.defaultMuiPrevented &&
           event.target === event.currentTarget &&
           !hasNativeKeyboardActivation() &&
           event.key === ' ' &&

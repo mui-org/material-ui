@@ -1,0 +1,33 @@
+{
+  "props": {
+    "actionsRef": {
+      "type": { "name": "shape", "description": "{ current?: { close: func, unmount: func } }" }
+    },
+    "children": { "type": { "name": "node" } },
+    "closeParentOnEsc": { "type": { "name": "bool" }, "default": "false" },
+    "defaultOpen": { "type": { "name": "bool" }, "default": "false" },
+    "highlightItemOnHover": { "type": { "name": "bool" }, "default": "true" },
+    "loopFocus": { "type": { "name": "bool" }, "default": "true" },
+    "onOpenChange": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(open: boolean, eventDetails: object) => void",
+        "describedArgs": ["open", "eventDetails"]
+      }
+    },
+    "onOpenChangeComplete": {
+      "type": { "name": "func" },
+      "signature": { "type": "function(open: boolean) => void", "describedArgs": ["open"] }
+    },
+    "open": { "type": { "name": "bool" } }
+  },
+  "name": "Menu2Submenu",
+  "imports": ["import MenuSubmenu from '@mui/material/Unstable_Menu2Submenu';"],
+  "classes": [],
+  "spread": false,
+  "themeDefaultProps": null,
+  "muiName": "MuiMenu2Submenu",
+  "filename": "/packages/mui-material/src/Unstable_Menu2Submenu/Menu2Submenu.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-menu2/\">Menu v2</a></li></ul>"
+}

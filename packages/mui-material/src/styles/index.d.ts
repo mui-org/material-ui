@@ -83,7 +83,7 @@ export { default as useThemeProps } from './useThemeProps';
 export * from './useThemeProps';
 export { default as styled } from './styled';
 export { default as ThemeProvider, ThemeProviderProps } from './ThemeProvider';
-export { ComponentsProps, ComponentsPropsList } from './props';
+export { ComponentsProps, ComponentsPropsList, ComponentsOwnerStateList } from './props';
 export { ComponentsVariants } from './variants';
 export { ComponentsOverrides, ComponentNameToClassKey } from './overrides';
 export { Components } from './components';

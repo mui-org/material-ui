@@ -173,6 +173,22 @@ export const SCREENSHOT_RULES: ScreenshotRule[] = [
   // The a11y fixture tree exists for axe, so screenshots are off by default.
   // Later rules re-enable single fixtures that also guard a visual state.
   { test: 'test/regressions/a11y/fixtures/**', enabled: false }, // A11y-only coverage fixtures
+  // Wait for portal content so axe cannot pass on a trigger-only render.
+  {
+    test: 'test/regressions/a11y/fixtures/menus/Menu2A11yOpen',
+    enabled: false,
+    waitForSelector: '[data-testid="root-menu"][data-open]',
+  },
+  {
+    test: 'test/regressions/a11y/fixtures/menus/Menu2A11yNested',
+    enabled: false,
+    waitForSelector: '[data-testid="nested-menu"][data-open]',
+  },
+  {
+    test: 'test/regressions/a11y/fixtures/menus/Menu2A11yNonModal',
+    enabled: false,
+    waitForSelector: '[data-testid="non-modal-menu"][data-open]',
+  },
   { test: 'test/regressions/a11y/fixtures/buttons/ButtonA11yTextSpacing', enabled: true }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
   { test: 'test/regressions/a11y/fixtures/accordion/AccordionA11yTextSpacing', enabled: true }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
   {
@@ -300,6 +316,29 @@ const TEXTFIELD_A11Y_DEMOS = [
  * incrementally.
  */
 export const A11Y_RULES: A11yRule[] = [
+  {
+    test: 'test/regressions/a11y/fixtures/menus/Menu2A11yOpen',
+    enabled: true,
+    assertions: 'all',
+    // Axe requires review of Base UI's focus guards and aria-controls on popup triggers.
+    // Interaction tests check the trigger references. Keep the incomplete results in the report.
+    skipAssertions: ['aria-hidden-focus', 'aria-valid-attr-value'],
+  },
+  {
+    test: 'test/regressions/a11y/fixtures/menus/Menu2A11yNested',
+    enabled: true,
+    assertions: 'all',
+    // The same review checks apply. Base UI 1.8 gives the owner span an allowed group role.
+    skipAssertions: ['aria-hidden-focus', 'aria-valid-attr-value'],
+  },
+  {
+    test: 'test/regressions/a11y/fixtures/menus/Menu2A11yNonModal',
+    enabled: true,
+    assertions: 'all',
+    // Base UI's focus guards fail aria-hidden-focus; axe also requires review of aria-controls.
+    // Keyboard interaction tests check focus movement and the referenced popup IDs.
+    skipAssertions: ['aria-hidden-focus', 'aria-valid-attr-value'],
+  },
   {
     test: 'docs/data/material/components/avatars/{LetterAvatars,BackgroundLetterAvatars,IconAvatars,VariantAvatars}',
     enabled: true,

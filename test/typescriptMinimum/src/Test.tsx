@@ -9,6 +9,47 @@ const theme = createTheme({
   components: {
     MuiButton: { defaultProps: { variant: 'contained' } },
     MuiMenu: { defaultProps: { keepMounted: true } },
+    MuiMenu2: {
+      defaultProps: { modal: false },
+    },
+    MuiMenu2Popup: {
+      defaultProps: { align: 'start' },
+      styleOverrides: {
+        root: ({ ownerState, theme: componentTheme }) => {
+          ownerState.elevation satisfies number | undefined;
+          // @ts-expect-error Owner state must retain the declared prop types.
+          ownerState.elevation satisfies string;
+          return { minWidth: componentTheme.spacing(20) };
+        },
+        positioner: { transition: 'none' },
+      },
+      variants: [{ props: { align: 'start' }, style: { color: 'navy' } }],
+    },
+    MuiMenu2Submenu: { defaultProps: { loopFocus: true } },
+    MuiMenu2SubmenuPopup: {
+      defaultProps: { side: 'inline-end' },
+      styleOverrides: { root: { minWidth: 180 } },
+    },
+    MuiMenu2Item: {
+      defaultProps: { dense: true },
+      styleOverrides: { dense: { minHeight: 24 } },
+    },
+    MuiMenu2Trigger: { defaultProps: { openOnHover: true, delay: 200 } },
+  },
+});
+
+createTheme({
+  components: {
+    MuiMenu2: {
+      defaultProps: {
+        // @ts-expect-error Theme defaults must retain the declared prop types.
+        modal: 'false',
+      },
+    },
+    MuiMenu2Trigger: {
+      // @ts-expect-error The render element owns its styles.
+      styleOverrides: { root: { color: 'red' } },
+    },
   },
 });
 

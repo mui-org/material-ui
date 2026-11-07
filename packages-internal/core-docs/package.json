@@ -55,7 +55,7 @@
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "peerDependencies": {
-    "@base-ui/react": "^1",
+    "@base-ui/react": "^1.9.0",
     "@docsearch/react": "catalog:docs",
     "@emotion/cache": "catalog:docs",
     "@emotion/react": "catalog:docs",

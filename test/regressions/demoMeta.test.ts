@@ -47,6 +47,27 @@ describe('parseRoute', () => {
 });
 
 describe('getConfig', () => {
+  it('waits for open Menu2 portals and limits axe exceptions to the documented gaps', () => {
+    for (const [name, popup] of [
+      ['Menu2A11yOpen', 'root-menu'],
+      ['Menu2A11yNested', 'nested-menu'],
+      ['Menu2A11yNonModal', 'non-modal-menu'],
+    ]) {
+      const path = `test/regressions/a11y/fixtures/menus/${name}`;
+      expect(getConfig(A11Y_RULES, path)).to.deep.equal({
+        test: path,
+        enabled: true,
+        assertions: 'all',
+        skipAssertions: ['aria-hidden-focus', 'aria-valid-attr-value'],
+      });
+      expect(getConfig(SCREENSHOT_RULES, path)).to.deep.equal({
+        test: path,
+        enabled: false,
+        waitForSelector: `[data-testid="${popup}"][data-open]`,
+      });
+    }
+  });
+
   it('returns undefined when no rule matches', () => {
     expect(
       getConfig(A11Y_RULES, 'docs/data/material/components/accordion/BasicAccordion'),

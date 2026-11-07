@@ -1,0 +1,34 @@
+{
+  "props": {
+    "actionsRef": {
+      "type": { "name": "shape", "description": "{ current?: { close: func, unmount: func } }" }
+    },
+    "children": { "type": { "name": "node" } },
+    "defaultOpen": { "type": { "name": "bool" }, "default": "false" },
+    "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "highlightItemOnHover": { "type": { "name": "bool" }, "default": "true" },
+    "loopFocus": { "type": { "name": "bool" }, "default": "true" },
+    "modal": { "type": { "name": "bool" }, "default": "true" },
+    "onOpenChange": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(open: boolean, eventDetails: object) => void",
+        "describedArgs": ["open", "eventDetails"]
+      }
+    },
+    "onOpenChangeComplete": {
+      "type": { "name": "func" },
+      "signature": { "type": "function(open: boolean) => void", "describedArgs": ["open"] }
+    },
+    "open": { "type": { "name": "bool" } }
+  },
+  "name": "Menu2",
+  "imports": ["import Menu from '@mui/material/Unstable_Menu2';"],
+  "classes": [],
+  "spread": false,
+  "themeDefaultProps": null,
+  "muiName": "MuiMenu2",
+  "filename": "/packages/mui-material/src/Unstable_Menu2/Menu2.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-menu2/\">Menu v2</a></li></ul>"
+}

@@ -463,6 +463,98 @@ export interface Components<Theme = unknown> {
         variants?: ComponentsVariants<Theme>['MuiMenu'] | undefined;
       }
     | undefined;
+  MuiMenu2?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2'] | undefined;
+      }
+    | undefined;
+  MuiMenu2Popup?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2Popup'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2Popup'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2Popup'] | undefined;
+      }
+    | undefined;
+  MuiMenu2CheckboxItem?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2CheckboxItem'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2CheckboxItem'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2CheckboxItem'] | undefined;
+      }
+    | undefined;
+  MuiMenu2Group?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2Group'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2Group'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2Group'] | undefined;
+      }
+    | undefined;
+  MuiMenu2GroupLabel?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2GroupLabel'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2GroupLabel'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2GroupLabel'] | undefined;
+      }
+    | undefined;
+  MuiMenu2Item?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2Item'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2Item'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2Item'] | undefined;
+      }
+    | undefined;
+  MuiMenu2LinkItem?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2LinkItem'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2LinkItem'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2LinkItem'] | undefined;
+      }
+    | undefined;
+  MuiMenu2RadioGroup?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2RadioGroup'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2RadioGroup'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2RadioGroup'] | undefined;
+      }
+    | undefined;
+  MuiMenu2RadioItem?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2RadioItem'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2RadioItem'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2RadioItem'] | undefined;
+      }
+    | undefined;
+  MuiMenu2Separator?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2Separator'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2Separator'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2Separator'] | undefined;
+      }
+    | undefined;
+  MuiMenu2Submenu?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2Submenu'] | undefined;
+      }
+    | undefined;
+  MuiMenu2SubmenuPopup?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2SubmenuPopup'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2SubmenuPopup'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2SubmenuPopup'] | undefined;
+      }
+    | undefined;
+  MuiMenu2SubmenuTrigger?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2SubmenuTrigger'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMenu2SubmenuTrigger'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMenu2SubmenuTrigger'] | undefined;
+      }
+    | undefined;
+  MuiMenu2Trigger?:
+    | {
+        defaultProps?: ComponentsProps['MuiMenu2Trigger'] | undefined;
+      }
+    | undefined;
   MuiMenuItem?:
     | {
         defaultProps?: ComponentsProps['MuiMenuItem'] | undefined;

@@ -1,0 +1,4 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["menu2Theme.spec.ts"]
+}

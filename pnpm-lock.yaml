@@ -848,7 +848,7 @@ importers:
         specifier: ^7.29.7 || ^8.0.5
         version: 8.0.10
       '@base-ui/react':
-        specifier: ^1
+        specifier: ^1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@docsearch/react':
         specifier: catalog:docs
@@ -1221,6 +1221,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.29.7 || ^8.0.5
         version: 8.0.10
+      '@base-ui/react':
+        specifier: ^1.9.0
+        version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@emotion/react':
         specifier: ^11.5.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@11.0.0)
@@ -1635,6 +1638,9 @@ importers:
       '@types/sinon':
         specifier: 22.0.2
         version: 22.0.2
+      '@types/stylis':
+        specifier: 4.2.7
+        version: 4.2.7
       docs:
         specifier: workspace:^
         version: link:../docs

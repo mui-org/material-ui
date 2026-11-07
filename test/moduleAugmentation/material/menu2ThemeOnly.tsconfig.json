@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2015",
+    "lib": ["es6", "dom"]
+  },
+  "files": ["menu2ThemeOnly.spec.ts"]
+}

@@ -1,0 +1,79 @@
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "children": { "description": "The content of the component." },
+    "classes": { "description": "Override or extend the styles applied to the component." },
+    "className": { "description": "CSS class applied to the element." },
+    "closeDelay": {
+      "description": "How long to wait before closing the submenu that was opened on hover, in milliseconds.<br>Requires the <code>openOnHover</code> prop."
+    },
+    "delay": {
+      "description": "How long to wait before the submenu may be opened on hover, in milliseconds.<br>Requires the <code>openOnHover</code> prop."
+    },
+    "dense": {
+      "description": "If <code>true</code>, compact vertical padding designed for keyboard and mouse input is used."
+    },
+    "disabled": { "description": "Whether the component should ignore user interaction." },
+    "disableGutters": {
+      "description": "If <code>true</code>, the left and right padding is removed."
+    },
+    "disableRipple": { "description": "If <code>true</code>, the ripple effect is disabled." },
+    "divider": {
+      "description": "If <code>true</code>, a 1px light border is added to the bottom of the menu item."
+    },
+    "label": {
+      "description": "Overrides the text label to use when the item is matched during keyboard text navigation."
+    },
+    "nativeButton": {
+      "description": "Whether the trigger renders a native <code>&lt;button&gt;</code> element. Inferred from a button element passed to <code>render</code>. Set to <code>true</code> for a custom component or render function that returns a button."
+    },
+    "openOnHover": {
+      "description": "Whether the submenu should also open when the trigger is hovered."
+    },
+    "render": {
+      "description": "The element to render, or a function that returns it. Forward the props, ref, and children to preserve Material styles, the indicator, and ripple. Put content in the children prop of Menu2SubmenuTrigger. Replacing the supplied children can remove the indicator and ripple."
+    },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
+    "style": { "description": "Styles applied to the root element." },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    }
+  },
+  "classDescriptions": {
+    "dense": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>dense={true}</code>"
+    },
+    "disabled": {
+      "description": "State class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disabled={true}</code>"
+    },
+    "divider": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>divider={true}</code>"
+    },
+    "gutters": {
+      "description": "Styles applied to {{nodeName}} unless {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disableGutters={true}</code>"
+    },
+    "highlighted": {
+      "description": "State class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "highlighted"
+    },
+    "open": {
+      "description": "State class applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "the submenu is open"
+    },
+    "root": { "description": "Styles applied to the root element." }
+  },
+  "slotDescriptions": {
+    "indicator": "The component that renders the submenu indicator. Set to <code>null</code> to omit the indicator. Custom indicators are not mirrored in RTL."
+  }
+}

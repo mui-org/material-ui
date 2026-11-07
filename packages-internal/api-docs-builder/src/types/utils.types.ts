@@ -18,9 +18,13 @@ export type ComponentInfo = {
    */
   filename: string;
   /**
-   * Component name as imported in the docs, in the global MUI namespace.
+   * Component name in the global MUI namespace.
    */
   name: string;
+  /**
+   * Local name in import examples. Defaults to the component name.
+   */
+  importName?: string;
   /**
    * Component name with `Mui` prefix, in the global HTML page namespace.
    */

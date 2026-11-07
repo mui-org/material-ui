@@ -19,11 +19,57 @@
     }
   },
   "name": "PigmentContainer",
-  "imports": [
-    "import PigmentContainer from '@mui/material/PigmentContainer';",
-    "import { PigmentContainer } from '@mui/material';"
+  "imports": ["import PigmentContainer from '@mui/material/PigmentContainer';"],
+  "classes": [
+    {
+      "key": "disableGutters",
+      "className": "MuiContainer-disableGutters",
+      "description": "Styles applied to the root element if `disableGutters={true}`.",
+      "isGlobal": false
+    },
+    {
+      "key": "fixed",
+      "className": "MuiContainer-fixed",
+      "description": "Styles applied to the root element if `fixed={true}`.",
+      "isGlobal": false
+    },
+    {
+      "key": "maxWidthLg",
+      "className": "MuiContainer-maxWidthLg",
+      "description": "Styles applied to the root element if `maxWidth=\"lg\"`.",
+      "isGlobal": false
+    },
+    {
+      "key": "maxWidthMd",
+      "className": "MuiContainer-maxWidthMd",
+      "description": "Styles applied to the root element if `maxWidth=\"md\"`.",
+      "isGlobal": false
+    },
+    {
+      "key": "maxWidthSm",
+      "className": "MuiContainer-maxWidthSm",
+      "description": "Styles applied to the root element if `maxWidth=\"sm\"`.",
+      "isGlobal": false
+    },
+    {
+      "key": "maxWidthXl",
+      "className": "MuiContainer-maxWidthXl",
+      "description": "Styles applied to the root element if `maxWidth=\"xl\"`.",
+      "isGlobal": false
+    },
+    {
+      "key": "maxWidthXs",
+      "className": "MuiContainer-maxWidthXs",
+      "description": "Styles applied to the root element if `maxWidth=\"xs\"`.",
+      "isGlobal": false
+    },
+    {
+      "key": "root",
+      "className": "MuiContainer-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
+    }
   ],
-  "classes": [],
   "muiName": "MuiPigmentContainer",
   "filename": "/packages/mui-material/src/PigmentContainer/PigmentContainer.tsx",
   "inheritance": null,

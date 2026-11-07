@@ -22,6 +22,8 @@ import type {
 import createDescribeableProp from '../utils/createDescribeableProp';
 import generatePropDescription from '../utils/generatePropDescription';
 import type { TypeScriptProject } from '../utils/createTypeScriptProject';
+import getComponentImports from '../utils/getComponentImports';
+import getComponentTypeScriptProject from '../utils/getComponentTypeScriptProject';
 import parseSlotsAndClasses from '../utils/parseSlotsAndClasses';
 import generateApiTranslations from '../utils/generateApiTranslation';
 import { sortAlphabetical } from '../utils/sortObjects';
@@ -608,42 +610,6 @@ const attachPropsTable = (
   reactApi.propsTable = componentProps;
 };
 
-/**
- * Helper to get the import options
- * @param name The name of the component
- * @param filename The filename where its defined (to infer the package)
- * @returns an array of import command
- */
-const defaultGetComponentImports = (name: string, filename: string) => {
-  const githubPath = toGitHubPath(filename);
-  const rootImportPath = githubPath.replace(
-    /\/packages\/mui(?:-(.+?))?\/src\/.*/,
-    (match, pkg) => `@mui/${pkg}`,
-  );
-
-  const subdirectoryImportPath = githubPath.replace(
-    /\/packages\/mui(?:-(.+?))?\/src\/([^\\/]+)\/.*/,
-    (match, pkg, directory) => `@mui/${pkg}/${directory}`,
-  );
-
-  let namedImportName = name;
-  const defaultImportName = name;
-
-  if (githubPath.includes('Unstable_')) {
-    namedImportName = `Unstable_${name} as ${name}`;
-  }
-
-  const useNamedImports = rootImportPath === '@mui/base';
-
-  const subpathImport = useNamedImports
-    ? `import { ${namedImportName} } from '${subdirectoryImportPath}';`
-    : `import ${defaultImportName} from '${subdirectoryImportPath}';`;
-
-  const rootImport = `import { ${namedImportName} } from '${rootImportPath}';`;
-
-  return [subpathImport, rootImport];
-};
-
 const attachTable = (
   reactApi: ComponentReactApi,
   params: ParsedProperty[],
@@ -798,7 +764,6 @@ export default async function generateComponentApi(
     reactApi.props = {};
   }
 
-  const { getComponentImports = defaultGetComponentImports } = projectSettings;
   const componentJsdoc = parseDoctrine(reactApi.description);
 
   // We override `reactApi.description` with `componentJsdoc.description` because
@@ -819,7 +784,9 @@ export default async function generateComponentApi(
 
   reactApi.filename = filename;
   reactApi.name = componentInfo.name;
-  reactApi.imports = getComponentImports(componentInfo.name, filename);
+  reactApi.imports = projectSettings.getComponentImports
+    ? projectSettings.getComponentImports(componentInfo.name, filename)
+    : getComponentImports(componentInfo.name, filename, project, componentInfo.importName);
   reactApi.muiName = componentInfo.muiName;
   reactApi.apiPathname = componentInfo.apiPathname;
   reactApi.EOL = EOL;
@@ -853,7 +820,7 @@ export default async function generateComponentApi(
 
   if (!projectSettings.skipSlotsAndClasses) {
     const { slots, classes } = parseSlotsAndClasses({
-      typescriptProject: project,
+      typescriptProject: getComponentTypeScriptProject(project, filename, componentInfo.name),
       projectSettings,
       componentName: reactApi.name,
       muiName: reactApi.muiName,

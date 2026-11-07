@@ -51,7 +51,6 @@ describe('<TouchRipple />', () => {
   }
 
   function collectCssRules(element) {
-    const classNames = Array.from(element.classList);
     const cssRules = [];
 
     function collectFromRules(rules) {
@@ -60,10 +59,7 @@ describe('<TouchRipple />', () => {
           collectFromRules(rule.cssRules);
         }
 
-        if (
-          'selectorText' in rule &&
-          classNames.some((className) => rule.selectorText.includes(`.${className}`))
-        ) {
+        if ('selectorText' in rule && element.matches(rule.selectorText)) {
           cssRules.push(rule.cssText);
         }
       });
@@ -161,6 +157,11 @@ describe('<TouchRipple />', () => {
     clock.withFakeTimers();
 
     it('omits animation declarations but keeps visible feedback when reduced motion is always', () => {
+      const { instance: regularRipple } = renderTouchRipple();
+      act(() => {
+        regularRipple.start({ clientX: 0, clientY: 0 }, { fakeElement: true }, cb);
+      });
+
       const theme = createTheme({
         motion: {
           reducedMotion: 'always',

@@ -21,6 +21,7 @@ export function getMaterialUiComponentInfo(filename: string): ComponentInfo {
   return {
     filename,
     name,
+    importName: name.startsWith('Menu2') ? name.replace(/^Menu2/, 'Menu') : undefined,
     muiName: getMuiName(name),
     apiPathname: `/material-ui/api/${kebabCase(name)}/`,
     apiPagesDirectory: path.join(process.cwd(), `docs/pages/material-ui/api`),

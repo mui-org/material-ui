@@ -1,0 +1,19 @@
+{
+  "componentDescription": "",
+  "propDescriptions": {
+    "classes": { "description": "Override or extend the styles applied to the component." },
+    "className": { "description": "CSS class applied to the element." },
+    "component": {
+      "description": "The component used for the root node. Either a string to use a HTML element or a component."
+    },
+    "orientation": { "description": "The orientation of the separator." },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
+    "style": { "description": "Styles applied to the root element." },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    }
+  },
+  "classDescriptions": {},
+  "slotDescriptions": { "root": "The component that renders the root." }
+}

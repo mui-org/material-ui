@@ -15,5 +15,42 @@
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     }
   },
-  "classDescriptions": {}
+  "classDescriptions": {
+    "disableGutters": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>disableGutters={true}</code>"
+    },
+    "fixed": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>fixed={true}</code>"
+    },
+    "maxWidthLg": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>maxWidth=\"lg\"</code>"
+    },
+    "maxWidthMd": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>maxWidth=\"md\"</code>"
+    },
+    "maxWidthSm": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>maxWidth=\"sm\"</code>"
+    },
+    "maxWidthXl": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>maxWidth=\"xl\"</code>"
+    },
+    "maxWidthXs": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the root element",
+      "conditions": "<code>maxWidth=\"xs\"</code>"
+    },
+    "root": { "description": "Styles applied to the root element." }
+  }
 }

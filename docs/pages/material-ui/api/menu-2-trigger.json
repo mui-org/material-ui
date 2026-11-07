@@ -1,0 +1,43 @@
+{
+  "props": {
+    "render": {
+      "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" },
+      "required": true
+    },
+    "children": { "type": { "name": "node" } },
+    "closeDelay": { "type": { "name": "number" }, "default": "0" },
+    "delay": { "type": { "name": "number" }, "default": "100" },
+    "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "nativeButton": { "type": { "name": "bool" }, "default": "true" },
+    "openOnHover": { "type": { "name": "bool" } }
+  },
+  "name": "Menu2Trigger",
+  "imports": ["import MenuTrigger from '@mui/material/Unstable_Menu2Trigger';"],
+  "classes": [
+    {
+      "key": "disabled",
+      "className": "Mui-disabled",
+      "description": "State class applied to the root element if `disabled={true}`.",
+      "isGlobal": true
+    },
+    {
+      "key": "open",
+      "className": "Mui-open",
+      "description": "State class applied to the root element if the menu is open.",
+      "isGlobal": true
+    },
+    {
+      "key": "root",
+      "className": "MuiMenu2Trigger-root",
+      "description": "Styles applied to the root element.",
+      "isGlobal": false
+    }
+  ],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiMenu2Trigger",
+  "forwardsRefTo": "HTMLButtonElement",
+  "filename": "/packages/mui-material/src/Unstable_Menu2Trigger/Menu2Trigger.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-menu2/\">Menu v2</a></li></ul>"
+}

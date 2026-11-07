@@ -224,6 +224,7 @@ interface Container {
   hiddenSet: Set<Element>;
   modals: Modal[];
   restore: null | (() => void);
+  scrollLocks?: number | undefined;
 }
 
 /**
@@ -297,7 +298,8 @@ export class ModalManager {
     // If that was the last modal in a container, clean up the container.
     if (containerInfo.modals.length === 0) {
       // The modal might be closed before it had the chance to be mounted in the DOM.
-      if (containerInfo.restore) {
+      // A scroll lock keeps the container locked until it is released.
+      if (containerInfo.restore && !containerInfo.scrollLocks) {
         containerInfo.restore();
       }
 
@@ -308,7 +310,9 @@ export class ModalManager {
 
       containerInfo.hiddenSet.forEach((element) => ariaHidden(element, false));
       containerInfo.hiddenSet.clear();
-      this.containers.splice(containerIndex, 1);
+      if (!containerInfo.scrollLocks) {
+        this.containers.splice(containerIndex, 1);
+      }
     } else {
       syncAriaHidden(containerInfo);
 
@@ -318,6 +322,35 @@ export class ModalManager {
     }
 
     return modalIndex;
+  }
+
+  /**
+   * Locks the container scroll without the aria-hidden work. Modals on the same
+   * container share the lock. Returns the function that releases it.
+   */
+  lockScroll(container: HTMLElement): () => void {
+    let containerInfo = this.containers.find((item) => item.container === container);
+
+    if (!containerInfo) {
+      containerInfo = { modals: [], container, restore: null, hiddenSet: new Set() };
+      this.containers.push(containerInfo);
+    }
+
+    const lockedContainer = containerInfo;
+    lockedContainer.scrollLocks = (lockedContainer.scrollLocks ?? 0) + 1;
+
+    if (!lockedContainer.restore) {
+      lockedContainer.restore = handleContainer(lockedContainer, {});
+    }
+
+    return () => {
+      lockedContainer.scrollLocks! -= 1;
+
+      if (lockedContainer.scrollLocks === 0 && lockedContainer.modals.length === 0) {
+        lockedContainer.restore!();
+        this.containers.splice(this.containers.indexOf(lockedContainer), 1);
+      }
+    };
   }
 
   isTopModal(modal: Modal): boolean {

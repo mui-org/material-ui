@@ -6,32 +6,24 @@ import composeClasses from '@mui/utils/composeClasses';
 import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
-import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import ListContext from '../List/ListContext';
-import ButtonBase from '../ButtonBase';
+import MenuItemBase from '../internal/MenuItemBase';
 import useEnhancedEffect from '../utils/useEnhancedEffect';
 import focusWithVisible from '../utils/focusWithVisible';
 import useForkRef from '../utils/useForkRef';
 import useId from '../utils/useId';
 import { useRovingTabIndexItem } from '../utils/useRovingTabIndex';
-import { dividerClasses } from '../Divider';
-import { listItemIconClasses } from '../ListItemIcon';
-import { listItemTextClasses } from '../ListItemText';
 import { useMenuListContext } from '../MenuList/MenuListContext';
 import { useSelectFocusSource } from '../Select/utils';
-import menuItemClasses, { getMenuItemUtilityClass } from './menuItemClasses';
+import { getMenuItemUtilityClass } from './menuItemClasses';
+import {
+  getMenuItemHighlightStyles,
+  getMenuItemSelectedStyles,
+  menuItemOverridesResolver,
+} from './menuItemStyles';
 
-export const overridesResolver = (props, styles) => {
-  const { ownerState } = props;
-
-  return [
-    styles.root,
-    ownerState.dense && styles.dense,
-    ownerState.divider && styles.divider,
-    !ownerState.disableGutters && styles.gutters,
-  ];
-};
+export const overridesResolver = menuItemOverridesResolver;
 
 const useUtilityClasses = (ownerState) => {
   const { disabled, dense, divider, disableGutters, selected, classes } = ownerState;
@@ -54,124 +46,14 @@ const useUtilityClasses = (ownerState) => {
   };
 };
 
-const MenuItemRoot = styled(ButtonBase, {
+const MenuItemRoot = styled(MenuItemBase, {
   shouldForwardProp: (prop) => rootShouldForwardProp(prop) || prop === 'classes',
   name: 'MuiMenuItem',
   slot: 'Root',
   overridesResolver,
 })(
-  memoTheme(({ theme }) => ({
-    ...theme.typography.body1,
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    position: 'relative',
-    textDecoration: 'none',
-    minHeight: 48,
-    paddingTop: 6,
-    paddingBottom: 6,
-    boxSizing: 'border-box',
-    whiteSpace: 'nowrap',
-    '&:hover': {
-      textDecoration: 'none',
-      backgroundColor: (theme.vars || theme).palette.action.hover,
-      // Reset on touch devices, it doesn't add specificity
-      '@media (hover: none)': {
-        backgroundColor: 'transparent',
-      },
-    },
-    [`&.${menuItemClasses.selected}`]: {
-      backgroundColor: theme.alpha(
-        (theme.vars || theme).palette.primary.main,
-        (theme.vars || theme).palette.action.selectedOpacity,
-      ),
-      ...(!theme.focusVisible && {
-        [`&.${menuItemClasses.focusVisible}`]: {
-          backgroundColor: theme.alpha(
-            (theme.vars || theme).palette.primary.main,
-            `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`,
-          ),
-        },
-      }),
-    },
-    [`&.${menuItemClasses.selected}:hover`]: {
-      backgroundColor: theme.alpha(
-        (theme.vars || theme).palette.primary.main,
-        `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.hoverOpacity}`,
-      ),
-      // Reset on touch devices, it doesn't add specificity
-      '@media (hover: none)': {
-        backgroundColor: theme.alpha(
-          (theme.vars || theme).palette.primary.main,
-          (theme.vars || theme).palette.action.selectedOpacity,
-        ),
-      },
-    },
-    ...(theme.focusVisible
-      ? // Inset the ring: a scrolling Menu/MenuList clips an outset ring.
-        applyInsetFocusVisible(1)
-      : {
-          [`&.${menuItemClasses.focusVisible}`]: {
-            backgroundColor: (theme.vars || theme).palette.action.focus,
-          },
-        }),
-    [`&.${menuItemClasses.disabled}`]: {
-      opacity: (theme.vars || theme).palette.action.disabledOpacity,
-    },
-    [`& + .${dividerClasses.root}`]: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
-    },
-    [`& + .${dividerClasses.inset}`]: {
-      marginLeft: 52,
-    },
-    [`& .${listItemTextClasses.root}`]: {
-      marginTop: 0,
-      marginBottom: 0,
-    },
-    [`& .${listItemTextClasses.inset}`]: {
-      paddingLeft: 36,
-    },
-    [`& .${listItemIconClasses.root}`]: {
-      minWidth: 36,
-    },
-    variants: [
-      {
-        props: ({ ownerState }) => !ownerState.disableGutters,
-        style: {
-          paddingLeft: 16,
-          paddingRight: 16,
-        },
-      },
-      {
-        props: ({ ownerState }) => ownerState.divider,
-        style: {
-          borderBottom: `1px solid ${(theme.vars || theme).palette.divider}`,
-          backgroundClip: 'padding-box',
-        },
-      },
-      {
-        props: ({ ownerState }) => !ownerState.dense,
-        style: {
-          [theme.breakpoints.up('sm')]: {
-            minHeight: 'auto',
-          },
-        },
-      },
-      {
-        props: ({ ownerState }) => ownerState.dense,
-        style: {
-          minHeight: 32, // https://m2.material.io/components/menus#specs > Dense
-          paddingTop: 4,
-          paddingBottom: 4,
-          ...theme.typography.body2,
-          [`& .${listItemIconClasses.root} svg`]: {
-            fontSize: '1.25rem',
-          },
-        },
-      },
-    ],
-  })),
+  memoTheme(({ theme }) => getMenuItemSelectedStyles(theme)),
+  memoTheme(({ theme }) => getMenuItemHighlightStyles(theme)),
 );
 
 const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {

@@ -8,6 +8,15 @@ import formLabelClasses from '../FormLabel/formLabelClasses';
 import inputClasses from '../Input/inputClasses';
 import listItemButtonClasses from '../ListItemButton/listItemButtonClasses';
 import menuItemClasses from '../MenuItem/menuItemClasses';
+import {
+  menu2CheckboxItemClasses,
+  menu2CheckboxItemIndicatorClasses,
+  menu2ItemClasses,
+  menu2LinkItemClasses,
+  menu2RadioItemClasses,
+  menu2RadioItemIndicatorClasses,
+  menu2SubmenuTriggerClasses,
+} from '../Unstable_Menu2/menu2Classes';
 import nativeSelectClasses from '../NativeSelect/nativeSelectClasses';
 import outlinedInputClasses from '../OutlinedInput/outlinedInputClasses';
 import radioClasses from '../Radio/radioClasses';
@@ -77,6 +86,69 @@ const defaultHcTokens: Required<HighContrastTokens> = {
 };
 
 const HCM = '@media (forced-colors: active)';
+
+function menu2ActiveOverrides(hcTokens: Required<HighContrastTokens>) {
+  return {
+    [HCM]: {
+      forcedColorAdjust: 'none',
+      color: hcTokens.activeText,
+      backgroundColor: hcTokens.activeBackground,
+    },
+  };
+}
+
+// Menu2 uses the same focus and hover cues as the classic items.
+function menu2ItemOverrides(
+  classes: { disabled: string; highlighted: string },
+  hcTokens: Required<HighContrastTokens>,
+) {
+  return {
+    [`&.${classes.highlighted}`]: menu2ActiveOverrides(hcTokens),
+    [`&.${menuItemClasses.focusVisible}, &:hover`]: {
+      [HCM]: {
+        forcedColorAdjust: 'none',
+        color: hcTokens.activeText,
+        backgroundColor: hcTokens.activeBackground,
+        outline: 'none',
+      },
+    },
+    // Base UI keeps disabled items focusable. Keep their disabled colors
+    // and use an outline to show keyboard focus.
+    [`&.${classes.disabled}`]: {
+      [HCM]: {
+        color: hcTokens.disabled,
+        opacity: 1,
+      },
+    },
+    [`&.${classes.disabled}.${menuItemClasses.focusVisible}`]: {
+      [HCM]: {
+        forcedColorAdjust: 'none',
+        color: hcTokens.disabled,
+        backgroundColor: hcTokens.canvas,
+        outline: `1px solid ${hcTokens.buttonBorder}`,
+      },
+    },
+  };
+}
+
+function menu2IndicatorOverrides(classes: { disabled: string; highlighted: string }) {
+  // Match the default checked rule and nested state overrides. The item supplies
+  // the system colors, including the disabled color, for its indicator to inherit.
+  const selector = [
+    '&',
+    '&[data-checked]',
+    `&.${classes.disabled}`,
+    `&[data-checked].${classes.disabled}`,
+    `&.${classes.highlighted}`,
+    `&[data-checked].${classes.highlighted}`,
+  ].join(', ');
+
+  return {
+    [HCM]: {
+      [selector]: { color: 'inherit', backgroundColor: 'transparent' },
+    },
+  };
+}
 
 /**
  * Enhances a theme with styles for Windows High Contrast Mode (forced-colors).
@@ -392,6 +464,68 @@ export default function enhanceHighContrast<
                   backgroundColor: hcTokens.activeBackground,
                 },
               },
+          },
+        ],
+      },
+    },
+    MuiMenu2Item: {
+      ...c?.MuiMenu2Item,
+      styleOverrides: {
+        ...c?.MuiMenu2Item?.styleOverrides,
+        root: [
+          c?.MuiMenu2Item?.styleOverrides?.root,
+          menu2ItemOverrides(menu2ItemClasses, hcTokens),
+        ],
+      },
+    },
+    MuiMenu2LinkItem: {
+      ...c?.MuiMenu2LinkItem,
+      styleOverrides: {
+        ...c?.MuiMenu2LinkItem?.styleOverrides,
+        root: [
+          c?.MuiMenu2LinkItem?.styleOverrides?.root,
+          menu2ItemOverrides(menu2LinkItemClasses, hcTokens),
+        ],
+      },
+    },
+    MuiMenu2CheckboxItem: {
+      ...c?.MuiMenu2CheckboxItem,
+      styleOverrides: {
+        ...c?.MuiMenu2CheckboxItem?.styleOverrides,
+        root: [
+          c?.MuiMenu2CheckboxItem?.styleOverrides?.root,
+          menu2ItemOverrides(menu2CheckboxItemClasses, hcTokens),
+        ],
+        indicator: [
+          c?.MuiMenu2CheckboxItem?.styleOverrides?.indicator,
+          menu2IndicatorOverrides(menu2CheckboxItemIndicatorClasses),
+        ],
+      },
+    },
+    MuiMenu2RadioItem: {
+      ...c?.MuiMenu2RadioItem,
+      styleOverrides: {
+        ...c?.MuiMenu2RadioItem?.styleOverrides,
+        root: [
+          c?.MuiMenu2RadioItem?.styleOverrides?.root,
+          menu2ItemOverrides(menu2RadioItemClasses, hcTokens),
+        ],
+        indicator: [
+          c?.MuiMenu2RadioItem?.styleOverrides?.indicator,
+          menu2IndicatorOverrides(menu2RadioItemIndicatorClasses),
+        ],
+      },
+    },
+    MuiMenu2SubmenuTrigger: {
+      ...c?.MuiMenu2SubmenuTrigger,
+      styleOverrides: {
+        ...c?.MuiMenu2SubmenuTrigger?.styleOverrides,
+        root: [
+          c?.MuiMenu2SubmenuTrigger?.styleOverrides?.root,
+          {
+            [`&.${menu2SubmenuTriggerClasses.open}`]: menu2ActiveOverrides(hcTokens),
+            '&[data-mui-internal-retain-open-tint]': menu2ActiveOverrides(hcTokens),
+            ...menu2ItemOverrides(menu2SubmenuTriggerClasses, hcTokens),
           },
         ],
       },

@@ -6,6 +6,8 @@ export default function getTypeHash(type: PropType): string {
       return type.value.toString();
     case 'InstanceOfNode':
       return `${type.type}.${type.instance}`;
+    case 'ElementNode':
+      return `${type.type}.${type.elementType}`;
     case 'array':
       return `array(${getTypeHash(type.arrayType)})`;
     case 'InterfaceNode':

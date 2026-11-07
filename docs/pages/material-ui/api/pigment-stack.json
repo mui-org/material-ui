@@ -25,10 +25,7 @@
     }
   },
   "name": "PigmentStack",
-  "imports": [
-    "import PigmentStack from '@mui/material/PigmentStack';",
-    "import { PigmentStack } from '@mui/material';"
-  ],
+  "imports": ["import PigmentStack from '@mui/material/PigmentStack';"],
   "classes": [],
   "muiName": "MuiPigmentStack",
   "filename": "/packages/mui-material/src/PigmentStack/PigmentStack.tsx",

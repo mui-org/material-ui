@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import findIndexFile from './findIndexFile';
 
-const componentRegex = /^(Unstable_)?([A-Z][a-z]*)+2?\.(js|tsx)/;
+const componentRegex = /^(Unstable_)?([A-Z][a-z0-9]*)+\.(js|tsx)$/;
 
 /**
  * Returns the component source in a flat array.

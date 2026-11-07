@@ -97,18 +97,17 @@ export const createTypeScriptProject = (
       const sourceFile = program.getSourceFile(entryPointPath);
 
       const pathData = path.parse(entryPointPath);
+      const entryExports = checker.getExportsOfModule(checker.getSymbolAtLocation(sourceFile!)!);
+      const defaultExport = entryExports.find((symbol) => symbol.name === 'default');
 
       exports = {
         ...exports,
-        ...Object.fromEntries(
-          checker.getExportsOfModule(checker.getSymbolAtLocation(sourceFile!)!).map((symbol) => {
-            return [symbol.name, symbol];
+        ...Object.fromEntries(entryExports.map((symbol) => [symbol.name, symbol])),
+        ...(pathData.name !== 'index' &&
+          defaultExport && {
+            // use the default export when the entrypoint is not `index`.
+            [pathData.name]: defaultExport,
           }),
-        ),
-        ...(pathData.name !== 'index' && {
-          // use the default export when the entrypoint is not `index`.
-          [pathData.name]: checker.getSymbolAtLocation(sourceFile!)!,
-        }),
       };
     });
   } else {

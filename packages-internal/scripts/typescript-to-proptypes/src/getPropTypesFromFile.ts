@@ -579,62 +579,39 @@ function checkSymbol({
       return null;
     };
 
-    // Check for direct type reference (e.g., `prop: React.ElementType`)
-    let elementTypeName = getElementTypeName(declaration.type);
-
-    // Also check for union types like `React.ElementType | undefined`
-    // but NOT for unions with other types like `string | React.ReactElement | undefined`
-    if (!elementTypeName && ts.isUnionTypeNode(declaration.type)) {
-      let foundElementType: string | null = null;
-      let hasOtherNonUndefinedTypes = false;
-
-      for (const typeNode of declaration.type.types) {
-        const name = getElementTypeName(typeNode);
-        if (name) {
-          foundElementType = name;
-        } else if (
-          // Check if this is an undefined type (keyword or literal)
-          !(
-            typeNode.kind === ts.SyntaxKind.UndefinedKeyword ||
-            (ts.isLiteralTypeNode(typeNode) &&
-              typeNode.literal.kind === ts.SyntaxKind.UndefinedKeyword)
-          )
-        ) {
-          // Found a type that's neither an element type nor undefined
-          hasOtherNonUndefinedTypes = true;
-        }
+    const typeNodes = ts.isUnionTypeNode(declaration.type)
+      ? declaration.type.types
+      : [declaration.type];
+    const types = typeNodes.map((typeNode) => {
+      const elementTypeName = getElementTypeName(typeNode);
+      if (elementTypeName) {
+        return createElementType({
+          elementType: elementTypeName === 'React.ReactElement' ? 'element' : 'elementType',
+          jsDoc: undefined,
+        });
       }
-
-      // Only use the element type if the union doesn't have other non-undefined types
-      if (foundElementType && !hasOtherNonUndefinedTypes) {
-        elementTypeName = foundElementType;
+      if (typeNode.kind === ts.SyntaxKind.UndefinedKeyword) {
+        return createUndefinedType({ jsDoc: undefined });
       }
-    }
+      if (ts.isLiteralTypeNode(typeNode) && typeNode.literal.kind === ts.SyntaxKind.NullKeyword) {
+        return createLiteralType({ jsDoc: undefined, value: 'null' });
+      }
+      return null;
+    });
 
-    if (elementTypeName) {
-      const elementNode = createElementType({
-        elementType: elementTypeName === 'React.ReactElement' ? 'element' : 'elementType',
-        jsDoc,
-      });
+    // Preserve each React type and its nullish members. Use the type checker for
+    // other unions, such as `string | React.ReactElement | undefined`.
+    if (types.every((type) => type !== null) && types.some((type) => type.type === 'ElementNode')) {
+      if (declaration.questionToken) {
+        types.push(createUndefinedType({ jsDoc: undefined }));
+      }
 
       return {
         $$id: project.createPropTypeId(symbol),
         name: symbol.getName(),
         jsDoc,
         filenames: symbolFilenames,
-        propType: declaration.questionToken
-          ? createUnionType({
-              jsDoc: elementNode.jsDoc,
-              types: [
-                createUndefinedType({ jsDoc: undefined }),
-                {
-                  ...elementNode,
-                  // jsDoc was hoisted to the union type
-                  jsDoc: undefined,
-                },
-              ],
-            })
-          : elementNode,
+        propType: types.length === 1 ? { ...types[0], jsDoc } : createUnionType({ jsDoc, types }),
       };
     }
   }

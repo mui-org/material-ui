@@ -1,9 +1,9 @@
 import type { Page, Browser } from '@playwright/test';
 import { chromium, expect } from '@playwright/test';
-import { describe, it, beforeAll, afterAll } from 'vitest';
+import { describe, it, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
 import '@mui/internal-test-utils/initPlaywrightMatchers';
 
-const BASE_URL = 'http://localhost:5001';
+const BASE_URL = process.env.E2E_BASE_URL || 'http://localhost:5001';
 
 function sleep(duration: number): Promise<void> {
   return new Promise<void>((resolve) => {
@@ -63,6 +63,365 @@ describe('e2e', () => {
 
   afterAll(async () => {
     await browser.close();
+  });
+
+  describe('<Modal />', () => {
+    ['', 'hidden', 'clip'].forEach((bodyOverflow) => {
+      it(`blocks wheel scrolling when html scrolls and body overflow is ${JSON.stringify(bodyOverflow)}`, async () => {
+        await page.goto('about:blank');
+        await renderFixture('Modal/ViewportScrollLock');
+        await page.evaluate((overflow) => {
+          document.documentElement.style.overflow = 'scroll';
+          document.documentElement.style.scrollBehavior = 'auto';
+          document.body.style.overflow = overflow;
+        }, bodyOverflow);
+
+        const trigger = page.getByRole('button', { name: 'Open dialog' });
+        await trigger.hover();
+        // Verify native wheel input can scroll the viewport before opening the dialog.
+        await page.mouse.wheel(0, 500);
+        await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+
+        await trigger.click();
+        const closeButton = page.getByRole('button', { name: 'Close dialog' });
+        await expect(closeButton).toBeVisible();
+        await expect(page.locator('html')).toHaveCSS('overflow', 'hidden');
+        await closeButton.hover();
+        await page.mouse.wheel(0, 500);
+        await page.evaluate(
+          () =>
+            new Promise<void>((resolve) => {
+              requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+            }),
+        );
+        expect(await page.evaluate(() => window.scrollY)).toBe(0);
+
+        await closeButton.click();
+        await expect(page.getByRole('dialog')).toBeHidden();
+        await expect(page.locator('html')).toHaveCSS('overflow', 'scroll');
+        expect(await page.evaluate(() => document.body.style.overflow)).toBe(bodyOverflow);
+      });
+    });
+  });
+
+  describe('<Menu2 />', () => {
+    beforeEach(async () => {
+      // Reload the fixture even when successive cases use the same URL and hash.
+      await page.goto('about:blank');
+    });
+
+    afterEach(async () => {
+      await page.emulateMedia({ forcedColors: 'none' });
+    });
+
+    [240, 600].forEach((viewportHeight) => {
+      it(`keeps the long-menu demo within a ${viewportHeight}px viewport and scrolls to the last item`, async () => {
+        const previousViewport = page.viewportSize()!;
+        try {
+          await page.setViewportSize({ width: 800, height: viewportHeight });
+          await renderFixture('Menu2/LongMenu');
+
+          const trigger = page.getByRole('button', { name: 'Country' });
+          await page.keyboard.press('Tab');
+          await expect(trigger).toBeFocused();
+          await page.keyboard.press('ArrowDown');
+
+          const menu = page.getByRole('menu');
+          await expect(menu).toBeVisible();
+          await expect(page.getByRole('menuitem', { name: 'Argentina' })).toBeFocused();
+          await expect(menu).toHaveCSS('transform', 'none');
+          const bounds = (await menu.boundingBox())!;
+          expect(bounds.y).toBeGreaterThanOrEqual(0);
+          expect(bounds.y + bounds.height).toBeLessThanOrEqual(viewportHeight);
+          expect(bounds.height).toBeLessThanOrEqual(320);
+          if (viewportHeight === 600) {
+            expect(bounds.height).toBe(320);
+          }
+          expect(
+            await menu.evaluate((element) => element.scrollHeight > element.clientHeight),
+          ).toBe(true);
+
+          await page.keyboard.press('End');
+          const lastItem = page.getByRole('menuitem', { name: 'United Kingdom' });
+          await expect(lastItem).toBeFocused();
+          await expect(lastItem).toBeInViewport({ ratio: 1 });
+          await expect.poll(() => menu.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+
+          await page.keyboard.press('Escape');
+          await expect(menu).toBeHidden();
+          await expect(trigger).toBeFocused();
+        } finally {
+          await page.setViewportSize(previousViewport);
+        }
+      });
+    });
+
+    ['pointer', 'keyboard'].forEach((input) => {
+      it(`keeps the Account menu named when opened with ${input} input`, async () => {
+        await renderFixture('Menu2/AccountMenu');
+
+        const trigger = page.getByRole('button', { name: 'Account settings' });
+        if (input === 'pointer') {
+          await trigger.hover();
+        } else {
+          await page.keyboard.press('Tab');
+          await expect(trigger).toBeFocused();
+        }
+        await expect(page.getByRole('tooltip')).toBeVisible();
+        expect(await page.getByRole('tooltip').getAttribute('id')).not.toBe(
+          await trigger.getAttribute('id'),
+        );
+
+        if (input === 'pointer') {
+          await trigger.click();
+        } else {
+          await page.keyboard.press('Enter');
+        }
+
+        const menu = page.getByRole('menu');
+        await expect(menu).toHaveAccessibleName('Account settings');
+        const triggerId = await trigger.getAttribute('id');
+        expect(triggerId).toBeTruthy();
+        await expect(menu).toHaveAttribute('aria-labelledby', triggerId!);
+        await expect(trigger).toHaveAttribute('aria-controls', (await menu.getAttribute('id'))!);
+
+        await page.mouse.move(0, 0);
+        await expect(page.getByRole('tooltip')).toBeHidden();
+        await expect(menu).toHaveAccessibleName('Account settings');
+
+        await page.keyboard.press('Escape');
+        await expect(menu).toBeHidden();
+        await expect(trigger).toBeFocused();
+      });
+    });
+
+    [
+      { side: 'top', align: 'end' },
+      { side: 'bottom', align: 'center' },
+      { side: 'left', align: 'start' },
+      { side: 'right', align: 'end' },
+      { side: 'inline-start', align: 'center' },
+      { side: 'inline-end', align: 'start' },
+    ].forEach(({ side, align }) => {
+      it(`updates the open positioning preview to ${side} without moving the trigger`, async () => {
+        await renderFixture('Menu2/DocsLayout');
+        const demo = page.getByTestId('positioned-demo');
+        const getPositions = () =>
+          demo.evaluate((element) => {
+            const container = element.getBoundingClientRect();
+            return Array.from(element.querySelectorAll('button'), (button) => {
+              const trigger = button.getBoundingClientRect();
+              return { x: trigger.left - container.left, y: trigger.top - container.top };
+            });
+          });
+        const closedPositions = await getPositions();
+
+        await demo.getByRole('button', { name: 'Open menu' }).click();
+        await expect(page.getByRole('menu')).toBeVisible();
+        const sideControl = demo.getByRole('combobox', { name: 'side', exact: true });
+        await sideControl.press('Home');
+        await sideControl.selectOption(side);
+        await demo.getByRole('combobox', { name: 'align', exact: true }).selectOption(align);
+        await expect(sideControl).toBeFocused();
+        await expect(page.getByRole('menu')).toBeVisible();
+        await expect(page.getByRole('menu')).toHaveAttribute('data-side', side);
+        await expect(page.getByRole('menu')).toHaveAttribute('data-align', align);
+        await expect.poll(getPositions, { timeout: 2000 }).toEqual(closedPositions);
+
+        await page.keyboard.press('Escape');
+        await expect(page.getByRole('menu')).toBeHidden();
+        await expect.poll(getPositions, { timeout: 2000 }).toEqual(closedPositions);
+      });
+    });
+
+    it('updates the open positioning preview offsets with pointer and keyboard input', async () => {
+      await renderFixture('Menu2/DocsLayout');
+      const demo = page.getByTestId('positioned-demo');
+      const trigger = demo.getByRole('button', { name: 'Open menu' });
+      await trigger.click();
+      const menu = page.getByRole('menu');
+      await expect(menu).toBeVisible();
+      await demo.getByText('sideOffset: 8 px', { exact: true }).click();
+      await expect(menu).toBeVisible();
+      const sideOffset = demo.getByRole('slider', { name: /^sideOffset:/ });
+      const alignOffset = demo.getByRole('slider', { name: /^alignOffset:/ });
+      await sideOffset.press('ArrowRight');
+      await sideOffset.press('ArrowRight');
+      await alignOffset.press('ArrowLeft');
+      await alignOffset.press('ArrowLeft');
+      await alignOffset.press('ArrowLeft');
+      await expect(sideOffset).toHaveValue('16');
+      await expect(alignOffset).toHaveValue('-12');
+
+      await expect(alignOffset).toBeFocused();
+      await expect(menu).toBeVisible();
+      await expect(menu).toHaveAttribute('data-side', 'bottom');
+      await expect
+        .poll(async () => {
+          const triggerBox = (await trigger.boundingBox())!;
+          const menuBox = (await menu.boundingBox())!;
+          return {
+            side: Math.round(menuBox.y - triggerBox.y - triggerBox.height),
+            align: Math.round(menuBox.x - triggerBox.x),
+          };
+        })
+        .toEqual({ side: 16, align: -12 });
+
+      await trigger.click();
+      await expect(menu).toBeHidden();
+    });
+
+    it('keeps the controlled demo trigger and text gap in place when opening and closing', async () => {
+      await renderFixture('Menu2/DocsLayout');
+      const demo = page.getByTestId('controlled-demo');
+      const getLayout = () =>
+        demo.evaluate((element) => {
+          const container = element.getBoundingClientRect();
+          const trigger = element.querySelector('button')!.getBoundingClientRect();
+          const text = element.querySelector('p')!.getBoundingClientRect();
+          return {
+            x: trigger.left - container.left,
+            y: trigger.top - container.top,
+            gap: text.left - trigger.right,
+          };
+        });
+      const closedLayout = await getLayout();
+
+      await demo.getByRole('button', { name: 'More actions' }).click();
+      await expect(page.getByRole('menu')).toBeVisible();
+      await expect(demo.getByText('Opened with reason "trigger-press".')).toBeVisible();
+      await expect.poll(getLayout, { timeout: 2000 }).toEqual(closedLayout);
+
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('menu')).toBeHidden();
+      await expect(demo.getByText('Closed with reason "escape-key".')).toBeVisible();
+      await expect.poll(getLayout, { timeout: 2000 }).toEqual(closedLayout);
+    });
+
+    [false, true].forEach((focusVisible) => {
+      it(`separates pointer and keyboard styles, focusVisible=${focusVisible}`, async () => {
+        await renderFixture('Menu2/ItemStates');
+        await page.getByRole('checkbox', { name: 'Focus ring' }).setChecked(focusVisible);
+        await page.getByRole('button', { name: 'Options' }).click();
+
+        const items = [
+          page.getByRole('menuitem', { name: 'Plain', exact: true }),
+          page.getByRole('menuitem', { name: 'Link', exact: true }),
+          page.getByRole('menuitemcheckbox', { name: 'Checkbox' }),
+          page.getByRole('menuitemradio', { name: 'Radio' }),
+        ];
+        /* eslint-disable no-await-in-loop -- Test each pointer move in order. */
+        for (const item of items) {
+          await item.hover();
+          await expect(item).toBeFocused();
+          await expect(item).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.04)');
+          await expect(item).not.toHaveClass(/Mui-focusVisible/);
+        }
+        /* eslint-enable no-await-in-loop */
+
+        const lastAction = page.getByRole('menuitem', { name: 'Last action' });
+        await lastAction.hover();
+        await expect(lastAction).toBeFocused();
+        await expect(lastAction).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.04)');
+        await Promise.all(
+          items.map((item) => expect(item).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')),
+        );
+
+        await page.keyboard.press('ArrowUp');
+        const trigger = page.getByRole('menuitem', { name: 'More', exact: true });
+        await expect(trigger).toBeFocused();
+        await expect(trigger).toHaveClass(/Mui-focusVisible/);
+        await expect(trigger).toHaveCSS(
+          'background-color',
+          focusVisible ? 'rgba(0, 0, 0, 0)' : 'rgba(0, 0, 0, 0.12)',
+        );
+        if (focusVisible) {
+          await expect(trigger).toHaveCSS('outline-width', '2px');
+        }
+      });
+    });
+
+    it('uses hover tint for the open parent and hovered child', async () => {
+      await renderFixture('Menu2/ItemStates');
+      await page.getByRole('button', { name: 'Options' }).click();
+      const parent = page.getByRole('menuitem', { name: 'More', exact: true });
+      await parent.hover();
+      const child = page.getByRole('menuitem', { name: 'More tools' });
+      await child.hover();
+      await expect(child).toBeFocused();
+      await expect(parent).toHaveClass(/Mui-open/);
+      await expect(parent).not.toHaveClass(/MuiMenu2SubmenuTrigger-highlighted/);
+      await expect(child).not.toHaveClass(/Mui-focusVisible/);
+      await expect(child).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.04)');
+      await expect(parent).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.04)');
+    });
+
+    [false, true].forEach((focusVisible) => {
+      [false, true].forEach((forcedColors) => {
+        it(`clears the submenu trigger tint during a pointer exit, focusVisible=${focusVisible}, forcedColors=${forcedColors}`, async () => {
+          await page.emulateMedia({ forcedColors: forcedColors ? 'active' : 'none' });
+          await renderFixture('Menu2/SubmenuPointerExit');
+          await page.getByRole('checkbox', { name: 'Focus ring' }).setChecked(focusVisible);
+          await page.getByRole('button', { name: 'Options' }).click();
+          const trigger = page.getByRole('menuitem', { name: 'More', exact: true });
+          const popup = page.getByTestId('submenu-popup');
+          const idleColors = await trigger.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return { color: style.color, backgroundColor: style.backgroundColor };
+          });
+          await trigger.hover();
+          await expect(trigger).toHaveClass(/Mui-open/);
+          await expect(popup).toBeVisible();
+          // Move through Base UI's safe-travel pointer blocking without waiting for it to end.
+          const sibling = page.getByRole('menuitem', { name: 'Plain', exact: true });
+          await sibling.hover({ force: true });
+          await expect(popup).toHaveAttribute('data-ending-style', '');
+          await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+          expect(
+            await trigger.evaluate((element) => {
+              const style = getComputedStyle(element);
+              return { color: style.color, backgroundColor: style.backgroundColor };
+            }),
+          ).toEqual(idleColors);
+          await expect(popup).toBeAttached();
+          await expect(popup).not.toBeAttached();
+        });
+      });
+    });
+
+    [false, true].forEach((forcedColors) => {
+      it(`restores the exit tint for keyboard navigation after a pointer close, forcedColors=${forcedColors}`, async () => {
+        await page.emulateMedia({ forcedColors: forcedColors ? 'active' : 'none' });
+        await renderFixture('Menu2/SubmenuPointerExit');
+        await page.getByRole('button', { name: 'Options' }).click();
+        const trigger = page.getByRole('menuitem', { name: 'More', exact: true });
+        const popup = page.getByTestId('submenu-popup');
+        await trigger.hover();
+        await expect(trigger).toHaveClass(/Mui-open/);
+        await expect(popup).toBeVisible();
+        await page.getByRole('menuitem', { name: 'Plain', exact: true }).hover({ force: true });
+        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+        await expect(popup).not.toBeAttached();
+        await page.getByRole('menuitem', { name: 'Plain', exact: true }).hover();
+        await page.keyboard.press('ArrowDown');
+        await page.keyboard.press('ArrowRight');
+        await expect(page.getByRole('menuitem', { name: 'Nested' })).toBeFocused();
+        const openColor = await trigger.evaluate(
+          (element) => getComputedStyle(element).backgroundColor,
+        );
+        await page.keyboard.press('Escape');
+        await expect(popup).toHaveAttribute('data-ending-style', '');
+        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+        expect(await trigger.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(
+          openColor,
+        );
+        await expect(popup).toBeAttached();
+        await expect(popup).not.toBeAttached();
+        await expect(trigger).toBeFocused();
+      });
+    });
   });
 
   describe('<FocusTrap />', () => {
