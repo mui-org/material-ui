@@ -174,6 +174,8 @@ const IconButton = React.forwardRef(function IconButton(inProps, ref) {
     color = 'default',
     disabled = false,
     disableFocusRipple = false,
+    // eslint-disable-next-line react/prop-types
+    focusableWhenDisabled: focusableWhenDisabledProp,
     size = 'medium',
     id: idProp,
     loading = null,
@@ -207,6 +209,8 @@ const IconButton = React.forwardRef(function IconButton(inProps, ref) {
       internalNativeButton
       focusRipple={!disableFocusRipple}
       disabled={disabled || loading}
+      // Keep a loading button focusable so focus isn't lost when `loading` is set while focused
+      focusableWhenDisabled={Boolean(loading) && !disabled}
       ref={ref}
       {...other}
       ownerState={ownerState}

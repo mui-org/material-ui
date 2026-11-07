@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { createRenderer, reactMajor, screen, within } from '@mui/internal-test-utils';
+import { act, createRenderer, isJsdom, reactMajor, screen, within } from '@mui/internal-test-utils';
 import capitalize from '@mui/utils/capitalize';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import IconButton, { iconButtonClasses as classes } from '@mui/material/IconButton';
@@ -170,19 +170,67 @@ describe('<IconButton />', () => {
       expect(button.firstChild).to.equal(null);
     });
 
-    it('disables the button', () => {
+    it('disables the button while keeping it focusable', () => {
       render(<IconButton loading />);
 
       const button = screen.getByRole('button');
-      expect(button).to.have.property('tabIndex', -1);
-      expect(button).to.have.property('disabled', true);
+      expect(button).to.have.attribute('aria-disabled', 'true');
+      expect(button).to.have.property('disabled', false);
+      expect(button).to.have.property('tabIndex', 0);
     });
 
     it('cannot be enabled while `loading`', () => {
       render(<IconButton disabled={false} loading />);
 
-      expect(screen.getByRole('button')).to.have.property('disabled', true);
+      expect(screen.getByRole('button')).to.have.attribute('aria-disabled', 'true');
     });
+
+    it('is natively disabled when both `disabled` and `loading`', () => {
+      render(<IconButton disabled loading />);
+
+      const button = screen.getByRole('button');
+      expect(button).to.have.property('disabled', true);
+      expect(button).not.to.have.attribute('aria-disabled');
+    });
+
+    it('does not activate on Enter or Space while `loading`', async () => {
+      const handleClick = vi.fn();
+      const { user } = render(<IconButton loading onClick={handleClick} aria-label="submit" />);
+
+      await act(async () => {
+        screen.getByRole('button').focus();
+      });
+      expect(screen.getByRole('button')).toHaveFocus();
+
+      await user.keyboard('{Enter}');
+      await user.keyboard(' ');
+
+      expect(handleClick).not.toHaveBeenCalled();
+    });
+
+    it.skipIf(isJsdom())(
+      'keeps focus on the button when `loading` is set while focused',
+      async () => {
+        const { rerender } = render(<IconButton loading={false} aria-label="submit" />);
+        const button = screen.getByRole('button');
+
+        await act(async () => {
+          button.focus();
+        });
+        expect(document.activeElement).to.equal(button);
+
+        rerender(<IconButton loading aria-label="submit" />);
+
+        // Browsers move focus away from a newly disabled element during the next rendering update
+        await act(async () => {
+          await new Promise((resolve) => {
+            requestAnimationFrame(() => requestAnimationFrame(resolve));
+          });
+        });
+
+        expect(document.activeElement).to.equal(button);
+      },
+    );
 
     it('renders a progressbar that is labelled by the button', () => {
       render(<IconButton loading>Submit</IconButton>);

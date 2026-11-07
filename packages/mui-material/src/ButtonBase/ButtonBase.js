@@ -183,6 +183,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
     type,
     hasFormAction,
     tabIndex,
+    focusableWhenDisabled,
     onBeforeKeyDown: handleBeforeKeyDown,
     onBeforeKeyUp: handleBeforeKeyUp,
   });

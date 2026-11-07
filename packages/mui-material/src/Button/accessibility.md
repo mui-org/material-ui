@@ -416,9 +416,9 @@ Tested by: unit `Button.test.js`
 
 <!-- 2.4.3:start -->
 
-- The component sits in natural DOM order with no positive `tabIndex`, and disabled or loading buttons leave the order, so it is one correct focus stop.
+- The component sits in natural DOM order with no positive `tabIndex`, so it is one correct focus stop. Disabled buttons leave the order. Loading buttons stay in it with `aria-disabled`, so setting `loading` on a focused button does not move focus to the page body.
 - Order across controls is the surrounding layout's responsibility.
-- Confirmed by a unit test in [`./Button.test.js`](./Button.test.js) (default `tabIndex` is `0`; disabled and loading buttons leave the order).
+- Confirmed by unit tests in [`./Button.test.js`](./Button.test.js) (default `tabIndex` is `0`; disabled buttons leave the order; loading buttons stay in it and keep focus when `loading` is set).
 
 <!-- 2.4.3:end -->
 

@@ -267,7 +267,6 @@ const MenuItem = React.forwardRef(function MenuItem(inProps, ref) {
         tabIndex={tabIndex}
         component={component}
         internalNativeButton={false}
-        focusableWhenDisabled={itemsFocusableWhenDisabled}
         suppressFocusVisible={suppressFocusVisible}
         focusVisibleClassName={clsx(classes.focusVisible, focusVisibleClassName)}
         className={clsx(classes.root, className)}

@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import * as React from 'react';
 import { spy } from 'sinon';
 import {
+  act,
   createRenderer,
   screen,
   simulateKeyboardDevice,
@@ -958,19 +959,71 @@ describe('<Button />', () => {
       expect(container.querySelector(`.${classes.loadingWrapper}`)).not.to.equal(null);
     });
 
-    it('disables the button', () => {
+    it('disables the button while keeping it focusable', () => {
       render(<Button loading />);
 
       const button = screen.getByRole('button');
-      expect(button).to.have.property('tabIndex', -1);
-      expect(button).to.have.property('disabled', true);
+      expect(button).to.have.attribute('aria-disabled', 'true');
+      expect(button).to.have.property('disabled', false);
+      expect(button).to.have.property('tabIndex', 0);
     });
 
     it('cannot be enabled while `loading`', () => {
       render(<Button disabled={false} loading />);
 
-      expect(screen.getByRole('button')).to.have.property('disabled', true);
+      expect(screen.getByRole('button')).to.have.attribute('aria-disabled', 'true');
     });
+
+    it('is natively disabled when both `disabled` and `loading`', () => {
+      render(<Button disabled loading />);
+
+      const button = screen.getByRole('button');
+      expect(button).to.have.property('disabled', true);
+      expect(button).not.to.have.attribute('aria-disabled');
+    });
+
+    it('does not activate on Enter or Space while `loading`', async () => {
+      const handleClick = vi.fn();
+      const { user } = render(
+        <Button loading onClick={handleClick}>
+          Submit
+        </Button>,
+      );
+
+      await act(async () => {
+        screen.getByRole('button').focus();
+      });
+      expect(screen.getByRole('button')).toHaveFocus();
+
+      await user.keyboard('{Enter}');
+      await user.keyboard(' ');
+
+      expect(handleClick).not.toHaveBeenCalled();
+    });
+
+    it.skipIf(isJsdom())(
+      'keeps focus on the button when `loading` is set while focused',
+      async () => {
+        const { rerender } = render(<Button loading={false}>Submit</Button>);
+        const button = screen.getByRole('button');
+
+        await act(async () => {
+          button.focus();
+        });
+        expect(document.activeElement).to.equal(button);
+
+        rerender(<Button loading>Submit</Button>);
+
+        // Browsers move focus away from a newly disabled element during the next rendering update
+        await act(async () => {
+          await new Promise((resolve) => {
+            requestAnimationFrame(() => requestAnimationFrame(resolve));
+          });
+        });
+
+        expect(document.activeElement).to.equal(button);
+      },
+    );
 
     it('renders a progressbar that is labelled by the button', () => {
       render(<Button loading>Submit</Button>);
@@ -1089,7 +1142,7 @@ describe('<Button />', () => {
         expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
       });
 
-      it('removes a loading button from the tab order', async () => {
+      it('keeps a loading button in the tab order', async () => {
         const { user } = render(
           <React.Fragment>
             <button type="button">Before</button>
@@ -1101,13 +1154,12 @@ describe('<Button />', () => {
         await user.tab();
         expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
 
-        // Tab skips the disabled button and lands on the next control.
+        // A loading button stays focusable so focus isn't lost when `loading` is set while focused.
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'Loading' })).toHaveFocus();
+
         await user.tab();
         expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
-
-        // Backwards tabbing also skips the disabled button and lands back on the first control.
-        await user.tab({ shift: true });
-        expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
       });
     });
 

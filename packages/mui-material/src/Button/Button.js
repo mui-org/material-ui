@@ -513,6 +513,8 @@ const Button = React.forwardRef(function Button(inProps, ref) {
     disableElevation = false,
     disableFocusRipple = false,
     endIcon: endIconProp,
+    // eslint-disable-next-line react/prop-types
+    focusableWhenDisabled: focusableWhenDisabledProp,
     focusVisibleClassName,
     fullWidth = false,
     id: idProp,
@@ -594,6 +596,8 @@ const Button = React.forwardRef(function Button(inProps, ref) {
       className={clsx(contextProps.className, classes.root, className, positionClassName)}
       component={component}
       disabled={disabled || loading}
+      // Keep a loading button focusable so focus isn't lost when `loading` is set while focused
+      focusableWhenDisabled={Boolean(loading) && !disabled}
       focusRipple={!disableFocusRipple}
       focusVisibleClassName={clsx(classes.focusVisible, focusVisibleClassName)}
       ref={ref}

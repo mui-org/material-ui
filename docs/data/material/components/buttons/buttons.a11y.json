@@ -600,6 +600,10 @@
       "nested-interactive": {
         "status": "pass",
         "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
       }
     }
   },
