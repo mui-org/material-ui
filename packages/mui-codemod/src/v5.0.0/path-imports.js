@@ -1,4 +1,3 @@
-import { dirname } from 'path';
 import addImports from 'jscodeshift-add-imports';
 import getJSExports from '../util/getJSExports';
 
@@ -11,11 +10,7 @@ export default function transformer(fileInfo, api, options) {
     trailingComma: true,
   };
 
-  const styleExports = getJSExports(
-    require.resolve('@mui/material-v5/modern/styles', {
-      paths: [dirname(fileInfo.path)],
-    }),
-  );
+  const styleExports = getJSExports(require.resolve('@mui/material-v5/modern/styles'));
 
   const barrelImportsToTransform = {
     material: {},
