@@ -54,6 +54,18 @@ const typographyTest = () => {
       <Typography component={CustomComponent} prop1="1" />
       {/* @ts-expect-error: CustomComponent requires a numeric prop2. */}
       <Typography component={CustomComponent} prop1="1" prop2="12" />
+      {/* Typography `sx` typography shorthand should enforce responsive variant type checking */}
+      <Typography sx={{ typography: 'body1' }} />
+      <Typography sx={{ typography: 'custom-variant' }} />
+      <Typography sx={{ typography: { md: 'body1' } }} />
+      <Typography sx={{ typography: { xs: 'h1', sm: 'inherit' } }} />
+      <Typography sx={{ typography: { md: undefined } }} />
+      {/* @ts-expect-error */}
+      <Typography sx={{ typography: { md: 'not-a-variant' } }} />
+      <Typography sx={{ typography: ['body1', 'body2'] }} />
+      <Typography
+        sx={(theme) => ({ typography: { md: 'body1' }, color: theme.palette.text.primary })}
+      />
     </div>
   );
 };

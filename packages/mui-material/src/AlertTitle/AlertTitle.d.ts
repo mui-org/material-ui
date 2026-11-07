@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { SxProps } from '@mui/system';
-import { Theme } from '../styles';
-import { TypographyProps } from '../Typography';
+import { TypographyProps, TypographySxProps } from '../Typography';
 import { AlertTitleClasses } from './alertTitleClasses';
 
 export interface AlertTitleProps extends TypographyProps<'div'> {
@@ -16,7 +14,7 @@ export interface AlertTitleProps extends TypographyProps<'div'> {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme> | undefined;
+  sx?: TypographySxProps | undefined;
 }
 
 /**

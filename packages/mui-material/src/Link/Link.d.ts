@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { DistributiveOmit } from '@mui/types';
-import { SxProps } from '@mui/system';
 import { OverridableComponent, OverrideProps } from '../OverridableComponent';
-import { Theme } from '../styles';
-import { TypographyOwnProps } from '../Typography';
+import { TypographyOwnProps, TypographySxProps } from '../Typography';
 import { LinkClasses } from './linkClasses';
 
 export interface LinkOwnProps extends LinkBaseProps {
@@ -23,7 +21,7 @@ export interface LinkOwnProps extends LinkBaseProps {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme> | undefined;
+  sx?: TypographySxProps | undefined;
   /**
    * `classes` prop applied to the [`Typography`](https://mui.com/material-ui/api/typography/) element.
    */

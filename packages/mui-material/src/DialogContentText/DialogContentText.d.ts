@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { SxProps } from '@mui/system';
-import { TypographyTypeMap } from '../Typography';
+import { TypographyTypeMap, TypographySxProps } from '../Typography';
 import { OverrideProps, OverridableComponent } from '../OverridableComponent';
-import { Theme } from '../styles';
 import { DialogContentTextClasses } from './dialogContentTextClasses';
 
 export interface DialogContentTextOwnProps extends Omit<TypographyTypeMap['props'], 'classes'> {
@@ -13,7 +11,7 @@ export interface DialogContentTextOwnProps extends Omit<TypographyTypeMap['props
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme> | undefined;
+  sx?: TypographySxProps | undefined;
 }
 
 export interface DialogContentTextTypeMap<

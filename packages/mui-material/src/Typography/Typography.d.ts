@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { OverridableStringUnion } from '@mui/types';
-import { SxProps } from '@mui/system';
+import { SxProps, Breakpoint } from '@mui/system';
 import { Theme, TypeText } from '../styles';
 import { OverrideProps, OverridableComponent } from '../OverridableComponent';
 import { TypographyVariant } from '../styles/createTypography';
@@ -9,6 +9,13 @@ import { TypographyClasses } from './typographyClasses';
 export interface TypographyPropsVariantOverrides {}
 
 export interface TypographyPropsColorOverrides {}
+
+export type TypographySxProps = SxProps<Theme> & {
+  /**
+   * Enforces type checking on the responsive `typography` shorthand in the `sx` prop.
+   */
+  typography?: string | Partial<Record<Breakpoint, TypographyProps['variant']>> | undefined;
+};
 
 export interface TypographyOwnProps {
   /**
@@ -58,7 +65,7 @@ export interface TypographyOwnProps {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  sx?: SxProps<Theme> | undefined;
+  sx?: TypographySxProps | undefined;
   /**
    * Applies the theme typography styles.
    * @default 'body1'
