@@ -208,16 +208,31 @@ The `ListItemIcon` default min-width has changed to `36px` (previously `56px`) t
 ### Material Icons
 
 23 legacy icon exports that ended with `Outline` (without the "d") have been removed.
-These were exact duplicates of their `Outlined` counterparts (for example, `InfoOutline` had the same SVG as `InfoOutlined`).
+Adding a "d" to the name doesn't always give the same icon, because `<Name>Outlined` is the Outlined theme of the base icon.
+For example, `ErrorOutline` is an outlined circle, but `ErrorOutlined` is a filled circle.
 
-To migrate, rename the import to use the `Outlined` suffix:
+To keep the same appearance, add the `Outlined` suffix to the removed export name:
+
+```diff
+-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
++import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlineOutlined';
+```
+
+This applies to `AddCircleOutline`, `ChatBubbleOutline`, `CheckCircleOutline`, `DeleteOutline`, `DoneOutline`, `ErrorOutline`, `HelpOutline`, `MailOutline`, `PauseCircleOutline`, `PersonOutline`, `PieChartOutline`, `PlayCircleOutline`, `RemoveCircleOutline`, `StarOutline`, and `WorkOutline`.
+
+`DriveFileMoveOutline`, `InfoOutline`, `LabelImportantOutline`, `LightbulbOutline`, `LockOutline`, and `WorkspacesOutline` have no `OutlineOutlined` variant, so replace `Outline` with `Outlined`:
 
 ```diff
 -import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 +import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 ```
 
-The full list of removed exports: `AddCircleOutline`, `ChatBubbleOutline`, `CheckCircleOutline`, `DeleteOutline`, `DoneOutline`, `DriveFileMoveOutline`, `ErrorOutline`, `HelpOutline`, `InfoOutline`, `LabelImportantOutline`, `LightbulbOutline`, `LockOutline`, `MailOutline`, `ModeEditOutline`, `PauseCircleOutline`, `PeopleOutline`, `PersonOutline`, `PieChartOutline`, `PlayCircleOutline`, `RemoveCircleOutline`, `StarOutline`, `WorkOutline`, `WorkspacesOutline`.
+These look the same as the removed icons, except `DriveFileMoveOutlined`, which has an outlined folder tab instead of a filled one.
+
+Two icons need a different replacement:
+
+- `ModeEditOutline` was a filled pencil, so replace it with `ModeEdit`.
+- `PeopleOutline` has no replacement with the same design. The closest is `PeopleOutlineOutlined`. To keep the previous design, copy its SVG path from v7 into a custom icon with [`createSvgIcon`](/material-ui/icons/#createsvgicon).
 
 Theme variants of these icons (for example, `InfoOutlineRounded`, `DeleteOutlineSharp`) are **not** affected and remain available.
 
