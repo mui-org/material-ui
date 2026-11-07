@@ -11,7 +11,12 @@
     },
     "defaultValue": { "type": { "name": "any" } },
     "disabled": { "type": { "name": "bool" } },
-    "disableInjectingGlobalStyles": { "type": { "name": "bool" }, "default": "false" },
+    "disableInjectingGlobalStyles": {
+      "type": { "name": "bool" },
+      "default": "false",
+      "deprecated": true,
+      "deprecationInfo": "The keyframes are injected with the input styles, so there is no longer a style sheet per input to avoid. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
+    },
     "endAdornment": { "type": { "name": "node" } },
     "error": { "type": { "name": "bool" } },
     "fullWidth": { "type": { "name": "bool" }, "default": "false" },

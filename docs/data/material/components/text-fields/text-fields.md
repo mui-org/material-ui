@@ -225,42 +225,6 @@ import { useFormControl } from '@mui/material/FormControl';
 
 {{"component": "file://./demos/use-form-control/index.ts"}}
 
-## Performance
-
-Global styles for the auto-fill keyframes are injected and removed on each mount and unmount, respectively.
-If you are loading a large number of Text Field components at once, it might be a good idea to change this default behavior by enabling [`disableInjectingGlobalStyles`](/material-ui/api/input-base/#input-base-prop-disableInjectingGlobalStyles) in `MuiInputBase`.
-Make sure to inject `GlobalStyles` for the auto-fill keyframes at the top of your application.
-
-```jsx
-import { GlobalStyles, createTheme, ThemeProvider } from '@mui/material';
-
-const theme = createTheme({
-  components: {
-    MuiInputBase: {
-      defaultProps: {
-        disableInjectingGlobalStyles: true,
-      },
-    },
-  },
-});
-
-export default function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles
-        styles={{
-          '@keyframes mui-auto-fill': { from: { animationName: 'mui-auto-fill' } },
-          '@keyframes mui-auto-fill-cancel': {
-            from: { animationName: 'mui-auto-fill-cancel' },
-          },
-        }}
-      />
-      ...
-    </ThemeProvider>
-  );
-}
-```
-
 ## Limitations
 
 ### Shrink

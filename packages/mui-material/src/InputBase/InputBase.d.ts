@@ -66,8 +66,8 @@ export interface InputBaseProps extends StandardProps<
    */
   disabled?: boolean | undefined;
   /**
-   * If `true`, GlobalStyles for the auto-fill keyframes will not be injected/removed on mount/unmount. Make sure to inject them at the top of your application.
-   * This option is intended to help with boosting the initial rendering performance if you are loading a big amount of Input components at once.
+   * If `true`, the auto-fill keyframes are not injected with the input styles. Make sure to inject them at the top of your application.
+   * @deprecated The keyframes are injected with the input styles, so there is no longer a style sheet per input to avoid. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
    * @default false
    */
   disableInjectingGlobalStyles?: boolean | undefined;

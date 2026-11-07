@@ -1486,6 +1486,35 @@ The InputBase's prop `componentsProps` was deprecated in favor of `slotProps`:
  />
 ```
 
+### disableInjectingGlobalStyles
+
+The InputBase's prop `disableInjectingGlobalStyles` was deprecated: the auto-fill keyframes are injected with the input styles, so there is no longer a style sheet per input to avoid.
+Remove the prop, along with the `GlobalStyles` for the auto-fill keyframes it required:
+
+```diff
+ const theme = createTheme({
+   components: {
+     MuiInputBase: {
+-      defaultProps: {
+-        disableInjectingGlobalStyles: true,
+-      },
+     },
+   },
+ });
+
+ <ThemeProvider theme={theme}>
+-  <GlobalStyles
+-    styles={{
+-      '@keyframes mui-auto-fill': { from: { animationName: 'mui-auto-fill' } },
+-      '@keyframes mui-auto-fill-cancel': {
+-        from: { animationName: 'mui-auto-fill-cancel' },
+-      },
+-    }}
+-  />
+   ...
+ </ThemeProvider>
+```
+
 ## ListItem
 
 Use the [codemod](https://github.com/mui/material-ui/tree/HEAD/packages/mui-codemod#list-item-props) below to migrate the code as described in the following sections:

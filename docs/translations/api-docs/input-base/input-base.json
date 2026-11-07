@@ -18,7 +18,7 @@
       "description": "If <code>true</code>, the component is disabled. The prop defaults to the value (<code>false</code>) inherited from the parent FormControl component."
     },
     "disableInjectingGlobalStyles": {
-      "description": "If <code>true</code>, GlobalStyles for the auto-fill keyframes will not be injected/removed on mount/unmount. Make sure to inject them at the top of your application. This option is intended to help with boosting the initial rendering performance if you are loading a big amount of Input components at once."
+      "description": "If <code>true</code>, the auto-fill keyframes are not injected with the input styles. Make sure to inject them at the top of your application."
     },
     "endAdornment": { "description": "End <code>InputAdornment</code> for this component." },
     "error": {
