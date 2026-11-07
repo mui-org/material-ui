@@ -2,7 +2,7 @@
 import type * as React from 'react';
 import type { ClassValue } from 'clsx';
 import useForkRef from '@mui/utils/useForkRef';
-import appendOwnerState from '@mui/utils/appendOwnerState';
+import isHostComponent from '@mui/utils/isHostComponent';
 import resolveComponentProps from '@mui/utils/resolveComponentProps';
 import mergeSlotProps from '@mui/utils/mergeSlotProps';
 
@@ -104,54 +104,59 @@ export default function useSlot<
     externalForwardedProps,
     internalForwardedProps,
     shouldForwardComponentProp = false,
-    ...useSlotPropsParams
+    getSlotProps,
+    additionalProps,
   } = parameters;
-  const {
-    component: rootComponent,
-    slots = { [name]: undefined },
-    slotProps = { [name]: undefined },
-    ...other
-  } = externalForwardedProps;
+  const rootComponent = externalForwardedProps.component;
+  const slot = externalForwardedProps.slots?.[name];
 
-  const elementType = slots[name] || initialElementType;
+  const elementType = slot || initialElementType;
 
   // `slotProps[name]` can be a callback that receives the component's ownerState.
   // `resolvedComponentsProps` is always a plain object.
-  const resolvedComponentsProps = resolveComponentProps(slotProps[name], ownerState);
+  const resolvedComponentsProps = resolveComponentProps(
+    externalForwardedProps.slotProps?.[name],
+    ownerState,
+  );
 
-  const {
-    props: { component: slotComponent, ...mergedProps },
-    internalRef,
-  } = mergeSlotProps({
+  let other: Record<string, any> | undefined;
+  if (name === 'root') {
+    const { component, slots, slotProps, ...rest } = externalForwardedProps;
+    other = rest;
+  }
+
+  const { props: mergedProps, internalRef } = mergeSlotProps({
     className,
-    ...useSlotPropsParams,
-    externalForwardedProps: name === 'root' ? other : undefined,
+    getSlotProps,
+    additionalProps,
+    externalForwardedProps: other,
     externalSlotProps: resolvedComponentsProps,
   });
 
   const ref = useForkRef(internalRef, resolvedComponentsProps?.ref, parameters.ref);
 
+  const slotComponent = (mergedProps as { component?: React.ElementType | undefined }).component;
   const LeafComponent = (name === 'root' ? slotComponent || rootComponent : slotComponent) as
     React.ElementType | undefined;
 
-  const props = appendOwnerState(
-    elementType,
-    {
-      ...(name === 'root' && !rootComponent && !slots[name] && internalForwardedProps),
-      ...(name !== 'root' && !slots[name] && internalForwardedProps),
-      ...mergedProps,
-      ...(LeafComponent &&
-        !shouldForwardComponentProp && {
-          as: LeafComponent,
-        }),
-      ...(LeafComponent &&
-        shouldForwardComponentProp && {
-          component: LeafComponent,
-        }),
-      ref,
-    },
-    ownerState,
-  );
+  // Built in one pass, in the order of precedence: internal props, the merged props without
+  // `component`, the leaf component, and the ref.
+  const props: Record<string, any> = {};
+  if (internalForwardedProps && !slot && (name !== 'root' || !rootComponent)) {
+    Object.assign(props, internalForwardedProps);
+  }
+  for (const key in mergedProps) {
+    if (key !== 'component') {
+      props[key] = (mergedProps as Record<string, any>)[key];
+    }
+  }
+  if (LeafComponent) {
+    props[shouldForwardComponentProp ? 'component' : 'as'] = LeafComponent;
+  }
+  props.ref = ref;
+  if (elementType !== undefined && !isHostComponent(elementType)) {
+    props.ownerState = props.ownerState ? { ...props.ownerState, ...ownerState } : ownerState;
+  }
 
   return [elementType, props] as [
     ElementType,

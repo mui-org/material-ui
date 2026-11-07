@@ -9,7 +9,7 @@ import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
 import { useDefaultProps } from '../DefaultPropsProvider';
-import ButtonBase from '../ButtonBase';
+import ButtonBase, { ButtonBaseRoot } from '../ButtonBase/ButtonBase';
 import CircularProgress from '../CircularProgress';
 import capitalize from '../utils/capitalize';
 import iconButtonClasses, { getIconButtonUtilityClass } from './iconButtonClasses';
@@ -34,7 +34,7 @@ const useUtilityClasses = (ownerState) => {
   return composeClasses(slots, getIconButtonUtilityClass, classes);
 };
 
-const IconButtonRoot = styled(ButtonBase, {
+const IconButtonRoot = styled(ButtonBaseRoot, {
   name: 'MuiIconButton',
   slot: 'Root',
   overridesResolver: (props, styles) => {
@@ -200,7 +200,9 @@ const IconButton = React.forwardRef(function IconButton(inProps, ref) {
   const classes = useUtilityClasses(ownerState);
 
   return (
-    <IconButtonRoot
+    <ButtonBase
+      internalRoot={IconButtonRoot}
+      internalOwnerState={ownerState}
       id={loading ? loadingId : idProp}
       className={clsx(classes.root, className)}
       centerRipple
@@ -209,7 +211,6 @@ const IconButton = React.forwardRef(function IconButton(inProps, ref) {
       disabled={disabled || loading}
       ref={ref}
       {...other}
-      ownerState={ownerState}
     >
       {typeof loading === 'boolean' && (
         // use plain HTML span to minimize the runtime overhead
@@ -220,7 +221,7 @@ const IconButton = React.forwardRef(function IconButton(inProps, ref) {
         </span>
       )}
       {children}
-    </IconButtonRoot>
+    </ButtonBase>
   );
 });
 

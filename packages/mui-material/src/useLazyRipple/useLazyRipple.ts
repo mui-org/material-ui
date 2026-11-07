@@ -71,7 +71,13 @@ export class LazyRipple {
   }
 
   stop(...args: Parameters<TouchRippleActions['stop']>) {
-    this.mount().then(() => this.ref.current?.stop(...args));
+    // Nothing can be running before the ripple mounts, so don't mount it just to stop it: what
+    // would run once the stop is done can run now.
+    if (!this.mounted) {
+      args[1]?.();
+      return;
+    }
+    this.mounted.then(() => this.ref.current?.stop(...args));
   }
 
   pulsate(...args: Parameters<TouchRippleActions['pulsate']>) {

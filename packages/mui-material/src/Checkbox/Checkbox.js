@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import buttonBaseClasses from '../ButtonBase/buttonBaseClasses';
 import { outsetFocusRing } from '../styles/focusVisible';
-import SwitchBase from '../internal/SwitchBase';
+import SwitchBase, { SwitchBaseRoot } from '../internal/SwitchBase';
 import CheckBoxOutlineBlankIcon from '../internal/svg-icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '../internal/svg-icons/CheckBox';
 import IndeterminateCheckBoxIcon from '../internal/svg-icons/IndeterminateCheckBox';
@@ -41,8 +41,8 @@ const useUtilityClasses = (ownerState) => {
   };
 };
 
-const CheckboxRoot = styled(SwitchBase, {
-  shouldForwardProp: (prop) => rootShouldForwardProp(prop) || prop === 'classes',
+const CheckboxRoot = styled(SwitchBaseRoot, {
+  shouldForwardProp: rootShouldForwardProp,
   name: 'MuiCheckbox',
   slot: 'Root',
   overridesResolver: (props, styles) => {
@@ -166,7 +166,7 @@ const Checkbox = React.forwardRef(function Checkbox(inProps, ref) {
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
     ref,
-    elementType: CheckboxRoot,
+    elementType: SwitchBase,
     className: clsx(classes.root, className),
     shouldForwardComponentProp: true,
     externalForwardedProps: {
@@ -202,7 +202,20 @@ const Checkbox = React.forwardRef(function Checkbox(inProps, ref) {
     },
   });
 
-  return <RootSlot {...rootSlotProps} classes={classes} />;
+  if (RootSlot !== SwitchBase) {
+    return <RootSlot {...rootSlotProps} classes={classes} />;
+  }
+
+  const { ownerState: rootOwnerState, ...rootProps } = rootSlotProps;
+
+  return (
+    <SwitchBase
+      {...rootProps}
+      classes={classes}
+      internalRoot={CheckboxRoot}
+      internalOwnerState={rootOwnerState}
+    />
+  );
 });
 
 Checkbox.propTypes /* remove-proptypes */ = {

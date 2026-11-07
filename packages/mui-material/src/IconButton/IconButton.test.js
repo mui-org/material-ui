@@ -161,6 +161,29 @@ describe('<IconButton />', () => {
     expect(container.querySelector('.touch-ripple')).to.equal(null);
   });
 
+  it('styles with its own owner state when a parent forwards an `ownerState` prop', () => {
+    const theme = createTheme({
+      components: {
+        MuiIconButton: {
+          styleOverrides: {
+            sizeSmall: { marginTop: 3 },
+          },
+        },
+      },
+    });
+
+    // A slot rendered with `useSlot` receives the owner state of the component that renders it.
+    render(
+      <ThemeProvider theme={theme}>
+        <IconButton size="small" ownerState={{ severity: 'error' }}>
+          book
+        </IconButton>
+      </ThemeProvider>,
+    );
+
+    expect(screen.getByRole('button')).to.have.class(classes.sizeSmall);
+  });
+
   describe('prop: loading', () => {
     it('does not render the wrapper by default', () => {
       render(<IconButton />);

@@ -6,11 +6,12 @@ import refType from '@mui/utils/refType';
 import elementTypeAcceptingRef from '@mui/utils/elementTypeAcceptingRef';
 import composeClasses from '@mui/utils/composeClasses';
 import isFocusVisible from '@mui/utils/isFocusVisible';
+import useLazyRef from '@mui/utils/useLazyRef';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import useForkRef from '../utils/useForkRef';
-import useEventCallback from '../utils/useEventCallback';
+import useEnhancedEffect from '../utils/useEnhancedEffect';
 import useButtonBase from './useButtonBase';
 import useLazyRipple from '../useLazyRipple';
 import TouchRipple from './TouchRipple';
@@ -110,6 +111,11 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
     internalNativeButton: internalNativeButtonProp,
     // private prop to let a parent (like SwitchBase) control its own focus visible style
     internalDisabledThemeFocusVisible = false,
+    // private props to let a parent render its own styled root, created with `styled(ButtonBaseRoot)`,
+    // so the styles of both are serialized together. The parent's owner state takes precedence over
+    // an `ownerState` prop it forwards, as with a styled wrapper.
+    internalRoot: Root = ButtonBaseRoot,
+    internalOwnerState,
     /* eslint-enable react/prop-types */
     LinkComponent = 'a',
     nativeButton: nativeButtonProp,
@@ -155,24 +161,11 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
     setFocusVisible(false);
   }
 
-  const handleBeforeKeyDown = useEventCallback((event) => {
-    // Check if key is already down to avoid repeats being counted as multiple activations
-    if (focusRipple && !event.repeat && focusVisible && event.key === ' ') {
-      ripple.stop(event, () => {
-        ripple.start(event);
-      });
-    }
-  });
-
-  const handleBeforeKeyUp = useEventCallback((event) => {
-    // calling preventDefault in keyUp on a <button> will not dispatch a click event if Space is pressed
-    // https://codesandbox.io/p/sandbox/button-keyup-preventdefault-dn7f0
-    if (focusRipple && event.key === ' ' && focusVisible && !event.defaultPrevented) {
-      ripple.stop(event, () => {
-        ripple.pulsate(event);
-      });
-    }
-  });
+  // The event handlers are created once and read the values of the last committed render.
+  const latestRef = React.useRef(null);
+  const handlers = useLazyRef(() =>
+    createEventHandlers(latestRef, setFocusVisible, ripple),
+  ).current;
 
   const { getButtonProps, rootRef: buttonRef } = useButtonBase({
     nativeButton,
@@ -183,8 +176,8 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
     type,
     hasFormAction,
     tabIndex,
-    onBeforeKeyDown: handleBeforeKeyDown,
-    onBeforeKeyUp: handleBeforeKeyUp,
+    onBeforeKeyDown: handlers.onBeforeKeyDown,
+    onBeforeKeyUp: handlers.onBeforeKeyUp,
   });
 
   const { onClick, onKeyDown, onKeyUp, ...buttonProps } = getButtonProps({
@@ -212,58 +205,31 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
     }
   }, [disableRipple, focusRipple, focusVisible, ripple]);
 
-  const handleMouseDown = useRippleHandler(ripple, 'start', onMouseDown, disableTouchRipple);
-  const handleContextMenu = useRippleHandler(ripple, 'stop', onContextMenu, disableTouchRipple);
-  const handleDragLeave = useRippleHandler(ripple, 'stop', onDragLeave, disableTouchRipple);
-  const handleMouseUp = useRippleHandler(ripple, 'stop', onMouseUp, disableTouchRipple);
-  const handleMouseLeave = useRippleHandler(
-    ripple,
-    'stop',
-    (event) => {
-      if (focusVisible) {
-        event.preventDefault();
-      }
-      if (onMouseLeave) {
-        onMouseLeave(event);
-      }
-    },
+  const latest = {
+    buttonRef,
     disableTouchRipple,
-  );
-  const handleTouchStart = useRippleHandler(ripple, 'start', onTouchStart, disableTouchRipple);
-  const handleTouchEnd = useRippleHandler(ripple, 'stop', onTouchEnd, disableTouchRipple);
-  const handleTouchMove = useRippleHandler(ripple, 'stop', onTouchMove, disableTouchRipple);
+    focusRipple,
+    focusVisible,
+    onBlur,
+    onContextMenu,
+    onDragLeave,
+    onFocus,
+    onFocusVisible,
+    onMouseDown,
+    onMouseLeave,
+    onMouseUp,
+    onTouchEnd,
+    onTouchMove,
+    onTouchStart,
+    suppressFocusVisible,
+  };
+  // Events can fire before the first layout effect, for example when focus moves during commit.
+  if (latestRef.current === null) {
+    latestRef.current = latest;
+  }
 
-  const handleBlur = useRippleHandler(
-    ripple,
-    'stop',
-    (event) => {
-      if (!isFocusVisible(event.target)) {
-        setFocusVisible(false);
-      }
-      if (onBlur) {
-        onBlur(event);
-      }
-    },
-    false,
-  );
-
-  const handleFocus = useEventCallback((event) => {
-    // Fix for https://github.com/react/react/issues/7769
-    if (!buttonRef.current) {
-      buttonRef.current = event.currentTarget;
-    }
-
-    if (!suppressFocusVisible && isFocusVisible(event.target)) {
-      setFocusVisible(true);
-
-      if (onFocusVisible) {
-        onFocusVisible(event);
-      }
-    }
-
-    if (onFocus) {
-      onFocus(event);
-    }
+  useEnhancedEffect(() => {
+    latestRef.current = latest;
   });
 
   const linkProps = {};
@@ -294,47 +260,115 @@ const ButtonBase = React.forwardRef(function ButtonBase(inProps, ref) {
   const classes = useUtilityClasses(ownerState);
 
   return (
-    <ButtonBaseRoot
+    <Root
       as={ComponentProp}
       className={clsx(classes.root, className)}
       ownerState={ownerState}
-      onBlur={handleBlur}
+      onBlur={handlers.onBlur}
       onClick={onClick}
-      onContextMenu={handleContextMenu}
-      onFocus={handleFocus}
+      onContextMenu={handlers.onContextMenu}
+      onFocus={handlers.onFocus}
       onKeyDown={onKeyDown}
       onKeyUp={onKeyUp}
-      onMouseDown={handleMouseDown}
-      onMouseLeave={handleMouseLeave}
-      onMouseUp={handleMouseUp}
-      onDragLeave={handleDragLeave}
-      onTouchEnd={handleTouchEnd}
-      onTouchMove={handleTouchMove}
-      onTouchStart={handleTouchStart}
+      onMouseDown={handlers.onMouseDown}
+      onMouseLeave={handlers.onMouseLeave}
+      onMouseUp={handlers.onMouseUp}
+      onDragLeave={handlers.onDragLeave}
+      onTouchEnd={handlers.onTouchEnd}
+      onTouchMove={handlers.onTouchMove}
+      onTouchStart={handlers.onTouchStart}
       ref={handleRef}
       {...(isLink ? linkProps : buttonProps)}
       {...other}
+      {...(internalOwnerState && { ownerState: { ...ownerState, ...internalOwnerState } })}
     >
       {children}
       {enableTouchRipple ? (
         <TouchRipple ref={handleRippleRef} center={centerRipple} {...TouchRippleProps} />
       ) : null}
-    </ButtonBaseRoot>
+    </Root>
   );
 });
 
-function useRippleHandler(ripple, rippleAction, eventCallback, skipRippleAction = false) {
-  return useEventCallback((event) => {
-    if (eventCallback) {
-      eventCallback(event);
-    }
+function createEventHandlers(latestRef, setFocusVisible, ripple) {
+  function createRippleHandler(rippleAction, eventCallbackName) {
+    return (event) => {
+      const latest = latestRef.current;
+      const eventCallback = latest[eventCallbackName];
+      if (eventCallback) {
+        eventCallback(event);
+      }
 
-    if (!skipRippleAction) {
-      ripple[rippleAction](event);
-    }
+      if (!latest.disableTouchRipple) {
+        ripple[rippleAction](event);
+      }
+    };
+  }
+  const handleMouseLeave = createRippleHandler('stop', 'onMouseLeave');
 
-    return true;
-  });
+  return {
+    onBeforeKeyDown(event) {
+      const { focusRipple, focusVisible } = latestRef.current;
+      // Check if key is already down to avoid repeats being counted as multiple activations
+      if (focusRipple && !event.repeat && focusVisible && event.key === ' ') {
+        ripple.stop(event, () => {
+          ripple.start(event);
+        });
+      }
+    },
+    onBeforeKeyUp(event) {
+      const { focusRipple, focusVisible } = latestRef.current;
+      // calling preventDefault in keyUp on a <button> will not dispatch a click event if Space is pressed
+      // https://codesandbox.io/p/sandbox/button-keyup-preventdefault-dn7f0
+      if (focusRipple && event.key === ' ' && focusVisible && !event.defaultPrevented) {
+        ripple.stop(event, () => {
+          ripple.pulsate(event);
+        });
+      }
+    },
+    onMouseDown: createRippleHandler('start', 'onMouseDown'),
+    onContextMenu: createRippleHandler('stop', 'onContextMenu'),
+    onDragLeave: createRippleHandler('stop', 'onDragLeave'),
+    onMouseUp: createRippleHandler('stop', 'onMouseUp'),
+    onMouseLeave(event) {
+      if (latestRef.current.focusVisible) {
+        event.preventDefault();
+      }
+      handleMouseLeave(event);
+    },
+    onTouchStart: createRippleHandler('start', 'onTouchStart'),
+    onTouchEnd: createRippleHandler('stop', 'onTouchEnd'),
+    onTouchMove: createRippleHandler('stop', 'onTouchMove'),
+    onBlur(event) {
+      const { onBlur } = latestRef.current;
+      if (!isFocusVisible(event.target)) {
+        setFocusVisible(false);
+      }
+      if (onBlur) {
+        onBlur(event);
+      }
+      ripple.stop(event);
+    },
+    onFocus(event) {
+      const { buttonRef, onFocus, onFocusVisible, suppressFocusVisible } = latestRef.current;
+      // Fix for https://github.com/react/react/issues/7769
+      if (!buttonRef.current) {
+        buttonRef.current = event.currentTarget;
+      }
+
+      if (!suppressFocusVisible && isFocusVisible(event.target)) {
+        setFocusVisible(true);
+
+        if (onFocusVisible) {
+          onFocusVisible(event);
+        }
+      }
+
+      if (onFocus) {
+        onFocus(event);
+      }
+    },
+  };
 }
 
 ButtonBase.propTypes /* remove-proptypes */ = {

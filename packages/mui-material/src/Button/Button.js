@@ -9,7 +9,7 @@ import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
-import ButtonBase from '../ButtonBase';
+import ButtonBase, { ButtonBaseRoot } from '../ButtonBase/ButtonBase';
 import CircularProgress from '../CircularProgress';
 import capitalize from '../utils/capitalize';
 import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFilter';
@@ -74,8 +74,8 @@ const commonIconStyles = [
   },
 ];
 
-const ButtonRoot = styled(ButtonBase, {
-  shouldForwardProp: (prop) => rootShouldForwardProp(prop) || prop === 'classes',
+const ButtonRoot = styled(ButtonBaseRoot, {
+  shouldForwardProp: rootShouldForwardProp,
   name: 'MuiButton',
   slot: 'Root',
   overridesResolver: (props, styles) => {
@@ -589,8 +589,9 @@ const Button = React.forwardRef(function Button(inProps, ref) {
   const { root, ...forwardedClasses } = classes;
 
   return (
-    <ButtonRoot
-      ownerState={ownerState}
+    <ButtonBase
+      internalRoot={ButtonRoot}
+      internalOwnerState={ownerState}
       className={clsx(contextProps.className, classes.root, className, positionClassName)}
       component={component}
       disabled={disabled || loading}
@@ -608,7 +609,7 @@ const Button = React.forwardRef(function Button(inProps, ref) {
       {children}
       {loadingPosition === 'end' && loader}
       {endIcon}
-    </ButtonRoot>
+    </ButtonBase>
   );
 });
 
