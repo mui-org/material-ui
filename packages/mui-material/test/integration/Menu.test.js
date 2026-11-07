@@ -411,6 +411,8 @@ describe('<Menu /> integration', () => {
           <MenuItem />
           <MenuItem autoFocus />
         </OpenMenu>,
+        // The second effect run in StrictMode refocuses the item and hides a focus override.
+        { strictEffects: false },
       );
 
       const menuitems = screen.getAllByRole('menuitem');

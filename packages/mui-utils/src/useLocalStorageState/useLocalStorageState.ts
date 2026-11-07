@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import useEnhancedEffect from '../useEnhancedEffect';
 
 // storage events only work across tabs, we'll use an event emitter to announce within the current tab
 const currentTabChangeListeners = new Map<string, Set<() => void>>();
@@ -90,6 +91,55 @@ type UseStorageStateHookResult = [
   React.Dispatch<React.SetStateAction<string | null>>,
 ];
 
+// TODO React 17: Remove `useSyncExternalStoreOld` once React 17 support is removed
+function useSyncExternalStoreOld(
+  subscribeToStore: (onStoreChange: () => void) => () => void,
+  getStoreSnapshot: () => string | null,
+  getServerSnapshot: () => string | null,
+): string | null {
+  const [{ store }, forceUpdate] = React.useState(() => ({
+    store: {
+      snapshot: getServerSnapshot(),
+      getSnapshot: getStoreSnapshot,
+      hydrated: false,
+    },
+  }));
+
+  // Only the first render uses the server snapshot. Later renders must read the current
+  // store, including when the key changes before its subscription effect runs.
+  const snapshot = store.hydrated ? getStoreSnapshot() : store.snapshot;
+
+  useEnhancedEffect(() => {
+    store.hydrated = true;
+    store.snapshot = snapshot;
+    store.getSnapshot = getStoreSnapshot;
+
+    if (snapshot !== getStoreSnapshot()) {
+      forceUpdate({ store });
+    }
+  }, [getStoreSnapshot, snapshot, store]);
+
+  useEnhancedEffect(() => {
+    const update = () => {
+      // Compare with the committed snapshot, even if a render changed it without an event.
+      if (store.snapshot !== store.getSnapshot()) {
+        forceUpdate({ store });
+      }
+    };
+
+    update();
+    return subscribeToStore(update);
+  }, [store, subscribeToStore]);
+
+  return snapshot;
+}
+
+// See https://github.com/mui/material-ui/issues/41190#issuecomment-2040873379 for why
+const safeReact = { ...React };
+const maybeReactUseSyncExternalStore: undefined | any = safeReact.useSyncExternalStore;
+const useStoreSnapshot: typeof useSyncExternalStoreOld =
+  maybeReactUseSyncExternalStore ?? useSyncExternalStoreOld;
+
 const serverValue: UseStorageStateHookResult = [null, () => {}];
 
 function useLocalStorageStateServer(): UseStorageStateHookResult {
@@ -122,11 +172,7 @@ function useLocalStorageStateBrowser(
   // Start with null for the hydration, and then switch to the actual value.
   const getKeyServerSnapshot = () => null;
 
-  const storedValue = React.useSyncExternalStore(
-    subscribeKey,
-    getKeySnapshot,
-    getKeyServerSnapshot,
-  );
+  const storedValue = useStoreSnapshot(subscribeKey, getKeySnapshot, getKeyServerSnapshot);
 
   const setStoredValue = React.useCallback(
     (value: React.SetStateAction<string | null>) => {

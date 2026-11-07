@@ -278,6 +278,34 @@ describe('<MenuList />', () => {
   });
 
   describe('keyboard navigation', () => {
+    it('does not preserve autoFocus on a disabled item', () => {
+      render(
+        <MenuList autoFocusItem>
+          <MenuItem>enabled</MenuItem>
+          <MenuItem disabled autoFocus>
+            disabled
+          </MenuItem>
+        </MenuList>,
+        { strictEffects: false },
+      );
+
+      expect(screen.getByRole('menuitem', { name: 'enabled' })).toHaveFocus();
+    });
+
+    it('preserves autoFocus on a disabled item when disabledItemsFocusable is true', () => {
+      render(
+        <MenuList autoFocusItem disabledItemsFocusable>
+          <MenuItem>enabled</MenuItem>
+          <MenuItem disabled autoFocus>
+            disabled
+          </MenuItem>
+        </MenuList>,
+        { strictEffects: false },
+      );
+
+      expect(screen.getByRole('menuitem', { name: 'disabled' })).toHaveFocus();
+    });
+
     it('does not focus the list container when autoFocusItem is true', () => {
       const handleFocus = spy();
 

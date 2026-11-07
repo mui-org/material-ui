@@ -141,6 +141,17 @@ const MenuList = React.forwardRef(function MenuList(inProps, ref) {
     }
 
     if (autoFocusActiveItem) {
+      // A `MenuItem` with `autoFocus` focuses itself in its own effect, which runs before this one.
+      const currentFocus = getActiveElement(ownerDocument(listRef.current));
+      const focusedItem = Array.from(getItemMap().values()).find(
+        (item) => currentFocus != null && item.element === currentFocus,
+      );
+
+      if (focusedItem && isItemFocusable(focusedItem)) {
+        hasFocusedInitialTargetRef.current = true;
+        return focusedItem.element;
+      }
+
       const activeItem = getActiveItem();
 
       if (activeItem?.element) {
