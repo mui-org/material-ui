@@ -379,6 +379,14 @@ export const A11Y_RULES: A11yRule[] = [
     enabled: true,
     assertions: 'all',
   },
+  // A11y-only fixture under `test/regressions/a11y/fixtures/form-control-label/`.
+  // FormControlLabel has no docs page, so the fixture owns the new
+  // `form-control-label` slug and its results stay out of the control slugs.
+  {
+    test: 'test/regressions/a11y/fixtures/form-control-label/FormControlLabelA11yStates',
+    enabled: true,
+    assertions: 'all',
+  },
   {
     test: `docs/data/material/components/progress/{${[
       ...LINEARPROGRESS_A11Y_DEMOS,

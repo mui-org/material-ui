@@ -29,6 +29,12 @@ export const CSS_LAYOUT_SUITES = [
     skipCriteria: ['1.4.4', '1.4.12'],
   },
   {
+    // No docs page consumes FormControlLabel, so the layout suite runs on its
+    // a11y fixture. The label is text, so all three layout criteria apply.
+    component: 'FormControlLabel',
+    route: '/a11y-form-control-label/FormControlLabelA11yStates',
+  },
+  {
     component: 'LinearProgress',
     route: '/docs-components-progress/LinearDeterminate',
     // The bar renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.

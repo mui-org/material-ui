@@ -154,6 +154,15 @@ describe('getConfig', () => {
     ).to.equal(undefined);
   });
 
+  it('asserts every rule on the FormControlLabel a11y fixture', () => {
+    expect(
+      getConfig(
+        A11Y_RULES,
+        'test/regressions/a11y/fixtures/form-control-label/FormControlLabelA11yStates',
+      ),
+    ).to.deep.include({ enabled: true, assertions: 'all' });
+  });
+
   it('returns the a11y rule with assertions:all for the progress brace-glob enrolment', () => {
     expect(
       getConfig(A11Y_RULES, 'docs/data/material/components/progress/LinearDeterminate'),

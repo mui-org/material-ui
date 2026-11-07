@@ -6,6 +6,8 @@ import FormControlLabel, {
 } from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
+import Radio from '@mui/material/Radio';
+import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import describeConformance from '../../test/describeConformance';
 
@@ -342,5 +344,114 @@ describe('<FormControlLabel />', () => {
     render(<FormControlLabel value="test" label="Pizza" control={<div data-testid="control" />} />);
 
     expect(screen.getByTestId('control')).to.have.attribute('value', 'test');
+  });
+
+  // Deterministic checks for the WCAG success criteria the FormControlLabel
+  // report rates as the label's own. See ./accessibility.md.
+  describe('WCAG 2.2 conformance', () => {
+    it('1.3.1 Info and Relationships: associates the control with its label by wrapping it', () => {
+      const { container } = render(
+        <FormControlLabel control={<Checkbox />} label="Email notifications" />,
+      );
+      const label = container.firstChild;
+
+      expect(label).to.have.tagName('label');
+      expect(label).to.contain(screen.getByRole('checkbox'));
+      expect(label).to.contain(screen.getByText('Email notifications'));
+    });
+
+    it('2.5.3 Label in Name: a Checkbox exposes the visible label as its accessible name', () => {
+      render(<FormControlLabel control={<Checkbox />} label="Email notifications" />);
+      // getByRole with `name` only resolves if the accessible name matches the visible label.
+      expect(screen.getByRole('checkbox', { name: 'Email notifications' })).not.to.equal(null);
+    });
+
+    it('2.5.3 Label in Name: a Radio exposes the visible label as its accessible name', () => {
+      render(<FormControlLabel control={<Radio />} value="standard" label="Standard shipping" />);
+
+      expect(screen.getByRole('radio', { name: 'Standard shipping' })).not.to.equal(null);
+    });
+
+    it('2.5.3 Label in Name: a Switch exposes the visible label as its accessible name', () => {
+      render(<FormControlLabel control={<Switch />} label="Dark mode" />);
+
+      expect(screen.getByRole('switch', { name: 'Dark mode' })).not.to.equal(null);
+    });
+
+    describe('4.1.2 Name, Role, Value', () => {
+      it('exposes the control role with the label as its accessible name', () => {
+        render(<FormControlLabel control={<Checkbox />} label="Subscribe" />);
+
+        expect(screen.getByRole('checkbox', { name: 'Subscribe' })).to.have.property(
+          'checked',
+          false,
+        );
+      });
+
+      it('forwards required to the control without adding the asterisk to the name', () => {
+        const { container } = render(
+          <FormControlLabel required control={<Checkbox />} label="Accept the terms" />,
+        );
+        const checkbox = screen.getByRole('checkbox', { name: 'Accept the terms' });
+
+        expect(checkbox).to.have.property('required', true);
+        // The visible text carries the asterisk, but the control's name does not.
+        expect(container.querySelector('label')).to.have.text('Accept the terms\u2009*');
+      });
+    });
+
+    it('toggles the wrapped control when the label text is clicked', async () => {
+      const { user } = render(
+        <FormControlLabel control={<Checkbox />} label="Email notifications" />,
+      );
+      const checkbox = screen.getByRole('checkbox', { name: 'Email notifications' });
+      expect(checkbox).to.have.property('checked', false);
+
+      await user.click(screen.getByText('Email notifications'));
+      expect(checkbox).to.have.property('checked', true);
+    });
+
+    it('2.5.2 Pointer Cancellation: a press on the label text does not toggle the control', async () => {
+      const { user } = render(
+        <React.Fragment>
+          <FormControlLabel control={<Checkbox />} label="Email notifications" />
+          <div data-testid="outside" />
+        </React.Fragment>,
+      );
+      const checkbox = screen.getByRole('checkbox', { name: 'Email notifications' });
+      const labelText = screen.getByText('Email notifications');
+
+      // The label is part of the target. Nothing toggles on the down event, and
+      // releasing away from the label cancels. A click activates on pointer up.
+      await user.pointer([
+        { keys: '[MouseLeft>]', target: labelText },
+        { target: screen.getByTestId('outside') },
+        { keys: '[/MouseLeft]' },
+      ]);
+      expect(checkbox).to.have.property('checked', false);
+
+      await user.click(labelText);
+      expect(checkbox).to.have.property('checked', true);
+    });
+
+    it('1.3.2 Meaningful Sequence: keeps the control before the label in the DOM for every labelPlacement', () => {
+      ['end', 'start', 'top', 'bottom'].forEach((labelPlacement) => {
+        const { container, unmount } = render(
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Email notifications"
+            labelPlacement={labelPlacement}
+          />,
+        );
+        const input = container.querySelector('input');
+        const labelText = screen.getByText('Email notifications');
+
+        // DOM order is control then label regardless of the visual placement.
+        // The control and the label are in separate subtrees, so the position
+        // is exactly DOCUMENT_POSITION_FOLLOWING when the label comes after it.
+        expect(input.compareDocumentPosition(labelText)).to.equal(Node.DOCUMENT_POSITION_FOLLOWING);
+        unmount();
+      });
+    });
   });
 });
