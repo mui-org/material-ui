@@ -233,6 +233,7 @@ Tested by: axe-core `color-contrast` ❌
 <!-- 1.4.3:start -->
 
 - This criterion governs the visible text. The input value (`text.primary`, about 16:1), the resting label and helper text (`text.secondary`, `5.74:1`), the `outlined` focused `primary` label on the white page (`4.60:1`), and error text on white (`error.main`, `4.98:1`) pass. The placeholder (about `2.55:1`) and the focused `warning` label (`3.11:1`) fall short, and the `filled` surface (`#f0f0f0`) drops each focused label about `0.5:1` lower, so the focused `primary` (`4.04:1`), `error` (`4.36:1`), and `success` (`4.49:1`) labels also fail there. Covered by axe-core; disabled text is exempt.
+- In dark mode, the elevation overlay of a Paper lowers the contrast of the error label and the error helper text (`error.main`, `#f44336`). They fall below 4.5:1 on a Paper with elevation 2 or more: `4.30:1` at elevation 2 and `3.13:1` at elevation 24, such as in a Dialog. The `filled` surface lowers the contrast more. The FormHelperText report has the details.
 - The placeholder opacity and the failing palette colors are component defaults; custom label colors are the author's to check.
 
 **Manual testing steps**

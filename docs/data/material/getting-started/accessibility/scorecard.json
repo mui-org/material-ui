@@ -1,6 +1,6 @@
 {
   "standard": "WCAG 2.2 Level A and AA",
-  "componentCount": 13,
+  "componentCount": 14,
   "totals": {
     "rated": 32,
     "supports": 27,
@@ -63,7 +63,7 @@
       "level": "AA",
       "conformance": "Partially Supports",
       "flagged": true,
-      "affected": ["Avatar", "Button", "TextField", "ToggleButton"]
+      "affected": ["Avatar", "Button", "FormHelperText", "TextField", "ToggleButton"]
     },
     {
       "number": "1.4.4",
@@ -274,7 +274,7 @@
       "level": "AA",
       "conformance": "Partially Supports",
       "flagged": true,
-      "affected": ["Button", "CircularProgress", "LinearProgress", "TextField"]
+      "affected": ["Button", "CircularProgress", "FormHelperText", "LinearProgress", "TextField"]
     }
   ],
   "components": [
@@ -1536,6 +1536,158 @@
         "doesNotSupport": 0,
         "verified": 6,
         "automated": 1
+      }
+    },
+    {
+      "component": "FormHelperText",
+      "counts": {
+        "supports": 11,
+        "partiallySupports": 2,
+        "doesNotSupport": 0,
+        "notApplicable": 42,
+        "flagged": 3,
+        "rated": 13
+      },
+      "gaps": [
+        {
+          "number": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "4.1.3",
+          "name": "Status Messages",
+          "conformance": "Partially Supports"
+        }
+      ],
+      "criteria": [
+        {
+          "number": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.3.2",
+          "name": "Meaningful Sequence",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": false
+        },
+        {
+          "number": "1.3.3",
+          "name": "Sensory Characteristics",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": false
+        },
+        {
+          "number": "1.4.1",
+          "name": "Use of Color",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.4.4",
+          "name": "Resize Text",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "1.4.5",
+          "name": "Images of Text",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": false
+        },
+        {
+          "number": "1.4.10",
+          "name": "Reflow",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "1.4.12",
+          "name": "Text Spacing",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "3.3.1",
+          "name": "Error Identification",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "3.3.2",
+          "name": "Labels or Instructions",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "3.3.3",
+          "name": "Error Suggestion",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": false
+        },
+        {
+          "number": "4.1.3",
+          "name": "Status Messages",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": true
+        }
+      ],
+      "summary": {
+        "rated": 13,
+        "levelA": 6,
+        "levelAA": 7,
+        "supports": 11,
+        "partiallySupports": 2,
+        "doesNotSupport": 0,
+        "verified": 10,
+        "automated": 3
       }
     },
     {

@@ -20,6 +20,12 @@
     "workaround": "Override the affected palette entries"
   },
   {
+    "gap": "In dark mode, the elevation overlay lowers the contrast of `error` text below 4.5:1 on a Paper with elevation 2 or more, such as a Menu or a Dialog",
+    "criteria": ["1.4.3"],
+    "affected": ["FormHelperText", "TextField"],
+    "workaround": "Set a lighter `error.main` for dark mode, or show error text on a surface with elevation 0 or 1"
+  },
+  {
     "gap": "The selected state of colored Toggle Buttons is conveyed almost entirely by hue",
     "criteria": ["1.4.1"],
     "affected": [{ "component": "ToggleButton", "note": "`primary`, `error`, `info`, `success`" }],
@@ -31,6 +37,7 @@
     "affected": [
       { "component": "Button", "note": "`loading`" },
       "CircularProgress",
+      { "component": "FormHelperText", "note": "error" },
       "LinearProgress",
       { "component": "TextField", "note": "error" }
     ],
