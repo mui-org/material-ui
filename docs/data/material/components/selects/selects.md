@@ -117,6 +117,15 @@ This example demonstrates how icons are used to indicate the selection state of 
 
 {{"component": "file://./demos/multiple-native/index.ts"}}
 
+### Form submission
+
+When a non-native multiple Select has a `name`, its hidden input submits the selected values as a single comma-separated string.
+To submit one form entry per value, keep the Select controlled, omit its `name`, and render a hidden input for each selected value with the same `name`.
+Then `new FormData(form).getAll('tags')` returns the selected values as an array.
+An empty selection submits no entries for that name.
+
+{{"component": "file://./demos/multiple-form/index.ts"}}
+
 ## Controlling the open state
 
 You can control the open state of the select with the `open` prop. Alternatively, it is also possible to set the initial (uncontrolled) open state of the component with the `defaultOpen` prop.
