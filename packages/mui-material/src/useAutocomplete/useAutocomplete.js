@@ -1439,6 +1439,8 @@ function useAutocomplete(props) {
       // Only handle event when the main button is pressed (left click).
       event.button === 0
     ) {
+      // Batch focused set with open and pristine state updates.
+      setFocused(true);
       handlePopupIndicator(event);
     }
   };
