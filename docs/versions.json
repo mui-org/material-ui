@@ -2,7 +2,6 @@
   "versions": [
     { "version": "v10 (next)", "url": "https://next.mui.com", "noReleaseNotes": true },
     { "version": "v9", "url": "https://mui.com" },
-    { "version": "v8", "url": "https://v8.mui.com", "noReleaseNotes": true },
     { "version": "v7", "url": "https://v7.mui.com" },
     { "version": "v6", "url": "https://v6.mui.com" },
     { "version": "v5", "url": "https://v5.mui.com" },
