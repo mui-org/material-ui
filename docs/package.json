@@ -104,7 +104,7 @@
     "@mui/internal-api-docs-builder": "workspace:^",
     "@mui/internal-docs-utils": "workspace:^",
     "@mui/internal-scripts": "workspace:^",
-    "@playwright/test": "1.63.0",
+    "@playwright/test": "1.64.1",
     "@types/autosuggest-highlight": "3.2.4",
     "@types/chance": "1.1.8",
     "@types/css-mediaquery": "0.1.4",
