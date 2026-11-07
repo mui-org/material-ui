@@ -165,6 +165,7 @@
     "/material-ui/guides/typescript": "TypeScript",
     "/material-ui/guides/composition": "Composition",
     "/material-ui/guides/content-security-policy": "Content Security Policy",
+    "/material-ui/guides/configuring-bundlers-for-css-imports": "Configuring bundlers for CSS imports",
     "/material-ui/integrations": "Integrations",
     "/material-ui/integrations/tailwindcss/tailwindcss-v4": "Tailwind CSS v4 integration",
     "/material-ui/integrations/nextjs": "Next.js integration",
