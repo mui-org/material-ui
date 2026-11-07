@@ -174,6 +174,7 @@
     "/material-ui/integrations/theme-scoping": "Theme scoping",
     "/material-ui/experimental-api": "Experimental APIs",
     "/material-ui/experimental-api/classname-generator": "ClassName generator",
+    "/material-ui/experimental-api/enhance-density": "Enhance density",
     "/material-ui/experimental-api/pigment-css": "Pigment CSS",
     "/material-ui/migration": "Migration",
     "/material-ui/migration/upgrade-to-grid-v2": "Upgrade to Grid v2",

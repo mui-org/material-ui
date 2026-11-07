@@ -2,6 +2,76 @@ import { describe, it, expect } from 'vitest';
 import spacing, { margin, padding } from './spacing';
 
 describe('system spacing', () => {
+  describe('named scale values', () => {
+    // Stands in for a userland spacing function — what an enhancer such as
+    // `enhanceDensity` installs on the theme. It advertises its named values
+    // through `keys`, the contract these props read; everything it does not
+    // name must stay raw CSS.
+    const createScaleSpacing = () => {
+      const scaled = { small: '12px', '-small': '-12px', xLarge: '32px' };
+      const fn = (...args) => args.map((arg) => scaled[arg] ?? `${arg * 8}px`).join(' ');
+      fn.keys = new Set(Object.keys(scaled));
+      return fn;
+    };
+    const keyedSpacing = createScaleSpacing();
+
+    it('resolves the names a transformer registers, on every spacing prop', () => {
+      const theme = { spacing: keyedSpacing };
+
+      expect(spacing({ theme, p: 'small' })).to.deep.equal({ padding: '12px' });
+      expect(spacing({ theme, mt: '-small' })).to.deep.equal({ marginTop: '-12px' });
+      expect(spacing({ theme, px: 'xLarge' })).to.deep.equal({
+        paddingLeft: '32px',
+        paddingRight: '32px',
+      });
+    });
+
+    it('leaves raw CSS, unregistered names and numbers alone', () => {
+      const theme = { spacing: keyedSpacing };
+
+      expect(spacing({ theme, m: 'auto' })).to.deep.equal({ margin: 'auto' });
+      expect(spacing({ theme, p: '2rem' })).to.deep.equal({ padding: '2rem' });
+      // a typo must not silently resolve to something else
+      expect(spacing({ theme, p: 'smal' })).to.deep.equal({ padding: 'smal' });
+      expect(spacing({ theme, p: 2 })).to.deep.equal({ padding: '16px' });
+    });
+
+    it('is inert for a transformer that registers nothing', () => {
+      expect(spacing({ theme: { spacing: 8 }, p: 'small' })).to.deep.equal({ padding: 'small' });
+      expect(spacing({ theme: { spacing: (x) => x * 8 }, p: 'small' })).to.deep.equal({
+        padding: 'small',
+      });
+    });
+
+    it('resolves names through theme.vars, where the transformer is a string', () => {
+      // `getPath` prefers `theme.vars.spacing`, which cannot resolve names — the
+      // scale-aware function has to win for names while numbers keep the var form.
+      const theme = { vars: { spacing: 'var(--mui-spacing, 8px)' }, spacing: keyedSpacing };
+
+      expect(spacing({ theme, p: 'small' })).to.deep.equal({ padding: '12px' });
+      expect(spacing({ theme, p: 2 })).to.deep.equal({
+        padding: 'calc(2 * var(--mui-spacing, 8px))',
+      });
+      expect(spacing({ theme, m: 'auto' })).to.deep.equal({ margin: 'auto' });
+    });
+
+    it('resolves names inside responsive values', () => {
+      const theme = {
+        spacing: keyedSpacing,
+        breakpoints: {
+          keys: ['xs', 'md'],
+          values: { xs: 0, md: 900 },
+          up: (k) => `@media (min-width:${k === 'xs' ? 0 : 900}px)`,
+        },
+      };
+
+      expect(spacing({ theme, p: { xs: 'small', md: 'xLarge' } })).to.deep.equal({
+        '@media (min-width:0px)': { padding: '12px' },
+        '@media (min-width:900px)': { padding: '32px' },
+      });
+    });
+  });
+
   describe('spacing', () => {
     describe('themeTransformer', () => {
       it('should have a default unit value', () => {

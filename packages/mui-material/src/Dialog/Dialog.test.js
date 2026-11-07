@@ -319,7 +319,7 @@ describe('<Dialog />', () => {
       expect(screen.getByTestId('paper')).to.have.class(classes.paperWidthFalse);
     });
 
-    it('should apply the correct max-width styles when maxWidth={false}', () => {
+    it.skipIf(isJsdom())('should apply the correct max-width styles when maxWidth={false}', () => {
       render(
         <Dialog open maxWidth={false} slotProps={{ paper: { 'data-testid': 'paper' } }}>
           foo

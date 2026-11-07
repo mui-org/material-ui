@@ -5,6 +5,45 @@ import createBreakpoints from '../createBreakpoints/createBreakpoints';
 import createTheme from '../createTheme';
 
 describe('styleFunctionSx', () => {
+  it('keeps a spacing function that registers names through createTheme, and sx resolves them', () => {
+    // The contract an enhancer relies on from @mui/system: `mui: true` makes
+    // `createSpacing` pass the function through, `keys` tells `getValue` which
+    // strings to resolve. Everything else about names is covered by spacing.test.js.
+    const scaled = { small: '12px', '-small': '-12px' };
+    const spacing = (...args) => args.map((arg) => scaled[arg] ?? `${arg * 8}px`).join(' ');
+    spacing.mui = true;
+    spacing.keys = new Set(Object.keys(scaled));
+    const theme = createTheme({ spacing });
+
+    expect(theme.spacing).to.equal(spacing);
+    expect(
+      styleFunctionSx({ theme, sx: { p: 'small', mt: '-small', gap: 'small', m: 2 } }),
+    ).to.deep.equal({
+      padding: '12px',
+      marginTop: '-12px',
+      gap: '12px',
+      margin: '16px',
+    });
+  });
+
+  it('resolves numbers against each theme when two vars themes share one spacing function', () => {
+    const spacing = (arg) => (arg === 'small' ? '12px' : `${arg * 8}px`);
+    spacing.mui = true;
+    spacing.keys = new Set(['small']);
+    const base = createTheme({ spacing });
+    const first = { ...base, vars: { spacing: 'var(--first-spacing)' } };
+    const second = { ...base, vars: { spacing: 'var(--second-spacing)' } };
+
+    expect(styleFunctionSx({ theme: first, sx: { m: 2, p: 'small' } })).to.deep.equal({
+      margin: 'calc(2 * var(--first-spacing))',
+      padding: '12px',
+    });
+    expect(styleFunctionSx({ theme: second, sx: { m: 2, p: 'small' } })).to.deep.equal({
+      margin: 'calc(2 * var(--second-spacing))',
+      padding: '12px',
+    });
+  });
+
   const breakpointsValues = {
     xs: 0,
     sm: 600,

@@ -4,5 +4,8 @@
   "compilerOptions": {
     "moduleResolution": "Bundler"
   },
-  "exclude": ["src/types/OverridableComponentAugmentation.ts"]
+  "exclude": [
+    "src/types/OverridableComponentAugmentation.ts",
+    "src/themeDensityAugmentation/index.ts"
+  ]
 }

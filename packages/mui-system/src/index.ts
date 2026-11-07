@@ -72,7 +72,12 @@ export type * from './createTheme';
 export { default as createBreakpoints } from './createBreakpoints/createBreakpoints';
 export type * from './createBreakpoints/createBreakpoints';
 export { default as createSpacing } from './createTheme/createSpacing';
-export type { SpacingOptions, Spacing } from './createTheme/createSpacing';
+export type {
+  SpacingOptions,
+  Spacing,
+  SpacingKeyOverrides,
+  SpacingKey,
+} from './createTheme/createSpacing';
 export { default as shape } from './createTheme/shape';
 export type * from './createTheme/shape';
 export { default as useThemeProps, getThemeProps } from './useThemeProps';

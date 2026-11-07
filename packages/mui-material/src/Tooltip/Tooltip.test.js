@@ -15,7 +15,11 @@ import {
 } from '@mui/internal-test-utils';
 import { camelCase } from 'es-toolkit/string';
 import Tooltip, { tooltipClasses as classes } from '@mui/material/Tooltip';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+  ThemeProvider,
+  createTheme,
+  unstable_enhanceDensity as enhanceDensity,
+} from '@mui/material/styles';
 import { testReset } from './Tooltip';
 import describeConformance from '../../test/describeConformance';
 
@@ -85,7 +89,8 @@ function expectRtlRightPlacementStyles() {
 
   expect(popper).to.have.attribute('data-popper-placement', 'right');
   expect(tooltip).toHaveComputedStyle({ direction: 'rtl' });
-  expect(hasInjectedStyle('margin-inline-start: 14px')).to.equal(true);
+  expect(hasInjectedStyle('margin-inline-start: var(--_spacing)')).to.equal(true);
+  expect(hasInjectedStyle('--_spacing: 14px')).to.equal(true);
   expect(hasInjectedStyle('inset-inline-start: 0')).to.equal(true);
   expectArrowOnInlineEnd(tooltip, arrow);
 }
@@ -362,6 +367,45 @@ describe('<Tooltip />', () => {
     });
   });
 
+  describe.skipIf(isJsdom())('prop: slots.arrow', () => {
+    const CustomArrow = React.forwardRef(function CustomArrow({ ownerState, ...other }, ref) {
+      return <span ref={ref} {...other} />;
+    });
+
+    async function renderWithCustomArrow(placement) {
+      render(
+        <AwayFromRealPointer>
+          <Tooltip
+            arrow
+            open
+            placement={placement}
+            title="Hello World"
+            slots={{ arrow: CustomArrow }}
+            slotProps={{ popper: fixedRightPlacementPopperProps }}
+          >
+            <button type="submit">Anchor</button>
+          </Tooltip>
+        </AwayFromRealPointer>,
+      );
+      await flushEffects();
+      const { arrow } = getTooltipParts();
+      const arrowStyle = getComputedStyle(arrow);
+      return { arrowStyle, em: parseFloat(arrowStyle.fontSize) };
+    }
+
+    it('keeps the default arrow offset on top placement', async () => {
+      const { arrowStyle, em } = await renderWithCustomArrow('top');
+      expect(parseFloat(arrowStyle.marginBottom)).to.be.closeTo(-0.71 * em, 0.05);
+    });
+
+    it('keeps the default arrow box on left placement', async () => {
+      const { arrowStyle, em } = await renderWithCustomArrow('left');
+      expect(parseFloat(arrowStyle.height)).to.be.closeTo(em, 0.05);
+      expect(parseFloat(arrowStyle.width)).to.be.closeTo(0.71 * em, 0.05);
+      expect(parseFloat(arrowStyle.marginRight)).to.be.closeTo(-0.71 * em, 0.05);
+    });
+  });
+
   it('should respond to external events', () => {
     const transitionTimeout = 10;
     const enterDelay = 100;
@@ -571,6 +615,23 @@ describe('<Tooltip />', () => {
   });
 
   describe('touch screen', () => {
+    it.skipIf(isJsdom())('keeps the touch offset under enhanceDensity', () => {
+      const theme = enhanceDensity(createTheme());
+      render(
+        <ThemeProvider theme={theme}>
+          <Tooltip enterTouchDelay={700} enterDelay={100} title="Hello World">
+            <button type="submit">Hello World</button>
+          </Tooltip>
+        </ThemeProvider>,
+      );
+      fireEvent.touchStart(screen.getByRole('button'));
+      clock.tick(700 + 100);
+
+      const tooltip = screen.getByRole('tooltip').querySelector(`.${classes.tooltip}`);
+      expect(tooltip).to.have.class(classes.touch);
+      expect(getComputedStyle(tooltip).getPropertyValue('--_spacing').trim()).to.equal('24px');
+    });
+
     it('should not respond to quick events', () => {
       render(
         <Tooltip title="Hello World">

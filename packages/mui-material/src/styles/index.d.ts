@@ -10,6 +10,8 @@ export {
   FocusVisible,
 } from './createTheme';
 export { default as enhanceHighContrast, HighContrastTokens } from './enhanceHighContrast';
+export { default as unstable_enhanceDensity } from './enhanceDensity';
+export type { DensityKey, DensityScaleOverrides, ResolvedDensityScale } from './densityScale';
 export { default as adaptV4Theme, DeprecatedThemeOptions } from './adaptV4Theme';
 export { Shadows } from './shadows';
 export { ZIndex } from './zIndex';

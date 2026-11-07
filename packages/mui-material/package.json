@@ -112,6 +112,7 @@
     "./Portal": "./src/Portal/index.ts",
     "./TextareaAutosize": "./src/TextareaAutosize/index.ts",
     "./themeCssVarsAugmentation": "./src/themeCssVarsAugmentation/index.ts",
+    "./themeDensityAugmentation": "./src/themeDensityAugmentation/index.ts",
     "./transitions": "./src/transitions/index.ts",
     "./Unstable_TrapFocus": "./src/Unstable_TrapFocus/index.ts",
     "./useLazyRipple": "./src/useLazyRipple/index.ts",

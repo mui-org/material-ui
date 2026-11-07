@@ -15,6 +15,7 @@ import { Motion, MotionOptions } from './createMotion';
 import { Transitions, TransitionsOptions } from './createTransitions';
 import { ZIndex, ZIndexOptions } from './zIndex';
 import { Components } from './components';
+import { ResolvedDensityScale } from './densityScale';
 import {
   CssVarsTheme,
   CssVarsPalette,
@@ -109,6 +110,8 @@ export interface Theme extends BaseTheme, CssVarsProperties {
   components?: Components<BaseTheme> | undefined;
   unstable_sx: (props: SxProps<Theme>) => CSSObject;
   unstable_sxConfig: SxConfig;
+  /** The scale `enhanceDensity` resolved, in px numbers; unset until the enhancer runs. */
+  unstable_densityScale?: ResolvedDensityScale | undefined;
   alpha: (color: string, value: number | string) => string;
   lighten: (color: string, coefficient: number | string) => string;
   darken: (color: string, coefficient: number | string) => string;
