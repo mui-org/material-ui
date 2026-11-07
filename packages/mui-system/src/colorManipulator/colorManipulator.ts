@@ -93,11 +93,9 @@ export function decomposeColor(color: string): ColorObject {
   let colorSpace: string | undefined;
 
   if (type === 'color') {
-    values = values.split(' ');
+    // The alpha is separated by a slash, with or without spaces around it: `r g b / a` or `r g b /a`.
+    values = values.split(/\s*\/\s*|\s+/);
     colorSpace = values.shift();
-    if (values.length === 4 && values[3].charAt(0) === '/') {
-      values[3] = values[3].slice(1);
-    }
     if (!['srgb', 'display-p3', 'a98-rgb', 'prophoto-rgb', 'rec-2020'].includes(colorSpace!)) {
       throw /* minify-error */ new Error(
         `MUI: unsupported \`${colorSpace}\` color space.\n` +
@@ -155,6 +153,9 @@ export function recomposeColor(color: ColorObject): string {
     values[2] = `${values[2]}%`;
   }
   if (type.includes('color')) {
+    if (values.length === 4) {
+      values = [...values.slice(0, 3), `/${values[3]}`];
+    }
     values = `${colorSpace} ${values.join(' ')}`;
   } else {
     values = `${values.join(', ')}`;
@@ -256,11 +257,7 @@ export function alpha(color: string, value: number): string {
   if ((color as any).type === 'rgb' || (color as any).type === 'hsl') {
     (color as any).type += 'a';
   }
-  if ((color as any).type === 'color') {
-    (color as any).values[3] = `/${value}`;
-  } else {
-    (color as any).values[3] = value;
-  }
+  (color as any).values[3] = value;
 
   return recomposeColor(color as any);
 }

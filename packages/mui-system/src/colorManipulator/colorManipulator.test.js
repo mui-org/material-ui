@@ -46,6 +46,16 @@ describe('utils/colorManipulator', () => {
       ).to.equal('color(display-p3 0.5 0.3 0.2)');
     });
 
+    it('converts a decomposed alpha CSS4 color object to a string`', () => {
+      expect(
+        recomposeColor({
+          type: 'color',
+          colorSpace: 'display-p3',
+          values: [0.5, 0.3, 0.2, 0.4],
+        }),
+      ).to.equal('color(display-p3 0.5 0.3 0.2 /0.4)');
+    });
+
     it('converts a decomposed hsl color object to a string`', () => {
       expect(
         recomposeColor({
@@ -141,6 +151,13 @@ describe('utils/colorManipulator', () => {
 
     it('converts an alpha CSS4 color with color space display-3', () => {
       const { type, values, colorSpace } = decomposeColor('color(display-p3 0 1 0 /0.4)');
+      expect(type).to.equal('color');
+      expect(colorSpace).to.equal('display-p3');
+      expect(values).to.deep.equal([0, 1, 0, 0.4]);
+    });
+
+    it('converts an alpha CSS4 color with spaces around the slash', () => {
+      const { type, values, colorSpace } = decomposeColor('color(display-p3 0 1 0 / 0.4)');
       expect(type).to.equal('color');
       expect(colorSpace).to.equal('display-p3');
       expect(values).to.deep.equal([0, 1, 0, 0.4]);
@@ -282,6 +299,10 @@ describe('utils/colorManipulator', () => {
       expect(alpha('color(display-p3 1 2 3)', 0.4)).to.equal('color(display-p3 1 2 3 /0.4)');
     });
 
+    it('replaces the alpha of a CSS4 color with spaces around the slash', () => {
+      expect(alpha('color(display-p3 1 2 3 / 0.2)', 0.4)).to.equal('color(display-p3 1 2 3 /0.4)');
+    });
+
     it('updates an rgba color with the alpha value provided', () => {
       expect(alpha('rgba(255, 0, 0, 0.2)', 0.5)).to.equal('rgba(255, 0, 0, 0.5)');
     });
@@ -371,6 +392,15 @@ describe('utils/colorManipulator', () => {
     it("doesn't modify CSS4 color when coefficient is 0", () => {
       expect(darken('color(display-p3 1 0 0)', 0)).to.equal('color(display-p3 1 0 0)');
     });
+
+    it('keeps the alpha of a CSS4 color', () => {
+      expect(darken('color(display-p3 1 0 0 /0.4)', 0.5)).to.equal(
+        'color(display-p3 0.5 0 0 /0.4)',
+      );
+      expect(darken('color(display-p3 1 0 0 / 0.4)', 0.5)).to.equal(
+        'color(display-p3 0.5 0 0 /0.4)',
+      );
+    });
   });
 
   describe('lighten', () => {
@@ -432,6 +462,12 @@ describe('utils/colorManipulator', () => {
 
     it("doesn't modify CSS4 color when coefficient is 0", () => {
       expect(lighten('color(display-p3 1 0 0)', 0)).to.equal('color(display-p3 1 0 0)');
+    });
+
+    it('keeps the alpha of a CSS4 color', () => {
+      expect(lighten('color(display-p3 1 0 0 /0.4)', 0.5)).to.equal(
+        'color(display-p3 1 0.5 0.5 /0.4)',
+      );
     });
   });
 
