@@ -80,6 +80,14 @@ const NotchedOutlineLegend = styled('legend', {
             easing: theme.transitions.easing.easeOut,
             delay: 50,
           }),
+          // Safari/WebKit intermittently fails to repaint the fieldset's notch cut once this
+          // max-width transition ends, leaving the outline border visible through the shrunk
+          // label (looking like a strikethrough) until the next interaction forces a reflow.
+          // Disabling the transition for Safari avoids the broken intermediate frame; the notch
+          // still resizes correctly, just without the brief animation.
+          '@supports (-webkit-hyphens: none)': {
+            transition: 'none',
+          },
         },
       },
     ],
