@@ -1444,6 +1444,75 @@ describe('<Tooltip />', () => {
     });
   });
 
+  describe('popper anchor', () => {
+    it('renders the popper while closed with keepMounted', () => {
+      const popperRef = React.createRef();
+      const { setProps } = render(
+        <Tooltip
+          title="Hello World"
+          open={false}
+          slotProps={{ popper: { keepMounted: true, popperRef } }}
+        >
+          <button type="submit">Hello World</button>
+        </Tooltip>,
+      );
+
+      expect(screen.getByRole('tooltip', { hidden: true })).not.toBeVisible();
+
+      setProps({ open: true });
+      expect(screen.getByRole('tooltip')).toBeVisible();
+      expect(popperRef.current.state.elements.reference).to.equal(screen.getByRole('button'));
+    });
+
+    it('anchors to the trigger when it opens again after closing', () => {
+      const popperRef = React.createRef();
+      const { setProps } = render(
+        <Tooltip title="Hello World" open slotProps={{ popper: { popperRef } }}>
+          <button type="submit">Hello World</button>
+        </Tooltip>,
+      );
+
+      setProps({ open: false });
+      clock.runAll();
+      expect(screen.queryByRole('tooltip')).to.equal(null);
+
+      setProps({ open: true });
+      expect(screen.getByRole('tooltip')).toBeVisible();
+      expect(popperRef.current.state.elements.reference).to.equal(screen.getByRole('button'));
+    });
+
+    it('anchors to the new trigger element when the child renders a different element', () => {
+      let showLink;
+      const Trigger = React.forwardRef(function Trigger(props, ref) {
+        const [isLink, setIsLink] = React.useState(false);
+        showLink = () => setIsLink(true);
+        return isLink ? (
+          <a href="#" ref={ref} {...props}>
+            Hello World
+          </a>
+        ) : (
+          <button type="button" ref={ref} {...props}>
+            Hello World
+          </button>
+        );
+      });
+      const popperRef = React.createRef();
+      render(
+        <Tooltip title="Hello World" open slotProps={{ popper: { popperRef } }}>
+          <Trigger />
+        </Tooltip>,
+      );
+
+      expect(popperRef.current.state.elements.reference).to.equal(screen.getByRole('button'));
+
+      act(() => {
+        showLink();
+      });
+
+      expect(popperRef.current.state.elements.reference).to.equal(screen.getByRole('link'));
+    });
+  });
+
   describe('prop: slots', () => {
     it('can render a different Popper component', () => {
       function CustomPopper() {
