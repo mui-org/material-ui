@@ -1,6 +1,7 @@
 import { describe, beforeAll, afterAll, it, expect, vi } from 'vitest';
 import * as React from 'react';
-import { createRenderer, fireEvent, screen, isJsdom } from '@mui/internal-test-utils';
+import * as ReactDOM from 'react-dom';
+import { act, createRenderer, fireEvent, screen, isJsdom } from '@mui/internal-test-utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Grow from '@mui/material/Grow';
 import Popper from '@mui/material/Popper';
@@ -121,6 +122,37 @@ describe('<Popper />', () => {
       await popperRef.current.setOptions({ placement: 'top' });
 
       expect(screen.getByTestId('placement')).to.have.text('bottom');
+    });
+  });
+
+  describe('re-rendering', () => {
+    // React 19 counts a default-priority update that is still pending after a synchronous commit
+    // as a nested update. Popper.js reports the placement after every forceUpdate, and setting the
+    // same placement on every render reached the 50 nested updates limit, e.g. while typing fast in
+    // an Autocomplete.
+    it('should not exceed the nested update limit when the placement does not change', () => {
+      let rerender;
+      function Test(props) {
+        const [count, setCount] = React.useState(0);
+        rerender = () => setCount((value) => value + 1);
+
+        return (
+          <Popper {...defaultProps} placement={props.placement}>
+            <span>{count}</span>
+          </Popper>
+        );
+      }
+      const { setProps } = render(<Test placement="top" />);
+      // A real placement change gives the Popper a state update.
+      setProps({ placement: 'bottom' });
+
+      expect(() => {
+        act(() => {
+          for (let i = 0; i < 60; i += 1) {
+            ReactDOM.flushSync(rerender);
+          }
+        });
+      }).not.to.throw();
     });
   });
 
