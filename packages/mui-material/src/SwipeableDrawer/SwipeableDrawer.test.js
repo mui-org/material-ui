@@ -749,6 +749,36 @@ describe('<SwipeableDrawer />', () => {
         expect(handleOpen.callCount).to.equal(1);
       });
     });
+
+    it('should not prevent the click of a tap that drifts a few pixels', () => {
+      const handleClose = spy();
+      render(
+        <SwipeableDrawer
+          onOpen={() => {}}
+          onClose={handleClose}
+          open
+          slotProps={{
+            paper: { component: FakePaper },
+          }}
+        >
+          <div data-testid="drawer">SwipeableDrawer</div>
+        </SwipeableDrawer>,
+      );
+      const drawer = screen.getByTestId('drawer');
+
+      fireEvent.touchStart(drawer, {
+        touches: [new Touch({ identifier: 0, target: drawer, pageX: 100, clientY: 0 })],
+      });
+      const notPrevented = fireEvent.touchMove(drawer, {
+        touches: [new Touch({ identifier: 0, target: drawer, pageX: 95, clientY: 1 })],
+      });
+      fireEvent.touchEnd(drawer, {
+        changedTouches: [new Touch({ identifier: 0, target: drawer, pageX: 95, clientY: 1 })],
+      });
+
+      expect(notPrevented).to.equal(true);
+      expect(handleClose.callCount).to.equal(0);
+    });
   });
 
   it('should be able to attach paper ref passed through PaperProps', () => {

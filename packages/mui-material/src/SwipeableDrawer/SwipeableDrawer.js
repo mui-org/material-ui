@@ -17,9 +17,10 @@ import { mergeSlotProps } from '../utils';
 import useSlot from '../utils/useSlot';
 import SwipeArea from './SwipeArea';
 
-// This value is closed to what browsers are using internally to
-// trigger a native scroll.
-const UNCERTAINTY_THRESHOLD = 3; // px
+// This value is close to the touch slop browsers use before they start a native scroll.
+// A tap often drifts a few px and Safari Mobile fires touchmove for it,
+// so below this distance the touch can still be a tap and its click must be kept.
+const UNCERTAINTY_THRESHOLD = 10; // px
 
 // This is the part of the drawer displayed on touch start.
 const DRAG_STARTED_SIGNAL = 20; // px
