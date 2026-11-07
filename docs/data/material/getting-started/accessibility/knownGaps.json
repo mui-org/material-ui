@@ -1,6 +1,6 @@
 [
   {
-    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, with untested contrast",
+    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, and its contrast can fall below 3:1",
     "criteria": ["1.4.11"],
     "affected": ["AccordionSummary", "Button", "Checkbox", "Radio", "Switch", "ToggleButton"],
     "workaround": "Enable `focusVisible` in your theme — see below"
@@ -13,6 +13,7 @@
       "Button",
       { "component": "CircularProgress", "note": "`warning` with `enableTrackSlot`" },
       "LinearProgress",
+      "Link",
       "Switch",
       "TextField",
       "ToggleButton"
@@ -24,6 +25,12 @@
     "criteria": ["1.4.1"],
     "affected": [{ "component": "ToggleButton", "note": "`primary`, `error`, `info`, `success`" }],
     "workaround": "Add a non-color cue to the selected state, such as an icon"
+  },
+  {
+    "gap": "Links without an underline rely on color, and several link colors are below 3:1 against body text",
+    "criteria": ["1.4.1"],
+    "affected": [{ "component": "Link", "note": "`underline=\"none\"`, `underline=\"hover\"`" }],
+    "workaround": "Keep the default `underline=\"always\"` for links in body text"
   },
   {
     "gap": "Dynamic state changes are not announced",

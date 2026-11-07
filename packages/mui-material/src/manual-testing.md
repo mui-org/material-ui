@@ -119,6 +119,20 @@ Run the rows matching what you touched, for the component you touched.
 - [ ] 🔁 **4.1.2 Name, Role, Value** — name, role, and value are correct for every variant.
 - [ ] 🔍 **4.1.3 Status Messages** — the change is announced without the user moving focus to it. It is not by default; add a polite live region in the application to convey it.
 
+## Link
+
+9 checks · full procedures in [`Link/accessibility.md`](./Link/accessibility.md)
+
+- [ ] 🔁 **1.1.1 Non-text Content** — each image link announces its destination or action.
+- [ ] 🔁 **1.3.1 Info and Relationships** — an `href` link announces "link", and a `component="button"` link announces "button".
+- [ ] 🔁 **1.4.1 Use of Color** — the link is at least `3:1` against the body text and shows a non-color cue on hover and on focus. Otherwise, the link fails. `underline="none"` fails unless the author adds another non-color cue.
+- [ ] 🔁 **1.4.3 Contrast (Minimum)** — each link is at least `4.5:1` in light and dark mode. `info`, `warning`, and `textDisabled` fail in light mode.
+- [ ] 🔁 **1.4.11 Non-text Contrast** — the focus indicator is at least `3:1` against the colors next to it, or it is the unchanged browser outline.
+- [ ] 🔁 **2.4.4 Link Purpose (In Context)** — the purpose of each link is clear, for example "account settings page", not "click here".
+- [ ] 🔁 **2.4.6 Headings and Labels** — each link text describes its destination or action.
+- [ ] 🔁 **2.4.7 Focus Visible** — each link shows a visible focus indicator on keyboard focus.
+- [ ] 🔁 **4.1.2 Name, Role, Value** — the `href` link announces its text and "link", and the `component="button"` link announces its text and "button".
+
 ## Radio
 
 8 checks · full procedures in [`Radio/accessibility.md`](./Radio/accessibility.md)

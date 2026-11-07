@@ -240,6 +240,9 @@ const BUTTON_A11Y_DEMOS = [
   'CustomizedButtons',
 ];
 
+// Link docs demos enrolled for axe assertions.
+const LINK_A11Y_DEMOS = ['Links', 'UnderlineLink', 'ButtonLink'];
+
 // Radio docs demos enrolled for axe assertions. FormControlLabelPlacement is left out: its axe
 // output duplicates RowRadioButtonsGroup (a row RadioGroup with a FormLabel), adding no new rules.
 const RADIO_A11Y_DEMOS = [
@@ -405,6 +408,34 @@ export const A11Y_RULES: A11yRule[] = [
     test: 'test/regressions/a11y/fixtures/progress/{LinearProgressA11ySemanticStates,LinearProgressA11yColorMatrix,CircularProgressA11ySemanticStates,CircularProgressA11yColorMatrix}',
     enabled: true,
     assertions: 'all',
+  },
+  {
+    test: `docs/data/material/components/links/{${LINK_A11Y_DEMOS.join(',')}}`,
+    enabled: true,
+    assertions: 'all',
+  },
+  // A11y-only fixtures under `test/regressions/a11y/fixtures/links/`; the suite
+  // name maps their results into the same `links.a11y.json`.
+  {
+    test: 'test/regressions/a11y/fixtures/links/LinkA11ySemanticStates',
+    enabled: true,
+    assertions: 'all',
+  },
+  // `color-contrast` and `link-in-text-block` are recorded but not asserted:
+  // `info`, `warning`, `textDisabled`, and some colors against body text are
+  // documented gaps (1.4.3, 1.4.1) in `packages/mui-material/src/Link/accessibility.md`.
+  {
+    test: 'test/regressions/a11y/fixtures/links/LinkA11yInTextBlock',
+    enabled: true,
+    assertions: 'all',
+    skipAssertions: ['color-contrast', 'link-in-text-block'],
+  },
+  // In dark mode, every color reaches 4.5:1, so only `link-in-text-block` is a gap.
+  {
+    test: 'test/regressions/a11y/fixtures/links/LinkA11yInTextBlockDark',
+    enabled: true,
+    assertions: 'all',
+    skipAssertions: ['link-in-text-block'],
   },
   {
     test: `docs/data/material/components/radio-buttons/{${RADIO_A11Y_DEMOS.join(',')}}`,

@@ -128,6 +128,20 @@ describe('getConfig', () => {
     );
   });
 
+  it('asserts every rule on the enrolled Link demos and records the text-block gaps', () => {
+    expect(getConfig(A11Y_RULES, 'docs/data/material/components/links/ButtonLink')).to.deep.equal({
+      test: 'docs/data/material/components/links/{Links,UnderlineLink,ButtonLink}',
+      enabled: true,
+      assertions: 'all',
+    });
+    expect(
+      getConfig(A11Y_RULES, 'test/regressions/a11y/fixtures/links/LinkA11yInTextBlock'),
+    ).to.deep.include({ skipAssertions: ['color-contrast', 'link-in-text-block'] });
+    expect(
+      getConfig(A11Y_RULES, 'test/regressions/a11y/fixtures/links/LinkA11yInTextBlockDark'),
+    ).to.deep.include({ skipAssertions: ['link-in-text-block'] });
+  });
+
   it('returns the radio a11y rule for a brace-glob enrolment', () => {
     expect(
       getConfig(A11Y_RULES, 'docs/data/material/components/radio-buttons/RadioButtonsGroup'),

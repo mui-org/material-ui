@@ -190,6 +190,7 @@ Edit the JSON files, not this table.
 | [Checkbox](./Checkbox/accessibility.md)                   | 24          | 1                     | 0                   | 30                | —           | 3/25       |
 | [CircularProgress](./CircularProgress/accessibility.md)   | 8           | 3                     | 0                   | 44                | —           | 5/11       |
 | [LinearProgress](./LinearProgress/accessibility.md)       | 8           | 3                     | 0                   | 44                | —           | 5/11       |
+| [Link](./Link/accessibility.md)                           | 22          | 2                     | 0                   | 31                | —           | 6/24       |
 | [Radio](./Radio/accessibility.md)                         | 24          | 1                     | 0                   | 30                | —           | 2/25       |
 | [RadioGroup](./RadioGroup/accessibility.md)               | 7           | 0                     | 0                   | 30                | 18          | 3/7        |
 | [Switch](./Switch/accessibility.md)                       | 24          | 1                     | 0                   | 30                | —           | 2/25       |
