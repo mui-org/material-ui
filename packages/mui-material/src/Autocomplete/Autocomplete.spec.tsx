@@ -768,6 +768,31 @@ const literalMappedProps = {
   }}
 />;
 
+// slotProps of component slots accept that component's props
+<Autocomplete
+  options={options}
+  renderInput={() => null}
+  slotProps={{
+    chip: { size: 'small', variant: 'outlined' },
+    clearIndicator: { size: 'small' },
+    paper: { component: 'section', elevation: 8 },
+    popper: { placement: 'top' },
+    popupIndicator: (ownerState) => ({ disabled: ownerState.disabled }),
+  }}
+/>;
+<Autocomplete
+  options={options}
+  renderInput={() => null}
+  // @ts-expect-error Paper has no such prop
+  slotProps={{ paper: { nonExistentProp: true } }}
+/>;
+<Autocomplete
+  options={options}
+  renderInput={() => null}
+  // @ts-expect-error Chip has no such prop
+  slotProps={{ chip: { nonExistentProp: true } }}
+/>;
+
 // onInputChange receives a null event on programmatic resets and a createOption reason in freeSolo
 <Autocomplete
   freeSolo
