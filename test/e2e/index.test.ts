@@ -188,14 +188,14 @@ describe('e2e', () => {
     it('should loop the arrow key', async () => {
       await renderFixture('Rating/BasicRating');
 
-      const activeEl = page.locator(':focus');
+      const checked = () => page.locator('input[name="rating-test"]:checked');
 
       await page.focus('input[name="rating-test"]:checked');
-      await expect(activeEl).toHaveAttribute('value', '1');
+      await expect(checked()).toHaveAttribute('value', '1');
       await page.keyboard.press('ArrowLeft');
-      await expect(activeEl).toHaveAttribute('value', '');
+      await expect(checked()).toHaveAttribute('value', '');
       await page.keyboard.press('ArrowLeft');
-      await expect(activeEl).toHaveAttribute('value', '5');
+      await expect(checked()).toHaveAttribute('value', '5');
     });
   });
 

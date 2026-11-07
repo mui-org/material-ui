@@ -34,6 +34,68 @@ function roundValueToPrecision(value, precision) {
   return Number(nearest.toFixed(getDecimalPrecision(precision)));
 }
 
+// Keyboard helpers to normalize keys across browsers (e.g., Safari)
+const KEY_LEFT = 'ArrowLeft';
+const KEY_RIGHT = 'ArrowRight';
+const KEY_UP = 'ArrowUp';
+const KEY_DOWN = 'ArrowDown';
+const KEY_HOME = 'Home';
+const KEY_END = 'End';
+
+function isKey(eventKey, logical) {
+  if (eventKey === logical) {
+    return true;
+  }
+  // Safari legacy key values
+  switch (logical) {
+    case KEY_LEFT:
+      return eventKey === 'Left';
+    case KEY_RIGHT:
+      return eventKey === 'Right';
+    case KEY_UP:
+      return eventKey === 'Up';
+    case KEY_DOWN:
+      return eventKey === 'Down';
+    default:
+      return false;
+  }
+}
+
+// Returns undefined if the key isnt a navigation key.
+// Index 0 means "empty" -> returns null.
+function nextValueForKey({ key, value, max, precision, isRtl }) {
+  const totalSteps = Math.round(max / precision);
+  const currentIndex = value == null ? 0 : Math.round(value / precision);
+
+  let nextIndex = currentIndex;
+  const inc = isKey(key, KEY_UP) || (isRtl ? isKey(key, KEY_LEFT) : isKey(key, KEY_RIGHT));
+  const dec = isKey(key, KEY_DOWN) || (isRtl ? isKey(key, KEY_RIGHT) : isKey(key, KEY_LEFT));
+
+  if (inc) {
+    nextIndex += 1;
+  } else if (dec) {
+    nextIndex -= 1;
+  } else if (isKey(key, KEY_HOME)) {
+    nextIndex = 0;
+  } else if (isKey(key, KEY_END)) {
+    nextIndex = totalSteps;
+  } else {
+    return undefined;
+  }
+
+  // wrap-around
+  if (nextIndex > totalSteps) {
+    nextIndex = 0;
+  }
+  if (nextIndex < 0) {
+    nextIndex = totalSteps;
+  }
+
+  return nextIndex === 0
+    ? null
+    : Number((nextIndex * precision).toFixed(getDecimalPrecision(precision)));
+}
+
 const useUtilityClasses = (ownerState) => {
   const { classes, size, readOnly, disabled, emptyValueFocused, focusVisible } = ownerState;
 
@@ -243,12 +305,14 @@ function RatingItem(props) {
     onChange,
     onClick,
     onFocus,
+    onKeyDown,
     readOnly,
     ownerState,
     ratingValue,
     ratingValueRounded,
     slots = {},
     slotProps = {},
+    tabIndex,
   } = props;
 
   const isFilled = highlightSelectedOnly ? itemValue === ratingValue : itemValue <= ratingValue;
@@ -323,12 +387,14 @@ function RatingItem(props) {
         onBlur={onBlur}
         onChange={onChange}
         onClick={onClick}
+        onKeyDown={onKeyDown}
         disabled={disabled}
         value={itemValue}
         id={id}
         type="radio"
         name={name}
         checked={isChecked}
+        tabIndex={tabIndex}
       />
     </React.Fragment>
   );
@@ -351,10 +417,12 @@ RatingItem.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func.isRequired,
   ownerState: PropTypes.object.isRequired,
   ratingValue: PropTypes.number,
   ratingValueRounded: PropTypes.number,
   readOnly: PropTypes.bool.isRequired,
+  tabIndex: PropTypes.number.isRequired,
   slotProps: PropTypes.object,
   slots: PropTypes.object,
 };
@@ -537,6 +605,18 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
 
   const [emptyValueFocused, setEmptyValueFocused] = React.useState(false);
 
+  const getStarTabIndex = (itemValue) => {
+    if (readOnly || disabled) {
+      return -1;
+    }
+
+    if (valueRounded == null) {
+      return -1;
+    }
+
+    return itemValue === valueRounded ? 0 : -1;
+  };
+
   const ownerState = {
     ...props,
     component,
@@ -555,6 +635,52 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
   };
 
   const classes = useUtilityClasses(ownerState);
+
+  const focusRatingInput = (newValue) => {
+    if (!rootRef.current) {
+      return;
+    }
+
+    const selectorValue = newValue == null ? '' : String(newValue);
+    const inputToFocus = rootRef.current.querySelector(
+      `input[name="${name}"][value="${selectorValue}"]`,
+    );
+
+    if (inputToFocus) {
+      inputToFocus.focus();
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (readOnly || disabled) {
+      return;
+    }
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    const next = nextValueForKey({
+      key: event.key,
+      value,
+      max,
+      precision,
+      isRtl,
+    });
+
+    if (next === undefined) {
+      return;
+    } // not a navigation key
+
+    event.preventDefault(); // keep behavior consistent across browsers
+    setValueState(next);
+    // Ensure visual value reflects the new rating even if focus overlay is active
+    setState((_prev) => ({ hover: -1, focus: -1 }));
+    focusRatingInput(next);
+    if (onChange) {
+      onChange(event, next);
+    }
+  };
 
   const externalForwardedProps = {
     slots,
@@ -580,6 +706,14 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
         handleMouseLeave(event);
         handlers.onMouseLeave?.(event);
       },
+      onKeyDownCapture: (event) => {
+        handleKeyDown(event);
+        handlers.onKeyDownCapture?.(event);
+      },
+      onKeyDown: (event) => {
+        handleKeyDown(event);
+        handlers.onKeyDown?.(event);
+      },
     }),
     ownerState,
     additionalProps: {
@@ -602,6 +736,11 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
     ownerState,
   });
 
+  let emptyTabIndex = -1;
+  if (!readOnly && !disabled) {
+    emptyTabIndex = valueRounded == null ? 0 : -1;
+  }
+
   return (
     <RootSlot {...rootSlotProps}>
       {Array.from(new Array(max)).map((_, index) => {
@@ -621,12 +760,14 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
           onChange: handleChange,
           onClick: handleClear,
           onFocus: handleFocus,
+          onKeyDown: handleKeyDown,
           ratingValue: value,
           ratingValueRounded: valueRounded,
           readOnly,
           ownerState,
           slots,
           slotProps,
+          tabIndex: getStarTabIndex(itemValue),
         };
 
         const isActive = itemValue === Math.ceil(value) && (hover !== -1 || focus !== -1);
@@ -649,6 +790,7 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
                   <RatingItem
                     key={itemDecimalValue}
                     {...ratingItemProps}
+                    tabIndex={getStarTabIndex(itemDecimalValue)}
                     // The icon is already displayed as active
                     isActive={false}
                     itemValue={itemDecimalValue}
@@ -690,8 +832,10 @@ const Rating = React.forwardRef(function Rating(inProps, ref) {
             type="radio"
             name={name}
             checked={valueRounded == null}
+            tabIndex={emptyTabIndex}
             onFocus={() => setEmptyValueFocused(true)}
             onBlur={() => setEmptyValueFocused(false)}
+            onKeyDown={handleKeyDown}
             onChange={handleChange}
           />
           <span className={classes.visuallyHidden}>{emptyLabelText}</span>
