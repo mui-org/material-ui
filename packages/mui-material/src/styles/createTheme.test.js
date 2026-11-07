@@ -1237,6 +1237,20 @@ describe('createTheme', () => {
       ).not.toWarnDev();
     });
 
+    it('should apply opaque alpha to `TableCell.border` before color mixing when `nativeColor` is used', () => {
+      const theme = createTheme({
+        cssVariables: { nativeColor: true },
+        colorSchemes: { light: true, dark: true },
+      });
+
+      expect(theme.colorSchemes.light.palette.TableCell.border).to.equal(
+        'color-mix(in oklch, oklch(from var(--mui-palette-divider) l c h / 1), #fff 88%)',
+      );
+      expect(theme.colorSchemes.dark.palette.TableCell.border).to.equal(
+        'color-mix(in oklch, oklch(from var(--mui-palette-divider) l c h / 1), #000 68%)',
+      );
+    });
+
     it.skipIf(isJSDOM)(
       '[CSS variables] `alpha()` colors should render without the CSS variables stylesheet',
       () => {
