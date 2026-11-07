@@ -39,6 +39,7 @@
   "devDependencies": {
     "@types/prop-types": "15.7.15",
     "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "react": "19.3.1",
     "styled-components": "6.6.0"
   },

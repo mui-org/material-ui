@@ -43,6 +43,21 @@ function styled(tag: React.ElementType, options?: StyledOptions<any>) {
 export default styled as unknown as CreateStyled;
 
 /**
+ * For internal usage in `@mui/system` package.
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function internal_createStyled(
+  tag: React.ElementType,
+  options: StyledOptions<any>,
+  styleFunctionSx: (props: any) => any,
+) {
+  internal_mutateStyles(tag, (styles: any[]) =>
+    styles.filter((style) => style !== styleFunctionSx),
+  );
+  return [styled(tag, options), styleFunctionSx] as const;
+}
+
+/**
  * For internal usage in `@mui/system` package
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
