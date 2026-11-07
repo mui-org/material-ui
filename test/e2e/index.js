@@ -48,7 +48,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router useTransitions={React.startTransition !== undefined}>
       <Routes>
         {fixtures.map((fixture) => {
           const path = computePath(fixture);
@@ -64,9 +64,12 @@ function App() {
               exact
               path={path}
               element={
-                <TestViewer>
-                  <FixtureComponent />
-                </TestViewer>
+                // React 17 legacy roots need a boundary for `React.lazy`.
+                <React.Suspense fallback={null}>
+                  <TestViewer>
+                    <FixtureComponent />
+                  </TestViewer>
+                </React.Suspense>
               }
             />
           );

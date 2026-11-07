@@ -5,7 +5,14 @@ import { chromium } from '@playwright/test';
 import { describe, test as base, afterAll } from 'vitest';
 import { recordA11y, WCAG_TAGS, GLOBAL_DISABLED_RULES } from './a11y/axe';
 import { CSS_LAYOUT_SUITES, FOCUS_VISIBLE_TARGETS } from './a11y/criteriaSuites';
-import { A11Y_RULES, DEFAULT_VIEWPORT, SCREENSHOT_RULES, getConfig, parseRoute } from './demoMeta';
+import {
+  A11Y_RULES,
+  DEFAULT_VIEWPORT,
+  SCREENSHOT_RULES,
+  getConfig,
+  getMinReactMajor,
+  parseRoute,
+} from './demoMeta';
 import { RECENT_SEARCHES, stubAlgoliaSearch, unstubAlgoliaSearch } from './algoliaSearchStub';
 import { favoriteSearchesKey, QUERY, recentSearchesKey } from './docsearchFixtureData';
 
@@ -92,6 +99,9 @@ async function main() {
     (await probePage.evaluate(() => window.muiFixture.reactVersion)).split('.')[0],
   );
   pool.release(probePage);
+  // Every test below skips the routes that this React version cannot render.
+  const routesBelowReactFloor = routes.filter((route) => reactMajor < getMinReactMajor(route));
+  routes = routes.filter((route) => !routesBelowReactFloor.includes(route));
 
   const test = base.extend({
     // eslint-disable-next-line no-empty-pattern
@@ -198,8 +208,7 @@ async function main() {
         const parsed = parseRoute(route);
         const screenshotRule = parsed ? getConfig(SCREENSHOT_RULES, parsed.path) : undefined;
         const a11yRule = parsed ? getConfig(A11Y_RULES, parsed.path) : undefined;
-        const meetsReactFloor = reactMajor >= (screenshotRule?.minReactMajor ?? 0);
-        const runScreenshot = parsed ? (screenshotRule?.enabled ?? true) && meetsReactFloor : true;
+        const runScreenshot = parsed ? (screenshotRule?.enabled ?? true) : true;
         const runA11y = a11yRule?.enabled === true;
         if (!runScreenshot && !runA11y) {
           return;
@@ -272,6 +281,19 @@ async function main() {
           },
         );
       });
+
+      // The a11y reporter keeps the committed results of these routes.
+      routesBelowReactFloor.forEach((route) => {
+        const parsed = parseRoute(route);
+        if (parsed && getConfig(A11Y_RULES, parsed.path)?.enabled) {
+          // eslint-disable-next-line vitest/no-disabled-tests -- The skip is permanent on this React version.
+          test.skip(
+            `runs a11y on ${route}`,
+            { meta: { a11yKept: { slug: parsed.slug, demo: parsed.demo } } },
+            () => {},
+          );
+        }
+      });
     });
 
     describe('Rating', () => {
@@ -311,7 +333,8 @@ async function main() {
       // `AGENTS.md` reaches this test. Without it a scoped run refreshes only
       // the closed-button capture the route loop generates, and leaves the
       // three below stale.
-      test(`should render /regression-AppSearch/${fixture} correctly`, async ({ pooled }) => {
+      const route = `/regression-AppSearch/${fixture}`;
+      test.runIf(routes.includes(route))(`should render ${route} correctly`, async ({ pooled }) => {
         const { page } = pooled;
         // Seed from here rather than from the fixture. The `pooled` fixture
         // clears storage on acquisition, and navigating to a route the pooled
@@ -324,7 +347,7 @@ async function main() {
           },
           [recentSearchesKey, favoriteSearchesKey, RECENT_SEARCHES],
         );
-        await renderFixture(page, `/regression-AppSearch/${fixture}`);
+        await renderFixture(page, route);
         // The modal portals to `document.body`, so it lands outside the
         // testcase element and has to be screenshotted on its own.
         await page.getByRole('button', { name: /search/i }).click();
@@ -619,11 +642,11 @@ function registerCssLayoutSuites({ test, renderFixture, routes }) {
   CSS_LAYOUT_SUITES.forEach(({ component, route, skipCriteria = [] }) => {
     // A slug only enters the demo bundle once its component is enrolled, so skip
     // entries this build doesn't contain rather than waiting for a fixture that
-    // was never bundled.
+    // was never bundled. `routes` also leaves out routes below their React floor.
     if (!routes.includes(route)) {
       // The slug enters the bundle only when its component enrolls (see fixtures.js).
       describe(`${component} layout criteria`, () => {
-        test.skip(`route not bundled: ${route}`, () => {});
+        test.skip(`route not bundled or below its React floor: ${route}`, () => {});
       });
       return;
     }

@@ -1,7 +1,7 @@
 import { describe, beforeAll, afterAll, beforeEach, afterEach, it, expect } from 'vitest';
 import * as React from 'react';
 import { spy } from 'sinon';
-import { createRenderer, fireEvent, act, screen } from '@mui/internal-test-utils';
+import { createRenderer, fireEvent, act, screen, reactMajor } from '@mui/internal-test-utils';
 import {
   DEFAULT_MODE_STORAGE_KEY,
   DEFAULT_COLOR_SCHEME_STORAGE_KEY,
@@ -111,7 +111,8 @@ describe('useCurrentColorScheme', () => {
     const { container } = render(<Data />);
 
     expect(container.firstChild.textContent).to.equal('light');
-    expect(effectRunCount).to.equal(3);
+    // StrictMode runs the mount effect twice on React 18+ only. The re-render adds one run.
+    expect(effectRunCount).to.equal(reactMajor >= 18 ? 3 : 2);
   });
 
   it('[noSsr] does not trigger a re-render', () => {

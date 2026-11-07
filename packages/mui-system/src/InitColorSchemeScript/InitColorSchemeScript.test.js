@@ -1,6 +1,6 @@
 /* eslint-disable no-eval */
 import { describe, beforeEach, afterEach, it, expect } from 'vitest';
-import { createRenderer } from '@mui/internal-test-utils';
+import { createRenderer, reactMajor } from '@mui/internal-test-utils';
 import InitColorSchemeScript from '@mui/system/InitColorSchemeScript';
 import {
   DEFAULT_ATTRIBUTE,
@@ -261,8 +261,8 @@ describe('InitColorSchemeScript', () => {
     expect(document.documentElement.getAttribute(DEFAULT_ATTRIBUTE)).to.equal(darkScheme);
   });
 
-  // Client renders must stay script-free (#48595).
-  it('should not render the script on the client', () => {
+  // Client renders must stay script-free (#48595). React <18 always emits the script by design.
+  it.skipIf(reactMajor < 18)('should not render the script on the client', () => {
     const { container } = render(<InitColorSchemeScript />);
     expect(container.querySelector('script')).to.equal(null);
   });
@@ -270,14 +270,17 @@ describe('InitColorSchemeScript', () => {
   // Hydration path (the bug in #48595): the script is server-rendered, hydrated without a mismatch
   // warning (vitest-fail-on-console turns the warning into a failure), then dropped on the
   // post-hydration commit when the client snapshot takes over.
-  it('should emit the script on server render and drop it after hydration', () => {
-    storage[DEFAULT_MODE_STORAGE_KEY] = 'light';
-    storage[`${DEFAULT_COLOR_SCHEME_STORAGE_KEY}-light`] = 'foo';
+  it.skipIf(reactMajor < 18)(
+    'should emit the script on server render and drop it after hydration',
+    () => {
+      storage[DEFAULT_MODE_STORAGE_KEY] = 'light';
+      storage[`${DEFAULT_COLOR_SCHEME_STORAGE_KEY}-light`] = 'foo';
 
-    const view = renderToString(<InitColorSchemeScript />);
-    expect(view.container.querySelector('script')).not.to.equal(null);
+      const view = renderToString(<InitColorSchemeScript />);
+      expect(view.container.querySelector('script')).not.to.equal(null);
 
-    const { container } = view.hydrate();
-    expect(container.querySelector('script')).to.equal(null);
-  });
+      const { container } = view.hydrate();
+      expect(container.querySelector('script')).to.equal(null);
+    },
+  );
 });

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { configDefaults, defineProject } from 'vitest/config';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
 import type { Plugin } from 'vite';
@@ -48,8 +49,33 @@ function getVitestEnvironment(fileName: string): 'browser' | 'node' {
 }
 
 const MONOREPO_ROOT = path.resolve(import.meta.dirname, '.');
+const REACT_MAJOR = Number(
+  createRequire(import.meta.url)('react/package.json').version.split('.')[0],
+);
+
+// Docs-infra code needs React 18+ APIs and does not ship, so the React 17 jobs skip its tests.
+const REACT_18_TEST_DIRS = [
+  'packages-internal/core-docs',
+  'packages-internal/scripts/generate-llms-txt',
+];
+
+function getReactVersionExcludes(projectDir: string): string[] {
+  if (REACT_MAJOR >= 18) {
+    return [];
+  }
+  // Vitest matches `exclude` against paths relative to the project.
+  return REACT_18_TEST_DIRS.map((dir) =>
+    path.relative(projectDir, path.resolve(MONOREPO_ROOT, dir)),
+  )
+    .filter((dir) => !dir.startsWith('..'))
+    .map((dir) => path.posix.join(dir.split(path.sep).join('/'), '**'));
+}
 
 export const alias = {
+  // React 17 has no `react-dom/client`.
+  ...(REACT_MAJOR < 18
+    ? { 'react-dom/client': path.resolve(MONOREPO_ROOT, './test/reactDomClient17.js') }
+    : {}),
   '@mui/internal-api-docs-builder': path.resolve(
     MONOREPO_ROOT,
     './packages-internal/api-docs-builder/src',
@@ -107,7 +133,14 @@ export default async function create(
     },
     test: {
       name,
-      exclude: ['**/node_modules/**', '**/build/**', '**/*.spec.*', '**/.next/**', ...excludes],
+      exclude: [
+        '**/node_modules/**',
+        '**/build/**',
+        '**/*.spec.*',
+        '**/.next/**',
+        ...excludes,
+        ...getReactVersionExcludes(path.dirname(file)),
+      ],
       disableConsoleIntercept: true,
       setupFiles: [
         // Must load before `react-dom`, which `setupVitest.ts` pulls in.
