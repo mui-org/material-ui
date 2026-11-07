@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { spy } from 'sinon';
 import {
@@ -914,6 +915,36 @@ describe('<InputBase />', () => {
       );
 
       expect(screen.getByTestId('adornment')).not.to.equal(null);
+    });
+
+    // React 19 counts a default-priority update that is still pending after a synchronous commit
+    // as a nested update. Calling `setAdornedStart` with an unchanged value on every render
+    // reached the 50 nested updates limit while the user typed fast.
+    it('should not exceed the nested update limit when the startAdornment element is recreated', () => {
+      let rerender;
+      function Test() {
+        const [count, setCount] = React.useState(0);
+        rerender = () => setCount((value) => value + 1);
+
+        return (
+          <FormControl>
+            <InputBase startAdornment={<InputAdornment position="start">{count}</InputAdornment>} />
+          </FormControl>
+        );
+      }
+      render(<Test />);
+      // Gives the FormControl a state update, as typing in the input does.
+      act(() => {
+        screen.getByRole('textbox').focus();
+      });
+
+      expect(() => {
+        act(() => {
+          for (let i = 0; i < 60; i += 1) {
+            ReactDOM.flushSync(rerender);
+          }
+        });
+      }).not.to.throw();
     });
 
     it('should allow a Select as an adornment', () => {
