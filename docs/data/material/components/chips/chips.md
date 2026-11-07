@@ -100,4 +100,6 @@ gain depth while clicked or touched.
 
 ## Accessibility
 
-If the Chip is deletable or clickable then it is a button in tab order. When the Chip is focused (for example when tabbing) releasing (`keyup` event) `Backspace` or `Delete` will call the `onDelete` handler while releasing `Escape` will blur the Chip.
+If the Chip is deletable or clickable then it is a button in tab order. When the Chip is focused (for example when tabbing) releasing (`keyup` event) `Backspace` or `Delete` calls the `onDelete` handler.
+After a deletion, move focus to the next chip or to a nearby control, because the deleted chip leaves the page.
+To remove a disabled deletable Chip from the tab order, set `skipFocusWhenDisabled`.

@@ -17,6 +17,8 @@ import { ThemeProvider, createTheme, hexToRgb } from '@mui/material/styles';
 import CheckBox from '../internal/svg-icons/CheckBox';
 import defaultTheme from '../styles/defaultTheme';
 import describeConformance from '../../test/describeConformance';
+import { blend, contrastRatio, WCAG_MINIMUM_RATIO, WCAG_NON_TEXT_RATIO } from '../../test/contrast';
+import { FAILING_PALETTE_COLORS, PALETTE_CONTRAST_COLORS } from '../../test/contrastContract';
 
 describe('<Chip />', () => {
   const { render } = createRenderer();
@@ -847,5 +849,266 @@ describe('<Chip />', () => {
 
       fireEvent.keyUp(chip, { key: ' ' });
     }).not.throw();
+  });
+
+  describe('WCAG 2.2 conformance', () => {
+    describe('1.1.1 Non-text Content', () => {
+      it('hides the delete icon from assistive technology', () => {
+        render(<Chip label="Design" onDelete={() => {}} />);
+
+        const button = screen.getByRole('button', { name: 'Design' });
+        const deleteIcon = button.querySelector(`.${classes.deleteIcon}`);
+        expect(deleteIcon).to.have.attribute('aria-hidden', 'true');
+      });
+    });
+
+    describe('1.4.3 Contrast (Minimum)', () => {
+      const theme = createTheme();
+
+      /** The palette colors whose label falls short of 4.5:1 for a variant. */
+      function failingColors(variant, background) {
+        render(
+          <React.Fragment>
+            {PALETTE_CONTRAST_COLORS.map((color) => (
+              <Chip key={color} label={color} color={color} variant={variant} />
+            ))}
+          </React.Fragment>,
+        );
+        return PALETTE_CONTRAST_COLORS.filter((color) => {
+          const chip = screen.getByText(color).parentElement;
+          const { color: textColor, backgroundColor } = window.getComputedStyle(chip);
+          const fill = backgroundColor === 'rgba(0, 0, 0, 0)' ? background : backgroundColor;
+          return contrastRatio(textColor, fill) < WCAG_MINIMUM_RATIO.normalText;
+        });
+      }
+
+      it('filled labels fall short of 4.5:1 only in the documented palette colors', () => {
+        expect(failingColors('filled', theme.palette.background.paper)).to.deep.equal([
+          ...FAILING_PALETTE_COLORS,
+        ]);
+      });
+
+      it('outlined labels fall short of 4.5:1 only in the documented palette colors', () => {
+        expect(failingColors('outlined', theme.palette.background.paper)).to.deep.equal([
+          ...FAILING_PALETTE_COLORS,
+        ]);
+      });
+
+      it('focused outlined labels fall short of 4.5:1 in every palette color except secondary', () => {
+        render(
+          <React.Fragment>
+            {PALETTE_CONTRAST_COLORS.map((color) => (
+              <Chip
+                key={color}
+                label={color}
+                color={color}
+                variant="outlined"
+                onDelete={() => {}}
+                className={classes.focusVisible}
+              />
+            ))}
+          </React.Fragment>,
+        );
+        const failing = PALETTE_CONTRAST_COLORS.filter((color) => {
+          const chip = screen.getByRole('button', { name: color });
+          const { color: textColor, backgroundColor } = window.getComputedStyle(chip);
+          // The focus tint is `main` at `focusOpacity`, so composite it over the paper.
+          const fill = blend(backgroundColor, 1, theme.palette.background.paper);
+          return contrastRatio(textColor, fill) < WCAG_MINIMUM_RATIO.normalText;
+        });
+        // When this changes, update Chip/accessibility.md and knownGaps.json.
+        expect(failing).to.deep.equal(['primary', 'error', 'info', 'success', 'warning']);
+      });
+    });
+
+    it('1.4.11 Non-text Contrast: the default delete icon falls short of 3:1 (documented gap)', () => {
+      render(<Chip label="Design" onDelete={() => {}} />);
+
+      const chip = screen.getByRole('button', { name: 'Design' });
+      const deleteIcon = chip.querySelector(`.${classes.deleteIcon}`);
+      // The default fill is translucent, so composite it over the paper background.
+      const fill = blend(
+        window.getComputedStyle(chip).backgroundColor,
+        1,
+        createTheme().palette.background.paper,
+      );
+      const ratio = contrastRatio(window.getComputedStyle(deleteIcon).color, fill);
+      // When this fails, the icon reaches 3:1: update Chip/accessibility.md and knownGaps.json.
+      expect(ratio).to.be.below(WCAG_NON_TEXT_RATIO);
+    });
+
+    describe('2.1.1 Keyboard', () => {
+      it('activates a clickable chip with Enter and Space', async () => {
+        const handleClick = spy();
+        const { user } = render(<Chip label="Filter" onClick={handleClick} />);
+
+        await user.tab();
+        await user.keyboard('{Enter}');
+        await user.keyboard(' ');
+        expect(handleClick.callCount).to.equal(2);
+      });
+
+      it('deletes a deletable chip with Backspace and Delete', async () => {
+        const handleDelete = spy();
+        const { user } = render(<Chip label="Design" onDelete={handleDelete} />);
+
+        await user.tab();
+        await user.keyboard('{Backspace}');
+        await user.keyboard('{Delete}');
+        expect(handleDelete.callCount).to.equal(2);
+      });
+    });
+
+    it('2.1.2 No Keyboard Trap: keyboard focus can enter and leave the chip', async () => {
+      const { user } = render(
+        <React.Fragment>
+          <button type="button">Before</button>
+          <Chip label="Middle" onClick={() => {}} onDelete={() => {}} />
+          <button type="button">After</button>
+        </React.Fragment>,
+      );
+
+      await user.tab();
+      await user.tab();
+      expect(screen.getByRole('button', { name: 'Middle' })).toHaveFocus();
+
+      await user.tab();
+      expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+
+      await user.tab({ shift: true });
+      await user.tab({ shift: true });
+      expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
+    });
+
+    describe('2.4.3 Focus Order', () => {
+      it('keeps a static chip out of the tab order', async () => {
+        const { user } = render(
+          <React.Fragment>
+            <Chip label="Static" />
+            <button type="button">After</button>
+          </React.Fragment>,
+        );
+
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+      });
+
+      it('makes clickable and deletable chips tab stops in DOM order', async () => {
+        const { user } = render(
+          <React.Fragment>
+            <Chip label="Clickable" onClick={() => {}} />
+            <Chip label="Deletable" onDelete={() => {}} />
+          </React.Fragment>,
+        );
+
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'Clickable' })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'Deletable' })).toHaveFocus();
+      });
+
+      it('removes a disabled clickable chip from the tab order', async () => {
+        const { user } = render(
+          <React.Fragment>
+            <Chip label="Disabled" onClick={() => {}} disabled />
+            <button type="button">After</button>
+          </React.Fragment>,
+        );
+
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+      });
+    });
+
+    it('2.5.2 Pointer Cancellation: activates on click, but not when released off the target', async () => {
+      const handleClick = spy();
+      const { user } = render(
+        <React.Fragment>
+          <Chip label="Filter" onClick={handleClick} />
+          <div data-testid="outside" />
+        </React.Fragment>,
+      );
+      const chip = screen.getByRole('button', { name: 'Filter' });
+
+      await user.pointer([
+        { keys: '[MouseLeft>]', target: chip },
+        { target: screen.getByTestId('outside') },
+        { keys: '[/MouseLeft]' },
+      ]);
+      expect(handleClick.callCount).to.equal(0);
+
+      await user.click(chip);
+      expect(handleClick.callCount).to.equal(1);
+    });
+
+    it('2.5.3 Label in Name: the accessible name is the visible label', () => {
+      render(<Chip label="Design" onDelete={() => {}} />);
+
+      expect(screen.getByRole('button')).toHaveAccessibleName('Design');
+    });
+
+    it('3.2.1 On Focus: moving keyboard focus to the chip does not activate or delete it', async () => {
+      const handleClick = spy();
+      const handleDelete = spy();
+      const { user } = render(
+        <Chip label="Design" onClick={handleClick} onDelete={handleDelete} />,
+      );
+
+      await user.tab();
+      expect(screen.getByRole('button')).toHaveFocus();
+      expect(handleClick.callCount).to.equal(0);
+      expect(handleDelete.callCount).to.equal(0);
+    });
+
+    describe('4.1.2 Name, Role, Value', () => {
+      it('gives a static chip no interactive role', () => {
+        render(<Chip label="Static" />);
+
+        expect(screen.queryByRole('button')).to.equal(null);
+      });
+
+      it('gives a clickable chip the button role and its label as name', () => {
+        render(<Chip label="Filter" onClick={() => {}} />);
+
+        expect(screen.getByRole('button', { name: 'Filter' })).not.to.equal(null);
+      });
+
+      it('gives a link chip the link role', () => {
+        render(<Chip label="Docs" component="a" href="/docs" clickable />);
+
+        expect(screen.getByRole('link', { name: 'Docs' })).to.have.tagName('a');
+      });
+
+      it('does not expose the disabled state of a disabled delete-only chip (documented gap)', async () => {
+        const handleDelete = spy();
+        const { user } = render(<Chip label="Design" onDelete={handleDelete} disabled />);
+        const chip = screen.getByRole('button');
+
+        // When this fails, the gap is fixed: update Chip/accessibility.md and knownGaps.json.
+        expect(chip).not.to.have.attribute('aria-disabled');
+        await user.tab();
+        expect(chip).toHaveFocus();
+        await user.keyboard('{Backspace}');
+        expect(handleDelete.callCount).to.equal(1);
+      });
+
+      it('removes a disabled delete-only chip from the tab order with skipFocusWhenDisabled', async () => {
+        const { user } = render(
+          <React.Fragment>
+            <Chip label="Design" onDelete={() => {}} disabled skipFocusWhenDisabled />
+            <button type="button">After</button>
+          </React.Fragment>,
+        );
+
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+      });
+
+      it('exposes the disabled state of a disabled clickable chip', () => {
+        render(<Chip label="Filter" onClick={() => {}} disabled />);
+
+        expect(screen.getByRole('button')).to.have.attribute('aria-disabled', 'true');
+      });
+    });
   });
 });

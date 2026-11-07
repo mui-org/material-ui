@@ -22,6 +22,7 @@ export const CSS_LAYOUT_SUITES = [
   },
   { component: 'Button', route: '/docs-components-buttons/BasicButtons' },
   { component: 'Checkbox', route: '/docs-components-checkboxes/Checkboxes' },
+  { component: 'Chip', route: '/docs-components-chips/ChipsArray' },
   {
     component: 'CircularProgress',
     route: '/docs-components-progress/CircularDeterminate',
@@ -63,6 +64,11 @@ export const FOCUS_VISIBLE_TARGETS = [
     component: 'Checkbox',
     route: '/docs-components-checkboxes/Checkboxes',
     selector: '.MuiCheckbox-root',
+  },
+  {
+    component: 'Chip',
+    route: '/docs-components-chips/ClickableChips',
+    selector: '.MuiChip-clickable',
   },
   {
     component: 'Radio',

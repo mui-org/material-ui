@@ -18,14 +18,14 @@ the component (○ Author).
 
 Run the rows matching what you touched, for the component you touched.
 
-| If your change touches…              | Re-check                                                                                                                        |
-| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
-| Styling, theme, or palette           | 1.4.1 Use of Color; 1.4.3 Contrast (Minimum); 1.4.4 Resize Text; 1.4.5 Images of Text; 1.4.11 Non-text Contrast                 |
-| DOM structure, roles, or ARIA        | 1.1.1 Non-text Content; 1.3.1 Info and Relationships; 1.3.2 Meaningful Sequence; 4.1.2 Name, Role, Value; 4.1.3 Status Messages |
-| Keyboard, focus, or pointer handling | 2.4.4 Link Purpose (In Context); 2.4.6 Headings and Labels; 2.4.7 Focus Visible                                                 |
-| Labels, errors, or validation        | 3.3.2 Labels or Instructions                                                                                                    |
-| Motion or timing                     | 2.2.2 Pause, Stop, Hide                                                                                                         |
-| Other                                | 2.3.1 Three Flashes or Below Threshold                                                                                          |
+| If your change touches…              | Re-check                                                                                                                                            |
+| :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Styling, theme, or palette           | 1.4.1 Use of Color; 1.4.3 Contrast (Minimum); 1.4.4 Resize Text; 1.4.5 Images of Text; 1.4.10 Reflow; 1.4.11 Non-text Contrast; 1.4.12 Text Spacing |
+| DOM structure, roles, or ARIA        | 1.1.1 Non-text Content; 1.3.1 Info and Relationships; 1.3.2 Meaningful Sequence; 4.1.2 Name, Role, Value; 4.1.3 Status Messages                     |
+| Keyboard, focus, or pointer handling | 2.1.1 Keyboard; 2.4.3 Focus Order; 2.4.4 Link Purpose (In Context); 2.4.6 Headings and Labels; 2.4.7 Focus Visible; 2.5.8 Target Size (Minimum)     |
+| Labels, errors, or validation        | 3.3.2 Labels or Instructions                                                                                                                        |
+| Motion or timing                     | 2.2.2 Pause, Stop, Hide                                                                                                                             |
+| Other                                | 2.3.1 Three Flashes or Below Threshold                                                                                                              |
 
 ## Accordion
 
@@ -92,6 +92,26 @@ Run the rows matching what you touched, for the component you touched.
 - [ ] 🔁 **2.4.7 Focus Visible** — every keyboard-focused checkbox shows a visible indicator. Under `disableRipple`, the indicator comes from the `focusVisible` theme ring or from author styles.
 - [ ] 🔁 **3.3.2 Labels or Instructions** — every checkbox has a label or instruction presented to all users, via `FormControlLabel`, adjacent text, or clear context.
 - [ ] 🔁 **4.1.2 Name, Role, Value** — the role, the checked/unchecked/mixed/disabled state with change notification, and an author-supplied accessible name are all programmatically determinable.
+
+## Chip
+
+15 checks · full procedures in [`Chip/accessibility.md`](./Chip/accessibility.md)
+
+- [ ] 🔁 **1.1.1 Non-text Content** — the screen reader tells the user that the chip can be deleted. Expected result from the source: it does not. To fix it, add a description with `aria-describedby`.
+- [ ] 🔁 **1.3.1 Info and Relationships** — each chip announces the correct role, and a list of chips is announced as a list.
+- [ ] 🔁 **1.4.1 Use of Color** — the meaning and the state of each chip stay clear without color.
+- [ ] 🔁 **1.4.3 Contrast (Minimum)** — each label is at least `4.5:1` at rest, on hover, and on focus. `info` and `warning` fail. On an `outlined` chip, all focused labels except `secondary` fail, and the hovered `primary` label fails. The letter avatar and the disabled delete-only label fail.
+- [ ] 🔁 **1.4.4 Resize Text** — the full label stays visible at 200% page zoom.
+- [ ] 🔁 **1.4.10 Reflow** — the full label stays visible. A long label fails with the default styles.
+- [ ] 🔁 **1.4.11 Non-text Contrast** — the delete icon and the focus indicator are at least `3:1`. The `outlined` border does not need `3:1`, because the label identifies the chip. It is `1.88:1` (default) and `2.23:1` to `3.57:1` (palette). The default delete icon and focus indicator fail.
+- [ ] 🔁 **1.4.12 Text Spacing** — the full label stays visible. A long label fails with the default styles.
+- [ ] 🔁 **2.1.1 Keyboard** — the deletable chip is removed, and the clickable chip activates on each key.
+- [ ] 🔁 **2.4.3 Focus Order** — focus moves to a nearby chip or control, not to the top of the page. The ChipsArray demo fails.
+- [ ] 🔁 **2.4.4 Link Purpose (In Context)** — the destination of each link chip is clear.
+- [ ] 🔁 **2.4.6 Headings and Labels** — each label describes the item or the filter.
+- [ ] 🔁 **2.4.7 Focus Visible** — each focused chip shows a visible change.
+- [ ] 🔁 **2.5.8 Target Size (Minimum)** — the delete icon is at least 24 by 24 CSS px. Or, a 24 px circle on its center touches no other target. The default icon is 16 by 16 px.
+- [ ] 🔁 **4.1.2 Name, Role, Value** — each chip announces its label and "button". The disabled chip announces "disabled" and cannot be deleted. The disabled delete-only chip fails.
 
 ## CircularProgress
 

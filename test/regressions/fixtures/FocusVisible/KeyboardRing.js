@@ -5,6 +5,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 import Radio from '@mui/material/Radio';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
@@ -39,6 +40,7 @@ export default function KeyboardRing() {
           Contained
         </Button>
         <Checkbox />
+        <Chip label="Chip" onClick={() => {}} />
         <Radio />
         <Switch />
         <ToggleButton value="bold">Toggle</ToggleButton>

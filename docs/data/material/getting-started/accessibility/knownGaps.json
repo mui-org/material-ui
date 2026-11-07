@@ -1,8 +1,16 @@
 [
   {
-    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, with untested contrast",
+    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, and its contrast can fall below 3:1",
     "criteria": ["1.4.11"],
-    "affected": ["AccordionSummary", "Button", "Checkbox", "Radio", "Switch", "ToggleButton"],
+    "affected": [
+      "AccordionSummary",
+      "Button",
+      "Checkbox",
+      "Chip",
+      "Radio",
+      "Switch",
+      "ToggleButton"
+    ],
     "workaround": "Enable `focusVisible` in your theme — see below"
   },
   {
@@ -11,6 +19,10 @@
     "affected": [
       "Avatar",
       "Button",
+      {
+        "component": "Chip",
+        "note": "`info`, `warning`, focused or hovered `outlined`, letter avatar, disabled delete-only"
+      },
       { "component": "CircularProgress", "note": "`warning` with `enableTrackSlot`" },
       "LinearProgress",
       "Switch",
@@ -24,6 +36,30 @@
     "criteria": ["1.4.1"],
     "affected": [{ "component": "ToggleButton", "note": "`primary`, `error`, `info`, `success`" }],
     "workaround": "Add a non-color cue to the selected state, such as an icon"
+  },
+  {
+    "gap": "A Chip label does not wrap, so a long label ends with an ellipsis and hides text",
+    "criteria": ["1.4.10", "1.4.12"],
+    "affected": ["Chip"],
+    "workaround": "Let the label wrap with `height: 'auto'` and `whiteSpace: 'normal'`, as in the multiline demo"
+  },
+  {
+    "gap": "A deletable Chip does not expose its delete action, and a disabled delete-only Chip stays focusable and deletable",
+    "criteria": ["1.1.1", "4.1.2"],
+    "affected": [{ "component": "Chip", "note": "`onDelete`; delete-only ignores Enter, Space" }],
+    "workaround": "Describe the delete key with `aria-describedby`, and set `skipFocusWhenDisabled` on disabled chips"
+  },
+  {
+    "gap": "Deleting a Chip with the keyboard moves focus to the page body",
+    "criteria": ["2.4.3"],
+    "affected": [{ "component": "Chip", "note": "`onDelete`" }],
+    "workaround": "Move focus to the next chip, or to the input, in the `onDelete` handler"
+  },
+  {
+    "gap": "The Chip delete icon is smaller than 24 by 24 CSS px, and its contrast is below 3:1",
+    "criteria": ["1.4.11", "2.5.8"],
+    "affected": [{ "component": "Chip", "note": "16 px `small`, 22 px `medium`" }],
+    "workaround": "Enlarge the icon, and give it a darker color, with `sx` on `.MuiChip-deleteIcon`"
   },
   {
     "gap": "Dynamic state changes are not announced",

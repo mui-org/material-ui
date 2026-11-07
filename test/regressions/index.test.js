@@ -506,6 +506,69 @@ async function main() {
         });
       });
     });
+    describe('Chip', () => {
+      // A tripwire for the text-only resize limitation (1.4.4) and the 1.4.10 and
+      // 1.4.12 gaps: the label does not wrap, so text that fits ends with an ellipsis. When
+      // this fails, Chip wraps its label: update Chip/accessibility.md and knownGaps.json.
+      const ROUTE = '/a11y-chips/ChipA11yLongLabel';
+      const truncated = (page, index) =>
+        page.evaluate((i) => {
+          const label = document.querySelectorAll('.MuiChip-label')[i];
+          return label.scrollWidth > label.clientWidth + 1;
+        }, index);
+      const whiteSpace = (page, index) =>
+        page.evaluate(
+          (i) => getComputedStyle(document.querySelectorAll('.MuiChip-label')[i]).whiteSpace,
+          index,
+        );
+
+      test('known gap: a label that fits at 100% is truncated at 200% text-only resize and with WCAG text spacing', async ({
+        pooled,
+      }) => {
+        const { page } = pooled;
+        await renderFixture(page, ROUTE);
+        if (await truncated(page, 0)) {
+          throw new Error('ChipA11yLongLabel no longer fits at 100%; pick a shorter label');
+        }
+        // The spacing step has about 5 px of margin, so also pin the cause: the label does not wrap.
+        if ((await whiteSpace(page, 0)) !== 'nowrap') {
+          throw new Error('Chip label can wrap now; the gap may be fixed');
+        }
+        for (const css of [
+          'html { font-size: 200% !important; }',
+          '* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }',
+        ]) {
+          // eslint-disable-next-line no-await-in-loop
+          const style = await page.addStyleTag({ content: css });
+          // eslint-disable-next-line no-await-in-loop
+          if (!(await truncated(page, 0))) {
+            throw new Error(`Chip label no longer truncates with ${css}; the gap may be fixed`);
+          }
+          // eslint-disable-next-line no-await-in-loop
+          await style.evaluate((node) => node.remove());
+        }
+      });
+
+      test('known gap: a label that fits a wide viewport is truncated at 320 CSS px', async ({
+        pooled,
+      }) => {
+        const { page } = pooled;
+        await renderFixture(page, ROUTE);
+        if (await truncated(page, 1)) {
+          throw new Error('ChipA11yLongLabel no longer fits at the default viewport');
+        }
+        await page.setViewportSize({ width: 320, height: 512 });
+        try {
+          await renderFixture(page, ROUTE);
+          if (!(await truncated(page, 1))) {
+            throw new Error('Chip label no longer truncates at 320 CSS px; the gap may be fixed');
+          }
+        } finally {
+          await page.setViewportSize(DEFAULT_VIEWPORT);
+        }
+      });
+    });
+
     describe('Avatar', () => {
       // Deterministic clip check for 1.4.12 Text Spacing, which axe cannot cover.
       // Renders `LetterAvatars` and targets the two-character ("OP") avatar,
@@ -718,6 +781,7 @@ function registerFocusVisibleSuites({ test, renderFixture, routes }) {
     { component: 'Button (outlined)', route: RING_ROUTE, selector: '.MuiButton-outlined' },
     { component: 'Button (contained)', route: RING_ROUTE, selector: '.MuiButton-contained' },
     { component: 'Checkbox', route: RING_ROUTE, selector: '.MuiCheckbox-root' },
+    { component: 'Chip', route: RING_ROUTE, selector: '.MuiChip-clickable' },
     { component: 'Radio', route: RING_ROUTE, selector: '.MuiRadio-root' },
     { component: 'Switch', route: RING_ROUTE, selector: '.MuiSwitch-root' },
     { component: 'ToggleButton', route: RING_ROUTE, selector: '.MuiToggleButton-root' },

@@ -1,21 +1,21 @@
 {
   "standard": "WCAG 2.2 Level A and AA",
-  "componentCount": 13,
+  "componentCount": 14,
   "totals": {
     "rated": 32,
-    "supports": 27,
-    "partiallySupports": 5,
+    "supports": 21,
+    "partiallySupports": 11,
     "doesNotSupport": 0,
-    "flagged": 13
+    "flagged": 16
   },
   "criteria": [
     {
       "number": "1.1.1",
       "name": "Non-text Content",
       "level": "A",
-      "conformance": "Supports",
-      "flagged": false,
-      "affected": []
+      "conformance": "Partially Supports",
+      "flagged": true,
+      "affected": ["Chip"]
     },
     {
       "number": "1.3.1",
@@ -63,7 +63,7 @@
       "level": "AA",
       "conformance": "Partially Supports",
       "flagged": true,
-      "affected": ["Avatar", "Button", "TextField", "ToggleButton"]
+      "affected": ["Avatar", "Button", "Chip", "TextField", "ToggleButton"]
     },
     {
       "number": "1.4.4",
@@ -85,9 +85,9 @@
       "number": "1.4.10",
       "name": "Reflow",
       "level": "AA",
-      "conformance": "Supports",
+      "conformance": "Partially Supports",
       "flagged": false,
-      "affected": []
+      "affected": ["Chip"]
     },
     {
       "number": "1.4.11",
@@ -100,6 +100,7 @@
         "Avatar",
         "Button",
         "Checkbox",
+        "Chip",
         "CircularProgress",
         "LinearProgress",
         "Radio",
@@ -112,9 +113,9 @@
       "number": "1.4.12",
       "name": "Text Spacing",
       "level": "AA",
-      "conformance": "Supports",
+      "conformance": "Partially Supports",
       "flagged": false,
-      "affected": []
+      "affected": ["Chip"]
     },
     {
       "number": "2.1.1",
@@ -152,9 +153,9 @@
       "number": "2.4.3",
       "name": "Focus Order",
       "level": "A",
-      "conformance": "Supports",
-      "flagged": false,
-      "affected": []
+      "conformance": "Partially Supports",
+      "flagged": true,
+      "affected": ["Chip"]
     },
     {
       "number": "2.4.4",
@@ -208,9 +209,9 @@
       "number": "2.5.8",
       "name": "Target Size (Minimum)",
       "level": "AA",
-      "conformance": "Supports",
-      "flagged": false,
-      "affected": []
+      "conformance": "Partially Supports",
+      "flagged": true,
+      "affected": ["Chip"]
     },
     {
       "number": "3.2.1",
@@ -264,9 +265,9 @@
       "number": "4.1.2",
       "name": "Name, Role, Value",
       "level": "A",
-      "conformance": "Supports",
+      "conformance": "Partially Supports",
       "flagged": false,
-      "affected": []
+      "affected": ["Chip"]
     },
     {
       "number": "4.1.3",
@@ -1397,6 +1398,287 @@
         "doesNotSupport": 0,
         "verified": 22,
         "automated": 11
+      }
+    },
+    {
+      "component": "Chip",
+      "counts": {
+        "supports": 16,
+        "partiallySupports": 8,
+        "doesNotSupport": 0,
+        "notApplicable": 31,
+        "flagged": 9,
+        "rated": 24
+      },
+      "gaps": [
+        {
+          "number": "1.1.1",
+          "name": "Non-text Content",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "1.4.10",
+          "name": "Reflow",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "1.4.11",
+          "name": "Non-text Contrast",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "1.4.12",
+          "name": "Text Spacing",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "2.4.3",
+          "name": "Focus Order",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "2.5.8",
+          "name": "Target Size (Minimum)",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "4.1.2",
+          "name": "Name, Role, Value",
+          "conformance": "Partially Supports"
+        }
+      ],
+      "criteria": [
+        {
+          "number": "1.1.1",
+          "name": "Non-text Content",
+          "level": "A",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.3.2",
+          "name": "Meaningful Sequence",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "1.3.3",
+          "name": "Sensory Characteristics",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "1.4.1",
+          "name": "Use of Color",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.4.4",
+          "name": "Resize Text",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.4.5",
+          "name": "Images of Text",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": false
+        },
+        {
+          "number": "1.4.10",
+          "name": "Reflow",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.4.11",
+          "name": "Non-text Contrast",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "1.4.12",
+          "name": "Text Spacing",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "2.1.1",
+          "name": "Keyboard",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "2.1.2",
+          "name": "No Keyboard Trap",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Component",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.4.3",
+          "name": "Focus Order",
+          "level": "A",
+          "conformance": "Partially Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "2.4.4",
+          "name": "Link Purpose (In Context)",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "2.4.6",
+          "name": "Headings and Labels",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "2.4.7",
+          "name": "Focus Visible",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "2.4.11",
+          "name": "Focus Not Obscured (Minimum)",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "2.5.2",
+          "name": "Pointer Cancellation",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Component",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.5.3",
+          "name": "Label in Name",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.5.8",
+          "name": "Target Size (Minimum)",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": true
+        },
+        {
+          "number": "3.2.1",
+          "name": "On Focus",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Component",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "3.2.4",
+          "name": "Consistent Identification",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "4.1.2",
+          "name": "Name, Role, Value",
+          "level": "A",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Hybrid",
+          "flagged": false
+        }
+      ],
+      "summary": {
+        "rated": 24,
+        "levelA": 13,
+        "levelAA": 11,
+        "supports": 16,
+        "partiallySupports": 8,
+        "doesNotSupport": 0,
+        "verified": 15,
+        "automated": 4
       }
     },
     {
