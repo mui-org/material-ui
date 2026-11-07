@@ -62,7 +62,7 @@
     "cross-env": "^10.1.0",
     "css-mediaquery": "^0.1.2",
     "dayjs": "^1.11.23",
-    "es-toolkit": "^1.52.0",
+    "es-toolkit": "^1.53.1",
     "feed": "^6.0.0",
     "fg-loadcss": "^3.1.0",
     "final-form": "^5.0.1",
