@@ -477,6 +477,13 @@ export interface Components<Theme = unknown> {
         variants?: ComponentsVariants<Theme>['MuiMenuList'] | undefined;
       }
     | undefined;
+  MuiMeter?:
+    | {
+        defaultProps?: ComponentsProps['MuiMeter'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiMeter'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiMeter'] | undefined;
+      }
+    | undefined;
   MuiMobileStepper?:
     | {
         defaultProps?: ComponentsProps['MuiMobileStepper'] | undefined;
@@ -537,6 +544,23 @@ export interface Components<Theme = unknown> {
         defaultProps?: ComponentsProps['MuiPopover'] | undefined;
         styleOverrides?: ComponentsOverrides<Theme>['MuiPopover'] | undefined;
         variants?: ComponentsVariants<Theme>['MuiPopover'] | undefined;
+      }
+    | undefined;
+  MuiPreviewCard?:
+    | {
+        defaultProps?: ComponentsProps['MuiPreviewCard'] | undefined;
+      }
+    | undefined;
+  MuiPreviewCardPopup?:
+    | {
+        defaultProps?: ComponentsProps['MuiPreviewCardPopup'] | undefined;
+        styleOverrides?: ComponentsOverrides<Theme>['MuiPreviewCardPopup'] | undefined;
+        variants?: ComponentsVariants<Theme>['MuiPreviewCardPopup'] | undefined;
+      }
+    | undefined;
+  MuiPreviewCardTrigger?:
+    | {
+        defaultProps?: ComponentsProps['MuiPreviewCardTrigger'] | undefined;
       }
     | undefined;
   MuiRadio?:

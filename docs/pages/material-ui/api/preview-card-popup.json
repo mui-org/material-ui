@@ -1,0 +1,124 @@
+{
+  "props": {
+    "align": {
+      "type": {
+        "name": "enum",
+        "description": "'center'<br>&#124;&nbsp;'end'<br>&#124;&nbsp;'start'"
+      },
+      "default": "'center'"
+    },
+    "alignOffset": {
+      "type": { "name": "union", "description": "func<br>&#124;&nbsp;number" },
+      "default": "0"
+    },
+    "anchor": {
+      "type": {
+        "name": "union",
+        "description": "(props, propName) => {\n  if (props[propName] == null) {\n    return new Error(`Prop '${propName}' is required but wasn't specified`);\n  }\n  if (typeof props[propName] !== 'object' || props[propName].nodeType !== 1) {\n    return new Error(`Expected prop '${propName}' to be of type Element`);\n  }\n  return null;\n}<br>&#124;&nbsp;func<br>&#124;&nbsp;{ current?: (props, propName) => {\n  if (props[propName] == null) {\n    return null;\n  }\n  if (typeof props[propName] !== 'object' || props[propName].nodeType !== 1) {\n    return new Error(`Expected prop '${propName}' to be of type Element`);\n  }\n  return null;\n} }<br>&#124;&nbsp;{ contextElement?: (props, propName) => {\n  if (props[propName] == null) {\n    return null;\n  }\n  if (typeof props[propName] !== 'object' || props[propName].nodeType !== 1) {\n    return new Error(`Expected prop '${propName}' to be of type Element`);\n  }\n  return null;\n}, getBoundingClientRect: func, getClientRects?: func }"
+      }
+    },
+    "children": { "type": { "name": "node" } },
+    "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
+    "collisionPadding": {
+      "type": {
+        "name": "union",
+        "description": "number<br>&#124;&nbsp;{ bottom?: number, left?: number, right?: number, top?: number }"
+      },
+      "default": "5"
+    },
+    "container": {
+      "type": {
+        "name": "union",
+        "description": "(props, propName) => {\n  if (props[propName] == null) {\n    return new Error(`Prop '${propName}' is required but wasn't specified`);\n  }\n  if (typeof props[propName] !== 'object' || props[propName].nodeType !== 1) {\n    return new Error(`Expected prop '${propName}' to be of type Element`);\n  }\n  return null;\n}<br>&#124;&nbsp;object<br>&#124;&nbsp;{ current?: (props, propName) => {\n  if (props[propName] == null) {\n    return new Error(`Prop '${propName}' is required but wasn't specified`);\n  }\n  if (typeof props[propName] !== 'object' || props[propName].nodeType !== 1) {\n    return new Error(`Expected prop '${propName}' to be of type Element`);\n  }\n  return null;\n}<br>&#124;&nbsp;object }"
+      }
+    },
+    "elevation": { "type": { "name": "number" }, "default": "8" },
+    "keepMounted": { "type": { "name": "bool" }, "default": "false" },
+    "render": { "type": { "name": "union", "description": "element<br>&#124;&nbsp;func" } },
+    "side": {
+      "type": {
+        "name": "enum",
+        "description": "'bottom'<br>&#124;&nbsp;'inline-end'<br>&#124;&nbsp;'inline-start'<br>&#124;&nbsp;'left'<br>&#124;&nbsp;'right'<br>&#124;&nbsp;'top'"
+      },
+      "default": "'bottom'"
+    },
+    "sideOffset": {
+      "type": { "name": "union", "description": "func<br>&#124;&nbsp;number" },
+      "default": "8"
+    },
+    "slotProps": {
+      "type": {
+        "name": "shape",
+        "description": "{ portal?: func<br>&#124;&nbsp;object, positioner?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object, transition?: func<br>&#124;&nbsp;object }"
+      },
+      "default": "{}"
+    },
+    "slots": {
+      "type": {
+        "name": "shape",
+        "description": "{ portal?: elementType, positioner?: elementType, root?: elementType, transition?: func }"
+      },
+      "default": "{}"
+    },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    },
+    "transitionDuration": {
+      "type": {
+        "name": "union",
+        "description": "'auto'<br>&#124;&nbsp;number<br>&#124;&nbsp;{ appear?: number, enter?: number, exit?: number }"
+      },
+      "default": "'auto'"
+    }
+  },
+  "name": "PreviewCardPopup",
+  "imports": [
+    "import PreviewCardPopup from '@mui/material/PreviewCardPopup';",
+    "import { PreviewCardPopup } from '@mui/material';"
+  ],
+  "slots": [
+    {
+      "name": "root",
+      "description": "The component that renders the popup surface.",
+      "default": "Paper",
+      "class": "MuiPreviewCardPopup-root"
+    },
+    {
+      "name": "portal",
+      "description": "The component that renders the portal element.",
+      "default": "'div'",
+      "class": "MuiPreviewCardPopup-portal"
+    },
+    {
+      "name": "positioner",
+      "description": "The component that positions the popup next to the trigger.",
+      "default": "'div'",
+      "class": "MuiPreviewCardPopup-positioner"
+    },
+    {
+      "name": "transition",
+      "description": "The component used for the transition.\nSet to `null` to render the popup without a Material UI transition.",
+      "default": "Grow",
+      "class": null
+    }
+  ],
+  "classes": [
+    {
+      "key": "open",
+      "className": "Mui-open",
+      "description": "Styles applied to the root element when the popup is open.",
+      "isGlobal": true
+    }
+  ],
+  "spread": true,
+  "themeDefaultProps": true,
+  "muiName": "MuiPreviewCardPopup",
+  "forwardsRefTo": "HTMLDivElement",
+  "filename": "/packages/mui-material/src/PreviewCardPopup/PreviewCardPopup.tsx",
+  "inheritance": { "component": "Paper", "pathname": "/material-ui/api/paper/" },
+  "demos": "<ul><li><a href=\"/material-ui/react-preview-card/\">Preview Card</a></li></ul>"
+}

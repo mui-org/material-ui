@@ -64,6 +64,7 @@ const pages: MuiPage[] = [
           { pathname: '/material-ui/material-icons', title: 'Material Icons' },
           { pathname: '/material-ui/react-list' },
           { pathname: '/material-ui/react-table' },
+          { pathname: '/material-ui/react-preview-card', title: 'Preview Card', newFeature: true },
           { pathname: '/material-ui/react-tooltip' },
           { pathname: '/material-ui/react-typography' },
         ],
@@ -74,6 +75,7 @@ const pages: MuiPage[] = [
         children: [
           { pathname: '/material-ui/react-alert' },
           { pathname: '/material-ui/react-dialog' },
+          { pathname: '/material-ui/react-meter', newFeature: true },
           { pathname: '/material-ui/react-progress' },
           { pathname: '/material-ui/react-skeleton' },
           { pathname: '/material-ui/react-snackbar' },

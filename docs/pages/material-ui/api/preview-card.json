@@ -1,0 +1,27 @@
+{
+  "props": {
+    "actionsRef": {
+      "type": { "name": "shape", "description": "{ current?: { close: func, unmount: func } }" }
+    },
+    "children": { "type": { "name": "union", "description": "node<br>&#124;&nbsp;func" } },
+    "defaultOpen": { "type": { "name": "bool" }, "default": "false" },
+    "defaultTriggerId": { "type": { "name": "string" } },
+    "handle": { "type": { "name": "object" } },
+    "onOpenChange": { "type": { "name": "func" } },
+    "onOpenChangeComplete": { "type": { "name": "func" } },
+    "open": { "type": { "name": "bool" } },
+    "triggerId": { "type": { "name": "string" } }
+  },
+  "name": "PreviewCard",
+  "imports": [
+    "import PreviewCard from '@mui/material/PreviewCard';",
+    "import { PreviewCard } from '@mui/material';"
+  ],
+  "classes": [],
+  "spread": true,
+  "themeDefaultProps": null,
+  "muiName": "MuiPreviewCard",
+  "filename": "/packages/mui-material/src/PreviewCard/PreviewCard.tsx",
+  "inheritance": null,
+  "demos": "<ul><li><a href=\"/material-ui/react-preview-card/\">Preview Card</a></li></ul>"
+}
