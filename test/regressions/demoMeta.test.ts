@@ -119,13 +119,25 @@ describe('getConfig', () => {
   });
 
   it('returns undefined for a demo outside a brace-glob enrolment', () => {
-    // Button a11y enrolment covers @mui/material/Button, not IconButton.
+    // The buttons enrolments cover Button and IconButton, not ButtonBase.
     expect(getConfig(A11Y_RULES, 'docs/data/material/components/buttons/DisabledButtons')).to.equal(
       undefined,
     );
-    expect(getConfig(A11Y_RULES, 'docs/data/material/components/buttons/IconButtons')).to.equal(
+    expect(getConfig(A11Y_RULES, 'docs/data/material/components/buttons/ButtonBaseDemo')).to.equal(
       undefined,
     );
+  });
+
+  it('asserts every rule on the enrolled IconButton demos and fixtures', () => {
+    expect(
+      getConfig(A11Y_RULES, 'docs/data/material/components/buttons/IconButtons'),
+    ).to.deep.include({ enabled: true, assertions: 'all' });
+    expect(
+      getConfig(A11Y_RULES, 'docs/data/material/components/buttons/LoadingIconButton'),
+    ).to.deep.include({ enabled: true, assertions: 'all' });
+    expect(
+      getConfig(A11Y_RULES, 'test/regressions/a11y/fixtures/buttons/IconButtonA11ySemanticStates'),
+    ).to.deep.include({ enabled: true, assertions: 'all' });
   });
 
   it('returns the radio a11y rule for a brace-glob enrolment', () => {

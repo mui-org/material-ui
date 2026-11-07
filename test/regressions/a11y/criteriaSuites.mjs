@@ -28,6 +28,8 @@ export const CSS_LAYOUT_SUITES = [
     // The spinner renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.
     skipCriteria: ['1.4.4', '1.4.12'],
   },
+  // The badge count is the only documented text inside an IconButton.
+  { component: 'IconButton', route: '/docs-components-buttons/IconButtonWithBadge' },
   {
     component: 'LinearProgress',
     route: '/docs-components-progress/LinearDeterminate',
@@ -63,6 +65,11 @@ export const FOCUS_VISIBLE_TARGETS = [
     component: 'Checkbox',
     route: '/docs-components-checkboxes/Checkboxes',
     selector: '.MuiCheckbox-root',
+  },
+  {
+    component: 'IconButton',
+    route: '/docs-components-buttons/IconButtons',
+    selector: '.MuiIconButton-root',
   },
   {
     component: 'Radio',

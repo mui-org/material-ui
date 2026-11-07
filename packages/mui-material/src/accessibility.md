@@ -186,9 +186,10 @@ Edit the JSON files, not this table.
 | [Accordion](./Accordion/accessibility.md)                 | 19          | 0                     | 0                   | 31                | 5           | 3/19       |
 | [AccordionSummary](./AccordionSummary/accessibility.md)   | 23          | 1                     | 0                   | 31                | —           | 3/24       |
 | [Avatar](./Avatar/accessibility.md)                       | 9           | 2                     | 0                   | 44                | —           | 5/11       |
-| [Button](./Button/accessibility.md)                       | 24          | 3                     | 0                   | 28                | —           | 7/27       |
+| [Button](./Button/accessibility.md)                       | 23          | 5                     | 0                   | 27                | —           | 9/28       |
 | [Checkbox](./Checkbox/accessibility.md)                   | 24          | 1                     | 0                   | 30                | —           | 3/25       |
 | [CircularProgress](./CircularProgress/accessibility.md)   | 8           | 3                     | 0                   | 44                | —           | 5/11       |
+| [IconButton](./IconButton/accessibility.md)               | 22          | 5                     | 0                   | 28                | —           | 9/27       |
 | [LinearProgress](./LinearProgress/accessibility.md)       | 8           | 3                     | 0                   | 44                | —           | 5/11       |
 | [Radio](./Radio/accessibility.md)                         | 24          | 1                     | 0                   | 30                | —           | 2/25       |
 | [RadioGroup](./RadioGroup/accessibility.md)               | 7           | 0                     | 0                   | 30                | 18          | 3/7        |

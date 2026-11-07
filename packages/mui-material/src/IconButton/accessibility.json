@@ -1,0 +1,43 @@
+{
+  "axe": "docs/data/material/components/buttons/buttons.a11y.json",
+  "axeDemos": [
+    "IconButtonA11yNonNative",
+    "IconButtonA11ySemanticStates",
+    "IconButtonColors",
+    "IconButtonSizes",
+    "IconButtonWithBadge",
+    "IconButtons",
+    "LoadingIconButton"
+  ],
+  "tests": ["ButtonBase"],
+  "criteria": {
+    "1.3.2": {
+      "flagged": true
+    },
+    "1.3.3": {
+      "flagged": true
+    },
+    "1.4.3": {
+      "conformance": "Partially Supports",
+      "responsibility": "Component"
+    },
+    "2.2.2": {},
+    "2.4.3": {
+      "conformance": "Partially Supports",
+      "group": "Hybrid",
+      "flagged": true
+    },
+    "2.4.4": {},
+    "2.4.11": {
+      "flagged": true
+    },
+    "2.5.8": {
+      "group": "Hybrid"
+    },
+    "3.2.4": {
+      "flagged": true
+    },
+    "4.1.3": {}
+  },
+  "notApplicable": ["3.3.2"]
+}

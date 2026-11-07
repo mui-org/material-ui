@@ -718,6 +718,7 @@ function registerFocusVisibleSuites({ test, renderFixture, routes }) {
     { component: 'Button (outlined)', route: RING_ROUTE, selector: '.MuiButton-outlined' },
     { component: 'Button (contained)', route: RING_ROUTE, selector: '.MuiButton-contained' },
     { component: 'Checkbox', route: RING_ROUTE, selector: '.MuiCheckbox-root' },
+    { component: 'IconButton', route: RING_ROUTE, selector: '.MuiIconButton-root' },
     { component: 'Radio', route: RING_ROUTE, selector: '.MuiRadio-root' },
     { component: 'Switch', route: RING_ROUTE, selector: '.MuiSwitch-root' },
     { component: 'ToggleButton', route: RING_ROUTE, selector: '.MuiToggleButton-root' },

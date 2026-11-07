@@ -455,6 +455,290 @@
       }
     }
   },
+  "IconButtonA11yNonNative": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-command-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-deprecated-role": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-required-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-roles": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
+      }
+    }
+  },
+  "IconButtonA11ySemanticStates": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-deprecated-role": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-progressbar-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-required-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-roles": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "button-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "duplicate-id-aria": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "link-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
+      }
+    }
+  },
+  "IconButtonColors": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "button-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
+      }
+    }
+  },
+  "IconButtons": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "button-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
+      }
+    }
+  },
+  "IconButtonSizes": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "button-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
+      }
+    }
+  },
+  "IconButtonWithBadge": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "button-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "color-contrast": {
+        "status": "pass",
+        "tags": ["wcag2aa"]
+      },
+      "label-content-name-mismatch": {
+        "status": "pass",
+        "tags": ["wcag21a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
+      }
+    }
+  },
   "IconLabelButtons": {
     "rules": {
       "aria-allowed-attr": {
@@ -600,6 +884,46 @@
       "nested-interactive": {
         "status": "pass",
         "tags": ["wcag2a"]
+      }
+    }
+  },
+  "LoadingIconButton": {
+    "rules": {
+      "aria-allowed-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-conditional-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-hidden-focus": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-prohibited-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "aria-valid-attr-value": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "button-name": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "nested-interactive": {
+        "status": "pass",
+        "tags": ["wcag2a"]
+      },
+      "target-size": {
+        "status": "pass",
+        "tags": ["wcag22aa"]
       }
     }
   },
