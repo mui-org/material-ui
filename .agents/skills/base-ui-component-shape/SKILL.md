@@ -9,7 +9,7 @@ disable-model-invocation: true
 Before anyone builds a component on Base UI, the team decides its **shape**: which pieces end users write in their code.
 At one end, one closed component wraps every Base UI part and exposes props.
 At the other end, every Base UI part is its own public part.
-Material UI usually sits between them: `Menu2Popup` merges Base UI's Portal, Positioner, and Popup into one part, because users rarely customize them alone.
+Material UI usually sits between them: the Menu v2 work ([#48823](https://github.com/mui/material-ui/pull/48823)) merges Base UI's Portal, Positioner, and Popup into one `Menu2Popup` part, because users rarely customize them alone.
 
 This skill does not pick the shape. It shows the team three options side by side, as the code end users write and as screenshots of what that code renders, so the team can decide.
 `base-ui-component-build` then builds the approved shape; its conventions (`render`, `Pick`, `slots`) are the same for every shape.
@@ -26,7 +26,9 @@ Read the Base UI docs and types for the component in `docs/node_modules/@base-ui
 Find the closest existing Material UI component (`Menu` for a menubar, `Tooltip` for a preview card).
 Search `mui/base-ui` issues and discussions with `gh` for each part: does anyone ask to customize, move, or replace it on its own?
 
-Done when a table lists every export of the Base UI component, each with its customization evidence (issue links, or "none found") and the matching piece of the closest Material UI component, if any.
+List the parts from the "Anatomy" section of the Base UI docs, not only the package export. Some components reuse another component's parts: a Base UI menubar is built from `Menu` parts.
+
+Done when a table lists every part in the Anatomy section plus helpers such as `createHandle`, each with its customization evidence (issue links, or "none found") and the matching piece of the closest Material UI component, if any.
 
 ### 2. Scenarios
 

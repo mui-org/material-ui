@@ -31,21 +31,25 @@ Write `.shape/<kebab-name>/<kebab-name>-shape.md`. The team reads it to choose a
 | ![](screenshots/<scenario>/closed-open.png) | ![](screenshots/<scenario>/balanced-open.png) | ![](screenshots/<scenario>/open-open.png) |
 
 <details>
-<summary>Code</summary>
-
-Closed:
+<summary>Closed code</summary>
 
 ```tsx
 <contents of scenarios/<scenario>/closed.tsx>
 ```
 
-Balanced:
+</details>
+
+<details>
+<summary>Balanced code</summary>
 
 ```tsx
 <…>
 ```
 
-Open:
+</details>
+
+<details>
+<summary>Open code</summary>
 
 ```tsx
 <…>
@@ -69,6 +73,10 @@ Open:
 ## Findings
 
 <Failures from step 4 and their cause, per option.>
+
+## Inventory
+
+<The step 1 table: every Base UI part, its customization evidence, and the matching piece of the closest Material UI component.>
 
 ## Open questions
 

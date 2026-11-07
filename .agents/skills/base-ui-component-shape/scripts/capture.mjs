@@ -9,17 +9,21 @@ const { values } = parseArgs({
     out: { type: 'string' },
     states: { type: 'string', default: 'default,open,dark,brand' },
     url: { type: 'string', default: 'http://localhost:5001' },
+    match: { type: 'string', default: '' },
   },
 });
 
 if (!values.suite || !values.out) {
-  throw new Error('Usage: capture.mjs --suite <Suite> --out <dir> [--states a,b] [--url <base>]');
+  throw new Error(
+    'Usage: capture.mjs --suite <Suite> --out <dir> [--states a,b] [--match <regexp>] [--url <base>]',
+  );
 }
 
 const fixtureDir = path.resolve('test/regressions/fixtures', values.suite);
 const fixtures = (await fs.readdir(fixtureDir))
   .filter((file) => /\.(js|tsx?)$/.test(file))
-  .map((file) => file.replace(/\.\w+$/, ''));
+  .map((file) => file.replace(/\.\w+$/, ''))
+  .filter((fixture) => new RegExp(values.match).test(fixture));
 const states = values.states.split(',');
 
 const browser = await chromium.launch();

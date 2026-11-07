@@ -4,8 +4,10 @@ Every option renders the same scenarios. Three categories must be present; the a
 
 ## 1. Basics
 
-Take the basics from Base UI's own examples for the component: every demo in `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` becomes one scenario, rewritten with Material UI parts.
+Take the basics from Base UI's own examples for the component: every demo in `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` becomes one scenario, rewritten with Material UI parts. The same demo shown in several styling variants (Tailwind, CSS Modules) counts once.
 They show that each option covers what Base UI supports out of the box.
+
+When the Base UI page has few demos, add the demos of the closest Material UI docs page (for a menubar, the menubar recipe and the `Menu` page), so the basics cover every kind of item the component supports.
 
 ## 2. Theming
 
@@ -28,14 +30,14 @@ Each brief uses this template, with `<pattern>` replaced by a plain description 
 ```text
 Research how <pattern> is used in real products. Read-only: browse and search, never post or sign in.
 Angle: <angle>
-Return 5 to 8 scenarios. For each: one sentence describing the UI, the source URL, what renders inside it (text, icons, forms, other components), what opens or triggers it, and any custom element the product uses (its own button, a router link, an avatar). Mark anything you could not confirm.
+Return 5 to 8 scenarios. For each: one sentence describing the UI, the source URL, what renders inside it (text, icons, forms, other components), what opens or triggers it, and any custom element the product uses (its own button, a router link, an avatar). Open every source URL you cite and confirm the scenario on that page; a search result snippet is not a source. Leave out any scenario you could not confirm.
 ```
 
 Angles, one agent each:
 
 1. Product UIs: GitHub, Linear, Notion, Figma, Gmail, Slack, VS Code, Google Docs.
 2. Design system docs: Material Design 3, Atlassian, Carbon, Fluent, Polaris, Primer, Radix Themes, shadcn/ui.
-3. User questions: `mui/material-ui` and `mui/base-ui` issues and discussions (with `gh`), and Stack Overflow, about building this UI with the closest existing component.
+3. User questions: `mui/material-ui` and `mui/base-ui` issues (with `gh search issues`), their GitHub discussions (with a web search limited to `github.com/mui/<repo>/discussions`), and Stack Overflow, about building this UI with the closest existing component.
 4. This repo: the templates in `docs/data/material/getting-started/templates/` and the docs demos that use the closest existing component.
 
 From the results, pick at least four composition scenarios:

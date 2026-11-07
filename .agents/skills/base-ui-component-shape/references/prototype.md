@@ -19,7 +19,14 @@ Everything lives in a scratch folder at the repository root that is never commit
   <kebab-name>-shape.md     the RFC
 ```
 
-Keep it out of git without touching `.gitignore`: add `.shape/` to the file that `git rev-parse --git-path info/exclude` prints. In a git worktree, `.git` is a file, so `.git/info/exclude` does not exist there.
+Keep it out of git without touching `.gitignore`: add `.shape/` to the file that `git rev-parse --git-path info/exclude` prints. In a git worktree, that file belongs to the main repository and applies to every worktree.
+
+`@base-ui/react` is installed only under `docs/node_modules`, so files in `.shape/` cannot resolve it. Link it once:
+
+```bash
+mkdir -p .shape/node_modules/@base-ui
+ln -s ../../../docs/node_modules/@base-ui/react .shape/node_modules/@base-ui/react
+```
 
 ## Options
 
@@ -28,6 +35,9 @@ Write each option file as the public API of that option and nothing more:
 - Each public part is a function component that renders a Base UI part with Material UI styles through Base UI `render`, as `docs/data/material/components/menubar/demos/Menubar.tsx` does.
 - A part that merges several Base UI parts renders them all and takes `slots` and `slotProps` for the inner ones.
 - Style each part with `styled(…, { name: 'Mui<Name><Part>', slot: 'root' })`, so `styleOverrides` in a theme reach it at runtime. Use the same part names across options where the part is the same.
+- Read props through `useDefaultProps({ props, name: 'Mui<Name><Part>' })` from `@mui/material/DefaultPropsProvider`, so theme `defaultProps` work too.
+- A styled part that accepts a user's `render` keeps its styles on the user's element, the way the build skill does it: see "Public `render`" in `.agents/skills/base-ui-component-build/references/adapter.md`. A prototype that lets the user's element replace the styled one makes that option look worse for a reason the real component would not have.
+- Give a portaled popup the `zIndex` of the closest Material component (`zIndex.modal` for click-opened, `zIndex.tooltip` for hover-opened), so it renders above a `Dialog`.
 - Count the lines each option file needs; step 5 reports them.
 
 ## Scenarios
@@ -60,6 +70,8 @@ export default function Example({ defaultOpen }: { defaultOpen?: boolean }) {
 
 Every scenario accepts `defaultOpen` (or the component's equivalent) so the capture can show its open state. Write the same scenario for every option; a scenario that an option cannot express is a finding for step 5.
 
+A state deeper than open, such as an open submenu, is its own scenario: set `defaultOpen` on the inner part too.
+
 ## Frame
 
 `frame.tsx` reads the capture state from the URL and wraps the scenario:
@@ -80,14 +92,17 @@ const themes = {
 
 type CaptureState = keyof typeof themes;
 
-export default function Frame(props: { children: (open: boolean) => React.ReactNode }) {
+export default function Frame(props: {
+  children: (open: boolean) => React.ReactNode;
+  fullPage?: boolean;
+}) {
   const param = new URLSearchParams(window.location.search).get('state');
   const state: CaptureState = param && param in themes ? (param as CaptureState) : 'default';
   return (
     <ThemeProvider theme={themes[state]}>
       <CssBaseline />
       <Box
-        data-testid="screenshot-target"
+        data-testid={props.fullPage ? undefined : 'screenshot-target'}
         sx={{ p: 4, width: 720, height: 480, bgcolor: 'background.default' }}
       >
         {props.children(state !== 'default')}
@@ -97,7 +112,9 @@ export default function Frame(props: { children: (open: boolean) => React.ReactN
 }
 ```
 
-The four capture states are `default`, `open`, `dark` (open, dark mode), and `brand` (open, the brand theme). The theming scenarios set their own theme inside the scenario instead, so the opposite design theme stays visible in every state.
+The four capture states are `default`, `open`, `dark` (open, dark mode), and `brand` (open, the brand theme). The theming scenarios set their own theme inside the scenario, so capture them in the `open` state only; their other states repeat it.
+
+A scenario that opens a modal (a `Dialog`) centers it in the page, outside the frame. Its fixture renders `<Frame fullPage>`, and the capture script then screenshots the whole page.
 
 ## Render and capture
 
@@ -116,12 +133,12 @@ The four capture states are `default`, `open`, `dark` (open, dark mode), and `br
    - Use the build, not `pnpm test:regressions:dev`. The dev server's dependency pre-bundling fails on `sinon`, which `test/regressions/syncDataGridGenerator.ts` imports.
    - If port 5001 is taken, serve on another port with `pnpm exec vite preview test/regressions --port <port> --strictPort`, and pass `--url http://localhost:<port>` to the capture script.
    - Rebuild after every change to a prototype or scenario; the server serves the last build.
-3. Capture every fixture in every state:
+   - The first capture after a build can fail while the browser loads; run it again before reading the result.
+3. Capture the fixtures. The script writes `<out>/<scenario>/<option>-<state>.png`. Capture the theming scenarios separately in the `open` state, and the others in every state:
 
    ```bash
-   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots
+   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match '^theme-' --states open
+   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match '^(?!theme-)'
    ```
-
-   The script writes `<out>/<scenario>/<option>-<state>.png`. Add `--states default,open` to capture fewer states.
 
 4. Stop the server and delete `test/regressions/fixtures/<Suite>/`. The fixtures must never reach a commit: regression CI screenshots every fixture.
