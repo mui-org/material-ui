@@ -616,7 +616,7 @@ function registerCssLayoutSuites({ test, renderFixture, routes }) {
     '* { line-height: 1.5 !important; letter-spacing: 0.12em !important;' +
     ' word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; }';
 
-  CSS_LAYOUT_SUITES.forEach(({ component, route, skipCriteria = [] }) => {
+  CSS_LAYOUT_SUITES.forEach(({ component, route, skipCriteria = [], textOnlyResize = true }) => {
     // A slug only enters the demo bundle once its component is enrolled, so skip
     // entries this build doesn't contain rather than waiting for a fixture that
     // was never bundled.
@@ -649,8 +649,37 @@ function registerCssLayoutSuites({ test, renderFixture, routes }) {
         },
       );
 
+      // 200% page zoom halves the CSS viewport. It decides the 1.4.4 rating
+      // (WCAG technique G142). The text-only check below is stricter.
       test.runIf(covers('1.4.4'))(
-        '1.4.4 Resize Text: content survives a 200% text size',
+        '1.4.4 Resize Text: content survives 200% page zoom',
+        async ({ pooled }) => {
+          const { page } = pooled;
+          await page.setViewportSize({
+            width: DEFAULT_VIEWPORT.width / 2,
+            height: DEFAULT_VIEWPORT.height / 2,
+          });
+          try {
+            await renderFixture(page, route);
+            const { horizontalOverflow, clipped } = await measureOverflow(page, '');
+            if (horizontalOverflow > 1) {
+              throw new Error(
+                `${component} overflows horizontally by ${horizontalOverflow}px at 200% page zoom`,
+              );
+            }
+            if (clipped.length > 0) {
+              throw new Error(
+                `${component} clips its own content at 200% page zoom: ${clipped.join(', ')}`,
+              );
+            }
+          } finally {
+            await page.setViewportSize(DEFAULT_VIEWPORT);
+          }
+        },
+      );
+
+      test.runIf(covers('1.4.4') && textOnlyResize)(
+        '1.4.4 Resize Text: content survives a 200% text-only resize',
         async ({ pooled }) => {
           const { page } = pooled;
           await renderFixture(page, route);
@@ -717,6 +746,7 @@ function registerFocusVisibleSuites({ test, renderFixture, routes }) {
     { component: 'Button (text)', route: RING_ROUTE, selector: '.MuiButton-text' },
     { component: 'Button (outlined)', route: RING_ROUTE, selector: '.MuiButton-outlined' },
     { component: 'Button (contained)', route: RING_ROUTE, selector: '.MuiButton-contained' },
+    { component: 'Fab', route: RING_ROUTE, selector: '.MuiFab-root' },
     { component: 'Checkbox', route: RING_ROUTE, selector: '.MuiCheckbox-root' },
     { component: 'Radio', route: RING_ROUTE, selector: '.MuiRadio-root' },
     { component: 'Switch', route: RING_ROUTE, selector: '.MuiSwitch-root' },

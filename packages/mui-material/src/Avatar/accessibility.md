@@ -10,7 +10,7 @@ Rated against WCAG 2.2 Level A and AA. See the [reports legend](../accessibility
 | ⚠️ Partially Supports | 2     |
 | ❌ Does Not Support   | 0     |
 | ➖ Not Applicable     | 44    |
-| 🚩 Flagged            | 5/11  |
+| 🚩 Flagged            | 4/11  |
 
 ## Known gaps
 
@@ -126,23 +126,6 @@ Tested by: axe-core `color-contrast` ❌
 
 **Pass:** <!-- 1.4.3:pass:start -->all letter and fallback text meets `4.5:1` (or `3:1` if it's sized to qualify as large text). The default gray letter avatar, the `deepOrange[500]` example, and arbitrary `stringToColor` backgrounds do not meet this without author color overrides.<!-- 1.4.3:pass:end -->
 
-#### 1.4.4 Resize Text · AA
-
-`🚩` · `✅ Supports` · `● Component`
-
-<!-- 1.4.4:start -->
-
-- The container is a fixed 40px square with text in rem (`pxToRem(20)`) and `overflow: hidden`. Under full-page browser zoom (the default scaling mechanism), the box and the text scale together, so initials stay fully visible.
-
-**Manual testing steps**
-
-1. In a UI with letter avatars, set browser zoom to 200% (<kbd>Ctrl</kbd> or <kbd>Cmd</kbd> and <kbd>+</kbd>) and confirm the box and initials scale together with nothing clipped.
-2. Optional: compare against text-only resize (Firefox "Zoom Text Only") to see the px box not scaling; long initials there are an author concern.
-
-<!-- 1.4.4:end -->
-
-**Pass:** <!-- 1.4.4:pass:start -->initials and fallback text stay fully visible at 200% page zoom. The container scales with the page.<!-- 1.4.4:pass:end -->
-
 #### 1.4.5 Images of Text · AA
 
 `✅ Supports` · `◐ Shared`
@@ -208,6 +191,21 @@ Tested by: unit `Avatar.test.js`
 **Pass:** <!-- 1.3.1:pass:start -->the image-to-name relationship is programmatically available via native `img` and `alt`.<!-- 1.3.1:pass:end -->
 
 ### ⚙️ Automated
+
+#### 1.4.4 Resize Text · AA
+
+`✅ Supports` · `● Component`
+
+Tested by: Playwright
+
+<!-- 1.4.4:start -->
+
+- The container is a fixed 40px square with text in rem (`pxToRem(20)`) and `overflow: hidden`. Under 200% page zoom, the box and the text scale together, so initials stay fully visible. A Playwright test confirms this on the letter avatars demo. Page zoom decides the 1.4.4 rating (WCAG technique G142).
+- Under text-only resize (for example Firefox "Zoom Text Only"), the text grows but the px box does not. Initials longer than two letters can then be clipped. The layout suite does not run the text-only check for Avatar.
+
+<!-- 1.4.4:end -->
+
+**Pass:** <!-- 1.4.4:pass:start -->initials and fallback text stay fully visible at 200% page zoom. The container scales with the page.<!-- 1.4.4:pass:end -->
 
 #### 1.4.10 Reflow · AA
 

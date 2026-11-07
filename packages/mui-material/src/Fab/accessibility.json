@@ -1,0 +1,15 @@
+{
+  "axe": "docs/data/material/components/floating-action-button/floating-action-button.a11y.json",
+  "tests": ["ButtonBase"],
+  "criteria": {
+    "1.3.2": { "flagged": true },
+    "1.3.3": { "flagged": true },
+    "1.4.3": { "responsibility": "Component" },
+    "1.4.10": { "conformance": "Partially Supports", "group": "Hybrid" },
+    "1.4.12": { "conformance": "Partially Supports", "group": "Hybrid" },
+    "2.4.4": {},
+    "2.4.11": { "flagged": true },
+    "3.2.4": { "flagged": true }
+  },
+  "notApplicable": ["3.3.2"]
+}

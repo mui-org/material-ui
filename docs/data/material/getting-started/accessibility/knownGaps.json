@@ -1,8 +1,16 @@
 [
   {
-    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, with untested contrast",
+    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, and its contrast can fall below 3:1",
     "criteria": ["1.4.11"],
-    "affected": ["AccordionSummary", "Button", "Checkbox", "Radio", "Switch", "ToggleButton"],
+    "affected": [
+      "AccordionSummary",
+      "Button",
+      "Checkbox",
+      { "component": "Fab", "note": "the ring needs `disableFocusRipple`" },
+      "Radio",
+      "Switch",
+      "ToggleButton"
+    ],
     "workaround": "Enable `focusVisible` in your theme — see below"
   },
   {
@@ -12,6 +20,10 @@
       "Avatar",
       "Button",
       { "component": "CircularProgress", "note": "`warning` with `enableTrackSlot`" },
+      {
+        "component": "Fab",
+        "note": "`info`, `warning`; label on the focus ripple: use `disableFocusRipple` with the ring"
+      },
       "LinearProgress",
       "Switch",
       "TextField",
@@ -24,6 +36,12 @@
     "criteria": ["1.4.1"],
     "affected": [{ "component": "ToggleButton", "note": "`primary`, `error`, `info`, `success`" }],
     "workaround": "Add a non-color cue to the selected state, such as an icon"
+  },
+  {
+    "gap": "The extended Fab has a fixed height, so a label that wraps spills out of it",
+    "criteria": ["1.4.10", "1.4.12"],
+    "affected": [{ "component": "Fab", "note": "`extended`" }],
+    "workaround": "Keep labels short, or set `height: 'auto'`, `minHeight: 48`, and vertical padding with `sx`"
   },
   {
     "gap": "Dynamic state changes are not announced",

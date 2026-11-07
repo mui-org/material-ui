@@ -136,6 +136,9 @@ export const WCAG_MINIMUM_RATIO = {
   largeText: 3,
 } as const;
 
+/** The 1.4.11 Non-text Contrast threshold for graphical objects and component boundaries. */
+export const WCAG_NON_TEXT_RATIO = 3;
+
 /** CSS keywords `fontWeight` accepts that map to a fixed numeric weight. */
 const ABSOLUTE_FONT_WEIGHTS: Record<string, number> = { normal: 400, bold: 700 };
 

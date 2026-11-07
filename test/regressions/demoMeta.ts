@@ -176,6 +176,10 @@ export const SCREENSHOT_RULES: ScreenshotRule[] = [
   { test: 'test/regressions/a11y/fixtures/buttons/ButtonA11yTextSpacing', enabled: true }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
   { test: 'test/regressions/a11y/fixtures/accordion/AccordionA11yTextSpacing', enabled: true }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
   {
+    test: 'test/regressions/a11y/fixtures/floating-action-button/FabA11yLongLabel',
+    enabled: true,
+  }, // Fab labels fit at default, then wrap under text spacing and 200% text (1.4.4, 1.4.10, 1.4.12)
+  {
     test: 'test/regressions/a11y/fixtures/toggle-button/ToggleButtonA11yTextSpacing',
     enabled: true,
   }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
@@ -238,6 +242,14 @@ const BUTTON_A11Y_DEMOS = [
   'InputFileUpload',
   'LoadingButtons',
   'CustomizedButtons',
+];
+
+// Fab docs demos enrolled for axe assertions. FloatingActionButtonZoom is excluded:
+// most of its content is a Tabs component.
+const FAB_A11Y_DEMOS = [
+  'FloatingActionButtons',
+  'FloatingActionButtonExtendedSize',
+  'FloatingActionButtonSize',
 ];
 
 // Radio docs demos enrolled for axe assertions. FormControlLabelPlacement is left out: its axe
@@ -367,6 +379,40 @@ export const A11Y_RULES: A11yRule[] = [
   // failing set drifts.
   {
     test: 'test/regressions/a11y/fixtures/buttons/ButtonA11yColorMatrix',
+    enabled: true,
+    assertions: 'all',
+    skipAssertions: ['color-contrast'],
+  },
+  {
+    test: `docs/data/material/components/floating-action-button/{${FAB_A11Y_DEMOS.join(',')}}`,
+    enabled: true,
+    assertions: 'all',
+  },
+  // A11y-only fixtures live under `test/regressions/a11y/fixtures/floating-action-button/`
+  // (no docs page consumes them); the suite name maps their results into the
+  // same `floating-action-button.a11y.json` as the docs demos above.
+  {
+    test: 'test/regressions/a11y/fixtures/floating-action-button/FabA11ySemanticStates',
+    enabled: true,
+    assertions: 'all',
+  },
+  // Under text spacing and 200% text, the labels spill out of the fixed-height
+  // extended Fab, the documented 1.4.4/1.4.10/1.4.12 gap. axe cannot resolve the
+  // background of the spilled text, so `color-contrast` is recorded as incomplete
+  // without failing CI.
+  {
+    test: 'test/regressions/a11y/fixtures/floating-action-button/FabA11yLongLabel',
+    enabled: true,
+    assertions: 'all',
+    skipAssertions: ['color-contrast'],
+  },
+  // `color-contrast` is a documented gap, not a regression: an extended Fab
+  // renders `contrastText` on `main`, like a contained Button, so `info` and
+  // `warning` labels fall short of 4.5:1. The failure is recorded in
+  // `floating-action-button.a11y.json` and documented in
+  // `packages/mui-material/src/Fab/accessibility.md` § 1.4.3.
+  {
+    test: 'test/regressions/a11y/fixtures/floating-action-button/FabA11yColorMatrix',
     enabled: true,
     assertions: 'all',
     skipAssertions: ['color-contrast'],

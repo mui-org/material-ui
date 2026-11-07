@@ -18,14 +18,14 @@ the component (○ Author).
 
 Run the rows matching what you touched, for the component you touched.
 
-| If your change touches…              | Re-check                                                                                                                        |
-| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
-| Styling, theme, or palette           | 1.4.1 Use of Color; 1.4.3 Contrast (Minimum); 1.4.4 Resize Text; 1.4.5 Images of Text; 1.4.11 Non-text Contrast                 |
-| DOM structure, roles, or ARIA        | 1.1.1 Non-text Content; 1.3.1 Info and Relationships; 1.3.2 Meaningful Sequence; 4.1.2 Name, Role, Value; 4.1.3 Status Messages |
-| Keyboard, focus, or pointer handling | 2.4.4 Link Purpose (In Context); 2.4.6 Headings and Labels; 2.4.7 Focus Visible                                                 |
-| Labels, errors, or validation        | 3.3.2 Labels or Instructions                                                                                                    |
-| Motion or timing                     | 2.2.2 Pause, Stop, Hide                                                                                                         |
-| Other                                | 2.3.1 Three Flashes or Below Threshold                                                                                          |
+| If your change touches…              | Re-check                                                                                                                         |
+| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| Styling, theme, or palette           | 1.4.1 Use of Color; 1.4.3 Contrast (Minimum); 1.4.5 Images of Text; 1.4.10 Reflow; 1.4.11 Non-text Contrast; 1.4.12 Text Spacing |
+| DOM structure, roles, or ARIA        | 1.1.1 Non-text Content; 1.3.1 Info and Relationships; 1.3.2 Meaningful Sequence; 4.1.2 Name, Role, Value; 4.1.3 Status Messages  |
+| Keyboard, focus, or pointer handling | 2.4.4 Link Purpose (In Context); 2.4.6 Headings and Labels; 2.4.7 Focus Visible                                                  |
+| Labels, errors, or validation        | 3.3.2 Labels or Instructions                                                                                                     |
+| Motion or timing                     | 2.2.2 Pause, Stop, Hide                                                                                                          |
+| Other                                | 2.3.1 Three Flashes or Below Threshold                                                                                           |
 
 ## Accordion
 
@@ -53,13 +53,12 @@ Run the rows matching what you touched, for the component you touched.
 
 ## Avatar
 
-7 checks · full procedures in [`Avatar/accessibility.md`](./Avatar/accessibility.md)
+6 checks · full procedures in [`Avatar/accessibility.md`](./Avatar/accessibility.md)
 
 - [ ] 🔍 **1.1.1 Non-text Content** — every informative avatar exposes a text alternative (`img` `alt` or an author-provided label); decorative and no-image avatars are silent. The component does its part; an informative avatar with no `alt` is an authoring failure.
 - [ ] 🔁 **1.3.1 Info and Relationships** — the image-to-name relationship is programmatically available via native `img` and `alt`.
 - [ ] 🔍 **1.4.1 Use of Color** — no information conveyed by the avatar is lost in grayscale; any color-coded meaning an author adds is paired with a non-color cue.
 - [ ] 🔍 **1.4.3 Contrast (Minimum)** — all letter and fallback text meets `4.5:1` (or `3:1` if it's sized to qualify as large text). The default gray letter avatar, the `deepOrange[500]` example, and arbitrary `stringToColor` backgrounds do not meet this without author color overrides.
-- [ ] 🔍 **1.4.4 Resize Text** — initials and fallback text stay fully visible at 200% page zoom. The container scales with the page.
 - [ ] 🔍 **1.4.5 Images of Text** — avatar initials and fallback are real text; the component renders no image of text.
 - [ ] 🔍 **1.4.11 Non-text Contrast** — any icon that conveys meaning meets `3:1` against its background; the decorative container shape and `Person` placeholder are exempt, and the boundary stays visible in forced-colors mode.
 
@@ -105,6 +104,22 @@ Run the rows matching what you touched, for the component you touched.
 - [ ] 🔁 **2.4.6 Headings and Labels** — every name describes its operation.
 - [ ] 🔁 **4.1.2 Name, Role, Value** — name, role, and value are correct for every variant, and the track is silent.
 - [ ] 🔍 **4.1.3 Status Messages** — the change is announced without the user moving focus to it. It is not by default; add a polite live region in the application to convey it.
+
+## Fab
+
+11 checks · full procedures in [`Fab/accessibility.md`](./Fab/accessibility.md)
+
+- [ ] 🔁 **1.1.1 Non-text Content** — the icon-only Fab announces its `aria-label`, the extended Fab announces its visible text, and the icon is silent.
+- [ ] 🔁 **1.3.1 Info and Relationships** — the screen reader announces "button", "link", the disabled state, and the pressed state where they apply.
+- [ ] 🔁 **1.4.1 Use of Color** — the purpose of each Fab stays clear without color.
+- [ ] 🔁 **1.4.3 Contrast (Minimum)** — the label is at least `4.5:1` in the resting, hover, focused, and pressed states. `info` and `warning` fail at rest, and each palette color fails on the ripple.
+- [ ] 🔁 **1.4.10 Reflow** — the full label stays inside the Fab. A label that wraps fails with the default styles.
+- [ ] 🔁 **1.4.11 Non-text Contrast** — the icon and the focus indicator are at least `3:1`. Disabled Fabs are exempt. The default focus ripple fails. The `focusVisible` theme ring with `disableFocusRipple` fixes it on a light page. On a colored or dark page, measure the ring.
+- [ ] 🔁 **1.4.12 Text Spacing** — the full label stays inside the Fab. A label that wraps to two lines fails in the `medium` and `small` sizes with the default styles.
+- [ ] 🔁 **2.4.4 Link Purpose (In Context)** — a user can tell where each link goes.
+- [ ] 🔁 **2.4.6 Headings and Labels** — each name tells the action, for example "Compose message", not "Add icon".
+- [ ] 🔁 **2.4.7 Focus Visible** — each Fab shows a visible indicator on keyboard focus. With `disableRipple` and the default theme, no indicator shows, and the author must add one. The `focusVisible` theme ring fixes it.
+- [ ] 🔁 **4.1.2 Name, Role, Value** — the name, role, and state are correct for each kind. The disabled one announces "disabled", and the `href` one "link".
 
 ## LinearProgress
 
