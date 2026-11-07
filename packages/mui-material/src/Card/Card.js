@@ -8,6 +8,7 @@ import { styled } from '../zero-styled';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import Paper from '../Paper';
 import { getCardUtilityClass } from './cardClasses';
+import { CardContextProvider } from './CardContext';
 
 const useUtilityClasses = (ownerState) => {
   const { classes } = ownerState;
@@ -22,9 +23,26 @@ const useUtilityClasses = (ownerState) => {
 const CardRoot = styled(Paper, {
   name: 'MuiCard',
   slot: 'Root',
-})({
+})(({ ownerState, theme }) => ({
   overflow: 'hidden',
-});
+  position: 'relative',
+  ...(ownerState.clickable && {
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      inset: 0,
+      backgroundColor: 'currentcolor',
+      opacity: 0,
+      transition: theme.transitions.create('opacity', {
+        duration: theme.transitions.duration.short,
+      }),
+      pointerEvents: 'none',
+    },
+    '&:hover::after': {
+      opacity: (theme.vars || theme).palette.action.hoverOpacity,
+    },
+  }),
+}));
 
 const Card = React.forwardRef(function Card(inProps, ref) {
   const props = useDefaultProps({
@@ -32,20 +50,22 @@ const Card = React.forwardRef(function Card(inProps, ref) {
     name: 'MuiCard',
   });
 
-  const { className, raised = false, ...other } = props;
+  const { className, raised = false, href, onClick, ...other } = props;
 
-  const ownerState = { ...props, raised };
+  const ownerState = { ...props, raised, clickable: !!(href || onClick) };
 
   const classes = useUtilityClasses(ownerState);
 
   return (
-    <CardRoot
-      className={clsx(classes.root, className)}
-      elevation={raised ? 8 : undefined}
-      ref={ref}
-      ownerState={ownerState}
-      {...other}
-    />
+    <CardContextProvider value={{ href, onClick }}>
+      <CardRoot
+        className={clsx(classes.root, className)}
+        elevation={raised ? 8 : undefined}
+        ref={ref}
+        ownerState={ownerState}
+        {...other}
+      />
+    </CardContextProvider>
   );
 });
 
@@ -66,6 +86,14 @@ Card.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   className: PropTypes.string,
+  /**
+   * If provided, the card will render a clickable link.
+   */
+  href: PropTypes.string,
+  /**
+   * If provided, the card will call this function when clicked.
+   */
+  onClick: PropTypes.func,
   /**
    * If `true`, the card will use raised styling.
    * @default false

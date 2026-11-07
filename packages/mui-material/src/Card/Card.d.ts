@@ -23,6 +23,14 @@ export interface CardOwnProps extends DistributiveOmit<PaperOwnProps, 'classes'>
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme> | undefined;
+  /**
+   * If provided, the card will render a clickable link.
+   */
+  href?: string | undefined;
+  /**
+   * If provided, the card will call this function when clicked.
+   */
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
 }
 
 export interface CardTypeMap<

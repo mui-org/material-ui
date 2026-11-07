@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
+import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import { getCardActionsUtilityClass } from './cardActionsClasses';
+import { useCardContext } from '../Card/CardContext';
+import useSlot from '../utils/useSlot';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, disableSpacing } = ownerState;
 
   const slots = {
     root: ['root', !disableSpacing && 'spacing'],
+    readMore: ['readMore'],
   };
 
   return composeClasses(slots, getCardActionsUtilityClass, classes);
@@ -29,6 +33,10 @@ const CardActionsRoot = styled('div', {
   display: 'flex',
   alignItems: 'center',
   padding: 8,
+  position: 'relative',
+  '& > *': {
+    zIndex: 2,
+  },
   variants: [
     {
       props: { disableSpacing: false },
@@ -41,17 +49,54 @@ const CardActionsRoot = styled('div', {
   ],
 });
 
+const ReadMore = styled('span')(
+  memoTheme(({ theme }) => ({
+    ...theme.typography.button,
+    color: (theme.vars || theme).palette.primary.main,
+    textTransform: 'uppercase',
+    padding: '6px 8px',
+    borderRadius: (theme.vars || theme).shape.borderRadius,
+    transition: theme.transitions.create(['background-color', 'color'], {
+      duration: theme.transitions.duration.short,
+    }),
+    marginLeft: 'auto',
+    pointerEvents: 'none',
+  })),
+);
+
 const CardActions = React.forwardRef(function CardActions(inProps, ref) {
   const props = useDefaultProps({
     props: inProps,
     name: 'MuiCardActions',
   });
 
-  const { disableSpacing = false, className, ...other } = props;
+  const {
+    disableSpacing = false,
+    className,
+    children,
+    slots = {},
+    slotProps = {},
+    ...other
+  } = props;
 
-  const ownerState = { ...props, disableSpacing };
+  const ownerState = { ...props, children, disableSpacing };
 
   const classes = useUtilityClasses(ownerState);
+
+  const externalForwardedProps = { slots, slotProps };
+
+  const { href, onClick } = useCardContext();
+  const clickable = !!(href || onClick);
+
+  const [ReadMoreSlot, readMoreSlotProps] = useSlot('readMore', {
+    className: classes.readMore,
+    elementType: ReadMore,
+    externalForwardedProps,
+    ownerState,
+    additionalProps: {
+      'aria-hidden': true,
+    },
+  });
 
   return (
     <CardActionsRoot
@@ -59,7 +104,10 @@ const CardActions = React.forwardRef(function CardActions(inProps, ref) {
       ownerState={ownerState}
       ref={ref}
       {...other}
-    />
+    >
+      {children}
+      {clickable && <ReadMoreSlot {...readMoreSlotProps}>{'Read more'}</ReadMoreSlot>}
+    </CardActionsRoot>
   );
 });
 
@@ -85,6 +133,21 @@ CardActions.propTypes /* remove-proptypes */ = {
    * @default false
    */
   disableSpacing: PropTypes.bool,
+  /**
+   * The props used for each slot inside.
+   * @default {}
+   */
+  slotProps: PropTypes /* @typescript-to-proptypes-ignore */.shape({
+    readMore: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  }),
+  /**
+   * The components used for each slot inside.
+   * @default {}
+   */
+  slots: PropTypes.shape({
+    readMore: PropTypes.elementType,
+  }),
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

@@ -70,6 +70,18 @@ A card can also offer supplemental actions which should stand detached from the 
 
 {{"component": "file://./demos/multi-action-area/index.ts", "bg": true}}
 
+## Actionable card with link
+
+A card's primary action is related to its main subject: the heading. The primary action is to expand the subject in the heading, either by navigating through a link, or executing an action. For this reason, Card accepts `href` and `onClick`, which render the CardHead heading inside a link / button element. This element is focusable, and its focus style is reflected on the whole card. The card can also have other focusable elements in CardHeader, CardContent and CardActions. By default, CardActions, in this case, will render a visual indicating "Read more" element, but that could be customized or removed via slots.
+
+Accessibility:
+
+- all focusable elements are reachable, main action is executed when clicking on the whole card.
+- all focusable elements are in the tab order.
+- aria-description on the button/link to "read more".
+
+{{"demo": "ActionableCard.js", "bg": true}}
+
 ## UI Controls
 
 Supplemental actions within the card are explicitly called out using icons, text, and UI controls, typically placed at the bottom of the card.

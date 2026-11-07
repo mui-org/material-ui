@@ -3,8 +3,24 @@ import { SxProps } from '@mui/system';
 import { Theme } from '../styles';
 import { InternalStandardProps as StandardProps } from '../internal';
 import { CardActionsClasses } from './cardActionsClasses';
+import { CreateSlotsAndSlotProps, SlotProps } from '../utils';
 
-export interface CardActionsProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>> {
+export interface CardActionSlots {
+  /**
+   * The component that renders the root slot.
+   * @default 'div'
+   */
+  readMore: React.ElementType;
+}
+
+export type CardActionsSlotsAndSlotProps = CreateSlotsAndSlotProps<
+  CardActionSlots,
+  {
+    readMore: SlotProps<'div', CardActionsClasses, CardActionsProps>;
+  }
+>;
+export interface CardActionsProps
+  extends StandardProps<React.HTMLAttributes<HTMLDivElement>>, CardActionsSlotsAndSlotProps {
   /**
    * The content of the component.
    */
