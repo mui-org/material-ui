@@ -4,15 +4,15 @@ Use this shape when users compose the component from pieces: a root, a trigger, 
 
 ## Part roles
 
-| Role      | Base UI parts                                                      | Renders                         | Material UI base                                                     |
-| :-------- | :----------------------------------------------------------------- | :------------------------------ | :------------------------------------------------------------------- |
-| Root      | `Root`                                                             | no element                      | none                                                                 |
-| Trigger   | `Trigger`                                                          | the user's `render` element     | none: the user brings `Button`, `IconButton`, or their own component |
-| Popup     | `Portal`, `Positioner`, `Popup`, and `Backdrop` or `Arrow` if used | one public part with slots      | `Paper` surface, optional `List` inside                              |
-| Item      | `Item`, `CheckboxItem`, `RadioItem`, `LinkItem`                    | a styled slot                   | `ButtonBase` or the closest existing item styles                     |
-| Structure | `Group`, `GroupLabel`, `Separator`                                 | a styled slot                   | `ListSubheader`, `Divider`, `div`                                    |
-| Indicator | `CheckboxItemIndicator`, `RadioItemIndicator`                      | an `indicator` slot of its item | `ListItemIcon`                                                       |
-| Helper    | `createHandle` and similar functions                               | nothing                         | export as a flat function (`createPreviewCardHandle`)                |
+| Role      | Base UI parts                                                      | Renders                                       | Material UI base                                                                                       |
+| :-------- | :----------------------------------------------------------------- | :-------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| Root      | `Root`                                                             | no element                                    | none                                                                                                   |
+| Trigger   | `Trigger`                                                          | the user's `render` element, or a styled slot | standalone: none, the user brings `Button`, `IconButton`, or their own component; styled: `ButtonBase` |
+| Popup     | `Portal`, `Positioner`, `Popup`, and `Backdrop` or `Arrow` if used | one public part with slots                    | `Paper` surface, optional `List` inside                                                                |
+| Item      | `Item`, `CheckboxItem`, `RadioItem`, `LinkItem`                    | a styled slot                                 | `ButtonBase` or the closest existing item styles                                                       |
+| Structure | `Group`, `GroupLabel`, `Separator`                                 | a styled slot                                 | `ListSubheader`, `Divider`, `div`                                                                      |
+| Indicator | `CheckboxItemIndicator`, `RadioItemIndicator`                      | an `indicator` slot of its item               | `ListItemIcon`                                                                                         |
+| Helper    | `createHandle` and similar functions                               | nothing                                       | export as a flat function (`createPreviewCardHandle`)                                                  |
 
 A Base UI part that the Material design does not need (an arrow, a viewport) can stay unexposed. Record the reason in the step 1 table.
 
@@ -38,11 +38,18 @@ return (
 
 ## Trigger
 
+A trigger is one of two kinds, and the approved shape says which:
+
+- A **standalone trigger** is placed and styled by the user, next to their own content (a preview card link, a menu button). It has no Material styles.
+- A **styled trigger** is laid out and styled by the component (the triggers in a menubar row). Build it like any styled part, on `ButtonBase`, with an optional `render` that keeps its styles (see "Public `render`" in [adapter.md](adapter.md)) and documented `children`.
+
+The rest of this section is about standalone triggers:
+
 - `render` is required and has no default. Forward it to the Base UI trigger unchanged.
 - Declare `children?: React.ReactNode | undefined` with the JSDoc `@ignore`, so the API page leaves it out, and pass it as the Base UI trigger's JSX children. When both the `render` element and the trigger have children, the `render` element's children win, because Base UI merges the element's own props last. That is why the docs show only the `render` form.
 - Pick only the props the Base UI trigger declares (for example `delay`, `closeDelay`, `handle`, `payload`, and `disabled` or `openOnHover` where they exist), plus `id` when the root has a `triggerId` prop. Other attributes go on the `render` element.
 - Pick `nativeButton` whenever the Base UI trigger declares it. A user who renders a non-button element (`render={<div />}`) sets `nativeButton={false}`. Without it, keyboard activation breaks and Base UI logs a dev-mode error.
-- The trigger has no Material styles. Its theme entry supports `defaultProps` only.
+- A standalone trigger has no Material styles. Its theme entry supports `defaultProps` only.
 
 ## Popup
 

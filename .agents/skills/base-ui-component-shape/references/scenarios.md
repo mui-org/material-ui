@@ -11,7 +11,7 @@ When the Base UI page has few demos, add the demos of the closest Material UI do
 
 ## 2. Theming
 
-Apply three themes, each to the basic scenario, from no customization to a complete restyle:
+Apply three themes, from no customization to a complete restyle. Apply each to the scenario with the deepest structure, such as an open submenu, so the theme has to reach nested parts:
 
 1. **Material Design**: the default theme, with no customization (`createTheme()`).
 2. **Brand**: customizes only the theme tokens: `palette`, `shape`, `typography`, and `shadows`. It shows how far the tokens alone carry the component.
@@ -38,7 +38,7 @@ Angles, one agent each:
 1. Product UIs: GitHub, Linear, Notion, Figma, Gmail, Slack, VS Code, Google Docs.
 2. Design system docs: Material Design 3, Atlassian, Carbon, Fluent, Polaris, Primer, Radix Themes, shadcn/ui.
 3. User questions: `mui/material-ui` and `mui/base-ui` issues (with `gh search issues`), their GitHub discussions (with a web search limited to `github.com/mui/<repo>/discussions`), and Stack Overflow, about building this UI with the closest existing component.
-4. This repo: the templates in `docs/data/material/getting-started/templates/` and the docs demos that use the closest existing component.
+4. This repo: the templates in `docs/data/material/getting-started/templates/` and the docs demos that use the closest existing component. For this angle, a repository path is the source.
 
 From the results, pick at least four composition scenarios:
 

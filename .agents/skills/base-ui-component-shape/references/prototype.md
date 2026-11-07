@@ -19,7 +19,7 @@ Everything lives in a scratch folder at the repository root that is never commit
   <kebab-name>-shape.md     the RFC
 ```
 
-Keep it out of git without touching `.gitignore`: add `.shape/` to the file that `git rev-parse --git-path info/exclude` prints. In a git worktree, that file belongs to the main repository and applies to every worktree.
+Keep it out of git without touching `.gitignore`: add `.shape/` to the file that `git rev-parse --git-path info/exclude` prints. In a git worktree, that file belongs to the main repository and applies to every worktree. If you cannot write that file, leave it alone, and never stage or commit `.shape/`.
 
 `@base-ui/react` is installed only under `docs/node_modules`, so files in `.shape/` cannot resolve it. Link it once:
 
@@ -37,6 +37,8 @@ export * from './recommended';
 ```
 
 Below that line, define the one changed part under its usual name (`export function MenubarItem(…)`). A local export takes precedence over the same name from `export *`.
+
+When the fork removes a part (no `MenubarLinkItem`, for example), the variant still exports that name, as a small wrapper that forwards to the part that replaces it (`MenubarItem` with `href`). The scenario code then shows what users write instead.
 
 Write the parts like this:
 
@@ -111,7 +113,11 @@ export default function Frame(props: {
       <CssBaseline />
       <Box
         data-testid={props.fullPage ? undefined : 'screenshot-target'}
-        sx={{ p: 4, width: 720, height: 480, bgcolor: 'background.default' }}
+        sx={
+          props.fullPage
+            ? undefined
+            : { p: 4, width: 720, height: 480, bgcolor: 'background.default' }
+        }
       >
         {props.children(state !== 'default')}
       </Box>

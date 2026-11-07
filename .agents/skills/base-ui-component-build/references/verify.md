@@ -49,7 +49,7 @@ Every check below is a bug that a previous build of a Material UI component on B
 ## Tests
 
 - [ ] **Test files import from `vitest`** and render to a string with `createRenderer().renderToString`. [testing.md]
-- [ ] **Every rendered part runs `describeConformance`** with `skip: ['componentProp']`; a trigger runs `only: ['refForwarding']`. [testing.md, Conformance]
+- [ ] **Every rendered part runs `describeConformance`** with `skip: ['componentProp']`; a standalone trigger runs `only: ['refForwarding']`. [testing.md, Conformance]
 - [ ] **Data attributes are asserted with the re-exported constants**, not strings. [testing.md, Data attributes]
 
 ## Docs

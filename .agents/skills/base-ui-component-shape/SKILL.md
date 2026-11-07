@@ -27,7 +27,7 @@ Read the Base UI docs and types for the component in `docs/node_modules/@base-ui
 Find the closest existing Material UI component (`Menu` for a menubar, `Tooltip` for a preview card).
 Search `mui/base-ui` issues and discussions with `gh` for each part: does anyone ask to customize, move, or replace it on its own?
 
-List the parts from the "Anatomy" section of the Base UI docs, not only the package export. Some components reuse another component's parts: a Base UI menubar is built from `Menu` parts.
+List the parts from the "Anatomy" section of the Base UI docs, not only the package export. Some components reuse another component's parts: a Base UI menubar is built from `Menu` parts. Parts that the reused component exports but the Anatomy section leaves out (such as preview parts) go to the RFC's open questions.
 
 Done when a table lists every part in the Anatomy section plus helpers such as `createHandle`, each with its customization evidence (issue links, or "none found") and the matching piece of the closest Material UI component, if any.
 
@@ -41,7 +41,7 @@ Done when all three categories in `scenarios.md` are present, every scenario nam
 
 Give every Base UI part one role: its own public part, a slot of a named part, a prop, or hidden. Apply these rules in order:
 
-1. **Merge only parts without customization evidence.** A part joins a neighbor (as a slot or a prop) only when the step 1 inventory found no issue or discussion where users customize it alone. Portal and Positioner usually qualify; a trigger usually does not.
+1. **Merge only parts without customization evidence.** A part joins a neighbor (as a slot or a prop) only when the step 1 inventory found no issue or discussion where users customize it alone, meaning they move it, replace its element, or put their own content in it. A request for a value that a prop can carry (a positioner's `side` or `align`) does not count: the merged part takes that prop. Portal and Positioner usually qualify; a trigger usually does not.
 2. **Nested structures repeat the top-level shape.** A submenu has the same parts as a menu (root, trigger, popup), so users learn one pattern.
 3. **Follow the closest Material UI component** where it already answers the question, so users meet patterns they know.
 4. **When the evidence is neutral, keep the part public.** The team's direction is toward more open components.
@@ -54,6 +54,8 @@ A **fork** is a part where the recommendation is not settled by the rules: the e
 Each fork has two choices, the recommended one and the alternative.
 
 Keep at most five forks, ranked by how many scenarios they change. Move the rest to the RFC's open questions.
+
+A fork that changes every scenario (merging the popup's layers, for example) is prototyped in two or three representative scenarios, not all of them.
 
 Done when every fork names its part, its two choices, why the rules do not settle it, and the scenarios it changes.
 

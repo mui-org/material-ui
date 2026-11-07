@@ -50,7 +50,7 @@ In page prose, write the brand names with a non-breaking space (`Material UI`, `
 ## Demos
 
 - Import each part from its subpath: `import PreviewCardTrigger from '@mui/material/PreviewCardTrigger';`.
-- Triggers always use `render`: `<PreviewCardTrigger render={<Button>Open</Button>} />`. Demos never pass `children` to a trigger.
+- Standalone triggers always use `render`: `<PreviewCardTrigger render={<Button>Open</Button>} />`. Demos never pass `children` to a standalone trigger.
 - Every `href` in a demo points at a heading anchor that exists on the page (`#detached-triggers`) or at an external URL. `pnpm docs:build` ends with a link check that fails the build on any other in-page anchor.
 - Wrap the code readers should see in `// @focus-start` and `// @focus-end` comments; the `docs-infra/require-demo-focus` lint rule requires them.
 - Pass an explicit `locale` to anything that formats numbers or dates, so the server and the browser render the same text.

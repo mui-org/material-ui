@@ -100,7 +100,7 @@ export interface PreviewCardPopupOwnerState extends PreviewCardPopupProps {
 }
 ```
 
-- A part that renders an element accepts the HTML attributes of that element (`Omit<React.HTMLAttributes<…>, 'children' | 'color'>`), like `Popover` and `Paper`. A trigger accepts only its picked props plus `children`; users put attributes on the `render` element.
+- A part that renders an element accepts the HTML attributes of that element (`Omit<React.HTMLAttributes<…>, 'children' | 'color'>`), like `Popover` and `Paper`. A standalone trigger accepts only its picked props plus `children`; users put attributes on the `render` element.
 - Behavior props come from `Pick<Base….Props, …>` or indexed access (`BaseNumberField.Root.Props['min']`). Write each picked name out. A new upstream prop then reaches neither our types nor the DOM until someone adds it on purpose.
 - Pick behavior props only. ARIA and HTML props that Base UI computes (`aria-valuetext`, `id`) come through the HTML attributes, so they override Base UI only when the user sets them.
 - A picked prop whose default you change (`sideOffset` above) leaves `Pick` and is redeclared with indexed access and its own JSDoc `@default`. `pnpm docs:api` fails when the JSDoc default and the runtime default disagree.
@@ -264,13 +264,13 @@ const PreviewCardPopupRootSlot = React.forwardRef(function PreviewCardPopupRootS
 
 ## Public `render`
 
-A trigger forwards `render` straight to the Base UI part, because the user's element brings its own styles:
+A standalone trigger forwards `render` straight to the Base UI part, because the user's element brings its own styles:
 
 ```tsx
 <BasePreviewCard.Trigger render={render} {...pickedTriggerProps} />
 ```
 
-Make `render` required in the trigger's props type.
+Make `render` required in the standalone trigger's props type. A styled trigger is a part with Material styles and follows the next paragraph.
 
 A part with Material styles keeps them when the user swaps the element. Its root slot renders `RenderElement`, which calls Base UI `useRender` with the Base UI state:
 
