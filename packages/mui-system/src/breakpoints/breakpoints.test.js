@@ -154,6 +154,22 @@ describe('breakpoints', () => {
         const values = resolveBreakpointValues({ values: columns, base: customBase });
         expect(values).to.deep.equal({ xs: 1, sm: 1, md: 2, lg: 2 });
       });
+
+      it('resolve breakpoint values for prop of array type with consecutive null values', () => {
+        const columns = [1, null, null, 4];
+        const values = resolveBreakpointValues({
+          values: columns,
+          breakpoints: muiThemeBreakpoints,
+        });
+        expect(values).to.deep.equal({ xs: 1, sm: 1, md: 1, lg: 4 });
+      });
+
+      it('given custom base, resolve breakpoint values for prop of object type with consecutive missing breakpoints', () => {
+        const columns = { xs: 1, lg: 4 };
+        const customBase = { xs: true, sm: true, md: true, lg: true, xl: true };
+        const values = resolveBreakpointValues({ values: columns, base: customBase });
+        expect(values).to.deep.equal({ xs: 1, sm: 1, md: 1, lg: 4, xl: 4 });
+      });
     });
 
     describe('custom breakpoints', () => {

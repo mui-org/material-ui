@@ -259,20 +259,19 @@ export function resolveBreakpointValues<T>(
     return breakpointValues as T;
   }
 
+  // The value of the closest smaller breakpoint that has one
   let previous: any;
 
   return keys.reduce<Record<string, T>>((acc, breakpoint, i) => {
     if (Array.isArray(breakpointValues)) {
-      acc[breakpoint] =
-        breakpointValues[i] != null ? breakpointValues[i] : breakpointValues[previous];
-      previous = i;
+      acc[breakpoint] = breakpointValues[i] != null ? breakpointValues[i] : previous;
     } else if (typeof breakpointValues === 'object' && breakpointValues) {
       const bv = breakpointValues as Record<string, T>;
-      acc[breakpoint] = bv[breakpoint] != null ? bv[breakpoint] : bv[previous];
-      previous = breakpoint;
+      acc[breakpoint] = bv[breakpoint] != null ? bv[breakpoint] : previous;
     } else {
       acc[breakpoint] = breakpointValues as unknown as T;
     }
+    previous = acc[breakpoint];
     return acc;
   }, {});
 }
