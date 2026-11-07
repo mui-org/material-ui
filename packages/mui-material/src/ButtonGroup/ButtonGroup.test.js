@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import * as React from 'react';
 import {
   act,
   createRenderer,
@@ -391,6 +392,120 @@ describe('<ButtonGroup />', () => {
 
       expect(screen.getByRole('button', { name: 'Save' })).to.equal(saveButton);
       expect(saveButton).toHaveFocus();
+    });
+  });
+
+  describe('WCAG 2.2 conformance', () => {
+    describe('1.3.1 Info and Relationships', () => {
+      it('puts the buttons inside the group element', () => {
+        render(
+          <ButtonGroup>
+            <Button>Left</Button>
+            <Button>Right</Button>
+          </ButtonGroup>,
+        );
+
+        const group = screen.getByRole('group');
+        screen.getAllByRole('button').forEach((button) => {
+          expect(group).to.contain(button);
+        });
+      });
+    });
+
+    describe('2.4.3 Focus Order', () => {
+      it('moves through the buttons in DOM order', async () => {
+        const { user } = render(
+          <ButtonGroup aria-label="Actions">
+            <Button>One</Button>
+            <Button>Two</Button>
+            <Button>Three</Button>
+          </ButtonGroup>,
+        );
+
+        for (const name of ['One', 'Two', 'Three']) {
+          // eslint-disable-next-line no-await-in-loop
+          await user.tab();
+          expect(screen.getByRole('button', { name })).toHaveFocus();
+        }
+      });
+
+      it('removes the buttons of a disabled group from the tab order', async () => {
+        const { user } = render(
+          <React.Fragment>
+            <button type="button">Before</button>
+            <ButtonGroup disabled aria-label="Actions">
+              <Button>One</Button>
+              <Button>Two</Button>
+            </ButtonGroup>
+            <button type="button">After</button>
+          </React.Fragment>,
+        );
+
+        await user.tab();
+        await user.tab();
+        expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+      });
+    });
+
+    // JSDOM doesn't support :focus-visible
+    it.skipIf(isJsdom())(
+      '2.4.7 Focus Visible: with the theme ring, the focused button paints above its neighbors',
+      async () => {
+        const { user } = render(
+          <ThemeProvider theme={createTheme({ focusVisible: true })}>
+            <ButtonGroup aria-label="Actions">
+              <Button>One</Button>
+              <Button>Two</Button>
+            </ButtonGroup>
+          </ThemeProvider>,
+        );
+
+        await user.tab();
+        const focused = screen.getByRole('button', { name: 'One' });
+        expect(focused).to.have.class(buttonClasses.focusVisible);
+        // The neighbors overlap by 1px, so a lower z-index would cover the ring edge.
+        expect(window.getComputedStyle(focused).zIndex).to.equal('1');
+        expect(
+          window.getComputedStyle(screen.getByRole('button', { name: 'Two' })).zIndex,
+        ).to.equal('auto');
+      },
+    );
+
+    describe('4.1.2 Name, Role, Value', () => {
+      it('has the group role and the name from aria-label', () => {
+        render(
+          <ButtonGroup aria-label="Export format">
+            <Button>PDF</Button>
+          </ButtonGroup>,
+        );
+
+        expect(screen.getByRole('group')).toHaveAccessibleName('Export format');
+      });
+
+      it('passes the disabled state to each button', () => {
+        render(
+          <ButtonGroup disabled aria-label="Actions">
+            <Button>One</Button>
+            <Button>Two</Button>
+          </ButtonGroup>,
+        );
+
+        screen.getAllByRole('button').forEach((button) => {
+          expect(button).to.have.property('disabled', true);
+        });
+      });
+
+      it('keeps a button enabled when it sets disabled={false} in a disabled group', () => {
+        render(
+          <ButtonGroup disabled aria-label="Actions">
+            <Button disabled={false}>One</Button>
+            <Button>Two</Button>
+          </ButtonGroup>,
+        );
+
+        expect(screen.getByRole('button', { name: 'One' })).to.have.property('disabled', false);
+        expect(screen.getByRole('button', { name: 'Two' })).to.have.property('disabled', true);
+      });
     });
   });
 });

@@ -1,8 +1,16 @@
 [
   {
-    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, with untested contrast",
+    "gap": "By default, the keyboard focus indicator is the ripple or a background tint, and its contrast can fall below 3:1",
     "criteria": ["1.4.11"],
-    "affected": ["AccordionSummary", "Button", "Checkbox", "Radio", "Switch", "ToggleButton"],
+    "affected": [
+      "AccordionSummary",
+      "Button",
+      "ButtonGroup",
+      "Checkbox",
+      "Radio",
+      "Switch",
+      "ToggleButton"
+    ],
     "workaround": "Enable `focusVisible` in your theme — see below"
   },
   {

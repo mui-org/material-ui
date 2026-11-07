@@ -55,7 +55,7 @@ export default function SplitButton() {
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-expanded={open}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}

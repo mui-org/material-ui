@@ -79,6 +79,17 @@ Run the rows matching what you touched, for the component you touched.
 - [ ] 🔁 **4.1.2 Name, Role, Value** — name, role, and state are correct for every variant, and state changes are announced.
 - [ ] 🔍 **4.1.3 Status Messages** — the change is announced without the user moving focus to it. It is not, because the component adds no live region; wrap the status in `role="status"` to fix it.
 
+## ButtonGroup
+
+6 checks · full procedures in [`ButtonGroup/accessibility.md`](./ButtonGroup/accessibility.md)
+
+- [ ] 🔁 **1.3.1 Info and Relationships** — the screen reader announces the group role and name, and the name and role of the button. A group with no name is announced as a group.
+- [ ] 🔍 **1.3.2 Meaningful Sequence** — focus and the reading order move in the reading direction in a horizontal group, and from top to bottom in a vertical group.
+- [ ] 🔍 **1.4.11 Non-text Contrast** — each button can be identified by its label, and the focus indicator is at least `3:1`.
+- [ ] 🔍 **2.4.6 Headings and Labels** — each group name tells the purpose of the set, for example "Text alignment", not "Basic button group".
+- [ ] 🔁 **2.4.7 Focus Visible** — the focus indicator of each button is fully visible, and the adjacent buttons do not cover the ring.
+- [ ] 🔁 **4.1.2 Name, Role, Value** — the arrow button announces its name, that it opens a menu, and "collapsed" or "expanded".
+
 ## Checkbox
 
 9 checks · full procedures in [`Checkbox/accessibility.md`](./Checkbox/accessibility.md)

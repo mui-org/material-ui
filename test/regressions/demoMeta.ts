@@ -176,6 +176,11 @@ export const SCREENSHOT_RULES: ScreenshotRule[] = [
   { test: 'test/regressions/a11y/fixtures/buttons/ButtonA11yTextSpacing', enabled: true }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
   { test: 'test/regressions/a11y/fixtures/accordion/AccordionA11yTextSpacing', enabled: true }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
   {
+    test: 'test/regressions/a11y/fixtures/button-group/ButtonGroupA11yWideGroup',
+    enabled: true,
+    viewportWidth: 320,
+  }, // Visual record of a wide horizontal group, clipped at 320 CSS px (1.4.10)
+  {
     test: 'test/regressions/a11y/fixtures/toggle-button/ToggleButtonA11yTextSpacing',
     enabled: true,
   }, // Visual regression for text spacing (1.4.12); adds no unique axe coverage
@@ -238,6 +243,18 @@ const BUTTON_A11Y_DEMOS = [
   'InputFileUpload',
   'LoadingButtons',
   'CustomizedButtons',
+];
+
+// ButtonGroup docs demos enrolled for axe assertions. SplitButton renders only the
+// closed menu button; the open menu needs interaction.
+const BUTTON_GROUP_A11Y_DEMOS = [
+  'BasicButtonGroup',
+  'VariantButtonGroup',
+  'GroupSizesColors',
+  'GroupOrientation',
+  'DisableElevation',
+  'LoadingButtonGroup',
+  'SplitButton',
 ];
 
 // Radio docs demos enrolled for axe assertions. FormControlLabelPlacement is left out: its axe
@@ -370,6 +387,18 @@ export const A11Y_RULES: A11yRule[] = [
     enabled: true,
     assertions: 'all',
     skipAssertions: ['color-contrast'],
+  },
+  {
+    test: `docs/data/material/components/button-group/{${BUTTON_GROUP_A11Y_DEMOS.join(',')}}`,
+    enabled: true,
+    assertions: 'all',
+  },
+  // A11y-only fixtures under `test/regressions/a11y/fixtures/button-group/`; the
+  // suite name maps their results into the same `button-group.a11y.json`.
+  {
+    test: 'test/regressions/a11y/fixtures/button-group/{ButtonGroupA11ySemanticStates,ButtonGroupA11yWideGroup}',
+    enabled: true,
+    assertions: 'all',
   },
   // IndeterminateCheckbox needs no skip: the component sets the native
   // `.indeterminate` property and no aria-checked attribute (#49053), so

@@ -184,7 +184,8 @@ export async function validateSource(source, defaults) {
   for (const number of ownNotApplicable) {
     if (!defaults.data.criteria[number]) {
       violations.push(`notApplicable: ${number} is not a WCAG 2.2 Level A or AA criterion`);
-    } else if (defaults.data.criteria[number].notApplicable) {
+    } else if (defaults.data.criteria[number].notApplicable && !data.inherits) {
+      // `validateReport` checks an inheriting component against its parent.
       violations.push(`notApplicable: ${number} is already not applicable by default`);
     }
   }
@@ -304,10 +305,22 @@ export function validateKnownGaps(knownGaps, reports, check) {
 /**
  * Returns every problem in one resolved report, prefixed with the component
  * name. With `check`, the prose the report needs must also be written.
+ * `parent` is the resolved report that `inherits` names, if any.
  */
-export function validateReport(report, check) {
+export function validateReport(report, check, defaults, parent) {
   const { component, data, regions } = report;
   const violations = [];
+
+  // An inheriting component can opt out of a default not-applicable criterion
+  // only when its parent rates that criterion.
+  if (parent) {
+    const parentRates = new Set(parent.criteria.map(({ number }) => number));
+    for (const number of data.notApplicable ?? []) {
+      if (defaults.data.criteria[number]?.notApplicable && !parentRates.has(number)) {
+        violations.push(`notApplicable: ${number} is already not applicable by default`);
+      }
+    }
+  }
 
   for (const number of report.unaccounted) {
     violations.push(`${number} is not rated, inherited, or not applicable`);

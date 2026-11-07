@@ -1,6 +1,6 @@
 {
   "standard": "WCAG 2.2 Level A and AA",
-  "componentCount": 13,
+  "componentCount": 14,
   "totals": {
     "rated": 32,
     "supports": 27,
@@ -99,6 +99,7 @@
         "AccordionSummary",
         "Avatar",
         "Button",
+        "ButtonGroup",
         "Checkbox",
         "CircularProgress",
         "LinearProgress",
@@ -1142,6 +1143,139 @@
         "doesNotSupport": 0,
         "verified": 20,
         "automated": 11
+      }
+    },
+    {
+      "component": "ButtonGroup",
+      "counts": {
+        "supports": 9,
+        "partiallySupports": 1,
+        "doesNotSupport": 0,
+        "notApplicable": 28,
+        "inherited": 17,
+        "flagged": 3,
+        "rated": 10
+      },
+      "gaps": [
+        {
+          "number": "1.4.11",
+          "name": "Non-text Contrast",
+          "conformance": "Partially Supports"
+        },
+        {
+          "number": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "conformance": "Partially Supports",
+          "from": "Button"
+        },
+        {
+          "number": "4.1.3",
+          "name": "Status Messages",
+          "conformance": "Partially Supports",
+          "from": "Button"
+        }
+      ],
+      "criteria": [
+        {
+          "number": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.3.2",
+          "name": "Meaningful Sequence",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "1.4.4",
+          "name": "Resize Text",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "1.4.10",
+          "name": "Reflow",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "1.4.11",
+          "name": "Non-text Contrast",
+          "level": "AA",
+          "conformance": "Partially Supports",
+          "responsibility": "Component",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "1.4.12",
+          "name": "Text Spacing",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.4.3",
+          "name": "Focus Order",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.4.6",
+          "name": "Headings and Labels",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "2.4.7",
+          "name": "Focus Visible",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "4.1.2",
+          "name": "Name, Role, Value",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        }
+      ],
+      "summary": {
+        "rated": 10,
+        "levelA": 4,
+        "levelAA": 6,
+        "supports": 9,
+        "partiallySupports": 1,
+        "doesNotSupport": 0,
+        "verified": 7,
+        "automated": 4
       }
     },
     {
