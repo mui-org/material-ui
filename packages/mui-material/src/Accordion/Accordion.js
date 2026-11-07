@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import chainPropTypes from '@mui/utils/chainPropTypes';
 import composeClasses from '@mui/utils/composeClasses';
+import resolveComponentProps from '@mui/utils/resolveComponentProps';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
@@ -12,9 +13,12 @@ import Collapse from '../Collapse';
 import Paper from '../Paper';
 import AccordionContext from './AccordionContext';
 import useControlled from '../utils/useControlled';
+import useId from '../utils/useId';
 import useSlot from '../utils/useSlot';
 import accordionClasses, { getAccordionUtilityClass } from './accordionClasses';
 import { getTransitionStyles } from '../transitions/utils';
+
+const EMPTY = {};
 
 const useUtilityClasses = (ownerState) => {
   const { classes, square, expanded, disabled, disableGutters } = ownerState;
@@ -149,8 +153,8 @@ const Accordion = React.forwardRef(function Accordion(inProps, ref) {
     disableGutters = false,
     expanded: expandedProp,
     onChange,
-    slots = {},
-    slotProps = {},
+    slots = EMPTY,
+    slotProps = EMPTY,
     ...other
   } = props;
 
@@ -172,11 +176,8 @@ const Accordion = React.forwardRef(function Accordion(inProps, ref) {
     [expanded, onChange, setExpandedState],
   );
 
-  const [summary, ...children] = React.Children.toArray(childrenProp);
-  const contextValue = React.useMemo(
-    () => ({ expanded, disabled, disableGutters, toggle: handleChange }),
-    [expanded, disabled, disableGutters, handleChange],
-  );
+  const [summary, ...regionChildren] = React.Children.toArray(childrenProp);
+  const summaryProps = React.isValidElement(summary) ? summary.props : EMPTY;
 
   const ownerState = {
     ...props,
@@ -184,6 +185,39 @@ const Accordion = React.forwardRef(function Accordion(inProps, ref) {
     disableGutters,
     expanded,
   };
+
+  // Ids the consumer supplied always win, so that ids used elsewhere in their code keep working.
+  // They can come from the summary's own props, from either side's `slotProps`, or from a wrapper
+  // around the summary, which only AccordionSummary itself can resolve and reports back below.
+  const [registeredSummaryProps, setRegisteredSummaryProps] = React.useState(EMPTY);
+  const summaryRootSlotProps = resolveComponentProps(summaryProps.slotProps?.root, {
+    ...summaryProps,
+    disabled,
+    disableGutters,
+    expanded,
+  });
+  // Resolved once and forwarded as an object so a callback `slotProps.region` is not called twice.
+  const resolvedRegionSlotProps = resolveComponentProps(slotProps.region, ownerState);
+  const summaryIdProp = registeredSummaryProps.id ?? summaryRootSlotProps?.id ?? summaryProps.id;
+  const regionIdProp =
+    resolvedRegionSlotProps?.id ??
+    registeredSummaryProps.ariaControls ??
+    summaryRootSlotProps?.['aria-controls'] ??
+    summaryProps['aria-controls'];
+  // `useId` returns the supplied id unchanged, so everything below stays in sync with it.
+  const summaryId = useId(summaryIdProp);
+  const regionId = useId(regionIdProp);
+  const hasRegionIdProp = regionIdProp != null;
+  const [isRegionMounted, setIsRegionMounted] = React.useState(false);
+
+  // A wrapper can supply summary props that are not visible on the first child.
+  const registerSummary = React.useCallback((id, ariaControls) => {
+    setRegisteredSummaryProps((previous) =>
+      previous.id === id && previous.ariaControls === ariaControls
+        ? previous
+        : { id, ariaControls },
+    );
+  }, []);
 
   const classes = useUtilityClasses(ownerState);
 
@@ -204,7 +238,7 @@ const Accordion = React.forwardRef(function Accordion(inProps, ref) {
     ref,
   });
 
-  const [AccordionHeadingSlot, accordionProps] = useSlot('heading', {
+  const [HeadingSlot, headingProps] = useSlot('heading', {
     elementType: AccordionHeading,
     externalForwardedProps,
     className: classes.heading,
@@ -217,25 +251,73 @@ const Accordion = React.forwardRef(function Accordion(inProps, ref) {
     ownerState,
   });
 
-  const [AccordionRegionSlot, accordionRegionProps] = useSlot('region', {
+  const resolvedCollapseProps = useDefaultProps({
+    props: transitionProps,
+    // eslint-disable-next-line mui/material-ui-name-matches-component-name
+    name: 'MuiCollapse',
+  });
+
+  // The default Collapse keeps its child mounted unless mounting is explicitly deferred.
+  const isDefaultTransition = TransitionSlot === Collapse;
+  // Mount tracking is only needed when generated aria-controls could point at an unmounted region.
+  // Custom transitions are opaque, so they are treated as unknown until the region ref is set.
+  const usesGeneratedRegionId = !hasRegionIdProp;
+  const isRegionAlwaysMounted =
+    isDefaultTransition &&
+    !resolvedCollapseProps.unmountOnExit &&
+    !resolvedCollapseProps.mountOnEnter;
+  const shouldTrackRegionMount = usesGeneratedRegionId && !isRegionAlwaysMounted;
+
+  const handleRegionMountRef = React.useCallback((node) => {
+    setIsRegionMounted(node != null);
+  }, []);
+
+  const shouldUseGeneratedAriaControls =
+    usesGeneratedRegionId &&
+    (isRegionAlwaysMounted || (isDefaultTransition && expanded) || isRegionMounted);
+
+  const [RegionSlot, regionProps] = useSlot('region', {
     elementType: AccordionRegion,
-    externalForwardedProps,
+    externalForwardedProps: {
+      ...externalForwardedProps,
+      slotProps: {
+        ...slotProps,
+        region: resolvedRegionSlotProps,
+      },
+    },
     ownerState,
     className: classes.region,
+    ref: shouldTrackRegionMount ? handleRegionMountRef : undefined,
+    // Defaults, so anything set through `slotProps.region` takes precedence.
     additionalProps: {
-      'aria-labelledby': summary.props.id,
-      id: summary.props['aria-controls'],
+      id: regionId,
+      'aria-labelledby': summaryId,
       role: 'region',
     },
   });
 
+  const ariaControls = hasRegionIdProp || shouldUseGeneratedAriaControls ? regionId : undefined;
+
+  const contextValue = React.useMemo(
+    () => ({
+      expanded,
+      disabled,
+      disableGutters,
+      toggle: handleChange,
+      summaryId,
+      ariaControls,
+      registerSummary,
+    }),
+    [expanded, disabled, disableGutters, handleChange, summaryId, ariaControls, registerSummary],
+  );
+
   return (
     <RootSlot {...rootProps}>
-      <AccordionHeadingSlot {...accordionProps}>
+      <HeadingSlot {...headingProps}>
         <AccordionContext.Provider value={contextValue}>{summary}</AccordionContext.Provider>
-      </AccordionHeadingSlot>
+      </HeadingSlot>
       <TransitionSlot in={expanded} timeout="auto" {...transitionProps}>
-        <AccordionRegionSlot {...accordionRegionProps}>{children}</AccordionRegionSlot>
+        <RegionSlot {...regionProps}>{regionChildren}</RegionSlot>
       </TransitionSlot>
     </RootSlot>
   );

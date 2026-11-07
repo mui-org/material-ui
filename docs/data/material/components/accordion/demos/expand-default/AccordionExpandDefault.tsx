@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -7,36 +6,26 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function AccordionExpandDefault() {
   // @focus-start @padding 1
-  const id = React.useId();
   return (
     <div>
       <Accordion defaultExpanded>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls={`${id}-panel1-content`}
-          id={`${id}-panel1-header`}
-        >
-          <Typography component="span">Expanded by default</Typography>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography component="span">Delivery options</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Choose standard shipping, scheduled delivery, or pickup based on what is
+            available for your order.
           </Typography>
         </AccordionDetails>
       </Accordion>
       <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls={`${id}-panel2-content`}
-          id={`${id}-panel2-header`}
-        >
-          <Typography component="span">Header</Typography>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography component="span">Gift options</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Add a gift message, choose wrapping, and hide prices on the packing slip.
           </Typography>
         </AccordionDetails>
       </Accordion>

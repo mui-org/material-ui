@@ -1,11 +1,19 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as React from 'react';
 import { spy } from 'sinon';
-import { act, createRenderer, fireEvent, screen, isJsdom } from '@mui/internal-test-utils';
+import {
+  act,
+  createRenderer,
+  fireEvent,
+  screen,
+  isJsdom,
+  strictModeDoubleLoggingSuppressed,
+} from '@mui/internal-test-utils';
 import AccordionSummary, {
   accordionSummaryClasses as classes,
 } from '@mui/material/AccordionSummary';
 import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import ButtonBase from '@mui/material/ButtonBase';
 import SvgIcon from '@mui/material/SvgIcon';
 import describeConformance from '../../test/describeConformance';
@@ -14,13 +22,31 @@ const CustomButtonBase = React.forwardRef(({ focusVisible, ...props }, ref) => (
   <ButtonBase ref={ref} {...props} />
 ));
 
+const missingAccordionContextWarning = [
+  'MUI: AccordionSummary should be rendered inside <Accordion>. Rendering AccordionSummary outside <Accordion> is deprecated and will no longer be supported in the next major version.',
+  !strictModeDoubleLoggingSuppressed &&
+    'MUI: AccordionSummary should be rendered inside <Accordion>. Rendering AccordionSummary outside <Accordion> is deprecated and will no longer be supported in the next major version.',
+];
+
 describe('<AccordionSummary />', () => {
   const { render } = createRenderer();
 
   describeConformance(<AccordionSummary expandIcon="expand" />, () => ({
     classes,
     inheritComponent: ButtonBase,
-    render,
+    render: (node) => {
+      const { container, ...other } = render(
+        <Accordion>
+          {node}
+          <AccordionDetails>Details</AccordionDetails>
+        </Accordion>,
+      );
+
+      return {
+        container: container.firstChild.firstChild,
+        ...other,
+      };
+    },
     refInstanceof: window.HTMLButtonElement,
     muiName: 'MuiAccordionSummary',
     testVariantProps: { disabled: true },
@@ -40,15 +66,21 @@ describe('<AccordionSummary />', () => {
   }));
 
   it('renders the children inside the .content element', () => {
-    const { container } = render(<AccordionSummary>The Summary</AccordionSummary>);
+    render(
+      <Accordion>
+        <AccordionSummary>The Summary</AccordionSummary>
+        <AccordionDetails>Details</AccordionDetails>
+      </Accordion>,
+    );
 
-    expect(container.querySelector(`.${classes.content}`)).to.have.text('The Summary');
+    expect(screen.getByText('The Summary')).to.have.class(classes.content);
   });
 
   it('when disabled should have disabled class', () => {
     render(
       <Accordion disabled>
         <AccordionSummary />
+        <AccordionDetails>Details</AccordionDetails>
       </Accordion>,
     );
 
@@ -56,61 +88,92 @@ describe('<AccordionSummary />', () => {
   });
 
   it('renders the content given in expandIcon prop inside the div.expandIconWrapper', () => {
-    const { container } = render(<AccordionSummary expandIcon="iconElementContentExample" />);
+    render(
+      <Accordion>
+        <AccordionSummary expandIcon="iconElementContentExample" />
+        <AccordionDetails>Details</AccordionDetails>
+      </Accordion>,
+    );
 
-    const expandIconWrapper = container.querySelector(`.${classes.expandIconWrapper}`);
-    expect(expandIconWrapper).to.have.text('iconElementContentExample');
+    expect(screen.getByText('iconElementContentExample')).to.have.class(classes.expandIconWrapper);
   });
 
   it('when expanded adds the expanded class to the button and .expandIconWrapper', () => {
-    const { container } = render(
+    render(
       <Accordion expanded>
         <AccordionSummary expandIcon="expand" />
+        <AccordionDetails>Details</AccordionDetails>
       </Accordion>,
     );
 
     const button = screen.getByRole('button');
     expect(button).to.have.class(classes.expanded);
     expect(button).to.have.attribute('aria-expanded', 'true');
-    expect(container.querySelector(`.${classes.expandIconWrapper}`)).to.have.class(
-      classes.expanded,
-    );
+    expect(screen.getByText('expand')).to.have.class(classes.expanded);
   });
 
-  it('should fire onBlur when the button blurs', () => {
+  it('should fire onBlur when the button blurs', async () => {
     const handleBlur = spy();
-    render(<AccordionSummary onBlur={handleBlur} />);
-    const button = screen.getByRole('button');
+    const { user } = render(
+      <Accordion>
+        <AccordionSummary onBlur={handleBlur} />
+        <AccordionDetails>Details</AccordionDetails>
+      </Accordion>,
+    );
 
-    act(() => {
-      button.focus();
-      button.blur();
-    });
+    await user.tab();
+    await user.tab();
 
     expect(handleBlur.callCount).to.equal(1);
   });
 
-  it('should fire onClick callbacks', () => {
+  it('should fire onClick callbacks', async () => {
     const handleClick = spy();
-    render(<AccordionSummary onClick={handleClick} />);
+    const { user } = render(
+      <Accordion>
+        <AccordionSummary onClick={handleClick} />
+        <AccordionDetails>Details</AccordionDetails>
+      </Accordion>,
+    );
 
-    screen.getByRole('button').click();
+    await user.click(screen.getByRole('button'));
 
     expect(handleClick.callCount).to.equal(1);
   });
 
-  it('fires onChange of the Accordion if clicked', () => {
+  it('preserves id and aria-controls props when rendered outside Accordion', () => {
+    expect(() => {
+      render(<AccordionSummary id="summary-id" aria-controls="region-id" />);
+    }).toWarnDev(missingAccordionContextWarning);
+
+    expect(screen.getByRole('button')).to.have.attribute('id', 'summary-id');
+    expect(screen.getByRole('button')).to.have.attribute('aria-controls', 'region-id');
+  });
+
+  it('preserves slotProps.root id and aria-controls when rendered outside Accordion', () => {
+    expect(() => {
+      render(
+        <AccordionSummary
+          slotProps={{ root: { id: 'summary-id', 'aria-controls': 'region-id' } }}
+        />,
+      );
+    }).toWarnDev(missingAccordionContextWarning);
+
+    expect(screen.getByRole('button')).to.have.attribute('id', 'summary-id');
+    expect(screen.getByRole('button')).to.have.attribute('aria-controls', 'region-id');
+  });
+
+  it('fires onChange of the Accordion if clicked', async () => {
     const handleChange = spy();
 
-    render(
+    const { user } = render(
       <Accordion onChange={handleChange} expanded={false}>
         <AccordionSummary />
+        <AccordionDetails>Details</AccordionDetails>
       </Accordion>,
     );
 
-    act(() => {
-      screen.getByRole('button').click();
-    });
+    await user.click(screen.getByRole('button'));
 
     expect(handleChange.callCount).to.equal(1);
   });
@@ -139,6 +202,7 @@ describe('<AccordionSummary />', () => {
       render(
         <Accordion>
           <AccordionSummary component={CustomSpan} nativeButton={false} />
+          <AccordionDetails>Details</AccordionDetails>
         </Accordion>,
       );
 
@@ -161,6 +225,7 @@ describe('<AccordionSummary />', () => {
           <button type="button">Before</button>
           <Accordion>
             <AccordionSummary>Summary</AccordionSummary>
+            <AccordionDetails>Details</AccordionDetails>
           </Accordion>
           <button type="button">After</button>
         </React.Fragment>,
@@ -188,6 +253,7 @@ describe('<AccordionSummary />', () => {
             <button type="button">Before</button>
             <Accordion>
               <AccordionSummary>Summary</AccordionSummary>
+              <AccordionDetails>Details</AccordionDetails>
             </Accordion>
             <button type="button">After</button>
           </React.Fragment>,
@@ -207,6 +273,7 @@ describe('<AccordionSummary />', () => {
           <React.Fragment>
             <Accordion disabled>
               <AccordionSummary>Disabled</AccordionSummary>
+              <AccordionDetails>Details</AccordionDetails>
             </Accordion>
             <button type="button">After</button>
           </React.Fragment>,
@@ -221,9 +288,14 @@ describe('<AccordionSummary />', () => {
     // JSDOM doesn't support :focus-visible
     it.skipIf(isJsdom())(
       '2.4.7 Focus Visible: applies the focus-visible state on keyboard focus',
-      function test() {
+      () => {
         const handleFocusVisible = spy();
-        render(<AccordionSummary onFocusVisible={handleFocusVisible} />);
+        render(
+          <Accordion>
+            <AccordionSummary onFocusVisible={handleFocusVisible} />
+            <AccordionDetails>Details</AccordionDetails>
+          </Accordion>,
+        );
         // simulate pointer device
         fireEvent.mouseDown(document.body);
 
@@ -243,6 +315,7 @@ describe('<AccordionSummary />', () => {
         <React.Fragment>
           <Accordion onChange={handleChange} expanded={false}>
             <AccordionSummary>Summary</AccordionSummary>
+            <AccordionDetails>Details</AccordionDetails>
           </Accordion>
           <div data-testid="outside" />
         </React.Fragment>,
@@ -268,6 +341,7 @@ describe('<AccordionSummary />', () => {
       const { user } = render(
         <Accordion onChange={handleChange} expanded={false}>
           <AccordionSummary>Summary</AccordionSummary>
+          <AccordionDetails>Details</AccordionDetails>
         </Accordion>,
       );
 
@@ -282,6 +356,7 @@ describe('<AccordionSummary />', () => {
       const { user } = render(
         <Accordion onChange={handleChange} expanded={false}>
           <AccordionSummary>Summary</AccordionSummary>
+          <AccordionDetails>Details</AccordionDetails>
         </Accordion>,
       );
 
@@ -305,6 +380,7 @@ describe('<AccordionSummary />', () => {
           >
             Billing details
           </AccordionSummary>
+          <AccordionDetails>Details</AccordionDetails>
         </Accordion>,
       );
 
@@ -318,6 +394,7 @@ describe('<AccordionSummary />', () => {
         render(
           <Accordion>
             <AccordionSummary>Shipping</AccordionSummary>
+            <AccordionDetails>Details</AccordionDetails>
           </Accordion>,
         );
 
@@ -328,6 +405,7 @@ describe('<AccordionSummary />', () => {
         const { user } = render(
           <Accordion>
             <AccordionSummary>Shipping</AccordionSummary>
+            <AccordionDetails>Details</AccordionDetails>
           </Accordion>,
         );
         const summary = screen.getByRole('button');

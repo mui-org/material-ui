@@ -171,7 +171,7 @@ This is the item-level report for the accordion header button. The root `<Accord
 
 <!-- 1.3.1:start -->
 
-- The summary exposes its `button` role and its `aria-expanded` state programmatically; the disclosure relationship to the panel is wired by the root `<Accordion>` (see [Accordion](../Accordion/accessibility.md)).
+- The summary exposes its `button` role and its `aria-expanded` state programmatically; the disclosure relationship to the panel is wired by the root `<Accordion>`, which supplies the summary's `id` and `aria-controls` (see [Accordion](../Accordion/accessibility.md)). A summary rendered outside an `<Accordion>` gets neither, which is out of scope for this report.
 - axe-core `aria-allowed-attr`, `aria-valid-attr`, and `aria-valid-attr-value` pass across the demos.
 
 **Manual testing steps**

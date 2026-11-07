@@ -3,11 +3,13 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
+import resolveComponentProps from '@mui/utils/resolveComponentProps';
+import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import ButtonBase from '../ButtonBase';
-import AccordionContext from '../Accordion/AccordionContext';
+import { useAccordionContext } from '../Accordion/AccordionContext';
 import { getTransitionStyles } from '../transitions/utils';
 import accordionSummaryClasses, {
   getAccordionSummaryUtilityClass,
@@ -119,11 +121,10 @@ const AccordionSummary = React.forwardRef(function AccordionSummary(inProps, ref
     ...other
   } = props;
 
-  const { disabled = false, disableGutters, expanded, toggle } = React.useContext(AccordionContext);
-  const handleChange = (event) => {
-    if (toggle) {
-      toggle(event);
-    }
+  const { disabled, disableGutters, expanded, toggle, summaryId, ariaControls, registerSummary } =
+    useAccordionContext();
+  const handleClick = (event) => {
+    toggle(event);
     if (onClick) {
       onClick(event);
     }
@@ -138,12 +139,23 @@ const AccordionSummary = React.forwardRef(function AccordionSummary(inProps, ref
 
   const classes = useUtilityClasses(ownerState);
 
+  // Reported back to Accordion so it can pair the region with the ids this summary really renders,
+  // including the ones Accordion cannot read off its child.
+  const resolvedRootSlotProps = resolveComponentProps(slotProps?.root, ownerState);
+  const summaryIdProp = resolvedRootSlotProps?.id ?? other.id;
+  const ariaControlsProp = resolvedRootSlotProps?.['aria-controls'] ?? other['aria-controls'];
+
+  useEnhancedEffect(() => {
+    registerSummary?.(summaryIdProp, ariaControlsProp);
+    return () => registerSummary?.(undefined, undefined);
+  }, [registerSummary, summaryIdProp, ariaControlsProp]);
+
   const externalForwardedProps = {
     slots,
     slotProps,
   };
 
-  const [RootSlot, rootSlotProps] = useSlot('root', {
+  const [RootSlot, rootProps] = useSlot('root', {
     ref,
     shouldForwardComponentProp: true,
     className: clsx(classes.root, className),
@@ -153,7 +165,11 @@ const AccordionSummary = React.forwardRef(function AccordionSummary(inProps, ref
       ...other,
     },
     ownerState,
+    // `id` and `aria-controls` are defaults, so an id passed as a prop or through
+    // `slotProps.root` takes precedence. Both are undefined outside an Accordion.
     additionalProps: {
+      id: summaryId,
+      'aria-controls': ariaControls,
       focusRipple: false,
       disableRipple: true,
       internalNativeButton: true,
@@ -165,7 +181,7 @@ const AccordionSummary = React.forwardRef(function AccordionSummary(inProps, ref
       ...handlers,
       onClick: (event) => {
         handlers.onClick?.(event);
-        handleChange(event);
+        handleClick(event);
       },
     }),
   });
@@ -185,7 +201,7 @@ const AccordionSummary = React.forwardRef(function AccordionSummary(inProps, ref
   });
 
   return (
-    <RootSlot {...rootSlotProps}>
+    <RootSlot {...rootProps}>
       <ContentSlot {...contentSlotProps}>{children}</ContentSlot>
       {expandIcon && (
         <ExpandIconWrapperSlot {...expandIconWrapperSlotProps}>{expandIcon}</ExpandIconWrapperSlot>
@@ -224,6 +240,10 @@ AccordionSummary.propTypes /* remove-proptypes */ = {
    * if needed.
    */
   focusVisibleClassName: PropTypes.string,
+  /**
+   * @ignore
+   */
+  id: PropTypes.string,
   /**
    * @ignore
    */
