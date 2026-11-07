@@ -1,3 +1,4 @@
+import alertClasses from '../Alert/alertClasses';
 import accordionSummaryClasses from '../AccordionSummary/accordionSummaryClasses';
 import autocompleteClasses from '../Autocomplete/autocompleteClasses';
 import checkboxClasses from '../Checkbox/checkboxClasses';
@@ -115,6 +116,33 @@ export default function enhanceHighContrast<
   const c = theme.components;
   theme.components = {
     ...c,
+    MuiAlert: {
+      ...c?.MuiAlert,
+      styleOverrides: {
+        ...c?.MuiAlert?.styleOverrides,
+        root: [
+          c?.MuiAlert?.styleOverrides?.root,
+          {
+            // All variants lack a visible border in HCM — add one so the
+            // alert region is distinguishable from the surrounding canvas.
+            [HCM]: {
+              outline: `1px solid ${hcTokens.buttonBorder}`,
+            },
+            // The filled variant uses background colour to convey severity;
+            // in HCM backgrounds are overridden by the OS, so explicitly set
+            // foreground/background using system color tokens to preserve contrast.
+            [`&.${alertClasses.filled}`]: {
+              [HCM]: {
+                forcedColorAdjust: 'none',
+                outline: `2px solid ${hcTokens.buttonBorder}`,
+                color: hcTokens.buttonText,
+                backgroundColor: hcTokens.activeBackground,
+              },
+            },
+          },
+        ],
+      },
+    },
     MuiAccordionSummary: {
       ...c?.MuiAccordionSummary,
       styleOverrides: {
