@@ -73,7 +73,7 @@ export interface Keyframes {
   getName(): string;
 }
 
-function styled(tag: any, options?: any): any {
+function styled(tag: any, options?: any, sxOwner?: object): any {
   let stylesFactory: any;
 
   if (options) {
@@ -83,6 +83,10 @@ function styled(tag: any, options?: any): any {
     });
   } else {
     stylesFactory = scStyled(tag);
+  }
+
+  if (sxOwner) {
+    stylesFactory = stylesFactory.attrs({ $muiSxOwner: sxOwner });
   }
 
   if (process.env.NODE_ENV !== 'production') {
@@ -110,6 +114,23 @@ function styled(tag: any, options?: any): any {
 }
 
 export default styled as unknown as typeof scStyled;
+
+/**
+ * For internal usage in `@mui/system` package.
+ */
+export function internal_createStyled(
+  tag: React.ElementType,
+  options: any,
+  styleFunctionSx: (props: any) => any,
+) {
+  const sxOwner = {};
+  // The outermost attrs value wins in a composed styled-components chain.
+  // Keep each layer's sx function intact so it still works independently.
+  return [
+    styled(tag, options, sxOwner),
+    (props: any) => (props.$muiSxOwner === sxOwner ? styleFunctionSx(props) : null),
+  ] as const;
+}
 
 /**
  * For internal usage in `@mui/system` package
