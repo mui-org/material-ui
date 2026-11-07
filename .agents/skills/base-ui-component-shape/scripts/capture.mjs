@@ -30,12 +30,12 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
 
 async function capture(fixture, state) {
-  const [scenario, option] = fixture.split('--');
+  const [scenario, variant] = fixture.split('--');
   await page.goto(`${values.url}/regression-${values.suite}/${fixture}?state=${state}#no-dev`, {
     waitUntil: 'networkidle',
   });
   await page.waitForTimeout(400);
-  const file = path.resolve(values.out, scenario, `${option}-${state}.png`);
+  const file = path.resolve(values.out, scenario, `${variant}-${state}.png`);
   await fs.mkdir(path.dirname(file), { recursive: true });
   const target = await page.$('[data-testid="screenshot-target"]');
   await (target ?? page).screenshot({ path: file });

@@ -1,6 +1,6 @@
 # Prototypes
 
-Each option is a **prototype**: thin wrappers over `@base-ui/react` and existing Material UI components, written as user-land code, the way the Menubar and Number Field docs recipes are. A prototype has no package registration, no theme typings, and no tests. It exists to render the scenarios and to measure what each option costs.
+The recommended shape and each fork variant are **prototypes**: thin wrappers over `@base-ui/react` and existing Material UI components, written as user-land code, the way the Menubar and Number Field docs recipes are. A prototype has no package registration, no theme typings, and no tests. It exists to render the scenarios and to measure what each choice costs.
 
 ## Scratch folder
 
@@ -8,14 +8,14 @@ Everything lives in a scratch folder at the repository root that is never commit
 
 ```text
 .shape/<kebab-name>/
-  options/closed.tsx        the parts of each option
-  options/balanced.tsx
-  options/open.tsx
+  shape/recommended.tsx     the parts of the recommended shape
+  shape/fork-<name>.tsx     one fork variant: the recommended shape with one part changed
   user-components.tsx       stand-ins for the user's own components
   themes.tsx                the brand theme and the opposite design theme
   frame.tsx                 renders a scenario in one capture state
-  scenarios/<scenario>/<option>.tsx
-  screenshots/<scenario>/<option>-<state>.png
+  scenarios/<scenario>/recommended.tsx
+  scenarios/<scenario>/fork-<name>.tsx    only for the scenarios that fork changes
+  screenshots/<scenario>/<variant>-<state>.png
   <kebab-name>-shape.md     the RFC
 ```
 
@@ -28,21 +28,29 @@ mkdir -p .shape/node_modules/@base-ui
 ln -s ../../../docs/node_modules/@base-ui/react .shape/node_modules/@base-ui/react
 ```
 
-## Options
+## Shape files
 
-Write each option file as the public API of that option and nothing more:
+`shape/recommended.tsx` is the public API of the recommended shape and nothing more. A fork variant re-exports it and replaces only the part the fork is about, so the two differ in one place:
+
+```tsx
+export * from './recommended';
+```
+
+Below that line, define the one changed part under its usual name (`export function MenubarItem(…)`). A local export takes precedence over the same name from `export *`.
+
+Write the parts like this:
 
 - Each public part is a function component that renders a Base UI part with Material UI styles through Base UI `render`, as `docs/data/material/components/menubar/demos/Menubar.tsx` does.
 - A part that merges several Base UI parts renders them all and takes `slots` and `slotProps` for the inner ones.
-- Style each part with `styled(…, { name: 'Mui<Name><Part>', slot: 'root' })`, so `styleOverrides` in a theme reach it at runtime. Use the same part names across options where the part is the same.
+- Style each part with `styled(…, { name: 'Mui<Name><Part>', slot: 'root' })`, so `styleOverrides` in a theme reach it at runtime.
 - Read props through `useDefaultProps({ props, name: 'Mui<Name><Part>' })` from `@mui/material/DefaultPropsProvider`, so theme `defaultProps` work too.
-- A styled part that accepts a user's `render` keeps its styles on the user's element, the way the build skill does it: see "Public `render`" in `.agents/skills/base-ui-component-build/references/adapter.md`. A prototype that lets the user's element replace the styled one makes that option look worse for a reason the real component would not have.
+- A styled part that accepts a user's `render` keeps its styles on the user's element, the way the build skill does it: see "Public `render`" in `.agents/skills/base-ui-component-build/references/adapter.md`. A prototype that lets the user's element replace the styled one makes a choice look worse for a reason the real component would not have.
 - Give a portaled popup the `zIndex` of the closest Material component (`zIndex.modal` for click-opened, `zIndex.tooltip` for hover-opened), so it renders above a `Dialog`.
-- Count the lines each option file needs; step 5 reports them.
+- Count the lines each shape file needs; step 6 reports them.
 
 ## Scenarios
 
-A scenario file is the code an end user would write, and the RFC quotes it as is. Keep it free of capture logic. For example, `.shape/menubar/scenarios/basic/balanced.tsx`:
+A scenario file is the code an end user would write, and the RFC quotes it as is. Keep it free of capture logic. For example, `.shape/menubar/scenarios/basic/recommended.tsx`:
 
 ```tsx
 import Button from '@mui/material/Button';
@@ -52,7 +60,7 @@ import {
   MenubarTrigger,
   MenubarPopup,
   MenubarItem,
-} from '../../options/balanced';
+} from '../../shape/recommended';
 
 export default function Example({ defaultOpen }: { defaultOpen?: boolean }) {
   return (
@@ -68,7 +76,7 @@ export default function Example({ defaultOpen }: { defaultOpen?: boolean }) {
 }
 ```
 
-Every scenario accepts `defaultOpen` (or the component's equivalent) so the capture can show its open state. Write the same scenario for every option; a scenario that an option cannot express is a finding for step 5.
+Every scenario accepts `defaultOpen` (or the component's equivalent) so the capture can show its open state. Write every scenario with the recommended shape, and write a fork's version only for the scenarios that fork changes. A scenario that a choice cannot express is a finding for step 6.
 
 A state deeper than open, such as an open submenu, is its own scenario: set `defaultOpen` on the inner part too.
 
@@ -118,11 +126,11 @@ A scenario that opens a modal (a `Dialog`) centers it in the page, outside the f
 
 ## Render and capture
 
-1. For every scenario and option, add a fixture that re-exports it in the frame. Fixtures are registered by path, `test/regressions/fixtures/<Suite>/<File>.tsx`, and only two path levels count, so encode the scenario and option in the file name, for example `test/regressions/fixtures/MenubarShape/basic--balanced.tsx`:
+1. For every scenario file, add a fixture that re-exports it in the frame. Fixtures are registered by path, `test/regressions/fixtures/<Suite>/<File>.tsx`, and only two path levels count, so encode the scenario and variant in the file name, for example `test/regressions/fixtures/MenubarShape/basic--recommended.tsx`:
 
    ```tsx
    import Frame from '../../../../.shape/menubar/frame';
-   import Example from '../../../../.shape/menubar/scenarios/basic/balanced';
+   import Example from '../../../../.shape/menubar/scenarios/basic/recommended';
 
    export default function Fixture() {
      return <Frame>{(open) => <Example defaultOpen={open} />}</Frame>;
@@ -134,11 +142,12 @@ A scenario that opens a modal (a `Dialog`) centers it in the page, outside the f
    - If port 5001 is taken, serve on another port with `pnpm exec vite preview test/regressions --port <port> --strictPort`, and pass `--url http://localhost:<port>` to the capture script.
    - Rebuild after every change to a prototype or scenario; the server serves the last build.
    - The first capture after a build can fail while the browser loads; run it again before reading the result.
-3. Capture the fixtures. The script writes `<out>/<scenario>/<option>-<state>.png`. Capture the theming scenarios separately in the `open` state, and the others in every state:
+3. Capture the fixtures. The script writes `<out>/<scenario>/<variant>-<state>.png`. Capture the recommended shape in every state, except the theming scenarios, and the fork variants in the `open` state:
 
    ```bash
-   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match '^theme-' --states open
-   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match '^(?!theme-)'
+   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match '^(?!theme-).*--recommended$'
+   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match '^theme-.*--recommended$' --states open
+   node .agents/skills/base-ui-component-shape/scripts/capture.mjs --suite MenubarShape --out .shape/menubar/screenshots --match='--fork-' --states open
    ```
 
 4. Stop the server and delete `test/regressions/fixtures/<Suite>/`. The fixtures must never reach a commit: regression CI screenshots every fixture.

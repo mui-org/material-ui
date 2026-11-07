@@ -29,7 +29,7 @@ These rules were decided by the Material UI team on 2026-11-04. Apply every one 
 
 ### 1. Read the approved shape
 
-Find the RFC that `base-ui-component-shape` produced and read its "Approved shape" section: the chosen option and its part table. If there is no RFC, or that section is empty, stop and ask the author to run `base-ui-component-shape` and get the team's decision first.
+Find the RFC that `base-ui-component-shape` produced and read its "Approved shape" section: the approved part table, with each fork's decision applied. If there is no RFC, or that section is empty, stop and ask the author to run `base-ui-component-shape` and get the team's decision first.
 
 Read the Base UI docs and types for the component. They ship with the package installed for the docs: `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` and `docs/node_modules/@base-ui/react/<kebab-name>/**/*.d.ts`.
 

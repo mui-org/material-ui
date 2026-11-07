@@ -1,6 +1,6 @@
 ---
 name: base-ui-component-shape
-description: Compare how open a new Material UI component built on Base UI should be, from one closed component configured by props to one public part per Base UI part, with prototypes, screenshots, and an RFC for the team to decide. Run before base-ui-component-build.
+description: Find the shape of a new Material UI component built on Base UI, meaning which pieces end users write in their code. Derives one recommended shape from evidence, lists the few forks where the team must decide, and backs both with prototypes, screenshots, and an RFC. Run before base-ui-component-build.
 disable-model-invocation: true
 ---
 
@@ -9,9 +9,10 @@ disable-model-invocation: true
 Before anyone builds a component on Base UI, the team decides its **shape**: which pieces end users write in their code.
 At one end, one closed component wraps every Base UI part and exposes props.
 At the other end, every Base UI part is its own public part.
-Material UI usually sits between them: the Menu v2 work ([#48823](https://github.com/mui/material-ui/pull/48823)) merges Base UI's Portal, Positioner, and Popup into one `Menu2Popup` part, because users rarely customize them alone.
+The right shape sits between them, and it is decided part by part: the Menu v2 work ([#48823](https://github.com/mui/material-ui/pull/48823)) merges Base UI's Portal, Positioner, and Popup into one `Menu2Popup` part, because users rarely customize them alone, but keeps the trigger and the items as public parts.
 
-This skill does not pick the shape. It shows the team three options side by side, as the code end users write and as screenshots of what that code renders, so the team can decide.
+This skill derives one **recommended shape** from evidence, then lists the **forks**: the few parts where the evidence is weak, the rules conflict, or a product decision is needed.
+The team approves the recommendation and decides each fork, from the code end users write and from screenshots of what it renders.
 `base-ui-component-build` then builds the approved shape; its conventions (`render`, `Pick`, `slots`) are the same for every shape.
 
 The output is a local markdown RFC. Publishing it is the author's decision.
@@ -32,45 +33,54 @@ Done when a table lists every part in the Anatomy section plus helpers such as `
 
 ### 2. Scenarios
 
-Collect the scenarios the options must handle. Follow [references/scenarios.md](references/scenarios.md), which includes the research briefs for the composition scenarios.
+Collect the scenarios the shape must handle. Follow [references/scenarios.md](references/scenarios.md), which includes the research briefs for the composition scenarios.
 
 Done when all three categories in `scenarios.md` are present, every scenario names its source, and the composition research has returned.
 
-### 3. Options
+### 3. Recommended shape
 
-Define three options: **closed**, **balanced**, and **open**.
-For each, write a table that gives every Base UI part one role: its own public part, a slot of a named part, a prop, or hidden.
-Then build each option as a prototype, following [references/prototype.md](references/prototype.md).
+Give every Base UI part one role: its own public part, a slot of a named part, a prop, or hidden. Apply these rules in order:
 
-The balanced option follows two rules, so its merges come from evidence rather than taste:
+1. **Merge only parts without customization evidence.** A part joins a neighbor (as a slot or a prop) only when the step 1 inventory found no issue or discussion where users customize it alone. Portal and Positioner usually qualify; a trigger usually does not.
+2. **Nested structures repeat the top-level shape.** A submenu has the same parts as a menu (root, trigger, popup), so users learn one pattern.
+3. **Follow the closest Material UI component** where it already answers the question, so users meet patterns they know.
+4. **When the evidence is neutral, keep the part public.** The team's direction is toward more open components.
 
-- **Merge only parts without customization evidence.** A part joins a neighbor (as a slot or a prop) only when the step 1 inventory found no issue or discussion where users customize it alone. Portal and Positioner usually qualify; a trigger usually does not.
-- **Nested structures repeat the top-level shape.** A submenu has the same parts as a menu (root, trigger, popup), so users learn one pattern.
+Done when a table gives every inventory row a role and names the rule and the evidence behind it.
 
-Done when every option's table covers every row of the step 1 inventory, every merge in the balanced option cites "none found" in the inventory, and each option's prototype exports the parts in its table.
+### 4. Forks
 
-### 4. Render and capture
+A **fork** is a part where the recommendation is not settled by the rules: the evidence is thin (one old issue), two rules point different ways, or the answer is a product decision (exposing a part that Base UI marks as preview).
+Each fork has two choices, the recommended one and the alternative.
 
-Write every scenario as end-user code for every option, render it through `test/regressions`, and capture the four states. Follow [references/prototype.md](references/prototype.md#render-and-capture).
+Keep at most five forks, ranked by how many scenarios they change. Move the rest to the RFC's open questions.
 
-Look at every screenshot. A layout that breaks, a popup that does not open, or a composition that does not render is a finding: fix the prototype if the bug is in it, or record it as a cost of that option.
+Done when every fork names its part, its two choices, why the rules do not settle it, and the scenarios it changes.
 
-Done when every scenario has a screenshot of every state for every option, every failure is fixed or recorded, and the temporary fixtures are deleted.
+### 5. Prototype and capture
 
-### 5. Trade-offs
+Build the recommended shape as a prototype and write every scenario with it. For each fork, build a variant that changes only that part, and write only the scenarios the fork changes. Follow [references/prototype.md](references/prototype.md).
 
-Measure each option against the others:
+Render through `test/regressions` and capture: the recommended shape in every state, each fork variant in the `open` state. Follow [references/prototype.md](references/prototype.md#render-and-capture).
 
-- Lines of end-user code per scenario.
-- Public parts, docs pages, and test suites the option creates.
-- Slots the option needs.
-- Code the prototype needed beyond the plain wrappers (measured, not estimated).
+Look at every screenshot. A layout that breaks, a popup that does not open, or a composition that does not render is a finding: fix the prototype if the bug is in it, or record it as a cost of that choice.
+
+Done when every scenario has a screenshot of every state for the recommended shape, every fork has screenshots of its affected scenarios for both choices, every failure is fixed or recorded, and the temporary fixtures are deleted.
+
+### 6. Costs
+
+For the recommended shape, and for each fork's alternative compared with it, measure:
+
+- Lines of end-user code in the affected scenarios.
+- Public parts, docs pages, and test suites.
+- Slots.
+- Code the prototype needed beyond plain wrappers (measured, not estimated).
 - Reversibility: opening a part later only adds API; closing it later breaks users.
 - Consistency with the closest Material UI component.
 
-Done when the trade-off table has no empty cell.
+Done when the recommended shape and every fork have every measure filled in.
 
-### 6. RFC
+### 7. RFC
 
 Write the RFC with [references/rfc.md](references/rfc.md).
 

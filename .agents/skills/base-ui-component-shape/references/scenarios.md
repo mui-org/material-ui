@@ -1,11 +1,11 @@
 # Scenarios
 
-Every option renders the same scenarios. Three categories must be present; the author can add more.
+The recommended shape renders every scenario, and each fork variant renders the scenarios it changes. Three categories must be present; the author can add more.
 
 ## 1. Basics
 
 Take the basics from Base UI's own examples for the component: every demo in `docs/node_modules/@base-ui/react/docs/react/components/<kebab-name>.md` becomes one scenario, rewritten with Material UI parts. The same demo shown in several styling variants (Tailwind, CSS Modules) counts once.
-They show that each option covers what Base UI supports out of the box.
+They show that the shape covers what Base UI supports out of the box.
 
 When the Base UI page has few demos, add the demos of the closest Material UI docs page (for a menubar, the menubar recipe and the `Menu` page), so the basics cover every kind of item the component supports.
 
@@ -15,9 +15,9 @@ Apply three themes, each to the basic scenario, from no customization to a compl
 
 1. **Material Design**: the default theme, with no customization (`createTheme()`).
 2. **Brand**: customizes only the theme tokens: `palette`, `shape`, `typography`, and `shadows`. It shows how far the tokens alone carry the component.
-3. **Opposite design**: everything in the brand theme, plus `components` entries (`styleOverrides`, `variants`, `defaultProps`) on the `Mui<Name><Part>` keys that the option exposes, to reach a visual language far from Material Design, such as a flat, borderless, high-density desktop style.
+3. **Opposite design**: everything in the brand theme, plus `components` entries (`styleOverrides`, `variants`, `defaultProps`) on the `Mui<Name><Part>` keys that the shape exposes, to reach a visual language far from Material Design, such as a flat, borderless, high-density desktop style.
 
-An option whose parts have no theme key for a piece the opposite design needs to restyle shows it here: record what the theme could not reach.
+A shape whose parts have no theme key for a piece the opposite design needs to restyle shows it here: record what the theme could not reach. A part that the theme cannot reach is a candidate fork.
 
 ## 3. Real-world compositions
 
