@@ -33,9 +33,7 @@ const CardActionsRoot = styled('div', {
     {
       props: { disableSpacing: false },
       style: {
-        '& > :not(style) ~ :not(style)': {
-          marginLeft: 8,
-        },
+        gap: 8,
       },
     },
   ],

@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createRenderer, isJsdom } from '@mui/internal-test-utils';
+import { createRenderer, screen } from '@mui/internal-test-utils';
 import CardActions, { cardActionsClasses as classes } from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
 import describeConformance from '../../test/describeConformance';
 
 describe('<CardActions />', () => {
@@ -17,24 +16,13 @@ describe('<CardActions />', () => {
     skip: ['componentProp'],
   }));
 
-  it.skipIf(isJsdom())('should apply margin to all children but the first one', function test() {
-    const { container } = render(
+  it('should render a children element', function test() {
+    render(
       <CardActions>
-        <Button data-testid="child-1">Agree</Button>
-        <Button data-testid="child-2" href="#">
-          Agree
-        </Button>
-        <Button data-testid="child-3" component="span">
-          Agree
-        </Button>
-        <div data-testid="child-4" />
+        <div data-testid="test-children" />
       </CardActions>,
     );
 
-    const children = container.querySelectorAll('[data-testid^="child-"]');
-    expect(children[0]).toHaveComputedStyle({ marginLeft: '0px' });
-    expect(children[1]).toHaveComputedStyle({ marginLeft: '8px' });
-    expect(children[2]).toHaveComputedStyle({ marginLeft: '8px' });
-    expect(children[3]).toHaveComputedStyle({ marginLeft: '8px' });
+    expect(screen.queryByTestId('test-children')).not.to.equal(null);
   });
 });

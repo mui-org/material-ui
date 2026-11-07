@@ -35,9 +35,7 @@ const DialogActionsRoot = styled('div', {
     {
       props: ({ ownerState }) => !ownerState.disableSpacing,
       style: {
-        '& > :not(style) ~ :not(style)': {
-          marginLeft: 8,
-        },
+        gap: 8,
       },
     },
   ],
