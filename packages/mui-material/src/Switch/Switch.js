@@ -12,7 +12,6 @@ import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import switchClasses, { getSwitchUtilityClass } from './switchClasses';
 import buttonBaseClasses from '../ButtonBase/buttonBaseClasses';
-import { outsetFocusRing } from '../styles/focusVisible';
 import { mergeSlotProps } from '../utils';
 import useSlot from '../utils/useSlot';
 import { getTransitionStyles } from '../transitions/utils';
@@ -132,10 +131,7 @@ const SwitchSwitchBase = styled(SwitchBase, {
     ...(theme.focusVisible
       ? {
           // when focusVisible is enabled, the styles must not rely on `opacity` so that the ring is visible on the track slot.
-          [`&.${buttonBaseClasses.focusVisible} ~ .${switchClasses.track}`]: {
-            ...outsetFocusRing,
-            ...theme.focusVisible,
-          },
+          [`&.${buttonBaseClasses.focusVisible} ~ .${switchClasses.track}`]: theme.focusVisible,
           // mirrors the non-focusVisible `opacity: 0.5`; must stay BEFORE the disabled rule so
           // disabled wins the checked+disabled combination at equal specificity.
           [`&.${switchClasses.checked} + .${switchClasses.track}`]: {

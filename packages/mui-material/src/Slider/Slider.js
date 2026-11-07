@@ -17,7 +17,6 @@ import createSimplePaletteValueFilter from '../utils/createSimplePaletteValueFil
 import BaseSliderValueLabel from './SliderValueLabel';
 import sliderClasses, { getSliderUtilityClass } from './sliderClasses';
 import { getTransitionStyles } from '../transitions/utils';
-import { outsetFocusRing } from '../styles/focusVisible';
 
 function Identity(x) {
   return x;
@@ -283,7 +282,7 @@ export const SliderThumb = styled('span', {
       },
     },
     ...(theme.focusVisible && {
-      [`&.${sliderClasses.focusVisible}`]: { ...outsetFocusRing, ...theme.focusVisible },
+      [`&.${sliderClasses.focusVisible}`]: theme.focusVisible,
     }),
     variants: [
       {

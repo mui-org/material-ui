@@ -25,7 +25,11 @@ import defaultShouldSkipGeneratingVar from './shouldSkipGeneratingVar';
 import defaultGetSelector from './createGetSelector';
 import { stringifyTheme } from './stringifyTheme';
 import { light, dark } from './createPalette';
-import { resolveFocusVisible, mergeFocusVisibleInput } from './focusVisible';
+import {
+  resolveFocusVisible,
+  mergeFocusVisibleInput,
+  mergeFocusVisibleInsetOverrides,
+} from './focusVisible';
 
 function assignNode(obj, keys) {
   keys.forEach((k) => {
@@ -1002,6 +1006,7 @@ export default function createThemeWithVars(options = {}, ...args) {
   const focusVisibleInput = mergeFocusVisibleInput(options.focusVisible, args);
   if (focusVisibleInput != null && focusVisibleInput !== false) {
     theme.focusVisible = resolveFocusVisible(focusVisibleInput, getCssVar('palette-primary-main'));
+    theme.unstable_focusVisibleInsetOverrides = mergeFocusVisibleInsetOverrides([options, ...args]);
   }
 
   const parserConfig = {

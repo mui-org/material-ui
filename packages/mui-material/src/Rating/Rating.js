@@ -16,7 +16,6 @@ import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import slotShouldForwardProp from '../styles/slotShouldForwardProp';
 import ratingClasses, { getRatingUtilityClass } from './ratingClasses';
-import { outsetFocusRing } from '../styles/focusVisible';
 import useSlot from '../utils/useSlot';
 import { getTransitionStyles } from '../transitions/utils';
 
@@ -93,7 +92,7 @@ const RatingRoot = styled('span', {
       ...(!theme.focusVisible && {
         outline: '1px solid #999',
       }),
-      ...(theme.focusVisible && { ...outsetFocusRing, ...theme.focusVisible }),
+      ...(theme.focusVisible && theme.focusVisible),
     },
     [`& .${ratingClasses.visuallyHidden}`]: visuallyHidden,
     variants: [
@@ -146,7 +145,7 @@ const RatingLabel = styled('label', {
           ...(!theme.focusVisible && {
             outline: '1px solid #999',
           }),
-          ...(theme.focusVisible && { ...outsetFocusRing, ...theme.focusVisible }),
+          ...(theme.focusVisible && theme.focusVisible),
         },
       },
     ],

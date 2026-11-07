@@ -355,6 +355,58 @@ const theme = createTheme();
   });
 }
 
+// focusVisible insetOverrides
+{
+  createTheme({
+    focusVisible: {
+      outlineOffset: 1,
+      boxShadow: '0 0 0 1px #fff',
+      insetOverrides: { outlineOffset: -2, boxShadow: 'inset 0 0 0 3px #fff' },
+    },
+  });
+  createTheme({ focusVisible: { insetOverrides: { borderRadius: 4, outlineColor: 'red' } } });
+
+  createTheme({
+    // @ts-expect-error insetOverrides takes CSS properties
+    focusVisible: { insetOverrides: { outlineOffset: true } },
+  });
+
+  const insetOverrides: React.CSSProperties | undefined =
+    createTheme().unstable_focusVisibleInsetOverrides;
+  createTheme({ focusVisible: { insetOverrides } });
+}
+
+// theme.applyFocusVisible
+{
+  const ringTheme = createTheme({ focusVisible: true });
+  // @ts-expect-error the position is required
+  ringTheme.applyFocusVisible();
+  ringTheme.applyFocusVisible('inside');
+  ringTheme.applyFocusVisible('outside');
+  createTheme({ cssVariables: true }).applyFocusVisible('inside');
+
+  createTheme({
+    components: {
+      MuiMenuItem: {
+        styleOverrides: {
+          root: ({ theme: t }) => ({ '&.Mui-focusVisible': t.applyFocusVisible('outside') }),
+        },
+      },
+    },
+  });
+
+  // @ts-expect-error the position is `inside` or `outside`, not a number
+  ringTheme.applyFocusVisible(-1);
+
+  ringTheme.components = {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: ({ theme: t }) => ({ '&.Mui-focusVisible': t.applyFocusVisible('outside') }),
+      },
+    },
+  };
+}
+
 // `theme.vars.zIndex`, `theme.vars.opacity` and the action opacities are typed as CSS variable strings
 {
   const varsTheme = createTheme({ cssVariables: true });

@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import composeClasses from '@mui/utils/composeClasses';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
-import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import ButtonBase from '../ButtonBase';
@@ -106,14 +105,12 @@ const ListItemButtonRoot = styled(ButtonBase, {
         ),
       },
     },
-    ...(theme.focusVisible
+    [`&.${listItemButtonClasses.focusVisible}`]: theme.focusVisible
       ? // Inset the ring: a scrolling List (drawers, long lists) clips an outset ring.
-        applyInsetFocusVisible(1)
+        theme.applyFocusVisible('inside')
       : {
-          [`&.${listItemButtonClasses.focusVisible}`]: {
-            backgroundColor: (theme.vars || theme).palette.action.focus,
-          },
-        }),
+          backgroundColor: (theme.vars || theme).palette.action.focus,
+        },
     [`&.${listItemButtonClasses.disabled}`]: {
       opacity: (theme.vars || theme).palette.action.disabledOpacity,
     },

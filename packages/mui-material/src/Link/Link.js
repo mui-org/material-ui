@@ -13,7 +13,6 @@ import { useDefaultProps } from '../DefaultPropsProvider';
 import Typography from '../Typography';
 import linkClasses, { getLinkUtilityClass } from './linkClasses';
 import getTextDecoration from './getTextDecoration';
-import { outsetFocusRing } from '../styles/focusVisible';
 
 const v6Colors = {
   primary: true,
@@ -58,7 +57,7 @@ const LinkRoot = styled(Typography, {
   memoTheme(({ theme }) => {
     return {
       ...(theme.focusVisible && {
-        [`&.${linkClasses.focusVisible}`]: { ...outsetFocusRing, ...theme.focusVisible },
+        [`&.${linkClasses.focusVisible}`]: theme.focusVisible,
       }),
       variants: [
         {

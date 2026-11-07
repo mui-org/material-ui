@@ -43,6 +43,15 @@ export interface CssThemeVariables {}
  */
 export type FocusVisible = React.CSSProperties;
 
+/**
+ * The `focusVisible` theme option. `insetOverrides` holds the styles that change on components that
+ * draw the ring inside their edge. Without it, those components use `outlineOffset: -outlineWidth`
+ * and the same `boxShadow` drawn `inset`.
+ */
+export type FocusVisibleOptions = React.CSSProperties & {
+  insetOverrides?: React.CSSProperties | undefined;
+};
+
 type CssVarsOptions = CssThemeVariables extends {
   enabled: true;
 }
@@ -60,7 +69,7 @@ export interface ThemeOptions extends Omit<SystemThemeOptions, 'zIndex'>, CssVar
   typography?:
     TypographyVariantsOptions | ((palette: Palette) => TypographyVariantsOptions) | undefined;
   zIndex?: ZIndexOptions | undefined;
-  focusVisible?: boolean | FocusVisible | undefined;
+  focusVisible?: boolean | FocusVisibleOptions | undefined;
   unstable_strictMode?: boolean | undefined;
   unstable_sxConfig?: SxConfig | undefined;
   modularCssLayers?: boolean | string | undefined;
@@ -78,6 +87,20 @@ export interface BaseTheme extends SystemTheme {
   focusVisible?: FocusVisible | false | undefined;
   unstable_strictMode?: boolean | undefined;
   applyStyles: ApplyStyles<SupportedColorScheme>;
+  /**
+   * Returns the `theme.focusVisible` ring for a focus selector. `'outside'` is `theme.focusVisible`,
+   * and `'inside'` merges the inset ring over it. Returns `{}` when `theme.focusVisible` is off.
+   * Call it on the theme (`theme.applyFocusVisible(…)`), not destructured.
+   *
+   * @param position `'outside'` or `'inside'`.
+   * @example
+   * styleOverrides: {
+   *   root: ({ theme }) => ({ '&.Mui-focusVisible': theme.applyFocusVisible('outside') }),
+   * }
+   */
+  applyFocusVisible: (position: 'inside' | 'outside') => CSSObject;
+  /** The `focusVisible.insetOverrides` the theme was created with. */
+  unstable_focusVisibleInsetOverrides?: React.CSSProperties | undefined;
 }
 
 // shut off automatic exporting for the `BaseTheme` above

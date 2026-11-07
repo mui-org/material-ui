@@ -15,7 +15,12 @@ import type {
 } from './createThemeNoVars';
 import createThemeNoVars from './createThemeNoVars';
 
-export type { Theme, CssThemeVariables, FocusVisible } from './createThemeNoVars';
+export type {
+  Theme,
+  CssThemeVariables,
+  FocusVisible,
+  FocusVisibleOptions,
+} from './createThemeNoVars';
 
 type CssVarsOptions = CssThemeVariables extends {
   enabled: true;

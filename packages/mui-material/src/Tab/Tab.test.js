@@ -324,8 +324,33 @@ describe('<Tab />', () => {
       const tab = screen.getByRole('tab');
       simulatePointerDevice();
       focusVisible(tab);
-      // Tab insets deeper than the default mirror (offset 3 → −3 × the 2px outlineOffset).
       expect(tab).toHaveComputedStyle({ outlineOffset: '-6px' });
+    });
+
+    [
+      [-3, '-6px'],
+      [-8, '-8px'],
+    ].forEach(([inside, expected]) => {
+      it.skipIf(isJsdom())(
+        `keeps the ring clear of the indicator (inside: ${inside} → ${expected})`,
+        () => {
+          const theme = createTheme({
+            focusVisible: { outlineOffset: 1, insetOverrides: { outlineOffset: inside } },
+            components: { MuiButtonBase: { defaultProps: { disableRipple: true } } },
+          });
+          render(
+            <ThemeProvider theme={theme}>
+              <Tabs value={0}>
+                <Tab label="One" />
+              </Tabs>
+            </ThemeProvider>,
+          );
+          const tab = screen.getByRole('tab');
+          simulatePointerDevice();
+          focusVisible(tab);
+          expect(tab).toHaveComputedStyle({ outlineOffset: expected });
+        },
+      );
     });
 
     it.skipIf(isJsdom())('insets a user box-shadow automatically on clip-prone components', () => {

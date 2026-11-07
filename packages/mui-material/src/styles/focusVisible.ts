@@ -1,19 +1,10 @@
 import type * as React from 'react';
 import deepmerge from '@mui/utils/deepmerge';
+import type { FocusVisibleOptions } from './createThemeNoVars';
 
-const focusVisibleOffsetVar = '--_focusVisible-offset';
-const focusVisibleBehaviorVar = '--_focusVisible-behavior';
 const focusVisibleShadowVar = '--_focusVisible-shadow';
 
-const offsetValue = `var(${focusVisibleOffsetVar}, 1)`;
-const behaviorValue = `var(${focusVisibleBehaviorVar}, )`;
-
-// Spread on a root whose ring must stay outset: the inset vars inherit, so a clip-prone ancestor
-// would otherwise inset a descendant's ring too.
-export const outsetFocusRing = {
-  [focusVisibleOffsetVar]: 1,
-  [focusVisibleBehaviorVar]: 'initial', // reverts the var to guaranteed-invalid so `var(--_focusVisible-behavior, )` falls back to empty — there is no explicit `outset` keyword.
-};
+const defaultOutlineOffset = 2;
 
 // Used by the colored-background surfaces (AppBar, Alert, SnackbarContent) to make the focus visible appear through box-shadow
 export function applyChildrenFocusVisible(color: string) {
@@ -22,17 +13,12 @@ export function applyChildrenFocusVisible(color: string) {
   };
 }
 
-// Clip-prone components (Tab, MenuItem, …) spread this on their root to inset the ring, so an
-// `overflow: hidden` ancestor cannot clip it — without the component knowing the ring width.
-// `offset` multiplies the ring's own outlineOffset, so 1 = mirror it inward.
-export function applyInsetFocusVisible(offset: number) {
-  return {
-    [focusVisibleOffsetVar]: -offset,
-    [focusVisibleBehaviorVar]: 'inset',
-  };
-}
+export type FocusVisibleInput = boolean | FocusVisibleOptions | null | undefined;
 
-export type FocusVisibleInput = boolean | React.CSSProperties | null | undefined;
+interface FocusVisibleTheme {
+  focusVisible?: React.CSSProperties | false | undefined;
+  unstable_focusVisibleInsetOverrides?: React.CSSProperties | undefined;
+}
 
 // Merge the raw `focusVisible` input across `createTheme(options, ...args)` with the theme's own
 // deep-merge semantics. The single-key wrapper is load-bearing — a raw value hits deepmerge's
@@ -48,67 +34,126 @@ export function mergeFocusVisibleInput(
   ).focusVisible;
 }
 
+export function mergeFocusVisibleInsetOverrides(
+  sources: readonly any[],
+): React.CSSProperties | undefined {
+  return sources.reduce<React.CSSProperties | undefined>((merged, source) => {
+    if (!source) {
+      return merged;
+    }
+    const inputOverrides =
+      source.focusVisible && typeof source.focusVisible === 'object'
+        ? source.focusVisible.insetOverrides
+        : undefined;
+    return [source.unstable_focusVisibleInsetOverrides, inputOverrides].reduce(
+      (acc, overrides) => (overrides ? deepmerge(acc ?? {}, overrides) : acc),
+      merged,
+    );
+  }, undefined);
+}
+
+const resolvedRings = new WeakSet<object>();
+
 /**
- * Whether an input is this module's own output. Only `wireFocusVisibleVars` emits the offset calc,
- * so it identifies a ring fed back in by `createTheme(existingTheme, …)`.
+ * Whether an input is this module's own output, which identifies a ring fed back in by
+ * `createTheme(existingTheme, …)`.
  */
 export function isResolvedFocusVisible(input: FocusVisibleInput): boolean {
-  return (
-    input != null &&
-    typeof input === 'object' &&
-    typeof input.outlineOffset === 'string' &&
-    input.outlineOffset.includes(focusVisibleOffsetVar)
-  );
+  return input != null && typeof input === 'object' && resolvedRings.has(input);
 }
 
 /**
- * Resolve the opt-in ring, wiring in the private inset vars. `outlineColor` is the caller's default
- * — a hex, the palette var, or a scheme's primary — overridden by a user-provided `outlineColor`.
+ * Resolve the opt-in outer ring. `outlineColor` is the caller's default — a hex, the palette var,
+ * or a scheme's primary — overridden by a user-provided `outlineColor`.
  */
 export function resolveFocusVisible(
-  input: true | React.CSSProperties,
+  input: true | FocusVisibleOptions,
   outlineColor: string,
 ): React.CSSProperties {
-  return wireFocusVisibleVars({
+  const ring: Record<string, unknown> = {
     outlineStyle: 'solid',
     outlineColor,
     outlineWidth: 2,
-    outlineOffset: 2,
+    outlineOffset: defaultOutlineOffset,
     // invisible shadow for parent component with solid background (AppBar, Snackbar, Alert) can control the ring color.
     boxShadow: `var(${focusVisibleShadowVar}, 0 0)`,
     ...(input === true ? null : input),
-  });
+  };
+  delete ring.insetOverrides;
+  resolvedRings.add(ring);
+  return ring as React.CSSProperties;
 }
 
-/**
- * Wire the private inset vars into a resolved `theme.focusVisible` so a custom `outlineOffset` or
- * `boxShadow` insets automatically on clip-prone components. Mutates and returns the object.
- */
-export function wireFocusVisibleVars(resolved: React.CSSProperties): React.CSSProperties {
-  // Multiply the offset by the sign var so it flips to inset on clip-prone components. Skip if
-  // already wired: re-composing a resolved theme must not wrap the calc twice and invert the sign.
-  const offset = resolved.outlineOffset ?? 0;
-  if (typeof offset !== 'string' || !offset.includes(focusVisibleOffsetVar)) {
-    const offsetPx = typeof offset === 'number' ? `${offset}px` : offset;
-    resolved.outlineOffset = `calc(${offsetValue} * ${offsetPx})`;
+const outlineWidthKeywords = new Set([
+  'thin',
+  'medium',
+  'thick',
+  'inherit',
+  'initial',
+  'unset',
+  'revert',
+  'revert-layer',
+]);
+
+const standaloneBoxShadows = new Set([
+  'none',
+  'initial',
+  'inherit',
+  'unset',
+  'revert',
+  'revert-layer',
+]);
+
+function toInsetBoxShadow(boxShadow: string) {
+  return standaloneBoxShadows.has(boxShadow.trim().toLowerCase()) || /\binset\b/.test(boxShadow)
+    ? boxShadow
+    : `inset ${boxShadow}`;
+}
+
+function getInsetOutlineOffset(
+  outlineWidth: React.CSSProperties['outlineWidth'],
+  outlineOffset: React.CSSProperties['outlineOffset'] = defaultOutlineOffset,
+): React.CSSProperties['outlineOffset'] {
+  if (typeof outlineWidth === 'number') {
+    return -outlineWidth;
   }
-  // Prefix a box-shadow with the behavior var so it insets there too, unless it already opts in.
-  // Standalone keywords are complete values — prefixing would produce an invalid `inset none`.
-  const standaloneBoxShadows = new Set([
-    'none',
-    'initial',
-    'inherit',
-    'unset',
-    'revert',
-    'revert-layer',
-  ]);
-  if (
-    typeof resolved.boxShadow === 'string' &&
-    !standaloneBoxShadows.has(resolved.boxShadow.trim().toLowerCase()) &&
-    !/\binset\b/.test(resolved.boxShadow) &&
-    !resolved.boxShadow.includes(focusVisibleBehaviorVar)
-  ) {
-    resolved.boxShadow = `${behaviorValue} ${resolved.boxShadow}`;
+  if (typeof outlineWidth === 'string' && !outlineWidthKeywords.has(outlineWidth.trim())) {
+    return `calc(-1 * ${outlineWidth})`;
   }
-  return resolved;
+  return typeof outlineOffset === 'number' ? -outlineOffset : `calc(-1 * ${outlineOffset})`;
+}
+
+function getDefaultInsetRing({ outlineOffset, outlineWidth, boxShadow }: React.CSSProperties) {
+  return {
+    outlineOffset: getInsetOutlineOffset(outlineWidth, outlineOffset),
+    ...(typeof boxShadow === 'string' && { boxShadow: toInsetBoxShadow(boxShadow) }),
+  };
+}
+
+export function applyFocusVisible(
+  this: FocusVisibleTheme,
+  position: 'inside' | 'outside',
+): React.CSSProperties {
+  const ring = this.focusVisible;
+  if (!ring) {
+    return {};
+  }
+  if (position === 'outside') {
+    return ring;
+  }
+  return { ...ring, ...getDefaultInsetRing(ring), ...this.unstable_focusVisibleInsetOverrides };
+}
+
+export function insetFocusVisibleAtLeast(
+  ring: React.CSSProperties,
+  depth: number,
+): React.CSSProperties {
+  const { outlineOffset = 0 } = ring;
+  return {
+    ...ring,
+    outlineOffset:
+      typeof outlineOffset === 'number'
+        ? Math.min(outlineOffset, -depth)
+        : `min(${outlineOffset}, ${-depth}px)`,
+  };
 }

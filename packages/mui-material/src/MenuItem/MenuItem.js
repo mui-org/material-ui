@@ -6,7 +6,6 @@ import composeClasses from '@mui/utils/composeClasses';
 import rootShouldForwardProp from '../styles/rootShouldForwardProp';
 import { styled } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
-import { applyInsetFocusVisible } from '../styles/focusVisible';
 import { useDefaultProps } from '../DefaultPropsProvider';
 import ListContext from '../List/ListContext';
 import ButtonBase from '../ButtonBase';
@@ -107,14 +106,12 @@ const MenuItemRoot = styled(ButtonBase, {
         ),
       },
     },
-    ...(theme.focusVisible
+    [`&.${menuItemClasses.focusVisible}`]: theme.focusVisible
       ? // Inset the ring: a scrolling Menu/MenuList clips an outset ring.
-        applyInsetFocusVisible(1)
+        theme.applyFocusVisible('inside')
       : {
-          [`&.${menuItemClasses.focusVisible}`]: {
-            backgroundColor: (theme.vars || theme).palette.action.focus,
-          },
-        }),
+          backgroundColor: (theme.vars || theme).palette.action.focus,
+        },
     [`&.${menuItemClasses.disabled}`]: {
       opacity: (theme.vars || theme).palette.action.disabledOpacity,
     },
