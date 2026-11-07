@@ -42,7 +42,12 @@ Define three options: **closed**, **balanced**, and **open**.
 For each, write a table that gives every Base UI part one role: its own public part, a slot of a named part, a prop, or hidden.
 Then build each option as a prototype, following [references/prototype.md](references/prototype.md).
 
-Done when every option's table covers every row of the step 1 inventory, and each option's prototype exports the parts in its table.
+The balanced option follows two rules, so its merges come from evidence rather than taste:
+
+- **Merge only parts without customization evidence.** A part joins a neighbor (as a slot or a prop) only when the step 1 inventory found no issue or discussion where users customize it alone. Portal and Positioner usually qualify; a trigger usually does not.
+- **Nested structures repeat the top-level shape.** A submenu has the same parts as a menu (root, trigger, popup), so users learn one pattern.
+
+Done when every option's table covers every row of the step 1 inventory, every merge in the balanced option cites "none found" in the inventory, and each option's prototype exports the parts in its table.
 
 ### 4. Render and capture
 

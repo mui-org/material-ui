@@ -44,5 +44,6 @@ From the results, pick at least four composition scenarios:
 
 - At least one inside other Material UI components (an `AppBar`, a `Dialog`, a `Table` cell, a form, next to a `Tooltip`).
 - At least one with the user's own components: a custom trigger, a router `Link`, a brand card or avatar inside the popup.
+- When the component nests (a submenu inside a menu), at least one with custom content in the nested trigger: a badge or count, an avatar, or a disabled trigger with a `Tooltip` that explains why.
 
 Write a stand-in for each user component in `user-components.tsx` (see [prototype.md](prototype.md)), so scenarios do not depend on outside packages.
