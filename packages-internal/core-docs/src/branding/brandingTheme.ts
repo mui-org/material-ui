@@ -1573,10 +1573,12 @@ export function getThemedComponents(): ThemeOptions {
         },
         styleOverrides: {
           html: {
+            // Forcing the scrollbar keeps the page from shifting between short and long
+            // pages, and is the fallback where `scrollbar-gutter` isn't supported. The
+            // gutter supersedes it elsewhere, and also holds the space while a modal
+            // blocks the scroll.
             overflowY: 'scroll',
-            // TODO add support for it,
-            // https://github.com/mui/material-ui/issues/40748
-            // scrollbarGutter: 'stable',
+            scrollbarGutter: 'stable',
           },
         },
       },
