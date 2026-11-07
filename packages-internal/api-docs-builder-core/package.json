@@ -17,7 +17,7 @@
     "@mui/internal-core-docs": "workspace:^",
     "@mui/internal-markdown": "workspace:^",
     "docs": "workspace:^",
-    "es-toolkit": "^1.52.0"
+    "es-toolkit": "^1.53.1"
   },
   "devDependencies": {
     "@types/node": "22.20.5",
