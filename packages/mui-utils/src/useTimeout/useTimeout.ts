@@ -1,6 +1,6 @@
 'use client';
-import useLazyRef from '../useLazyRef/useLazyRef';
-import useOnMount from '../useOnMount/useOnMount';
+import useLazyRef from '../useLazyRef';
+import useEnhancedEffect from '../useEnhancedEffect';
 
 export class Timeout {
   static create() {
@@ -35,7 +35,8 @@ export class Timeout {
 export default function useTimeout() {
   const timeout = useLazyRef(Timeout.create).current;
 
-  useOnMount(timeout.disposeEffect);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEnhancedEffect(timeout.disposeEffect, []);
 
   return timeout;
 }
