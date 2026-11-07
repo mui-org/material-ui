@@ -355,8 +355,6 @@ const SwipeableDrawer = React.forwardRef(function SwipeableDrawer(inProps, ref) 
       return;
     }
 
-    startMaybeSwiping(true);
-
     const anchorRtl = getAnchor(theme, anchor);
     const horizontalSwipe = isHorizontal(anchor);
 
@@ -371,6 +369,19 @@ const SwipeableDrawer = React.forwardRef(function SwipeableDrawer(inProps, ref) 
       nativeEvent.touches,
       ownerWindow(nativeEvent.currentTarget),
     );
+
+    // Safari Mobile fires touchmove for a finger that drifts a pixel or two during a tap.
+    // Wait until the touch moves past the threshold before changing the DOM,
+    // otherwise the tap loses its click event and the page scroll gets locked.
+    if (
+      swipeInstance.current.isSwiping == null &&
+      Math.abs(currentX - swipeInstance.current.startX) <= UNCERTAINTY_THRESHOLD &&
+      Math.abs(currentY - swipeInstance.current.startY) <= UNCERTAINTY_THRESHOLD
+    ) {
+      return;
+    }
+
+    startMaybeSwiping(true);
 
     if (open && contains(paperRef.current, nativeEvent.target) && claimedSwipeInstance === null) {
       const domTreeShapes = getDomTreeShapes(nativeEvent.target, paperRef.current);

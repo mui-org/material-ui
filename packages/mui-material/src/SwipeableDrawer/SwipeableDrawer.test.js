@@ -749,6 +749,42 @@ describe('<SwipeableDrawer />', () => {
         expect(handleOpen.callCount).to.equal(1);
       });
     });
+
+    it('should not lock the scroll until the touch moves past the threshold', () => {
+      render(
+        <SwipeableDrawer
+          disableDiscovery
+          allowSwipeInChildren
+          onOpen={() => {}}
+          onClose={() => {}}
+          open={false}
+          slotProps={{
+            paper: { component: FakePaper },
+          }}
+        >
+          <div>SwipeableDrawer</div>
+        </SwipeableDrawer>,
+      );
+
+      const swipeArea = document.querySelector('[class*=PrivateSwipeArea-root]');
+
+      fireEvent.touchStart(swipeArea, {
+        touches: [new Touch({ identifier: 0, target: swipeArea, pageX: 0, clientY: 0 })],
+      });
+      fireEvent.touchMove(swipeArea, {
+        touches: [new Touch({ identifier: 0, target: swipeArea, pageX: 2, clientY: 1 })],
+      });
+      expect(document.body.style).to.have.property('overflow', '');
+
+      fireEvent.touchMove(swipeArea, {
+        touches: [new Touch({ identifier: 0, target: swipeArea, pageX: 20, clientY: 1 })],
+      });
+      expect(document.body.style).to.have.property('overflow', 'hidden');
+
+      fireEvent.touchEnd(swipeArea, {
+        changedTouches: [new Touch({ identifier: 0, target: swipeArea, pageX: 20, clientY: 1 })],
+      });
+    });
   });
 
   it('should be able to attach paper ref passed through PaperProps', () => {
