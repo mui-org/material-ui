@@ -13,6 +13,7 @@
       },
       "default": "'end'"
     },
+    "name": { "type": { "name": "string" } },
     "onChange": {
       "type": { "name": "func" },
       "signature": {

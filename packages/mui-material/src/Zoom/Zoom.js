@@ -232,9 +232,6 @@ Zoom.propTypes /* remove-proptypes */ = {
    * @ignore
    */
   onExiting: PropTypes.func,
-  /**
-   * @ignore
-   */
   style: PropTypes.object,
   /**
    * The duration for the transition, in milliseconds.

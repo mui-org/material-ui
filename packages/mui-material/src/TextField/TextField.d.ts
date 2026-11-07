@@ -198,7 +198,13 @@ export interface BaseTextFieldProps extends StandardProps<
    * Name attribute of the `input` element.
    */
   name?: string | undefined;
+  /**
+   * @ignore
+   */
   onBlur?: InputBaseProps['onBlur'] | undefined;
+  /**
+   * @ignore
+   */
   onFocus?: StandardInputProps['onFocus'] | undefined;
   /**
    * The short hint displayed in the `input` before the user enters a value.

@@ -1,5 +1,6 @@
 {
   "props": {
+    "children": { "type": { "name": "node" } },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "disableGutters": { "type": { "name": "bool" }, "default": "false" },
     "fixed": { "type": { "name": "bool" }, "default": "false" },

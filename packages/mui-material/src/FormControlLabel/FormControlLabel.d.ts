@@ -61,6 +61,9 @@ export interface FormControlLabelProps
    * @default 'end'
    */
   labelPlacement?: 'end' | 'start' | 'top' | 'bottom' | undefined;
+  /**
+   * The `name` of the control, used when the control does not set its own.
+   */
   name?: string | undefined;
   /**
    * Callback fired when the state is changed.

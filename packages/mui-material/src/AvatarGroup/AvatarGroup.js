@@ -171,9 +171,6 @@ AvatarGroup.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The component used for the root node.
@@ -221,9 +218,6 @@ AvatarGroup.propTypes /* remove-proptypes */ = {
    * @default 'medium'
    */
   spacing: PropTypes.oneOfType([PropTypes.oneOf(['medium', 'small']), PropTypes.number]),
-  /**
-   * @ignore
-   */
   style: PropTypes.object,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

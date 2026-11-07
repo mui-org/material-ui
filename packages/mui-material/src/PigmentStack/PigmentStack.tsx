@@ -85,9 +85,6 @@ PigmentStack.propTypes /* remove-proptypes */ = {
    * The content of the component.
    */
   children: PropTypes.node,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * Defines the `flex-direction` style property.

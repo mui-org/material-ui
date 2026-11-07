@@ -32,5 +32,5 @@
     },
     "root": { "description": "Styles applied to the root element." }
   },
-  "slotDescriptions": { "surplus": "" }
+  "slotDescriptions": { "surplus": "The component that renders the surplus avatar." }
 }

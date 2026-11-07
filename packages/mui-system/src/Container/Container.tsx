@@ -21,7 +21,7 @@ Container.propTypes /* remove-proptypes */ = {
   // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
   // └─────────────────────────────────────────────────────────────────────┘
   /**
-   * @ignore
+   * The content of the component.
    */
   children: PropTypes.node,
   /**

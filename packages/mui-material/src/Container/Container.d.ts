@@ -5,6 +5,9 @@ import { OverridableComponent, OverrideProps } from '../OverridableComponent';
 import { ContainerClasses } from './containerClasses';
 
 export interface ContainerOwnProps {
+  /**
+   * The content of the component.
+   */
   children?: React.ReactNode;
   /**
    * Override or extend the styles applied to the component.

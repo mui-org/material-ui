@@ -257,9 +257,6 @@ Snackbar.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
@@ -277,9 +274,6 @@ Snackbar.propTypes /* remove-proptypes */ = {
    * The message to display.
    */
   message: PropTypes.node,
-  /**
-   * @ignore
-   */
   onBlur: PropTypes.func,
   /**
    * Callback fired when the component requests to be closed.
@@ -292,17 +286,8 @@ Snackbar.propTypes /* remove-proptypes */ = {
    * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`, or `"escapeKeyDown"`.
    */
   onClose: PropTypes.func,
-  /**
-   * @ignore
-   */
   onFocus: PropTypes.func,
-  /**
-   * @ignore
-   */
   onMouseEnter: PropTypes.func,
-  /**
-   * @ignore
-   */
   onMouseLeave: PropTypes.func,
   /**
    * If `true`, the component is shown.

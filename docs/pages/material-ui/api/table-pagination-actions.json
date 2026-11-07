@@ -1,12 +1,39 @@
 {
   "props": {
+    "count": { "type": { "name": "number" }, "required": true },
     "getItemAriaLabel": {
       "type": { "name": "func" },
       "required": true,
       "signature": { "type": "function(type: string) => string", "describedArgs": ["type"] }
     },
+    "onPageChange": {
+      "type": { "name": "func" },
+      "required": true,
+      "signature": {
+        "type": "function(event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void",
+        "describedArgs": ["event", "page"]
+      }
+    },
+    "page": { "type": { "name": "number" }, "required": true },
+    "rowsPerPage": { "type": { "name": "number" }, "required": true },
+    "showFirstButton": { "type": { "name": "bool" }, "required": true },
+    "showLastButton": { "type": { "name": "bool" }, "required": true },
     "classes": { "type": { "name": "object" }, "additionalInfo": { "cssApi": true } },
     "disabled": { "type": { "name": "bool" }, "default": "false" },
+    "slotProps": {
+      "type": {
+        "name": "shape",
+        "description": "{ firstButton?: object, firstButtonIcon?: object, lastButton?: object, lastButtonIcon?: object, nextButton?: object, nextButtonIcon?: object, previousButton?: object, previousButtonIcon?: object }"
+      },
+      "default": "{}"
+    },
+    "slots": {
+      "type": {
+        "name": "shape",
+        "description": "{ firstButton?: elementType, firstButtonIcon?: elementType, lastButton?: elementType, lastButtonIcon?: elementType, nextButton?: elementType, nextButtonIcon?: elementType, previousButton?: elementType, previousButtonIcon?: elementType }"
+      },
+      "default": "{}"
+    },
     "sx": {
       "type": {
         "name": "union",

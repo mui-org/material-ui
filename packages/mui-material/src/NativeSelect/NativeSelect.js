@@ -87,9 +87,6 @@ NativeSelect.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The icon that displays the arrow.

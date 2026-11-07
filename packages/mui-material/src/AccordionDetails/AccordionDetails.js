@@ -56,9 +56,6 @@ AccordionDetails.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

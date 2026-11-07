@@ -320,7 +320,7 @@ Tab.propTypes /* remove-proptypes */ = {
    */
   classes: PropTypes.object,
   /**
-   * @ignore
+   * A CSS class name applied to the root element.
    */
   className: PropTypes.string,
   /**
@@ -354,17 +354,8 @@ Tab.propTypes /* remove-proptypes */ = {
    * The label element.
    */
   label: PropTypes.node,
-  /**
-   * @ignore
-   */
   onChange: PropTypes.func,
-  /**
-   * @ignore
-   */
   onClick: PropTypes.func,
-  /**
-   * @ignore
-   */
   onFocus: PropTypes.func,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

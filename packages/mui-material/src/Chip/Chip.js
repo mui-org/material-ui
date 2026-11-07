@@ -575,7 +575,7 @@ Chip.propTypes /* remove-proptypes */ = {
    */
   classes: PropTypes.object,
   /**
-   * @ignore
+   * A CSS class name applied to the root element.
    */
   className: PropTypes.string,
   /**
@@ -626,22 +626,13 @@ Chip.propTypes /* remove-proptypes */ = {
    * when it resolves to a non-button host.
    */
   nativeButton: PropTypes.bool,
-  /**
-   * @ignore
-   */
   onClick: PropTypes.func,
   /**
    * Callback fired when the delete icon is clicked.
    * If set, the delete icon will be shown.
    */
   onDelete: PropTypes.func,
-  /**
-   * @ignore
-   */
   onKeyDown: PropTypes.func,
-  /**
-   * @ignore
-   */
   onKeyUp: PropTypes.func,
   /**
    * The size of the component.

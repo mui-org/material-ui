@@ -19,13 +19,7 @@ DefaultPropsProvider.propTypes /* remove-proptypes */ = {
   // │ These PropTypes are generated from the TypeScript type definitions. │
   // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
   // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * @ignore
-   */
   children: PropTypes.node,
-  /**
-   * @ignore
-   */
   value: PropTypes.object.isRequired,
 } as any;
 

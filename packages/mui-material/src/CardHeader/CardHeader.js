@@ -189,9 +189,6 @@ CardHeader.propTypes /* remove-proptypes */ = {
    * The Avatar element to display.
    */
   avatar: PropTypes.node,
-  /**
-   * @ignore
-   */
   children: PropTypes.node,
   /**
    * Override or extend the styles applied to the component.

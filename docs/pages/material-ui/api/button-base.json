@@ -20,6 +20,7 @@
       },
       "additionalInfo": { "sx": true }
     },
+    "tabIndex": { "type": { "name": "number" }, "default": "0" },
     "TouchRippleProps": { "type": { "name": "object" } },
     "touchRippleRef": {
       "type": {

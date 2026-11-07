@@ -1,5 +1,6 @@
 import * as ts from '@typescript/typescript6';
 import type { TypeScriptProject } from './createTypeScriptProject';
+import { resolveExportSpecifier } from './resolveExportSpecifier';
 
 export interface ParsedProp {
   /**
@@ -353,4 +354,42 @@ export function getPropsFromComponentNode({
   }
 
   return parsedComponent;
+}
+
+export function getComponentDeclaration(
+  project: TypeScriptProject,
+  componentName: string,
+): ts.Node | null {
+  const unstableName = `Unstable_${componentName}`;
+  const componentSymbol = project.exports[componentName] ?? project.exports[unstableName];
+
+  if (!componentSymbol) {
+    return null;
+  }
+
+  const localeSymbol = resolveExportSpecifier(componentSymbol, project);
+  return localeSymbol.valueDeclaration ?? null;
+}
+
+function isDeclaredOnlyInDependencies(prop: ParsedProp) {
+  return prop.signatures.every(({ symbol }) => {
+    const declarations = symbol.declarations ?? [];
+    return (
+      declarations.length > 0 &&
+      declarations.every((node) => node.getSourceFile().fileName.includes('/node_modules/'))
+    );
+  });
+}
+
+/**
+ * Names of the component props only declared in dependencies, like React's DOM attributes.
+ */
+export function getExternalProps(project: TypeScriptProject, componentName: string): Set<string> {
+  const node = getComponentDeclaration(project, componentName);
+  const props = node ? getPropsFromComponentNode({ node, project, checkDeclarations: true }) : null;
+  return new Set(
+    Object.entries(props?.props ?? {})
+      .filter(([, prop]) => isDeclaredOnlyInDependencies(prop))
+      .map(([name]) => name),
+  );
 }

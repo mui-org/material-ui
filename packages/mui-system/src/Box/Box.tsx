@@ -56,6 +56,9 @@ export type SystemProps<Theme extends object = {}> = {
 };
 
 export interface BoxOwnProps<Theme extends object = SystemTheme> {
+  /**
+   * The content of the component.
+   */
   children?: React.ReactNode;
   ref?: React.Ref<unknown> | undefined;
   /**
@@ -95,7 +98,7 @@ Box.propTypes /* remove-proptypes */ = {
   // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
   // └─────────────────────────────────────────────────────────────────────┘
   /**
-   * @ignore
+   * The content of the component.
    */
   children: PropTypes.node,
   /**

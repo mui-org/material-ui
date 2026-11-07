@@ -392,9 +392,6 @@ Collapse.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The width (horizontal) or height (vertical) of the container when collapsed.
@@ -473,9 +470,6 @@ Collapse.propTypes /* remove-proptypes */ = {
     wrapper: PropTypes.elementType,
     wrapperInner: PropTypes.elementType,
   }),
-  /**
-   * @ignore
-   */
   style: PropTypes.object,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

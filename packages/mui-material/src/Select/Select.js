@@ -159,9 +159,6 @@ Select.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * If `true`, the component is initially open. Use when the component open state is not controlled (i.e. the `open` prop is not defined).

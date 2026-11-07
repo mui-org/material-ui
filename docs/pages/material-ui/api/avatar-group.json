@@ -48,7 +48,14 @@
     "import AvatarGroup from '@mui/material/AvatarGroup';",
     "import { AvatarGroup } from '@mui/material';"
   ],
-  "slots": [{ "name": "surplus", "description": "", "class": null }],
+  "slots": [
+    {
+      "name": "surplus",
+      "description": "The component that renders the surplus avatar.",
+      "default": "Avatar",
+      "class": null
+    }
+  ],
   "classes": [
     {
       "key": "avatar",

@@ -58,6 +58,9 @@ export type BaseProps<TypeMap extends OverridableTypeMap> =
  */
 // each component declares it's classes in a separate interface for proper JSDoc.
 export interface CommonProps extends StyledComponentProps<never> {
+  /**
+   * A CSS class name applied to the root element.
+   */
   className?: string | undefined;
   style?: React.CSSProperties | undefined;
 }

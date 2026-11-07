@@ -22,6 +22,9 @@
     "spacing": {
       "description": "Defines the space between the type <code>item</code> components. It can only be used on a type <code>container</code> component."
     },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    },
     "unstable_level": {
       "description": "The level of the grid starts from <code>0</code> and increases when the grid nests inside another grid. Nesting is defined as a container Grid being a direct child of a container Grid.<br><code>js &amp;lt;Grid container&gt; // level 0   &amp;lt;Grid container&gt; // level 1     &amp;lt;Grid container&gt; // level 2 </code><br>Only consecutive grid is considered nesting. A grid container will start at <code>0</code> if there are non-Grid container element above it.<br><code>js &amp;lt;Grid container&gt; // level 0   &amp;lt;div&gt;     &amp;lt;Grid container&gt; // level 0 </code><br><code>js &amp;lt;Grid container&gt; // level 0   &amp;lt;Grid&gt;     &amp;lt;Grid container&gt; // level 0 </code>"
     },

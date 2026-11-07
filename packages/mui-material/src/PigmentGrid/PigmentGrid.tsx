@@ -84,7 +84,13 @@ export interface GridTypeMap<
   AdditionalProps = {},
   DefaultComponent extends React.ElementType = 'div',
 > {
-  props: AdditionalProps & GridBaseProps & { sx?: SxProps<Theme> | undefined };
+  props: AdditionalProps &
+    GridBaseProps & {
+      /**
+       * The system prop that allows defining system overrides as well as additional CSS styles.
+       */
+      sx?: SxProps<Theme> | undefined;
+    };
   defaultComponent: DefaultComponent;
 }
 
@@ -147,9 +153,6 @@ PigmentGrid.propTypes /* remove-proptypes */ = {
    * The content of the component.
    */
   children: PropTypes.node,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The number of columns.
@@ -224,7 +227,7 @@ PigmentGrid.propTypes /* remove-proptypes */ = {
     PropTypes.string,
   ]),
   /**
-   * @ignore
+   * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])),

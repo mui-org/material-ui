@@ -16,6 +16,10 @@ export interface AvatarGroupPropsVariantOverrides {}
 export interface AvatarGroupComponentsPropsOverrides {}
 
 export interface AvatarGroupSlots {
+  /**
+   * The component that renders the surplus avatar.
+   * @default Avatar
+   */
   surplus: React.ElementType;
 }
 

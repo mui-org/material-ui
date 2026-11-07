@@ -13,6 +13,7 @@
     "disableGutters": { "type": { "name": "bool" }, "default": "false" },
     "divider": { "type": { "name": "bool" }, "default": "false" },
     "focusVisibleClassName": { "type": { "name": "string" } },
+    "href": { "type": { "name": "string" } },
     "selected": { "type": { "name": "bool" }, "default": "false" },
     "sx": {
       "type": {

@@ -29,6 +29,9 @@ export interface InputBaseProps extends StandardProps<
   | 'aria-label'
 > {
   'aria-describedby'?: string | undefined;
+  /**
+   * @ignore
+   */
   'aria-label'?: string | undefined;
   /**
    * This prop helps users to fill forms faster, especially on mobile devices.
@@ -132,8 +135,17 @@ export interface InputBaseProps extends StandardProps<
    * You can pull out the new value by accessing `event.target.value` (string).
    */
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> | undefined;
+  /**
+   * @ignore
+   */
   onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+  /**
+   * @ignore
+   */
   onKeyDown?: React.KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement> | undefined;
+  /**
+   * @ignore
+   */
   onKeyUp?: React.KeyboardEventHandler<HTMLTextAreaElement | HTMLInputElement> | undefined;
   /**
    * Callback fired when the `input` doesn't satisfy its constraints.
@@ -153,6 +165,9 @@ export interface InputBaseProps extends StandardProps<
    * The prop defaults to the value (`false`) inherited from the parent FormControl component.
    */
   required?: boolean | undefined;
+  /**
+   * @ignore
+   */
   renderSuffix?:
     | ((state: {
         disabled?: boolean | undefined;

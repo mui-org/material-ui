@@ -47,6 +47,13 @@
       },
       "default": "0"
     },
+    "sx": {
+      "type": {
+        "name": "union",
+        "description": "Array&lt;func<br>&#124;&nbsp;object<br>&#124;&nbsp;bool&gt;<br>&#124;&nbsp;func<br>&#124;&nbsp;object"
+      },
+      "additionalInfo": { "sx": true }
+    },
     "unstable_level": { "type": { "name": "number" } },
     "wrap": {
       "type": {

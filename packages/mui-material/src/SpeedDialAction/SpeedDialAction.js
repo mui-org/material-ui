@@ -329,9 +329,6 @@ SpeedDialAction.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * Adds a transition delay, to allow a series of SpeedDialActions to be animated.

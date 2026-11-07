@@ -23,6 +23,9 @@
     "focusVisibleClassName": {
       "description": "This prop can help identify which element has keyboard focus. The class name will be applied when the element gains the focus through keyboard interaction. It&#39;s a polyfill for the <a href=\"https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo\">CSS :focus-visible selector</a>. The rationale for using this feature <a href=\"https://github.com/WICG/focus-visible/blob/HEAD/explainer.md\">is explained here</a>. A <a href=\"https://github.com/WICG/focus-visible\">polyfill can be used</a> to apply a <code>focus-visible</code> class to other components if needed."
     },
+    "href": {
+      "description": "The URL to link to when the button is clicked. If defined, an <code>a</code> element will be used as the root node."
+    },
     "selected": { "description": "Use to apply selected styling." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."

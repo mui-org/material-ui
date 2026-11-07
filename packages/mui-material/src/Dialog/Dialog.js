@@ -428,9 +428,6 @@ Dialog.propTypes /* remove-proptypes */ = {
     PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', false]),
     PropTypes.string,
   ]),
-  /**
-   * @ignore
-   */
   onClick: PropTypes.func,
   /**
    * Callback fired when the component requests to be closed.

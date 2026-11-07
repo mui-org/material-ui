@@ -12,6 +12,9 @@
     },
     "label": { "description": "A text or an element to be used in an enclosing label element." },
     "labelPlacement": { "description": "The position of the label." },
+    "name": {
+      "description": "The <code>name</code> of the control, used when the control does not set its own."
+    },
     "onChange": {
       "description": "Callback fired when the state is changed.",
       "typeDescriptions": {

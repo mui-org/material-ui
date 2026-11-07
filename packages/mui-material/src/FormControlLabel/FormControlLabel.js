@@ -214,9 +214,6 @@ FormControlLabel.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * A control element. For instance, it can be a `Radio`, a `Switch` or a `Checkbox`.
@@ -240,7 +237,7 @@ FormControlLabel.propTypes /* remove-proptypes */ = {
    */
   labelPlacement: PropTypes.oneOf(['bottom', 'end', 'start', 'top']),
   /**
-   * @ignore
+   * The `name` of the control, used when the control does not set its own.
    */
   name: PropTypes.string,
   /**

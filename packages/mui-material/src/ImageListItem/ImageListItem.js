@@ -168,7 +168,7 @@ ImageListItem.propTypes /* remove-proptypes */ = {
    */
   classes: PropTypes.object,
   /**
-   * @ignore
+   * A CSS class name applied to the root element.
    */
   className: PropTypes.string,
   /**
@@ -186,9 +186,6 @@ ImageListItem.propTypes /* remove-proptypes */ = {
    * @default 1
    */
   rows: integerPropType,
-  /**
-   * @ignore
-   */
   style: PropTypes.object,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

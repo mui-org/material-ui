@@ -30,6 +30,7 @@ export interface InputBaseClasses {
   readOnly: string;
   /** Styles applied to the input element. */
   input: string;
+  /** Styles applied to the input element if `type="search"`. */
   inputTypeSearch: string;
 }
 

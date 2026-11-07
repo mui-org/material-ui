@@ -105,9 +105,6 @@ RadioGroup.propTypes /* remove-proptypes */ = {
    * The content of the component.
    */
   children: PropTypes.node,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The default value. Use when the component is not controlled.

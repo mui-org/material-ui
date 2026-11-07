@@ -346,9 +346,6 @@ CircularProgress.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * The color of the component.
@@ -398,9 +395,6 @@ CircularProgress.propTypes /* remove-proptypes */ = {
    * @default 40
    */
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  /**
-   * @ignore
-   */
   style: PropTypes.object,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

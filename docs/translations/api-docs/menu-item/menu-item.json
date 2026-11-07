@@ -26,6 +26,9 @@
     },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    },
+    "tabIndex": {
+      "description": "The <code>tabIndex</code> of the root element. When not provided, it is managed by the parent menu&#39;s keyboard focus handling."
     }
   },
   "classDescriptions": {

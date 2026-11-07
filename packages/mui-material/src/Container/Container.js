@@ -29,7 +29,7 @@ Container.propTypes /* remove-proptypes */ = {
   // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
   // └─────────────────────────────────────────────────────────────────────┘
   /**
-   * @ignore
+   * The content of the component.
    */
   children: PropTypes.node,
   /**

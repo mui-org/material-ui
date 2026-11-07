@@ -3,7 +3,6 @@
   "propDescriptions": {
     "children": { "description": "The content of the component." },
     "classes": { "description": "Override or extend the styles applied to the component." },
-    "className": { "description": "className applied to the root element." },
     "position": {
       "description": "The position where the TimelineContent should appear relative to the time axis."
     },

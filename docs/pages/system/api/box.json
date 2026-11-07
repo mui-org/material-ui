@@ -1,5 +1,6 @@
 {
   "props": {
+    "children": { "type": { "name": "node" } },
     "component": { "type": { "name": "elementType" } },
     "sx": {
       "type": {

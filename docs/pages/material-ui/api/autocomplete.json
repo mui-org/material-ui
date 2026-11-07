@@ -120,6 +120,13 @@
         "describedArgs": ["event", "value", "reason"]
       }
     },
+    "onKeyDown": {
+      "type": { "name": "func" },
+      "signature": {
+        "type": "function(event: React.KeyboardEvent) => void",
+        "describedArgs": ["event"]
+      }
+    },
     "onOpen": {
       "type": { "name": "func" },
       "signature": {

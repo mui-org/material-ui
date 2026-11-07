@@ -359,9 +359,6 @@ TablePagination.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   colSpan: PropTypes.number,
   /**
    * The component used for the root node.

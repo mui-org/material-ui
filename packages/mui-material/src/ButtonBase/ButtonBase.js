@@ -362,7 +362,7 @@ ButtonBase.propTypes /* remove-proptypes */ = {
    */
   classes: PropTypes.object,
   /**
-   * @ignore
+   * A CSS class name applied to the root element.
    */
   className: PropTypes.string,
   /**
@@ -402,9 +402,6 @@ ButtonBase.propTypes /* remove-proptypes */ = {
    * if needed.
    */
   focusVisibleClassName: PropTypes.string,
-  /**
-   * @ignore
-   */
   formAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   /**
    * @ignore
@@ -420,62 +417,23 @@ ButtonBase.propTypes /* remove-proptypes */ = {
    * when passing a React component to the `component` or `slots` prop.
    */
   nativeButton: PropTypes.bool,
-  /**
-   * @ignore
-   */
   onBlur: PropTypes.func,
-  /**
-   * @ignore
-   */
   onClick: PropTypes.func,
-  /**
-   * @ignore
-   */
   onContextMenu: PropTypes.func,
-  /**
-   * @ignore
-   */
   onDragLeave: PropTypes.func,
-  /**
-   * @ignore
-   */
   onFocus: PropTypes.func,
   /**
    * Callback fired when the component is focused with a keyboard.
    * We trigger a `onFocus` callback too.
    */
   onFocusVisible: PropTypes.func,
-  /**
-   * @ignore
-   */
   onKeyDown: PropTypes.func,
-  /**
-   * @ignore
-   */
   onKeyUp: PropTypes.func,
-  /**
-   * @ignore
-   */
   onMouseDown: PropTypes.func,
-  /**
-   * @ignore
-   */
   onMouseLeave: PropTypes.func,
-  /**
-   * @ignore
-   */
   onMouseUp: PropTypes.func,
-  /**
-   * @ignore
-   */
   onTouchEnd: PropTypes.func,
-  /**
-   * @ignore
-   */
   onTouchMove: PropTypes.func,
-  /**
-   * @ignore
-   */
   onTouchStart: PropTypes.func,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
@@ -486,6 +444,7 @@ ButtonBase.propTypes /* remove-proptypes */ = {
     PropTypes.object,
   ]),
   /**
+   * The `tabIndex` of the root element.
    * @default 0
    */
   tabIndex: PropTypes.number,

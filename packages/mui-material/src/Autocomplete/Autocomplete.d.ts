@@ -396,6 +396,11 @@ export interface AutocompleteProps<
    * @default 'No options'
    */
   noOptionsText?: React.ReactNode;
+  /**
+   * Callback fired when a key is pressed.
+   * Set `event.defaultMuiPrevented` to `true` to skip the default keyboard handling of the component.
+   * @param {React.KeyboardEvent} event The event source of the callback.
+   */
   onKeyDown?:
     | ((
         event: React.KeyboardEvent<HTMLDivElement> & { defaultMuiPrevented?: boolean | undefined },

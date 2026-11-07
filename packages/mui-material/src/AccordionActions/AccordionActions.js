@@ -72,9 +72,6 @@ AccordionActions.propTypes /* remove-proptypes */ = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
    * If `true`, the actions do not have additional margin.

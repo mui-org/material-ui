@@ -137,7 +137,11 @@
       "conditions": "<code>hiddenLabel={true}</code>"
     },
     "input": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the input element" },
-    "inputTypeSearch": { "description": "" },
+    "inputTypeSearch": {
+      "description": "Styles applied to {{nodeName}} if {{conditions}}.",
+      "nodeName": "the input element",
+      "conditions": "<code>type=\"search\"</code>"
+    },
     "multiline": {
       "description": "Styles applied to {{nodeName}} if {{conditions}}.",
       "nodeName": "the root element",

@@ -191,10 +191,9 @@ async function generateProptypes(
   cleanComponents.forEach((component) => {
     component.types.forEach((prop) => {
       if (
-        !prop.jsDoc ||
-        (project.name !== 'base' &&
-          ignoreExternalDocumentation[component.name] &&
-          ignoreExternalDocumentation[component.name].includes(prop.name))
+        project.name !== 'base' &&
+        ignoreExternalDocumentation[component.name] &&
+        ignoreExternalDocumentation[component.name].includes(prop.name)
       ) {
         prop.jsDoc = '@ignore';
       }

@@ -13,6 +13,9 @@ export interface TablePaginationActionsProps extends StandardProps<
    * Override or extend the styles applied to the component.
    */
   classes?: Partial<TablePaginationActionsClasses> | undefined;
+  /**
+   * The total number of rows.
+   */
   count: number;
   /**
    * If `true`, the component is disabled.
@@ -28,12 +31,33 @@ export interface TablePaginationActionsProps extends StandardProps<
    * @returns {string}
    */
   getItemAriaLabel: (type: 'first' | 'last' | 'next' | 'previous') => string;
+  /**
+   * Callback fired when the page is changed.
+   * @param {React.MouseEvent<HTMLButtonElement> | null} event The event source of the callback.
+   * @param {number} page The page selected.
+   */
   onPageChange: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
+  /**
+   * The zero-based index of the current page.
+   */
   page: number;
   ref?: React.Ref<HTMLDivElement> | undefined;
+  /**
+   * The number of rows per page.
+   */
   rowsPerPage: number;
+  /**
+   * If `true`, show the first-page button.
+   */
   showFirstButton: boolean;
+  /**
+   * If `true`, show the last-page button.
+   */
   showLastButton: boolean;
+  /**
+   * The props used for each slot inside.
+   * @default {}
+   */
   slotProps?:
     | {
         firstButton?: Partial<IconButtonProps> | undefined;
@@ -46,6 +70,10 @@ export interface TablePaginationActionsProps extends StandardProps<
         previousButtonIcon?: Partial<SvgIconProps> | undefined;
       }
     | undefined;
+  /**
+   * The components used for each slot inside.
+   * @default {}
+   */
   slots?: TablePaginationActionsSlots | undefined;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

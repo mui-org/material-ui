@@ -245,20 +245,14 @@ TablePaginationActions.propTypes /* remove-proptypes */ = {
   // │ These PropTypes are generated from the TypeScript type definitions. │
   // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
   // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * @ignore
-   */
   children: PropTypes.node,
   /**
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * @ignore
-   */
   className: PropTypes.string,
   /**
-   * @ignore
+   * The total number of rows.
    */
   count: PropTypes.number.isRequired,
   /**
@@ -275,36 +269,33 @@ TablePaginationActions.propTypes /* remove-proptypes */ = {
    * @returns {string}
    */
   getItemAriaLabel: PropTypes.func.isRequired,
-  /**
-   * @ignore
-   */
   onBlur: PropTypes.func,
-  /**
-   * @ignore
-   */
   onFocus: PropTypes.func,
   /**
-   * @ignore
+   * Callback fired when the page is changed.
+   * @param {React.MouseEvent<HTMLButtonElement> | null} event The event source of the callback.
+   * @param {number} page The page selected.
    */
   onPageChange: PropTypes.func.isRequired,
   /**
-   * @ignore
+   * The zero-based index of the current page.
    */
   page: PropTypes.number.isRequired,
   /**
-   * @ignore
+   * The number of rows per page.
    */
   rowsPerPage: PropTypes.number.isRequired,
   /**
-   * @ignore
+   * If `true`, show the first-page button.
    */
   showFirstButton: PropTypes.bool.isRequired,
   /**
-   * @ignore
+   * If `true`, show the last-page button.
    */
   showLastButton: PropTypes.bool.isRequired,
   /**
-   * @ignore
+   * The props used for each slot inside.
+   * @default {}
    */
   slotProps: PropTypes.shape({
     firstButton: PropTypes.object,
@@ -317,7 +308,8 @@ TablePaginationActions.propTypes /* remove-proptypes */ = {
     previousButtonIcon: PropTypes.object,
   }),
   /**
-   * @ignore
+   * The components used for each slot inside.
+   * @default {}
    */
   slots: PropTypes.shape({
     firstButton: PropTypes.elementType,

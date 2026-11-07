@@ -47,6 +47,11 @@ export interface MenuItemOwnProps {
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme> | undefined;
+  /**
+   * The `tabIndex` of the root element.
+   * When not provided, it is managed by the parent menu's keyboard focus handling.
+   */
+  tabIndex?: number | undefined;
 }
 
 export type MenuItemTypeMap<

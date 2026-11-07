@@ -259,7 +259,7 @@ Link.propTypes /* remove-proptypes */ = {
    */
   classes: PropTypes.object,
   /**
-   * @ignore
+   * A CSS class name applied to the root element.
    */
   className: PropTypes.string,
   /**
@@ -285,17 +285,8 @@ Link.propTypes /* remove-proptypes */ = {
    * Either a string to use a HTML element or a component.
    */
   component: elementTypeAcceptingRef,
-  /**
-   * @ignore
-   */
   onBlur: PropTypes.func,
-  /**
-   * @ignore
-   */
   onFocus: PropTypes.func,
-  /**
-   * @ignore
-   */
   style: PropTypes.object,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.

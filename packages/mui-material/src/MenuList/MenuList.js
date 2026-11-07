@@ -336,7 +336,7 @@ MenuList.propTypes /* remove-proptypes */ = {
    */
   children: PropTypes.node,
   /**
-   * @ignore
+   * A CSS class name applied to the root element.
    */
   className: PropTypes.string,
   /**
@@ -349,13 +349,7 @@ MenuList.propTypes /* remove-proptypes */ = {
    * @default false
    */
   disableListWrap: PropTypes.bool,
-  /**
-   * @ignore
-   */
   onFocus: PropTypes.func,
-  /**
-   * @ignore
-   */
   onKeyDown: PropTypes.func,
   /**
    * The variant to use. Use `menu` to prevent selected items from impacting the initial focus

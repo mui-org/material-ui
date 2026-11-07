@@ -183,6 +183,12 @@
         }
       }
     },
+    "onKeyDown": {
+      "description": "Callback fired when a key is pressed. Set <code>event.defaultMuiPrevented</code> to <code>true</code> to skip the default keyboard handling of the component.",
+      "typeDescriptions": {
+        "event": { "name": "event", "description": "The event source of the callback." }
+      }
+    },
     "onOpen": {
       "description": "Callback fired when the popup requests to be opened. Use in controlled mode (see open).",
       "typeDescriptions": {

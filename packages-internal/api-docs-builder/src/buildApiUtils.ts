@@ -155,6 +155,17 @@ export function getSymbolJSDocTags(symbol: ts.Symbol) {
   return Object.fromEntries(symbol.getJsDocTags().map((tag) => [tag.name, tag]));
 }
 
+/**
+ * JSDoc tags that hide an item from the API docs.
+ */
+export const HIDDEN_JSDOC_TAGS = ['ignore', 'internal'];
+
+export function isHiddenFromApiDocs(tags: Record<string, unknown>) {
+  return HIDDEN_JSDOC_TAGS.some((tag) => tag in tags);
+}
+
+export const IGNORE_HINT = 'To leave it out of the API docs, add `@ignore` instead.';
+
 export async function stringifySymbol(symbol: ts.Symbol, project: TypeScriptProject) {
   let rawType: string;
 

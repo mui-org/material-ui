@@ -2,6 +2,7 @@
   "componentDescription": "",
   "propDescriptions": {
     "classes": { "description": "Override or extend the styles applied to the component." },
+    "count": { "description": "The total number of rows." },
     "disabled": { "description": "If <code>true</code>, the component is disabled." },
     "getItemAriaLabel": {
       "description": "Accepts a function which returns a string value that provides a user-friendly name for the current page. This is important for screen reader users.<br>For localization purposes, you can use the provided <a href=\"https://mui.com/material-ui/guides/localization/\">translations</a>.",
@@ -12,6 +13,19 @@
         }
       }
     },
+    "onPageChange": {
+      "description": "Callback fired when the page is changed.",
+      "typeDescriptions": {
+        "event": { "name": "event", "description": "The event source of the callback." },
+        "page": { "name": "page", "description": "The page selected." }
+      }
+    },
+    "page": { "description": "The zero-based index of the current page." },
+    "rowsPerPage": { "description": "The number of rows per page." },
+    "showFirstButton": { "description": "If <code>true</code>, show the first-page button." },
+    "showLastButton": { "description": "If <code>true</code>, show the last-page button." },
+    "slotProps": { "description": "The props used for each slot inside." },
+    "slots": { "description": "The components used for each slot inside." },
     "sx": {
       "description": "The system prop that allows defining system overrides as well as additional CSS styles."
     }

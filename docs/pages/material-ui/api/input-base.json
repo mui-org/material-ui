@@ -134,7 +134,7 @@
     {
       "key": "inputTypeSearch",
       "className": "MuiInputBase-inputTypeSearch",
-      "description": "",
+      "description": "Styles applied to the input element if `type=\"search\"`.",
       "isGlobal": false
     },
     {

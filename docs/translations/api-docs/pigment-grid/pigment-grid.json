@@ -20,6 +20,9 @@
     "spacing": {
       "description": "Defines the space between the type <code>item</code> components. It can only be used on a type <code>container</code> component."
     },
+    "sx": {
+      "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+    },
     "wrap": {
       "description": "Defines the <code>flex-wrap</code> style property. It&#39;s applied for all screen sizes."
     }

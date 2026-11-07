@@ -107,7 +107,13 @@ export interface GridTypeMap<
   AdditionalProps = {},
   DefaultComponent extends React.ElementType = 'div',
 > {
-  props: AdditionalProps & GridBaseProps & { sx?: SxProps<Theme> | undefined };
+  props: AdditionalProps &
+    GridBaseProps & {
+      /**
+       * The system prop that allows defining system overrides as well as additional CSS styles.
+       */
+      sx?: SxProps<Theme> | undefined;
+    };
   defaultComponent: DefaultComponent;
 }
 
