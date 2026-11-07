@@ -29,6 +29,13 @@ export const CSS_LAYOUT_SUITES = [
     skipCriteria: ['1.4.4', '1.4.12'],
   },
   {
+    // FormGroup has no docs page of its own, so the layout suite runs on its a11y fixture.
+    component: 'FormGroup',
+    route: '/a11y-form-group/FormGroupA11yStates',
+    // FormGroup renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.
+    skipCriteria: ['1.4.4', '1.4.12'],
+  },
+  {
     component: 'LinearProgress',
     route: '/docs-components-progress/LinearDeterminate',
     // The bar renders no text, so the report rates 1.4.4 and 1.4.12 not applicable.

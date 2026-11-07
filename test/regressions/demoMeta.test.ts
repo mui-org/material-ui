@@ -137,6 +137,16 @@ describe('getConfig', () => {
     ).to.deep.include({ enabled: true, assertions: 'all' });
   });
 
+  it('asserts every rule on the FormGroup fixture', () => {
+    expect(
+      getConfig(A11Y_RULES, 'test/regressions/a11y/fixtures/form-group/FormGroupA11yStates'),
+    ).to.deep.equal({
+      test: 'test/regressions/a11y/fixtures/form-group/FormGroupA11yStates',
+      enabled: true,
+      assertions: 'all',
+    });
+  });
+
   it('returns undefined for a radio demo outside the enrolment', () => {
     // The radio-buttons enrolment omits FormControlLabelPlacement.
     expect(

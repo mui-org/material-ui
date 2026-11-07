@@ -406,6 +406,13 @@ export const A11Y_RULES: A11yRule[] = [
     enabled: true,
     assertions: 'all',
   },
+  // A11y-only fixture under `test/regressions/a11y/fixtures/form-group/`.
+  // FormGroup has no docs page, so the fixture owns the `form-group` slug.
+  {
+    test: 'test/regressions/a11y/fixtures/form-group/FormGroupA11yStates',
+    enabled: true,
+    assertions: 'all',
+  },
   {
     test: `docs/data/material/components/radio-buttons/{${RADIO_A11Y_DEMOS.join(',')}}`,
     enabled: true,

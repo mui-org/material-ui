@@ -3,7 +3,7 @@
 <p class="description">How Material UI components conform to WCAG 2.2 Level A and AA, reported in VPAT terms for procurement and accessibility review.</p>
 
 :::warning
-**Draft — partial coverage.** This report covers the 13 components assessed so far, not the whole library. It has not been reviewed by an external auditor, and no assistive-technology testing has been performed yet. See [Scope and limitations](#scope-and-limitations) before relying on it for a procurement decision.
+**Draft — partial coverage.** This report covers only the components in the [component table](#conformance-by-component), not the whole library. It has not been reviewed by an external auditor, and no assistive-technology testing has been performed yet. See [Scope and limitations](#scope-and-limitations) before relying on it for a procurement decision.
 :::
 
 ## About this report
@@ -43,6 +43,7 @@ Each row counts only the criteria that **apply** to that component; criteria tha
 | [Button](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Button/accessibility.md)                       |      15 |       12 |    27 |          24 |                     3 |    20/27 |        11 |
 | [Checkbox](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Checkbox/accessibility.md)                   |      14 |       11 |    25 |          24 |                     1 |    22/25 |        11 |
 | [CircularProgress](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/CircularProgress/accessibility.md)   |       6 |        5 |    11 |           8 |                     3 |     6/11 |         1 |
+| [FormGroup](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/FormGroup/accessibility.md)                 |       5 |        2 |     7 |           7 |                     0 |      4/7 |         2 |
 | [LinearProgress](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/LinearProgress/accessibility.md)       |       6 |        5 |    11 |           8 |                     3 |     6/11 |         1 |
 | [Radio](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Radio/accessibility.md)                         |      14 |       11 |    25 |          24 |                     1 |    23/25 |        11 |
 | [RadioGroup](https://github.com/mui/material-ui/blob/master/packages/mui-material/src/RadioGroup/accessibility.md)               |       6 |        1 |     7 |           7 |                     0 |      4/7 |         2 |
@@ -106,7 +107,7 @@ const theme = createTheme({ focusVisible: true });
 Read this section before citing the report.
 :::
 
-- **Component coverage is partial.** 13 components are assessed. Widely used components including Select, Autocomplete, Dialog, Menu, Table, Tabs, Slider, Tooltip, Snackbar, and Drawer are **not yet assessed**, and this report says nothing about them.
+- **Component coverage is partial.** Only the components in the [component table](#conformance-by-component) are assessed. Widely used components including Select, Autocomplete, Dialog, Menu, Table, Tabs, Slider, Tooltip, Snackbar, and Drawer are **not yet assessed**, and this report says nothing about them.
 - **No assistive-technology testing.** No screen-reader passes have been performed. Criteria that depend on how a specific assistive technology behaves are assessed from the exposed accessibility tree, not from observed behavior.
 - **Level AAA is out of scope**, as it is for a standard VPAT.
 - **Components are rated in isolation**, as rendered with default props and the default theme. Customization, composition, and your surrounding page can change the result.

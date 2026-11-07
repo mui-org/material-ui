@@ -1,6 +1,6 @@
 {
   "standard": "WCAG 2.2 Level A and AA",
-  "componentCount": 13,
+  "componentCount": 14,
   "totals": {
     "rated": 32,
     "supports": 27,
@@ -1536,6 +1536,93 @@
         "doesNotSupport": 0,
         "verified": 6,
         "automated": 1
+      }
+    },
+    {
+      "component": "FormGroup",
+      "counts": {
+        "supports": 7,
+        "partiallySupports": 0,
+        "doesNotSupport": 0,
+        "notApplicable": 48,
+        "flagged": 3,
+        "rated": 7
+      },
+      "gaps": [],
+      "criteria": [
+        {
+          "number": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": false
+        },
+        {
+          "number": "1.3.2",
+          "name": "Meaningful Sequence",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "1.3.3",
+          "name": "Sensory Characteristics",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Author",
+          "group": "Manual",
+          "flagged": false
+        },
+        {
+          "number": "1.4.10",
+          "name": "Reflow",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.4.3",
+          "name": "Focus Order",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Automated",
+          "flagged": false
+        },
+        {
+          "number": "2.4.6",
+          "name": "Headings and Labels",
+          "level": "AA",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Manual",
+          "flagged": true
+        },
+        {
+          "number": "3.3.2",
+          "name": "Labels or Instructions",
+          "level": "A",
+          "conformance": "Supports",
+          "responsibility": "Shared",
+          "group": "Hybrid",
+          "flagged": true
+        }
+      ],
+      "summary": {
+        "rated": 7,
+        "levelA": 5,
+        "levelAA": 2,
+        "supports": 7,
+        "partiallySupports": 0,
+        "doesNotSupport": 0,
+        "verified": 4,
+        "automated": 2
       }
     },
     {
