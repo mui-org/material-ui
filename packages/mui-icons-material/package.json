@@ -3,7 +3,7 @@
   "version": "10.0.0-alpha.0",
   "author": "MUI Team",
   "description": "Material Design icons distributed as SVG React components.",
-  "license": "MIT",
+  "license": "MIT AND Apache-2.0",
   "main": "./src/index.js",
   "keywords": [
     "react",
@@ -31,7 +31,7 @@
     "build:pkg-json": "node ./scripts/merge-package-json.mjs",
     "build:lib": "code-infra build --flat --hasLargeFiles --skipMainCheck --buildTypes false --no-expand",
     "build:lib:clean": "rimraf lib && pnpm build:lib && shx cp -R build lib && rimraf build",
-    "build:copy-files": "shx cp README.md ../../CHANGELOG.md ../../LICENSE build",
+    "build:copy-files": "shx cp README.md THIRD_PARTY_NOTICES.md LICENSE.google-material-icons ../../CHANGELOG.md ../../LICENSE build",
     "build:typings": "node ./scripts/create-typings.mjs",
     "release": "pnpm build && pnpm publish",
     "src:download": "node ./scripts/download.mjs",
