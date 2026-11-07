@@ -243,7 +243,7 @@ const SpeedDial = React.forwardRef(function SpeedDial(inProps, ref) {
 
     if (event.key === 'Escape') {
       setOpenState(false);
-      actions.current[0].focus();
+      actions.current[0]?.focus();
 
       if (onClose) {
         onClose(event, 'escapeKeyDown');
@@ -259,8 +259,12 @@ const SpeedDial = React.forwardRef(function SpeedDial(inProps, ref) {
 
       const actionStep = key === nextItemArrowKeyCurrent ? 1 : -1;
 
-      // stay within array indices
-      const nextAction = clamp(focusedAction.current + actionStep, 0, actions.current.length - 1);
+      // stay within array indices; the Fab is unmounted while hidden
+      const nextAction = clamp(
+        focusedAction.current + actionStep,
+        actions.current[0] ? 0 : 1,
+        actions.current.length - 1,
+      );
       actions.current[nextAction].focus();
       focusedAction.current = nextAction;
       nextItemArrowKey.current = nextItemArrowKeyCurrent;
