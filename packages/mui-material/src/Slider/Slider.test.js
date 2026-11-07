@@ -566,6 +566,30 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
       expect(slider).to.have.attribute('aria-valuenow', '0.4');
     });
 
+    it('should keep the precision of a decimal min when the step is an integer', () => {
+      const { container } = render(<Slider defaultValue={0.5} min={0.5} max={10.5} step={1} />);
+      const slider = screen.getByRole('slider');
+
+      stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+        width: 100,
+        height: 10,
+        bottom: 10,
+        left: 0,
+      }));
+
+      fireEvent.touchStart(
+        container.firstChild,
+        createTouches([{ identifier: 1, clientX: 30, clientY: 0 }]),
+      );
+      expect(slider).to.have.attribute('aria-valuenow', '3.5');
+
+      fireEvent.touchMove(
+        document.body,
+        createTouches([{ identifier: 1, clientX: 72, clientY: 0 }]),
+      );
+      expect(slider).to.have.attribute('aria-valuenow', '7.5');
+    });
+
     it('should round value to step precision when using the keyboard', () => {
       render(<Slider defaultValue={0.2} min={0} max={1} step={0.1} shiftStep={0.2} />);
       const slider = screen.getByRole('slider');

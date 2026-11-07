@@ -124,7 +124,9 @@ function getDecimalPrecision(num: number) {
 
 function roundValueToStep(value: number, step: number, min: number) {
   const nearest = Math.round((value - min) / step) * step + min;
-  return Number(nearest.toFixed(getDecimalPrecision(step)));
+  // The step grid starts at `min`, so keep the decimals of both.
+  const precision = Math.max(getDecimalPrecision(step), getDecimalPrecision(min));
+  return Number(nearest.toFixed(precision));
 }
 
 function setValueIndex(values: number[], newValue: number, index: number) {
