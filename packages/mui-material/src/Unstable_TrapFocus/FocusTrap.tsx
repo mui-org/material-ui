@@ -144,6 +144,10 @@ function FocusTrap(props: FocusTrapProps): React.JSX.Element {
   // This variable is useful when disableAutoFocus is true.
   // It waits for the active element to move into the component to activate.
   const activated = React.useRef(false);
+  // Tracks the last focused element inside the trap.
+  // Used to distinguish Safari's transient <body> activeElement (SPA navigation)
+  // from genuine focus loss where the element is removed from the DOM.
+  const lastFocusedInsideTrap = React.useRef<HTMLElement | null>(null);
 
   const rootRef = React.useRef<HTMLElement>(null);
   const handleRef = useForkRef(getReactElementRef(children), rootRef);
@@ -364,6 +368,12 @@ function FocusTrap(props: FocusTrapProps): React.JSX.Element {
     const interval = setInterval(() => {
       const activeEl = getActiveElement(doc);
       if (activeEl && activeEl.tagName === 'BODY') {
+        if (
+          lastFocusedInsideTrap.current &&
+          rootRef.current?.contains(lastFocusedInsideTrap.current)
+        ) {
+          return;
+        }
         contain();
       }
     }, 50);
@@ -374,7 +384,7 @@ function FocusTrap(props: FocusTrapProps): React.JSX.Element {
       doc.removeEventListener('focusin', contain);
       doc.removeEventListener('keydown', loopFocus, true);
     };
-  }, [disableAutoFocus, disableEnforceFocus, disableRestoreFocus, isEnabled, open, getTabbable]);
+  }, [disableEnforceFocus, disableRestoreFocus, isEnabled, open, getTabbable]);
 
   const onFocus = (event: React.FocusEvent<Element, Element>) => {
     if (nodeToRestore.current === null) {
@@ -382,6 +392,7 @@ function FocusTrap(props: FocusTrapProps): React.JSX.Element {
     }
     activated.current = true;
     reactFocusEventTarget.current = event.target;
+    lastFocusedInsideTrap.current = event.target as HTMLElement;
 
     const childrenPropsHandler = children.props.onFocus;
     if (childrenPropsHandler) {
@@ -394,6 +405,7 @@ function FocusTrap(props: FocusTrapProps): React.JSX.Element {
       nodeToRestore.current = event.relatedTarget;
     }
     activated.current = true;
+    lastFocusedInsideTrap.current = event.target as HTMLElement;
   };
 
   return (

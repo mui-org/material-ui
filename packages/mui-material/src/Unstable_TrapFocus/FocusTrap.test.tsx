@@ -569,5 +569,66 @@ describe('<FocusTrap />', () => {
         expect(screen.getByTestId('outside-input')).toHaveFocus();
       });
     });
+
+    it('contains the focus if the active element is removed, even with disableAutoFocus', async () => {
+      function WithRemovableElement({ hideButton = false }) {
+        return (
+          <FocusTrap open disableAutoFocus>
+            <div tabIndex={-1} data-testid="root">
+              {!hideButton && (
+                <button type="button" data-testid="hide-button">
+                  I am going to disappear
+                </button>
+              )}
+            </div>
+          </FocusTrap>
+        );
+      }
+
+      const { setProps } = render(<WithRemovableElement />);
+
+      await act(async () => {
+        screen.getByTestId('hide-button').focus();
+      });
+      expect(screen.getByTestId('hide-button')).toHaveFocus();
+
+      setProps({ hideButton: true });
+      expect(screen.getByTestId('root')).not.toHaveFocus();
+      clock.tick(500);
+      expect(screen.getByTestId('root')).toHaveFocus();
+    });
+
+    it('should not steal focus when activeElement transiently reports <body> (Safari SPA)', async () => {
+      render(
+        <FocusTrap open disableAutoFocus>
+          <div tabIndex={-1} data-testid="root">
+            <button type="button" data-testid="focus-input">
+              Focus me
+            </button>
+          </div>
+        </FocusTrap>,
+      );
+
+      await act(async () => {
+        screen.getByTestId('focus-input').focus();
+      });
+      expect(screen.getByTestId('focus-input')).toHaveFocus();
+
+      // Simulate Safari SPA: activeElement transiently returns <body>
+      // while the actual focused element is still inside the trap.
+      // Override the activeElement getter to return body.
+      Object.defineProperty(document, 'activeElement', {
+        get: () => document.body,
+        configurable: true,
+      });
+
+      clock.tick(500);
+
+      // Remove the override so toHaveFocus() can read the real activeElement.
+      delete (document as any).activeElement;
+      // Focus should NOT have been stolen by contain() — the fix correctly
+      // detects that the last focused element is still inside the root.
+      expect(screen.getByTestId('focus-input')).toHaveFocus();
+    });
   });
 });
