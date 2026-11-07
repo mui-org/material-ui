@@ -5948,6 +5948,67 @@ describe('<Autocomplete />', () => {
     },
   );
 
+  // https://github.com/mui/material-ui/issues/49653
+  describe('options positioned with a CSS transform', () => {
+    const options = Array.from({ length: 30 }, (_, index) => `option ${index}`);
+
+    function TransformedAutocomplete() {
+      return (
+        <Autocomplete
+          disablePortal
+          options={options}
+          renderInput={(params) => <TextField {...params} />}
+          renderOption={(props, option) => (
+            <li
+              {...props}
+              key={option}
+              style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                height: 36,
+                transform: `translateY(${options.indexOf(option) * 36}px)`,
+              }}
+            >
+              {option}
+            </li>
+          )}
+          slotProps={{ listbox: { style: { position: 'relative', padding: 0, height: 108 } } }}
+        />
+      );
+    }
+
+    async function expectScrollToFollowHighlight(user) {
+      await user.click(screen.getByRole('combobox'));
+      const listbox = screen.getByRole('listbox');
+
+      await user.keyboard('{ArrowDown>10/}');
+      checkHighlightIs(listbox, 'option 9');
+      expect(listbox.scrollTop).to.be.closeTo(252, 1);
+
+      await user.keyboard('{ArrowUp>9/}');
+      checkHighlightIs(listbox, 'option 0');
+      expect(listbox.scrollTop).to.be.closeTo(0, 1);
+    }
+
+    it.skipIf(isJsdom())('should scroll the highlighted option into view', async () => {
+      const { user } = render(<TransformedAutocomplete />);
+      await expectScrollToFollowHighlight(user);
+    });
+
+    it.skipIf(isJsdom())(
+      'should scroll the highlighted option into view inside a scaled ancestor',
+      async () => {
+        const { user } = render(
+          <div style={{ transform: 'scale(0.5)', transformOrigin: '0 0' }}>
+            <TransformedAutocomplete />
+          </div>,
+        );
+        await expectScrollToFollowHighlight(user);
+      },
+    );
+  });
+
   describe('exit transition', () => {
     it.skipIf(isJsdom())(
       'should preserve options in DOM during Popper exit transition',
