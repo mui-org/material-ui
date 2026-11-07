@@ -66,6 +66,8 @@ const ChipRoot = styled('div', {
   memoTheme(({ theme }) => {
     const textColor =
       theme.palette.mode === 'light' ? theme.palette.grey[700] : theme.palette.grey[300];
+    const avatarColor =
+      theme.palette.mode === 'light' ? theme.palette.common.black : theme.palette.common.white;
     return {
       maxWidth: '100%',
       fontFamily: theme.typography.fontFamily,
@@ -98,7 +100,7 @@ const ChipRoot = styled('div', {
         marginRight: -6,
         width: 24,
         height: 24,
-        color: theme.vars ? theme.vars.palette.Chip.defaultAvatarColor : textColor,
+        color: theme.vars ? theme.vars.palette.Chip.defaultAvatarColor : avatarColor,
         fontSize: theme.typography.pxToRem(12),
       },
       [`& .${chipClasses.icon}`]: {
