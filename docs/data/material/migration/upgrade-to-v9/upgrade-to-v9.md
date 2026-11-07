@@ -208,27 +208,31 @@ The `ListItemIcon` default min-width has changed to `36px` (previously `56px`) t
 ### Material Icons
 
 23 legacy icon exports that ended with `Outline` (without the "d") have been removed.
-Some of these icons have the same SVG as their `Outlined` counterparts, but others do not.
-For example, `InfoOutline` and `InfoOutlined` have the same SVG, while `ErrorOutlined` uses a filled circle instead of the outline in `ErrorOutline`.
+Adding a "d" to the name doesn't always give the same icon, because `<Name>Outlined` is the Outlined theme of the base icon.
+For example, `ErrorOutline` is an outlined circle, but `ErrorOutlined` is a filled circle.
 
-To migrate, choose the replacement that preserves the appearance you need.
-For icons with the same SVG, rename the import to use the `Outlined` suffix:
+To keep the same appearance, add the `Outlined` suffix to the removed export name:
+
+```diff
+-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
++import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlineOutlined';
+```
+
+This applies to `AddCircleOutline`, `ChatBubbleOutline`, `CheckCircleOutline`, `DeleteOutline`, `DoneOutline`, `ErrorOutline`, `HelpOutline`, `MailOutline`, `PauseCircleOutline`, `PersonOutline`, `PieChartOutline`, `PlayCircleOutline`, `RemoveCircleOutline`, `StarOutline`, and `WorkOutline`.
+
+`DriveFileMoveOutline`, `InfoOutline`, `LabelImportantOutline`, `LightbulbOutline`, `LockOutline`, and `WorkspacesOutline` have no `OutlineOutlined` variant, so replace `Outline` with `Outlined`:
 
 ```diff
 -import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 +import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 ```
 
-For `ErrorOutline` and `HelpOutline`, use their remaining `OutlineOutlined` variants to preserve the outline:
+These look the same as the removed icons, except `DriveFileMoveOutlined`, which has an outlined folder tab instead of a filled one.
 
-```diff
--import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlineOutlined';
--import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
-```
+Two icons need a different replacement:
 
-The full list of removed exports: `AddCircleOutline`, `ChatBubbleOutline`, `CheckCircleOutline`, `DeleteOutline`, `DoneOutline`, `DriveFileMoveOutline`, `ErrorOutline`, `HelpOutline`, `InfoOutline`, `LabelImportantOutline`, `LightbulbOutline`, `LockOutline`, `MailOutline`, `ModeEditOutline`, `PauseCircleOutline`, `PeopleOutline`, `PersonOutline`, `PieChartOutline`, `PlayCircleOutline`, `RemoveCircleOutline`, `StarOutline`, `WorkOutline`, `WorkspacesOutline`.
+- `ModeEditOutline` was a filled pencil, so replace it with `ModeEdit`.
+- `PeopleOutline` has no replacement with the same design. The closest is `PeopleOutlineOutlined`. To keep the previous design, copy its SVG path from v7 into a custom icon with [`createSvgIcon`](/material-ui/icons/#createsvgicon).
 
 Theme variants of these icons (for example, `InfoOutlineRounded`, `DeleteOutlineSharp`) are **not** affected and remain available.
 
