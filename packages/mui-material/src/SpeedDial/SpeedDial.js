@@ -7,6 +7,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import useTimeout from '@mui/utils/useTimeout';
 import clamp from '@mui/utils/clamp';
 import setRef from '@mui/utils/setRef';
+import resolveComponentProps from '@mui/utils/resolveComponentProps';
 import { styled, useTheme } from '../zero-styled';
 import memoTheme from '../utils/memoTheme';
 import { useDefaultProps } from '../DefaultPropsProvider';
@@ -19,6 +20,7 @@ import useForkRef from '../utils/useForkRef';
 import useControlled from '../utils/useControlled';
 import speedDialClasses, { getSpeedDialUtilityClass } from './speedDialClasses';
 import useSlot from '../utils/useSlot';
+import mergeSlotProps from '../utils/mergeSlotProps';
 
 const useUtilityClasses = (ownerState) => {
   const { classes, open, direction } = ownerState;
@@ -301,10 +303,6 @@ const SpeedDial = React.forwardRef(function SpeedDial(inProps, ref) {
   };
 
   const handleClick = (event) => {
-    if (FabProps.onClick) {
-      FabProps.onClick(event);
-    }
-
     eventTimer.clear();
 
     if (open) {
@@ -399,7 +397,10 @@ const SpeedDial = React.forwardRef(function SpeedDial(inProps, ref) {
 
   const externalForwardedProps = {
     slots,
-    slotProps,
+    slotProps: {
+      ...slotProps,
+      fab: (state) => mergeSlotProps(resolveComponentProps(slotProps.fab, state), FabProps),
+    },
   };
 
   const [RootSlot, rootSlotProps] = useSlot('root', {
@@ -445,25 +446,37 @@ const SpeedDial = React.forwardRef(function SpeedDial(inProps, ref) {
     ownerState,
   });
 
+  const [FabSlot, fabSlotProps] = useSlot('fab', {
+    elementType: SpeedDialFab,
+    externalForwardedProps,
+    ownerState,
+    ref: handleFabRef,
+    className: classes.fab,
+    shouldForwardComponentProp: true,
+    additionalProps: {
+      color: 'primary',
+      'aria-label': ariaLabel,
+      'aria-haspopup': 'true',
+      'aria-expanded': open,
+      'aria-controls': `${id}-actions`,
+    },
+    getSlotProps: (handlers) => ({
+      ...handlers,
+      onClick: (event) => {
+        handlers.onClick?.(event);
+        handleClick(event);
+      },
+    }),
+  });
+
   return (
     <RootSlot {...rootSlotProps}>
       <TransitionSlot in={!hidden} timeout={transitionDuration} unmountOnExit {...transitionProps}>
-        <SpeedDialFab
-          color="primary"
-          aria-label={ariaLabel}
-          aria-haspopup="true"
-          aria-expanded={open}
-          aria-controls={`${id}-actions`}
-          {...FabProps}
-          onClick={handleClick}
-          className={clsx(classes.fab, FabProps.className)}
-          ref={handleFabRef}
-          ownerState={ownerState}
-        >
+        <FabSlot {...fabSlotProps}>
           {React.isValidElement(icon) && isMuiElement(icon, ['SpeedDialIcon'])
             ? React.cloneElement(icon, { open })
             : icon}
-        </SpeedDialFab>
+        </FabSlot>
       </TransitionSlot>
       <SpeedDialActions
         id={`${id}-actions`}
@@ -508,6 +521,7 @@ SpeedDial.propTypes /* remove-proptypes */ = {
   /**
    * Props applied to the [`Fab`](https://mui.com/material-ui/api/fab/) element.
    * @default {}
+   * @deprecated Use `slotProps.fab` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
    */
   FabProps: PropTypes.object,
   /**
@@ -567,6 +581,7 @@ SpeedDial.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   slotProps: PropTypes.shape({
+    fab: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     transition: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   }),
@@ -575,6 +590,7 @@ SpeedDial.propTypes /* remove-proptypes */ = {
    * @default {}
    */
   slots: PropTypes.shape({
+    fab: PropTypes.elementType,
     root: PropTypes.elementType,
     transition: PropTypes.elementType,
   }),

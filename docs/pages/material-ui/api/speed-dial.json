@@ -10,7 +10,12 @@
       },
       "default": "'up'"
     },
-    "FabProps": { "type": { "name": "object" }, "default": "{}" },
+    "FabProps": {
+      "type": { "name": "object" },
+      "default": "{}",
+      "deprecated": true,
+      "deprecationInfo": "Use <code>slotProps.fab</code> instead. This prop will be removed in a future major release. See <a href=\"/material-ui/migration/migrating-from-deprecated-apis/\">Migrating from deprecated APIs</a> for more details."
+    },
     "hidden": { "type": { "name": "bool" }, "default": "false" },
     "icon": { "type": { "name": "node" } },
     "onClose": {
@@ -32,14 +37,14 @@
     "slotProps": {
       "type": {
         "name": "shape",
-        "description": "{ root?: func<br>&#124;&nbsp;object, transition?: func<br>&#124;&nbsp;object }"
+        "description": "{ fab?: func<br>&#124;&nbsp;object, root?: func<br>&#124;&nbsp;object, transition?: func<br>&#124;&nbsp;object }"
       },
       "default": "{}"
     },
     "slots": {
       "type": {
         "name": "shape",
-        "description": "{ root?: elementType, transition?: elementType }"
+        "description": "{ fab?: elementType, root?: elementType, transition?: elementType }"
       },
       "default": "{}"
     },
@@ -69,6 +74,12 @@
       "description": "The component that renders the root slot.",
       "default": "'div'",
       "class": "MuiSpeedDial-root"
+    },
+    {
+      "name": "fab",
+      "description": "The component that renders the fab.",
+      "default": "Fab",
+      "class": "MuiSpeedDial-fab"
     },
     {
       "name": "transition",
@@ -112,12 +123,6 @@
       "key": "directionUp",
       "className": "MuiSpeedDial-directionUp",
       "description": "Styles applied to the root element if direction=\"up\"",
-      "isGlobal": false
-    },
-    {
-      "key": "fab",
-      "className": "MuiSpeedDial-fab",
-      "description": "Styles applied to the Fab component.",
       "isGlobal": false
     }
   ],

@@ -5,7 +5,7 @@ import { InternalStandardProps as StandardProps } from '../internal';
 import { FabProps } from '../Fab';
 import { TransitionProps } from '../transitions';
 import { SpeedDialClasses } from './speedDialClasses';
-import { CreateSlotsAndSlotProps, SlotComponentProps } from '../utils/types';
+import { CreateSlotsAndSlotProps, SlotComponentProps, SlotProps } from '../utils/types';
 
 export type CloseReason = 'toggle' | 'blur' | 'mouseLeave' | 'escapeKeyDown';
 export type OpenReason = 'toggle' | 'focus' | 'mouseEnter';
@@ -17,12 +17,19 @@ export interface SpeedDialSlots {
    */
   root: React.ElementType;
   /**
+   * The component that renders the fab.
+   * @default Fab
+   */
+  fab: React.ElementType;
+  /**
    * The component that renders the transition.
    * [Follow this guide](/material-ui/transitions/#transition-slots) to learn more about the requirements for this component.
    * @default Zoom
    */
   transition: React.ElementType;
 }
+
+export interface SpeedDialFabSlotPropsOverrides {}
 
 export type SpeedDialSlotsAndSlotProps = CreateSlotsAndSlotProps<
   SpeedDialSlots,
@@ -32,6 +39,15 @@ export type SpeedDialSlotsAndSlotProps = CreateSlotsAndSlotProps<
      * By default, the available props are based on div element.
      */
     root: SlotComponentProps<'div', React.HTMLAttributes<HTMLDivElement>, SpeedDialOwnerState>;
+    /**
+     * Props forwarded to the fab slot.
+     * By default, the available props are based on the [Fab](https://mui.com/material-ui/api/fab/#props) component.
+     */
+    fab: SlotProps<
+      React.ElementType<FabProps>,
+      SpeedDialFabSlotPropsOverrides,
+      SpeedDialOwnerState
+    >;
     /**
      * Props forwarded to the transition slot.
      * By default, the available props are based on the [Zoom](https://mui.com/material-ui/api/zoom/#props) component.
@@ -74,6 +90,7 @@ export interface SpeedDialProps
   /**
    * Props applied to the [`Fab`](https://mui.com/material-ui/api/fab/) element.
    * @default {}
+   * @deprecated Use `slotProps.fab` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
    */
   FabProps?: Partial<FabProps> | undefined;
   /**

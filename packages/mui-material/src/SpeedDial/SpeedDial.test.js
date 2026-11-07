@@ -10,11 +10,16 @@ import {
   isJsdom,
 } from '@mui/internal-test-utils';
 import Icon from '@mui/material/Icon';
+import Fab from '@mui/material/Fab';
 import SpeedDial, { speedDialClasses as classes } from '@mui/material/SpeedDial';
 import SpeedDialAction, { speedDialActionClasses } from '@mui/material/SpeedDialAction';
 import { tooltipClasses } from '@mui/material/Tooltip';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import describeConformance from '../../test/describeConformance';
+
+const CustomFab = React.forwardRef(({ ownerState, ...props }, ref) => (
+  <Fab ref={ref} {...props} data-testid="custom" />
+));
 
 describe('<SpeedDial />', () => {
   const { clock, render } = createRenderer({ clock: 'fake' });
@@ -36,7 +41,15 @@ describe('<SpeedDial />', () => {
     refInstanceof: window.HTMLDivElement,
     muiName: 'MuiSpeedDial',
     testVariantProps: { direction: 'right' },
-    slots: { transition: { testWithElement: null }, root: { expectedClassName: classes.root } },
+    slots: {
+      transition: { testWithElement: null },
+      root: { expectedClassName: classes.root },
+      fab: {
+        expectedClassName: classes.fab,
+        testWithElement: null,
+        testWithComponent: CustomFab,
+      },
+    },
     skip: [
       'componentProp', // react-transition-group issue
     ],
@@ -73,6 +86,81 @@ describe('<SpeedDial />', () => {
 
     expect(screen.getByRole('menu').children).to.have.lengthOf(2);
     expect(screen.getAllByRole('menuitem')).to.have.lengthOf(2);
+  });
+
+  describe('slotProps.fab', () => {
+    it('calls the click handler and requests closing the dial', async () => {
+      clock.restore();
+      const handleClick = spy();
+      const handleClose = spy();
+      const { user } = render(
+        <SpeedDial
+          {...defaultProps}
+          onClose={handleClose}
+          slotProps={{ fab: { onClick: handleClick } }}
+        />,
+      );
+
+      const button = screen.getByRole('button');
+      await user.click(button, { skipHover: true });
+
+      expect(handleClick.callCount).to.equal(1);
+      expect(handleClose.callCount).to.equal(1);
+      expect(handleClose.args[0][1]).to.equal('toggle');
+    });
+
+    it('resolves callback props using the owner state', () => {
+      render(
+        <SpeedDial
+          {...defaultProps}
+          className="custom-root"
+          direction="left"
+          slotProps={{
+            fab: (ownerState) => ({ title: `${ownerState.direction}-${ownerState.open}` }),
+          }}
+        />,
+      );
+
+      expect(screen.getByRole('button')).to.have.attribute('title', 'left-true');
+      expect(screen.getByRole('button')).not.to.have.class('custom-root');
+    });
+
+    it('preserves the FabProps ref and the slot ref', () => {
+      const legacyRef = React.createRef();
+      const slotRef = React.createRef();
+      render(
+        <SpeedDial
+          {...defaultProps}
+          FabProps={{ ref: legacyRef }}
+          slotProps={{ fab: { ref: slotRef } }}
+        />,
+      );
+
+      expect(legacyRef.current).to.equal(screen.getByRole('button'));
+      expect(slotRef.current).to.equal(screen.getByRole('button'));
+    });
+
+    it('overrides FabProps while preserving other legacy props', () => {
+      render(
+        <SpeedDial
+          {...defaultProps}
+          FabProps={{ color: 'secondary', title: 'legacy' }}
+          slotProps={{ fab: { color: 'success' } }}
+        />,
+      );
+
+      expect(screen.getByRole('button')).to.have.class('MuiFab-success');
+      expect(screen.getByRole('button')).to.have.attribute('title', 'legacy');
+    });
+
+    it('forwards the component prop to the Fab', () => {
+      render(
+        <SpeedDial {...defaultProps} slotProps={{ fab: { component: 'a', href: '#actions' } }} />,
+      );
+
+      expect(screen.getByRole('link')).to.have.class('MuiFab-root');
+      expect(screen.getByRole('link')).to.have.attribute('href', '#actions');
+    });
   });
 
   it('should preserve object refs passed to action fab slots', () => {
@@ -509,9 +597,11 @@ describe('<SpeedDial />', () => {
       render(
         <SpeedDial
           ariaLabel={`${direction}-actions-${actionCount}`}
-          FabProps={{
-            ref: (element) => {
-              fabButton = element;
+          slotProps={{
+            fab: {
+              ref: (element) => {
+                fabButton = element;
+              },
             },
           }}
           open

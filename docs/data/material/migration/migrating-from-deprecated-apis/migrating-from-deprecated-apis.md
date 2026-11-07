@@ -2650,6 +2650,17 @@ Use the [codemod](https://github.com/mui/material-ui/tree/HEAD/packages/mui-code
 npx @mui/codemod@latest deprecations/speed-dial-props <path>
 ```
 
+### FabProps
+
+The SpeedDial's `FabProps` prop was deprecated in favor of `slotProps.fab`:
+
+```diff
+ <SpeedDial
+-  FabProps={CustomFabProps}
++  slotProps={{ fab: CustomFabProps }}
+ />
+```
+
 ### TransitionComponent
 
 The SpeedDial's `TransitionComponent` prop was deprecated in favor of `slots.transition`:

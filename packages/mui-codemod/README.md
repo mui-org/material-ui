@@ -2024,20 +2024,28 @@ npx @mui/codemod@next deprecations/snackbar-props <path>
 
 ```diff
  <SpeedDial
+-  FabProps={CustomFabProps}
 -  TransitionComponent={CustomTransition}
 -  TransitionProps={CustomTransitionProps}
 +  slots={{ transition: CustomTransition }}
-+  slotProps={{ transition: CustomTransitionProps }}
++  slotProps={{
++    fab: CustomFabProps,
++    transition: CustomTransitionProps,
++  }}
  />
 ```
 
 ```diff
  MuiSpeedDial: {
    defaultProps: {
+-    FabProps: CustomFabProps,
 -    TransitionComponent: CustomTransition,
 -    TransitionProps: CustomTransitionProps,
 +    slots: { transition: CustomTransition },
-+    slotProps: { transition: CustomTransitionProps },
++    slotProps: {
++      fab: CustomFabProps,
++      transition: CustomTransitionProps,
++    },
    },
  },
 ```

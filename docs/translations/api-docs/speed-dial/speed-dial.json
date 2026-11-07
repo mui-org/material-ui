@@ -72,10 +72,10 @@
     },
     "directionUp": {
       "description": "Styles applied to the root element if direction=&quot;up&quot;"
-    },
-    "fab": { "description": "Styles applied to {{nodeName}}.", "nodeName": "the Fab component" }
+    }
   },
   "slotDescriptions": {
+    "fab": "The component that renders the fab.",
     "root": "The component that renders the root slot.",
     "transition": "The component that renders the transition. <a href=\"/material-ui/transitions/#transition-slots\">Follow this guide</a> to learn more about the requirements for this component."
   }
