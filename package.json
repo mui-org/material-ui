@@ -29,7 +29,6 @@
     "docs:create-playground": "pnpm --filter docs create-playground",
     "docs:link-check": "pnpm --filter docs link-check",
     "docs:typescript:check": "pnpm --filter docs typescript",
-    "docs:sync-careers": "tsx ./docs/scripts/syncCareers.ts",
     "docs:sync-team": "tsx ./docs/scripts/syncTeamMembers.ts && pnpm prettier",
     "docs:mdicons:synonyms": "cross-env BABEL_ENV=development babel-node --extensions \".tsx,.ts,.js,.mjs\" ./docs/scripts/updateIconSynonyms && pnpm prettier",
     "extract-error-codes": "code-infra extract-error-codes --errorCodesPath docs/public/static/error-codes.json --skip @mui/core-downloads-tracker @mui/envinfo @mui/internal-core-docs @mui/codemod @mui/icons-material",
@@ -79,14 +78,14 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@babel/core": "8.0.7",
+    "@babel/core": "8.0.10",
     "@babel/node": "8.0.6",
     "@babel/plugin-transform-react-constant-elements": "8.0.5",
     "@eslint/compat": "2.1.1",
     "@mui/internal-babel-plugin-minify-errors": "3.0.1-canary.2",
-    "@mui/internal-bundle-size-checker": "1.1.1-canary.5",
-    "@mui/internal-code-infra": "0.1.1-canary.22",
-    "@mui/internal-docs-infra": "0.13.1-canary.19",
+    "@mui/internal-bundle-size-checker": "1.1.1-canary.6",
+    "@mui/internal-code-infra": "0.1.1-canary.27",
+    "@mui/internal-docs-infra": "0.13.1-canary.29",
     "@mui/internal-docs-utils": "workspace:^",
     "@mui/internal-netlify-cache": "0.1.1-canary.2",
     "@mui/internal-scripts": "workspace:^",
@@ -124,7 +123,7 @@
     "globby": "16.2.4",
     "jsdom": "30.1.3",
     "lerna": "10.1.1",
-    "minimatch": "10.2.6",
+    "minimatch": "11.0.3",
     "nx": "23.3.1",
     "pkg-pr-new": "0.0.91",
     "playwright": "1.63.0",
@@ -145,11 +144,11 @@
     "yargs": "18.2.0"
   },
   "config": {
-    "valeVersion": "3.25.1"
+    "valeVersion": "3.26.0"
   },
-  "packageManager": "pnpm@12.16.0",
+  "packageManager": "pnpm@12.16.1",
   "engines": {
-    "pnpm": "12.16.0",
+    "pnpm": "12.16.1",
     "node": ">=22.23.4"
   }
 }

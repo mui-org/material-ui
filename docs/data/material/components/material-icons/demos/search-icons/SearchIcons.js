@@ -570,6 +570,7 @@ const allIconsMap = {};
 const allIconsByTheme = {};
 // The five themes of an icon share the same name and synonyms, so each icon is indexed once.
 const searchDocuments = [];
+const indexedNames = new Set();
 for (const importName of Object.keys(mui).sort()) {
   let theme = 'Filled';
   let name = importName;
@@ -590,11 +591,12 @@ for (const importName of Object.keys(mui).sort()) {
   allIconsMap[importName] = icon;
   allIconsByTheme[theme] ??= {};
   allIconsByTheme[theme][name] = icon;
-  if (theme === 'Filled') {
+  if (!indexedNames.has(name)) {
     searchDocuments.push({
       id: name,
       searchable: synonyms[name] ? `${name} ${synonyms[name]}` : name,
     });
+    indexedNames.add(name);
   }
 }
 

@@ -307,7 +307,7 @@ export interface UseAutocompleteProps<
    * Use in controlled mode (see open).
    *
    * @param {React.SyntheticEvent} event The event source of the callback.
-   * @param {string} reason Can be: `"toggleInput"`, `"escape"`, `"selectOption"`, `"removeOption"`, `"blur"`.
+   * @param {string} reason Can be: `"toggleInput"`, `"escape"`, `"selectOption"`, `"removeOption"`, `"createOption"`, `"blur"`.
    */
   onClose?: ((event: React.SyntheticEvent, reason: AutocompleteCloseReason) => void) | undefined;
   /**
@@ -327,12 +327,18 @@ export interface UseAutocompleteProps<
   /**
    * Callback fired when the input value changes.
    *
-   * @param {React.SyntheticEvent} event The event source of the callback.
+   * @param {React.SyntheticEvent | null} event The event source of the callback, or `null` when the input value is reset programmatically.
    * @param {string} value The new value of the text input.
-   * @param {string} reason Can be: `"input"` (user input), `"reset"` (programmatic change), `"clear"`, `"blur"`, `"selectOption"`, `"removeOption"`
+   * @param {string} reason Can be: `"input"` (user input), `"reset"` (programmatic change), `"clear"`, `"blur"`, `"selectOption"`, `"removeOption"`, `"createOption"`
    */
   onInputChange?:
-    | ((event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) => void)
+    | {
+        bivarianceHack(
+          event: React.SyntheticEvent | null,
+          value: string,
+          reason: AutocompleteInputChangeReason,
+        ): void;
+      }['bivarianceHack']
     | undefined;
   /**
    * Callback fired when the popup requests to be opened.
@@ -406,7 +412,7 @@ export interface AutocompleteChangeDetails<Value = string> {
 export type AutocompleteCloseReason =
   'createOption' | 'toggleInput' | 'escape' | 'selectOption' | 'removeOption' | 'blur';
 export type AutocompleteInputChangeReason =
-  'input' | 'reset' | 'clear' | 'blur' | 'selectOption' | 'removeOption';
+  'input' | 'reset' | 'clear' | 'blur' | 'selectOption' | 'removeOption' | 'createOption';
 
 export type AutocompleteGetItemProps<Multiple extends boolean | undefined> = Multiple extends true
   ? (args: { index: number }) => {

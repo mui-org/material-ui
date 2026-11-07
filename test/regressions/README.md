@@ -114,6 +114,7 @@ curl --fail-with-body --silent --show-error \
         "hierarchy.lvl3",
         "hierarchy.lvl4",
         "hierarchy.lvl5",
+        "hierarchy.lvl6",
         "content",
         "type",
         "url",
@@ -126,6 +127,7 @@ curl --fail-with-body --silent --show-error \
         "hierarchy.lvl3:15",
         "hierarchy.lvl4:15",
         "hierarchy.lvl5:15",
+        "hierarchy.lvl6:15",
         "content:15"
       ],
       "snippetEllipsisText": "…",
