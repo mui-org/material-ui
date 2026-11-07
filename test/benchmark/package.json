@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@mui/internal-benchmark": "0.1.1-canary.13",
-    "@playwright/test": "1.63.0",
+    "@playwright/test": "1.64.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "vite": "^8.0.0"
