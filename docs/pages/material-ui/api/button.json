@@ -233,5 +233,5 @@
   "forwardsRefTo": "HTMLButtonElement",
   "filename": "/packages/mui-material/src/Button/Button.js",
   "inheritance": { "component": "ButtonBase", "pathname": "/material-ui/api/button-base/" },
-  "demos": "<ul><li><a href=\"/material-ui/react-button-group/\">Button Group</a></li>\n<li><a href=\"/material-ui/react-button/\">Button</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li>\n<li><a href=\"/material-ui/react-number-field/\">Number Field</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>"
+  "demos": "<ul><li><a href=\"/material-ui/react-button-group/\">Button Group</a></li>\n<li><a href=\"/material-ui/react-button/\">Button</a></li>\n<li><a href=\"/material-ui/react-menubar/\">Menubar</a></li>\n<li><a href=\"/material-ui/react-transfer-list/\">Transfer List</a></li></ul>"
 }

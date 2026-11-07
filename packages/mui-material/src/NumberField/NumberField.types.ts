@@ -1,0 +1,414 @@
+import type { NumberField as BaseNumberField } from '@base-ui/react/number-field';
+
+import type { OverridableStringUnion } from '@mui/types';
+
+import type { InputProps as StandardInputProps } from '../Input';
+import type { InternalStandardProps as StandardProps } from '../internal';
+import type { FormControlProps } from '../FormControl';
+import type { CreateSlotsAndSlotProps, SlotProps } from '../utils/types';
+import type { NumberFieldClasses } from './numberFieldClasses';
+import type { FormHelperTextProps } from '../FormHelperText';
+import type { InputLabelProps } from '../InputLabel';
+import type { Theme } from '../styles/createTheme';
+import type {
+  FilledInputProps,
+  IconButtonProps,
+  InputBaseProps,
+  OutlinedInputProps,
+  SxProps,
+} from '..';
+
+type NumberFieldVariants = 'outlined' | 'standard' | 'filled';
+
+export type ControlsPosition = 'start' | 'end' | 'split';
+
+export interface NumberFieldSlots {
+  /**
+   * The component that renders the decrement button.
+   * @default IconButton
+   */
+  decrementButton: React.ElementType;
+  /**
+   * The component that renders the helper text.
+   * @default FormHelperText
+   */
+  formHelperText: React.ElementType;
+  /**
+   * The html input element.
+   * @default 'input'
+   */
+  htmlInput: React.ElementType;
+  /**
+   * The component that renders the increment button.
+   * @default IconButton
+   */
+  incrementButton: React.ElementType;
+  /**
+   * The component that renders the input.
+   * @default OutlinedInput
+   */
+  input: React.ElementType;
+  /**
+   * The component that renders the input's label.
+   * @default InputLabel
+   */
+  inputLabel: React.ElementType;
+  /** The component that renders the root
+   * @default FormControl
+   */
+  root: React.ElementType;
+  /**
+   * The component that renders the scrub area.
+   * @default 'span'
+   */
+  scrubArea: React.ElementType;
+  /**
+   * The component that renders the scrub area cursor.
+   * @default 'span'
+   */
+  scrubAreaCursor: React.ElementType;
+}
+
+export interface NumberFieldPropsSizeOverrides {}
+export interface NumberFieldPropsColorOverrides {}
+
+export interface NumberFieldRootSlotOverrides {}
+export interface NumberFieldInputSlotPropsOverrides {}
+export interface NumberFieldFormHelperTextSlotPropsOverrides {}
+export interface NumberFieldInputLabelSlotPropsOverrides {}
+export interface NumberFieldDecrementButtonSlotPropsOverrides {}
+export interface NumberFieldIncrementButtonSlotPropsOverrides {}
+export interface NumberFieldScrubAreaSlotPropsOverrides {}
+export interface NumberFieldScrubAreaCursorSlotPropsOverrides {}
+
+export type NumberFieldSlotsAndSlotProps<InputPropsType> = CreateSlotsAndSlotProps<
+  NumberFieldSlots,
+  {
+    decrementButton: SlotProps<
+      React.ElementType<IconButtonProps>,
+      NumberFieldDecrementButtonSlotPropsOverrides &
+        Pick<BaseNumberField.Decrement.Props, 'nativeButton'>,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the form helper text slot.
+     * By default, the available props are based on the [FormHelperText](https://mui.com/material-ui/api/form-helper-text/#props) component.
+     */
+    formHelperText: SlotProps<
+      React.ElementType<FormHelperTextProps>,
+      NumberFieldFormHelperTextSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the html input slot.
+     * By default, the available props are based on the html input element.
+     */
+    htmlInput: SlotProps<
+      React.ElementType<InputBaseProps['inputProps']>,
+      {},
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the increment button slot.
+     * By default, the available props are based on the increment button element.
+     */
+    incrementButton: SlotProps<
+      React.ElementType<IconButtonProps>,
+      NumberFieldIncrementButtonSlotPropsOverrides &
+        Pick<BaseNumberField.Increment.Props, 'nativeButton'>,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the input slot.
+     * By default, the available props are based on the [Input](https://mui.com/material-ui/api/input/#props) component.
+     */
+    input: SlotProps<
+      React.ElementType<InputPropsType>,
+      NumberFieldInputSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the input label slot.
+     * By default, the available props are based on the [InputLabel](https://mui.com/material-ui/api/input-label/#props) component.
+     */
+    inputLabel: SlotProps<
+      React.ElementType<InputLabelProps>,
+      NumberFieldInputLabelSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the root slot.
+     * By default, the available props are based on the [FormControl](https://mui.com/material-ui/api/form-control/#props) component.
+     */
+    root: SlotProps<
+      React.ElementType<FormControlProps>,
+      NumberFieldRootSlotOverrides,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the scrub area slot.
+     * By default, the available props are based on the span element.
+     */
+    scrubArea: SlotProps<
+      'span',
+      NumberFieldScrubAreaSlotPropsOverrides &
+        Pick<
+          BaseNumberField.ScrubArea.Props,
+          'direction' | 'pixelSensitivity' | 'teleportDistance'
+        >,
+      NumberFieldOwnerState
+    >;
+    /**
+     * Props forwarded to the scrub area cursor slot.
+     * By default, the available props are based on the span element.
+     */
+    scrubAreaCursor: SlotProps<
+      'span',
+      NumberFieldScrubAreaCursorSlotPropsOverrides,
+      NumberFieldOwnerState
+    >;
+  }
+>;
+
+export interface BaseNumberFieldProps extends StandardProps<
+  FormControlProps,
+  'children' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus'
+> {
+  /**
+   * If `true`, the number input element will allow values outside the specified range.
+   * @default false
+   */
+  allowOutOfRange?: BaseNumberField.Root.Props['allowOutOfRange'] | undefined;
+  /**
+   * If `true`, the number input element will respond to wheel scrub gestures.
+   * @default false
+   */
+  allowWheelScrub?: BaseNumberField.Root.Props['allowWheelScrub'] | undefined;
+  /**
+   * If `true`, the `input` element is focused during the first mount.
+   * @default false
+   */
+  autoFocus?: boolean | undefined;
+  /**
+   * @ignore
+   */
+  children?: FormControlProps['children'] | undefined;
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes?: Partial<NumberFieldClasses> | undefined;
+  /**
+   * The color of the component.
+   * It supports both default and custom theme colors, which can be added as shown in the
+   * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+   * @default 'primary'
+   */
+  color?:
+    | OverridableStringUnion<
+        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+        NumberFieldPropsColorOverrides
+      >
+    | undefined;
+  /**
+   * The position of the control buttons relative to the input element.
+   * @default 'end'
+   */
+  controlsPosition?: ControlsPosition | undefined;
+  /**
+   * The default value of the number input element.
+   */
+  defaultValue?: BaseNumberField.Root.Props['defaultValue'] | undefined;
+  /**
+   * If `true`, the component is disabled.
+   * @default false
+   */
+  disabled?: boolean | undefined;
+  /**
+   * If `true`, the label is displayed in an error state.
+   * @default false
+   */
+  error?: boolean | undefined;
+  /**
+   * Identifies the form that owns the input element.
+   */
+  form?: BaseNumberField.Root.Props['form'] | undefined;
+  /**
+   * Options to format the input value.
+   *
+   * See [MDN - Intl](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+   */
+  format?: BaseNumberField.Root.Props['format'] | undefined;
+  /**
+   * If `true`, the input will take up the full width of its container.
+   * @default false
+   */
+  fullWidth?: boolean | undefined;
+  /**
+   * The helper text content.
+   */
+  helperText?: React.ReactNode | undefined;
+  /**
+   * The id of the input element.
+   */
+  id?: string | undefined;
+  /**
+   * The ref of the input element.
+   */
+  inputRef?: React.Ref<HTMLInputElement> | undefined;
+  /**
+   * The label content.
+   */
+  label?: React.ReactNode | undefined;
+  /**
+   * The amount to increment or decrement while holding the Shift key.
+   * @default 10
+   */
+  largeStep?: BaseNumberField.Root.Props['largeStep'] | undefined;
+  /**
+   * The locale used for number formatting and parsing.
+   *
+   * See [MDN - Intl Number Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
+   */
+  locale?: BaseNumberField.Root.Props['locale'] | undefined;
+  /**
+   * The maximum value allowed for the number input element.
+   */
+  max?: BaseNumberField.Root.Props['max'] | undefined;
+  /**
+   * The minimum value allowed for the number input element.
+   */
+  min?: BaseNumberField.Root.Props['min'] | undefined;
+  /**
+   * Name attribute of the `input` element.
+   */
+  name?: string | undefined;
+  /**
+   * The blur event handler of the input element.
+   */
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
+  /**
+   * The focus event handler of the input element.
+   */
+  onFocus?: React.FocusEventHandler<HTMLInputElement> | undefined;
+  /**
+   * Callback fired when the numeric value changes.
+   * Call `eventDetails.cancel()` to reject the proposed change.
+   *
+   * @param {number|null} value The new numeric value, or `null` when the input is empty.
+   * @param {object} eventDetails The interaction details, including the native `event` and a `reason`:
+   * `"input-change"`, `"input-clear"`, `"input-blur"`, `"input-paste"`, `"keyboard"`,
+   * `"increment-press"`, `"decrement-press"`, `"wheel"`, `"scrub"`, or `"none"`.
+   */
+  onValueChange?: BaseNumberField.Root.Props['onValueChange'] | undefined;
+  /**
+   * Callback fired when a value is committed.
+   * Typing commits on blur. Button and scrub interactions commit on pointer release.
+   * Keyboard and wheel changes commit immediately.
+   *
+   * @param {number|null} value The committed numeric value, or `null` when the input is empty.
+   * @param {object} eventDetails The interaction details, including the native `event` and a `reason`:
+   * `"input-blur"`, `"input-clear"`, `"keyboard"`, `"increment-press"`, `"decrement-press"`,
+   * `"wheel"`, `"scrub"`, or `"none"`.
+   */
+  onValueCommitted?: BaseNumberField.Root.Props['onValueCommitted'] | undefined;
+  /**
+   * If `true`, the input element is read-only.
+   * @default false
+   */
+  readOnly?: boolean | undefined;
+  /**
+   * If `true`, the label is displayed as required and the `input` element is required.
+   * @default false
+   */
+  required?: boolean | undefined;
+  /**
+   * The area of the input element where the scrub control is displayed. Set to false to hide it.
+   * @default false
+   */
+  scrubArea?: 'start' | 'end' | false | undefined;
+  /**
+   * The size of the component.
+   * @default 'medium'
+   */
+  size?: OverridableStringUnion<'small' | 'medium', NumberFieldPropsSizeOverrides> | undefined;
+  /**
+   * The amount to increment or decrement while holding the Alt key (Option on macOS).
+   * @default 0.1
+   */
+  smallStep?: BaseNumberField.Root.Props['smallStep'] | undefined;
+  /**
+   * If `true`, the number input element will snap to the nearest step value.
+   * @default false
+   */
+  snapOnStep?: BaseNumberField.Root.Props['snapOnStep'] | undefined;
+  /**
+   * The amount to increment or decrement with the buttons, arrow keys, or scrub area.
+   * Set `min` explicitly to enable step validation on form submission.
+   * Set to `"any"` to disable step validation; interactive stepping then uses `1`,
+   * while the Alt and Shift keys still use `smallStep` and `largeStep`.
+   * @default 1
+   */
+  step?: BaseNumberField.Root.Props['step'] | undefined;
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx?: SxProps<Theme> | undefined;
+  /**
+   * The value of the number input element.
+   */
+  value?: BaseNumberField.Root.Props['value'] | undefined;
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
+  variant?: NumberFieldVariants | undefined;
+}
+
+export interface StandardNumberFieldProps
+  extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<StandardInputProps> {
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
+  variant: 'standard';
+}
+
+export interface OutlinedNumberFieldProps
+  extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<OutlinedInputProps> {
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
+  variant?: 'outlined' | undefined;
+}
+
+export interface FilledNumberFieldProps
+  extends BaseNumberFieldProps, NumberFieldSlotsAndSlotProps<FilledInputProps> {
+  /**
+   * The variant to use.
+   * @default 'outlined'
+   */
+  variant: 'filled';
+}
+
+export type NumberFieldProps<Variant extends NumberFieldVariants = NumberFieldVariants> =
+  Variant extends 'filled'
+    ? FilledNumberFieldProps
+    : Variant extends 'standard'
+      ? StandardNumberFieldProps
+      : OutlinedNumberFieldProps;
+
+export interface NumberFieldOwnerState
+  extends BaseNumberFieldProps, Pick<NumberFieldProps, 'slots' | 'slotProps'> {
+  autoFocus: boolean;
+  controlsPosition: NonNullable<NumberFieldProps['controlsPosition']>;
+  color: NonNullable<NumberFieldProps['color']>;
+  disabled: boolean;
+  error: boolean;
+  fullWidth: boolean;
+  readOnly: boolean;
+  required: boolean;
+  scrubArea: NonNullable<NumberFieldProps['scrubArea']>;
+  size: NonNullable<NumberFieldProps['size']>;
+  variant: NumberFieldVariants;
+}

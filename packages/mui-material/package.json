@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.29.7 || ^8.0.5",
+    "@base-ui/react": "^1.8.0",
     "@mui/core-downloads-tracker": "workspace:^",
     "@mui/system": "workspace:*",
     "@mui/types": "workspace:^",
@@ -104,6 +105,7 @@
     "./internal": "./src/internal/index.ts",
     "./locale": "./src/locale/index.ts",
     "./NoSsr": "./src/NoSsr/index.ts",
+    "./NumberField": "./src/NumberField/index.ts",
     "./OverridableComponent": "./src/OverridableComponent/index.ts",
     "./PigmentContainer": "./src/PigmentContainer/index.ts",
     "./PigmentGrid": "./src/PigmentGrid/index.ts",

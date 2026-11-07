@@ -232,6 +232,9 @@ export * from './Modal';
 export { default as NativeSelect } from './NativeSelect';
 export * from './NativeSelect';
 
+export { default as NumberField } from './NumberField';
+export * from './NumberField';
+
 export { default as NoSsr } from './NoSsr';
 export * from './NoSsr';
 
