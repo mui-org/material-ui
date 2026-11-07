@@ -224,6 +224,21 @@ export function testReset() {
   hystersisTimer.clear();
 }
 
+function isCursorOver(element, cursorPosition) {
+  if (!element) {
+    return false;
+  }
+
+  const rect = element.getBoundingClientRect();
+
+  return (
+    cursorPosition.x >= rect.left &&
+    cursorPosition.x <= rect.right &&
+    cursorPosition.y >= rect.top &&
+    cursorPosition.y <= rect.bottom
+  );
+}
+
 function composeEventHandler(handler, eventHandler) {
   return (event, ...params) => {
     if (eventHandler) {
@@ -270,6 +285,10 @@ const Tooltip = React.forwardRef(function Tooltip(inProps, ref) {
   const [arrowRef, setArrowRef] = React.useState(null);
   const ignoreNonTouchEvents = React.useRef(false);
   const openedByDisabledTriggerRef = React.useRef(false);
+  const popperNodeRef = React.useRef(null);
+  // Where the cursor was when it last entered the trigger or the tooltip.
+  // `null` when the tooltip was not opened by a cursor, i.e. by focus or by touch.
+  const cursorPositionRef = React.useRef(null);
 
   const disableInteractive = disableInteractiveProp || followCursor;
 
@@ -340,6 +359,9 @@ const Tooltip = React.forwardRef(function Tooltip(inProps, ref) {
     if (ignoreNonTouchEvents.current && event.type !== 'touchstart') {
       return;
     }
+
+    cursorPositionRef.current =
+      event.type === 'mouseover' ? { x: event.clientX, y: event.clientY } : null;
 
     // Remove the title ahead of time.
     // We don't want to wait for the next render commit.
@@ -495,6 +517,42 @@ const Tooltip = React.forwardRef(function Tooltip(inProps, ref) {
     };
   }, [handleClose, open]);
 
+  // Scrolling moves the trigger out from under a motionless cursor without the browser
+  // firing any pointer event, so the tooltip would stay open with nothing hovered.
+  // https://github.com/mui/material-ui/issues/44548
+  const handleScroll = useEventCallback((nativeEvent) => {
+    const cursorPosition = cursorPositionRef.current;
+
+    // A tooltip opened by focus stays open as long as the trigger is focused, and a touch
+    // interaction leaves no cursor behind. Neither is affected by a scroll.
+    if (!cursorPosition) {
+      return;
+    }
+
+    if (
+      isCursorOver(childNode, cursorPosition) ||
+      (!disableInteractive && isCursorOver(popperNodeRef.current, cursorPosition))
+    ) {
+      return;
+    }
+
+    handleMouseLeave(nativeEvent);
+  });
+
+  React.useEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
+    // `scroll` does not bubble, the listener has to run in the capture phase to catch
+    // scrolls happening in any container between the document and the trigger.
+    document.addEventListener('scroll', handleScroll, true);
+
+    return () => {
+      document.removeEventListener('scroll', handleScroll, true);
+    };
+  }, [handleScroll, open]);
+
   const handleRef = useForkRef(getReactElementRef(children), setChildNode, ref);
 
   // There is no point in displaying an empty tooltip.
@@ -645,6 +703,7 @@ const Tooltip = React.forwardRef(function Tooltip(inProps, ref) {
     externalForwardedProps,
     ownerState,
     className: classes.popper,
+    ref: popperNodeRef,
   });
 
   const [TransitionSlot, transitionSlotProps] = useSlot('transition', {
