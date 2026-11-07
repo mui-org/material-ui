@@ -42,6 +42,21 @@ describe('<Chip />', () => {
   }));
 
   describe('text only', () => {
+    it('does not attach a click handler to a non-interactive chip', () => {
+      const { container } = render(<Chip label="My text Chip" />);
+
+      expect(container.firstChild.onclick).to.equal(null);
+    });
+
+    it('calls a click handler supplied through the root slot', () => {
+      const onClick = vi.fn();
+      const { container } = render(<Chip label="My text Chip" slotProps={{ root: { onClick } }} />);
+
+      fireEvent.click(container.firstChild);
+
+      expect(onClick).toHaveBeenCalledOnce();
+    });
+
     it('is not in tab order', () => {
       const { container } = render(<Chip label="My text Chip" />);
 
