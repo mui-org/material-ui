@@ -244,6 +244,287 @@ describe.skipIf(!supportsTouch())('<Slider />', () => {
     expect(handleChange.args[1][1]).to.deep.equal(22);
   });
 
+  it.skipIf(isJsdom())('should end the drag when the browser cancels the pointer', () => {
+    const handleChange = spy();
+    const handleChangeCommitted = spy();
+    const { container } = render(
+      <Slider defaultValue={0} onChange={handleChange} onChangeCommitted={handleChangeCommitted} />,
+    );
+    stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+      width: 100,
+      left: 0,
+    }));
+
+    fireEvent.pointerDown(container.firstChild, {
+      buttons: 1,
+      clientX: 10,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    fireEvent.pointerMove(document.body, {
+      buttons: 1,
+      clientX: 20,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    fireEvent.pointerCancel(document.body, {
+      clientX: 50,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+
+    // The cancelled pointer's position doesn't pick a value, only the drag so far is committed.
+    expect(handleChange.callCount).to.equal(2);
+    expect(handleChangeCommitted.callCount).to.equal(1);
+    expect(handleChangeCommitted.args[0][1]).to.equal(20);
+    expect(container.querySelector(`.${classes.thumb}`)).not.to.have.class(classes.active);
+
+    fireEvent.pointerMove(document.body, {
+      buttons: 1,
+      clientX: 60,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    expect(handleChange.callCount).to.equal(2);
+  });
+
+  it.skipIf(isJsdom())('should commit a cancelled drag without onChange', () => {
+    const handleChangeCommitted = spy();
+    const { container } = render(
+      <Slider defaultValue={0} onChangeCommitted={handleChangeCommitted} />,
+    );
+    stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+      width: 100,
+      left: 0,
+    }));
+
+    fireEvent.pointerDown(container.firstChild, {
+      buttons: 1,
+      clientX: 10,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    fireEvent.pointerMove(document.body, {
+      buttons: 1,
+      clientX: 20,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+    fireEvent.pointerCancel(document.body, {
+      clientX: 0,
+      pointerId: 1,
+      pointerType: 'touch',
+    });
+
+    expect(handleChangeCommitted.callCount).to.equal(1);
+    expect(handleChangeCommitted.args[0][1]).to.equal(20);
+  });
+
+  it.skipIf(isJsdom())(
+    'should not hold back a touch press when touch-action only allows zooming',
+    () => {
+      const handleChange = spy();
+      const { container } = render(
+        <Slider defaultValue={0} onChange={handleChange} sx={{ touchAction: 'pinch-zoom' }} />,
+      );
+      stub(container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+        width: 100,
+        left: 0,
+      }));
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(10);
+    },
+  );
+
+  describe.skipIf(isJsdom())('when touch-action allows panning', () => {
+    function renderPannableSlider(props) {
+      const view = render(<Slider defaultValue={0} sx={{ touchAction: 'pan-y' }} {...props} />);
+      stub(view.container.firstChild, 'getBoundingClientRect').callsFake(() => ({
+        width: 100,
+        left: 0,
+      }));
+      return view;
+    }
+
+    it('should not change the value when the browser claims the touch to scroll', () => {
+      const handleChange = spy();
+      const handleChangeCommitted = spy();
+      const { container } = renderPannableSlider({
+        onChange: handleChange,
+        onChangeCommitted: handleChangeCommitted,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        clientY: 40,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      expect(handleChange.callCount).to.equal(0);
+
+      // Chromium sends a few moves before it decides to scroll, and the finger can drift sideways.
+      [
+        [9, 32],
+        [7, 26],
+        [5, 19],
+      ].forEach(([clientX, clientY]) => {
+        fireEvent.pointerMove(document.body, {
+          buttons: 1,
+          clientX,
+          clientY,
+          pointerId: 1,
+          pointerType: 'touch',
+        });
+      });
+      expect(handleChange.callCount).to.equal(0);
+
+      fireEvent.pointerCancel(document.body, {
+        clientX: 0,
+        clientY: 0,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      expect(handleChange.callCount).to.equal(0);
+      expect(handleChangeCommitted.callCount).to.equal(0);
+      expect(screen.getByRole('slider')).to.have.attribute('aria-valuenow', '0');
+    });
+
+    it('should change the value on a tap', () => {
+      const handleChange = spy();
+      const handleChangeCommitted = spy();
+      const { container } = renderPannableSlider({
+        onChange: handleChange,
+        onChangeCommitted: handleChangeCommitted,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      fireEvent.pointerUp(document.body, {
+        clientX: 10,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(10);
+      expect(handleChangeCommitted.callCount).to.equal(1);
+      expect(handleChangeCommitted.args[0][1]).to.equal(10);
+      expect(screen.getByRole('slider')).to.have.attribute('aria-valuenow', '10');
+    });
+
+    it('should change the value on a drag', () => {
+      const handleChange = spy();
+      const handleChangeCommitted = spy();
+      const { container } = renderPannableSlider({
+        onChange: handleChange,
+        onChangeCommitted: handleChangeCommitted,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      fireEvent.pointerMove(document.body, {
+        buttons: 1,
+        clientX: 20,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      fireEvent.pointerUp(document.body, {
+        clientX: 20,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(20);
+      expect(handleChangeCommitted.callCount).to.equal(1);
+      expect(handleChangeCommitted.args[0][1]).to.equal(20);
+    });
+
+    it('should undo the moves when the browser claims the touch after the thumb moved', () => {
+      const handleChange = spy();
+      const handleChangeCommitted = spy();
+      const { container } = renderPannableSlider({
+        onChange: handleChange,
+        onChangeCommitted: handleChangeCommitted,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 10,
+        clientY: 40,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      // The finger settles slightly along the slider before the swipe turns vertical.
+      [
+        [12, 41],
+        [12, 30],
+      ].forEach(([clientX, clientY]) => {
+        fireEvent.pointerMove(document.body, {
+          buttons: 1,
+          clientX,
+          clientY,
+          pointerId: 1,
+          pointerType: 'touch',
+        });
+      });
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.equal(12);
+
+      fireEvent.pointerCancel(document.body, {
+        clientX: 0,
+        clientY: 0,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      expect(handleChange.callCount).to.equal(2);
+      expect(handleChange.args[1][1]).to.equal(0);
+      expect(handleChangeCommitted.callCount).to.equal(0);
+      expect(screen.getByRole('slider')).to.have.attribute('aria-valuenow', '0');
+    });
+
+    it('should move the thumb closest to the press in a range slider', () => {
+      const handleChange = spy();
+      const { container } = renderPannableSlider({
+        defaultValue: [40, 60],
+        onChange: handleChange,
+      });
+
+      fireEvent.pointerDown(container.firstChild, {
+        buttons: 1,
+        clientX: 49,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+      fireEvent.pointerMove(document.body, {
+        buttons: 1,
+        clientX: 52,
+        pointerId: 1,
+        pointerType: 'touch',
+      });
+
+      expect(handleChange.callCount).to.equal(1);
+      expect(handleChange.args[0][1]).to.deep.equal([52, 60]);
+    });
+  });
+
   describe('prop: classes', () => {
     it('adds custom classes to the component', () => {
       const selectedClasses = ['root', 'rail', 'track', 'mark'];
