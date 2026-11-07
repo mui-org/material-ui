@@ -72,6 +72,10 @@ export default function createBreakpoints(breakpoints: BreakpointsOptions): Brea
   function up(key: Breakpoint | number) {
     const value =
       typeof (values as any)[key as any] === 'number' ? (values as any)[key as any] : key;
+    // A string that has its own unit, such as `40em`, is used as is.
+    if (typeof value === 'string' && Number.isNaN(Number(value))) {
+      return `@media (min-width:${value})`;
+    }
     return `@media (min-width:${value}${unit})`;
   }
 
